@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="network"> Specification of the cluster network. </param>
         /// <param name="byok"> Specification of the cluster byok. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SCClusterSpecEntity(string name, string availability, string cloud, string zone, Package? package, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, ClusterConfigEntity config, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SCClusterSpecEntity(string name, string availability, string cloud, string zone, ConfluentPackage? package, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, ClusterConfigEntity config, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Availability = availability;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public string Zone { get; set; }
 
         /// <summary> Stream governance configuration. </summary>
-        public Package? Package { get; set; }
+        public ConfluentPackage? Package { get; set; }
 
         /// <summary> The cloud service provider region. </summary>
         public string Region { get; set; }

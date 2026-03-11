@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Confluent.Models
     public readonly partial struct ConnectorType : IEquatable<ConnectorType>
     {
         private readonly string _value;
-        private const string SINKValue = "SINK";
-        private const string SOURCEValue = "SOURCE";
+        private const string SinkValue = "SINK";
+        private const string SourceValue = "SOURCE";
 
         /// <summary> Initializes a new instance of <see cref="ConnectorType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Confluent.Models
             _value = value;
         }
 
-        /// <summary> Gets the SINK. </summary>
-        public static ConnectorType SINK { get; } = new ConnectorType(SINKValue);
+        /// <summary> Gets the Sink. </summary>
+        public static ConnectorType Sink { get; } = new ConnectorType(SinkValue);
 
-        /// <summary> Gets the SOURCE. </summary>
-        public static ConnectorType SOURCE { get; } = new ConnectorType(SOURCEValue);
+        /// <summary> Gets the Source. </summary>
+        public static ConnectorType Source { get; } = new ConnectorType(SourceValue);
 
         /// <summary> Determines if two <see cref="ConnectorType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

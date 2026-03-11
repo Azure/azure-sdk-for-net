@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Initializes a new instance of <see cref="StreamGovernanceConfig"/>. </summary>
         /// <param name="package"> Stream governance configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StreamGovernanceConfig(Package? package, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StreamGovernanceConfig(ConfluentPackage? package, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Package = package;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Stream governance configuration. </summary>
-        public Package? Package { get; set; }
+        public ConfluentPackage? Package { get; set; }
     }
 }

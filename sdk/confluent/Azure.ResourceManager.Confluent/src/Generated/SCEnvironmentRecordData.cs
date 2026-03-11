@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <summary> Stream governance configuration. </summary>
-        public Package? StreamGovernanceConfigPackage
+        public ConfluentPackage? StreamGovernanceConfigPackage
         {
             get
             {

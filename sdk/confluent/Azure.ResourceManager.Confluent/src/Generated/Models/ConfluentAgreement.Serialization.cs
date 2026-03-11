@@ -18,11 +18,11 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Agreement Terms definition. </summary>
-    public partial class ConfluentAgreement : IJsonModel<ConfluentAgreement>
+    public partial class ConfluentAgreement : ResourceData, IJsonModel<ConfluentAgreement>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfluentAgreement PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreement>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfluentAgreement IPersistableModel<ConfluentAgreement>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfluentAgreement IPersistableModel<ConfluentAgreement>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConfluentAgreement)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ConfluentAgreement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -90,62 +90,28 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfluentAgreement IJsonModel<ConfluentAgreement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfluentAgreement IJsonModel<ConfluentAgreement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConfluentAgreement)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfluentAgreement JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -164,27 +130,35 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
+            ResourceType resourceType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            string @type = default;
             SystemData systemData = default;
             ConfluentAgreementProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -212,11 +186,11 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             return new ConfluentAgreement(
                 id,
+                resourceType,
+                additionalBinaryDataProperties,
                 name,
-                @type,
                 systemData,
-                properties,
-                additionalBinaryDataProperties);
+                properties);
         }
     }
 }

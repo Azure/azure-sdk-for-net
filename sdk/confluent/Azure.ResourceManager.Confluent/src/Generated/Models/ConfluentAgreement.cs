@@ -7,12 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Agreement Terms definition. </summary>
-    public partial class ConfluentAgreement
+    public partial class ConfluentAgreement : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,33 +24,17 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfluentAgreement"/>. </summary>
-        /// <param name="id"> The ARM id of the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the agreement. </param>
-        /// <param name="type"> The type of the agreement. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="properties"> Represents the properties of the resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfluentAgreement(string id, string name, string @type, SystemData systemData, ConfluentAgreementProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfluentAgreement(ResourceIdentifier id, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, SystemData systemData, ConfluentAgreementProperties properties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
-            SystemData = systemData;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
-
-        /// <summary> The ARM id of the resource. </summary>
-        public string Id { get; }
-
-        /// <summary> The name of the agreement. </summary>
-        public string Name { get; }
-
-        /// <summary> The type of the agreement. </summary>
-        public string Type { get; }
-
-        /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
-        public SystemData SystemData { get; }
 
         /// <summary> Represents the properties of the resource. </summary>
         internal ConfluentAgreementProperties Properties { get; set; }

@@ -22,5 +22,25 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, status);
         }
+
+        /// <summary>
+        /// Backward-compatible factory method for <see cref="SCClusterRecord"/>.
+        /// Use <see cref="SCClusterRecordData"/> in new code.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SCClusterRecord SCClusterRecord(string kind = null, string id = null, string name = null, SCMetadataEntity metadata = null, SCClusterSpecEntity spec = null, ClusterStatusEntity status = null)
+        {
+            return new SCClusterRecord(kind, id, name, metadata, spec, status);
+        }
+
+        /// <summary>
+        /// Backward-compatible factory method for <see cref="SCEnvironmentRecord"/>.
+        /// Use <see cref="SCEnvironmentRecordData"/> in new code.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SCEnvironmentRecord SCEnvironmentRecord(string kind = null, string id = null, string name = null, SCMetadataEntity metadata = null)
+        {
+            return new SCEnvironmentRecord(kind, id, name, metadata);
+        }
     }
 }

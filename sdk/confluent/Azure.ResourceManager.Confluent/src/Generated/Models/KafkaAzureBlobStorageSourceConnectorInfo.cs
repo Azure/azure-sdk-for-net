@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="topicRegex"> Kafka topics Regex pattern. </param>
         /// <param name="topicsDir"> Kafka topics directory. </param>
         /// <param name="maxTasks"> Maximum Tasks. </param>
-        internal KafkaAzureBlobStorageSourceConnectorInfo(PartnerConnectorType partnerConnectorType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AuthType? authType, DataFormatType? inputFormat, DataFormatType? outputFormat, string apiKey, string apiSecret, string serviceAccountId, string serviceAccountName, string topicRegex, string topicsDir, string maxTasks) : base(partnerConnectorType, additionalBinaryDataProperties)
+        internal KafkaAzureBlobStorageSourceConnectorInfo(PartnerConnectorType partnerConnectorType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfluentAuthType? authType, ConfluentDataFormatType? inputFormat, ConfluentDataFormatType? outputFormat, string apiKey, string apiSecret, string serviceAccountId, string serviceAccountName, string topicRegex, string topicsDir, string maxTasks) : base(partnerConnectorType, additionalBinaryDataProperties)
         {
             AuthType = authType;
             InputFormat = inputFormat;
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> Kafka Auth Type. </summary>
-        public AuthType? AuthType { get; set; }
+        public ConfluentAuthType? AuthType { get; set; }
 
         /// <summary> Kafka Input Data Format Type. </summary>
-        public DataFormatType? InputFormat { get; set; }
+        public ConfluentDataFormatType? InputFormat { get; set; }
 
         /// <summary> Kafka Output Data Format Type. </summary>
-        public DataFormatType? OutputFormat { get; set; }
+        public ConfluentDataFormatType? OutputFormat { get; set; }
 
         /// <summary> Kafka API Key. </summary>
         public string ApiKey { get; set; }

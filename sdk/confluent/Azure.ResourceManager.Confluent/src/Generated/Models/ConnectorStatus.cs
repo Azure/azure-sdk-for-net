@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Confluent.Models
     public readonly partial struct ConnectorStatus : IEquatable<ConnectorStatus>
     {
         private readonly string _value;
-        private const string PROVISIONINGValue = "PROVISIONING";
-        private const string RUNNINGValue = "RUNNING";
-        private const string PAUSEDValue = "PAUSED";
-        private const string FAILEDValue = "FAILED";
+        private const string ProvisioningValue = "PROVISIONING";
+        private const string RunningValue = "RUNNING";
+        private const string PausedValue = "PAUSED";
+        private const string FailedValue = "FAILED";
 
         /// <summary> Initializes a new instance of <see cref="ConnectorStatus"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Confluent.Models
             _value = value;
         }
 
-        /// <summary> Gets the PROVISIONING. </summary>
-        public static ConnectorStatus PROVISIONING { get; } = new ConnectorStatus(PROVISIONINGValue);
+        /// <summary> Gets the Provisioning. </summary>
+        public static ConnectorStatus Provisioning { get; } = new ConnectorStatus(ProvisioningValue);
 
-        /// <summary> Gets the RUNNING. </summary>
-        public static ConnectorStatus RUNNING { get; } = new ConnectorStatus(RUNNINGValue);
+        /// <summary> Gets the Running. </summary>
+        public static ConnectorStatus Running { get; } = new ConnectorStatus(RunningValue);
 
-        /// <summary> Gets the PAUSED. </summary>
-        public static ConnectorStatus PAUSED { get; } = new ConnectorStatus(PAUSEDValue);
+        /// <summary> Gets the Paused. </summary>
+        public static ConnectorStatus Paused { get; } = new ConnectorStatus(PausedValue);
 
-        /// <summary> Gets the FAILED. </summary>
-        public static ConnectorStatus FAILED { get; } = new ConnectorStatus(FAILEDValue);
+        /// <summary> Gets the Failed. </summary>
+        public static ConnectorStatus Failed { get; } = new ConnectorStatus(FailedValue);
 
         /// <summary> Determines if two <see cref="ConnectorStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

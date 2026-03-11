@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            Package? package = default;
+            ConfluentPackage? package = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    package = new Package(prop.Value.GetString());
+                    package = new ConfluentPackage(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

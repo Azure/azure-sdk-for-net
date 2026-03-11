@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.Confluent.Models
     public readonly partial struct ConnectorClass : IEquatable<ConnectorClass>
     {
         private readonly string _value;
-        private const string AZUREBLOBSOURCEValue = "AZUREBLOBSOURCE";
-        private const string AZUREBLOBSINKValue = "AZUREBLOBSINK";
-        private const string AZURECOSMOSV2SINKValue = "AZURECOSMOSV2SINK";
-        private const string AZURECOSMOSV2SOURCEValue = "AZURECOSMOSV2SOURCE";
+        private const string AzureBlobSourceValue = "AZUREBLOBSOURCE";
+        private const string AzureBlobSinkValue = "AZUREBLOBSINK";
+        private const string AzureCosmosV2SinkValue = "AZURECOSMOSV2SINK";
+        private const string AzureCosmosV2SourceValue = "AZURECOSMOSV2SOURCE";
 
         /// <summary> Initializes a new instance of <see cref="ConnectorClass"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Confluent.Models
             _value = value;
         }
 
-        /// <summary> Gets the AZUREBLOBSOURCE. </summary>
-        public static ConnectorClass AZUREBLOBSOURCE { get; } = new ConnectorClass(AZUREBLOBSOURCEValue);
+        /// <summary> Gets the AzureBlobSource. </summary>
+        public static ConnectorClass AzureBlobSource { get; } = new ConnectorClass(AzureBlobSourceValue);
 
-        /// <summary> Gets the AZUREBLOBSINK. </summary>
-        public static ConnectorClass AZUREBLOBSINK { get; } = new ConnectorClass(AZUREBLOBSINKValue);
+        /// <summary> Gets the AzureBlobSink. </summary>
+        public static ConnectorClass AzureBlobSink { get; } = new ConnectorClass(AzureBlobSinkValue);
 
-        /// <summary> Gets the AZURECOSMOSV2SINK. </summary>
-        public static ConnectorClass AZURECOSMOSV2SINK { get; } = new ConnectorClass(AZURECOSMOSV2SINKValue);
+        /// <summary> Gets the AzureCosmosV2Sink. </summary>
+        public static ConnectorClass AzureCosmosV2Sink { get; } = new ConnectorClass(AzureCosmosV2SinkValue);
 
-        /// <summary> Gets the AZURECOSMOSV2SOURCE. </summary>
-        public static ConnectorClass AZURECOSMOSV2SOURCE { get; } = new ConnectorClass(AZURECOSMOSV2SOURCEValue);
+        /// <summary> Gets the AzureCosmosV2Source. </summary>
+        public static ConnectorClass AzureCosmosV2Source { get; } = new ConnectorClass(AzureCosmosV2SourceValue);
 
         /// <summary> Determines if two <see cref="ConnectorClass"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

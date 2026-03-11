@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Confluent.Models
         public SCMetadataEntity Metadata { get; set; }
 
         /// <summary> Stream governance configuration. </summary>
-        public Package? StreamGovernanceConfigPackage
+        public ConfluentPackage? StreamGovernanceConfigPackage
         {
             get
             {

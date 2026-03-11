@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             PartnerConnectorType partnerConnectorType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            AuthType? authType = default;
-            DataFormatType? inputFormat = default;
-            DataFormatType? outputFormat = default;
+            ConfluentAuthType? authType = default;
+            ConfluentDataFormatType? inputFormat = default;
+            ConfluentDataFormatType? outputFormat = default;
             string apiKey = default;
             string apiSecret = default;
             string serviceAccountId = default;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    authType = new AuthType(prop.Value.GetString());
+                    authType = new ConfluentAuthType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("inputFormat"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    inputFormat = new DataFormatType(prop.Value.GetString());
+                    inputFormat = new ConfluentDataFormatType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("outputFormat"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    outputFormat = new DataFormatType(prop.Value.GetString());
+                    outputFormat = new ConfluentDataFormatType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("apiKey"u8))

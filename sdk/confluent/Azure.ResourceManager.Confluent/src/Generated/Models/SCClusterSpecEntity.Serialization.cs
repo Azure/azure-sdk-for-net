@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Confluent.Models
             string availability = default;
             string cloud = default;
             string zone = default;
-            Package? package = default;
+            ConfluentPackage? package = default;
             string region = default;
             string kafkaBootstrapEndpoint = default;
             string httpEndpoint = default;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     {
                         continue;
                     }
-                    package = new Package(prop.Value.GetString());
+                    package = new ConfluentPackage(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("region"u8))

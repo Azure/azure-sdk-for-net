@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Confluent
             return message;
         }
 
-        internal HttpMessage CreateGetEnvironmentsRequest(Guid subscriptionId, string resourceGroupName, string organizationName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetAccessEnvironmentsRequest(Guid subscriptionId, string resourceGroupName, string organizationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

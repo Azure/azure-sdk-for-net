@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="streamGovernanceConfigPackage"> Stream governance configuration. </param>
         /// <returns> A new <see cref="Confluent.SCEnvironmentRecordData"/> instance for mocking. </returns>
-        public static SCEnvironmentRecordData SCEnvironmentRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SCMetadataEntity metadata = default, Package? streamGovernanceConfigPackage = default)
+        public static SCEnvironmentRecordData SCEnvironmentRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SCMetadataEntity metadata = default, ConfluentPackage? streamGovernanceConfigPackage = default)
         {
             return new SCEnvironmentRecordData(
                 id,
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="maxTasks"> Maximum Tasks. </param>
         /// <param name="timeInterval"> Time Interval. </param>
         /// <returns> A new <see cref="Models.KafkaAzureBlobStorageSinkConnectorInfo"/> instance for mocking. </returns>
-        public static KafkaAzureBlobStorageSinkConnectorInfo KafkaAzureBlobStorageSinkConnectorInfo(AuthType? authType = default, DataFormatType? inputFormat = default, DataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, IEnumerable<string> topics = default, string topicsDir = default, string flushSize = default, string maxTasks = default, string timeInterval = default)
+        public static KafkaAzureBlobStorageSinkConnectorInfo KafkaAzureBlobStorageSinkConnectorInfo(ConfluentAuthType? authType = default, ConfluentDataFormatType? inputFormat = default, ConfluentDataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, IEnumerable<string> topics = default, string topicsDir = default, string flushSize = default, string maxTasks = default, string timeInterval = default)
         {
             topics ??= new ChangeTrackingList<string>();
 
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="maxTasks"> Maximum Tasks. </param>
         /// <param name="timeInterval"> Time Interval. </param>
         /// <returns> A new <see cref="Models.KafkaAzureCosmosDBSinkConnectorInfo"/> instance for mocking. </returns>
-        public static KafkaAzureCosmosDBSinkConnectorInfo KafkaAzureCosmosDBSinkConnectorInfo(AuthType? authType = default, DataFormatType? inputFormat = default, DataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, IEnumerable<string> topics = default, string topicsDir = default, string flushSize = default, string maxTasks = default, string timeInterval = default)
+        public static KafkaAzureCosmosDBSinkConnectorInfo KafkaAzureCosmosDBSinkConnectorInfo(ConfluentAuthType? authType = default, ConfluentDataFormatType? inputFormat = default, ConfluentDataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, IEnumerable<string> topics = default, string topicsDir = default, string flushSize = default, string maxTasks = default, string timeInterval = default)
         {
             topics ??= new ChangeTrackingList<string>();
 
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="maxTasks"> Maximum Tasks. </param>
         /// <param name="timeInterval"> Time Interval. </param>
         /// <returns> A new <see cref="Models.KafkaAzureSynapseAnalyticsSinkConnectorInfo"/> instance for mocking. </returns>
-        public static KafkaAzureSynapseAnalyticsSinkConnectorInfo KafkaAzureSynapseAnalyticsSinkConnectorInfo(AuthType? authType = default, DataFormatType? inputFormat = default, DataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, IEnumerable<string> topics = default, string topicsDir = default, string flushSize = default, string maxTasks = default, string timeInterval = default)
+        public static KafkaAzureSynapseAnalyticsSinkConnectorInfo KafkaAzureSynapseAnalyticsSinkConnectorInfo(ConfluentAuthType? authType = default, ConfluentDataFormatType? inputFormat = default, ConfluentDataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, IEnumerable<string> topics = default, string topicsDir = default, string flushSize = default, string maxTasks = default, string timeInterval = default)
         {
             topics ??= new ChangeTrackingList<string>();
 
@@ -731,39 +731,6 @@ namespace Azure.ResourceManager.Confluent.Models
                     null));
         }
 
-        /// <param name="id"> The ARM id of the resource. </param>
-        /// <param name="name"> The name of the agreement. </param>
-        /// <param name="type"> The type of the agreement. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="publisher"> Publisher identifier string. </param>
-        /// <param name="product"> Product identifier string. </param>
-        /// <param name="plan"> Plan identifier string. </param>
-        /// <param name="licenseTextLink"> Link to HTML with Microsoft and Publisher terms. </param>
-        /// <param name="privacyPolicyLink"> Link to the privacy policy of the publisher. </param>
-        /// <param name="retrieveOn"> Date and time in UTC of when the terms were accepted. This is empty if Accepted is false. </param>
-        /// <param name="signature"> Terms signature. </param>
-        /// <param name="isAccepted"> If any version of the terms have been accepted, otherwise false. </param>
-        /// <returns> A new <see cref="Models.ConfluentAgreement"/> instance for mocking. </returns>
-        public static ConfluentAgreement ConfluentAgreement(string id = default, string name = default, string @type = default, SystemData systemData = default, string publisher = default, string product = default, string plan = default, string licenseTextLink = default, string privacyPolicyLink = default, DateTimeOffset? retrieveOn = default, string signature = default, bool? isAccepted = default)
-        {
-            return new ConfluentAgreement(
-                id,
-                name,
-                @type,
-                systemData,
-                publisher is null && product is null && plan is null && licenseTextLink is null && privacyPolicyLink is null && retrieveOn is null && signature is null && isAccepted is null ? default : new ConfluentAgreementProperties(
-                    publisher,
-                    product,
-                    plan,
-                    licenseTextLink,
-                    privacyPolicyLink,
-                    retrieveOn,
-                    signature,
-                    isAccepted,
-                    null),
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Validation response from the provider. </summary>
         /// <param name="info"> Info from the response. </param>
         /// <returns> A new <see cref="Models.ConfluentOrganizationValidationResult"/> instance for mocking. </returns>
@@ -788,16 +755,15 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="signature"> Terms signature. </param>
         /// <param name="isAccepted"> If any version of the terms have been accepted, otherwise false. </param>
         /// <returns> A new <see cref="Models.ConfluentAgreement"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ConfluentAgreement ConfluentAgreement(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string product, string plan, string licenseTextLink, string privacyPolicyLink, DateTimeOffset? retrieveOn, string signature, bool? isAccepted)
+        public static ConfluentAgreement ConfluentAgreement(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publisher = default, string product = default, string plan = default, string licenseTextLink = default, string privacyPolicyLink = default, DateTimeOffset? retrieveOn = default, string signature = default, bool? isAccepted = default)
         {
             return new ConfluentAgreement(
                 id,
+                resourceType,
+                additionalBinaryDataProperties: null,
                 name,
-                default,
                 systemData,
-                default,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ClusterStatusEntity"/>. </summary>

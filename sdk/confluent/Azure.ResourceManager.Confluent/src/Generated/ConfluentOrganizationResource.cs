@@ -1027,11 +1027,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<AccessEnvironmentListResult>> GetEnvironmentsAsync(AccessListContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AccessEnvironmentListResult>> GetAccessEnvironmentsAsync(AccessListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetEnvironments");
+            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessEnvironments");
             scope.Start();
             try
             {
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetEnvironmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessEnvironmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessEnvironmentListResult> response = Response.FromValue(AccessEnvironmentListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -1079,11 +1079,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="content"> List Access Request Model. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<AccessEnvironmentListResult> GetEnvironments(AccessListContent content, CancellationToken cancellationToken = default)
+        public virtual Response<AccessEnvironmentListResult> GetAccessEnvironments(AccessListContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetEnvironments");
+            using DiagnosticScope scope = _confluentOrganizationClientDiagnostics.CreateScope("ConfluentOrganizationResource.GetAccessEnvironments");
             scope.Start();
             try
             {
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _confluentOrganizationRestClient.CreateGetEnvironmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
+                HttpMessage message = _confluentOrganizationRestClient.CreateGetAccessEnvironmentsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, AccessListContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessEnvironmentListResult> response = Response.FromValue(AccessEnvironmentListResult.FromResponse(result), result);
                 if (response.Value == null)

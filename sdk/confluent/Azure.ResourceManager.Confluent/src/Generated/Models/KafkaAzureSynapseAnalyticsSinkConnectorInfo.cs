@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="flushSize"> Flush size. </param>
         /// <param name="maxTasks"> Maximum Tasks. </param>
         /// <param name="timeInterval"> Time Interval. </param>
-        internal KafkaAzureSynapseAnalyticsSinkConnectorInfo(PartnerConnectorType partnerConnectorType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AuthType? authType, DataFormatType? inputFormat, DataFormatType? outputFormat, string apiKey, string apiSecret, string serviceAccountId, string serviceAccountName, IList<string> topics, string topicsDir, string flushSize, string maxTasks, string timeInterval) : base(partnerConnectorType, additionalBinaryDataProperties)
+        internal KafkaAzureSynapseAnalyticsSinkConnectorInfo(PartnerConnectorType partnerConnectorType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConfluentAuthType? authType, ConfluentDataFormatType? inputFormat, ConfluentDataFormatType? outputFormat, string apiKey, string apiSecret, string serviceAccountId, string serviceAccountName, IList<string> topics, string topicsDir, string flushSize, string maxTasks, string timeInterval) : base(partnerConnectorType, additionalBinaryDataProperties)
         {
             AuthType = authType;
             InputFormat = inputFormat;
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> Kafka Auth Type. </summary>
-        public AuthType? AuthType { get; set; }
+        public ConfluentAuthType? AuthType { get; set; }
 
         /// <summary> Kafka Input Data Format Type. </summary>
-        public DataFormatType? InputFormat { get; set; }
+        public ConfluentDataFormatType? InputFormat { get; set; }
 
         /// <summary> Kafka Output Data Format Type. </summary>
-        public DataFormatType? OutputFormat { get; set; }
+        public ConfluentDataFormatType? OutputFormat { get; set; }
 
         /// <summary> Kafka API Key. </summary>
         public string ApiKey { get; set; }
