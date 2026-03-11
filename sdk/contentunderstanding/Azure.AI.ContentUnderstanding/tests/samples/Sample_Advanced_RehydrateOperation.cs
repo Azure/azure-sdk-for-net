@@ -46,11 +46,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
-            #region Snippet:ContentUnderstandingRehydrateOperationAsync
-            // ---------------------------------------------------------------
-            // PROCESS A: Start the analysis and persist the rehydration token
-            // ---------------------------------------------------------------
-
+            #region Snippet:ContentUnderstandingRehydrateStartAndSaveToken
             // Start a long-running analysis without waiting for completion.
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
 
@@ -59,12 +55,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "prebuilt-read",
                 inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
-            Console.WriteLine($"Process A: Operation started with ID: {operation.Id}");
+            Console.WriteLine($"Operation started with ID: {operation.Id}");
 
             // Get the rehydration token — this captures the full operation state
             // (polling URI, operation ID, HTTP method, etc.) so it can be resumed later.
             RehydrationToken tokenValue = operation.GetRehydrationToken()!.Value;
-            Console.WriteLine($"Process A: Rehydration token obtained. Token ID: {tokenValue.Id}");
+            Console.WriteLine($"Rehydration token obtained. Token ID: {tokenValue.Id}");
 
             // Save the token to a file. In a real application, you might store this in
             // a database, queue message, or any durable medium. The token is a lightweight
@@ -72,29 +68,26 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string tokenFilePath = Path.Combine(Path.GetTempPath(), $"cu-operation-{operation.Id}.json");
             string serializedToken = ModelReaderWriter.Write(tokenValue).ToString();
             File.WriteAllText(tokenFilePath, serializedToken);
-            Console.WriteLine($"Process A: Token saved to {tokenFilePath} ({serializedToken.Length} chars)");
-            Console.WriteLine("Process A: Exiting. The operation continues running on the server.");
+            Console.WriteLine($"Token saved to {tokenFilePath} ({serializedToken.Length} chars)");
 
-            // ---------------------------------------------------------------
-            // PROCESS B: Read the token from file and resume polling
-            // (In a real app, this would be a different process, a background
-            // worker, or the same app after a restart.)
-            // ---------------------------------------------------------------
+            // Process A can now exit. The operation continues running on the server.
+            #endregion
 
+            #region Snippet:ContentUnderstandingRehydrateResumePolling
             // Read the saved token from file.
             string savedToken = File.ReadAllText(tokenFilePath);
             RehydrationToken restoredToken = ModelReaderWriter
                 .Read<RehydrationToken>(BinaryData.FromString(savedToken))!;
-            Console.WriteLine($"Process B: Token loaded from file. Operation ID: {restoredToken.Id}");
+            Console.WriteLine($"Token loaded from file. Operation ID: {restoredToken.Id}");
 
             // Rehydrate the operation from the saved token.
             // This reconstructs the polling state machine without re-sending the original request.
             Operation rehydratedOp = await Operation.RehydrateAsync(client.Pipeline, restoredToken);
-            Console.WriteLine($"Process B: Operation rehydrated. Completed: {rehydratedOp.HasCompleted}");
+            Console.WriteLine($"Operation rehydrated. Completed: {rehydratedOp.HasCompleted}");
 
             // Resume polling until the operation completes.
             Response completionResponse = await rehydratedOp.WaitForCompletionResponseAsync();
-            Console.WriteLine($"Process B: Operation completed: {rehydratedOp.HasCompleted}");
+            Console.WriteLine($"Operation completed: {rehydratedOp.HasCompleted}");
 
             // Parse the result from the response body and access the extracted markdown.
             // The LRO response contains a "result" property with the AnalysisResult.

@@ -36,70 +36,52 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 
 ## Two-process rehydration example
 
-This example shows two separate programs: **Process A** starts the analysis and saves the rehydration token to a file, then **Process B** (which could be a completely different application) reads the token and resumes polling.
+This example shows two separate processes: **Process A** starts the analysis and saves the rehydration token to a file, then **Process B** (which could be a completely different application) reads the token and resumes polling.
 
 ### Process A — Start analysis and save token
 
 This process starts the analysis, gets the rehydration token, and writes it to a shared file. After saving the token, it can exit — the operation continues running on the server.
 
-```csharp
-// ProcessA/Program.cs — Start the operation and save the rehydration token to a file
-using System.ClientModel.Primitives;
-using Azure;
-using Azure.AI.ContentUnderstanding;
-using Azure.Identity;
+```C# Snippet:ContentUnderstandingRehydrateStartAndSaveToken
+// Start a long-running analysis without waiting for completion.
+Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
 
-string endpoint = "<endpoint>";
-var client = new ContentUnderstandingClient(new Uri(endpoint), new DefaultAzureCredential());
-
-Uri documentUrl = new Uri("https://example.com/my-document.pdf");
-
-// Start the analysis without waiting for completion.
 Operation<AnalysisResult> operation = await client.AnalyzeAsync(
     WaitUntil.Started,
     "prebuilt-read",
-    inputs: new[] { new AnalysisInput { Uri = documentUrl } });
+    inputs: new[] { new AnalysisInput { Uri = uriSource } });
 
 Console.WriteLine($"Operation started with ID: {operation.Id}");
 
-// Get the rehydration token — captures the full operation state.
+// Get the rehydration token — this captures the full operation state
+// (polling URI, operation ID, HTTP method, etc.) so it can be resumed later.
 RehydrationToken tokenValue = operation.GetRehydrationToken()!.Value;
+Console.WriteLine($"Rehydration token obtained. Token ID: {tokenValue.Id}");
 
-// Save the token to a file. In production, you might use a database or message queue.
+// Save the token to a file. In a real application, you might store this in
+// a database, queue message, or any durable medium. The token is a lightweight
+// JSON object (~300 bytes).
 string tokenFilePath = Path.Combine(Path.GetTempPath(), $"cu-operation-{operation.Id}.json");
-File.WriteAllText(tokenFilePath, ModelReaderWriter.Write(tokenValue).ToString());
-Console.WriteLine($"Token saved to: {tokenFilePath}");
+string serializedToken = ModelReaderWriter.Write(tokenValue).ToString();
+File.WriteAllText(tokenFilePath, serializedToken);
+Console.WriteLine($"Token saved to {tokenFilePath} ({serializedToken.Length} chars)");
 
 // Process A can now exit. The operation continues running on the server.
 ```
 
 ### Process B — Read token, resume polling, and get results
 
-This process reads the token file written by Process A, rehydrates the operation, resumes polling, and accesses the extracted markdown content.
+This process reads the token file written by Process A, rehydrates the operation, resumes polling, and accesses the extracted markdown content. In a real application, this could be a completely different program, a background worker, or the same app after a restart.
 
-```csharp
-// ProcessB/Program.cs — Read the saved token, resume polling, and get the results
-using System.ClientModel.Primitives;
-using System.Text.Json;
-using Azure;
-using Azure.AI.ContentUnderstanding;
-using Azure.Core;
-using Azure.Identity;
-
-string endpoint = "<endpoint>";
-var client = new ContentUnderstandingClient(new Uri(endpoint), new DefaultAzureCredential());
-
-// Read the token from the file saved by Process A.
-string tokenFilePath = args[0]; // Pass the token file path as a command-line argument
+```C# Snippet:ContentUnderstandingRehydrateResumePolling
+// Read the saved token from file.
 string savedToken = File.ReadAllText(tokenFilePath);
-
-// Deserialize the token back into a RehydrationToken struct.
 RehydrationToken restoredToken = ModelReaderWriter
     .Read<RehydrationToken>(BinaryData.FromString(savedToken))!;
-Console.WriteLine($"Token loaded. Operation ID: {restoredToken.Id}");
+Console.WriteLine($"Token loaded from file. Operation ID: {restoredToken.Id}");
 
-// Rehydrate the operation — reconstructs the polling state machine
-// without re-sending the original request.
+// Rehydrate the operation from the saved token.
+// This reconstructs the polling state machine without re-sending the original request.
 Operation rehydratedOp = await Operation.RehydrateAsync(client.Pipeline, restoredToken);
 Console.WriteLine($"Operation rehydrated. Completed: {rehydratedOp.HasCompleted}");
 
@@ -107,21 +89,20 @@ Console.WriteLine($"Operation rehydrated. Completed: {rehydratedOp.HasCompleted}
 Response completionResponse = await rehydratedOp.WaitForCompletionResponseAsync();
 Console.WriteLine($"Operation completed: {rehydratedOp.HasCompleted}");
 
-// Parse the result from the response body.
+// Parse the result from the response body and access the extracted markdown.
 // The LRO response contains a "result" property with the AnalysisResult.
 using JsonDocument document = JsonDocument.Parse(completionResponse.Content);
 JsonElement resultElement = document.RootElement.GetProperty("result");
 AnalysisResult result = ModelReaderWriter.Read<AnalysisResult>(
     BinaryData.FromString(resultElement.GetRawText()))!;
 
-// Access the extracted markdown content.
 foreach (AnalysisContent content in result.Contents!)
 {
     Console.WriteLine($"--- Content (MIME: {content.MimeType}) ---");
     Console.WriteLine(content.Markdown);
 }
 
-// Clean up.
+// Clean up the token file.
 File.Delete(tokenFilePath);
 ```
 
