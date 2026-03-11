@@ -41,13 +41,10 @@ namespace Azure.ResourceManager.Storage.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void DeserializeNullableGuid(JsonProperty property, ref Guid? domainGuid)
         {
-            if (string.IsNullOrEmpty(property.Value.GetString()))
+            string guidString = property.Value.GetString();
+            if (!string.IsNullOrWhiteSpace(guidString) && Guid.TryParse(guidString, out Guid parsedGuid))
             {
-                domainGuid = null;
-            }
-            else
-            {
-                domainGuid = property.Value.GetGuid();
+                domainGuid = parsedGuid;
             }
         }
     }
