@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2021-01-01"
+  "apiVersions": {
+    "Microsoft.PowerBIDedicated": "2021-01-01"
+  }
 }

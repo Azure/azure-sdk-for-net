@@ -70,9 +70,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(searchIndexerDataSourceConnection, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(searchIndexerDataSourceConnection, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchIndexerDataSourceConnection"/> from. </param>

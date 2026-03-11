@@ -19,8 +19,9 @@ public static class ServiceConfiguration
     /// <param name="services">Service collection to configure.</param>
     /// <param name="configuration">Application configuration.</param>
     /// <param name="projectPath">SDK project path from CLI args. Null when no subcommand requires Copilot (e.g. --help).</param>
+    /// <param name="localSpecsPath">Local specs repo path from CLI args. Null for --help.</param>
     /// <returns>Configured service collection.</returns>
-    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration, string? projectPath)
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration configuration, string? projectPath, string? localSpecsPath)
     {
         services.AddSingleton(configuration);
 
@@ -45,7 +46,7 @@ public static class ServiceConfiguration
                 var logger = provider.GetRequiredService<ILoggerFactory>().CreateLogger<CopilotService>();
                 var settings = provider.GetRequiredService<AppSettings>();
 
-                return CopilotService.CreateAsync(projectPath, logger, settings);
+                return CopilotService.CreateAsync(projectPath, logger, settings, localSpecsPath!);
             });
         }
 

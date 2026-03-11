@@ -1,6 +1,18 @@
 # Release History
 
-## 1.5.0-beta.2 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added `Condition` property to `ResourceBicepMetadata` to support conditional resource deployment. The condition generates Bicep `if (condition)` syntax and accepts literal boolean values, parameter references, or complex expressions.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.5.0 (2026-03-04)
 
 ### Features Added
 
@@ -10,11 +22,6 @@
 - Updated default API versions for `ArmDeployment` (2023-07-01 → 2025-04-01), `Subscription` (2019-10-01 → 2022-12-01), `SubscriptionPolicyDefinition`, and `SubscriptionPolicySetDefinition` resources.
 - Added `ResourceBicepMetadata` class (renamed from `BicepMetadata` introduced in 1.5.0-beta.1) that provides a clean, type-safe way to set Bicep metadata on resources.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.5.0-beta.1 (2026-01-23)
 

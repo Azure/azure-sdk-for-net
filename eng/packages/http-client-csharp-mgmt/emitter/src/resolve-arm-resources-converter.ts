@@ -40,14 +40,16 @@ import {
   ResourceScope,
   postProcessArmResources,
   ParentResourceLookupContext,
-  assignNonResourceMethodsToResources
+  assignNonResourceMethodsToResources,
+  calculateResourceTypeFromPath
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import { getCrossLanguageDefinitionId } from "@azure-tools/typespec-client-generator-core";
 import {
   isVariableSegment,
   isPrefix,
-  findLongestPrefixMatch
+  findLongestPrefixMatch,
+  countProviderSegments
 } from "./utils.js";
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
@@ -632,19 +634,19 @@ function assignListOperationsToResources(
           }
         );
 
-        // Fall back to type segment matching if prefix matching didn't find a match
-        if (!targetResource) {
-          const listLastSegment = getLastPathSegment(listOp.path);
-          if (listLastSegment) {
-            targetResource = resourcesForModel.find((r) => {
-              const typeSegment = getResourceTypeSegment(
-                r.metadata.resourceIdPattern
-              );
-              return (
-                typeSegment?.toLowerCase() === listLastSegment.toLowerCase()
-              );
-            });
-          }
+        // Fall back to resource type matching if prefix matching didn't find a match
+        if (!targetResource && listOp.path.includes("/providers/")) {
+          const listType = calculateResourceTypeFromPath(listOp.path);
+          const listProviderDepth = countProviderSegments(listOp.path);
+          targetResource = resourcesForModel.find((r) => {
+            if (
+              countProviderSegments(r.metadata.resourceIdPattern) !==
+              listProviderDepth
+            ) {
+              return false;
+            }
+            return r.metadata.resourceType === listType;
+          });
         }
       }
 
@@ -662,26 +664,4 @@ function assignListOperationsToResources(
       });
     }
   }
-}
-
-/**
- * Gets the resource type segment from a resource ID pattern.
- * The type segment is the second-to-last segment, since the last is the key variable.
- * E.g., for ".../configs/{resourceName}", returns "configs".
- */
-function getResourceTypeSegment(resourceIdPattern: string): string | undefined {
-  const segments = resourceIdPattern.split("/").filter((s) => s !== "");
-  if (segments.length < 2) return undefined;
-  return segments[segments.length - 2];
-}
-
-/**
- * Gets the last segment of a path.
- * For list operation paths, this is the resource type/collection segment.
- * E.g., for ".../configs", returns "configs".
- */
-function getLastPathSegment(path: string): string | undefined {
-  const segments = path.split("/").filter((s) => s !== "");
-  if (segments.length === 0) return undefined;
-  return segments[segments.length - 1];
 }

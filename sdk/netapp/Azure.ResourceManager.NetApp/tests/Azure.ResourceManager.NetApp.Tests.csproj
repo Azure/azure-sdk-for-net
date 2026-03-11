@@ -16,5 +16,9 @@
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
     <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
+    <Compile Remove="Generated\Samples\Sample_Elastic*.cs" />
+    <Compile Remove="Generated\Samples\Sample_NetAppBucket*.cs" />
+    <Compile Remove="Generated\Samples\Sample_NetAppCache*.cs" />
+    <Compile Remove="Generated\Samples\Sample_ActiveDirectoryConfig*.cs" />
   </ItemGroup>
 </Project>

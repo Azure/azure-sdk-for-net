@@ -240,7 +240,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
 
-            ClientResult result = CreateOrUpdate(id, evaluationRule, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions());
+            ClientResult result = CreateOrUpdate(id, evaluationRule, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 
@@ -257,7 +257,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
 
-            ClientResult result = await CreateOrUpdateAsync(id, evaluationRule, foundryFeatures?.ToString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateOrUpdateAsync(id, evaluationRule, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 

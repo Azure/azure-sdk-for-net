@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2025-01-15-preview"
+  "apiVersions": {
+    "Microsoft.Fabric": "2025-01-15-preview"
+  }
 }

@@ -4,6 +4,7 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -94,6 +95,20 @@ public class ClientLoggingOptions
             MessageContentSizeLimit = messageContentSizeLimit;
         }
     }
+
+    /// <summary>
+    /// Gets a value that indicates whether this <see cref="ClientLoggingOptions"/>
+    /// instance is read-only.  If <c>true</c>, any attempt to set properties on
+    /// the instance or call methods that would change its state will throw
+    /// <see cref="InvalidOperationException"/>.
+    /// </summary>
+    /// <remarks>
+    /// Options become read-only when the <see cref="ClientPipeline"/> they are
+    /// associated with is created, or when <see cref="Freeze"/> is called
+    /// explicitly.  To create a mutable copy of a read-only instance, use
+    /// <see cref="Clone"/>.
+    /// </remarks>
+    public bool IsReadOnly => Volatile.Read(ref _frozen);
 
     /// <summary>
     /// Gets or sets the implementation of <see cref="ILoggerFactory"/> to use to
@@ -257,6 +272,40 @@ public class ClientLoggingOptions
         {
             _allowedQueryParameters.Freeze();
         }
+    }
+
+    /// <summary>
+    /// Creates a new mutable instance of <see cref="ClientLoggingOptions"/> from this
+    /// instance.  This method can be used to create a mutable copy of an instance that
+    /// may have been frozen.
+    /// </summary>
+    /// <returns>A new mutable <see cref="ClientLoggingOptions"/> with the same settings
+    /// as this instance.</returns>
+    public virtual ClientLoggingOptions Clone()
+    {
+        var clone = new ClientLoggingOptions();
+        clone._enableLogging = _enableLogging;
+        clone._enableMessageLogging = _enableMessageLogging;
+        clone._enableMessageContentLogging = _enableMessageContentLogging;
+        clone._messageContentSizeLimit = _messageContentSizeLimit;
+        clone._loggerFactory = _loggerFactory;
+        if (_allowedHeaderNames is not null && _allowedHeaderNames.HasChanged)
+        {
+            clone._allowedHeaderNames = new ChangeTrackingStringList();
+            foreach (string item in _allowedHeaderNames)
+            {
+                clone._allowedHeaderNames.Add(item);
+            }
+        }
+        if (_allowedQueryParameters is not null && _allowedQueryParameters.HasChanged)
+        {
+            clone._allowedQueryParameters = new ChangeTrackingStringList();
+            foreach (string item in _allowedQueryParameters)
+            {
+                clone._allowedQueryParameters.Add(item);
+            }
+        }
+        return clone;
     }
 
     /// <summary>

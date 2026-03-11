@@ -1,6 +1,6 @@
 # Release History
 
-## 1.15.0-beta.2 (Unreleased)
+## 1.16.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.15.0 (2026-03-03)
+
+### Features Added
+- Upgraded api-version tag from 'package-2025-06-01' to 'package-2025-12-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4b0af9ea3ddad4d6fc0c08572e00ee68679a213c/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added `RansomwareReport` resource support on `NetAppVolumeResource`, including `GetRansomwareReports`, `GetRansomwareReport`, and `ClearSuspects`.
+- Added quota report support on `NetAppVolumeResource` with `GetQuotaReport` and `GetQuotaReportAsync`.
+- Added `RansomwareProtection` to `VolumePropertiesDataProtection` and `VolumePatchPropertiesDataProtection`.
+- Added models `ListQuotaReportResult`, `NetAppVolumeQuotaReport`, and `QuotaReportFilterContent`.
+- Added models `RansomwareProtectionPatchSettings`, `RansomwareProtectionSettings`, `RansomwareReportProperties`, `RansomwareSuspects`, `RansomwareSuspectsClearContent`, and `SuspectFile`.
+- Added enums `ActualRansomwareProtectionState`, `DesiredRansomwareProtectionState`, `RansomwareReportSeverity`, `RansomwareReportState`, `RansomwareSuspectResolution`, and `NetAppVolumeQuotaType`.
+
+### Breaking Changes
+- Updated generated quota APIs to add `QuotaItemResource`-based overloads while retaining `NetAppSubscriptionQuotaItem` APIs for compatibility.
+- Updated backup relationship status enum usage to `VolumeBackupRelationshipStatus`.
+
+### Bugs Fixed
+- Fixed debug-time quota resource validation to accept both account-scoped and location-scoped quota resource IDs.
 
 ## 1.15.0-beta.1 (2025-12-01)
 
@@ -32,7 +50,7 @@
 
 ### Features Added
 - Upgraded api-version tag from 'package-2025-06-01' to 'package-2025-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1da0ccefea2127820defac6496bf4710c0902d78/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
-- Added `ExcludeReplicationsFilter` to `GetReplicationsAsync` to filter out replications 
+- Added `ExcludeReplicationsFilter` to `GetReplicationsAsync` to filter out replications
 
 ## 1.13.0-beta.1 (2025-10-22)
 
