@@ -836,24 +836,6 @@ namespace Azure.ResourceManager.BotService
             return GetCachedClient(client => new BotChannelCollection(client, Id));
         }
 
-        /// <summary> Returns a BotService Channel registration specified by the parameters. </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
-        {
-            return await GetBotChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Returns a BotService Channel registration specified by the parameters. </summary>
-        /// <param name="channelName"> The name of the Channel resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual Response<BotChannelResource> GetBotChannel(BotChannelName channelName, CancellationToken cancellationToken = default)
-        {
-            return GetBotChannels().Get(channelName, cancellationToken);
-        }
-
         /// <summary> Gets a collection of BotConnectionSettings in the <see cref="BotResource"/>. </summary>
         /// <returns> An object representing collection of BotConnectionSettings and their operations over a BotConnectionSettingResource. </returns>
         public virtual BotConnectionSettingCollection GetBotConnectionSettings()

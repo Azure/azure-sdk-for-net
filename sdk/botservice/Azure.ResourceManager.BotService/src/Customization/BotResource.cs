@@ -2,14 +2,37 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.ResourceManager.BotService.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.BotService
 {
+    [CodeGenSuppress("GetBotChannelAsync", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetBotChannel", typeof(string), typeof(CancellationToken))]
     public partial class BotResource
     {
+        /// <summary> Returns a BotService Channel registration specified by the parameters. </summary>
+        /// <param name="channelName"> The name of the Bot resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BotChannelResource>> GetBotChannelAsync(BotChannelName channelName, CancellationToken cancellationToken = default)
+        {
+            return await GetBotChannels().GetAsync(channelName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Returns a BotService Channel registration specified by the parameters. </summary>
+        /// <param name="channelName"> The name of the Bot resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<BotChannelResource> GetBotChannel(BotChannelName channelName, CancellationToken cancellationToken = default)
+        {
+            return GetBotChannels().Get(channelName, cancellationToken);
+        }
+
         /// <summary>
         /// Regenerates secret keys and returns them for the DirectLine Channel of a particular BotService resource.
         /// </summary>
@@ -25,7 +48,7 @@ namespace Azure.ResourceManager.BotService
                 ? BotChannelName.WebChatChannel
                 : BotChannelName.DirectLineChannel;
 
-            BotChannelResource channelResource = Client.GetBotChannelResource(BotChannelResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, botChannelName));
+            BotChannelResource channelResource = Client.GetBotChannelResource(BotChannelResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, botChannelName.ToString()));
             return await channelResource.GetBotChannelWithRegenerateKeysAsyncAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -44,7 +67,7 @@ namespace Azure.ResourceManager.BotService
                 ? BotChannelName.WebChatChannel
                 : BotChannelName.DirectLineChannel;
 
-            BotChannelResource channelResource = Client.GetBotChannelResource(BotChannelResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, botChannelName));
+            BotChannelResource channelResource = Client.GetBotChannelResource(BotChannelResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, botChannelName.ToString()));
             return channelResource.GetBotChannelWithRegenerateKeysAsync(content, cancellationToken);
         }
     }
