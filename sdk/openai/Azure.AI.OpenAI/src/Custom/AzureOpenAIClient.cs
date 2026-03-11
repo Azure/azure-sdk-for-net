@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+global using Microsoft.TypeSpec.Generator.Customizations;
+
 global using OpenAI;
 global using OpenAI.Assistants;
 global using OpenAI.Audio;
@@ -12,9 +14,9 @@ global using OpenAI.FineTuning;
 global using OpenAI.Images;
 global using OpenAI.Models;
 global using OpenAI.Moderations;
+global using OpenAI.Realtime;
 global using OpenAI.VectorStores;
 #if !AZURE_OPENAI_GA
-global using OpenAI.Realtime;
 global using OpenAI.Responses;
 #endif
 
@@ -33,7 +35,6 @@ using Azure.Core;
 #if !AZURE_OPENAI_GA
 using Azure.AI.OpenAI.Assistants;
 using Azure.AI.OpenAI.FineTuning;
-using Azure.AI.OpenAI.Realtime;
 using Azure.AI.OpenAI.VectorStores;
 using Azure.AI.OpenAI.Responses;
 using OpenAI.Evals;
@@ -277,27 +278,14 @@ public partial class AzureOpenAIClient : OpenAIClient
         => throw new InvalidOperationException($"VectorStoreClient is not supported with this GA version of the library. Please use a preview version of the library for this functionality.");
 #endif
 
-#if !AZURE_OPENAI_GA
-    [Experimental("OPENAI002")]
     public override RealtimeClient GetRealtimeClient()
     {
-        if (_tokenCredential is not null)
-        {
-            return new AzureRealtimeClient(_endpoint, _tokenCredential, _options);
-        }
-        else
-        {
-            return new AzureRealtimeClient(_endpoint, _keyCredential, _options);
-        }
+        throw new InvalidOperationException($"{nameof(RealtimeClient)} is not supported via the Azure.AI.OpenAI library. Please use the OpenAI library directly with v1 endpoints, instead.");
     }
-#else
-    // Not yet present in OpenAI GA dependency
-#endif
 
-    public override ResponsesClient GetResponsesClient(string deploymentName)
+    public override ResponsesClient GetResponsesClient()
     {
-        Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-        return new AzureResponsesClient(Pipeline, deploymentName, _endpoint, _options);
+        return new AzureResponsesClient(Pipeline, deploymentName: null, _endpoint, _options);
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
