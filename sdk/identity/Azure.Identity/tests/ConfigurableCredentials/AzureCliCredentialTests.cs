@@ -34,21 +34,23 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.AzureCli
         private TokenCredential CreateConfiguredCredential(IProcessService processService = null, string tenantId = null, string subscription = null, bool addTenantIdHint = false, TimeSpan? timeout = null, bool isChained = false)
         {
             IConfiguration config = isChained ? _helper.GetChainedConfiguration() : _helper.GetConfiguration();
+            // For chained mode, credential-specific properties go under the source's section.
+            string prefix = isChained ? "MyClient:Credential:Sources:0" : "MyClient:Credential";
             if (tenantId != null)
             {
-                config["MyClient:Credential:TenantId"] = tenantId;
+                config[$"{prefix}:TenantId"] = tenantId;
             }
             if (addTenantIdHint)
             {
-                config["MyClient:Credential:AdditionallyAllowedTenants:0"] = TenantIdHint;
+                config[$"{prefix}:AdditionallyAllowedTenants:0"] = TenantIdHint;
             }
             if (subscription != null)
             {
-                config["MyClient:Credential:Subscription"] = subscription;
+                config[$"{prefix}:Subscription"] = subscription;
             }
             if (timeout != null)
             {
-                config["MyClient:Credential:CredentialProcessTimeout"] = timeout.Value.ToString();
+                config[$"{prefix}:CredentialProcessTimeout"] = timeout.Value.ToString();
             }
 
             ConfigurableCredential credential;

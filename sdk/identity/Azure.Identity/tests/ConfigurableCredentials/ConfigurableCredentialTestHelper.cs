@@ -110,7 +110,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 .AddInMemoryCollection(new Dictionary<string, string>())
                 .Build();
             config["MyClient:Credential:CredentialSource"] = "ChainedTokenCredential";
-            config["MyClient:Credential:Sources:0"] = _credentialSource;
+            config["MyClient:Credential:Sources:0:CredentialSource"] = _credentialSource;
             return config;
         }
 

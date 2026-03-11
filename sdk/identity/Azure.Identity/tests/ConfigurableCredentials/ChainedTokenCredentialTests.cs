@@ -25,7 +25,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 throw new ArgumentException("At least one credential is required.", nameof(sources));
             }
 
-            // Build config with CredentialSource: "ChainedTokenCredential" and Sources array
+            // Build config with CredentialSource: "ChainedTokenCredential" and Sources array of objects
             var credentialNames = new[] { "AzureCliCredential", "AzurePowerShellCredential",
                 "ManagedIdentityCredential", "VisualStudioCredential", "AzureDeveloperCliCredential",
                 "EnvironmentCredential", "WorkloadIdentityCredential", "InteractiveBrowserCredential" };
@@ -36,7 +36,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             };
             for (int i = 0; i < sources.Length && i < credentialNames.Length; i++)
             {
-                configValues[$"Sources:{i}"] = credentialNames[i];
+                configValues[$"Sources:{i}:CredentialSource"] = credentialNames[i];
             }
 
             var cc = CreateConfigurableFromConfig(configValues);

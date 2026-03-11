@@ -213,19 +213,16 @@ namespace Azure.Identity
                 IsLegacyMsaPassthroughEnabled = isLegacyMsaPassthroughEnabled;
             }
 
-            // Parse Sources array for ChainedTokenCredential configuration
+            // Parse Sources array for ChainedTokenCredential configuration — each child is a credential config object
             var sourcesSection = section.GetSection(nameof(Sources));
             if (sourcesSection != null)
             {
-                var sourcesChildren = sourcesSection
-                    .GetChildren()
-                    .Select(c => c.Value)
-                    .Where(v => v is not null)
-                    .ToArray();
-
-                if (sourcesChildren.Length > 0)
+                var children = sourcesSection.GetChildren().ToArray();
+                if (children.Length > 0)
                 {
-                    Sources = Array.ConvertAll(sourcesChildren, ConvertCredentialSource);
+                    Sources = children
+                        .Select(child => new DefaultAzureCredentialOptions(new CredentialSettings(child), child))
+                        .ToArray();
                 }
             }
         }
@@ -251,10 +248,11 @@ namespace Azure.Identity
         internal string ApiKey { get; private set; }
 
         /// <summary>
-        /// Gets or sets the array of credential sources for ChainedTokenCredential configuration.
-        /// Used when CredentialSource is "ChainedTokenCredential".
+        /// Gets or sets the array of credential source configurations for ChainedTokenCredential.
+        /// Used when CredentialSource is "ChainedTokenCredential". Each element is a full credential
+        /// configuration with its own CredentialSource and properties.
         /// </summary>
-        internal string[] Sources { get; private set; }
+        internal DefaultAzureCredentialOptions[] Sources { get; private set; }
 
         internal static string ConvertCredentialSource(string value)
         {

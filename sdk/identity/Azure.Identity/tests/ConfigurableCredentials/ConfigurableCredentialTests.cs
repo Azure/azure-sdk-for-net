@@ -282,8 +282,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
                     ["Credential:CredentialSource"] = "ChainedTokenCredential",
-                    ["Credential:Sources:0"] = "VisualStudio",
-                    ["Credential:Sources:1"] = "AzureCli"
+                    ["Credential:Sources:0:CredentialSource"] = "VisualStudio",
+                    ["Credential:Sources:1:CredentialSource"] = "AzureCli"
                 })
                 .Build();
 
@@ -307,9 +307,9 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
                     ["Credential:CredentialSource"] = "ChainedToken",
-                    ["Credential:Sources:0"] = "VisualStudio",
-                    ["Credential:Sources:1"] = "AzurePowerShell",
-                    ["Credential:Sources:2"] = "AzureDeveloperCli"
+                    ["Credential:Sources:0:CredentialSource"] = "VisualStudio",
+                    ["Credential:Sources:1:CredentialSource"] = "AzurePowerShell",
+                    ["Credential:Sources:2:CredentialSource"] = "AzureDeveloperCli"
                 })
                 .Build();
 
@@ -331,8 +331,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
                     ["Credential:CredentialSource"] = "ChainedTokenCredential",
-                    ["Credential:Sources:0"] = "VisualStudio",
-                    ["Credential:Sources:1"] = "ApiKey"
+                    ["Credential:Sources:0:CredentialSource"] = "VisualStudio",
+                    ["Credential:Sources:1:CredentialSource"] = "ApiKey"
                 })
                 .Build();
 
@@ -352,8 +352,8 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
                     ["Credential:CredentialSource"] = "ChainedTokenCredential",
-                    ["Credential:Sources:0"] = "VisualStudio",
-                    ["Credential:Sources:1"] = "ChainedTokenCredential"
+                    ["Credential:Sources:0:CredentialSource"] = "VisualStudio",
+                    ["Credential:Sources:1:CredentialSource"] = "ChainedTokenCredential"
                 })
                 .Build();
 
@@ -406,7 +406,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
                 .AddInMemoryCollection(new Dictionary<string, string>
                 {
                     ["Credential:CredentialSource"] = "ChainedTokenCredential",
-                    ["Credential:Sources:0"] = "ManagedIdentity"
+                    ["Credential:Sources:0:CredentialSource"] = "ManagedIdentity"
                 })
                 .Build();
 
@@ -420,6 +420,128 @@ namespace Azure.Identity.Tests.ConfigurableCredentials
             var sources = GetChainedTokenCredentialSources(innerCredential);
             Assert.AreEqual(1, sources.Length);
             Assert.IsInstanceOf<ManagedIdentityCredential>(sources[0]);
+        }
+
+        [Test]
+        public void Constructor_WithChainedSourceProperties_FlowsToCredentials()
+        {
+            var config = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["Credential:CredentialSource"] = "ChainedTokenCredential",
+
+                    // Source 0: AzureCliCredential with all settable properties
+                    ["Credential:Sources:0:CredentialSource"] = "AzureCliCredential",
+                    ["Credential:Sources:0:TenantId"] = "cli-tenant",
+                    ["Credential:Sources:0:CredentialProcessTimeout"] = "00:00:45",
+                    ["Credential:Sources:0:Subscription"] = "cli-sub-id",
+                    ["Credential:Sources:0:AdditionallyAllowedTenants:0"] = "cli-extra-tenant",
+
+                    // Source 1: AzurePowerShellCredential with properties
+                    ["Credential:Sources:1:CredentialSource"] = "AzurePowerShellCredential",
+                    ["Credential:Sources:1:TenantId"] = "ps-tenant",
+                    ["Credential:Sources:1:CredentialProcessTimeout"] = "00:01:00",
+                    ["Credential:Sources:1:AdditionallyAllowedTenants:0"] = "ps-extra-tenant",
+
+                    // Source 2: ManagedIdentityCredential with user-assigned client ID
+                    ["Credential:Sources:2:CredentialSource"] = "ManagedIdentityCredential",
+                    ["Credential:Sources:2:ManagedIdentityIdKind"] = "ClientId",
+                    ["Credential:Sources:2:ManagedIdentityId"] = "mi-client-id-123",
+
+                    // Source 3: AzureDeveloperCliCredential with properties
+                    ["Credential:Sources:3:CredentialSource"] = "AzureDeveloperCliCredential",
+                    ["Credential:Sources:3:TenantId"] = "azd-tenant",
+                    ["Credential:Sources:3:CredentialProcessTimeout"] = "00:00:30",
+                    ["Credential:Sources:3:AdditionallyAllowedTenants:0"] = "azd-extra-tenant-a",
+                    ["Credential:Sources:3:AdditionallyAllowedTenants:1"] = "azd-extra-tenant-b",
+
+                    // Source 4: VisualStudioCredential with properties
+                    ["Credential:Sources:4:CredentialSource"] = "VisualStudioCredential",
+                    ["Credential:Sources:4:TenantId"] = "vs-tenant",
+                    ["Credential:Sources:4:CredentialProcessTimeout"] = "00:02:00",
+                    ["Credential:Sources:4:AdditionallyAllowedTenants:0"] = "*",
+                })
+                .Build();
+
+            var section = config.GetSection("Credential");
+            var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+            var credential = new ConfigurableCredential(options);
+
+            var innerCredential = GetInnerCredential(credential) as ChainedTokenCredential;
+            Assert.IsNotNull(innerCredential);
+
+            var sources = GetChainedTokenCredentialSources(innerCredential);
+            Assert.AreEqual(5, sources.Length);
+
+            // --- Source 0: AzureCliCredential ---
+            var cli = sources[0] as AzureCliCredential;
+            Assert.IsNotNull(cli);
+            Assert.AreEqual("cli-tenant", ReadProperty<string>(cli, "TenantId"));
+            Assert.AreEqual(TimeSpan.FromSeconds(45), ReadProperty<TimeSpan>(cli, "ProcessTimeout"));
+            Assert.AreEqual("cli-sub-id", ReadProperty<string>(cli, "Subscription"));
+            var cliTenants = ReadProperty<string[]>(cli, "AdditionallyAllowedTenantIds");
+            CollectionAssert.Contains(cliTenants, "cli-extra-tenant");
+
+            // --- Source 1: AzurePowerShellCredential ---
+            var ps = sources[1] as AzurePowerShellCredential;
+            Assert.IsNotNull(ps);
+            Assert.AreEqual("ps-tenant", ReadProperty<string>(ps, "TenantId"));
+            Assert.AreEqual(TimeSpan.FromMinutes(1), ReadProperty<TimeSpan>(ps, "ProcessTimeout"));
+            var psTenants = ReadProperty<string[]>(ps, "AdditionallyAllowedTenantIds");
+            CollectionAssert.Contains(psTenants, "ps-extra-tenant");
+
+            // --- Source 2: ManagedIdentityCredential ---
+            var mi = sources[2] as ManagedIdentityCredential;
+            Assert.IsNotNull(mi);
+            var miClient = ReadProperty<ManagedIdentityClient>(mi, "Client");
+            Assert.IsNotNull(miClient);
+            var miId = ReadProperty<ManagedIdentityId>(miClient, "ManagedIdentityId");
+            Assert.AreEqual(ManagedIdentityIdType.ClientId, ReadField<ManagedIdentityIdType>(miId, "_idType"));
+            Assert.AreEqual("mi-client-id-123", ReadField<string>(miId, "_userAssignedId"));
+
+            // --- Source 3: AzureDeveloperCliCredential ---
+            var azd = sources[3] as AzureDeveloperCliCredential;
+            Assert.IsNotNull(azd);
+            Assert.AreEqual("azd-tenant", ReadProperty<string>(azd, "TenantId"));
+            Assert.AreEqual(TimeSpan.FromSeconds(30), ReadProperty<TimeSpan>(azd, "ProcessTimeout"));
+            var azdTenants = ReadProperty<string[]>(azd, "AdditionallyAllowedTenantIds");
+            CollectionAssert.Contains(azdTenants, "azd-extra-tenant-a");
+            CollectionAssert.Contains(azdTenants, "azd-extra-tenant-b");
+            Assert.AreEqual(2, azdTenants.Length);
+
+            // --- Source 4: VisualStudioCredential ---
+            var vs = sources[4] as VisualStudioCredential;
+            Assert.IsNotNull(vs);
+            Assert.AreEqual("vs-tenant", ReadProperty<string>(vs, "TenantId"));
+            Assert.AreEqual(TimeSpan.FromMinutes(2), ReadProperty<TimeSpan>(vs, "ProcessTimeout"));
+            var vsTenants = ReadProperty<string[]>(vs, "AdditionallyAllowedTenantIds");
+            CollectionAssert.Contains(vsTenants, "*");
+        }
+
+        private static T ReadProperty<T>(object target, string name)
+        {
+            var type = target.GetType();
+            while (type != null)
+            {
+                var prop = type.GetProperty(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly);
+                if (prop != null)
+                    return (T)prop.GetValue(target);
+                type = type.BaseType;
+            }
+            throw new InvalidOperationException($"Property '{name}' not found on {target.GetType().Name} or its base types.");
+        }
+
+        private static T ReadField<T>(object target, string name)
+        {
+            var type = target.GetType();
+            while (type != null)
+            {
+                var field = type.GetField(name, BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.DeclaredOnly);
+                if (field != null)
+                    return (T)field.GetValue(target);
+                type = type.BaseType;
+            }
+            throw new InvalidOperationException($"Field '{name}' not found on {target.GetType().Name} or its base types.");
         }
     }
 }

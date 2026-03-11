@@ -35,10 +35,11 @@ namespace Azure.Identity
             }
             else if (options.CredentialSource == Constants.ChainedTokenCredential)
             {
-                // ChainedTokenCredential source → build chain from Sources array
-                var factory = new DefaultAzureCredentialFactory(options);
-                _pipeline = factory.Pipeline;
-                _tokenCredential = new ChainedTokenCredential(factory.CreateCredentialChain());
+                // ChainedTokenCredential source — build chain directly from Sources array.
+                // Use the singleton pipeline since it's only needed for diagnostics (StartGetTokenScope).
+                // Each credential in the chain creates its own pipeline from its source options.
+                _pipeline = CredentialPipeline.GetInstance(null);
+                _tokenCredential = new ChainedTokenCredential(ChainedTokenCredentialFactory.CreateCredentialChain(options));
             }
             else
             {

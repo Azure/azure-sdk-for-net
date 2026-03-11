@@ -40,20 +40,33 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
             TimeSpan? networkTimeout = null)
         {
             IConfiguration config = isChained ? _helper.GetChainedConfiguration() : _helper.GetConfiguration();
+            // For chained mode, MI-specific properties go under the source's section.
+            string prefix = isChained ? "MyClient:Credential:Sources:0" : "MyClient:Credential";
             if (clientId != null)
             {
-                config["MyClient:Credential:ManagedIdentityIdKind"] = "ClientId";
-                config["MyClient:Credential:ManagedIdentityId"] = clientId;
+                config[$"{prefix}:ManagedIdentityIdKind"] = "ClientId";
+                config[$"{prefix}:ManagedIdentityId"] = clientId;
             }
             if (resourceId != null)
             {
-                config["MyClient:Credential:ManagedIdentityIdKind"] = "ResourceId";
-                config["MyClient:Credential:ManagedIdentityId"] = resourceId;
+                config[$"{prefix}:ManagedIdentityIdKind"] = "ResourceId";
+                config[$"{prefix}:ManagedIdentityId"] = resourceId;
             }
             if (objectId != null)
             {
-                config["MyClient:Credential:ManagedIdentityIdKind"] = "ObjectId";
-                config["MyClient:Credential:ManagedIdentityId"] = objectId;
+                config[$"{prefix}:ManagedIdentityIdKind"] = "ObjectId";
+                config[$"{prefix}:ManagedIdentityId"] = objectId;
+            }
+
+            // For chained mode, retry settings go in the source's config section since each source
+            // in a ChainedTokenCredential has its own retry configuration.
+            // For non-chained mode, retry is set programmatically on the parent options below.
+            if (isChained)
+            {
+                config[$"{prefix}:Retry:MaxDelay"] = (maxRetryDelay ?? TimeSpan.FromMilliseconds(1)).ToString();
+                config[$"{prefix}:Retry:Delay"] = (retryDelay ?? TimeSpan.FromMilliseconds(1)).ToString();
+                if (retryMode.HasValue) config[$"{prefix}:Retry:Mode"] = retryMode.Value.ToString();
+                if (networkTimeout.HasValue) config[$"{prefix}:Retry:NetworkTimeout"] = networkTimeout.Value.ToString();
             }
 
             // Temporarily clear AZURE_CLIENT_ID so it doesn't interfere with config-based creation.
@@ -64,14 +77,29 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.ManagedIdentity
                 System.Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", null);
                 IConfigurationSection credentialSection = config.GetSection("MyClient:Credential");
                 var dacOptions = new DefaultAzureCredentialOptions(new CredentialSettings(credentialSection), credentialSection);
-                dacOptions.Transport = transport;
                 dacOptions.IsForceRefreshEnabled = isForceRefreshEnabled;
-                // Use fast retry defaults to avoid test timeouts from pipeline retry delays.
-                // Tests that need specific retry behavior pass explicit values.
-                dacOptions.Retry.MaxDelay = maxRetryDelay ?? TimeSpan.FromMilliseconds(1);
-                dacOptions.Retry.Delay = retryDelay ?? TimeSpan.FromMilliseconds(1);
-                if (retryMode.HasValue) dacOptions.Retry.Mode = retryMode.Value;
-                if (networkTimeout.HasValue) dacOptions.Retry.NetworkTimeout = networkTimeout.Value;
+                if (isChained && dacOptions.Sources != null)
+                {
+                    // For chained mode, set Transport and IsForceRefreshEnabled on each source
+                    // since credentials are constructed entirely from config (no parent propagation).
+                    foreach (var source in dacOptions.Sources)
+                    {
+                        source.Transport = transport;
+                        source.IsForceRefreshEnabled = isForceRefreshEnabled;
+                    }
+                }
+                else
+                {
+                    dacOptions.Transport = transport;
+                }
+                if (!isChained)
+                {
+                    // Non-chained: set retry directly on the parent options (factory clones these).
+                    dacOptions.Retry.MaxDelay = maxRetryDelay ?? TimeSpan.FromMilliseconds(1);
+                    dacOptions.Retry.Delay = retryDelay ?? TimeSpan.FromMilliseconds(1);
+                    if (retryMode.HasValue) dacOptions.Retry.Mode = retryMode.Value;
+                    if (networkTimeout.HasValue) dacOptions.Retry.NetworkTimeout = networkTimeout.Value;
+                }
                 return new ConfigurableCredential(dacOptions);
             }
             finally
