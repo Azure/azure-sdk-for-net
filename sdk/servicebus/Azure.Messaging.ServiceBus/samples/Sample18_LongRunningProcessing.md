@@ -75,19 +75,32 @@ processor.ProcessMessageAsync += async args =>
 
     try
     {
-        args.MessageLockLostAsync += lockLostArgs =>
-        {
-            Console.WriteLine($"Lock lost for message {args.Message.MessageId}: {lockLostArgs.Exception}");
-            cts.Cancel();
-            return Task.CompletedTask;
-        };
+        args.MessageLockLostAsync += LockLostHandler;
 
         // Pass the linked token to your processing logic.
         // When the lock is lost, the token is cancelled and processing stops cleanly.
         await ProcessLongRunningJobAsync(args.Message, cts.Token);
 
+        // If cancellation was requested (lock lost or processor stopping),
+        // skip settlement and let the message be redelivered.
+        if (cts.IsCancellationRequested)
+        {
+            Console.WriteLine($"Skipping completion for message {args.Message.MessageId} " +
+                              "because the lock was lost. Message will be redelivered.");
+            return;
+        }
+
         // Only settle if we still own the lock.
-        await args.CompleteMessageAsync(args.Message);
+        try
+        {
+            await args.CompleteMessageAsync(args.Message);
+        }
+        catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageLockLost)
+        {
+            // The lock was lost between finishing processing and settlement.
+            Console.WriteLine($"Lock lost while completing message {args.Message.MessageId}. " +
+                              "Message will be redelivered.");
+        }
     }
     catch (OperationCanceledException) when (cts.IsCancellationRequested)
     {
@@ -95,6 +108,18 @@ processor.ProcessMessageAsync += async args =>
         // Don't try to settle -- the broker will redeliver after the lock expires.
         Console.WriteLine($"Processing cancelled for message {args.Message.MessageId}. " +
                           "Message will be redelivered.");
+    }
+    finally
+    {
+        // Remove the handler to avoid a memory leak.
+        args.MessageLockLostAsync -= LockLostHandler;
+    }
+
+    Task LockLostHandler(MessageLockLostEventArgs lockLostArgs)
+    {
+        Console.WriteLine($"Lock lost for message {args.Message.MessageId}: {lockLostArgs.Exception}");
+        cts.Cancel();
+        return Task.CompletedTask;
     }
 };
 
@@ -115,23 +140,24 @@ static async Task ProcessLongRunningJobAsync(ServiceBusReceivedMessage message, 
 
 ## Using the receiver instead of the processor
 
-If you need more control over the receive loop, you can use `ServiceBusReceiver` directly. Automatic lock renewal is configured through `ServiceBusReceiverOptions.MaxAutoLockRenewalDuration`.
+If you need more control over the receive loop, you can use `ServiceBusReceiver` directly. Unlike the processor, the receiver does not renew locks automatically -- you must renew them yourself using a background task.
 
 ```C# Snippet:ServiceBusLongRunningWithReceiver
 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
-ServiceBusReceiver receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
-{
-    // Enable automatic lock renewal for up to 1 hour.
-    MaxAutoLockRenewalDuration = TimeSpan.FromHours(1)
-});
+await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
 if (message != null)
 {
+    using var renewCts = new CancellationTokenSource();
+
+    // Renew the lock in the background while processing.
+    Task renewalTask = RenewLockPeriodicallyAsync(receiver, message, renewCts.Token);
+
     try
     {
-        // Process the message. The lock is renewed automatically in the background.
+        // Process the message while the background task renews the lock.
         await ProcessLongRunningJobAsync(message, CancellationToken.None);
 
         // Settlement on success.
@@ -151,6 +177,27 @@ if (message != null)
             // Lock was lost -- the broker will redeliver automatically after it expires.
             Console.WriteLine("Could not abandon message because the lock was lost.");
         }
+    }
+    finally
+    {
+        // Stop the renewal task.
+        renewCts.Cancel();
+        try { await renewalTask; } catch (OperationCanceledException) { }
+    }
+}
+
+static async Task RenewLockPeriodicallyAsync(
+    ServiceBusReceiver receiver,
+    ServiceBusReceivedMessage message,
+    CancellationToken cancellationToken)
+{
+    // Renew before the lock expires. If the lock duration is 5 minutes
+    // (the maximum), renew every 4 minutes to leave margin.
+    while (!cancellationToken.IsCancellationRequested)
+    {
+        await Task.Delay(TimeSpan.FromMinutes(4), cancellationToken);
+        await receiver.RenewMessageLockAsync(message, cancellationToken);
+        Console.WriteLine($"Renewed lock for message {message.MessageId}");
     }
 }
 ```
