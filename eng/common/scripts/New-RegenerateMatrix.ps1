@@ -16,7 +16,8 @@ param (
   [Parameter()]
   [string]$OnlyTypeSpec,
 
-  # Optional filter pattern applied to package directory names (e.g., 'Azure.ResourceManager*')
+  # Optional comma-separated filter patterns applied to package directory names
+  # (e.g., 'Azure.ResourceManager*,Azure.Provisioning*')
   [Parameter()]
   [string]$DirectoryFilterPattern
 )
@@ -71,8 +72,12 @@ else {
 }
 
 if ($DirectoryFilterPattern) {
-  $directoriesForGeneration = @($directoriesForGeneration | Where-Object { $_.Name -like $DirectoryFilterPattern })
-  Write-Host "Filtered directories to pattern '$DirectoryFilterPattern': $($directoriesForGeneration.Count) matches"
+  $patterns = $DirectoryFilterPattern -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+  $directoriesForGeneration = @($directoriesForGeneration | Where-Object {
+    $name = $_.Name
+    $patterns | Where-Object { $name -like $_ }
+  })
+  Write-Host "Filtered directories to pattern(s) '$DirectoryFilterPattern': $($directoriesForGeneration.Count) matches"
 }
 else {
   $directoriesForGeneration = @($directoriesForGeneration)
