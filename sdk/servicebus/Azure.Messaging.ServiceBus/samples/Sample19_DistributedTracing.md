@@ -1,0 +1,197 @@
+# Distributed tracing
+
+This sample demonstrates how to observe Service Bus operations using the built-in distributed tracing instrumentation. The `Azure.Messaging.ServiceBus` client library emits [Activity](https://learn.microsoft.com/dotnet/api/system.diagnostics.activity) events for every operation, so you can monitor latency, trace message flow across services, and diagnose failures in production.
+
+For background on how Service Bus propagates trace context, see [Distributed tracing and correlation through Service Bus messaging](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-end-to-end-tracing).
+
+## Automatic tracing with OpenTelemetry
+
+The recommended approach is [OpenTelemetry](https://opentelemetry.io/docs/languages/dotnet/), which collects traces from the Service Bus client (and any other instrumented library) with no per-call code changes. The Service Bus client library supports OpenTelemetry in experimental mode starting with version 7.5.0. You opt in by setting the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable or the `Azure.Experimental.EnableActivitySource` [AppContext](https://learn.microsoft.com/dotnet/api/system.appcontext) switch.
+
+```C# Snippet:ServiceBusOpenTelemetrySetup
+// Enable the experimental OpenTelemetry support in Azure SDK client libraries.
+AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+
+// Configure the OpenTelemetry tracer provider to listen to the Azure.Messaging.ServiceBus source.
+using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource("Azure.Messaging.ServiceBus.*")
+    .AddConsoleExporter()
+    .Build();
+
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+DefaultAzureCredential credential = new();
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
+
+ServiceBusSender sender = client.CreateSender("<queue-name>");
+await sender.SendMessageAsync(new ServiceBusMessage("Hello with tracing!"));
+// The send operation is automatically captured as a span by OpenTelemetry.
+```
+
+When the processor handles a message, the SDK creates a `Process` activity that is automatically linked to the `Send` activity on the producer side via the `Diagnostic-Id` message property. This gives you end-to-end visibility from sender to receiver.
+
+```C# Snippet:ServiceBusOpenTelemetryProcessor
+AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
+
+using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource("Azure.Messaging.ServiceBus.*")
+    .AddConsoleExporter()
+    .Build();
+
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+DefaultAzureCredential credential = new();
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
+
+await using ServiceBusProcessor processor = client.CreateProcessor("<queue-name>");
+
+processor.ProcessMessageAsync += async args =>
+{
+    // This handler runs inside an Activity that is correlated
+    // with the sender's Activity through the Diagnostic-Id property.
+    Console.WriteLine($"Processing message: {args.Message.Body}");
+    Console.WriteLine($"Activity.Current: {Activity.Current?.Id}");
+
+    await args.CompleteMessageAsync(args.Message);
+};
+
+processor.ProcessErrorAsync += args =>
+{
+    Console.WriteLine($"Error: {args.Exception}");
+    return Task.CompletedTask;
+};
+
+await processor.StartProcessingAsync();
+Console.ReadKey();
+```
+
+To export traces to Azure Monitor (Application Insights) instead of the console, replace `AddConsoleExporter()` with the Azure Monitor exporter:
+
+```C# Snippet:ServiceBusOpenTelemetryAzureMonitor
+using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .AddSource("Azure.Messaging.ServiceBus.*")
+    .AddAzureMonitorTraceExporter(options =>
+    {
+        options.ConnectionString = "<application-insights-connection-string>";
+    })
+    .Build();
+```
+
+## Automatic tracing with Application Insights
+
+If you use the [Application Insights SDK](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) and the `ServiceBusProcessor`, send and process operations are tracked and correlated automatically — no extra code required.
+
+For manual processing (using `ServiceBusReceiver` directly), you can start a request telemetry operation that correlates with the incoming message:
+
+```C# Snippet:ServiceBusAppInsightsManualProcessing
+async Task ProcessAsync(ProcessMessageEventArgs args)
+{
+    ServiceBusReceivedMessage message = args.Message;
+    if (message.ApplicationProperties.TryGetValue("Diagnostic-Id", out var objectId)
+        && objectId is string diagnosticId)
+    {
+        var activity = new Activity("ServiceBusProcessor.ProcessMessage");
+        activity.SetParentId(diagnosticId);
+
+        using var operation = telemetryClient.StartOperation<RequestTelemetry>(activity);
+        try
+        {
+            // Your message processing logic here.
+            telemetryClient.TrackTrace($"Processing message {message.MessageId}");
+            await args.CompleteMessageAsync(message);
+        }
+        catch (Exception ex)
+        {
+            telemetryClient.TrackException(ex);
+            operation.Telemetry.Success = false;
+            throw;
+        }
+    }
+}
+```
+
+## Listening to DiagnosticSource events directly
+
+If you do not use OpenTelemetry or Application Insights, you can subscribe to Service Bus diagnostic events directly using `DiagnosticListener`. This gives you full control over which events to capture and how to record them.
+
+The Service Bus client emits events on the `Azure.Messaging.ServiceBus` diagnostic source. Each operation produces a `Start` and `Stop` event, and `Activity.Current` carries the trace context.
+
+```C# Snippet:ServiceBusDiagnosticListener
+IDisposable innerSubscription = null;
+IDisposable outerSubscription = DiagnosticListener.AllListeners.Subscribe(listener =>
+{
+    if (listener.Name == "Azure.Messaging.ServiceBus")
+    {
+        innerSubscription = listener.Subscribe(evnt =>
+        {
+            // Log the operation when it completes.
+            if (evnt.Key.EndsWith("Stop"))
+            {
+                Activity currentActivity = Activity.Current;
+                Console.WriteLine(
+                    $"Operation {currentActivity.OperationName} completed " +
+                    $"in {currentActivity.Duration.TotalMilliseconds:F1}ms " +
+                    $"[Id={currentActivity.Id}]");
+            }
+        });
+    }
+});
+
+// Use the Service Bus client as normal — diagnostic events are emitted automatically.
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+DefaultAzureCredential credential = new();
+await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
+
+ServiceBusSender sender = client.CreateSender("<queue-name>");
+await sender.SendMessageAsync(new ServiceBusMessage("Traced message"));
+
+// Clean up the subscriptions when done.
+innerSubscription?.Dispose();
+outerSubscription?.Dispose();
+```
+
+## Filtering diagnostic events
+
+You can reduce overhead by subscribing only to the operations you care about. Use the `IsEnabled` callback to filter by operation name or entity.
+
+```C# Snippet:ServiceBusDiagnosticFiltering
+innerSubscription = listener.Subscribe(
+    observer: evnt =>
+    {
+        if (evnt.Key.EndsWith("Stop"))
+        {
+            Activity currentActivity = Activity.Current;
+            Console.WriteLine(
+                $"{currentActivity.OperationName}: {currentActivity.Duration.TotalMilliseconds:F1}ms");
+        }
+    },
+    isEnabled: (eventName, _, _) =>
+    {
+        // Only listen to send and process operations.
+        return eventName.StartsWith("ServiceBusSender.Send")
+            || eventName.StartsWith("ServiceBusProcessor.ProcessMessage");
+    });
+```
+
+## Instrumented operations
+
+The following operations emit diagnostic activities:
+
+| Operation | Source API |
+|-----------|-----------|
+| `ServiceBusSender.Send` | `SendMessageAsync`, `SendMessagesAsync` |
+| `ServiceBusSender.Schedule` | `ScheduleMessageAsync`, `ScheduleMessagesAsync` |
+| `ServiceBusSender.Cancel` | `CancelScheduledMessageAsync`, `CancelScheduledMessagesAsync` |
+| `ServiceBusReceiver.Receive` | `ReceiveMessageAsync`, `ReceiveMessagesAsync` |
+| `ServiceBusReceiver.ReceiveDeferred` | `ReceiveDeferredMessagesAsync` |
+| `ServiceBusReceiver.Peek` | `PeekMessageAsync`, `PeekMessagesAsync` |
+| `ServiceBusReceiver.Abandon` | `AbandonMessageAsync` |
+| `ServiceBusReceiver.Complete` | `CompleteMessageAsync` |
+| `ServiceBusReceiver.DeadLetter` | `DeadLetterMessageAsync` |
+| `ServiceBusReceiver.Defer` | `DeferMessageAsync` |
+| `ServiceBusReceiver.RenewMessageLock` | `RenewMessageLockAsync` |
+| `ServiceBusSessionReceiver.RenewSessionLock` | `RenewSessionLockAsync` |
+| `ServiceBusSessionReceiver.GetSessionState` | `GetSessionStateAsync` |
+| `ServiceBusSessionReceiver.SetSessionState` | `SetSessionStateAsync` |
+| `ServiceBusProcessor.ProcessMessage` | Callback on `ProcessMessageAsync` |
+| `ServiceBusSessionProcessor.ProcessSessionMessage` | Callback on `ProcessMessageAsync` |
+
+For more details on the Azure SDK distributed tracing conventions, see [Diagnostics samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
