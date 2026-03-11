@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    NOTE: This is a stub project used only to satisfy engineering checks (e.g. AOT compatibility)
+    that assume sdk/<service>/<pkg>/src/<pkg>.csproj exists.
+
+    This directory is tests-only (see sdk/storage/Azure.Storage.DataMovement.Blobs.Files.Shares/README.md)
+    and there is no real package produced from this project.
+  -->
+
+  <PropertyGroup>
+    <!-- Keep it clearly non-shipping -->
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <GenerateAPIListing>false</GenerateAPIListing>
+    
+    <!-- Ensure no NuGet package is produced -->
+    <IsPackable>false</IsPackable>
+
+    <!-- Opt out of the Azure SDK AOT compatibility check -->
+    <AotCompatOptOut>true</AotCompatOptOut>
+
+    <!-- Reduce build/publish side-effects for this stub -->
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- Intentionally no ItemGroup references; this project should remain empty. -->
+</Project>
