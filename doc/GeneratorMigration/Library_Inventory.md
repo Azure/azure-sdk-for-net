@@ -19,8 +19,8 @@
   - New Emitter (TypeSpec): 98
   - Old TypeSpec: 0
 - Data Plane (DPG): 145
-  - Autorest/Swagger: 55
-  - New Emitter (TypeSpec): 37
+  - Autorest/Swagger: 54
+  - New Emitter (TypeSpec): 38
   - Old TypeSpec: 4
 - Provisioning: 31
   - Reflection-based generator: 31
@@ -32,13 +32,14 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 37 / 41 (90.2%)
+**Migration Status**: 38 / 42 (90.5%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
 | ai | Azure.AI.Agents.Persistent |  |  |
+| ai | Azure.AI.Extensions.OpenAI | ✅ | ✅ |
 | ai | Azure.AI.Projects | ✅ | ✅ |
-| ai | Azure.AI.Projects.OpenAI | ✅ | ✅ |
+| ai | Azure.AI.Projects.Agents | ✅ | ✅ |
 | anomalydetector | Azure.AI.AnomalyDetector | ✅ |  |
 | appconfiguration | Azure.Data.AppConfiguration | ✅ |  |
 | batch | Azure.Compute.Batch | ✅ |  |
@@ -81,7 +82,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 55
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 54
 
 | Service | Library |
 | ------- | ------- |
@@ -134,7 +135,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 55
 | synapse | Azure.Analytics.Synapse.Monitoring |
 | synapse | Azure.Analytics.Synapse.Spark |
 | tables | Azure.Data.Tables |
-| testservice | Azure.Data.TestService |
 | textanalytics | Azure.AI.TextAnalytics |
 | textanalytics | Azure.AI.TextAnalytics.Legacy.Shared |
 | timeseriesinsights | Azure.IoT.TimeSeriesInsights |

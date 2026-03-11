@@ -8,7 +8,7 @@ using System;
 using System.ClientModel;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.AI.Projects.OpenAI;
+using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using NUnit.Framework;
 using OpenAI.Files;
