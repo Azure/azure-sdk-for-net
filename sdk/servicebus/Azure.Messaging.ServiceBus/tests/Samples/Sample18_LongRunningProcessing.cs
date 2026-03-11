@@ -309,6 +309,34 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         processingCts.Cancel();
                         break;
                     }
+                    catch (ServiceBusException ex)
+                    {
+                        // Transient Service Bus error (throttling, network). Log and retry
+                        // after a brief backoff so renewal can resume if the issue clears.
+                        Console.WriteLine($"Error renewing lock for message {message.MessageId}: {ex.Message}");
+
+                        try
+                        {
+                            await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                        }
+                        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+                        {
+                            break;
+                        }
+                    }
+                    catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+                    {
+                        // Cancellation requested; exit the renewal loop.
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Unexpected error. Stop renewing and signal processing to stop
+                        // so we don't continue with an unreliable lock state.
+                        Console.WriteLine($"Unexpected error renewing lock for message {message.MessageId}: {ex.Message}");
+                        processingCts.Cancel();
+                        break;
+                    }
                 }
             }
 #endif
