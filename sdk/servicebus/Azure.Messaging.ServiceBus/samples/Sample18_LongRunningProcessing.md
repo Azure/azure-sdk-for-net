@@ -10,7 +10,7 @@ To use the samples, a Service Bus queue or subscription configured with **PeekLo
 
 ## Processing messages with automatic lock renewal
 
-The simplest approach uses the `ServiceBusProcessor` with `MaxAutoLockRenewalDuration` set to cover the longest expected processing time. The SDK renews the lock in the background while your handler runs.
+The simplest approach uses the `ServiceBusProcessor` with `MaxAutoLockRenewalDuration` set to cover the longest expected processing time. The client renews the lock in the background while your handler runs.
 
 ```C# Snippet:ServiceBusLongRunningProcessing
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
@@ -20,8 +20,9 @@ await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAz
 
 await using ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
 {
-    // The SDK renews the lock in the background for up to this duration.
-    // Set it to at least the longest expected processing time, with some margin.
+    // The client automatically renews the lock in the background for up to this duration.
+    // Set it to at least the longest expected processing time (including any retries or
+    // delays in your handler), plus ~25% margin for safety.
     MaxAutoLockRenewalDuration = TimeSpan.FromHours(2),
 
     // Disable auto-complete so we settle messages explicitly after processing succeeds.
@@ -29,10 +30,31 @@ await using ServiceBusProcessor processor = client.CreateProcessor(queueName, ne
 
     // Process one message at a time. Increase for higher throughput
     // if the processing is I/O-bound rather than CPU-bound.
+    // Note: MaxConcurrentCalls = 1 limits parallelism but does not guarantee
+    // ordering. Use sessions if message ordering is required.
     MaxConcurrentCalls = 1
 });
 
-processor.ProcessMessageAsync += async args =>
+// Use try/finally to wire and unwire event handlers explicitly.
+// This avoids keeping closures alive beyond the processor's intended lifetime.
+try
+{
+    processor.ProcessMessageAsync += MessageHandler;
+    processor.ProcessErrorAsync += ErrorHandler;
+
+    await processor.StartProcessingAsync();
+
+    // Processing runs in the background. Press any key to stop.
+    Console.ReadKey();
+    await processor.StopProcessingAsync();
+}
+finally
+{
+    processor.ProcessMessageAsync -= MessageHandler;
+    processor.ProcessErrorAsync -= ErrorHandler;
+}
+
+async Task MessageHandler(ProcessMessageEventArgs args)
 {
     Console.WriteLine($"Processing message: {args.Message.MessageId}");
 
@@ -40,22 +62,18 @@ processor.ProcessMessageAsync += async args =>
     await Task.Delay(TimeSpan.FromMinutes(10), args.CancellationToken);
 
     // Complete the message only after processing succeeds.
+    // Because lock loss causes redelivery, ensure your processing logic is
+    // idempotent -- see the idempotency note at the end of this sample.
     await args.CompleteMessageAsync(args.Message);
     Console.WriteLine($"Completed message: {args.Message.MessageId}");
-};
+}
 
-processor.ProcessErrorAsync += args =>
+Task ErrorHandler(ProcessErrorEventArgs args)
 {
     Console.WriteLine($"Error source: {args.ErrorSource}");
     Console.WriteLine($"Error: {args.Exception}");
     return Task.CompletedTask;
-};
-
-await processor.StartProcessingAsync();
-
-// Processing runs in the background. Press any key to stop.
-Console.ReadKey();
-await processor.StopProcessingAsync();
+}
 ```
 
 If the handler throws without settling the message, the processor abandons it automatically, making it available for redelivery.
@@ -64,7 +82,7 @@ If the handler throws without settling the message, the processor abandons it au
 
 Lock renewal is a best-effort operation. The lock can be lost due to transient network issues, service updates, or because the processing time exceeded `MaxAutoLockRenewalDuration`. When this happens, any attempt to settle the message will fail.
 
-For long-running jobs, continuing expensive work after the lock is lost wastes resources -- you will not be able to complete the message anyway. The `MessageLockLostAsync` event lets you cancel work immediately.
+For long-running jobs, continuing expensive work after the lock is lost wastes resources -- you will not be able to complete the message anyway. The `MessageLockLostAsync` event lets you cancel work immediately. `ProcessLongRunningJobAsync` is defined after the main logic.
 
 ```C# Snippet:ServiceBusLongRunningWithLockLostHandler
 processor.ProcessMessageAsync += async args =>
