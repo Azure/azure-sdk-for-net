@@ -230,7 +230,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 {
                     // Stop the renewal task.
                     renewCts.Cancel();
-                    try { await renewalTask; } catch (OperationCanceledException) { }
+                    try { await renewalTask; }
+                    catch (OperationCanceledException) { }
+                    catch (ServiceBusException) { }
                 }
             }
 
@@ -244,9 +246,18 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 // (the maximum), renew every 4 minutes to leave margin.
                 while (!cancellationToken.IsCancellationRequested)
                 {
-                    await Task.Delay(TimeSpan.FromMinutes(4), cancellationToken);
-                    await receiver.RenewMessageLockAsync(message, cancellationToken);
-                    Console.WriteLine($"Renewed lock for message {message.MessageId}");
+                    try
+                    {
+                        await Task.Delay(TimeSpan.FromMinutes(4), cancellationToken);
+                        await receiver.RenewMessageLockAsync(message, cancellationToken);
+                        Console.WriteLine($"Renewed lock for message {message.MessageId}");
+                    }
+                    catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageLockLost)
+                    {
+                        // Lock was lost -- stop renewing.
+                        Console.WriteLine($"Lock lost for message {message.MessageId}. Stopping renewal.");
+                        break;
+                    }
                 }
             }
 #endif
