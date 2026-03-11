@@ -182,7 +182,7 @@ To regenerate Azure libraries using your local changes, run:
 ./eng/scripts/RegenPreview.ps1
 ```
 
-This will regenerate all the Azure libraries and allow you to view any potential diffs your changes may cause. For more information on the script's usage, see [RegenPreview](./eng/scripts/docs/RegenPreview.md).
+This will regenerate all the Azure libraries and allow you to view any potential diffs your changes may cause. For more information on the script's usage, see [RegenPreview](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp/eng/scripts/docs/RegenPreview.md).
 
 ## Creating Pull Requests
 
