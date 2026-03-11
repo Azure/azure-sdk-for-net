@@ -13,7 +13,9 @@ namespace Azure.Communication.Messages
     /// The Azure Communication Services Message Template client.
     /// </summary>
     [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(AzureKeyCredential))]
+    [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(TokenCredential))]
     [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(AzureKeyCredential), typeof(MessagesClientOptions))]
+    [CodeGenSuppress("MessageTemplateClient", typeof(Uri), typeof(TokenCredential), typeof(MessagesClientOptions))]
     public partial class MessageTemplateClient
     {
         #region public constructors
@@ -50,6 +52,35 @@ namespace Azure.Communication.Messages
                 options ?? new CommunicationMessagesClientOptions())
         {
             _keyCredential = credential;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The <see cref="AzureKeyCredential"/> used to authenticate requests.</param>
+        public MessageTemplateClient(Uri endpoint, AzureKeyCredential credential)
+             : this(endpoint, credential, default)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The <see cref="TokenCredential"/> used to authenticate requests.</param>
+        /// <param name="options">Client options exposing <see cref="ClientOptions.Diagnostics"/>, <see cref="ClientOptions.Retry"/>, <see cref="ClientOptions.Transport"/>, etc.</param>
+        public MessageTemplateClient(Uri endpoint, TokenCredential credential, CommunicationMessagesClientOptions options)
+            : this(
+                Argument.CheckNotNull(endpoint, nameof(endpoint)),
+                (options ?? new CommunicationMessagesClientOptions()).BuildHttpPipeline(credential),
+                options ?? new CommunicationMessagesClientOptions())
+        {
+            _tokenCredential = credential;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateClient"/>.</summary>
+        /// <param name="endpoint">The URI of the Azure Communication Services resource.</param>
+        /// <param name="credential">The <see cref="TokenCredential"/> used to authenticate requests.</param>
+        public MessageTemplateClient(Uri endpoint, TokenCredential credential)
+            : this(endpoint, credential, default)
+        {
         }
 
         #endregion

@@ -135,7 +135,7 @@ namespace Azure.Communication.Messages
             {
                 return null;
             }
-            IList<MessageReceipt> receipts = default;
+            IReadOnlyList<MessageReceipt> receipts = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -17,18 +17,6 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="NotificationMessagesClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<NotificationMessagesClient, MessagesClientOptions> AddNotificationMessagesClient<TBuilder>(this TBuilder builder, Uri endpoint)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            return builder.RegisterClientFactory<NotificationMessagesClient, MessagesClientOptions>((options, credential) => new NotificationMessagesClient(endpoint, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="NotificationMessagesClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
@@ -36,18 +24,6 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<NotificationMessagesClient, MessagesClientOptions>(configuration);
-        }
-
-        /// <summary> Registers a <see cref="MessageTemplateClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<MessageTemplateClient, MessagesClientOptions> AddMessageTemplateClient<TBuilder>(this TBuilder builder, Uri endpoint)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            return builder.RegisterClientFactory<MessageTemplateClient, MessagesClientOptions>((options, credential) => new MessageTemplateClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="MessageTemplateClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>

@@ -18,11 +18,6 @@ namespace Azure.Communication.Messages
     [PersistableModelProxy(typeof(UnknownMessageTemplateBindings))]
     public abstract partial class MessageTemplateBindings : IJsonModel<MessageTemplateBindings>
     {
-        /// <summary> Initializes a new instance of <see cref="MessageTemplateBindings"/> for deserialization. </summary>
-        internal MessageTemplateBindings()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MessageTemplateBindings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
