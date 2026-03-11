@@ -12,9 +12,48 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ApiCenter
 {
+    /*
+     * Backward-compatibility shim for the ApiCenterApiVersionResource.
+     *
+     * In the 1.0.0 GA release (AutoRest-generated), this resource class had Head/HeadAsync
+     * methods as generated self-check operations returning Response<bool> with no parameters
+     * (besides CancellationToken).
+     *
+     * After migrating to the TypeSpec MPG generator, the generator produces a different Head method:
+     * Head(string definitionName, CancellationToken) that checks if a child definition exists,
+     * returning Response instead of Response<bool>. This is a parent-check pattern, not self-check.
+     *
+     * These custom methods preserve the parameterless self-check Head/HeadAsync with Response<bool>
+     * return type for 1.0.0 GA backward compatibility. They coexist with the generated
+     * Head(string definitionName) overload as different method signatures.
+     */
     public partial class ApiCenterApiVersionResource
     {
-        /// <summary> Checks if this resource exists. </summary>
+        /// <summary>
+        /// Checks if specified API version exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiVersions_Head</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterApiVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// <para>Backward-compat: In old AutoRest-generated code this was a generated method.
+        /// Note: The new MPG generator generates Head(string definitionName) for child-checking;
+        /// this parameterless overload is the old self-check pattern.</para>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> HeadAsync(CancellationToken cancellationToken = default)
         {
@@ -38,7 +77,29 @@ namespace Azure.ResourceManager.ApiCenter
             }
         }
 
-        /// <summary> Checks if this resource exists. </summary>
+        /// <summary>
+        /// Checks if specified API version exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/apis/{apiName}/versions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiVersions_Head</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterApiVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// <para>Backward-compat: same as HeadAsync above, synchronous version.</para>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> Head(CancellationToken cancellationToken = default)
         {

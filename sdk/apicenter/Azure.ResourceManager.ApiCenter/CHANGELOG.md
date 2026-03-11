@@ -8,11 +8,8 @@
 - Added `ImportSpecificationWithResult` and `ImportSpecificationWithResultAsync` methods to `ApiCenterApiDefinitionResource` that return `ArmOperation<ApiCenterApiImportSuccess>`.
 - Added `ApiSourceResource`, `ApiSourceCollection`, and `ApiSourceData` for managing API sources.
 - Added `DeletedServiceResource`, `DeletedServiceCollection`, and `DeletedServiceData` for managing deleted services.
-- Added HEAD operations on parent resources: `HeadApi`, `HeadApiSource`, `HeadEnvironment` on `ApiCenterWorkspaceResource`; `HeadApiVersion`, `HeadDeployment` on `ApiCenterApiResource`; `HeadMetadataSchema`, `HeadWorkspace` on `ApiCenterServiceResource`.
-
-### Breaking Changes
-
-### Bugs Fixed
+- Added HEAD operations on parent resources: `HeadApi`, `HeadApiSource`, `HeadEnvironment` on `ApiCenterWorkspaceResource`; `HeadApiVersion`, `HeadDeployment` on `ApiCenterApiResource`; `Head` (for API definitions) on `ApiCenterApiVersionResource`; `HeadMetadataSchema`, `HeadWorkspace` on `ApiCenterServiceResource`.
+- Added `ApiCenterServiceProperties` property on `ApiCenterServiceData`.
 
 ### Other Changes
 

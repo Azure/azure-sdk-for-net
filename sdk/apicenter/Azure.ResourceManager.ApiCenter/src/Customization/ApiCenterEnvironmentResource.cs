@@ -12,9 +12,46 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ApiCenter
 {
+    /*
+     * Backward-compatibility shim for the ApiCenterEnvironmentResource.
+     *
+     * In the 1.0.0 GA release (AutoRest-generated), this resource class had Head/HeadAsync
+     * methods as generated self-check operations returning Response<bool>.
+     *
+     * After migrating to the TypeSpec MPG generator, HEAD operations are no longer generated
+     * as self-check methods on the resource itself. Instead, the generator places them on the
+     * parent resource (HeadEnvironment(string) on ApiCenterWorkspaceResource) and returns
+     * Response instead of Response<bool>.
+     *
+     * These custom methods preserve the 1.0.0 GA public API surface for backward compatibility.
+     */
     public partial class ApiCenterEnvironmentResource
     {
-        /// <summary> Checks if this resource exists. </summary>
+        /// <summary>
+        /// Checks if specified environment exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/environments/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Environments_Head</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterEnvironmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <para>Backward-compat: In old AutoRest-generated code this was a generated method.
+        /// The new MPG generator does not generate self-check HEAD on the resource itself,
+        /// so this custom code manually sends the HEAD request and converts the HTTP status to bool.</para>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> HeadAsync(CancellationToken cancellationToken = default)
         {
@@ -38,7 +75,29 @@ namespace Azure.ResourceManager.ApiCenter
             }
         }
 
-        /// <summary> Checks if this resource exists. </summary>
+        /// <summary>
+        /// Checks if specified environment exists.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiCenter/services/{serviceName}/workspaces/{workspaceName}/environments/{environmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Environments_Head</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiCenterEnvironmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// <para>Backward-compat: same as HeadAsync above, synchronous version.</para>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> Head(CancellationToken cancellationToken = default)
         {
