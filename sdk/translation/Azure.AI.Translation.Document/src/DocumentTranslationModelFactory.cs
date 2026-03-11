@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Translation.Document
 {
     /// <summary>
     /// Model factory that enables mocking for the Document Translation Library.
     /// </summary>
-    [CodeGenModel("AITranslationDocumentModelFactory")]
+    [CodeGenType("AITranslationDocumentModelFactory")]
     public static partial class DocumentTranslationModelFactory
     {
         #region Statuses

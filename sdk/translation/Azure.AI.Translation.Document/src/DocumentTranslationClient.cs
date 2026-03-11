@@ -7,7 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
