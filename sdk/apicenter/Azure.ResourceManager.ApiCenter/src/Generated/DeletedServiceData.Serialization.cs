@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApiCenter
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DeletedServiceProperties properties = default;
+            ApiCenterDeletedServiceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ApiCenter
                     {
                         continue;
                     }
-                    properties = DeletedServiceProperties.DeserializeDeletedServiceProperties(prop.Value, options);
+                    properties = ApiCenterDeletedServiceProperties.DeserializeApiCenterDeletedServiceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.ApiCenter
         private readonly Workspaces _workspacesRestClient;
         private readonly ClientDiagnostics _apisClientDiagnostics;
         private readonly Apis _apisRestClient;
-        private readonly ClientDiagnostics _apiSourcesClientDiagnostics;
-        private readonly ApiSources _apiSourcesRestClient;
+        private readonly ClientDiagnostics _apiCenterApiSourceClientDiagnostics;
+        private readonly ApiCenterApiSource _apiCenterApiSourceRestClient;
         private readonly ClientDiagnostics _environmentsClientDiagnostics;
         private readonly Environments _environmentsRestClient;
         private readonly ApiCenterWorkspaceData _data;
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.ApiCenter
             _workspacesRestClient = new Workspaces(_workspacesClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
             _apisClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
             _apisRestClient = new Apis(_apisClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
-            _apiSourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
-            _apiSourcesRestClient = new ApiSources(_apiSourcesClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
+            _apiCenterApiSourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
+            _apiCenterApiSourceRestClient = new ApiCenterApiSource(_apiCenterApiSourceClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
             _environmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ResourceType.Namespace, Diagnostics);
             _environmentsRestClient = new Environments(_environmentsClientDiagnostics, Pipeline, Endpoint, apiCenterWorkspaceApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
 
-            using DiagnosticScope scope = _apiSourcesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApiSource");
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApiSource");
             scope.Start();
             try
             {
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiSourcesRestClient.CreateHeadApiSourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateHeadApiSourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 return response;
             }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
 
-            using DiagnosticScope scope = _apiSourcesClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApiSource");
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiCenterWorkspaceResource.HeadApiSource");
             scope.Start();
             try
             {
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiSourcesRestClient.CreateHeadApiSourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateHeadApiSourceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 return response;
             }

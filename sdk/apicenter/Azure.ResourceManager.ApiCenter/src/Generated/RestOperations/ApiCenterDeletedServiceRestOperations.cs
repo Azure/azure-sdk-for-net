@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ApiCenter
 {
-    internal partial class DeletedServices
+    internal partial class ApiCenterDeletedService
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DeletedServices for mocking. </summary>
-        protected DeletedServices()
+        /// <summary> Initializes a new instance of ApiCenterDeletedService for mocking. </summary>
+        protected ApiCenterDeletedService()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedServices. </summary>
+        /// <summary> Initializes a new instance of ApiCenterDeletedService. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DeletedServices(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ApiCenterDeletedService(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

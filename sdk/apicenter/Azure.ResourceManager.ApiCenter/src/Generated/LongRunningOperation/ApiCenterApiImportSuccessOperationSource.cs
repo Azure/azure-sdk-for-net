@@ -15,30 +15,30 @@ using Azure.ResourceManager.ApiCenter.Models;
 namespace Azure.ResourceManager.ApiCenter
 {
     /// <summary></summary>
-    internal partial class ApiImportSuccessOperationSource : IOperationSource<ApiImportSuccess>
+    internal partial class ApiCenterApiImportSuccessOperationSource : IOperationSource<ApiCenterApiImportSuccess>
     {
         /// <summary></summary>
-        internal ApiImportSuccessOperationSource()
+        internal ApiCenterApiImportSuccessOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        ApiImportSuccess IOperationSource<ApiImportSuccess>.CreateResult(Response response, CancellationToken cancellationToken)
+        ApiCenterApiImportSuccess IOperationSource<ApiCenterApiImportSuccess>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ApiImportSuccess result = ApiImportSuccess.DeserializeApiImportSuccess(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ApiCenterApiImportSuccess result = ApiCenterApiImportSuccess.DeserializeApiCenterApiImportSuccess(document.RootElement, ModelSerializationExtensions.WireOptions);
             return result;
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<ApiImportSuccess> IOperationSource<ApiImportSuccess>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ApiCenterApiImportSuccess> IOperationSource<ApiCenterApiImportSuccess>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ApiImportSuccess result = ApiImportSuccess.DeserializeApiImportSuccess(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ApiCenterApiImportSuccess result = ApiCenterApiImportSuccess.DeserializeApiCenterApiImportSuccess(document.RootElement, ModelSerializationExtensions.WireOptions);
             return result;
         }
     }

@@ -15,27 +15,27 @@ using Azure.ResourceManager.ApiCenter.Models;
 
 namespace Azure.ResourceManager.ApiCenter
 {
-    internal partial class DeletedServicesGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<DeletedServiceData>
+    internal partial class ApiCenterDeletedServiceGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<DeletedServiceData>
     {
-        private readonly DeletedServices _client;
+        private readonly ApiCenterDeletedService _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of DeletedServicesGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DeletedServices client used to send requests. </param>
+        /// <summary> Initializes a new instance of ApiCenterDeletedServiceGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ApiCenterDeletedService client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DeletedServicesGetBySubscriptionAsyncCollectionResultOfT(DeletedServices client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ApiCenterDeletedServiceGetBySubscriptionAsyncCollectionResultOfT(ApiCenterDeletedService client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
         }
 
-        /// <summary> Gets the pages of DeletedServicesGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ApiCenterDeletedServiceGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeletedServicesGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ApiCenterDeletedServiceGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DeletedServiceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

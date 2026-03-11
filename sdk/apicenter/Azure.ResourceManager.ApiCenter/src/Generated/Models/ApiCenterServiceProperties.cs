@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="ApiCenterServiceProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the service. </param>
-        /// <param name="restore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
+        /// <param name="isRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterServiceProperties(ApiCenterProvisioningState? provisioningState, bool? restore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiCenterServiceProperties(ApiCenterProvisioningState? provisioningState, bool? isRestore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
-            Restore = restore;
+            IsRestore = isRestore;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public ApiCenterProvisioningState? ProvisioningState { get; }
 
         /// <summary> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </summary>
-        public bool? Restore { get; set; }
+        public bool? IsRestore { get; set; }
     }
 }

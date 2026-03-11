@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.ApiCenter
 {
-    internal partial class ApiSources
+    internal partial class ApiCenterApiSource
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ApiSources for mocking. </summary>
-        protected ApiSources()
+        /// <summary> Initializes a new instance of ApiCenterApiSource for mocking. </summary>
+        protected ApiCenterApiSource()
         {
         }
 
-        /// <summary> Initializes a new instance of ApiSources. </summary>
+        /// <summary> Initializes a new instance of ApiCenterApiSource. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ApiSources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ApiCenterApiSource(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

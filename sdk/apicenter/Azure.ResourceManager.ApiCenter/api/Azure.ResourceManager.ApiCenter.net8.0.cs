@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ApiCenter
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> HeadAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ImportSpecification(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiCenter.Models.ApiSpecImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ImportSpecificationAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiCenter.Models.ApiSpecImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess> ImportSpecificationWithResult(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiCenter.Models.ApiSpecImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess>> ImportSpecificationWithResultAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiCenter.Models.ApiSpecImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess> ImportSpecificationWithResult(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiCenter.Models.ApiSpecImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess>> ImportSpecificationWithResultAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ApiCenter.Models.ApiSpecImportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ApiCenter.ApiCenterApiDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterApiDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.ApiCenterApiDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ApiCenter.ApiCenterApiDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.ApiCenterApiDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.ApiCenter
     public partial class DeletedServiceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.DeletedServiceData>
     {
         internal DeletedServiceData() { }
-        public Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties Properties { get { throw null; } }
+        public Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -633,6 +633,21 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
 }
 namespace Azure.ResourceManager.ApiCenter.Models
 {
+    public partial class ApiCenterApiAzureApiManagementSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>
+    {
+        public ApiCenterApiAzureApiManagementSource(Azure.Core.ResourceIdentifier resourceId) { }
+        public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ApiCenterApiDefinitionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties>
     {
         public ApiCenterApiDefinitionProperties(string title) { }
@@ -648,6 +663,19 @@ namespace Azure.ResourceManager.ApiCenter.Models
         Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ApiCenterApiImportSuccess : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess>
+    {
+        internal ApiCenterApiImportSuccess() { }
+        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiImportSuccess>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ApiCenterApiProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiProperties>
     {
@@ -672,6 +700,25 @@ namespace Azure.ResourceManager.ApiCenter.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApiCenterApiSourceLinkState : System.IEquatable<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApiCenterApiSourceLinkState(string value) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState Error { get { throw null; } }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState Initializing { get { throw null; } }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState Syncing { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState left, Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState left, Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ApiCenterApiVersionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiVersionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiVersionProperties>
     {
         public ApiCenterApiVersionProperties(string title, Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage lifecycleStage) { }
@@ -686,6 +733,21 @@ namespace Azure.ResourceManager.ApiCenter.Models
         Azure.ResourceManager.ApiCenter.Models.ApiCenterApiVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiVersionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterApiVersionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ApiCenterDeletedServiceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties>
+    {
+        internal ApiCenterDeletedServiceProperties() { }
+        public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
+        public System.DateTimeOffset? SoftDeletionOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ApiCenterDeploymentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterDeploymentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterDeploymentProperties>
     {
@@ -777,12 +839,30 @@ namespace Azure.ResourceManager.ApiCenter.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentServer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentServer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ApiCenterImportSpecificationModel : System.IEquatable<Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ApiCenterImportSpecificationModel(string value) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel Always { get { throw null; } }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel Never { get { throw null; } }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel OnDemand { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel left, Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel left, Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ApiCenterLinkState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState>
     {
         internal ApiCenterLinkState() { }
         public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public string Message { get { throw null; } }
-        public Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState? State { get { throw null; } }
+        public Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState? State { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -846,7 +926,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
     {
         public ApiCenterServicePatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public bool? Restore { get { throw null; } set { } }
+        public bool? IsRestore { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -861,8 +941,8 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public partial class ApiCenterServiceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiCenterServiceProperties>
     {
         public ApiCenterServiceProperties() { }
+        public bool? IsRestore { get { throw null; } set { } }
         public Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState? ProvisioningState { get { throw null; } }
-        public bool? Restore { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterServiceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ApiCenter.Models.ApiCenterServiceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -919,19 +999,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
         Azure.ResourceManager.ApiCenter.Models.ApiExternalDocumentation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiExternalDocumentation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiExternalDocumentation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiExternalDocumentation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ApiImportSuccess : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess>
-    {
-        internal ApiImportSuccess() { }
-        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiImportSuccess>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApiKind : System.IEquatable<Azure.ResourceManager.ApiCenter.Models.ApiKind>
@@ -992,30 +1059,11 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static bool operator !=(Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage left, Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ApiSourceLinkState : System.IEquatable<Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ApiSourceLinkState(string value) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState Error { get { throw null; } }
-        public static Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState Initializing { get { throw null; } }
-        public static Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState Syncing { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState left, Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState left, Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ApiSourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.ApiSourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.ApiSourceProperties>
     {
         public ApiSourceProperties() { }
-        public Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource AzureApiManagementSource { get { throw null; } set { } }
-        public Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions? ImportSpecification { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource AzureApiManagementSource { get { throw null; } set { } }
+        public Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel? ImportSpecification { get { throw null; } set { } }
         public Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState LinkState { get { throw null; } }
         public Azure.Core.ResourceIdentifier TargetEnvironmentId { get { throw null; } set { } }
         public Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage? TargetLifecycleStage { get { throw null; } set { } }
@@ -1131,55 +1179,25 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterApiDefinitionProperties ApiCenterApiDefinitionProperties(string title = null, string description = null, Azure.ResourceManager.ApiCenter.Models.ApiSpecificationDetails specification = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterApiProperties ApiCenterApiProperties(string title = null, Azure.ResourceManager.ApiCenter.Models.ApiKind kind = default(Azure.ResourceManager.ApiCenter.Models.ApiKind), string description = null, string summary = null, Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage? lifecycleStage = default(Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage?), System.Uri termsOfServiceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.Models.ApiExternalDocumentation> externalDocumentation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.Models.ApiContactInformation> contacts = null, Azure.ResourceManager.ApiCenter.Models.ApiLicenseInformation license = null, System.BinaryData customProperties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterApiVersionData ApiCenterApiVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterApiVersionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties ApiCenterDeletedServiceProperties(System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), System.DateTimeOffset? softDeletionOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterDeploymentData ApiCenterDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterDeploymentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterEnvironmentData ApiCenterEnvironmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterEnvironmentServer ApiCenterEnvironmentServer(Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType? environmentServerType = default(Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType?), System.Collections.Generic.IEnumerable<System.Uri> managementPortalUri = null) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState ApiCenterLinkState(Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState? state = default(Azure.ResourceManager.ApiCenter.Models.ApiSourceLinkState?), string message = null, System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState ApiCenterLinkState(Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState? state = default(Azure.ResourceManager.ApiCenter.Models.ApiCenterApiSourceLinkState?), string message = null, System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterMetadataSchemaData ApiCenterMetadataSchemaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterMetadataSchemaProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.ApiCenterMetadataSchemaProperties ApiCenterMetadataSchemaProperties(string schema = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApiCenter.Models.ApiCenterMetadataAssignment> assignedTo = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterServiceData ApiCenterServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ApiCenter.Models.ApiCenterServiceProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterServiceData ApiCenterServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState? apiCenterServiceProvisioningState, Azure.ResourceManager.Models.ManagedServiceIdentity identity) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch ApiCenterServicePatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, bool? restore = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterServiceProperties ApiCenterServiceProperties(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState? provisioningState = default(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState?), bool? restore = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterServicePatch ApiCenterServicePatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, bool? isRestore = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiCenterServiceProperties ApiCenterServiceProperties(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState? provisioningState = default(Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState?), bool? isRestore = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiCenterWorkspaceData ApiCenterWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterWorkspaceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.ApiSourceData ApiSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiSourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.Models.ApiSourceProperties ApiSourceProperties(Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions? importSpecification = default(Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions?), Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource azureApiManagementSource = null, Azure.Core.ResourceIdentifier targetEnvironmentId = null, Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage? targetLifecycleStage = default(Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage?), Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState linkState = null) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.Models.ApiSourceProperties ApiSourceProperties(Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel? importSpecification = default(Azure.ResourceManager.ApiCenter.Models.ApiCenterImportSpecificationModel?), Azure.ResourceManager.ApiCenter.Models.ApiCenterApiAzureApiManagementSource azureApiManagementSource = null, Azure.Core.ResourceIdentifier targetEnvironmentId = null, Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage? targetLifecycleStage = default(Azure.ResourceManager.ApiCenter.Models.ApiLifecycleStage?), Azure.ResourceManager.ApiCenter.Models.ApiCenterLinkState linkState = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResult ApiSpecExportResult(Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResultFormat? format = default(Azure.ResourceManager.ApiCenter.Models.ApiSpecExportResultFormat?), string value = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.ApiSpecificationDetails ApiSpecificationDetails(string name = null, string version = null) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.DeletedServiceData DeletedServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties DeletedServiceProperties(System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), System.DateTimeOffset? softDeletionOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.ApiCenter.DeletedServiceData DeletedServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ApiCenter.Models.ApiCenterDeletedServiceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.EnvironmentOnboardingInformation EnvironmentOnboardingInformation(string instructions = null, System.Collections.Generic.IEnumerable<System.Uri> developerPortalUri = null) { throw null; }
         public static Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportResult MetadataSchemaExportResult(Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportFormat? format = default(Azure.ResourceManager.ApiCenter.Models.MetadataSchemaExportFormat?), string value = null) { throw null; }
-    }
-    public partial class AzureApiManagementSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource>
-    {
-        public AzureApiManagementSource(Azure.Core.ResourceIdentifier resourceId) { }
-        public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.AzureApiManagementSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeletedServiceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties>
-    {
-        internal DeletedServiceProperties() { }
-        public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
-        public System.DateTimeOffset? SoftDeletionOn { get { throw null; } }
-        protected virtual Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.DeletedServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EnvironmentOnboardingInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApiCenter.Models.EnvironmentOnboardingInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApiCenter.Models.EnvironmentOnboardingInformation>
     {
@@ -1216,24 +1234,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType left, Azure.ResourceManager.ApiCenter.Models.EnvironmentServerType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ImportSpecificationOptions : System.IEquatable<Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ImportSpecificationOptions(string value) { throw null; }
-        public static Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions Always { get { throw null; } }
-        public static Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions Never { get { throw null; } }
-        public static Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions OnDemand { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions left, Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions left, Azure.ResourceManager.ApiCenter.Models.ImportSpecificationOptions right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

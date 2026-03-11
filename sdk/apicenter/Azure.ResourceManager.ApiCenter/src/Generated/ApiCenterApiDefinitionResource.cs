@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiImportSuccess>> ImportSpecificationWithResultAsync(WaitUntil waitUntil, ApiSpecImportContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiCenterApiImportSuccess>> ImportSpecificationWithResultAsync(WaitUntil waitUntil, ApiSpecImportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -442,8 +442,8 @@ namespace Azure.ResourceManager.ApiCenter
                 };
                 HttpMessage message = _apiDefinitionsRestClient.CreateImportSpecificationWithResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ApiSpecImportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ApiCenterArmOperation<ApiImportSuccess> operation = new ApiCenterArmOperation<ApiImportSuccess>(
-                    new ApiImportSuccessOperationSource(),
+                ApiCenterArmOperation<ApiCenterApiImportSuccess> operation = new ApiCenterArmOperation<ApiCenterApiImportSuccess>(
+                    new ApiCenterApiImportSuccessOperationSource(),
                     _apiDefinitionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ApiImportSuccess> ImportSpecificationWithResult(WaitUntil waitUntil, ApiSpecImportContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiCenterApiImportSuccess> ImportSpecificationWithResult(WaitUntil waitUntil, ApiSpecImportContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -501,8 +501,8 @@ namespace Azure.ResourceManager.ApiCenter
                 };
                 HttpMessage message = _apiDefinitionsRestClient.CreateImportSpecificationWithResultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ApiSpecImportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ApiCenterArmOperation<ApiImportSuccess> operation = new ApiCenterArmOperation<ApiImportSuccess>(
-                    new ApiImportSuccessOperationSource(),
+                ApiCenterArmOperation<ApiCenterApiImportSuccess> operation = new ApiCenterArmOperation<ApiCenterApiImportSuccess>(
+                    new ApiCenterApiImportSuccessOperationSource(),
                     _apiDefinitionsClientDiagnostics,
                     Pipeline,
                     message.Request,

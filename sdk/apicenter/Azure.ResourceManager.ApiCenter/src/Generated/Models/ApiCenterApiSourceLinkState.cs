@@ -12,7 +12,7 @@ using Azure.ResourceManager.ApiCenter;
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> The API source link state. </summary>
-    public readonly partial struct ApiSourceLinkState : IEquatable<ApiSourceLinkState>
+    public readonly partial struct ApiCenterApiSourceLinkState : IEquatable<ApiCenterApiSourceLinkState>
     {
         private readonly string _value;
         /// <summary> The API source link is initializing. </summary>
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <summary> The API source is being deleted. </summary>
         private const string DeletingValue = "deleting";
 
-        /// <summary> Initializes a new instance of <see cref="ApiSourceLinkState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterApiSourceLinkState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ApiSourceLinkState(string value)
+        public ApiCenterApiSourceLinkState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -38,44 +38,44 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <summary> The API source link is initializing. </summary>
-        public static ApiSourceLinkState Initializing { get; } = new ApiSourceLinkState(InitializingValue);
+        public static ApiCenterApiSourceLinkState Initializing { get; } = new ApiCenterApiSourceLinkState(InitializingValue);
 
         /// <summary>
         /// *
         /// The API source is syncing.
         /// </summary>
-        public static ApiSourceLinkState Syncing { get; } = new ApiSourceLinkState(SyncingValue);
+        public static ApiCenterApiSourceLinkState Syncing { get; } = new ApiCenterApiSourceLinkState(SyncingValue);
 
         /// <summary> The API source sync is blocked due to an error. </summary>
-        public static ApiSourceLinkState Error { get; } = new ApiSourceLinkState(ErrorValue);
+        public static ApiCenterApiSourceLinkState Error { get; } = new ApiCenterApiSourceLinkState(ErrorValue);
 
         /// <summary> The API source is being deleted. </summary>
-        public static ApiSourceLinkState Deleting { get; } = new ApiSourceLinkState(DeletingValue);
+        public static ApiCenterApiSourceLinkState Deleting { get; } = new ApiCenterApiSourceLinkState(DeletingValue);
 
-        /// <summary> Determines if two <see cref="ApiSourceLinkState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ApiCenterApiSourceLinkState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ApiSourceLinkState left, ApiSourceLinkState right) => left.Equals(right);
+        public static bool operator ==(ApiCenterApiSourceLinkState left, ApiCenterApiSourceLinkState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ApiSourceLinkState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ApiCenterApiSourceLinkState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ApiSourceLinkState left, ApiSourceLinkState right) => !left.Equals(right);
+        public static bool operator !=(ApiCenterApiSourceLinkState left, ApiCenterApiSourceLinkState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ApiSourceLinkState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ApiCenterApiSourceLinkState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiSourceLinkState(string value) => new ApiSourceLinkState(value);
+        public static implicit operator ApiCenterApiSourceLinkState(string value) => new ApiCenterApiSourceLinkState(value);
 
-        /// <summary> Converts a string to a <see cref="ApiSourceLinkState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ApiCenterApiSourceLinkState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ApiSourceLinkState?(string value) => value == null ? null : new ApiSourceLinkState(value);
+        public static implicit operator ApiCenterApiSourceLinkState?(string value) => value == null ? null : new ApiCenterApiSourceLinkState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ApiSourceLinkState other && Equals(other);
+        public override bool Equals(object obj) => obj is ApiCenterApiSourceLinkState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ApiSourceLinkState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ApiCenterApiSourceLinkState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

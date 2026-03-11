@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> Deleted service properties. </summary>
-    public partial class DeletedServiceProperties
+    public partial class ApiCenterDeletedServiceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeletedServiceProperties"/>. </summary>
-        internal DeletedServiceProperties()
+        /// <summary> Initializes a new instance of <see cref="ApiCenterDeletedServiceProperties"/>. </summary>
+        internal ApiCenterDeletedServiceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeletedServiceProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterDeletedServiceProperties"/>. </summary>
         /// <param name="scheduledPurgeOn"> UTC date and time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="softDeletionOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedServiceProperties(DateTimeOffset? scheduledPurgeOn, DateTimeOffset? softDeletionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn, DateTimeOffset? softDeletionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScheduledPurgeOn = scheduledPurgeOn;
             SoftDeletionOn = softDeletionOn;

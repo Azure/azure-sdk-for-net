@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceUpdateProperties"/>. </summary>
-        /// <param name="restore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
+        /// <param name="isRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceUpdateProperties(bool? restore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceUpdateProperties(bool? isRestore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Restore = restore;
+            IsRestore = isRestore;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </summary>
-        public bool? Restore { get; set; }
+        public bool? IsRestore { get; set; }
     }
 }

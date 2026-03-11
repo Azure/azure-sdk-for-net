@@ -9,61 +9,62 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ApiCenter;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    /// <summary> The link state. </summary>
-    public partial class ApiCenterLinkState : IJsonModel<ApiCenterLinkState>
+    /// <summary> API source configuration for Azure API Management. </summary>
+    public partial class ApiCenterApiAzureApiManagementSource : IJsonModel<ApiCenterApiAzureApiManagementSource>
     {
-        /// <summary> Initializes a new instance of <see cref="ApiCenterLinkState"/> for deserialization. </summary>
-        internal ApiCenterLinkState()
+        /// <summary> Initializes a new instance of <see cref="ApiCenterApiAzureApiManagementSource"/> for deserialization. </summary>
+        internal ApiCenterApiAzureApiManagementSource()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApiCenterLinkState PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ApiCenterApiAzureApiManagementSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterLinkState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiAzureApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiCenterLinkState(document.RootElement, options);
+                        return DeserializeApiCenterApiAzureApiManagementSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiCenterLinkState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiCenterApiAzureApiManagementSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterLinkState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiAzureApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiCenterLinkState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiCenterApiAzureApiManagementSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiCenterLinkState>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ApiCenterApiAzureApiManagementSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiCenterLinkState IPersistableModel<ApiCenterLinkState>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ApiCenterApiAzureApiManagementSource IPersistableModel<ApiCenterApiAzureApiManagementSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiCenterLinkState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ApiCenterApiAzureApiManagementSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiCenterLinkState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ApiCenterApiAzureApiManagementSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,23 +75,18 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterLinkState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiAzureApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiCenterLinkState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiCenterApiAzureApiManagementSource)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(State))
+            writer.WritePropertyName("resourceId"u8);
+            writer.WriteStringValue(ResourceId);
+            if (Optional.IsDefined(MsiResourceId))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WritePropertyName("msiResourceId"u8);
+                writer.WriteStringValue(MsiResourceId);
             }
-            if (Optional.IsDefined(Message))
-            {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
-            }
-            writer.WritePropertyName("lastUpdatedOn"u8);
-            writer.WriteStringValue(LastUpdatedOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -110,52 +106,46 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiCenterLinkState IJsonModel<ApiCenterLinkState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ApiCenterApiAzureApiManagementSource IJsonModel<ApiCenterApiAzureApiManagementSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApiCenterLinkState JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ApiCenterApiAzureApiManagementSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterLinkState>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiCenterApiAzureApiManagementSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiCenterLinkState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiCenterApiAzureApiManagementSource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiCenterLinkState(document.RootElement, options);
+            return DeserializeApiCenterApiAzureApiManagementSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApiCenterLinkState DeserializeApiCenterLinkState(JsonElement element, ModelReaderWriterOptions options)
+        internal static ApiCenterApiAzureApiManagementSource DeserializeApiCenterApiAzureApiManagementSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ApiCenterApiSourceLinkState? state = default;
-            string message = default;
-            DateTimeOffset lastUpdatedOn = default;
+            ResourceIdentifier resourceId = default;
+            ResourceIdentifier msiResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("state"u8))
+                if (prop.NameEquals("resourceId"u8))
+                {
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("msiResourceId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new ApiCenterApiSourceLinkState(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("message"u8))
-                {
-                    message = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("lastUpdatedOn"u8))
-                {
-                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
+                    msiResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +153,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiCenterLinkState(state, message, lastUpdatedOn, additionalBinaryDataProperties);
+            return new ApiCenterApiAzureApiManagementSource(resourceId, msiResourceId, additionalBinaryDataProperties);
         }
     }
 }

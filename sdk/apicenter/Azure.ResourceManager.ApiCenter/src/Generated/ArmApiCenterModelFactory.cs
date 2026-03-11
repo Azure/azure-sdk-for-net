@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> The properties of the service. </summary>
         /// <param name="provisioningState"> Provisioning state of the service. </param>
-        /// <param name="restore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
+        /// <param name="isRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
         /// <returns> A new <see cref="Models.ApiCenterServiceProperties"/> instance for mocking. </returns>
-        public static ApiCenterServiceProperties ApiCenterServiceProperties(ApiCenterProvisioningState? provisioningState = default, bool? restore = default)
+        public static ApiCenterServiceProperties ApiCenterServiceProperties(ApiCenterProvisioningState? provisioningState = default, bool? isRestore = default)
         {
-            return new ApiCenterServiceProperties(provisioningState, restore, additionalBinaryDataProperties: null);
+            return new ApiCenterServiceProperties(provisioningState, isRestore, additionalBinaryDataProperties: null);
         }
 
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="restore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
+        /// <param name="isRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
         /// <returns> A new <see cref="Models.ApiCenterServicePatch"/> instance for mocking. </returns>
-        public static ApiCenterServicePatch ApiCenterServicePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, bool? restore = default)
+        public static ApiCenterServicePatch ApiCenterServicePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, bool? isRestore = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ApiCenterServicePatch(identity, tags, restore is null ? default : new ServiceUpdateProperties(restore, null), additionalBinaryDataProperties: null);
+            return new ApiCenterServicePatch(identity, tags, isRestore is null ? default : new ServiceUpdateProperties(isRestore, null), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The metadata schema export result. </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="ApiCenter.DeletedServiceData"/> instance for mocking. </returns>
-        public static DeletedServiceData DeletedServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeletedServiceProperties properties = default)
+        public static DeletedServiceData DeletedServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ApiCenterDeletedServiceProperties properties = default)
         {
             return new DeletedServiceData(
                 id,
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <summary> Deleted service properties. </summary>
         /// <param name="scheduledPurgeOn"> UTC date and time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="softDeletionOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <returns> A new <see cref="Models.DeletedServiceProperties"/> instance for mocking. </returns>
-        public static DeletedServiceProperties DeletedServiceProperties(DateTimeOffset? scheduledPurgeOn = default, DateTimeOffset? softDeletionOn = default)
+        /// <returns> A new <see cref="Models.ApiCenterDeletedServiceProperties"/> instance for mocking. </returns>
+        public static ApiCenterDeletedServiceProperties ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn = default, DateTimeOffset? softDeletionOn = default)
         {
-            return new DeletedServiceProperties(scheduledPurgeOn, softDeletionOn, additionalBinaryDataProperties: null);
+            return new ApiCenterDeletedServiceProperties(scheduledPurgeOn, softDeletionOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Metadata schema entity. Used to define metadata for the entities in API catalog. </summary>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="targetLifecycleStage"> The target lifecycle stage. </param>
         /// <param name="linkState"> The state of the API source link. </param>
         /// <returns> A new <see cref="Models.ApiSourceProperties"/> instance for mocking. </returns>
-        public static ApiSourceProperties ApiSourceProperties(ImportSpecificationOptions? importSpecification = default, AzureApiManagementSource azureApiManagementSource = default, ResourceIdentifier targetEnvironmentId = default, ApiLifecycleStage? targetLifecycleStage = default, ApiCenterLinkState linkState = default)
+        public static ApiSourceProperties ApiSourceProperties(ApiCenterImportSpecificationModel? importSpecification = default, ApiCenterApiAzureApiManagementSource azureApiManagementSource = default, ResourceIdentifier targetEnvironmentId = default, ApiLifecycleStage? targetLifecycleStage = default, ApiCenterLinkState linkState = default)
         {
             return new ApiSourceProperties(
                 importSpecification,
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="message"> The state message. </param>
         /// <param name="lastUpdatedOn"> The timestamp of the last update of the link state. </param>
         /// <returns> A new <see cref="Models.ApiCenterLinkState"/> instance for mocking. </returns>
-        public static ApiCenterLinkState ApiCenterLinkState(ApiSourceLinkState? state = default, string message = default, DateTimeOffset lastUpdatedOn = default)
+        public static ApiCenterLinkState ApiCenterLinkState(ApiCenterApiSourceLinkState? state = default, string message = default, DateTimeOffset lastUpdatedOn = default)
         {
             return new ApiCenterLinkState(state, message, lastUpdatedOn, additionalBinaryDataProperties: null);
         }

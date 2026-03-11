@@ -12,7 +12,7 @@ using Azure.ResourceManager.ApiCenter;
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> The API source specification import options. </summary>
-    public readonly partial struct ImportSpecificationOptions : IEquatable<ImportSpecificationOptions>
+    public readonly partial struct ApiCenterImportSpecificationModel : IEquatable<ApiCenterImportSpecificationModel>
     {
         private readonly string _value;
         /// <summary> Indicates that the specification should be never be imported. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <summary> Indicates that the specification should always be imported along with metadata. </summary>
         private const string AlwaysValue = "always";
 
-        /// <summary> Initializes a new instance of <see cref="ImportSpecificationOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterImportSpecificationModel"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ImportSpecificationOptions(string value)
+        public ApiCenterImportSpecificationModel(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <summary> Indicates that the specification should be never be imported. </summary>
-        public static ImportSpecificationOptions Never { get; } = new ImportSpecificationOptions(NeverValue);
+        public static ApiCenterImportSpecificationModel Never { get; } = new ApiCenterImportSpecificationModel(NeverValue);
 
         /// <summary> Indicates that the specification should be imported only by request. </summary>
-        public static ImportSpecificationOptions OnDemand { get; } = new ImportSpecificationOptions(OnDemandValue);
+        public static ApiCenterImportSpecificationModel OnDemand { get; } = new ApiCenterImportSpecificationModel(OnDemandValue);
 
         /// <summary> Indicates that the specification should always be imported along with metadata. </summary>
-        public static ImportSpecificationOptions Always { get; } = new ImportSpecificationOptions(AlwaysValue);
+        public static ApiCenterImportSpecificationModel Always { get; } = new ApiCenterImportSpecificationModel(AlwaysValue);
 
-        /// <summary> Determines if two <see cref="ImportSpecificationOptions"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ApiCenterImportSpecificationModel"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ImportSpecificationOptions left, ImportSpecificationOptions right) => left.Equals(right);
+        public static bool operator ==(ApiCenterImportSpecificationModel left, ApiCenterImportSpecificationModel right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ImportSpecificationOptions"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ApiCenterImportSpecificationModel"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ImportSpecificationOptions left, ImportSpecificationOptions right) => !left.Equals(right);
+        public static bool operator !=(ApiCenterImportSpecificationModel left, ApiCenterImportSpecificationModel right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ImportSpecificationOptions"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ApiCenterImportSpecificationModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImportSpecificationOptions(string value) => new ImportSpecificationOptions(value);
+        public static implicit operator ApiCenterImportSpecificationModel(string value) => new ApiCenterImportSpecificationModel(value);
 
-        /// <summary> Converts a string to a <see cref="ImportSpecificationOptions"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ApiCenterImportSpecificationModel"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ImportSpecificationOptions?(string value) => value == null ? null : new ImportSpecificationOptions(value);
+        public static implicit operator ApiCenterImportSpecificationModel?(string value) => value == null ? null : new ApiCenterImportSpecificationModel(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ImportSpecificationOptions other && Equals(other);
+        public override bool Equals(object obj) => obj is ApiCenterImportSpecificationModel other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ImportSpecificationOptions other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ApiCenterImportSpecificationModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

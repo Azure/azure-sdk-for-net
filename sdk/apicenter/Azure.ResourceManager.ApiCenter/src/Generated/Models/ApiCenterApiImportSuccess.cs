@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ApiCenter.Models
 {
     /// <summary> The API specification was successfully imported. </summary>
-    public partial class ApiImportSuccess
+    public partial class ApiCenterApiImportSuccess
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApiImportSuccess"/>. </summary>
-        internal ApiImportSuccess()
+        /// <summary> Initializes a new instance of <see cref="ApiCenterApiImportSuccess"/>. </summary>
+        internal ApiCenterApiImportSuccess()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiImportSuccess"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiCenterApiImportSuccess"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiImportSuccess(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiCenterApiImportSuccess(IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

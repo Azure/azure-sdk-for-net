@@ -15,9 +15,9 @@ using Azure.ResourceManager.ApiCenter.Models;
 
 namespace Azure.ResourceManager.ApiCenter
 {
-    internal partial class ApiSourcesGetAllAsyncCollectionResultOfT : AsyncPageable<ApiSourceData>
+    internal partial class ApiCenterApiSourceGetAllAsyncCollectionResultOfT : AsyncPageable<ApiSourceData>
     {
-        private readonly ApiSources _client;
+        private readonly ApiCenterApiSource _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _serviceName;
@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.ApiCenter
         private readonly string _filter;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ApiSourcesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ApiSources client used to send requests. </param>
+        /// <summary> Initializes a new instance of ApiCenterApiSourceGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The ApiCenterApiSource client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serviceName"> The name of Azure API Center service. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="filter"> OData filter parameter. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ApiSourcesGetAllAsyncCollectionResultOfT(ApiSources client, Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ApiCenterApiSourceGetAllAsyncCollectionResultOfT(ApiCenterApiSource client, Guid subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ApiCenter
             _context = context;
         }
 
-        /// <summary> Gets the pages of ApiSourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ApiCenterApiSourceGetAllAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ApiSourcesGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of ApiCenterApiSourceGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ApiSourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;

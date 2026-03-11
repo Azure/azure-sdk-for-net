@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(Restore))
+            if (Optional.IsDefined(IsRestore))
             {
                 writer.WritePropertyName("restore"u8);
-                writer.WriteBooleanValue(Restore.Value);
+                writer.WriteBooleanValue(IsRestore.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 return null;
             }
             ApiCenterProvisioningState? provisioningState = default;
-            bool? restore = default;
+            bool? isRestore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     {
                         continue;
                     }
-                    restore = prop.Value.GetBoolean();
+                    isRestore = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiCenterServiceProperties(provisioningState, restore, additionalBinaryDataProperties);
+            return new ApiCenterServiceProperties(provisioningState, isRestore, additionalBinaryDataProperties);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="message"> The state message. </param>
         /// <param name="lastUpdatedOn"> The timestamp of the last update of the link state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterLinkState(ApiSourceLinkState? state, string message, DateTimeOffset lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiCenterLinkState(ApiCenterApiSourceLinkState? state, string message, DateTimeOffset lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             Message = message;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <summary> The state of the link. </summary>
-        public ApiSourceLinkState? State { get; }
+        public ApiCenterApiSourceLinkState? State { get; }
 
         /// <summary> The state message. </summary>
         public string Message { get; }

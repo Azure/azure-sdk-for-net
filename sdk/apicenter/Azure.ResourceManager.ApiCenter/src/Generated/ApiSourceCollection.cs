@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.ApiCenter
     /// </summary>
     public partial class ApiSourceCollection : ArmCollection, IEnumerable<ApiSourceResource>, IAsyncEnumerable<ApiSourceResource>
     {
-        private readonly ClientDiagnostics _apiSourcesClientDiagnostics;
-        private readonly ApiSources _apiSourcesRestClient;
+        private readonly ClientDiagnostics _apiCenterApiSourceClientDiagnostics;
+        private readonly ApiCenterApiSource _apiCenterApiSourceRestClient;
 
         /// <summary> Initializes a new instance of ApiSourceCollection for mocking. </summary>
         protected ApiSourceCollection()
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.ApiCenter
         internal ApiSourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ApiSourceResource.ResourceType, out string apiSourceApiVersion);
-            _apiSourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiSourceResource.ResourceType.Namespace, Diagnostics);
-            _apiSourcesRestClient = new ApiSources(_apiSourcesClientDiagnostics, Pipeline, Endpoint, apiSourceApiVersion ?? "2024-06-01-preview");
+            _apiCenterApiSourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiSourceResource.ResourceType.Namespace, Diagnostics);
+            _apiCenterApiSourceRestClient = new ApiCenterApiSource(_apiCenterApiSourceClientDiagnostics, Pipeline, Endpoint, apiSourceApiVersion ?? "2024-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiCenter
             Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _apiSourcesClientDiagnostics.CreateScope("ApiSourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiSourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiSourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, ApiSourceData.ToRequestContent(data), context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, ApiSourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiSourceData> response = Response.FromValue(ApiSourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiCenter
             Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _apiSourcesClientDiagnostics.CreateScope("ApiSourceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiSourceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiSourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, ApiSourceData.ToRequestContent(data), context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, ApiSourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiSourceData> response = Response.FromValue(ApiSourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
 
-            using DiagnosticScope scope = _apiSourcesClientDiagnostics.CreateScope("ApiSourceCollection.Get");
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiSourceCollection.Get");
             scope.Start();
             try
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiSourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ApiSourceData> response = Response.FromValue(ApiSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
 
-            using DiagnosticScope scope = _apiSourcesClientDiagnostics.CreateScope("ApiSourceCollection.Get");
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiSourceCollection.Get");
             scope.Start();
             try
             {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiSourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ApiSourceData> response = Response.FromValue(ApiSourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -288,8 +288,8 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ApiSourceData, ApiSourceResource>(new ApiSourcesGetAllAsyncCollectionResultOfT(
-                _apiSourcesRestClient,
+            return new AsyncPageableWrapper<ApiSourceData, ApiSourceResource>(new ApiCenterApiSourceGetAllAsyncCollectionResultOfT(
+                _apiCenterApiSourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -324,8 +324,8 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ApiSourceData, ApiSourceResource>(new ApiSourcesGetAllCollectionResultOfT(
-                _apiSourcesRestClient,
+            return new PageableWrapper<ApiSourceData, ApiSourceResource>(new ApiCenterApiSourceGetAllCollectionResultOfT(
+                _apiCenterApiSourceRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Parent.Name,
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
 
-            using DiagnosticScope scope = _apiSourcesClientDiagnostics.CreateScope("ApiSourceCollection.Exists");
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiSourceCollection.Exists");
             scope.Start();
             try
             {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiSourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiSourceData> response = default;
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
 
-            using DiagnosticScope scope = _apiSourcesClientDiagnostics.CreateScope("ApiSourceCollection.Exists");
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiSourceCollection.Exists");
             scope.Start();
             try
             {
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiSourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiSourceData> response = default;
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
 
-            using DiagnosticScope scope = _apiSourcesClientDiagnostics.CreateScope("ApiSourceCollection.GetIfExists");
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiSourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiSourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<ApiSourceData> response = default;
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.ApiCenter
         {
             Argument.AssertNotNullOrEmpty(apiSourceName, nameof(apiSourceName));
 
-            using DiagnosticScope scope = _apiSourcesClientDiagnostics.CreateScope("ApiSourceCollection.GetIfExists");
+            using DiagnosticScope scope = _apiCenterApiSourceClientDiagnostics.CreateScope("ApiSourceCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ApiCenter
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _apiSourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
+                HttpMessage message = _apiCenterApiSourceRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, apiSourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<ApiSourceData> response = default;
