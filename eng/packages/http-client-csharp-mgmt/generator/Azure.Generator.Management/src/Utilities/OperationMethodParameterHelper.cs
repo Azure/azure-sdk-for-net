@@ -93,12 +93,11 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 // For PUT/PATCH operations, the body parameter is always required.
-                // We must also clear DefaultValue so that "= default" is not written in the output.
+                // Clear DefaultValue so that "= default" is not written in the output.
                 if (convenienceParam.Location == ParameterLocation.Body &&
-                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "PATCH") &&
-                    outputParameter.DefaultValue != null)
+                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "PATCH"))
                 {
-                    outputParameter = ClearDefaultValue(outputParameter);
+                    outputParameter.DefaultValue = null;
                 }
 
                 if (outputParameter.DefaultValue == null)
@@ -115,24 +114,6 @@ namespace Azure.Generator.Management.Utilities
 
             return [.. requiredParameters, .. optionalParameters];
         }
-
-        private static ParameterProvider ClearDefaultValue(ParameterProvider parameter)
-            => new(
-                    name: parameter.Name,
-                    description: parameter.Description,
-                    type: parameter.Type,
-                    defaultValue: null,
-                    isRef: parameter.IsRef,
-                    isOut: parameter.IsOut,
-                    isIn: parameter.IsIn,
-                    isParams: parameter.IsParams,
-                    attributes: parameter.Attributes,
-                    property: parameter.Property,
-                    field: parameter.Field,
-                    initializationValue: parameter.InitializationValue,
-                    location: parameter.Location,
-                    wireInfo: parameter.WireInfo,
-                    validation: parameter.Validation);
 
         private static ParameterProvider RenameWithNewInstance(ParameterProvider outputParameter, string normalizedName, FormattableString? description = null, Type? type = null)
             => new(
