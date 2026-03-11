@@ -14,7 +14,11 @@ param (
   [int]$MinimumPerJob = 10,
 
   [Parameter()]
-  [string]$OnlyTypeSpec
+  [string]$OnlyTypeSpec,
+
+  # Optional filter pattern applied to package directory names (e.g., 'Azure.ResourceManager*')
+  [Parameter()]
+  [string]$DirectoryFilterPattern
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -64,6 +68,11 @@ else {
   if ($OnlyTypespec) {
     $directoriesForGeneration = $directoriesForGeneration | Where-Object { Test-Path "$_/tsp-location.yaml" }
   }
+}
+
+if ($DirectoryFilterPattern) {
+  $directoriesForGeneration = $directoriesForGeneration | Where-Object { $_.Name -like $DirectoryFilterPattern }
+  Write-Host "Filtered directories to pattern '$DirectoryFilterPattern': $($directoriesForGeneration.Count) matches"
 }
 
 [array]$packageDirectories = $directoriesForGeneration
