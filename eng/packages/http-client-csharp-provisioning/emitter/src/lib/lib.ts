@@ -3,9 +3,7 @@
 
 import { createTypeSpecLibrary } from "@typespec/compiler";
 import { $lib as mgmtLib } from "@azure-typespec/http-client-csharp-mgmt";
-import {
-  AzureProvisioningEmitterOptionsSchema
-} from "../options.js";
+import { AzureProvisioningEmitterOptionsSchema } from "../options.js";
 
 export const $lib = createTypeSpecLibrary({
   name: "@azure-typespec/http-client-csharp-provisioning",
