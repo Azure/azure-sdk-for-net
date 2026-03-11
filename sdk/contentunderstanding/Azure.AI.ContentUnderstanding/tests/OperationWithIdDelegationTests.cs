@@ -70,40 +70,48 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 .Concat(operationBase.GetMethods(BindingFlags.Public | BindingFlags.Instance))
                 .Where(m => m.IsVirtual && !m.IsFinal)
                 .Where(m => m.DeclaringType != typeof(object)) // Exclude System.Object methods
-                .Select(m => m.Name)
-                .Distinct()
                 .ToList();
 
-            // Get methods that OperationWithId explicitly overrides
-            var overriddenMethods = new HashSet<string>(
+            // Get base definitions for methods that OperationWithId explicitly overrides
+            var overrideBaseDefinitions = new HashSet<MethodInfo>(
                 operationWithIdType!
                     .GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
                     .Where(m => m.IsVirtual)
-                    .Select(m => m.Name),
-                StringComparer.Ordinal);
+                    .Select(m => m.GetBaseDefinition()));
 
-            // Also include properties (get_Value, get_HasValue, etc.)
-            var overriddenProperties = new HashSet<string>(
-                operationWithIdType
-                    .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                    .Select(p => p.Name),
-                StringComparer.Ordinal);
+            // Also include property accessors (get_Value, get_HasValue, etc.)
+            foreach (var property in operationWithIdType.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+            {
+                var getMethod = property.GetMethod;
+                if (getMethod != null && getMethod.IsVirtual)
+                {
+                    overrideBaseDefinitions.Add(getMethod.GetBaseDefinition());
+                }
+
+                var setMethod = property.SetMethod;
+                if (setMethod != null && setMethod.IsVirtual)
+                {
+                    overrideBaseDefinitions.Add(setMethod.GetBaseDefinition());
+                }
+            }
 
             // Find virtual methods that are NOT overridden and NOT in the allowlist
             var missingOverrides = new List<string>();
-            foreach (string methodName in baseVirtualMethods)
+            foreach (MethodInfo baseMethod in baseVirtualMethods)
             {
+                string methodName = baseMethod.Name;
+
                 // Strip "get_" / "set_" prefix for property accessors
-                string baseName = methodName.StartsWith("get_") || methodName.StartsWith("set_")
+                string baseName = methodName.StartsWith("get_", StringComparison.Ordinal) ||
+                                  methodName.StartsWith("set_", StringComparison.Ordinal)
                     ? methodName.Substring(4)
                     : methodName;
 
                 if (AllowedNonOverrides.Contains(baseName))
                     continue;
 
-                // Check if it's overridden as a method or as a property
-                bool isOverridden = overriddenMethods.Contains(methodName)
-                    || overriddenProperties.Contains(baseName);
+                // Check if this specific base virtual method is overridden
+                bool isOverridden = overrideBaseDefinitions.Contains(baseMethod);
 
                 if (!isOverridden)
                 {
