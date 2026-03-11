@@ -1,0 +1,9 @@
+# Files matching patterns listed here are permitted to use relative links even when checkLinkGuidance is enabled.
+# Relative links in matching files are still verified for correctness.
+# One glob pattern per line. Lines beginning with '#' are ignored.
+# Patterns support wildcards: * matches within a path segment, ** matches across segments.
+#
+# Allow relative links for all files under the .github folder (e.g. copilot instructions).
+.github/**
+# Allow relative links for all files under the eng folder (e.g. engineering system scripts and templates).
+eng/**

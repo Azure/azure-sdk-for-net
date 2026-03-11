@@ -263,7 +263,7 @@
 /sdk/communication/Azure.Communication.Rooms/                      @alexokun @allchiang-msft @mikehang-msft @minnieliu @Mrayyan @paolamvhz @shwali-msft
 
 # PRLabel: %Communication - Short Codes
-/sdk/communication/Azure.Communication.ShortCodes/                 @Arazan @danielortega-msft @whisper6284
+/sdk/communication/Azure.Communication.ShortCodes/                 @Arazan @whisper6284
 
 # PRLabel: %Communication - SMS
 /sdk/communication/Azure.Communication.Sms/                        @besh2014 @gfeitosa-msft @ilyapaliakou-msft @phermanov-msft
@@ -478,7 +478,7 @@
 /sdk/search/                                                       @Azure/azure-sdk-write-search
 
 # ServiceLabel: %Search
-# ServiceOwners:                                                   @efrainretana @kuanlu95 @mattgotteiner
+# ServiceOwners:                                                   @efrainretana @mattgotteiner
 
 # PRLabel: %Service Bus
 /sdk/servicebus/                                                   @EldertGrootenboer @j7nw4r @jsquire @skarri-microsoft
@@ -912,11 +912,8 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
-# PRLabel: %API Center
-/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @alexyaang @ArthurMa1978
-
-# ServiceLabel: %API Center %Mgmt
-# ServiceOwners:                                                   @alexyaang
+# PRLabel: %API Center %Mgmt
+/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Arize AI %Mgmt
 /sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/             @ArcturusZhang @ArthurMa1978

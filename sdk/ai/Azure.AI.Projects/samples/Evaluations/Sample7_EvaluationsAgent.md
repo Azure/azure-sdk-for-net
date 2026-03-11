@@ -43,7 +43,7 @@ Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Na
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_EvaluationsAgent_Sync
 ResponseItem request = ResponseItem.CreateUserMessageItem("What is the size of France in square miles?");
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
 ResponseResult response = responseClient.CreateResponse([request]);
 Console.WriteLine(response.GetOutputText());
 ```
@@ -51,7 +51,7 @@ Console.WriteLine(response.GetOutputText());
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_EvaluationsAgent_Async
 ResponseItem request = ResponseItem.CreateUserMessageItem("What is the size of France in square miles?");
-ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version));
 ResponseResult response = await responseClient.CreateResponseAsync([request]);
 Console.WriteLine(response.GetOutputText());
 ```

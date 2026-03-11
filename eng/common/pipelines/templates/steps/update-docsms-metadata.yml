@@ -29,6 +29,9 @@ parameters:
   - name: PackageSourceOverride
     type: string
     default: ''
+  - name: NpmConfigUserConfig
+    type: string
+    default: ''
 steps:
   - ${{ if eq(length(parameters.PackageInfoLocations), 0) }}:
     - pwsh: |
@@ -91,6 +94,9 @@ steps:
           -RepoId '${{ parameters.RepoId }}' `
           -PackageSourceOverride '${{ parameters.PackageSourceOverride }}'
       displayName: Apply Documentation Updates
+      env:
+        ${{ if ne(parameters.NpmConfigUserConfig, '') }}:
+          NPM_CONFIG_USERCONFIG: ${{ parameters.NpmConfigUserConfig }}
 
     - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
       parameters:
