@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 domainGuid = parsedGuid;
             }
+            else
+            {
+                domainGuid = null;
+            }
         }
     }
 }
