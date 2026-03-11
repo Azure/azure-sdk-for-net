@@ -617,8 +617,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             data.SerializeInternal(dataStream);
 
             int streamLength = (int)dataStream.Length;
-            // Position after version (4 bytes) is where first offset info starts
-            dataStream.Position = sizeof(int); // Skip version
+            // Position after version (4 bytes) + fileAttributes (1+4+4=9 bytes) + filePermission (1 byte) = 14 bytes
+            dataStream.Position = sizeof(int) + sizeof(byte) + sizeof(int) + sizeof(int) + sizeof(byte);
             using BinaryWriter writer = new(dataStream, Encoding.UTF8, leaveOpen: true);
             writer.Write(true);              // isSet = true
             writer.Write(streamLength - 1);  // offset near end of stream
@@ -636,9 +636,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             data.SerializeInternal(dataStream);
 
             // Corrupt: set offset + length beyond stream length
-            dataStream.Position = sizeof(int); // Skip version
+            // Position after version (4 bytes) + fileAttributes (1+4+4=9 bytes) + filePermission (1 byte) = 14 bytes
+            dataStream.Position = sizeof(int) + sizeof(byte) + sizeof(int) + sizeof(int) + sizeof(byte);
             using BinaryWriter writer = new(dataStream, Encoding.UTF8, leaveOpen: true);
-            writer.Write(true);  // isSet = true
+            writer.Write(true);  // isFileCreatedOnSet = true
             writer.Write(1000);  // offset beyond stream
             writer.Write(100);   // length
 
