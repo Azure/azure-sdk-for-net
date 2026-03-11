@@ -12,25 +12,25 @@ namespace Azure.AI.Projects.Agents
     public partial class CaptureStructuredOutputsTool : AgentTool
     {
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="outputs"/> is null. </exception>
-        public CaptureStructuredOutputsTool(StructuredOutputDefinition outputs) : base(ToolType.CaptureStructuredOutputs)
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="outputDefinition"/> is null. </exception>
+        public CaptureStructuredOutputsTool(StructuredOutputDefinition outputDefinition) : base(ToolType.CaptureStructuredOutputs)
         {
-            Argument.AssertNotNull(outputs, nameof(outputs));
+            Argument.AssertNotNull(outputDefinition, nameof(outputDefinition));
 
-            Outputs = outputs;
+            OutputDefinition = outputDefinition;
         }
 
         /// <summary> Initializes a new instance of <see cref="CaptureStructuredOutputsTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="outputs"> The structured outputs to capture from the model. </param>
-        internal CaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StructuredOutputDefinition outputs) : base(@type, additionalBinaryDataProperties)
+        /// <param name="outputDefinition"> The structured outputs to capture from the model. </param>
+        internal CaptureStructuredOutputsTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StructuredOutputDefinition outputDefinition) : base(@type, additionalBinaryDataProperties)
         {
-            Outputs = outputs;
+            OutputDefinition = outputDefinition;
         }
 
         /// <summary> The structured outputs to capture from the model. </summary>
-        public StructuredOutputDefinition Outputs { get; set; }
+        public StructuredOutputDefinition OutputDefinition { get; set; }
     }
 }

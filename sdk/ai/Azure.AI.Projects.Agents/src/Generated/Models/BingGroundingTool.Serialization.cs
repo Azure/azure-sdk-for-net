@@ -78,7 +78,7 @@ namespace Azure.AI.Projects.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("bing_grounding"u8);
-            writer.WriteObjectValue(BingGrounding, options);
+            writer.WriteObjectValue(SearchToolOptions, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            BingGroundingSearchToolOptions bingGrounding = default;
+            BingGroundingSearchToolOptions searchToolOptions = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("bing_grounding"u8))
                 {
-                    bingGrounding = BingGroundingSearchToolOptions.DeserializeBingGroundingSearchToolOptions(prop.Value, options);
+                    searchToolOptions = BingGroundingSearchToolOptions.DeserializeBingGroundingSearchToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BingGroundingTool(@type, additionalBinaryDataProperties, bingGrounding);
+            return new BingGroundingTool(@type, additionalBinaryDataProperties, searchToolOptions);
         }
     }
 }

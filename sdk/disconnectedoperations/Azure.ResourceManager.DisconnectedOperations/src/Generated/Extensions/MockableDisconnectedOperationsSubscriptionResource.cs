@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
 
         private ClientDiagnostics DisconnectedClientDiagnostics => _disconnectedClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Disconnected DisconnectedRestClient => _disconnectedRestClient ??= new Disconnected(DisconnectedClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private Disconnected DisconnectedRestClient => _disconnectedRestClient ??= new Disconnected(DisconnectedClientDiagnostics, Pipeline, Endpoint, "2026-03-15");
 
         /// <summary>
         /// List DisconnectedOperation resources by subscription ID
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>

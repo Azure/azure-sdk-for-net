@@ -19,9 +19,9 @@ public abstract partial class AgentTool
     public static MicrosoftFabricPreviewTool CreateMicrosoftFabricTool(FabricDataAgentToolOptions options) => new MicrosoftFabricPreviewTool(options);
     public static SharepointPreviewTool CreateSharepointTool(SharePointGroundingToolOptions options) => new SharepointPreviewTool(options);
     public static AzureAISearchTool CreateAzureAISearchTool(AzureAISearchToolOptions options = null) => new AzureAISearchTool(options ?? new());
-    public static OpenAPITool CreateOpenApiTool(OpenAPIFunctionDefinition definition) => new OpenAPITool(definition);
-    public static BingCustomSearchPreviewTool CreateBingCustomSearchTool(BingCustomSearchToolParameters parameters) => new BingCustomSearchPreviewTool(parameters);
-    public static BrowserAutomationPreviewTool CreateBrowserAutomationTool(BrowserAutomationToolParameters parameters) => new BrowserAutomationPreviewTool(parameters);
+    public static OpenAPITool CreateOpenApiTool(OpenApiFunctionDefinition definition) => new OpenAPITool(definition);
+    public static BingCustomSearchPreviewTool CreateBingCustomSearchTool(BingCustomSearchToolOptions parameters) => new BingCustomSearchPreviewTool(parameters);
+    public static BrowserAutomationPreviewTool CreateBrowserAutomationTool(BrowserAutomationToolOptions parameters) => new BrowserAutomationPreviewTool(parameters);
     public static CaptureStructuredOutputsTool CreateStructuredOutputsTool(StructuredOutputDefinition outputs) => new CaptureStructuredOutputsTool(outputs);
     public static ResponseTool CreateA2ATool(Uri baseUri, string agentCardPath = null) => new A2APreviewTool(baseUri)
     {
