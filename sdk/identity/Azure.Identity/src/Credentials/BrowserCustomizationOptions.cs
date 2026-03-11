@@ -96,12 +96,31 @@ namespace Azure.Identity
             }
         }
 
+        /// <summary>
+        /// Property to set OpenBrowserAsync of SystemWebViewOptions from MSAL,
+        /// which allows customizing the browser used when opening the authorization URI.
+        /// When set, this delegate will be called with the authorization URI and the browser will be opened by the delegate.
+        /// </summary>
+        public Func<Uri, Task> OpenBrowserAsync
+        {
+            get
+            {
+                return systemWebViewOptions.OpenBrowserAsync;
+            }
+
+            set
+            {
+                systemWebViewOptions.OpenBrowserAsync = value;
+            }
+        }
+
         internal BrowserCustomizationOptions Clone()
         {
             var clone = new BrowserCustomizationOptions
             {
                 ErrorMessage = ErrorMessage,
                 SuccessMessage = SuccessMessage,
+                OpenBrowserAsync = OpenBrowserAsync,
 #pragma warning disable CS0618 // Type or member is obsolete
                 UseEmbeddedWebView = UseEmbeddedWebView ?? false
 #pragma warning restore CS0618 // Type or member is obsolete

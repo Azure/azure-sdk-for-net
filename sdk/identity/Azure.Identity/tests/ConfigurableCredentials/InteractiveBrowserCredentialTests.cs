@@ -208,5 +208,7 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.InteractiveBrowser
             => Assert.Ignore("MSAL-specific test does not apply to configurable credential");
         public override async Task InteractiveBrowserValidateSyncWorkaroundCompatSwitch()
             => Assert.Ignore("Compat switch test does not apply to configurable credential");
+        public override async Task BrowserCustomizedOpenBrowserAsync()
+            => Assert.Ignore("OpenBrowserAsync is a delegate and cannot be passed through IConfiguration");
     }
 }
