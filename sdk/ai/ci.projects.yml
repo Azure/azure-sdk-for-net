@@ -10,7 +10,8 @@ trigger:
     include:
     - sdk/ai/ci.projects.yml
     - sdk/ai/Azure.AI.Projects
-    - sdk/ai/Azure.AI.Projects.OpenAI
+    - sdk/ai/Azure.AI.Extensions.OpenAI
+    - sdk/ai/Azure.AI.Projects.Agents
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -20,8 +21,10 @@ extends:
     Artifacts:
     - name: Azure.AI.Projects
       safeName: AzureAIProjects
-    - name: Azure.AI.Projects.OpenAI
-      safeName: AzureAIProjectsOpenAI
+    - name: Azure.AI.Extensions.OpenAI
+      safeName: AzureAIExtensionsOpenAI
+    - name: Azure.AI.Projects.Agents
+      safeName: AzureAIProjectsAgents
     # Skip project reference tests
     MatrixFilters:
       - AdditionalTestArguments=^(?!.*UseProjectReferenceToAzureClients=true)

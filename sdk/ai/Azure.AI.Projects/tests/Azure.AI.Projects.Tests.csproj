@@ -10,9 +10,10 @@
   <!-- Reference Foundry libraries via project -->
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.AI.Projects.csproj" />
-    <ProjectReference Include="..\..\Azure.AI.Projects.OpenAI\src\Azure.AI.Projects.OpenAI.csproj" />
     <ProjectReference Include="..\..\Azure.AI.Agents.Persistent\src\Azure.AI.Agents.Persistent.csproj" />
     <ProjectReference Include="..\..\Azure.AI.Inference\src\Azure.AI.Inference.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.Projects.Agents\src\Azure.AI.Projects.Agents.csproj" />
+    <ProjectReference Include="..\..\Azure.AI.Extensions.OpenAI\src\Azure.AI.Extensions.OpenAI.csproj" />
     <ProjectReference Include="..\..\..\core\Microsoft.ClientModel.TestFramework\src\Microsoft.ClientModel.TestFramework.csproj" />
   </ItemGroup>
 

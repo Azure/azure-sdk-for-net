@@ -3,27 +3,16 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+#pragma warning disable CS1591
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Capacity pool patch resource. </summary>
-    public partial class CapacityPoolPatch : TrackedResourceData
+    public partial class CapacityPoolPatch
     {
-        /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
         public float? CustomThroughputMibps
         {
-            get
-            {
-                return CustomThroughputMibpsInt.HasValue ? (float?)CustomThroughputMibpsInt.Value : null;
-            }
-            set
-            {
-                CustomThroughputMibpsInt = value.HasValue ? (int)value.Value : null;
-            }
+            get => CustomThroughputMibpsInt;
+            set => CustomThroughputMibpsInt = value.HasValue ? (int?)value.Value : null;
         }
     }
 }
