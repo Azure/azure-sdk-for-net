@@ -71,8 +71,16 @@ else {
 }
 
 if ($DirectoryFilterPattern) {
-  $directoriesForGeneration = $directoriesForGeneration | Where-Object { $_.Name -like $DirectoryFilterPattern }
+  $directoriesForGeneration = @($directoriesForGeneration | Where-Object { $_.Name -like $DirectoryFilterPattern })
   Write-Host "Filtered directories to pattern '$DirectoryFilterPattern': $($directoriesForGeneration.Count) matches"
+}
+else {
+  $directoriesForGeneration = @($directoriesForGeneration)
+}
+
+if ($directoriesForGeneration.Count -eq 0) {
+  Write-Error "No directories found for generation after applying filters. DirectoryFilterPattern='$DirectoryFilterPattern', OnlyTypeSpec='$OnlyTypespec'."
+  return
 }
 
 [array]$packageDirectories = $directoriesForGeneration
