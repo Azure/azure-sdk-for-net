@@ -228,13 +228,26 @@ static async Task RenewLockPeriodicallyAsync(
     CancellationToken cancellationToken,
     CancellationTokenSource processingCts)
 {
-    // Renew before the lock expires. If the lock duration is 5 minutes
-    // (the maximum), renew every 4 minutes to leave margin.
+    // Renew the lock before it expires. The delay adapts to the
+    // entity's lock duration: wait for (remaining - buffer) where
+    // the buffer is the smaller of half the remaining time or a
+    // fixed maximum. Short locks renew sooner; long locks renew
+    // roughly 20 seconds before expiry.
+    TimeSpan maxBuffer = TimeSpan.FromSeconds(20);
+
     while (!cancellationToken.IsCancellationRequested)
     {
         try
         {
-            await Task.Delay(TimeSpan.FromMinutes(4), cancellationToken);
+            TimeSpan remaining = message.LockedUntil - DateTimeOffset.UtcNow;
+            TimeSpan buffer = remaining / 2 < maxBuffer ? remaining / 2 : maxBuffer;
+            TimeSpan delay = remaining - buffer;
+
+            if (delay > TimeSpan.Zero)
+            {
+                await Task.Delay(delay, cancellationToken);
+            }
+
             await receiver.RenewMessageLockAsync(message, cancellationToken);
             Console.WriteLine($"Renewed lock for message {message.MessageId}");
         }
