@@ -31,8 +31,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <param name="connectionStatus"> The connection status. </param>
         /// <param name="registrationStatus"> The registration intent. </param>
         /// <param name="deviceVersion"> The device version. </param>
+        /// <param name="billingConfiguration"> The billing configuration. </param>
+        /// <param name="benefitPlans"> The benefit plans. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DisconnectedOperationProperties(DisconnectedOperationsResourceProvisioningState? provisioningState, string stampId, DisconnectedOperationsBillingModel billingModel, DisconnectedOperationsConnectionIntent connectionIntent, DisconnectedOperationsConnectionStatus? connectionStatus, DisconnectedOperationsRegistrationStatus? registrationStatus, string deviceVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DisconnectedOperationProperties(DisconnectedOperationsResourceProvisioningState? provisioningState, string stampId, DisconnectedOperationsBillingModel billingModel, DisconnectedOperationsConnectionIntent connectionIntent, DisconnectedOperationsConnectionStatus? connectionStatus, DisconnectedOperationsRegistrationStatus? registrationStatus, string deviceVersion, DisconnectedOperationsBillingConfiguration billingConfiguration, DisconnectedOperationsBenefitPlans benefitPlans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             StampId = stampId;
@@ -41,6 +43,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
             ConnectionStatus = connectionStatus;
             RegistrationStatus = registrationStatus;
             DeviceVersion = deviceVersion;
+            BillingConfiguration = billingConfiguration;
+            BenefitPlans = benefitPlans;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,5 +68,11 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
 
         /// <summary> The device version. </summary>
         public string DeviceVersion { get; set; }
+
+        /// <summary> The billing configuration. </summary>
+        public DisconnectedOperationsBillingConfiguration BillingConfiguration { get; set; }
+
+        /// <summary> The benefit plans. </summary>
+        public DisconnectedOperationsBenefitPlans BenefitPlans { get; set; }
     }
 }

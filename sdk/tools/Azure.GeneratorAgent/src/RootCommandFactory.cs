@@ -64,8 +64,10 @@ public class RootCommandFactory
     private Command CreateGenerateCommand(CancellationToken appCancellationToken)
     {
         var sdkPathArgument = new Argument<string>("sdk-path") { Description = "Path to the SDK directory" };
+        var localSpecsPathArgument = new Argument<string>("local-specs-path") { Description = "Path to the local specs repository." };
         var generateCommand = new Command("generate", "Generate code for Azure SDK");
         generateCommand.Add(sdkPathArgument);
+        generateCommand.Add(localSpecsPathArgument);
 
         generateCommand.SetAction(async (parseResult) =>
         {
@@ -82,19 +84,28 @@ public class RootCommandFactory
     private Command CreateMigrateCommand(CancellationToken appCancellationToken)
     {
         var sdkPathArgument = new Argument<string>("sdk-path") { Description = "Path to the SDK directory" };
+        var localSpecsPathArgument = new Argument<string>("local-specs-path") { Description = "Path to the local specs repository. Used to iterate through commits to find one that generates successfully." };
         var migrateCommand = new Command("migrate", "Migrate existing code to new Azure SDK");
         migrateCommand.Add(sdkPathArgument);
+        migrateCommand.Add(localSpecsPathArgument);
 
         migrateCommand.SetAction(async (parseResult) =>
         {
             var sdkPath = parseResult.GetValue(sdkPathArgument);
+            var localSpecsPath = parseResult.GetValue(localSpecsPathArgument);
 
             if (string.IsNullOrEmpty(sdkPath))
             {
                 throw new ArgumentException("SDK path argument is required but was not provided", nameof(sdkPath));
             }
 
+            if (string.IsNullOrEmpty(localSpecsPath))
+            {
+                throw new ArgumentException("Local specs path argument is required but was not provided", nameof(localSpecsPath));
+            }
+
             _logger.LogInformation("Migrating: {SdkPath}", sdkPath);
+            _logger.LogInformation("Using local specs: {LocalSpecsPath}", localSpecsPath);
 
             using var commandCts = CancellationTokenSource.CreateLinkedTokenSource(appCancellationToken);
             commandCts.CancelAfter(_settings.WorkflowTimeout);
@@ -102,21 +113,23 @@ public class RootCommandFactory
 
             try
             {
-                // Step 1: Validate SDK path
+                // Step 1: Validate inputs
                 _logger.LogDebug("Step 1: Validating SDK path");
-                var validatedPath = await _validator.ValidateAsync(sdkPath, cancellationToken).ConfigureAwait(false);
+                var validatedSdkPath = await _validator.ValidateAsync(sdkPath, cancellationToken).ConfigureAwait(false);
+
+                _logger.LogDebug("Step 1b: Validating local specs path");
+                var validatedSpecsPath = _validator.ValidateLocalSpecsPath(localSpecsPath);
 
                 // Step 2: Validate tsp-location.yaml
                 _logger.LogDebug("Step 2: Validating tsp-location.yaml file");
-                var tspLocationPath = Path.Combine(validatedPath, TspLocationFileName);
+                var tspLocationPath = Path.Combine(validatedSdkPath, TspLocationFileName);
                 _validator.ValidateTspLocationFile(tspLocationPath);
 
-                // Step 3: Get directory from tsp-location.yaml and validate it
-                _logger.LogDebug("Step 3: Reading and validating directory field");
-                var relativeDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
-                _validator.ValidateRepositoryPath(relativeDirectory);
+                // Step 3: Read directory from tsp-location.yaml
+                _logger.LogDebug("Step 3: Reading directory field");
+                var specsRelativeDirectory = await _fileService.ReadFieldAsync(tspLocationPath, DirectoryField, cancellationToken).ConfigureAwait(false);
 
-                // Step 4: Get Copilot service once for reuse
+                // Step 4: Initialize Copilot
                 _logger.LogDebug("Step 4: Initializing Copilot service");
                 if (_copilotServiceTask is null)
                 {
@@ -124,26 +137,28 @@ public class RootCommandFactory
                 }
                 var copilotService = await _copilotServiceTask.ConfigureAwait(false);
 
-                // Step 5: Resolve valid commit SHA and directory path
-                _logger.LogDebug("Step 5: Resolving commit information and directory path");
-                var (commitSha, finalDirectory) = await ResolveCommitAndDirectoryAsync(validatedPath, tspLocationPath, relativeDirectory, copilotService, cancellationToken).ConfigureAwait(false);
+                // Step 5: Verify directory exists in remote specs repo; if not, ask Copilot to correct it
+                _logger.LogDebug("Step 5: Verifying specs directory exists in remote repo");
+                specsRelativeDirectory = await ResolveSpecsDirectoryAsync(
+                    validatedSdkPath, tspLocationPath, specsRelativeDirectory, copilotService, cancellationToken).ConfigureAwait(false);
+                _validator.ValidateRepositoryPath(specsRelativeDirectory);
 
-                if (commitSha == null || string.IsNullOrEmpty(finalDirectory))
-                {
-                    throw new InvalidOperationException("Unable to resolve valid commit and directory path");
-                }
+                // Step 6: Ensure valid commit in tsp-location.yaml; fallback to latest if missing or invalid
+                _logger.LogDebug("Step 6: Resolving commit SHA");
+                await ResolveCommitAsync(tspLocationPath, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
 
-                _logger.LogInformation("Commit: {CommitSha}", commitSha);
-                _logger.LogInformation("Spec: {FinalDirectory}", finalDirectory);
-
-                // Step 6: Update tsp-location.yaml
-                _logger.LogDebug("Step 6: Updating tsp-location.yaml fields");
-                await _fileService.WriteFieldAsync(tspLocationPath, CommitField, commitSha, cancellationToken).ConfigureAwait(false);
+                // Step 7: Update emitterPackageJsonPath
+                _logger.LogDebug("Step 7: Updating emitterPackageJsonPath in tsp-location.yaml");
                 await _fileService.WriteFieldAsync(tspLocationPath, EmitterPackageJsonPathField, DefaultEmitterPackageJsonPath, cancellationToken).ConfigureAwait(false);
 
-                // Step 7: Run code generation, fix errors, then build and fix errors
-                _logger.LogDebug("Step 7: Delegating build-fix cycle to Copilot");
-                await copilotService.HandleBuildFixCycleAsync(validatedPath, cancellationToken).ConfigureAwait(false);
+                // Step 8: Delegate commit iteration to Copilot (uses local specs repo)
+                _logger.LogDebug("Step 8: Delegating local specs commit iteration to Copilot");
+                await copilotService.HandleLocalSpecsCommitIterationAsync(
+                    validatedSdkPath, tspLocationPath, specsRelativeDirectory, validatedSpecsPath, cancellationToken).ConfigureAwait(false);
+
+                // Step 9: Build-fix cycle
+                _logger.LogDebug("Step 9: Delegating build-fix cycle to Copilot");
+                await copilotService.HandleBuildFixCycleAsync(validatedSdkPath, cancellationToken).ConfigureAwait(false);
 
                 _logger.LogInformation("Migration completed: {SdkPath}", sdkPath);
             }
@@ -188,44 +203,108 @@ public class RootCommandFactory
     }
 
     /// <summary>
-    /// Resolves a valid commit SHA and directory path, using Copilot to correct the path if needed.
+    /// Verifies the specs directory exists in the remote specs repo via the GitHub API.
+    /// If not found, delegates to Copilot to correct the directory field in tsp-location.yaml.
     /// </summary>
-    private async Task<(string? CommitSha, string? FinalDirectory)> ResolveCommitAndDirectoryAsync(string validatedPath, string tspLocationPath, string? initialDirectory, CopilotService copilotService, CancellationToken cancellationToken)
+    private async Task<string> ResolveSpecsDirectoryAsync(
+        string validatedSdkPath,
+        string tspLocationPath,
+        string? specsRelativeDirectory,
+        CopilotService copilotService,
+        CancellationToken cancellationToken)
     {
-        // Try with initial directory first
-        if (!string.IsNullOrEmpty(initialDirectory))
+        if (!string.IsNullOrEmpty(specsRelativeDirectory))
         {
-            var commitSha = await _gitService.TryGetCommitForPath(DefaultOwner, DefaultSpecsRepository, initialDirectory, cancellationToken).ConfigureAwait(false);
-            if (commitSha != null)
+            var commitForPath = await _gitService.TryGetCommitForPath(
+                DefaultOwner, DefaultSpecsRepository, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
+
+            if (commitForPath is not null)
             {
-                _logger.LogDebug("Found valid commit {CommitSha} for existing directory: {Directory}", commitSha, initialDirectory);
-                return (commitSha, initialDirectory);
+                _logger.LogDebug("Specs directory '{Directory}' verified in remote repo", specsRelativeDirectory);
+                return specsRelativeDirectory;
+            }
+
+            _logger.LogWarning("Specs directory '{Directory}' not found in remote repo, asking Copilot to correct it", specsRelativeDirectory);
+        }
+        else
+        {
+            _logger.LogWarning("No directory field found in tsp-location.yaml, asking Copilot to determine it");
+        }
+
+        await copilotService.UpdateTspLocationFileAsync(validatedSdkPath, DefaultSpecsRepository, cancellationToken).ConfigureAwait(false);
+
+        var correctedDirectory = await _fileService.ReadFieldAsync(tspLocationPath, DirectoryField, cancellationToken).ConfigureAwait(false);
+
+        if (string.IsNullOrEmpty(correctedDirectory))
+        {
+            throw new InvalidOperationException("Copilot was unable to determine the correct specs directory path");
+        }
+
+        var verifyCommit = await _gitService.TryGetCommitForPath(
+            DefaultOwner, DefaultSpecsRepository, correctedDirectory, cancellationToken).ConfigureAwait(false);
+
+        if (verifyCommit is null)
+        {
+            throw new InvalidOperationException(
+                $"Copilot suggested specs directory '{correctedDirectory}' but it was not found in {DefaultOwner}/{DefaultSpecsRepository}");
+        }
+
+        _logger.LogInformation("Copilot corrected specs directory to: {Directory}", correctedDirectory);
+        return correctedDirectory;
+    }
+
+    /// <summary>
+    /// Ensures the commit field in tsp-location.yaml contains a valid SHA.
+    /// If missing or invalid (not a 40-char hex string), fetches the latest commit for the directory
+    /// from the GitHub API and writes it into tsp-location.yaml.
+    /// </summary>
+    private async Task ResolveCommitAsync(
+        string tspLocationPath,
+        string specsRelativeDirectory,
+        CancellationToken cancellationToken)
+    {
+        var currentCommit = await _fileService.ReadFieldAsync(tspLocationPath, CommitField, cancellationToken).ConfigureAwait(false);
+
+        if (IsValidCommitSha(currentCommit))
+        {
+            _logger.LogDebug("Commit SHA '{Commit}' is valid", currentCommit);
+            return;
+        }
+
+        _logger.LogWarning("Commit field is missing or invalid ('{Commit}'), fetching latest commit for '{Directory}'",
+            currentCommit ?? "(empty)", specsRelativeDirectory);
+
+        var latestCommit = await _gitService.TryGetCommitForPath(
+            DefaultOwner, DefaultSpecsRepository, specsRelativeDirectory, cancellationToken).ConfigureAwait(false);
+
+        if (string.IsNullOrEmpty(latestCommit))
+        {
+            throw new InvalidOperationException(
+                $"Unable to fetch latest commit for directory '{specsRelativeDirectory}' from {DefaultOwner}/{DefaultSpecsRepository}");
+        }
+
+        await _fileService.WriteFieldAsync(tspLocationPath, CommitField, latestCommit, cancellationToken).ConfigureAwait(false);
+        _logger.LogInformation("Updated commit in tsp-location.yaml to latest: {Commit}", latestCommit);
+    }
+
+    /// <summary>
+    /// Validates that a string is a well-formed 40-character hexadecimal git commit SHA.
+    /// </summary>
+    internal static bool IsValidCommitSha(string? sha)
+    {
+        if (string.IsNullOrEmpty(sha) || sha.Length != 40)
+        {
+            return false;
+        }
+
+        foreach (var c in sha)
+        {
+            if (!char.IsAsciiHexDigit(c))
+            {
+                return false;
             }
         }
 
-        // Directory not found or invalid, use Copilot to fix it
-        _logger.LogDebug("Directory path {Path} not found or invalid, using Copilot to find correct path", initialDirectory);
-
-        await copilotService.UpdateTspLocationFileAsync(validatedPath, DefaultSpecsRepository, cancellationToken).ConfigureAwait(false);
-
-        var updatedDirectory = await _fileService.ReadDirectoryFieldAsync(tspLocationPath, cancellationToken).ConfigureAwait(false);
-
-        if (string.IsNullOrEmpty(updatedDirectory))
-        {
-            _logger.LogError("Failed to read updated directory from tsp-location.yaml after Copilot update");
-            return (null, null);
-        }
-
-        // Try with updated directory
-        var updatedCommitSha = await _gitService.TryGetCommitForPath(DefaultOwner, DefaultSpecsRepository, updatedDirectory, cancellationToken).ConfigureAwait(false);
-
-        if (updatedCommitSha != null)
-        {
-            _logger.LogDebug("Found valid commit {CommitSha} for Copilot-updated directory: {Directory}", updatedCommitSha, updatedDirectory);
-            return (updatedCommitSha, updatedDirectory);
-        }
-
-        _logger.LogError("Unable to retrieve commit information even after Copilot updated the directory path: {Path}", updatedDirectory);
-        return (null, null);
+        return true;
     }
 }

@@ -1,14 +1,10 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (2026-03-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added `Condition` property to `ResourceBicepMetadata` to support conditional resource deployment. The condition generates Bicep `if (condition)` syntax and accepts literal boolean values, parameter references, or complex expressions.
 
 ## 1.5.0 (2026-03-04)
 
