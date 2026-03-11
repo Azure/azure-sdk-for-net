@@ -295,36 +295,36 @@ namespace Azure.ResourceManager.Maintenance
         /// Get Configuration records within a subscription and resource group
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceResourceGroupResource.GetApplyUpdatesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceResourceGroupResource.GetAllAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MaintenanceApplyUpdateResource> GetApplyUpdatesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<MaintenanceApplyUpdateResource> GetAllAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetApplyUpdatesAsync(cancellationToken);
+            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetAllAsync(cancellationToken);
         }
 
         /// <summary>
         /// Get Configuration records within a subscription and resource group
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceResourceGroupResource.GetApplyUpdates(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceResourceGroupResource.GetAll(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MaintenanceApplyUpdateResource> GetApplyUpdates(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        public static Pageable<MaintenanceApplyUpdateResource> GetAll(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetApplyUpdates(cancellationToken);
+            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetAll(cancellationToken);
         }
 
         /// <summary>
@@ -444,6 +444,94 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
+        /// Apply maintenance updates to resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetApplyUpdatesAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<MaintenanceApplyUpdateResource>> GetApplyUpdatesAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetApplyUpdatesAsync(resourceGroupName, providerName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Apply maintenance updates to resource
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetApplyUpdates(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<MaintenanceApplyUpdateResource> GetApplyUpdates(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetApplyUpdates(resourceGroupName, providerName, resourceType, resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Apply maintenance updates to resource with parent
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetApplyUpdatesAsync(string, string, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceParentType"> Resource parent type. </param>
+        /// <param name="resourceParentName"> Resource parent identifier. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static async Task<Response<MaintenanceApplyUpdateResource>> GetApplyUpdatesAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetApplyUpdatesAsync(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Apply maintenance updates to resource with parent
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.GetApplyUpdates(string, string, string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceParentType"> Resource parent type. </param>
+        /// <param name="resourceParentName"> Resource parent identifier. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        public static Response<MaintenanceApplyUpdateResource> GetApplyUpdates(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).GetApplyUpdates(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+        }
+
+        /// <summary>
         /// Post Scheduled Event Acknowledgement
         /// <item>
         /// <term> Mocking. </term>
@@ -483,94 +571,6 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMaintenanceSubscriptionResource(subscriptionResource).Acknowledge(resourceGroupName, resourceType, resourceName, scheduledEventId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Apply maintenance updates to resource with parent
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.CreateOrUpdateApplyUpdateByParentAsync(string, string, string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateByParentAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableMaintenanceSubscriptionResource(subscriptionResource).CreateOrUpdateApplyUpdateByParentAsync(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Apply maintenance updates to resource with parent
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.CreateOrUpdateApplyUpdateByParent(string, string, string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdateByParent(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).CreateOrUpdateApplyUpdateByParent(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Apply maintenance updates to resource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.CreateOrUpdateAsync(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<MaintenanceApplyUpdateResource>> CreateOrUpdateAsync(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableMaintenanceSubscriptionResource(subscriptionResource).CreateOrUpdateAsync(resourceGroupName, providerName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Apply maintenance updates to resource
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMaintenanceSubscriptionResource.CreateOrUpdate(string, string, string, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<MaintenanceApplyUpdateResource> CreateOrUpdate(this SubscriptionResource subscriptionResource, string resourceGroupName, string providerName, string resourceType, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableMaintenanceSubscriptionResource(subscriptionResource).CreateOrUpdate(resourceGroupName, providerName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>

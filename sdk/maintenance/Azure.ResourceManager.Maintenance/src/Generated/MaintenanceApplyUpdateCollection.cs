@@ -24,8 +24,6 @@ namespace Azure.ResourceManager.Maintenance
     {
         private readonly ClientDiagnostics _maintenanceApplyUpdateClientDiagnostics;
         private readonly MaintenanceApplyUpdate _maintenanceApplyUpdateRestClient;
-        private readonly ClientDiagnostics _applyUpdateForResourceGroupClientDiagnostics;
-        private readonly ApplyUpdateForResourceGroup _applyUpdateForResourceGroupRestClient;
 
         /// <summary> Initializes a new instance of MaintenanceApplyUpdateCollection for mocking. </summary>
         protected MaintenanceApplyUpdateCollection()
@@ -40,8 +38,6 @@ namespace Azure.ResourceManager.Maintenance
             TryGetApiVersion(MaintenanceApplyUpdateResource.ResourceType, out string applyUpdateApiVersion);
             _maintenanceApplyUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceApplyUpdateResource.ResourceType.Namespace, Diagnostics);
             _maintenanceApplyUpdateRestClient = new MaintenanceApplyUpdate(_maintenanceApplyUpdateClientDiagnostics, Pipeline, Endpoint, applyUpdateApiVersion ?? "2023-10-01-preview");
-            _applyUpdateForResourceGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", MaintenanceApplyUpdateResource.ResourceType.Namespace, Diagnostics);
-            _applyUpdateForResourceGroupRestClient = new ApplyUpdateForResourceGroup(_applyUpdateForResourceGroupClientDiagnostics, Pipeline, Endpoint, applyUpdateApiVersion ?? "2023-10-01-preview");
         }
 
         /// <summary>

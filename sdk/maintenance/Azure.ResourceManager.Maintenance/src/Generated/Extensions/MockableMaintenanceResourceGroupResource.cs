@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetApplyUpdatesAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MaintenanceApplyUpdateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MaintenanceApplyUpdateResource> GetApplyUpdates(CancellationToken cancellationToken = default)
+        public virtual Pageable<MaintenanceApplyUpdateResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
