@@ -69,6 +69,10 @@ if ($null -eq $filter) {
 
     # Write the launch settings to the launchSettings.json file
     $launchSettingsPath = Join-Path $provisioningSolutionDir "Azure.Generator.Provisioning" "src" "Properties" "launchSettings.json"
+    $launchSettingsDir = Split-Path $launchSettingsPath
+    if (-not (Test-Path $launchSettingsDir)) {
+        New-Item -ItemType Directory -Force -Path $launchSettingsDir | Out-Null
+    }
     # Write the settings to JSON and normalize line endings to Unix style (LF)
     $sortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $launchSettingsPath
 }
