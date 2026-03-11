@@ -39,7 +39,7 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
 AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
 BrowserAutomationPreviewTool playwrightTool = new(
-    new BrowserAutomationToolParameters(
+    new BrowserAutomationToolOptions(
         new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 
@@ -59,7 +59,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
 BrowserAutomationPreviewTool playwrightTool = new(
-    new BrowserAutomationToolParameters(
+    new BrowserAutomationToolOptions(
         new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
     ));
 

@@ -96,10 +96,10 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="id"></param>
         /// <param name="agentReference"> The agent that created the item. </param>
         /// <param name="responseId"> The response on which the item is created. </param>
-        /// <param name="consentLink"> The link the user can use to perform OAuth consent. </param>
+        /// <param name="internalConsentLink"> The link the user can use to perform OAuth consent. </param>
         /// <param name="serverLabel"> The server label for the OAuth consent request. </param>
         /// <returns> A new <see cref="OpenAI.OAuthConsentRequestResponseItem"/> instance for mocking. </returns>
-        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string consentLink = default, string serverLabel = default)
+        public static OAuthConsentRequestResponseItem OAuthConsentRequestResponseItem(string id = default, AgentReference agentReference = default, string responseId = default, string internalConsentLink = default, string serverLabel = default)
         {
             return new OAuthConsentRequestResponseItem(
                 AgentResponseItemKind.OauthConsentRequest,
@@ -107,7 +107,7 @@ namespace Azure.AI.Extensions.OpenAI
                 agentReference,
                 responseId,
                 additionalBinaryDataProperties: null,
-                consentLink,
+                internalConsentLink,
                 serverLabel);
         }
 

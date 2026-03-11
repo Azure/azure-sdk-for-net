@@ -67,6 +67,11 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string containerName = default)
             => await SourceClientBuilder.GetTestContainerAsync(service, containerName);
 
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceSasDisposingContainerAsync(
+            BlobServiceClient service = default,
+            string containerName = default)
+            => await SourceClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
+
         /// <summary>
         /// Gets the specific storage resource from the given client
         /// e.g. ShareFileClient to a ShareFileStorageResource, BlockBlobClient to a BlockBlobStorageResource.
@@ -104,6 +109,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool useContainerCredentials = default,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -128,6 +134,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                         await UploadAppendBlocksAsync(blobClient, stream, cancellationToken);
                     }
                 }
+            }
+            if (useContainerCredentials)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new AppendBlobClient(sourceUri, GetBlobOptions()));
@@ -162,8 +172,15 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
         }
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationSasDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetAzureSasCredentialTestShareAsync(service, containerName);
 
         protected override async Task<ShareFileClient> GetDestinationObjectClientAsync(
             ShareClient container,
@@ -172,6 +189,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             string objectName = null,
             ShareClientOptions options = null,
             Stream contents = null,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
@@ -188,6 +206,10 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
                 {
                     await fileClient.UploadAsync(contents);
                 }
+            }
+            if (useContainerCredentials)
+            {
+                return fileClient;
             }
             Uri sourceUri = fileClient.GenerateSasUri(BaseShares::Azure.Storage.Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new ShareFileClient(sourceUri, GetShareOptions()));

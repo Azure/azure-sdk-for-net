@@ -12,25 +12,25 @@ namespace Azure.AI.Projects.Agents
     public partial class BingGroundingTool : AgentTool
     {
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>
-        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="bingGrounding"/> is null. </exception>
-        public BingGroundingTool(BingGroundingSearchToolOptions bingGrounding) : base(ToolType.BingGrounding)
+        /// <param name="searchToolOptions"> The bing grounding search tool parameters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchToolOptions"/> is null. </exception>
+        public BingGroundingTool(BingGroundingSearchToolOptions searchToolOptions) : base(ToolType.BingGrounding)
         {
-            Argument.AssertNotNull(bingGrounding, nameof(bingGrounding));
+            Argument.AssertNotNull(searchToolOptions, nameof(searchToolOptions));
 
-            BingGrounding = bingGrounding;
+            SearchToolOptions = searchToolOptions;
         }
 
         /// <summary> Initializes a new instance of <see cref="BingGroundingTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="bingGrounding"> The bing grounding search tool parameters. </param>
-        internal BingGroundingTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BingGroundingSearchToolOptions bingGrounding) : base(@type, additionalBinaryDataProperties)
+        /// <param name="searchToolOptions"> The bing grounding search tool parameters. </param>
+        internal BingGroundingTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, BingGroundingSearchToolOptions searchToolOptions) : base(@type, additionalBinaryDataProperties)
         {
-            BingGrounding = bingGrounding;
+            SearchToolOptions = searchToolOptions;
         }
 
         /// <summary> The bing grounding search tool parameters. </summary>
-        public BingGroundingSearchToolOptions BingGrounding { get; set; }
+        public BingGroundingSearchToolOptions SearchToolOptions { get; set; }
     }
 }
