@@ -6,7 +6,11 @@ For background on how Service Bus propagates trace context, see [Distributed tra
 
 ## Automatic tracing with OpenTelemetry
 
-The recommended approach is [OpenTelemetry](https://opentelemetry.io/docs/languages/dotnet/), which collects traces from the Service Bus client (and any other instrumented library) with no per-call code changes. The Service Bus client library supports OpenTelemetry in experimental mode starting with version 7.5.0. You opt in by setting the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable or the `Azure.Experimental.EnableActivitySource` [AppContext](https://learn.microsoft.com/dotnet/api/system.appcontext) switch.
+The `Azure.Messaging.ServiceBus` client library is instrumented for distributed tracing using [OpenTelemetry](https://opentelemetry.io/docs/languages/dotnet/) or the Application Insights SDK. Both approaches collect traces with no per-call code changes.
+
+> **Experimental:** OpenTelemetry support in `Azure.Messaging.ServiceBus` remains experimental. You must opt in by setting the `AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE` environment variable to `true` or the `Azure.Experimental.EnableActivitySource` [AppContext](https://learn.microsoft.com/dotnet/api/system.appcontext) switch. See [Enabling experimental tracing features](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md#enabling-experimental-tracing-features) for details.
+
+This section shows OpenTelemetry configuration. For the Application Insights approach, see [Automatic tracing with Application Insights](#automatic-tracing-with-application-insights) below.
 
 ```C# Snippet:ServiceBusOpenTelemetrySetup
 // Enable the experimental OpenTelemetry support in Azure SDK client libraries.
@@ -27,7 +31,7 @@ await sender.SendMessageAsync(new ServiceBusMessage("Hello with tracing!"));
 // The send operation is automatically captured as a span by OpenTelemetry.
 ```
 
-When the processor handles a message, the SDK creates a `Process` activity that is automatically linked to the `Send` activity on the producer side via the `Diagnostic-Id` message property. This gives you end-to-end visibility from sender to receiver.
+When the processor handles a message, the client library creates a `Process` activity that is automatically linked to the `Send` activity on the producer side via the `Diagnostic-Id` message property. This gives you end-to-end visibility from sender to receiver.
 
 ```C# Snippet:ServiceBusOpenTelemetryProcessor
 AppContext.SetSwitch("Azure.Experimental.EnableActivitySource", true);
@@ -43,7 +47,7 @@ await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
 await using ServiceBusProcessor processor = client.CreateProcessor("<queue-name>");
 
-processor.ProcessMessageAsync += async args =>
+async Task MessageHandler(ProcessMessageEventArgs args)
 {
     // This handler runs inside an Activity that is correlated
     // with the sender's Activity through the Diagnostic-Id property.
@@ -51,16 +55,28 @@ processor.ProcessMessageAsync += async args =>
     Console.WriteLine($"Activity.Current: {Activity.Current?.Id}");
 
     await args.CompleteMessageAsync(args.Message);
-};
+}
 
-processor.ProcessErrorAsync += args =>
+Task ErrorHandler(ProcessErrorEventArgs args)
 {
     Console.WriteLine($"Error: {args.Exception}");
     return Task.CompletedTask;
-};
+}
 
-await processor.StartProcessingAsync();
-Console.ReadKey();
+try
+{
+    processor.ProcessMessageAsync += MessageHandler;
+    processor.ProcessErrorAsync += ErrorHandler;
+
+    await processor.StartProcessingAsync();
+    Console.ReadKey();
+    await processor.StopProcessingAsync();
+}
+finally
+{
+    processor.ProcessMessageAsync -= MessageHandler;
+    processor.ProcessErrorAsync -= ErrorHandler;
+}
 ```
 
 To export traces to Azure Monitor (Application Insights) instead of the console, replace `AddConsoleExporter()` with the Azure Monitor exporter:
