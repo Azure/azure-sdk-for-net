@@ -1,5 +1,7 @@
 # Microsoft Azure Neon Postgres management client library for .NET
 
+> **[DEPRECATED]** This package has been deprecated and will no longer be maintained. The Azure Marketplace listing for Neon Serverless Postgres has been removed and the service is no longer available. Refer to our [deprecation policy](https://aka.ms/azsdk/support-policies) for more details.
+
 Neon is a cloud-native Postgres solution designed for modern applications. It offers a serverless, fully managed, and scalable Postgres database. Neon's advanced features include autoscaling, scale-to-zero, database branching, instant point-in-time restore, and time travel queries. Neon simplifies database management with seamless integration into your existing workflows, providing a powerful, cost-efficient solution for developers and businesses. 
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
