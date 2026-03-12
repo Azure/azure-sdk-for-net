@@ -95,7 +95,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Ignore("Only verifying that the code builds")]
         public async Task LongRunningWithLockLostHandler()
         {
+            #region Snippet:ServiceBusLongRunningWithLockLostHandler
 #if SNIPPET
+            // The fully qualified Service Bus namespace, which is likely to be similar to
+            // "{yournamespace}.servicebus.windows.net".
             string fullyQualifiedNamespace = "<fully_qualified_namespace>";
             string queueName = "<queue_name>";
 
@@ -118,8 +121,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 Console.WriteLine(args.Exception);
                 return Task.CompletedTask;
             };
-
-            #region Snippet:ServiceBusLongRunningWithLockLostHandler
             processor.ProcessMessageAsync += async args =>
             {
                 // Create a linked token that cancels both when the processor stops
@@ -191,29 +192,28 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 }
             }
 #endif
-            #endregion
-
             await processor.StartProcessingAsync();
             Console.ReadKey();
             await processor.StopProcessingAsync();
+            #endregion
         }
 
         [Test]
         [Ignore("Only verifying that the code builds")]
         public async Task LongRunningWithReceiver()
         {
+            #region Snippet:ServiceBusLongRunningWithReceiver
 #if SNIPPET
+            // The fully qualified Service Bus namespace, which is likely to be similar to
+            // "{yournamespace}.servicebus.windows.net".
             string fullyQualifiedNamespace = "<fully_qualified_namespace>";
             string queueName = "<queue_name>";
+
+            await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
             string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
             string queueName = "queue";
-#endif
 
-            #region Snippet:ServiceBusLongRunningWithReceiver
-#if SNIPPET
-            await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
-#else
             await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
 #endif
 

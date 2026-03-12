@@ -89,6 +89,24 @@ Lock renewal is a best-effort operation. The lock can be lost due to transient n
 For long-running jobs, continuing expensive work after the lock is lost wastes resources -- you will not be able to complete the message anyway. The `MessageLockLostAsync` event lets you cancel work immediately. `ProcessLongRunningJobAsync` is defined after the main logic.
 
 ```C# Snippet:ServiceBusLongRunningWithLockLostHandler
+// The fully qualified Service Bus namespace, which is likely to be similar to
+// "{yournamespace}.servicebus.windows.net".
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+string queueName = "<queue_name>";
+
+await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+
+await using ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
+{
+    MaxAutoLockRenewalDuration = TimeSpan.FromHours(2),
+    AutoCompleteMessages = false,
+});
+
+processor.ProcessErrorAsync += args =>
+{
+    Console.WriteLine(args.Exception);
+    return Task.CompletedTask;
+};
 processor.ProcessMessageAsync += async args =>
 {
     // Create a linked token that cancels both when the processor stops
@@ -158,6 +176,9 @@ static async Task ProcessLongRunningJobAsync(ServiceBusReceivedMessage message, 
         Console.WriteLine($"  Step {step + 1}/100 for message {message.MessageId}");
     }
 }
+await processor.StartProcessingAsync();
+Console.ReadKey();
+await processor.StopProcessingAsync();
 ```
 
 ## Using the receiver instead of the processor
@@ -165,6 +186,11 @@ static async Task ProcessLongRunningJobAsync(ServiceBusReceivedMessage message, 
 If you need more control over the receive loop, you can use `ServiceBusReceiver` directly. Unlike the processor, the receiver does not renew locks automatically -- you must renew them yourself.  The most common approach is by using a background task.
 
 ```C# Snippet:ServiceBusLongRunningWithReceiver
+// The fully qualified Service Bus namespace, which is likely to be similar to
+// "{yournamespace}.servicebus.windows.net".
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+string queueName = "<queue_name>";
+
 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
