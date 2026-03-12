@@ -27,6 +27,7 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         None,
         CodeInterpreter,
+        CodeInterpreterGen,
         FileSearch,
         FunctionCall,
         ComputerUse,
@@ -80,6 +81,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MicrosoftFabric, "Tell me about the weather in Texas."},
         {ToolType.Sharepoint, "What is Contoso whistleblower policy?"},
         {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
+        {ToolType.CodeInterpreterGen, "Please create PDF file showing the rendering of Mandelbrot set"},
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
         {ToolType.MCPConnection, "How many follower on github do I have?"},
         {ToolType.A2A, "What can the secondary agent do?"},
@@ -110,6 +112,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MicrosoftFabric, "You are helpful agent."},
         {ToolType.Sharepoint, "You are helpful agent."},
         {ToolType.CodeInterpreter, "You are helpful agent."},
+        {ToolType.CodeInterpreterGen, "You are a personal math tutor. When asked a math question, generate the appropriate PDF, save it and return its file ID." },
         {ToolType.MCP, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPConnection, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.A2A, "You are a helpful assistant."},
@@ -143,6 +146,8 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.MCP, typeof(StreamingResponseMcpCallCompletedUpdate)},
         {ToolType.MCPConnection, typeof(StreamingResponseMcpCallCompletedUpdate)},
         {ToolType.FunctionCall, typeof(StreamingResponseFunctionCallArgumentsDoneUpdate)},
+        {ToolType.CodeInterpreter, typeof(StreamingResponseCodeInterpreterCallCompletedUpdate)},
+        {ToolType.CodeInterpreterGen, typeof(StreamingResponseCodeInterpreterCallCompletedUpdate)},
     };
 
     public Dictionary<ToolType, Type> ExpectedAnnotations = new()
@@ -152,6 +157,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.BingGrounding, typeof(UriCitationMessageAnnotation) },
         {ToolType.BingGroundingCustom, typeof(UriCitationMessageAnnotation) },
         {ToolType.MicrosoftFabric, typeof(UriCitationMessageAnnotation) },
+        {ToolType.CodeInterpreterGen, typeof(ContainerFileCitationMessageAnnotation)},
     };
 
     public Dictionary<ToolType, string> ExpectedItems = new()
@@ -424,6 +430,13 @@ public class AgentsTestBase : ProjectsClientTestBase
                     new CodeInterpreterToolContainer(
                         CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(
                             fileIds: [TestEnvironment.OPENAI_FILE_ID]
+                        )
+                    )
+                ),
+            ToolType.CodeInterpreterGen => ResponseTool.CreateCodeInterpreterTool(
+                    new CodeInterpreterToolContainer(
+                        CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration(
+                            fileIds: []
                         )
                     )
                 ),

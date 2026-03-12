@@ -7,21 +7,22 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Tests.Utils;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI;
+using OpenAI.Containers;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
-using System.Linq.Expressions;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -684,6 +685,7 @@ public class AgentsTests : AgentsTestBase
 
     [RecordedTest]
     [TestCase(ToolType.CodeInterpreter)]
+    [TestCase(ToolType.CodeInterpreterGen)]
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.ImageGeneration)]
     [TestCase(ToolType.WebSearch)]
@@ -761,18 +763,29 @@ public class AgentsTests : AgentsTestBase
         {
             bool isUriCitationFound = false;
 
-            // Check Annotation for Azure AI Search tool.
+            // Check Annotation.
             foreach (ResponseItem item in response.OutputItems)
             {
                 isUriCitationFound |= ContainsAnnotation(item, toolType);
             }
             Assert.That(isUriCitationFound, Is.True, "The annotation of type UriCitationMessageAnnotation was not found.");
         }
+        else if (toolType == ToolType.CodeInterpreterGen)
+        {
+            bool hasDownloadableFile = false;
+            // Check Annotation.
+            foreach (ResponseItem item in response.OutputItems)
+            {
+                hasDownloadableFile |= await ContainsDownloadableFileAnnotation(item, projectClient);
+            }
+            Assert.That(hasDownloadableFile, Is.True, "The annotation of type UriCitationMessageAnnotation was not found.");
+        }
     }
 
     [RecordedTest]
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.CodeInterpreter)]
+    [TestCase(ToolType.CodeInterpreterGen)]
     [TestCase(ToolType.Memory)]
     [TestCase(ToolType.AzureAISearch)]
     [TestCase(ToolType.BingGrounding)]
@@ -839,6 +852,10 @@ public class AgentsTests : AgentsTestBase
                     if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint | toolType == ToolType.MicrosoftFabric)
                     {
                         annotationMet = ContainsAnnotation(itemDoneUpdate.Item, toolType);
+                    }
+                    if (toolType == ToolType.CodeInterpreter)
+                    {
+                        annotationMet = await ContainsDownloadableFileAnnotation(itemDoneUpdate.Item, projectClient);
                     }
                 }
                 else
@@ -1541,6 +1558,31 @@ public class AgentsTests : AgentsTestBase
             }
         }
         return isUriCitationFound;
+    }
+
+    private static async Task<bool> ContainsDownloadableFileAnnotation(ResponseItem item, AIProjectClient projectClient)
+    {
+        ContainerClient containerClient = projectClient.OpenAI.GetContainerClient();
+        ContainerFileCitationMessageAnnotation containerAnnotation = null;
+        if (item is MessageResponseItem messageItem)
+        {
+            foreach (ResponseContentPart content in messageItem.Content)
+            {
+                foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+                {
+                    if (annotation is ContainerFileCitationMessageAnnotation cntrAnnotation)
+                    {
+                        containerAnnotation = cntrAnnotation;
+                    }
+                }
+            }
+        }
+        if (containerAnnotation is null)
+        {
+            return false;
+        }
+        BinaryData fileData = await containerClient.DownloadContainerFileAsync(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
+        return !fileData.IsEmpty;
     }
 
     private static readonly string s_HelloWorkflowYaml = """

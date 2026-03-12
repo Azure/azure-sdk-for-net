@@ -1,13 +1,5 @@
 # Release History
 
-## 2.0.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (2026-03-12)
 
 This is the first release of the `Azure.AI.Projects.Agents`. It provides the administrative tools for working with Agents.
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
