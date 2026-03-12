@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -95,9 +96,11 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             var cluster = await CreateDefaultHadoopCluster(_resourceGroup, _clusterName, _storageAccountName, _containerName, _accessKey);
 
-            var extension = await cluster.GetExtensionAsync("azuremonitor");
+            var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
+            var tenantResource = tenants.First();
+            var extension = await tenantResource.GetExtensionAsync(_resourceGroup.Id.Name, "azuremonitor", Guid.Parse(_resourceGroup.Id.SubscriptionId));
             Assert.IsNotNull(extension);
-            Assert.IsFalse(extension.Value.IsClusterMonitoringEnabled);
+            Assert.IsFalse(extension.Value.ClusterMonitoringEnabled);
             Assert.IsNull(extension.Value.WorkspaceId);
         }
 
@@ -136,21 +139,21 @@ namespace Azure.ResourceManager.HDInsight.Tests
             //Assert.AreEqual(ManagedServiceIdentityType.UserAssigned, cluster.Data.Identity.ManagedServiceIdentityType);
             //Assert.AreEqual(resourceIdentifier, cluster.Data.Identity.UserAssignedIdentities.First().Key);
 
-            patch.Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned");
-            patch.Identity.UserAssignedIdentities.Add(new ResourceIdentifier(resourceIdentifier), new UserAssignedIdentity());
-            patch.Identity.UserAssignedIdentities.Add(new ResourceIdentifier(resourceIdentifier2), new UserAssignedIdentity());
+            patch.Identity = new ClusterIdentity() { Type = new ResourceIdentityType("SystemAssigned,UserAssigned") };
+            patch.Identity.UserAssignedIdentities.Add(resourceIdentifier.ToString(), new Azure.ResourceManager.HDInsight.Models.UserAssignedIdentity());
+            patch.Identity.UserAssignedIdentities.Add(resourceIdentifier2.ToString(), new Azure.ResourceManager.HDInsight.Models.UserAssignedIdentity());
             await cluster.UpdateAsync(patch);
 
             cluster = await _clusterCollection.GetAsync(_clusterName);
-            Assert.AreEqual("SystemAssigned,UserAssigned", cluster.Data.Identity.ManagedServiceIdentityType.ToString());
+            Assert.AreEqual("SystemAssigned,UserAssigned", cluster.Data.Identity.Type.ToString());
             Assert.AreEqual(2, cluster.Data.Identity.UserAssignedIdentities.Count);
         }
         private void ValidateCluster(HDInsightClusterResource cluster)
         {
             Assert.IsNotNull(cluster);
             Assert.AreEqual(1, cluster.Data.Tags.Count);
-            Assert.AreEqual("Linux", cluster.Data.Properties.OSType.ToString());
-            Assert.AreEqual(1, cluster.Data.Properties.StorageAccounts.Count);
+            Assert.AreEqual("Linux", cluster.Data.Properties.OsType.ToString());
+            Assert.AreEqual(1, cluster.Data.Properties.StorageStorageaccounts.Count);
             Assert.AreEqual("standard", cluster.Data.Properties.Tier.ToString());
             Assert.AreEqual(true, cluster.Data.Properties.IsEncryptionInTransitEnabled);
         }

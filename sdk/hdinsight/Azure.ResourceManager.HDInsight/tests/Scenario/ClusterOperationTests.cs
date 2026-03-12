@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 using (Recording.DisableRecording())
                 {
                     // Create a NSG
-                    var nsgData = new NetworkSecurityGroupData() { Location = DefaultLocation, };
+                    var nsgData = new NetworkSecurityGroupData() { Location = DefaultLocation.ToString(), };
                     var nsg = await resourceGroup.GetNetworkSecurityGroups().CreateOrUpdateAsync(WaitUntil.Completed, "nsg", nsgData);
 
-                    VirtualNetworkData data = new VirtualNetworkData() { Location = DefaultLocation, };
+                    VirtualNetworkData data = new VirtualNetworkData() { Location = DefaultLocation.ToString(), };
                     data.AddressPrefixes.Add("10.10.0.0/16");
                     data.Subnets.Add(new SubnetData() { Name = "subnet1", AddressPrefix = "10.10.1.0/24", PrivateLinkServiceNetworkPolicy = VirtualNetworkPrivateLinkServiceNetworkPolicy.Disabled, NetworkSecurityGroup = nsg.Value.Data });
                     data.Subnets.Add(new SubnetData() { Name = "subnet2", AddressPrefix = "10.10.2.0/24" });
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var workerNode = properties.ComputeRoles.First(role => role.Name.Equals("workernode"));
 
             //Add auto scale configuration Load-based type
-            workerNode.AutoScaleConfiguration = new HDInsightAutoScaleConfiguration()
+            workerNode.AutoscaleConfiguration = new HDInsightAutoScaleConfiguration()
             {
                 Capacity = new HDInsightAutoScaleCapacity()
                 {
@@ -100,16 +100,16 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 }
             };
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
-            Assert.AreEqual(4, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Capacity.MinInstanceCount);
-            Assert.AreEqual(5, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Capacity.MaxInstanceCount);
+            Assert.AreEqual(4, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration.Capacity.MinInstanceCount);
+            Assert.AreEqual(5, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration.Capacity.MaxInstanceCount);
         }
 
         [RecordedTest]
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var workerNode = properties.ComputeRoles.First(role => role.Name.Equals("workernode"));
 
             //Add auto scale configuration.
-            workerNode.AutoScaleConfiguration = new HDInsightAutoScaleConfiguration()
+            workerNode.AutoscaleConfiguration = new HDInsightAutoScaleConfiguration()
             {
                 Recurrence = new HDInsightAutoScaleRecurrence()
                 {
@@ -138,20 +138,20 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 },
             };
             timeAndCapacity.Days.Add(HDInsightDayOfWeek.Thursday);
-            workerNode.AutoScaleConfiguration.Recurrence.Schedule.Add(timeAndCapacity);
+            workerNode.AutoscaleConfiguration.Recurrence.Schedule.Add(timeAndCapacity);
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
-            Assert.AreEqual("China Standard Time", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.TimeZone);
-            Assert.AreEqual("16:00", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.Time);
-            Assert.AreEqual(4, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.MaxInstanceCount);
-            Assert.AreEqual(4, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoScaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.MinInstanceCount);
+            Assert.AreEqual("China Standard Time", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration.Recurrence.TimeZone);
+            Assert.AreEqual("16:00", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.Time);
+            Assert.AreEqual(4, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.MaxInstanceCount);
+            Assert.AreEqual(4, cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("workernode")).AutoscaleConfiguration.Recurrence.Schedule.FirstOrDefault().TimeAndCapacity.MinInstanceCount);
         }
 
         [RecordedTest]
@@ -166,11 +166,11 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
             // availability zones requires custom vnet
             var vnetInfo = await CreateDefaultNetwork(_resourceGroup, _vnetName);
-            foreach (var role in properties.ComputeProfile.Roles)
+            foreach (var role in properties.ComputeRoles)
             {
                 role.VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
-                    Id = vnetInfo.Item1,
+                    Id = vnetInfo.Item1.ToString(),
                     Subnet = vnetInfo.Item2.ToString(),
                 };
             }
@@ -179,10 +179,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
             string content = File.ReadAllText(@"TestData/ClusterWithAvailabilityZonesSqlDefinition.json");
             properties.ClusterDefinition.Configurations = new BinaryData(content);
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             // set zones
             data.Zones.Add("1");
@@ -197,16 +197,16 @@ namespace Azure.ResourceManager.HDInsight.Tests
             string clusterName = "hdi-encryptionathost";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterDefinition.Kind = "Spark";
-            properties.ComputeProfile.Roles.ToList().ForEach(role => role.HardwareProfile.VmSize = "Standard_DS12_v2");
+            properties.ComputeRoles.ToList().ForEach(role => role.HardwareVmSize = "Standard_DS12_v2");
             properties.DiskEncryptionProperties = new HDInsightDiskEncryptionProperties()
             {
-                IsEncryptionAtHostEnabled = true
+                EncryptionAtHost = true
             };
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.ClusterDefinition.Kind = "Spark";
             properties.IsEncryptionInTransitEnabled = true;
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -240,27 +240,27 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             string clusterName = "hdi-outbounprivatelink";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
-            properties.StorageAccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName);
+            properties.StorageStorageaccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName).ToString();
             properties.NetworkProperties = new HDInsightClusterNetworkProperties()
             {
                 ResourceProviderConnection = HDInsightResourceProviderConnection.Outbound,
                 PrivateLink = HDInsightPrivateLinkState.Enabled,
-                PublicIPTag = new HDInsightClusterIPTag("FirstPartyUsage", "HDInsight")
+                PublicIpTag = new HDInsightClusterIPTag("FirstPartyUsage", "HDInsight")
             };
 
-            foreach (var role in properties.ComputeProfile.Roles)
+            foreach (var role in properties.ComputeRoles)
             {
                 role.VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
-                    Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hdi-ps-test/providers/Microsoft.Network/virtualNetworks/hdi-testvnet2"),
+                    Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hdi-ps-test/providers/Microsoft.Network/virtualNetworks/hdi-testvnet2",
                     Subnet = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hdi-ps-test/providers/Microsoft.Network/virtualNetworks/hdi-testvnet2/subnets/default"
                 };
             }
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -279,24 +279,24 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 ResourceProviderConnection = HDInsightResourceProviderConnection.Outbound,
                 PrivateLink = HDInsightPrivateLinkState.Enabled
             };
-            properties.StorageAccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName);
+            properties.StorageStorageaccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName).ToString();
 
             var vnetInfo = await CreateDefaultNetwork(_resourceGroup, _vnetName);
-            foreach (var role in properties.ComputeProfile.Roles)
+            foreach (var role in properties.ComputeRoles)
             {
                 role.VirtualNetworkProfile = new HDInsightVirtualNetworkProfile()
                 {
-                    Id = vnetInfo.Item1,
+                    Id = vnetInfo.Item1.ToString(),
                     Subnet = vnetInfo.Item2.ToString()
                 };
             }
-            var ipConfigurations = new List<HDInsightIPConfiguration> { new HDInsightIPConfiguration("ipconfig") { IsPrimary = true, } };
+            var ipConfigurations = new List<HDInsightIPConfiguration> { new HDInsightIPConfiguration("ipconfig") { Primary = true, } };
             properties.PrivateLinkConfigurations.Add(new HDInsightPrivateLinkConfiguration("plconfig", "headnode", ipConfigurations));
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -310,10 +310,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.MinSupportedTlsVersion = "1.2";
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -329,10 +329,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
             string clusterName = "hdi-humboldt";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -347,20 +347,20 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
             var headNode = properties.ComputeRoles.First(role => role.Name == "headnode");
             var zookeeperNode = properties.ComputeRoles.First(role => role.Name == "zookeepernode");
-            headNode.HardwareProfile.VmSize = "ExtraLarge";
-            zookeeperNode.HardwareProfile.VmSize = "Medium";
+            headNode.HardwareVmSize = "ExtraLarge";
+            zookeeperNode.HardwareVmSize = "Medium";
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
             Assert.AreEqual("Hadoop", cluster.Value.Data.Properties.ClusterDefinition.Kind);
-            Assert.AreEqual("standard_a8_v2", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("headnode")).HardwareProfile.VmSize);
-            Assert.AreEqual("standard_a2_v2", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("zookeepernode")).HardwareProfile.VmSize);
+            Assert.AreEqual("standard_a8_v2", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("headnode")).HardwareVmSize);
+            Assert.AreEqual("standard_a2_v2", cluster.Value.Data.Properties.ComputeRoles.First(role => role.Name.Equals("zookeepernode")).HardwareVmSize);
         }
 
         [RecordedTest]
@@ -371,10 +371,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.Tier = HDInsightTier.Premium;
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -390,10 +390,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
             properties.IsEncryptionInTransitEnabled = false;
             properties.ClusterDefinition.ComponentVersion.Add(new KeyValuePair<string, string>("Spark", "2.4"));
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -411,28 +411,22 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterDefinition.Kind = "MLServices";
             properties.ClusterVersion = "4.0";
-            properties.ComputeProfile.Roles.Add(new HDInsightClusterRole()
+            properties.ComputeRoles.Add(new HDInsightClusterRole()
             {
                 Name = "edgenode",
                 TargetInstanceCount = 1,
-                HardwareProfile = new HardwareProfile
+                HardwareVmSize = "Standard_D4_v2",
+                OsLinuxOperatingSystemProfile = new HDInsightLinuxOSProfile()
                 {
-                    VmSize = "Standard_D4_v2"
-                },
-                OSProfile = new OSProfile()
-                {
-                    LinuxProfile = new HDInsightLinuxOSProfile()
-                    {
-                        Username = Common_User,
-                        Password = Common_Password
-                    }
+                    Username = Common_User,
+                    Password = Common_Password
                 }
             });
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -447,28 +441,22 @@ namespace Azure.ResourceManager.HDInsight.Tests
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterDefinition.Kind = "RServer";
             properties.ClusterDefinition.ComponentVersion.Add(new KeyValuePair<string, string>("RServer", "9.3"));
-            properties.ComputeProfile.Roles.Add(new HDInsightClusterRole()
+            properties.ComputeRoles.Add(new HDInsightClusterRole()
             {
                 Name = "edgenode",
                 TargetInstanceCount = 1,
-                HardwareProfile = new HardwareProfile
+                HardwareVmSize = "Standard_D4_v2",
+                OsLinuxOperatingSystemProfile = new HDInsightLinuxOSProfile()
                 {
-                    VmSize = "Standard_D4_v2"
-                },
-                OSProfile = new OSProfile()
-                {
-                    LinuxProfile = new HDInsightLinuxOSProfile()
-                    {
-                        Username = Common_User,
-                        Password = Common_Password
-                    }
+                    Username = Common_User,
+                    Password = Common_Password
                 }
             });
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -493,7 +481,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 }
             }
 
-            properties.StorageAccounts.Add(new HDInsightStorageAccountInfo()
+            properties.StorageStorageaccounts.Add(new HDInsightStorageAccountInfo()
             {
                 Name = $"{secondaryStorageAccountName}.blob.core.windows.net",
                 IsDefault = false,
@@ -501,18 +489,18 @@ namespace Azure.ResourceManager.HDInsight.Tests
                 Key = accessKey,
             });
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
             Assert.AreEqual(clusterName, cluster.Value.Data.Name);
-            Assert.AreEqual(2, cluster.Value.Data.Properties.StorageAccounts.Count);
-            Assert.AreEqual($"{_storageAccountName}.blob.core.windows.net", cluster.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == true).Name);
-            Assert.AreEqual($"{secondaryStorageAccountName}.blob.core.windows.net", cluster.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == false).Name);
+            Assert.AreEqual(2, cluster.Value.Data.Properties.StorageStorageaccounts.Count);
+            Assert.AreEqual($"{_storageAccountName}.blob.core.windows.net", cluster.Value.Data.Properties.StorageStorageaccounts.First(item => item.IsDefault == true).Name);
+            Assert.AreEqual($"{secondaryStorageAccountName}.blob.core.windows.net", cluster.Value.Data.Properties.StorageStorageaccounts.First(item => item.IsDefault == false).Name);
         }
 
         [RecordedTest]
@@ -524,10 +512,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
 
             // TODO: Add data lake properties
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -538,7 +526,7 @@ namespace Azure.ResourceManager.HDInsight.Tests
         public void TestCreateWithEmptyExtendedParameters()
         {
             string clusterName = "hdi-empty";
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
             };
             Assert.ThrowsAsync<RequestFailedException>(() => _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data));
@@ -549,10 +537,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             string clusterName = "hdi-gateway";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -568,34 +556,34 @@ namespace Azure.ResourceManager.HDInsight.Tests
         {
             string clusterName = "hdi-securechannel";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
-            properties.StorageAccounts.FirstOrDefault().EnableSecureChannel = true;
+            properties.StorageStorageaccounts.FirstOrDefault().EnableSecureChannel = true;
 
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             data.Tags.Add(new KeyValuePair<string, string>("key0", "value0"));
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
-            Assert.IsTrue(cluster.Value.Data.Properties.StorageAccounts.FirstOrDefault().EnableSecureChannel);
+            Assert.IsTrue(cluster.Value.Data.Properties.StorageStorageaccounts.FirstOrDefault().EnableSecureChannel);
         }
 
         [RecordedTest]
-        public async Task TestCreateClusterWithPublicIPTag()
+        public async Task TestCreateClusterWithPublicIpTag()
         {
             string clusterName = "hdi-iptag";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
-            properties.StorageAccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName);
+            properties.StorageStorageaccounts.FirstOrDefault().ResourceId = StorageAccountResource.CreateResourceIdentifier(_resourceGroup.Id.SubscriptionId, _resourceGroup.Id.Name, _storageAccountName).ToString();
             properties.NetworkProperties = new HDInsightClusterNetworkProperties()
             {
-                PublicIPTag = new HDInsightClusterIPTag("FirstPartyUsage", "/HDInsight")
+                PublicIpTag = new HDInsightClusterIPTag("FirstPartyUsage", "/HDInsight")
             };
             properties.ClusterVersion = "5.1";
-            var data = new HDInsightClusterCreateOrUpdateContent()
+            var data = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             Assert.IsNotNull(cluster);
@@ -610,30 +598,29 @@ namespace Azure.ResourceManager.HDInsight.Tests
             string resourceId = $"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hdi-ps-test/providers/Microsoft.Storage/storageAccounts/{_storageAccountName}";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterVersion = "5.1";
-            properties.StorageAccounts.Clear();
-            var msiId = new ResourceIdentifier(msi);
+            properties.StorageStorageaccounts.Clear();
             var hdis = new HDInsightStorageAccountInfo()
             {
                 Name = $"{_storageAccountName}.blob.core.windows.net",
-                ResourceId = new ResourceIdentifier(resourceId),
+                ResourceId = resourceId,
                 IsDefault = true,
                 Container = _containerName,
                 Key = null,
                 EnableSecureChannel = true,
-                MsiResourceId = new ResourceIdentifier(msiId.ToString())
+                MsiResourceId = msi
             };
-            properties.StorageAccounts.Add(hdis);
-            var clusterIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
-            clusterIdentity.UserAssignedIdentities.Add(msiId, new UserAssignedIdentity());
-            var content = new HDInsightClusterCreateOrUpdateContent()
+            properties.StorageStorageaccounts.Add(hdis);
+            var clusterIdentity = new ClusterIdentity() { Type = ResourceIdentityType.UserAssigned };
+            clusterIdentity.UserAssignedIdentities.Add(msi, new Azure.ResourceManager.HDInsight.Models.UserAssignedIdentity());
+            var content = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
                 Identity = clusterIdentity
             };
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content);
             Assert.IsNotNull(cluster);
-            Assert.AreEqual($"{_storageAccountName}.blob.core.windows.net", cluster.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == true).Name);
+            Assert.AreEqual($"{_storageAccountName}.blob.core.windows.net", cluster.Value.Data.Properties.StorageStorageaccounts.First(item => item.IsDefault == true).Name);
         }
 
         [RecordedTest]
@@ -646,29 +633,28 @@ namespace Azure.ResourceManager.HDInsight.Tests
             string resourceId = $"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/hdi-ps-test/providers/Microsoft.Storage/storageAccounts/{_storageAccountName}";
             var properties = PrepareClusterCreateParams(_storageAccountName, _containerName, _accessKey);
             properties.ClusterVersion = "5.1";
-            properties.StorageAccounts.Clear();
-            var msiId = new ResourceIdentifier(msi);
+            properties.StorageStorageaccounts.Clear();
             var hdis = new HDInsightStorageAccountInfo()
             {
                 Name = $"{_storageAccountName}.dfs.core.windows.net",
-                ResourceId = new ResourceIdentifier(resourceId),
+                ResourceId = resourceId,
                 IsDefault = true,
                 FileSystem = _fileSystem,
                 EnableSecureChannel = true,
-                MsiResourceId = new ResourceIdentifier(msiId.ToString())
+                MsiResourceId = msi
             };
-            properties.StorageAccounts.Add(hdis);
-            var clusterIdentity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
-            clusterIdentity.UserAssignedIdentities.Add(msiId, new UserAssignedIdentity());
-            var content = new HDInsightClusterCreateOrUpdateContent()
+            properties.StorageStorageaccounts.Add(hdis);
+            var clusterIdentity = new ClusterIdentity() { Type = ResourceIdentityType.UserAssigned };
+            clusterIdentity.UserAssignedIdentities.Add(msi, new Azure.ResourceManager.HDInsight.Models.UserAssignedIdentity());
+            var content2 = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
                 Identity = clusterIdentity
             };
-            var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content);
-            Assert.IsNotNull(cluster);
-            Assert.AreEqual($"{_storageAccountName}.dfs.core.windows.net", cluster.Value.Data.Properties.StorageAccounts.First(item => item.IsDefault == true).Name);
+            var cluster2 = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content2);
+            Assert.IsNotNull(cluster2);
+            Assert.AreEqual($"{_storageAccountName}.dfs.core.windows.net", cluster2.Value.Data.Properties.StorageStorageaccounts.First(item => item.IsDefault == true).Name);
         }
 
         [RecordedTest]
@@ -687,10 +673,10 @@ namespace Azure.ResourceManager.HDInsight.Tests
                     }
                     }")
             };
-            var content = new HDInsightClusterCreateOrUpdateContent()
+            var content = new ClusterCreateParametersExtended()
             {
                 Properties = properties,
-                Location = DefaultLocation,
+                Location = DefaultLocation.ToString(),
             };
             var cluster = await _clusterCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, content);
             var clusterSettings = await cluster.Value.GetGatewaySettingsAsync();
