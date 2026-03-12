@@ -299,34 +299,87 @@ If the PR uses `[CodeGenType]` without evidence that `@@access` was tried first,
 
 ## Output Format
 
-### Posting Inline Review Comments
+### CRITICAL: Use Inline Review Comments — Never Post a Single Large Comment
 
-All findings **must** be posted as inline review comments directly on the PR using the GitHub API. Use the `gh api` CLI or GitHub MCP tools to create a pull request review with inline comments:
+⚠️ **Do NOT post a single large PR comment summarizing all findings.** Instead, every finding **must** be posted as an **inline review comment** attached to the specific file and line where the issue occurs. This makes feedback actionable — the PR author sees each comment directly on the code that needs to change.
 
-```
-POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews
-{
-  "event": "COMMENT",
-  "body": "<summary of findings>",
-  "comments": [
-    { "path": "file.cs", "line": <line_number>, "body": "**[rule_id]** <comment>" }
-  ]
-}
-```
+### How to Post Inline Review Comments
+
+Use the GitHub API to create a **pull request review** with inline comments. First collect all findings during analysis, then submit them as a single review:
+
+1. **Get the PR head commit SHA** — needed for the `commit_id` field:
+   ```
+   gh api repos/{owner}/{repo}/pulls/{pull_number} --jq '.head.sha'
+   ```
+
+2. **Determine line numbers** — For each finding, identify the exact line in the file (as it appears in the PR diff). For new/added files, use the actual line number. For modified files, the line must be within a diff hunk.
+
+3. **Submit the review** with all inline comments in one API call:
+   ```
+   POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews
+   {
+     "commit_id": "<head_sha>",
+     "event": "COMMENT",
+     "body": "<summary table — see below>",
+     "comments": [
+       {
+         "path": "src/Customization/MyFile.cs",
+         "line": 14,
+         "side": "RIGHT",
+         "body": "**[4.1]** Missing justification comment. This customization suppresses ... because ..."
+       },
+       {
+         "path": "src/Generated/SomeResource.cs",
+         "line": 42,
+         "side": "RIGHT",
+         "body": "**[5.1]** The method name `FooAsyncAsync` has a double Async suffix. Fix the `@@clientName` in client.tsp ..."
+       }
+     ]
+   }
+   ```
+
+4. **Use `gh api`** to submit (pipe the JSON body via `--input -`):
+   ```powershell
+   $review | ConvertTo-Json -Depth 5 | gh api repos/{owner}/{repo}/pulls/{pull_number}/reviews --method POST --input -
+   ```
+
+### Inline Comment Format
 
 Each inline comment should:
-- Start with the rule ID in bold (e.g., `**[4.1]**`, `**[5.2]**`)
-- Explain the specific violation
-- Suggest the fix or improvement
+- Start with the **rule ID in bold** (e.g., `**[4.1]**`, `**[5.2]**`)
+- Prefix critical issues with 🔴, should-fix with ⚠️
+- Explain the **specific violation** at that location
+- **Suggest the fix** or improvement with code examples where applicable
+- For TypeSpec decorator suggestions, always include the corrected decorator code
 
-The review body should include an overall summary with pass/fail per phase and counts of issues found.
+### Review Body (Summary Table)
+
+The review `body` field should contain **only** a compact summary table — all details go in inline comments:
+
+```markdown
+## MPG Migration PR Review: {ServiceName}
+
+| Phase | Result | Issues |
+|-------|--------|--------|
+| 1. Versioning | ✅ Pass | — |
+| 2. API Review | ✅ Pass | — |
+| 3. Breaking Changes | ✅ Pass | — |
+| 4. Customization | ⚠️ | N should-fix |
+| 5. TypeSpec Decorators | 🔴 | N critical |
+
+{Any findings that can't be attached to a specific file/line, e.g. missing CHANGELOG entries}
+```
+
+### Where to Attach Comments
+
+- **Phase 4 findings** → attach to the customization file (`src/Customization/*.cs`) at the relevant class/method declaration line
+- **Phase 5 findings** → attach to either the customization file (suggesting a decorator replacement) or the generated file (pointing out the symptom of a missing/wrong decorator)
+- **CHANGELOG issues** → if CHANGELOG.md is in the PR diff, attach inline; otherwise mention in the review body summary
+- **ApiCompatBaseline issues** → attach to `ApiCompatBaseline.txt` at the relevant entry line
 
 ### Report Structure
 
-1. **Report Phase 1–3 results** (from base skill)
-2. **Report Phase 4 results** (Migration Customization Review):
-   - Post inline comments on each customization issue at the relevant file and line
-   - Group findings by category (4.1–4.8)
-3. **Report Phase 5 results** (TypeSpec Decorator Preference):
-   - Post inline comments where a TypeSpec decorator could replace customization code
-4. **Final summary** with counts: critical issues, should-fix issues, suggestions
+1. **Analyze all phases** (1–5) and collect findings
+2. **Map each finding to a file + line number** in the PR diff
+3. **Submit one review** with all inline comments + summary body
+4. **Never** post findings as a standalone PR comment (`gh pr comment`) — always use the review API with inline comments
