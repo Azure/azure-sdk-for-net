@@ -16,7 +16,6 @@
 ### Other Changes
 
 - Migrated from AutoRest to TypeSpec-based code generation.
-- Deprecated `CorsRulesValue` property on `MapsAccountProperties` and `MapsAccountPatch` in favor of `CorsRules`.
 
 ## 1.1.0 (2024-11-27)
 

@@ -463,6 +463,8 @@ When there are many errors (20+), fix them in batches to avoid unnecessary regen
 - **`[CodeGenSuppress("MemberName", typeof(...))]`** — Suppress a generated member.
 - **`[CodeGenMember("MemberName")]`** — Link custom property to generated counterpart.
 - **Match existing custom code folder convention** — `Custom/`, `Customization/`, or `Customized/`.
+- **Add justification comments** — Every custom code file must include an XML doc comment or code comment explaining **why** the customization exists (e.g., backward-compat shim for removed enum value, property rename from flattening change). This helps future maintainers understand the intent and decide whether the shim can be removed.
+- **Mark backward-compat shims with `[EditorBrowsable(EditorBrowsableState.Never)]`** — Deprecated shim members (e.g., restored enum values, renamed properties) should be hidden from IntelliSense to guide users toward the new API surface.
 
 > **Further reading**: [C# Customization Guide](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md), [TypeSpec client customization](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/knowledge/customizing-client-tsp.md).
 
