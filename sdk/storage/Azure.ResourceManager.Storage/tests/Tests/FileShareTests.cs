@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 ShareDeleteRetentionPolicy = new DeleteRetentionPolicy()
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     Days = 5
                 }
             };
@@ -219,14 +219,14 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 ShareDeleteRetentionPolicy = new DeleteRetentionPolicy()
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     Days = 5
                 }
             };
             _fileService = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, parameter)).Value;
 
             //validate
-            Assert.IsTrue(_fileService.Data.ShareDeleteRetentionPolicy.Enabled);
+            Assert.IsTrue(_fileService.Data.ShareDeleteRetentionPolicy.IsEnabled);
             Assert.AreEqual(_fileService.Data.ShareDeleteRetentionPolicy.Days, 5);
 
             // Get after account create
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Storage.Tests
                     {
                         Multichannel = new Multichannel()
                         {
-                            Enabled = true
+                            IsMultiChannelEnabled = true
                         },
                         Versions = "SMB2.1;SMB3.0;SMB3.1.1",
                         AuthenticationMethods = "NTLMv2;Kerberos",
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 }
             };
             service = (await _fileService.CreateOrUpdateAsync(WaitUntil.Completed, data)).Value;
-            Assert.IsTrue(service.Data.ProtocolSettings.SmbSetting.Multichannel.Enabled);
+            Assert.IsTrue(service.Data.ProtocolSettings.SmbSetting.Multichannel.IsMultiChannelEnabled);
             Assert.AreEqual("SMB2.1;SMB3.0;SMB3.1.1", service.Data.ProtocolSettings.SmbSetting.Versions);
             Assert.AreEqual("NTLMv2;Kerberos", service.Data.ProtocolSettings.SmbSetting.AuthenticationMethods);
             Assert.AreEqual("RC4-HMAC;AES-256", service.Data.ProtocolSettings.SmbSetting.KerberosTicketEncryption);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // Get and validate
             service = (await _fileService.GetAsync()).Value;
-            Assert.IsTrue(service.Data.ProtocolSettings.SmbSetting.Multichannel.Enabled);
+            Assert.IsTrue(service.Data.ProtocolSettings.SmbSetting.Multichannel.IsMultiChannelEnabled);
             Assert.AreEqual("SMB2.1;SMB3.0;SMB3.1.1", service.Data.ProtocolSettings.SmbSetting.Versions);
             Assert.AreEqual("NTLMv2;Kerberos", service.Data.ProtocolSettings.SmbSetting.AuthenticationMethods);
             Assert.AreEqual("RC4-HMAC;AES-256", service.Data.ProtocolSettings.SmbSetting.KerberosTicketEncryption);
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Storage.Tests
             {
                 ShareDeleteRetentionPolicy = new DeleteRetentionPolicy()
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     Days = 5
                 }
             };
@@ -332,14 +332,16 @@ namespace Azure.ResourceManager.Storage.Tests
             DateTimeOffset start2 = datenow.AddMinutes(1).ToUniversalTime();
             DateTimeOffset end2 = datenow.AddMinutes(40).ToUniversalTime();
             var updateParameters2 = new FileShareData();
-            var sig1 = new StorageSignedIdentifier("testSig1",
-                new StorageServiceAccessPolicy(startOn: start1,
-                    expiryOn: end1,
-                    permission: "rw", null), null);
-            var sig2 = new StorageSignedIdentifier("testSig2",
-                new StorageServiceAccessPolicy(startOn: start2,
-                    expiryOn: end2,
-                    permission: "rwdl", null), null);
+            var sig1 = new StorageSignedIdentifier()
+            {
+                Id = "testSig1",
+                AccessPolicy = new StorageServiceAccessPolicy() { StartOn = start1, ExpireOn = end1, Permission = "rw" }
+            };
+            var sig2 = new StorageSignedIdentifier()
+            {
+                Id = "testSig2",
+                AccessPolicy = new StorageServiceAccessPolicy() { StartOn = start2, ExpireOn = end2, Permission = "rwdl" }
+            };
             updateParameters2.SignedIdentifiers.Add(sig1);
             updateParameters2.SignedIdentifiers.Add(sig2);
 
@@ -506,19 +508,19 @@ namespace Azure.ResourceManager.Storage.Tests
             var usage = (_fileService.GetFileServiceUsage()).GetAsync().Result.Value.Data;
             Assert.IsNotNull(usage.Properties.FileShareLimits);
             Assert.IsTrue(usage.Properties.FileShareLimits.MaxProvisionedBandwidthMiBPerSec.Value > 0);
-            Assert.IsTrue(usage.Properties.FileShareLimits.MaxProvisionedIOPS.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareLimits.MaxProvisionedIops.Value > 0);
             Assert.IsTrue(usage.Properties.FileShareLimits.MaxProvisionedStorageGiB.Value > 0);
             Assert.IsTrue(usage.Properties.FileShareLimits.MinProvisionedBandwidthMiBPerSec.Value > 0);
-            Assert.IsTrue(usage.Properties.FileShareLimits.MinProvisionedIOPS.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareLimits.MinProvisionedIops.Value > 0);
             Assert.IsTrue(usage.Properties.FileShareLimits.MinProvisionedStorageGiB.Value > 0);
             Assert.IsNotNull(usage.Properties.BurstingConstants);
             Assert.IsTrue(usage.Properties.FileShareRecommendations.BandwidthScalar.Value > 0);
             Assert.IsTrue(usage.Properties.FileShareRecommendations.BaseBandwidthMiBPerSec.Value > 0);
-            Assert.IsTrue(usage.Properties.FileShareRecommendations.BaseIOPS.Value > 0);
+            Assert.IsTrue(usage.Properties.FileShareRecommendations.BaseIops.Value > 0);
             Assert.IsTrue(usage.Properties.FileShareRecommendations.IoScalar.Value > 0);
             Assert.IsTrue(usage.Properties.StorageAccountLimits.MaxFileShares.Value > 0);
             Assert.IsTrue(usage.Properties.StorageAccountLimits.MaxProvisionedBandwidthMiBPerSec.Value > 0);
-            Assert.IsTrue(usage.Properties.StorageAccountLimits.MaxProvisionedIOPS.Value > 0);
+            Assert.IsTrue(usage.Properties.StorageAccountLimits.MaxProvisionedIops.Value > 0);
             Assert.IsTrue(usage.Properties.StorageAccountLimits.MaxProvisionedStorageGiB.Value > 0);
             Assert.IsNotNull(usage.Properties.StorageAccountUsage);
 
@@ -527,7 +529,7 @@ namespace Azure.ResourceManager.Storage.Tests
             var data = new FileShareData()
             {
                 ProvisionedBandwidthMibps = usage.Properties.FileShareLimits.MaxProvisionedBandwidthMiBPerSec.Value - 1,
-                ProvisionedIops = usage.Properties.FileShareLimits.MaxProvisionedIOPS.Value - 1,
+                ProvisionedIops = usage.Properties.FileShareLimits.MaxProvisionedIops.Value - 1,
                 ShareQuota = usage.Properties.FileShareLimits.MaxProvisionedStorageGiB.Value - 1
             };
             FileShareResource share1 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName, data)).Value;
@@ -544,7 +546,7 @@ namespace Azure.ResourceManager.Storage.Tests
 
             // Update File share
             data.ProvisionedBandwidthMibps = usage.Properties.FileShareLimits.MinProvisionedBandwidthMiBPerSec.Value + 1;
-            data.ProvisionedIops = usage.Properties.FileShareLimits.MinProvisionedIOPS.Value + 1;
+            data.ProvisionedIops = usage.Properties.FileShareLimits.MinProvisionedIops.Value + 1;
             data.ShareQuota = usage.Properties.FileShareLimits.MinProvisionedStorageGiB.Value + 1;
 
             share1 = (await _fileShareCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileShareName, data)).Value;

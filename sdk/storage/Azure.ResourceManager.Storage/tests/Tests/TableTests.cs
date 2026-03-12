@@ -61,14 +61,14 @@ namespace Azure.ResourceManager.Storage.Tests
                     {
                         AccessPolicy = new StorageTableAccessPolicy("raud")
                         {
-                            ExpiryOn = DateTimeOffset.Parse("2029-12-31T16:00:00.0000000Z")
+                            ExpireOn = DateTimeOffset.Parse("2029-12-31T16:00:00.0000000Z")
                         }
                     },
                     new StorageTableSignedIdentifier("MTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTI")
                     {
                         AccessPolicy = new StorageTableAccessPolicy("ra")
                         {
-                            ExpiryOn = DateTimeOffset.Parse("2030-09-08T16:00:00.0000000Z")
+                            ExpireOn = DateTimeOffset.Parse("2030-09-08T16:00:00.0000000Z")
                         }
                     }
                 }
