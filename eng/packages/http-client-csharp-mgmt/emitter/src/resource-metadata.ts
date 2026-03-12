@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { isVariableSegment, findLongestPrefixMatch } from "./utils.js";
+import {
+  isVariableSegment,
+  findLongestPrefixMatch,
+  countProviderSegments
+} from "./utils.js";
 
 const ResourceGroupScopePrefix =
   "/subscriptions/{subscriptionId}/resourceGroups";
@@ -265,6 +269,12 @@ export function postProcessArmResources(
   }
 
   for (const resource of resources) {
+    // Skip if parentResourceId was already set by the caller (e.g., path-based detection
+    // in legacy resource detection). This preserves scope-accurate parent assignments for
+    // cross-scope resources where the same model exists at multiple scopes (e.g., tenant
+    // and subscription), since path-based detection picks the correct scope variant.
+    if (resource.metadata.parentResourceId) continue;
+
     // Use the provided parent lookup context to find parent
     const parentResource = parentLookup.getParentResource(resource);
     if (
@@ -441,10 +451,12 @@ export function postProcessArmResources(
  * 2. Resource model ID matching: if prefix matching fails but the method has a resourceModelId,
  *    it is matched to a valid resource with the same model ID and assigned as a List operation.
  *    This handles extension resources where list paths have different parent structures.
- * 3. Type segment matching: if both prefix and model ID matching fail, the method's last path
- *    segment is compared against each resource's type segment (second-to-last segment of the
- *    resource ID pattern). This handles "missing operations" from resolveArmResources that
- *    lack resourceModelId but share a type segment with a known resource.
+ * 3. Resource type matching: if both prefix and model ID matching fail, the resource type
+ *    is extracted from the operation path using calculateResourceTypeFromPath (which includes
+ *    the provider namespace) and compared against each resource's metadata.resourceType.
+ *    The provider hierarchy depth must also match to prevent cross-scope false matches.
+ *    This handles operations from resolveArmResources that lack resourceModelId but share
+ *    a resource type with a known resource.
  *
  * @param resources - The list of valid resources
  * @param nonResourceMethods - The array of non-resource methods (will be mutated: matched methods are removed)
@@ -490,20 +502,28 @@ export function assignNonResourceMethodsToResources(
         methodsToRemove.add(method.methodId);
       }
     } else {
-      // Both prefix and model ID matching failed — try matching by type segment.
-      // The last segment of the operation path (e.g., "configurationAssignments") is compared
-      // against each resource's type segment (second-to-last segment of the resource ID pattern,
-      // e.g., "configurationAssignments" from ".../configurationAssignments/{name}").
-      // This handles "missing operations" from resolveArmResources that lack resourceModelId.
-      const lastSegment = getLastPathSegment(method.operationPath);
-      if (lastSegment) {
+      // Both prefix and model ID matching failed — try matching by resource type.
+      // Extension resource list paths may have fewer parent segments than the resource
+      // ID pattern, causing a structural length mismatch that prefix matching cannot resolve.
+      // As a final fallback, compare the resource type (extracted via calculateResourceTypeFromPath,
+      // which includes the provider namespace) against each resource's metadata.resourceType.
+      // The provider hierarchy depth must also match to prevent cross-scope false matches
+      // (e.g., RG-scoped list matching a VM-scoped extension resource).
+      if (method.operationPath.includes("/providers/")) {
+        const operationType = calculateResourceTypeFromPath(
+          method.operationPath
+        );
+        const operationProviderDepth = countProviderSegments(
+          method.operationPath
+        );
         const match = resources.find((r) => {
-          const typeSegment = getResourceTypeSegment(
-            r.metadata.resourceIdPattern
-          );
-          return (
-            typeSegment?.toLowerCase() === lastSegment.toLowerCase()
-          );
+          if (
+            countProviderSegments(r.metadata.resourceIdPattern) !==
+            operationProviderDepth
+          ) {
+            return false;
+          }
+          return r.metadata.resourceType === operationType;
         });
         if (match) {
           match.metadata.methods.push({
@@ -532,30 +552,6 @@ export function assignNonResourceMethodsToResources(
       sortResourceMethods(resource.metadata.methods);
     }
   }
-}
-
-/**
- * Gets the resource type segment from a resource ID pattern.
- * The type segment is the second-to-last segment, since the last is the key variable.
- * E.g., for ".../configurationAssignments/{configurationAssignmentName}", returns "configurationAssignments".
- */
-function getResourceTypeSegment(
-  resourceIdPattern: string
-): string | undefined {
-  const segments = resourceIdPattern.split("/").filter((s) => s !== "");
-  if (segments.length < 2) return undefined;
-  return segments[segments.length - 2];
-}
-
-/**
- * Gets the last segment of a path.
- * For list operation paths, this is the resource type/collection segment.
- * E.g., for ".../configurationAssignments", returns "configurationAssignments".
- */
-function getLastPathSegment(path: string): string | undefined {
-  const segments = path.split("/").filter((s) => s !== "");
-  if (segments.length === 0) return undefined;
-  return segments[segments.length - 1];
 }
 
 /**
