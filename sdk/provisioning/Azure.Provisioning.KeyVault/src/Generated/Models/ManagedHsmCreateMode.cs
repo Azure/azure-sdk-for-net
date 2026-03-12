@@ -10,9 +10,9 @@ namespace Azure.Provisioning.KeyVault
     /// <summary> The create mode to indicate whether the resource is being created or is being recovered from a deleted resource. </summary>
     public enum ManagedHsmCreateMode
     {
-        /// <summary> Recover. </summary>
-        Recover,
         /// <summary> Default. </summary>
-        Default
+        Default,
+        /// <summary> Recover. </summary>
+        Recover
     }
 }

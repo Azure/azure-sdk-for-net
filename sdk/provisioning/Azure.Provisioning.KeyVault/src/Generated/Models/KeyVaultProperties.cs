@@ -31,6 +31,7 @@ namespace Azure.Provisioning.KeyVault
         private BicepValue<KeyVaultProvisioningState> _provisioningState;
         private BicepList<KeyVaultPrivateEndpointConnectionItemData> _privateEndpointConnections;
         private BicepValue<string> _publicNetworkAccess;
+        private TokenBindingParameters _tokenBindingParameters;
 
         /// <summary> Creates a new KeyVaultProperties. </summary>
         public KeyVaultProperties()
@@ -282,6 +283,21 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
+        /// <summary> Gets or sets the TokenBindingParameters. </summary>
+        public TokenBindingParameters TokenBindingParameters
+        {
+            get
+            {
+                Initialize();
+                return _tokenBindingParameters;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _tokenBindingParameters, value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for KeyVaultProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -303,6 +319,7 @@ namespace Azure.Provisioning.KeyVault
             _provisioningState = DefineProperty<KeyVaultProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" });
             _privateEndpointConnections = DefineListProperty<KeyVaultPrivateEndpointConnectionItemData>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<string>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
+            _tokenBindingParameters = DefineModelProperty<TokenBindingParameters>(nameof(TokenBindingParameters), new string[] { "tokenBindingParameters" });
         }
     }
 }

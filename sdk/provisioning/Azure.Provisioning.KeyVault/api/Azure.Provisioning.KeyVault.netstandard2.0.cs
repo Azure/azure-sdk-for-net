@@ -12,6 +12,8 @@ namespace Azure.Provisioning.KeyVault
         public static partial class ResourceVersions
         {
             public static readonly string V2025_05_01;
+            public static readonly string V2026_02_01;
+            public static readonly string V2026_03_01_preview;
         }
     }
     public partial class DeletedKeyVaultProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -37,6 +39,8 @@ namespace Azure.Provisioning.KeyVault
         public static partial class ResourceVersions
         {
             public static readonly string V2025_05_01;
+            public static readonly string V2026_02_01;
+            public static readonly string V2026_03_01_preview;
         }
     }
     public partial class DeletedManagedHsmProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -148,8 +152,8 @@ namespace Azure.Provisioning.KeyVault
     }
     public enum KeyVaultCreateMode
     {
-        Recover = 0,
-        Default = 1,
+        Default = 0,
+        Recover = 1,
     }
     public partial class KeyVaultIPRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -194,6 +198,8 @@ namespace Azure.Provisioning.KeyVault
         public static partial class ResourceVersions
         {
             public static readonly string V2025_05_01;
+            public static readonly string V2026_02_01;
+            public static readonly string V2026_03_01_preview;
         }
     }
     public partial class KeyVaultPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -249,6 +255,7 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.KeyVault.KeyVaultSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> SoftDeleteRetentionInDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
+        public Azure.Provisioning.KeyVault.TokenBindingParameters TokenBindingParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> VaultUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -272,6 +279,8 @@ namespace Azure.Provisioning.KeyVault
         public static partial class ResourceVersions
         {
             public static readonly string V2025_05_01;
+            public static readonly string V2026_02_01;
+            public static readonly string V2026_03_01_preview;
         }
     }
     public partial class KeyVaultService : Azure.Provisioning.Primitives.ProvisionableResource
@@ -288,6 +297,8 @@ namespace Azure.Provisioning.KeyVault
         public static partial class ResourceVersions
         {
             public static readonly string V2025_05_01;
+            public static readonly string V2026_02_01;
+            public static readonly string V2026_03_01_preview;
         }
     }
     public partial class KeyVaultSku : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -329,6 +340,8 @@ namespace Azure.Provisioning.KeyVault
         public static partial class ResourceVersions
         {
             public static readonly string V2025_05_01;
+            public static readonly string V2026_02_01;
+            public static readonly string V2026_03_01_preview;
         }
     }
     public enum ManagedHsmActionsRequiredMessage
@@ -337,8 +350,8 @@ namespace Azure.Provisioning.KeyVault
     }
     public enum ManagedHsmCreateMode
     {
-        Recover = 0,
-        Default = 1,
+        Default = 0,
+        Recover = 1,
     }
     public partial class ManagedHsmGeoReplicatedRegion : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -403,6 +416,8 @@ namespace Azure.Provisioning.KeyVault
         public static partial class ResourceVersions
         {
             public static readonly string V2025_05_01;
+            public static readonly string V2026_02_01;
+            public static readonly string V2026_03_01_preview;
         }
     }
     public partial class ManagedHsmPrivateEndpointConnectionItemData : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -535,5 +550,24 @@ namespace Azure.Provisioning.KeyVault
         public Azure.Provisioning.BicepValue<string> SecretUriWithVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public enum TokenBindingMode
+    {
+        Enforced = 0,
+        NotEnforced = 1,
+    }
+    public partial class TokenBindingParameters : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public TokenBindingParameters() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.TokenBindingStrength> MinimumTokenBindingStrength { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.KeyVault.TokenBindingMode> Mode { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum TokenBindingStrength
+    {
+        NoValidation = 0,
+        Unattested = 1,
+        AttestedTrustedLaunch = 2,
+        AttestedConfidential = 3,
     }
 }

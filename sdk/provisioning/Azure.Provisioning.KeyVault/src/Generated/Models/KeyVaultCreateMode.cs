@@ -10,9 +10,9 @@ namespace Azure.Provisioning.KeyVault
     /// <summary> The vault's create mode to indicate whether the vault need to be recovered or not. </summary>
     public enum KeyVaultCreateMode
     {
-        /// <summary> Recover. </summary>
-        Recover,
         /// <summary> Default. </summary>
-        Default
+        Default,
+        /// <summary> Recover. </summary>
+        Recover
     }
 }
