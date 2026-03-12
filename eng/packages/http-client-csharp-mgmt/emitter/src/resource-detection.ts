@@ -51,7 +51,14 @@ import {
   subscriptionResource,
   tenantResource
 } from "./sdk-context-options.js";
-import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
+import {
+  DecoratorApplication,
+  Model,
+  NoTarget,
+  getPattern,
+  getMinLength,
+  getMaxLength
+} from "@typespec/compiler";
 import {
   resolveArmResources,
   getOperationScopeFromPath
@@ -502,6 +509,20 @@ export function buildArmProviderSchema(
       }
     }
     // If there's only one resource for this model, keep using the model name (already set)
+  }
+
+  // Extract name constraints (@pattern, @minLength, @maxLength) from the resource model's "name" property
+  for (const resource of filteredResources) {
+    const sdkModel = models.get(resource.resourceModelId);
+    const typespecModel = sdkModel?.__raw as Model | undefined;
+    const nameProperty = typespecModel?.properties.get("name");
+    if (nameProperty) {
+      resource.metadata.nameConstraints = {
+        pattern: getPattern(sdkContext.program, nameProperty),
+        minLength: getMinLength(sdkContext.program, nameProperty),
+        maxLength: getMaxLength(sdkContext.program, nameProperty)
+      };
+    }
   }
 
   // Assign non-resource methods to resources based on operationPath prefix matching.

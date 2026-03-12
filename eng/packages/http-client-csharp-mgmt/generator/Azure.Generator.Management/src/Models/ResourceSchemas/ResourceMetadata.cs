@@ -18,6 +18,7 @@ namespace Azure.Generator.Management.Models;
 /// <param name="SingletonResourceName"> The singleton resource name, if applicable. </param>
 /// <param name="ParentResourceId"> The parent resource ID pattern, if applicable. </param>
 /// <param name="ChildResourceIds"> The list of child resource ID patterns. </param>
+/// <param name="NameConstraints"> The name constraints for the resource, if specified. </param>
 public record ResourceMetadata(
     string ResourceIdPattern,
     string ResourceName,
@@ -27,7 +28,8 @@ public record ResourceMetadata(
     IReadOnlyList<ResourceMethod> Methods,
     string? SingletonResourceName,
     string? ParentResourceId,
-    IReadOnlyList<string> ChildResourceIds)
+    IReadOnlyList<string> ChildResourceIds,
+    NameConstraints? NameConstraints)
 {
     // ChildResourceIds is currently unpopulated and passed in as an empty array
     internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
@@ -82,6 +84,12 @@ public record ResourceMetadata(
             resourceName = resourceNameElement.GetString();
         }
 
+        NameConstraints? nameConstraints = null;
+        if (element.TryGetProperty("nameConstraints", out var nameConstraintsElement))
+        {
+            nameConstraints = NameConstraints.DeserializeNameConstraints(nameConstraintsElement);
+        }
+
         return new(
             resourceIdPattern ?? throw new InvalidOperationException("resourceIdPattern cannot be null"),
             resourceName ?? throw new InvalidOperationException("resourceName cannot be null"),
@@ -91,6 +99,7 @@ public record ResourceMetadata(
             methods,
             singletonResourceName,
             parentResource,
-            childResourceIds);
+            childResourceIds,
+            nameConstraints);
     }
 }

@@ -24,7 +24,13 @@
  * allowing gradual migration to the standardized API.
  */
 
-import { Program, Operation } from "@typespec/compiler";
+import {
+  Program,
+  Operation,
+  getPattern,
+  getMinLength,
+  getMaxLength
+} from "@typespec/compiler";
 import {
   ResolvedResource,
   ResourceType,
@@ -104,6 +110,7 @@ export function resolveArmResources(
 
       // Convert to our resource schema format
       const metadata = convertResolvedResourceToMetadata(
+        program,
         sdkContext,
         resolvedResource
       );
@@ -248,6 +255,7 @@ export function resolveArmResources(
  * Converts a ResolvedResource to ResourceMetadata format
  */
 function convertResolvedResourceToMetadata(
+  program: Program,
   sdkContext: CSharpEmitterContext,
   resolvedResource: ResolvedResource
 ): ResourceMetadata {
@@ -375,6 +383,16 @@ function convertResolvedResourceToMetadata(
     resourceName = explicitName;
   }
 
+  // Extract name constraints from the resource model's "name" property
+  const nameProperty = resolvedResource.type.properties.get("name");
+  const nameConstraints = nameProperty
+    ? {
+        pattern: getPattern(program, nameProperty),
+        minLength: getMinLength(program, nameProperty),
+        maxLength: getMaxLength(program, nameProperty)
+      }
+    : undefined;
+
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty
     resourceIdPattern: resourceIdPattern,
@@ -388,7 +406,8 @@ function convertResolvedResourceToMetadata(
     singletonResourceName: extractSingletonName(
       resolvedResource.resourceInstancePath
     ),
-    resourceName: resourceName
+    resourceName: resourceName,
+    nameConstraints
   };
 }
 
