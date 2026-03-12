@@ -14,7 +14,7 @@ using Azure;
 namespace Azure.AI.Translation.Document
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class TranslationDocumentModelFactory
+    public static partial class DocumentTranslationModelFactory
     {
         /// <summary> Translation job submission batch request. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
@@ -48,7 +48,7 @@ namespace Azure.AI.Translation.Document
         /// </param>
         /// <param name="storageSource"> Storage Source. </param>
         /// <returns> A new <see cref="Document.TranslationSource"/> instance for mocking. </returns>
-        internal static TranslationSource TranslationSource(Uri sourceUri = default, DocumentFilter filter = default, string languageCode = default, TranslationStorageSource? storageSource = default)
+        public static TranslationSource TranslationSource(Uri sourceUri = default, DocumentFilter filter = default, string languageCode = default, TranslationStorageSource? storageSource = default)
         {
             return new TranslationSource(sourceUri, filter, languageCode, storageSource, additionalBinaryDataProperties: null);
         }
