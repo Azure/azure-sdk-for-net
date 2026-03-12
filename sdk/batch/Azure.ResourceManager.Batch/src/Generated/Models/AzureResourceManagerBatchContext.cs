@@ -9,7 +9,6 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch
 {
@@ -89,7 +88,6 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(BatchProvisioningIssueProperties))]
     [ModelReaderWriterBuildable(typeof(BatchProxyAgentSettings))]
     [ModelReaderWriterBuildable(typeof(BatchPublicIPAddressConfiguration))]
-    [ModelReaderWriterBuildable(typeof(BatchResizeError))]
     [ModelReaderWriterBuildable(typeof(BatchResizeOperationStatus))]
     [ModelReaderWriterBuildable(typeof(BatchResourceAssociation))]
     [ModelReaderWriterBuildable(typeof(BatchResourceFile))]
@@ -137,7 +135,6 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RollingUpgradePolicy))]
     [ModelReaderWriterBuildable(typeof(ServiceArtifactReference))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SupportedSkusResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UpgradePolicy))]

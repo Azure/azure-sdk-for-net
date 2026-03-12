@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Resources.Models;
@@ -102,11 +101,6 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (SubResource item in Subscriptions)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
@@ -209,12 +203,12 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchAccessRuleDirection? direction = default;
-            IList<string> addressPrefixes = default;
-            IList<SubResource> subscriptions = default;
-            IList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
-            IList<string> fullyQualifiedDomainNames = default;
-            IList<string> emailAddresses = default;
-            IList<string> phoneNumbers = default;
+            IReadOnlyList<string> addressPrefixes = default;
+            IReadOnlyList<SubResource> subscriptions = default;
+            IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
+            IReadOnlyList<string> fullyQualifiedDomainNames = default;
+            IReadOnlyList<string> emailAddresses = default;
+            IReadOnlyList<string> phoneNumbers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -257,14 +251,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerBatchContext.Default));
-                        }
+                        array.Add(ModelReaderWriter.Read<SubResource>(BinaryData.FromString(item.GetRawText()), options, AzureResourceManagerBatchContext.Default));
                     }
                     subscriptions = array;
                     continue;

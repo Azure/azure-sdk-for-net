@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -20,65 +21,6 @@ namespace Azure.ResourceManager.Batch.Models
     public static partial class ArmBatchModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="accountEndpoint"> The account endpoint used to interact with the Batch service. </param>
-        /// <param name="nodeManagementEndpoint"> The endpoint used by compute node to connect to the Batch node management service. </param>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="poolAllocationMode"> The allocation mode for creating pools in the Batch account. </param>
-        /// <param name="keyVaultReference"> Identifies the Azure key vault associated with a Batch account. </param>
-        /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
-        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Batch account. </param>
-        /// <param name="autoStorage"> Contains information about the auto-storage account associated with a Batch account. </param>
-        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
-        /// <param name="dedicatedCoreQuota"> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
-        /// <param name="lowPriorityCoreQuota"> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
-        /// <param name="dedicatedCoreQuotaPerVmFamily"> A list of the dedicated core quota per Virtual Machine family for the Batch account. For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
-        /// <param name="isDedicatedCoreQuotaPerVmFamilyEnforced"> If this flag is true, dedicated core quota is enforced via both the dedicatedCoreQuotaPerVMFamily and dedicatedCoreQuota properties on the account. If this flag is false, dedicated core quota is enforced only via the dedicatedCoreQuota property on the account and does not consider Virtual Machine family. </param>
-        /// <param name="poolQuota"> The pool quota for the Batch account. </param>
-        /// <param name="activeJobAndJobScheduleQuota"> The active job and job schedule quota for the Batch account. </param>
-        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
-        /// <param name="identity"> The identity of the Batch account. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Batch.BatchAccountData"/> instance for mocking. </returns>
-        public static BatchAccountData BatchAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, string accountEndpoint = default, string nodeManagementEndpoint = default, BatchProvisioningState? provisioningState = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = default, BatchAccountAutoStorageConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, int? dedicatedCoreQuota = default, int? lowPriorityCoreQuota = default, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default, int? poolQuota = default, int? activeJobAndJobScheduleQuota = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, SystemData systemData = default, AzureLocation? location = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BatchAccountData(
-                id,
-                name,
-                resourceType,
-                additionalBinaryDataProperties: null,
-                accountEndpoint is null && nodeManagementEndpoint is null && provisioningState is null && poolAllocationMode is null && keyVaultReference is null && publicNetworkAccess is null && networkProfile is null && privateEndpointConnections is null && autoStorage is null && encryption is null && dedicatedCoreQuota is null && lowPriorityCoreQuota is null && dedicatedCoreQuotaPerVmFamily is null && isDedicatedCoreQuotaPerVmFamilyEnforced is null && poolQuota is null && activeJobAndJobScheduleQuota is null && allowedAuthenticationModes is null ? default : new BatchAccountProperties(
-                    accountEndpoint,
-                    nodeManagementEndpoint,
-                    provisioningState,
-                    poolAllocationMode,
-                    keyVaultReference,
-                    publicNetworkAccess,
-                    networkProfile,
-                    (privateEndpointConnections ?? new ChangeTrackingList<BatchPrivateEndpointConnectionData>()).ToList(),
-                    autoStorage,
-                    encryption,
-                    dedicatedCoreQuota,
-                    lowPriorityCoreQuota,
-                    (dedicatedCoreQuotaPerVmFamily ?? new ChangeTrackingList<BatchVmFamilyCoreQuota>()).ToList(),
-                    isDedicatedCoreQuotaPerVmFamilyEnforced,
-                    poolQuota,
-                    activeJobAndJobScheduleQuota,
-                    (allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>()).ToList(),
-                    null),
-                identity,
-                tags,
-                systemData,
-                location);
-        }
-
         /// <summary> Network access profile for Batch endpoint. </summary>
         /// <param name="defaultAction"> Default action for endpoint access. It is only applicable when publicNetworkAccess is enabled. </param>
         /// <param name="ipRules"> Array of IP ranges to filter client IP address. </param>
@@ -88,32 +30,6 @@ namespace Azure.ResourceManager.Batch.Models
             ipRules ??= new ChangeTrackingList<BatchIPRule>();
 
             return new BatchEndpointAccessProfile(defaultAction, ipRules.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the private endpoint connection. </param>
-        /// <param name="groupIds"> The value has one and only one group id. </param>
-        /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
-        /// <param name="privateEndpointId"> The ARM resource identifier of the private endpoint. This is of the form /subscriptions/{subscription}/resourceGroups/{group}/providers/Microsoft.Network/privateEndpoints/{privateEndpoint}. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <returns> A new <see cref="Batch.BatchPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BatchPrivateEndpointConnectionProvisioningState? provisioningState = default, IEnumerable<string> groupIds = default, BatchPrivateLinkServiceConnectionState connectionState = default, ResourceIdentifier privateEndpointId = default, ETag? etag = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BatchPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                provisioningState is null && groupIds is null && connectionState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, null), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, null),
-                etag,
-                tags);
         }
 
         /// <summary> The private link service connection state of the private endpoint connection. </summary>
@@ -133,32 +49,6 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchVmFamilyCoreQuota BatchVmFamilyCoreQuota(string name = default, int? coreQuota = default)
         {
             return new BatchVmFamilyCoreQuota(name, coreQuota, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="location"> The region in which to create the account. </param>
-        /// <param name="tags"> The user-specified tags associated with the account. </param>
-        /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
-        /// <param name="poolAllocationMode"> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Microsoft Entra ID. If the mode is UserSubscription, clients must use Microsoft Entra ID. The default is BatchService. </param>
-        /// <param name="keyVaultReference"> A reference to the Azure key vault associated with the Batch account. </param>
-        /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
-        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
-        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
-        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
-        /// <param name="identity"> The identity of the Batch account. </param>
-        /// <returns> A new <see cref="Models.BatchAccountCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static BatchAccountCreateOrUpdateContent BatchAccountCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = default, BatchAccountAutoStorageBaseConfiguration autoStorage = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, BatchAccountEncryptionConfiguration encryption = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BatchAccountCreateOrUpdateContent(location, tags, autoStorage is null && poolAllocationMode is null && keyVaultReference is null && publicNetworkAccess is null && networkProfile is null && encryption is null && allowedAuthenticationModes is null ? default : new BatchAccountCreateProperties(
-                autoStorage,
-                poolAllocationMode,
-                keyVaultReference,
-                publicNetworkAccess,
-                networkProfile,
-                encryption,
-                (allowedAuthenticationModes ?? new ChangeTrackingList<BatchAuthenticationMode>()).ToList(),
-                null), identity, additionalBinaryDataProperties: null);
         }
 
         /// <param name="tags"> The user-specified tags associated with the account. </param>
@@ -237,79 +127,6 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchApplicationPackageActivateContent BatchApplicationPackageActivateContent(string format = default)
         {
             return new BatchApplicationPackageActivateContent(format, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
-        /// <param name="lastModifiedOn"> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </param>
-        /// <param name="createdOn"> The creation time of the pool. </param>
-        /// <param name="provisioningState"> The current state of the pool. </param>
-        /// <param name="provisioningStateTransitOn"> The time at which the pool entered its current state. </param>
-        /// <param name="allocationState"> Whether the pool is resizing. </param>
-        /// <param name="allocationStateTransitionOn"> The time at which the pool entered its current allocation state. </param>
-        /// <param name="vmSize"> For information about available VM sizes, see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
-        /// <param name="currentDedicatedNodes"> The number of dedicated compute nodes currently in the pool. </param>
-        /// <param name="currentLowPriorityNodes"> The number of Spot/low-priority compute nodes currently in the pool. </param>
-        /// <param name="scaleSettings"> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </param>
-        /// <param name="autoScaleRun"> This property is set only if the pool automatically scales, i.e. autoScaleSettings are used. </param>
-        /// <param name="interNodeCommunication"> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to 'Disabled'. </param>
-        /// <param name="networkConfiguration"> The network configuration for a pool. </param>
-        /// <param name="taskSlotsPerNode"> The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
-        /// <param name="taskSchedulingPolicy"> If not specified, the default is spread. </param>
-        /// <param name="userAccounts"> The list of user accounts to be created on each node in the pool. </param>
-        /// <param name="metadata"> The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
-        /// <param name="startTask"> In an PATCH (update) operation, this property can be set to an empty object to remove the start task from the pool. </param>
-        /// <param name="applicationPackages"> Changes to application package references affect all new compute nodes joining the pool, but do not affect compute nodes that are already in the pool until they are rebooted or reimaged. There is a maximum of 10 application package references on any given pool. </param>
-        /// <param name="resizeOperationStatus"> Describes either the current operation (if the pool AllocationState is Resizing) or the previously completed operation (if the AllocationState is Steady). </param>
-        /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
-        /// <param name="upgradePolicy"> Describes an upgrade policy - automatic, manual, or rolling. </param>
-        /// <param name="deploymentVmConfiguration"> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </param>
-        /// <param name="identity"> The type of identity used for the Batch Pool. </param>
-        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
-        /// <param name="tags"> The tags of the resource. </param>
-        /// <returns> A new <see cref="Batch.BatchAccountPoolData"/> instance for mocking. </returns>
-        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, BatchTaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, UpgradePolicy upgradePolicy = default, BatchVmConfiguration deploymentVmConfiguration = default, ManagedServiceIdentity identity = default, ETag? etag = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new BatchAccountPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                displayName is null && lastModifiedOn is null && createdOn is null && provisioningState is null && provisioningStateTransitOn is null && allocationState is null && allocationStateTransitionOn is null && vmSize is null && currentDedicatedNodes is null && currentLowPriorityNodes is null && scaleSettings is null && autoScaleRun is null && interNodeCommunication is null && networkConfiguration is null && taskSlotsPerNode is null && taskSchedulingPolicy is null && userAccounts is null && metadata is null && startTask is null && applicationPackages is null && resizeOperationStatus is null && mountConfiguration is null && upgradePolicy is null && deploymentVmConfiguration is null ? default : new PoolProperties(
-                    displayName,
-                    lastModifiedOn,
-                    createdOn,
-                    provisioningState,
-                    provisioningStateTransitOn,
-                    allocationState,
-                    allocationStateTransitionOn,
-                    vmSize,
-                    new BatchDeploymentConfiguration(deploymentVmConfiguration, null),
-                    currentDedicatedNodes,
-                    currentLowPriorityNodes,
-                    scaleSettings,
-                    autoScaleRun,
-                    interNodeCommunication,
-                    networkConfiguration,
-                    taskSlotsPerNode,
-                    taskSchedulingPolicy,
-                    (userAccounts ?? new ChangeTrackingList<BatchUserAccount>()).ToList(),
-                    (metadata ?? new ChangeTrackingList<BatchAccountPoolMetadataItem>()).ToList(),
-                    startTask,
-                    (applicationPackages ?? new ChangeTrackingList<BatchApplicationPackageReference>()).ToList(),
-                    resizeOperationStatus,
-                    (mountConfiguration ?? new ChangeTrackingList<BatchMountConfiguration>()).ToList(),
-                    upgradePolicy,
-                    null),
-                identity,
-                etag,
-                tags);
         }
 
         /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </param>
@@ -515,9 +332,9 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="startOn"> The time when this resize operation was started. </param>
         /// <param name="errors"> This property is set only if an error occurred during the last pool resize, and only when the pool allocationState is Steady. </param>
         /// <returns> A new <see cref="Models.BatchResizeOperationStatus"/> instance for mocking. </returns>
-        public static BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, TimeSpan? resizeTimeout = default, BatchNodeDeallocationOption? nodeDeallocationOption = default, DateTimeOffset? startOn = default, IEnumerable<BatchResizeError> errors = default)
+        public static BatchResizeOperationStatus BatchResizeOperationStatus(int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, TimeSpan? resizeTimeout = default, BatchNodeDeallocationOption? nodeDeallocationOption = default, DateTimeOffset? startOn = default, IEnumerable<ResponseError> errors = default)
         {
-            errors ??= new ChangeTrackingList<BatchResizeError>();
+            errors ??= new ChangeTrackingList<ResponseError>();
 
             return new BatchResizeOperationStatus(
                 targetDedicatedNodes,
@@ -527,18 +344,6 @@ namespace Azure.ResourceManager.Batch.Models
                 startOn,
                 errors.ToList(),
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> An error that occurred when resizing a pool. </summary>
-        /// <param name="code"> An identifier for the error. Codes are invariant and are intended to be consumed programmatically. </param>
-        /// <param name="message"> A message describing the error, intended to be suitable for display in a user interface. </param>
-        /// <param name="details"> Additional details about the error. </param>
-        /// <returns> A new <see cref="Models.BatchResizeError"/> instance for mocking. </returns>
-        public static BatchResizeError BatchResizeError(string code = default, string message = default, IEnumerable<BatchResizeError> details = default)
-        {
-            details ??= new ChangeTrackingList<BatchResizeError>();
-
-            return new BatchResizeError(code, message, details.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Network security perimeter (NSP) configuration resource. </summary>
@@ -706,6 +511,279 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchNameAvailabilityResult BatchNameAvailabilityResult(bool? isNameAvailable = default, BatchNameUnavailableReason? reason = default, string message = default)
         {
             return new BatchNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="accountEndpoint"> The account endpoint used to interact with the Batch service. </param>
+        /// <param name="nodeManagementEndpoint"> The endpoint used by compute node to connect to the Batch node management service. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="poolAllocationMode"> The allocation mode for creating pools in the Batch account. </param>
+        /// <param name="keyVaultReference"> Identifies the Azure key vault associated with a Batch account. </param>
+        /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
+        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Batch account. </param>
+        /// <param name="autoStorage"> Contains information about the auto-storage account associated with a Batch account. </param>
+        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
+        /// <param name="dedicatedCoreQuota"> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
+        /// <param name="lowPriorityCoreQuota"> For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
+        /// <param name="dedicatedCoreQuotaPerVmFamily"> A list of the dedicated core quota per Virtual Machine family for the Batch account. For accounts with PoolAllocationMode set to UserSubscription, quota is managed on the subscription so this value is not returned. </param>
+        /// <param name="isDedicatedCoreQuotaPerVmFamilyEnforced"> If this flag is true, dedicated core quota is enforced via both the dedicatedCoreQuotaPerVMFamily and dedicatedCoreQuota properties on the account. If this flag is false, dedicated core quota is enforced only via the dedicatedCoreQuota property on the account and does not consider Virtual Machine family. </param>
+        /// <param name="poolQuota"> The pool quota for the Batch account. </param>
+        /// <param name="activeJobAndJobScheduleQuota"> The active job and job schedule quota for the Batch account. </param>
+        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
+        /// <param name="location"> The location of the resource. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <returns> A new <see cref="Batch.BatchAccountData"/> instance for mocking. </returns>
+        public static BatchAccountData BatchAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, string accountEndpoint = default, string nodeManagementEndpoint = default, BatchProvisioningState? provisioningState = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, IEnumerable<BatchPrivateEndpointConnectionData> privateEndpointConnections = default, BatchAccountAutoStorageConfiguration autoStorage = default, BatchAccountEncryptionConfiguration encryption = default, int? dedicatedCoreQuota = default, int? lowPriorityCoreQuota = default, IEnumerable<BatchVmFamilyCoreQuota> dedicatedCoreQuotaPerVmFamily = default, bool? isDedicatedCoreQuotaPerVmFamilyEnforced = default, int? poolQuota = default, int? activeJobAndJobScheduleQuota = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default)
+        {
+            privateEndpointConnections ??= new ChangeTrackingList<BatchPrivateEndpointConnectionData>();
+            dedicatedCoreQuotaPerVmFamily ??= new ChangeTrackingList<BatchVmFamilyCoreQuota>();
+            allowedAuthenticationModes ??= new ChangeTrackingList<BatchAuthenticationMode>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchAccountData(
+                id,
+                name,
+                resourceType,
+                additionalBinaryDataProperties: null,
+                default,
+                identity,
+                tags,
+                systemData,
+                location);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BatchIPRule"/>. </summary>
+        /// <param name="action"> Action when client IP address is matched. </param>
+        /// <param name="value"> IPv4 address, or IPv4 address range in CIDR format. </param>
+        /// <returns> A new <see cref="Models.BatchIPRule"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchIPRule BatchIPRule(BatchIPRuleAction action, string value)
+        {
+            return new BatchIPRule(action, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection. </param>
+        /// <param name="privateEndpointId"> The private endpoint of the private endpoint connection. </param>
+        /// <param name="groupIds"> The value has one and only one group id. </param>
+        /// <param name="connectionState"> The private link service connection state of the private endpoint connection. </param>
+        /// <returns> A new <see cref="Batch.BatchPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static BatchPrivateEndpointConnectionData BatchPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, BatchPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, IEnumerable<string> groupIds = default, BatchPrivateLinkServiceConnectionState connectionState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            groupIds ??= new ChangeTrackingList<string>();
+
+            return new BatchPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BatchAccountCreateOrUpdateContent"/>. </summary>
+        /// <param name="location"> The region in which to create the account. </param>
+        /// <param name="tags"> The user-specified tags associated with the account. </param>
+        /// <param name="identity"> The identity of the Batch account. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="autoStorage"> The properties related to the auto-storage account. </param>
+        /// <param name="poolAllocationMode"> The pool allocation mode also affects how clients may authenticate to the Batch Service API. If the mode is BatchService, clients may authenticate using access keys or Microsoft Entra ID. If the mode is UserSubscription, clients must use Microsoft Entra ID. The default is BatchService. </param>
+        /// <param name="keyVaultReference"> A reference to the Azure key vault associated with the Batch account. </param>
+        /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
+        /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
+        /// <param name="encryption"> Configures how customer data is encrypted inside the Batch account. By default, accounts are encrypted using a Microsoft managed key. For additional control, a customer-managed key can be used instead. </param>
+        /// <param name="allowedAuthenticationModes"> List of allowed authentication modes for the Batch account that can be used to authenticate with the data plane. This does not affect authentication with the control plane. </param>
+        /// <returns> A new <see cref="Models.BatchAccountCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static BatchAccountCreateOrUpdateContent BatchAccountCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, BatchAccountAutoStorageBaseConfiguration autoStorage = default, BatchAccountPoolAllocationMode? poolAllocationMode = default, BatchKeyVaultReference keyVaultReference = default, BatchPublicNetworkAccess? publicNetworkAccess = default, BatchNetworkProfile networkProfile = default, BatchAccountEncryptionConfiguration encryption = default, IEnumerable<BatchAuthenticationMode> allowedAuthenticationModes = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            allowedAuthenticationModes ??= new ChangeTrackingList<BatchAuthenticationMode>();
+
+            return new BatchAccountCreateOrUpdateContent(location, tags, default, identity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="displayName"> The display name for the application. </param>
+        /// <param name="allowUpdates"> A value indicating whether packages within the application may be overwritten using the same version string. </param>
+        /// <param name="defaultVersion"> The package to use if a client requests the application but does not specify a version. This property can only be set to the name of an existing package. </param>
+        /// <returns> A new <see cref="Batch.BatchApplicationData"/> instance for mocking. </returns>
+        public static BatchApplicationData BatchApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, string displayName = default, bool? allowUpdates = default, string defaultVersion = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationPackageData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="state"> The current state of the application package. </param>
+        /// <param name="format"> The format of the application package, if the package is active. </param>
+        /// <param name="storageUri"> The URL for the application package in Azure Storage. </param>
+        /// <param name="storageUriExpireOn"> The UTC time at which the Azure Storage URL will expire. </param>
+        /// <param name="lastActivatedOn"> The time at which the package was last activated, if the package is active. </param>
+        /// <returns> A new <see cref="Batch.BatchApplicationPackageData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchApplicationPackageData BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchApplicationPackageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountDetectorData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="value"> A base64 encoded string that represents the content of a detector. </param>
+        /// <returns> A new <see cref="Batch.BatchAccountDetectorData"/> instance for mocking. </returns>
+        public static BatchAccountDetectorData BatchAccountDetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, string value = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new BatchAccountDetectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.BatchAccessRule"/>. </summary>
+        /// <param name="name"> Name of the access rule. </param>
+        /// <param name="properties"> Properties of Access Rule. </param>
+        /// <returns> A new <see cref="Models.BatchAccessRule"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BatchAccessRule BatchAccessRule(string name, BatchAccessRuleProperties properties)
+        {
+            return new BatchAccessRule(name, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchAccountPoolData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> The type of identity used for the Batch Pool. Current supported identity types: UserAssigned, None. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="displayName"> The display name need not be unique and can contain any Unicode characters up to a maximum length of 1024. </param>
+        /// <param name="lastModifiedOn"> This is the last time at which the pool level data, such as the targetDedicatedNodes or autoScaleSettings, changed. It does not factor in node-level changes such as a compute node changing state. </param>
+        /// <param name="createdOn"> The creation time of the pool. </param>
+        /// <param name="provisioningState"> The current state of the pool. </param>
+        /// <param name="provisioningStateTransitOn"> The time at which the pool entered its current state. </param>
+        /// <param name="allocationState"> Whether the pool is resizing. </param>
+        /// <param name="allocationStateTransitionOn"> The time at which the pool entered its current allocation state. </param>
+        /// <param name="vmSize"> For information about available VM sizes, see Sizes for Virtual Machines in Azure (https://learn.microsoft.com/azure/virtual-machines/sizes/overview). Batch supports all Azure VM sizes except STANDARD_A0 and those with premium storage (STANDARD_GS, STANDARD_DS, and STANDARD_DSV2 series). </param>
+        /// <param name="deploymentVmConfiguration"> Deployment configuration properties. </param>
+        /// <param name="currentDedicatedNodes"> The number of dedicated compute nodes currently in the pool. </param>
+        /// <param name="currentLowPriorityNodes"> The number of Spot/low-priority compute nodes currently in the pool. </param>
+        /// <param name="scaleSettings"> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </param>
+        /// <param name="autoScaleRun"> This property is set only if the pool automatically scales, i.e. autoScaleSettings are used. </param>
+        /// <param name="interNodeCommunication"> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to 'Disabled'. </param>
+        /// <param name="networkConfiguration"> The network configuration for a pool. </param>
+        /// <param name="taskSlotsPerNode"> The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
+        /// <param name="taskSchedulingPolicy"> If not specified, the default is spread. </param>
+        /// <param name="userAccounts"> The list of user accounts to be created on each node in the pool. </param>
+        /// <param name="metadata"> The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
+        /// <param name="startTask"> In an PATCH (update) operation, this property can be set to an empty object to remove the start task from the pool. </param>
+        /// <param name="applicationPackages"> Changes to application package references affect all new compute nodes joining the pool, but do not affect compute nodes that are already in the pool until they are rebooted or reimaged. There is a maximum of 10 application package references on any given pool. </param>
+        /// <param name="resizeOperationStatus"> Describes either the current operation (if the pool AllocationState is Resizing) or the previously completed operation (if the AllocationState is Steady). </param>
+        /// <param name="mountConfiguration"> This supports Azure Files, NFS, CIFS/SMB, and Blobfuse. </param>
+        /// <param name="upgradePolicy"> Describes an upgrade policy - automatic, manual, or rolling. </param>
+        /// <returns> A new <see cref="Batch.BatchAccountPoolData"/> instance for mocking. </returns>
+        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, ETag? etag = default, IDictionary<string, string> tags = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, BatchVmConfiguration deploymentVmConfiguration = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, BatchTaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, UpgradePolicy upgradePolicy = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            userAccounts ??= new ChangeTrackingList<BatchUserAccount>();
+            metadata ??= new ChangeTrackingList<BatchAccountPoolMetadataItem>();
+            applicationPackages ??= new ChangeTrackingList<BatchApplicationPackageReference>();
+            mountConfiguration ??= new ChangeTrackingList<BatchMountConfiguration>();
+
+            return new BatchAccountPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                identity,
+                default,
+                tags);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateLinkResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
+        /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="groupId"> The group id is used to establish the private link connection. </param>
+        /// <param name="requiredMembers"> The list of required members that are used to establish the private link connection. </param>
+        /// <param name="requiredZoneNames"> The list of required zone names for the private DNS resource name. </param>
+        /// <returns> A new <see cref="Batch.BatchPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static BatchPrivateLinkResourceData BatchPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, IDictionary<string, string> tags = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new BatchPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                default,
+                tags);
         }
     }
 }

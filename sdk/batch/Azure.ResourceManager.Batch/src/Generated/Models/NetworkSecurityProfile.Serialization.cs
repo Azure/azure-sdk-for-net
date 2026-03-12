@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.Batch.Models
             }
             string name = default;
             int? accessRulesVersion = default;
-            IList<BatchAccessRule> accessRules = default;
+            IReadOnlyList<BatchAccessRule> accessRules = default;
             int? diagnosticSettingsVersion = default;
-            IList<string> enabledLogCategories = default;
+            IReadOnlyList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
