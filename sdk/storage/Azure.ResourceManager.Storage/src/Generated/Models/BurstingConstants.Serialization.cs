@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(BurstingConstants)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(BurstFloorIops))
+            if (options.Format != "W" && Optional.IsDefined(BurstFloorIOPS))
             {
                 writer.WritePropertyName("burstFloorIOPS"u8);
-                writer.WriteNumberValue(BurstFloorIops.Value);
+                writer.WriteNumberValue(BurstFloorIOPS.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(BurstIOScalar))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            int? burstFloorIops = default;
+            int? burstFloorIOPS = default;
             double? burstIOScalar = default;
             int? burstTimeframeSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    burstFloorIops = prop.Value.GetInt32();
+                    burstFloorIOPS = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("burstIOScalar"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BurstingConstants(burstFloorIops, burstIOScalar, burstTimeframeSeconds, additionalBinaryDataProperties);
+            return new BurstingConstants(burstFloorIOPS, burstIOScalar, burstTimeframeSeconds, additionalBinaryDataProperties);
         }
     }
 }

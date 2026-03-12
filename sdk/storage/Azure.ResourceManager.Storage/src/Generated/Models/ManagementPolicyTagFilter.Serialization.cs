@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("op"u8);
-            writer.WriteStringValue(Operator);
+            writer.WriteStringValue(Op);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string name = default;
-            string @operator = default;
+            string op = default;
             string value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("op"u8))
                 {
-                    @operator = prop.Value.GetString();
+                    op = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagementPolicyTagFilter(name, @operator, value, additionalBinaryDataProperties);
+            return new ManagementPolicyTagFilter(name, op, value, additionalBinaryDataProperties);
         }
     }
 }

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(FileShareRecommendations)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(BaseIops))
+            if (options.Format != "W" && Optional.IsDefined(BaseIOPS))
             {
                 writer.WritePropertyName("baseIOPS"u8);
-                writer.WriteNumberValue(BaseIops.Value);
+                writer.WriteNumberValue(BaseIOPS.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(IoScalar))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            int? baseIops = default;
+            int? baseIOPS = default;
             double? ioScalar = default;
             int? baseBandwidthMiBPerSec = default;
             double? bandwidthScalar = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    baseIops = prop.Value.GetInt32();
+                    baseIOPS = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("ioScalar"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileShareRecommendations(baseIops, ioScalar, baseBandwidthMiBPerSec, bandwidthScalar, additionalBinaryDataProperties);
+            return new FileShareRecommendations(baseIOPS, ioScalar, baseBandwidthMiBPerSec, bandwidthScalar, additionalBinaryDataProperties);
         }
     }
 }

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageServiceAccessPolicy"/>. </summary>
         /// <param name="startOn"> Start time of the access policy. </param>
-        /// <param name="expireOn"> Expiry time of the access policy. </param>
+        /// <param name="expiryOn"> Expiry time of the access policy. </param>
         /// <param name="permission"> List of abbreviated permissions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageServiceAccessPolicy(DateTimeOffset? startOn, DateTimeOffset? expireOn, string permission, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageServiceAccessPolicy(DateTimeOffset? startOn, DateTimeOffset? expiryOn, string permission, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
-            ExpireOn = expireOn;
+            ExpiryOn = expiryOn;
             Permission = permission;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Expiry time of the access policy. </summary>
         [WirePath("expiryTime")]
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiryOn { get; set; }
 
         /// <summary> List of abbreviated permissions. </summary>
         [WirePath("permission")]

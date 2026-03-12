@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(PrimaryLocation))
             {
                 writer.WritePropertyName("primaryLocation"u8);
-                writer.WriteStringValue(PrimaryLocation.Value);
+                writer.WriteStringValue(PrimaryLocation);
             }
             if (options.Format != "W" && Optional.IsDefined(StatusOfPrimary))
             {
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(SecondaryLocation))
             {
                 writer.WritePropertyName("secondaryLocation"u8);
-                writer.WriteStringValue(SecondaryLocation.Value);
+                writer.WriteStringValue(SecondaryLocation);
             }
             if (options.Format != "W" && Optional.IsDefined(StatusOfSecondary))
             {
@@ -175,10 +174,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("isLocalUserEnabled"u8);
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
-            if (Optional.IsDefined(IsExtendedGroupEnabled))
+            if (Optional.IsDefined(EnableExtendedGroups))
             {
                 writer.WritePropertyName("enableExtendedGroups"u8);
-                writer.WriteBooleanValue(IsExtendedGroupEnabled.Value);
+                writer.WriteBooleanValue(EnableExtendedGroups.Value);
             }
             if (Optional.IsDefined(IsHnsEnabled))
             {
@@ -190,10 +189,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("geoReplicationStats"u8);
                 writer.WriteObjectValue(GeoReplicationStats, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsFailoverInProgress))
+            if (options.Format != "W" && Optional.IsDefined(FailoverInProgress))
             {
                 writer.WritePropertyName("failoverInProgress"u8);
-                writer.WriteBooleanValue(IsFailoverInProgress.Value);
+                writer.WriteBooleanValue(FailoverInProgress.Value);
             }
             if (Optional.IsDefined(LargeFileSharesState))
             {
@@ -240,20 +239,20 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("allowSharedKeyAccess"u8);
                 writer.WriteBooleanValue(AllowSharedKeyAccess.Value);
             }
-            if (Optional.IsDefined(IsNfsV3Enabled))
+            if (Optional.IsDefined(EnableNfsV3))
             {
                 writer.WritePropertyName("isNfsV3Enabled"u8);
-                writer.WriteBooleanValue(IsNfsV3Enabled.Value);
+                writer.WriteBooleanValue(EnableNfsV3.Value);
             }
             if (Optional.IsDefined(AllowCrossTenantReplication))
             {
                 writer.WritePropertyName("allowCrossTenantReplication"u8);
                 writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
             }
-            if (Optional.IsDefined(IsDefaultToOAuthAuthentication))
+            if (Optional.IsDefined(DefaultToOAuthAuthentication))
             {
                 writer.WritePropertyName("defaultToOAuthAuthentication"u8);
-                writer.WriteBooleanValue(IsDefaultToOAuthAuthentication.Value);
+                writer.WriteBooleanValue(DefaultToOAuthAuthentication.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -285,10 +284,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("isSkuConversionBlocked"u8);
                 writer.WriteBooleanValue(IsSkuConversionBlocked.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsAccountMigrationInProgress))
+            if (options.Format != "W" && Optional.IsDefined(AccountMigrationInProgress))
             {
                 writer.WritePropertyName("accountMigrationInProgress"u8);
-                writer.WriteBooleanValue(IsAccountMigrationInProgress.Value);
+                writer.WriteBooleanValue(AccountMigrationInProgress.Value);
             }
             if (Optional.IsDefined(GeoPriorityReplicationStatus))
             {
@@ -349,10 +348,10 @@ namespace Azure.ResourceManager.Storage.Models
             }
             StorageAccountProvisioningState? provisioningState = default;
             StorageAccountEndpoints primaryEndpoints = default;
-            AzureLocation? primaryLocation = default;
+            string primaryLocation = default;
             StorageAccountStatus? statusOfPrimary = default;
             DateTimeOffset? lastGeoFailoverOn = default;
-            AzureLocation? secondaryLocation = default;
+            string secondaryLocation = default;
             StorageAccountStatus? statusOfSecondary = default;
             DateTimeOffset? createdOn = default;
             StorageCustomDomain customDomain = default;
@@ -367,10 +366,10 @@ namespace Azure.ResourceManager.Storage.Models
             StorageAccountNetworkRuleSet networkRuleSet = default;
             bool? isSftpEnabled = default;
             bool? isLocalUserEnabled = default;
-            bool? isExtendedGroupEnabled = default;
+            bool? enableExtendedGroups = default;
             bool? isHnsEnabled = default;
             GeoReplicationStatistics geoReplicationStats = default;
-            bool? isFailoverInProgress = default;
+            bool? failoverInProgress = default;
             LargeFileSharesState? largeFileSharesState = default;
             IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections = default;
             StorageRoutingPreference routingPreference = default;
@@ -379,16 +378,16 @@ namespace Azure.ResourceManager.Storage.Models
             bool? allowBlobPublicAccess = default;
             StorageMinimumTlsVersion? minimumTlsVersion = default;
             bool? allowSharedKeyAccess = default;
-            bool? isNfsV3Enabled = default;
+            bool? enableNfsV3 = default;
             bool? allowCrossTenantReplication = default;
-            bool? isDefaultToOAuthAuthentication = default;
+            bool? defaultToOAuthAuthentication = default;
             StoragePublicNetworkAccess? publicNetworkAccess = default;
             ImmutableStorageAccount immutableStorageWithVersioning = default;
             AllowedCopyScope? allowedCopyScope = default;
             StorageAccountSkuConversionStatus storageAccountSkuConversionStatus = default;
             StorageDnsEndpointType? dnsEndpointType = default;
             bool? isSkuConversionBlocked = default;
-            bool? isAccountMigrationInProgress = default;
+            bool? accountMigrationInProgress = default;
             GeoPriorityReplicationStatus geoPriorityReplicationStatus = default;
             StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices = default;
             StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties = default;
@@ -415,11 +414,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("primaryLocation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    primaryLocation = new AzureLocation(prop.Value.GetString());
+                    primaryLocation = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("statusOfPrimary"u8))
@@ -442,11 +437,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("secondaryLocation"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    secondaryLocation = new AzureLocation(prop.Value.GetString());
+                    secondaryLocation = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("statusOfSecondary"u8))
@@ -581,7 +572,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isExtendedGroupEnabled = prop.Value.GetBoolean();
+                    enableExtendedGroups = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isHnsEnabled"u8))
@@ -608,7 +599,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isFailoverInProgress = prop.Value.GetBoolean();
+                    failoverInProgress = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("largeFileSharesState"u8))
@@ -694,7 +685,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isNfsV3Enabled = prop.Value.GetBoolean();
+                    enableNfsV3 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("allowCrossTenantReplication"u8))
@@ -712,7 +703,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isDefaultToOAuthAuthentication = prop.Value.GetBoolean();
+                    defaultToOAuthAuthentication = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -775,7 +766,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isAccountMigrationInProgress = prop.Value.GetBoolean();
+                    accountMigrationInProgress = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("geoPriorityReplicationStatus"u8))
@@ -831,10 +822,10 @@ namespace Azure.ResourceManager.Storage.Models
                 networkRuleSet,
                 isSftpEnabled,
                 isLocalUserEnabled,
-                isExtendedGroupEnabled,
+                enableExtendedGroups,
                 isHnsEnabled,
                 geoReplicationStats,
-                isFailoverInProgress,
+                failoverInProgress,
                 largeFileSharesState,
                 privateEndpointConnections ?? new ChangeTrackingList<StoragePrivateEndpointConnectionData>(),
                 routingPreference,
@@ -843,16 +834,16 @@ namespace Azure.ResourceManager.Storage.Models
                 allowBlobPublicAccess,
                 minimumTlsVersion,
                 allowSharedKeyAccess,
-                isNfsV3Enabled,
+                enableNfsV3,
                 allowCrossTenantReplication,
-                isDefaultToOAuthAuthentication,
+                defaultToOAuthAuthentication,
                 publicNetworkAccess,
                 immutableStorageWithVersioning,
                 allowedCopyScope,
                 storageAccountSkuConversionStatus,
                 dnsEndpointType,
                 isSkuConversionBlocked,
-                isAccountMigrationInProgress,
+                accountMigrationInProgress,
                 geoPriorityReplicationStatus,
                 allowSharedKeyAccessForServices,
                 dataCollaborationPolicyProperties,

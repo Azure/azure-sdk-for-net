@@ -104,21 +104,21 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPRules))
+            if (Optional.IsCollectionDefined(IpRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (StorageAccountIPRule item in IPRules)
+                foreach (StorageAccountIPRule item in IpRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IPv6Rules))
+            if (Optional.IsCollectionDefined(Ipv6Rules))
             {
                 writer.WritePropertyName("ipv6Rules"u8);
                 writer.WriteStartArray();
-                foreach (StorageAccountIPRule item in IPv6Rules)
+                foreach (StorageAccountIPRule item in Ipv6Rules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Storage.Models
             IList<StorageAccountResourceAccessRule> resourceAccessRules = default;
             IList<StorageAccountVirtualNetworkRule> virtualNetworkRules = default;
             IList<StorageAccountIPRule> ipRules = default;
-            IList<StorageAccountIPRule> iPv6Rules = default;
+            IList<StorageAccountIPRule> ipv6Rules = default;
             StorageNetworkDefaultAction defaultAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         array.Add(StorageAccountIPRule.DeserializeStorageAccountIPRule(item, options));
                     }
-                    iPv6Rules = array;
+                    ipv6Rules = array;
                     continue;
                 }
                 if (prop.NameEquals("defaultAction"u8))
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Storage.Models
                 resourceAccessRules ?? new ChangeTrackingList<StorageAccountResourceAccessRule>(),
                 virtualNetworkRules ?? new ChangeTrackingList<StorageAccountVirtualNetworkRule>(),
                 ipRules ?? new ChangeTrackingList<StorageAccountIPRule>(),
-                iPv6Rules ?? new ChangeTrackingList<StorageAccountIPRule>(),
+                ipv6Rules ?? new ChangeTrackingList<StorageAccountIPRule>(),
                 defaultAction,
                 additionalBinaryDataProperties);
         }

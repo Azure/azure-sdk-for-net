@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LegalHoldProperties"/>. </summary>
-        public LegalHoldProperties()
+        internal LegalHoldProperties()
         {
             Tags = new ChangeTrackingList<LegalHoldTag>();
         }
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Protected append blob writes history. </summary>
         [WirePath("protectedAppendWritesHistory")]
-        public ProtectedAppendWritesHistory ProtectedAppendWritesHistory { get; set; }
+        public ProtectedAppendWritesHistory ProtectedAppendWritesHistory { get; }
     }
 }

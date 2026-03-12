@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -113,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -189,7 +187,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             StorageSku sku = default;
             IDictionary<string, string> tags = default;
-            ManagedServiceIdentity identity = default;
+            StorageIdentity identity = default;
             StorageAccountPropertiesUpdateParameters properties = default;
             StorageKind? kind = default;
             IList<string> zones = default;
@@ -233,7 +231,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
+                    identity = StorageIdentity.DeserializeStorageIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

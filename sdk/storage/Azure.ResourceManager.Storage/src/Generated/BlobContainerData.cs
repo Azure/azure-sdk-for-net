@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerProperties"> Properties of the blob container. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerProperties containerProperties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerProperties containerProperties, string eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             ContainerProperties = containerProperties;
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
 
         /// <summary> The version of the deleted blob container. </summary>
         [WirePath("properties.version")]
@@ -60,11 +59,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Indicates whether the blob container was deleted. </summary>
         [WirePath("properties.deleted")]
-        public bool? IsDeleted
+        public bool? Deleted
         {
             get
             {
-                return ContainerProperties is null ? default : ContainerProperties.IsDeleted;
+                return ContainerProperties is null ? default : ContainerProperties.Deleted;
             }
         }
 
@@ -108,11 +107,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Block override of encryption scope from the container default. </summary>
         [WirePath("properties.denyEncryptionScopeOverride")]
-        public bool? PreventEncryptionScopeOverride
+        public bool? DenyEncryptionScopeOverride
         {
             get
             {
-                return ContainerProperties is null ? default : ContainerProperties.PreventEncryptionScopeOverride;
+                return ContainerProperties is null ? default : ContainerProperties.DenyEncryptionScopeOverride;
             }
             set
             {
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     ContainerProperties = new ContainerProperties();
                 }
-                ContainerProperties.PreventEncryptionScopeOverride = value.Value;
+                ContainerProperties.DenyEncryptionScopeOverride = value.Value;
             }
         }
 

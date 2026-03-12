@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -27,26 +26,26 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="storageAccountResourceId"> Full resource id of the original storage account. </param>
         /// <param name="location"> Location of the deleted account. </param>
         /// <param name="restoreReference"> Can be used to attempt recovering this deleted account via PutStorageAccount API. </param>
-        /// <param name="createdOn"> Creation time of the deleted account. </param>
-        /// <param name="deletedOn"> Deletion time of the deleted account. </param>
+        /// <param name="creationTime"> Creation time of the deleted account. </param>
+        /// <param name="deletionTime"> Deletion time of the deleted account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedAccountProperties(ResourceIdentifier storageAccountResourceId, AzureLocation? location, string restoreReference, string createdOn, string deletedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedAccountProperties(string storageAccountResourceId, string location, string restoreReference, string creationTime, string deletionTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StorageAccountResourceId = storageAccountResourceId;
             Location = location;
             RestoreReference = restoreReference;
-            CreatedOn = createdOn;
-            DeletedOn = deletedOn;
+            CreationTime = creationTime;
+            DeletionTime = deletionTime;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Full resource id of the original storage account. </summary>
         [WirePath("storageAccountResourceId")]
-        public ResourceIdentifier StorageAccountResourceId { get; }
+        public string StorageAccountResourceId { get; }
 
         /// <summary> Location of the deleted account. </summary>
         [WirePath("location")]
-        public AzureLocation? Location { get; }
+        public string Location { get; }
 
         /// <summary> Can be used to attempt recovering this deleted account via PutStorageAccount API. </summary>
         [WirePath("restoreReference")]
@@ -54,10 +53,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Creation time of the deleted account. </summary>
         [WirePath("creationTime")]
-        public string CreatedOn { get; }
+        public string CreationTime { get; }
 
         /// <summary> Deletion time of the deleted account. </summary>
         [WirePath("deletionTime")]
-        public string DeletedOn { get; }
+        public string DeletionTime { get; }
     }
 }

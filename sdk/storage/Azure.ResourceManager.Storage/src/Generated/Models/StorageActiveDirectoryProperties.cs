@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="samAccountName"> Specifies the Active Directory SAMAccountName for Azure Storage. If directoryServiceOptions is set to AD (AD DS authentication), this property is optional. If provided, accountType should also be provided. For directoryServiceOptions AADDS (Entra DS authentication) or AADKERB (Entra authentication), this property can be omitted. </param>
         /// <param name="accountType"> Specifies the Active Directory account type for Azure Storage. If directoryServiceOptions is set to AD (AD DS authentication), this property is optional. If provided, samAccountName should also be provided. For directoryServiceOptions AADDS (Entra DS authentication) or AADKERB (Entra authentication), this property can be omitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, Guid? activeDirectoryDomainGuid, string domainSid, string azureStorageSid, string samAccountName, ActiveDirectoryAccountType? accountType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageActiveDirectoryProperties(string domainName, string netBiosDomainName, string forestName, string activeDirectoryDomainGuid, string domainSid, string azureStorageSid, string samAccountName, ActiveDirectoryAccountType? accountType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DomainName = domainName;
             NetBiosDomainName = netBiosDomainName;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Specifies the domain GUID. If directoryServiceOptions is set to AD (AD DS authentication), this property is required. If directoryServiceOptions is set to AADDS (Entra DS authentication), this property can be omitted. If directoryServiceOptions is set to AADKERB (Entra authentication), this property is optional; it is needed to support configuration of directory- and file-level permissions via Windows File Explorer, but is not required for authentication. </summary>
         [WirePath("domainGuid")]
-        public Guid? ActiveDirectoryDomainGuid { get; set; }
+        public string ActiveDirectoryDomainGuid { get; set; }
 
         /// <summary> Specifies the security identifier (SID) of the AD domain. If directoryServiceOptions is set to AD (AD DS authentication), this property is required. Otherwise, it can be omitted. </summary>
         [WirePath("domainSid")]

@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("isLocalUserEnabled"u8);
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
-            if (Optional.IsDefined(IsExtendedGroupEnabled))
+            if (Optional.IsDefined(EnableExtendedGroups))
             {
                 writer.WritePropertyName("enableExtendedGroups"u8);
-                writer.WriteBooleanValue(IsExtendedGroupEnabled.Value);
+                writer.WriteBooleanValue(EnableExtendedGroups.Value);
             }
             if (Optional.IsDefined(IsHnsEnabled))
             {
@@ -174,20 +174,20 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("allowSharedKeyAccess"u8);
                 writer.WriteBooleanValue(AllowSharedKeyAccess.Value);
             }
-            if (Optional.IsDefined(IsNfsV3Enabled))
+            if (Optional.IsDefined(EnableNfsV3))
             {
                 writer.WritePropertyName("isNfsV3Enabled"u8);
-                writer.WriteBooleanValue(IsNfsV3Enabled.Value);
+                writer.WriteBooleanValue(EnableNfsV3.Value);
             }
             if (Optional.IsDefined(AllowCrossTenantReplication))
             {
                 writer.WritePropertyName("allowCrossTenantReplication"u8);
                 writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
             }
-            if (Optional.IsDefined(IsDefaultToOAuthAuthentication))
+            if (Optional.IsDefined(DefaultToOAuthAuthentication))
             {
                 writer.WritePropertyName("defaultToOAuthAuthentication"u8);
-                writer.WriteBooleanValue(IsDefaultToOAuthAuthentication.Value);
+                writer.WriteBooleanValue(DefaultToOAuthAuthentication.Value);
             }
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Storage.Models
             bool? enableHttpsTrafficOnly = default;
             bool? isSftpEnabled = default;
             bool? isLocalUserEnabled = default;
-            bool? isExtendedGroupEnabled = default;
+            bool? enableExtendedGroups = default;
             bool? isHnsEnabled = default;
             LargeFileSharesState? largeFileSharesState = default;
             StorageRoutingPreference routingPreference = default;
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.Storage.Models
             bool? allowBlobPublicAccess = default;
             StorageMinimumTlsVersion? minimumTlsVersion = default;
             bool? allowSharedKeyAccess = default;
-            bool? isNfsV3Enabled = default;
+            bool? enableNfsV3 = default;
             bool? allowCrossTenantReplication = default;
-            bool? isDefaultToOAuthAuthentication = default;
+            bool? defaultToOAuthAuthentication = default;
             ImmutableStorageAccount immutableStorageWithVersioning = default;
             StorageDnsEndpointType? dnsEndpointType = default;
             GeoPriorityReplicationStatus geoPriorityReplicationStatus = default;
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isExtendedGroupEnabled = prop.Value.GetBoolean();
+                    enableExtendedGroups = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("isHnsEnabled"u8))
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isNfsV3Enabled = prop.Value.GetBoolean();
+                    enableNfsV3 = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("allowCrossTenantReplication"u8))
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isDefaultToOAuthAuthentication = prop.Value.GetBoolean();
+                    defaultToOAuthAuthentication = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("immutableStorageWithVersioning"u8))
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Storage.Models
                 enableHttpsTrafficOnly,
                 isSftpEnabled,
                 isLocalUserEnabled,
-                isExtendedGroupEnabled,
+                enableExtendedGroups,
                 isHnsEnabled,
                 largeFileSharesState,
                 routingPreference,
@@ -565,9 +565,9 @@ namespace Azure.ResourceManager.Storage.Models
                 allowBlobPublicAccess,
                 minimumTlsVersion,
                 allowSharedKeyAccess,
-                isNfsV3Enabled,
+                enableNfsV3,
                 allowCrossTenantReplication,
-                isDefaultToOAuthAuthentication,
+                defaultToOAuthAuthentication,
                 immutableStorageWithVersioning,
                 dnsEndpointType,
                 geoPriorityReplicationStatus,

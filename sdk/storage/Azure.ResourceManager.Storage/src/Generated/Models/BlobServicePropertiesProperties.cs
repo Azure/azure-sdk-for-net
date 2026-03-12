@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="deleteRetentionPolicy"> The blob service properties for blob soft delete. </param>
         /// <param name="staticWebsite"> The static website properties for blob storage. </param>
         /// <param name="isVersioningEnabled"> Versioning is enabled if set to true. </param>
-        /// <param name="isAutomaticSnapshotPolicyEnabled"> Deprecated in favor of isVersioningEnabled property. </param>
+        /// <param name="automaticSnapshotPolicyEnabled"> Deprecated in favor of isVersioningEnabled property. </param>
         /// <param name="changeFeed"> The blob service properties for change feed events. </param>
         /// <param name="restorePolicy"> The blob service properties for blob restore policy. </param>
         /// <param name="containerDeleteRetentionPolicy"> The blob service properties for container soft delete. </param>
         /// <param name="lastAccessTimeTrackingPolicy"> The blob service property to configure last access time based tracking policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobServicePropertiesProperties(StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, StaticWebsite staticWebsite, bool? isVersioningEnabled, bool? isAutomaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobServicePropertiesProperties(StorageCorsRules cors, string defaultServiceVersion, DeleteRetentionPolicy deleteRetentionPolicy, StaticWebsite staticWebsite, bool? isVersioningEnabled, bool? automaticSnapshotPolicyEnabled, BlobServiceChangeFeed changeFeed, RestorePolicy restorePolicy, DeleteRetentionPolicy containerDeleteRetentionPolicy, LastAccessTimeTrackingPolicy lastAccessTimeTrackingPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cors = cors;
             DefaultServiceVersion = defaultServiceVersion;
             DeleteRetentionPolicy = deleteRetentionPolicy;
             StaticWebsite = staticWebsite;
             IsVersioningEnabled = isVersioningEnabled;
-            IsAutomaticSnapshotPolicyEnabled = isAutomaticSnapshotPolicyEnabled;
+            AutomaticSnapshotPolicyEnabled = automaticSnapshotPolicyEnabled;
             ChangeFeed = changeFeed;
             RestorePolicy = restorePolicy;
             ContainerDeleteRetentionPolicy = containerDeleteRetentionPolicy;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Deprecated in favor of isVersioningEnabled property. </summary>
         [WirePath("automaticSnapshotPolicyEnabled")]
-        public bool? IsAutomaticSnapshotPolicyEnabled { get; set; }
+        public bool? AutomaticSnapshotPolicyEnabled { get; set; }
 
         /// <summary> The blob service properties for change feed events. </summary>
         [WirePath("changeFeed")]

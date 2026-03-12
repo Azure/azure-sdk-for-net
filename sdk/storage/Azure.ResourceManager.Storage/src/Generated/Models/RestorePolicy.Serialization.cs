@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(RestorePolicy)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
+            writer.WriteBooleanValue(Enabled);
             if (Optional.IsDefined(Days))
             {
                 writer.WritePropertyName("days"u8);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            bool isEnabled = default;
+            bool enabled = default;
             int? days = default;
             DateTimeOffset? lastEnabledOn = default;
             DateTimeOffset? minRestoreOn = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (prop.NameEquals("enabled"u8))
                 {
-                    isEnabled = prop.Value.GetBoolean();
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("days"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorePolicy(isEnabled, days, lastEnabledOn, minRestoreOn, additionalBinaryDataProperties);
+            return new RestorePolicy(enabled, days, lastEnabledOn, minRestoreOn, additionalBinaryDataProperties);
         }
     }
 }

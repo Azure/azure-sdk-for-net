@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(EncryptionInTransit)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsRequired))
+            if (Optional.IsDefined(Required))
             {
                 writer.WritePropertyName("required"u8);
-                writer.WriteBooleanValue(IsRequired.Value);
+                writer.WriteBooleanValue(Required.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            bool? isRequired = default;
+            bool? @required = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isRequired = prop.Value.GetBoolean();
+                    @required = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EncryptionInTransit(isRequired, additionalBinaryDataProperties);
+            return new EncryptionInTransit(@required, additionalBinaryDataProperties);
         }
     }
 }

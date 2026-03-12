@@ -21,13 +21,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="services"> The signed services accessible with the account SAS. Possible values include: Blob (b), Queue (q), Table (t), File (f). </param>
         /// <param name="resourceTypes"> The signed resource types that are accessible with the account SAS. Service (s): Access to service-level APIs; Container (c): Access to container-level APIs; Object (o): Access to object-level APIs for blobs, queue messages, table entities, and files. </param>
         /// <param name="permissions"> The signed permissions for the account SAS. Possible values include: Read (r), Write (w), Delete (d), List (l), Add (a), Create (c), Update (u) and Process (p). </param>
-        /// <param name="sharedAccessExpireOn"> The time at which the shared access signature becomes invalid. </param>
-        public AccountSasContent(StorageAccountSasSignedService services, StorageAccountSasSignedResourceType resourceTypes, StorageAccountSasPermission permissions, DateTimeOffset sharedAccessExpireOn)
+        /// <param name="sharedAccessExpiryOn"> The time at which the shared access signature becomes invalid. </param>
+        public AccountSasContent(StorageAccountSasSignedService services, StorageAccountSasSignedResourceType resourceTypes, StorageAccountSasPermission permissions, DateTimeOffset sharedAccessExpiryOn)
         {
             Services = services;
             ResourceTypes = resourceTypes;
             Permissions = permissions;
-            SharedAccessExpireOn = sharedAccessExpireOn;
+            SharedAccessExpiryOn = sharedAccessExpiryOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="AccountSasContent"/>. </summary>
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="ipAddressOrRange"> An IP address or a range of IP addresses from which to accept requests. </param>
         /// <param name="protocols"> The protocol permitted for a request made with the account SAS. </param>
         /// <param name="sharedAccessStartOn"> The time at which the SAS becomes valid. </param>
-        /// <param name="sharedAccessExpireOn"> The time at which the shared access signature becomes invalid. </param>
+        /// <param name="sharedAccessExpiryOn"> The time at which the shared access signature becomes invalid. </param>
         /// <param name="keyToSign"> The key to sign the account SAS token with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AccountSasContent(StorageAccountSasSignedService services, StorageAccountSasSignedResourceType resourceTypes, StorageAccountSasPermission permissions, string ipAddressOrRange, StorageAccountHttpProtocol? protocols, DateTimeOffset? sharedAccessStartOn, DateTimeOffset sharedAccessExpireOn, string keyToSign, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AccountSasContent(StorageAccountSasSignedService services, StorageAccountSasSignedResourceType resourceTypes, StorageAccountSasPermission permissions, string ipAddressOrRange, StorageAccountHttpProtocol? protocols, DateTimeOffset? sharedAccessStartOn, DateTimeOffset sharedAccessExpiryOn, string keyToSign, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Services = services;
             ResourceTypes = resourceTypes;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage.Models
             IPAddressOrRange = ipAddressOrRange;
             Protocols = protocols;
             SharedAccessStartOn = sharedAccessStartOn;
-            SharedAccessExpireOn = sharedAccessExpireOn;
+            SharedAccessExpiryOn = sharedAccessExpiryOn;
             KeyToSign = keyToSign;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The time at which the shared access signature becomes invalid. </summary>
         [WirePath("signedExpiry")]
-        public DateTimeOffset SharedAccessExpireOn { get; }
+        public DateTimeOffset SharedAccessExpiryOn { get; }
 
         /// <summary> The key to sign the account SAS token with. </summary>
         [WirePath("keyToSign")]

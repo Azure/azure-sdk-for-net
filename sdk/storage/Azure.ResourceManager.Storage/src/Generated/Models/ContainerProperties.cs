@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerProperties"/>. </summary>
         /// <param name="version"> The version of the deleted blob container. </param>
-        /// <param name="isDeleted"> Indicates whether the blob container was deleted. </param>
+        /// <param name="deleted"> Indicates whether the blob container was deleted. </param>
         /// <param name="deletedOn"> Blob container deletion time. </param>
         /// <param name="remainingRetentionDays"> Remaining retention days for soft deleted blob container. </param>
         /// <param name="defaultEncryptionScope"> Default the container to use specified encryption scope for all writes. </param>
-        /// <param name="preventEncryptionScopeOverride"> Block override of encryption scope from the container default. </param>
+        /// <param name="denyEncryptionScopeOverride"> Block override of encryption scope from the container default. </param>
         /// <param name="publicAccess"> Specifies whether data in the container may be accessed publicly and the level of access. </param>
         /// <param name="lastModifiedOn"> Returns the date and time the container was last modified. </param>
         /// <param name="leaseStatus"> The lease status of the container. </param>
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
         /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerProperties(string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, StoragePublicAccessType? publicAccess, DateTimeOffset? lastModifiedOn, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IDictionary<string, string> metadata, BlobContainerImmutabilityPolicy immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerProperties(string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? denyEncryptionScopeOverride, StoragePublicAccessType? publicAccess, DateTimeOffset? lastModifiedOn, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IDictionary<string, string> metadata, BlobContainerImmutabilityPolicy immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
-            IsDeleted = isDeleted;
+            Deleted = deleted;
             DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             DefaultEncryptionScope = defaultEncryptionScope;
-            PreventEncryptionScopeOverride = preventEncryptionScopeOverride;
+            DenyEncryptionScopeOverride = denyEncryptionScopeOverride;
             PublicAccess = publicAccess;
             LastModifiedOn = lastModifiedOn;
             LeaseStatus = leaseStatus;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether the blob container was deleted. </summary>
         [WirePath("deleted")]
-        public bool? IsDeleted { get; }
+        public bool? Deleted { get; }
 
         /// <summary> Blob container deletion time. </summary>
         [WirePath("deletedTime")]
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Block override of encryption scope from the container default. </summary>
         [WirePath("denyEncryptionScopeOverride")]
-        public bool? PreventEncryptionScopeOverride { get; set; }
+        public bool? DenyEncryptionScopeOverride { get; set; }
 
         /// <summary> Specifies whether data in the container may be accessed publicly and the level of access. </summary>
         [WirePath("publicAccess")]

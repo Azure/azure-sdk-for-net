@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyFilter"/>. </summary>
         public BlobInventoryPolicyFilter()
         {
-            IncludePrefix = new ChangeTrackingList<string>();
+            PrefixMatch = new ChangeTrackingList<string>();
             ExcludePrefix = new ChangeTrackingList<string>();
             BlobTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyFilter"/>. </summary>
-        /// <param name="includePrefix"> An array of strings with maximum 10 blob prefixes to be included in the inventory. </param>
+        /// <param name="prefixMatch"> An array of strings with maximum 10 blob prefixes to be included in the inventory. </param>
         /// <param name="excludePrefix"> An array of strings with maximum 10 blob prefixes to be excluded from the inventory. </param>
         /// <param name="blobTypes"> An array of predefined enum values. Valid values include blockBlob, appendBlob, pageBlob. Hns accounts does not support pageBlobs. This field is required when definition.objectType property is set to 'Blob'. </param>
         /// <param name="includeBlobVersions"> Includes blob versions in blob inventory when value is set to true. The definition.schemaFields values 'VersionId and IsCurrentVersion' are required if this property is set to true, else they must be excluded. </param>
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="includeDeleted"> For 'Container' definition.objectType the definition.schemaFields must include 'Deleted, Version, DeletedTime and RemainingRetentionDays'. For 'Blob' definition.objectType and HNS enabled storage accounts the definition.schemaFields must include 'DeletionId, Deleted, DeletedTime and RemainingRetentionDays' and for Hns disabled accounts the definition.schemaFields must include 'Deleted and RemainingRetentionDays', else it must be excluded. </param>
         /// <param name="creationTime"> This property is used to filter objects based on the object creation time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobInventoryPolicyFilter(IList<string> includePrefix, IList<string> excludePrefix, IList<string> blobTypes, bool? includeBlobVersions, bool? includeSnapshots, bool? includeDeleted, BlobInventoryCreationTime creationTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobInventoryPolicyFilter(IList<string> prefixMatch, IList<string> excludePrefix, IList<string> blobTypes, bool? includeBlobVersions, bool? includeSnapshots, bool? includeDeleted, BlobInventoryCreationTime creationTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IncludePrefix = includePrefix;
+            PrefixMatch = prefixMatch;
             ExcludePrefix = excludePrefix;
             BlobTypes = blobTypes;
             IncludeBlobVersions = includeBlobVersions;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> An array of strings with maximum 10 blob prefixes to be included in the inventory. </summary>
         [WirePath("prefixMatch")]
-        public IList<string> IncludePrefix { get; }
+        public IList<string> PrefixMatch { get; }
 
         /// <summary> An array of strings with maximum 10 blob prefixes to be excluded from the inventory. </summary>
         [WirePath("excludePrefix")]

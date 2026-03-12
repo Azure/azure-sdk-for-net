@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -134,15 +133,15 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            ResourceIdentifier virtualNetworkResourceId = default;
-            StorageAccountNetworkRuleAction? action = default;
+            string virtualNetworkResourceId = default;
+            StorageAccountVirtualNetworkRuleAction? action = default;
             StorageAccountNetworkRuleState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    virtualNetworkResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    virtualNetworkResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("action"u8))
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    action = new StorageAccountNetworkRuleAction(prop.Value.GetString());
+                    action = new StorageAccountVirtualNetworkRuleAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("state"u8))

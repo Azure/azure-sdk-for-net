@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of an ImmutabilityPolicy of a blob container. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        internal ImmutabilityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImmutabilityPolicyProperty properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal ImmutabilityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImmutabilityPolicyProperty properties, string eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
 
         /// <summary> The immutability period for the blobs in the container since the policy creation, in days. </summary>
         [WirePath("properties.immutabilityPeriodSinceCreationInDays")]

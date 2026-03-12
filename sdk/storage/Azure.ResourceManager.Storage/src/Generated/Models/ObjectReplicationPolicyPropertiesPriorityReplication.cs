@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectReplicationPolicyPropertiesPriorityReplication"/>. </summary>
-        /// <param name="isPriorityReplicationEnabled"> Indicates whether object replication priority replication feature is enabled for the policy. </param>
+        /// <param name="enabled"> Indicates whether object replication priority replication feature is enabled for the policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectReplicationPolicyPropertiesPriorityReplication(bool? isPriorityReplicationEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectReplicationPolicyPropertiesPriorityReplication(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsPriorityReplicationEnabled = isPriorityReplicationEnabled;
+            Enabled = enabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether object replication priority replication feature is enabled for the policy. </summary>
         [WirePath("enabled")]
-        public bool? IsPriorityReplicationEnabled { get; set; }
+        public bool? Enabled { get; set; }
     }
 }

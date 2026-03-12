@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            if (options.Format != "W" && Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartedOn.Value, "O");
+                writer.WriteStringValue(StartTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
+            if (options.Format != "W" && Optional.IsDefined(FinishTime))
             {
                 writer.WritePropertyName("finishTime"u8);
-                writer.WriteStringValue(FinishedOn.Value, "O");
+                writer.WriteStringValue(FinishTime);
             }
             if (options.Format != "W" && Optional.IsDefined(ObjectsTargetedCount))
             {
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.Storage.Models
             }
             ResourceIdentifier taskAssignmentId = default;
             ResourceIdentifier storageAccountId = default;
-            DateTimeOffset? startedOn = default;
-            DateTimeOffset? finishedOn = default;
+            string startTime = default;
+            string finishTime = default;
             string objectsTargetedCount = default;
             string objectsOperatedOnCount = default;
             string objectFailedCount = default;
@@ -224,20 +224,12 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    startedOn = prop.Value.GetDateTimeOffset("O");
+                    startTime = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("finishTime"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    finishedOn = prop.Value.GetDateTimeOffset("O");
+                    finishTime = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("objectsTargetedCount"u8))
@@ -310,8 +302,8 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageTaskReportProperties(
                 taskAssignmentId,
                 storageAccountId,
-                startedOn,
-                finishedOn,
+                startTime,
+                finishTime,
                 objectsTargetedCount,
                 objectsOperatedOnCount,
                 objectFailedCount,

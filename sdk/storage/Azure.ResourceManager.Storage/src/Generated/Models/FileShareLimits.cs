@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="FileShareLimits"/>. </summary>
         /// <param name="minProvisionedStorageGiB"> The minimum provisioned storage quota limit in gibibytes for a file share in the storage account. </param>
         /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for a file share in the storage account. </param>
-        /// <param name="minProvisionedIops"> The minimum provisioned IOPS limit for a file share in the storage account. </param>
-        /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for a file share in the storage account. </param>
+        /// <param name="minProvisionedIOPS"> The minimum provisioned IOPS limit for a file share in the storage account. </param>
+        /// <param name="maxProvisionedIOPS"> The maximum provisioned IOPS limit for a file share in the storage account. </param>
         /// <param name="minProvisionedBandwidthMiBPerSec"> The minimum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
         /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareLimits(int? minProvisionedStorageGiB, int? maxProvisionedStorageGiB, int? minProvisionedIops, int? maxProvisionedIops, int? minProvisionedBandwidthMiBPerSec, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareLimits(int? minProvisionedStorageGiB, int? maxProvisionedStorageGiB, int? minProvisionedIOPS, int? maxProvisionedIOPS, int? minProvisionedBandwidthMiBPerSec, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinProvisionedStorageGiB = minProvisionedStorageGiB;
             MaxProvisionedStorageGiB = maxProvisionedStorageGiB;
-            MinProvisionedIops = minProvisionedIops;
-            MaxProvisionedIops = maxProvisionedIops;
+            MinProvisionedIOPS = minProvisionedIOPS;
+            MaxProvisionedIOPS = maxProvisionedIOPS;
             MinProvisionedBandwidthMiBPerSec = minProvisionedBandwidthMiBPerSec;
             MaxProvisionedBandwidthMiBPerSec = maxProvisionedBandwidthMiBPerSec;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The minimum provisioned IOPS limit for a file share in the storage account. </summary>
         [WirePath("minProvisionedIOPS")]
-        public int? MinProvisionedIops { get; }
+        public int? MinProvisionedIOPS { get; }
 
         /// <summary> The maximum provisioned IOPS limit for a file share in the storage account. </summary>
         [WirePath("maxProvisionedIOPS")]
-        public int? MaxProvisionedIops { get; }
+        public int? MaxProvisionedIOPS { get; }
 
         /// <summary> The minimum provisioned bandwidth limit in mebibytes per second for a file share in the storage account. </summary>
         [WirePath("minProvisionedBandwidthMiBPerSec")]

@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("routingChoice"u8);
                 writer.WriteStringValue(RoutingChoice.Value.ToString());
             }
-            if (Optional.IsDefined(IsMicrosoftEndpointsPublished))
+            if (Optional.IsDefined(PublishMicrosoftEndpoints))
             {
                 writer.WritePropertyName("publishMicrosoftEndpoints"u8);
-                writer.WriteBooleanValue(IsMicrosoftEndpointsPublished.Value);
+                writer.WriteBooleanValue(PublishMicrosoftEndpoints.Value);
             }
-            if (Optional.IsDefined(IsInternetEndpointsPublished))
+            if (Optional.IsDefined(PublishInternetEndpoints))
             {
                 writer.WritePropertyName("publishInternetEndpoints"u8);
-                writer.WriteBooleanValue(IsInternetEndpointsPublished.Value);
+                writer.WriteBooleanValue(PublishInternetEndpoints.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             StorageRoutingChoice? routingChoice = default;
-            bool? isMicrosoftEndpointsPublished = default;
-            bool? isInternetEndpointsPublished = default;
+            bool? publishMicrosoftEndpoints = default;
+            bool? publishInternetEndpoints = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isMicrosoftEndpointsPublished = prop.Value.GetBoolean();
+                    publishMicrosoftEndpoints = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publishInternetEndpoints"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isInternetEndpointsPublished = prop.Value.GetBoolean();
+                    publishInternetEndpoints = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageRoutingPreference(routingChoice, isMicrosoftEndpointsPublished, isInternetEndpointsPublished, additionalBinaryDataProperties);
+            return new StorageRoutingPreference(routingChoice, publishMicrosoftEndpoints, publishInternetEndpoints, additionalBinaryDataProperties);
         }
     }
 }

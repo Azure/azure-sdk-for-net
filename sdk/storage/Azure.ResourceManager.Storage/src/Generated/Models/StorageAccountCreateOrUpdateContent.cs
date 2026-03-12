@@ -7,9 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -24,10 +21,11 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="sku"> Required. Gets or sets the SKU name. </param>
         /// <param name="kind"> Required. Indicates the type of storage account. </param>
         /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location)
+        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="location"/> is null. </exception>
+        public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, string location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
+            Argument.AssertNotNull(location, nameof(location));
 
             Sku = sku;
             Kind = kind;
@@ -47,7 +45,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="properties"> The parameters used to create the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IList<string> zones, Placement placement, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageAccountPropertiesCreateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, string location, StorageExtendedLocation extendedLocation, IList<string> zones, Placement placement, IDictionary<string, string> tags, StorageIdentity identity, StorageAccountPropertiesCreateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Kind = kind;
@@ -63,19 +61,19 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Required. Gets or sets the SKU name. </summary>
         [WirePath("sku")]
-        public StorageSku Sku { get; set; }
+        public StorageSku Sku { get; }
 
         /// <summary> Required. Indicates the type of storage account. </summary>
         [WirePath("kind")]
-        public StorageKind Kind { get; set; }
+        public StorageKind Kind { get; }
 
         /// <summary> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </summary>
         [WirePath("location")]
-        public AzureLocation Location { get; set; }
+        public string Location { get; }
 
         /// <summary> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </summary>
         [WirePath("extendedLocation")]
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public StorageExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Optional. Gets or sets the pinned logical availability zone for the storage account. </summary>
         [WirePath("zones")]
@@ -91,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public StorageIdentity Identity { get; set; }
 
         /// <summary> The parameters used to create the storage account. </summary>
         [WirePath("properties")]
@@ -315,11 +313,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Enables extended group support with local users feature, if set to true. </summary>
         [WirePath("properties.enableExtendedGroups")]
-        public bool? IsExtendedGroupEnabled
+        public bool? EnableExtendedGroups
         {
             get
             {
-                return Properties is null ? default : Properties.IsExtendedGroupEnabled;
+                return Properties is null ? default : Properties.EnableExtendedGroups;
             }
             set
             {
@@ -327,7 +325,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.IsExtendedGroupEnabled = value.Value;
+                Properties.EnableExtendedGroups = value.Value;
             }
         }
 
@@ -441,11 +439,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> NFS 3.0 protocol support enabled if set to true. </summary>
         [WirePath("properties.isNfsV3Enabled")]
-        public bool? IsNfsV3Enabled
+        public bool? EnableNfsV3
         {
             get
             {
-                return Properties is null ? default : Properties.IsNfsV3Enabled;
+                return Properties is null ? default : Properties.EnableNfsV3;
             }
             set
             {
@@ -453,7 +451,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.IsNfsV3Enabled = value.Value;
+                Properties.EnableNfsV3 = value.Value;
             }
         }
 
@@ -477,11 +475,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
         [WirePath("properties.defaultToOAuthAuthentication")]
-        public bool? IsDefaultToOAuthAuthentication
+        public bool? DefaultToOAuthAuthentication
         {
             get
             {
-                return Properties is null ? default : Properties.IsDefaultToOAuthAuthentication;
+                return Properties is null ? default : Properties.DefaultToOAuthAuthentication;
             }
             set
             {
@@ -489,7 +487,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.IsDefaultToOAuthAuthentication = value.Value;
+                Properties.DefaultToOAuthAuthentication = value.Value;
             }
         }
 
@@ -585,11 +583,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
         [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
-        public bool? IsIPv6EndpointToBePublished
+        public bool? PublishIpv6Endpoint
         {
             get
             {
-                return Properties is null ? default : Properties.IsIPv6EndpointToBePublished;
+                return Properties is null ? default : Properties.PublishIpv6Endpoint;
             }
             set
             {
@@ -597,7 +595,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
-                Properties.IsIPv6EndpointToBePublished = value.Value;
+                Properties.PublishIpv6Endpoint = value.Value;
             }
         }
 

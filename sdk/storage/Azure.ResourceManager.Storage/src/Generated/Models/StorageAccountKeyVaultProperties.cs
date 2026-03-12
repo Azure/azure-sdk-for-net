@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="lastKeyRotationTimestamp"> Timestamp of last rotation of the Key Vault Key. </param>
         /// <param name="currentVersionedKeyExpirationTimestamp"> This is a read only property that represents the expiration time of the current version of the customer managed key used for encryption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp, DateTimeOffset? currentVersionedKeyExpirationTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountKeyVaultProperties(string keyName, string keyVersion, string keyVaultUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp, DateTimeOffset? currentVersionedKeyExpirationTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyName = keyName;
             KeyVersion = keyVersion;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The Uri of KeyVault. </summary>
         [WirePath("keyvaulturi")]
-        public Uri KeyVaultUri { get; set; }
+        public string KeyVaultUri { get; set; }
 
         /// <summary> The object identifier of the current versioned Key Vault Key in use. </summary>
         [WirePath("currentVersionedKeyIdentifier")]

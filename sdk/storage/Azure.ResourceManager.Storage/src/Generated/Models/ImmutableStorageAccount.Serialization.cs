@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(ImmutableStorageAccount)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(Enabled.Value);
             }
             if (Optional.IsDefined(ImmutabilityPolicy))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            bool? isEnabled = default;
+            bool? enabled = default;
             AccountImmutabilityPolicy immutabilityPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isEnabled = prop.Value.GetBoolean();
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("immutabilityPolicy"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImmutableStorageAccount(isEnabled, immutabilityPolicy, additionalBinaryDataProperties);
+            return new ImmutableStorageAccount(enabled, immutabilityPolicy, additionalBinaryDataProperties);
         }
     }
 }

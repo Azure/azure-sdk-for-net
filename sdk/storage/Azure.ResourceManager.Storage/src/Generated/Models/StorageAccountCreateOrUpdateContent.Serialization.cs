@@ -8,11 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -104,7 +101,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
+                writer.WriteObjectValue(ExtendedLocation, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -145,7 +142,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -196,12 +193,12 @@ namespace Azure.ResourceManager.Storage.Models
             }
             StorageSku sku = default;
             StorageKind kind = default;
-            AzureLocation location = default;
-            ExtendedLocation extendedLocation = default;
+            string location = default;
+            StorageExtendedLocation extendedLocation = default;
             IList<string> zones = default;
             Placement placement = default;
             IDictionary<string, string> tags = default;
-            ManagedServiceIdentity identity = default;
+            StorageIdentity identity = default;
             StorageAccountPropertiesCreateParameters properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -218,7 +215,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("extendedLocation"u8))
@@ -227,7 +224,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
+                    extendedLocation = StorageExtendedLocation.DeserializeStorageExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))
@@ -287,7 +284,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
+                    identity = StorageIdentity.DeserializeStorageIdentity(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))

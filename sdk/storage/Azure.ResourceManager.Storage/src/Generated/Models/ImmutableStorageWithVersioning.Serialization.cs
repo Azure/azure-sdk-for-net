@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(ImmutableStorageWithVersioning)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(Enabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeStamp))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            bool? isEnabled = default;
+            bool? enabled = default;
             DateTimeOffset? timeStamp = default;
             ImmutableStorageWithVersioningMigrationState? migrationState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isEnabled = prop.Value.GetBoolean();
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("timeStamp"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImmutableStorageWithVersioning(isEnabled, timeStamp, migrationState, additionalBinaryDataProperties);
+            return new ImmutableStorageWithVersioning(enabled, timeStamp, migrationState, additionalBinaryDataProperties);
         }
     }
 }

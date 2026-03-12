@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="FileServiceAccountLimits"/>. </summary>
         /// <param name="maxFileShares"> The maximum number of file shares limit for the storage account. </param>
         /// <param name="maxProvisionedStorageGiB"> The maximum provisioned storage quota limit in gibibytes for the storage account. </param>
-        /// <param name="maxProvisionedIops"> The maximum provisioned IOPS limit for the storage account. </param>
+        /// <param name="maxProvisionedIOPS"> The maximum provisioned IOPS limit for the storage account. </param>
         /// <param name="maxProvisionedBandwidthMiBPerSec"> The maximum provisioned bandwidth limit in mebibytes per second for the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileServiceAccountLimits(int? maxFileShares, int? maxProvisionedStorageGiB, int? maxProvisionedIops, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileServiceAccountLimits(int? maxFileShares, int? maxProvisionedStorageGiB, int? maxProvisionedIOPS, int? maxProvisionedBandwidthMiBPerSec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxFileShares = maxFileShares;
             MaxProvisionedStorageGiB = maxProvisionedStorageGiB;
-            MaxProvisionedIops = maxProvisionedIops;
+            MaxProvisionedIOPS = maxProvisionedIOPS;
             MaxProvisionedBandwidthMiBPerSec = maxProvisionedBandwidthMiBPerSec;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The maximum provisioned IOPS limit for the storage account. </summary>
         [WirePath("maxProvisionedIOPS")]
-        public int? MaxProvisionedIops { get; }
+        public int? MaxProvisionedIOPS { get; }
 
         /// <summary> The maximum provisioned bandwidth limit in mebibytes per second for the storage account. </summary>
         [WirePath("maxProvisionedBandwidthMiBPerSec")]

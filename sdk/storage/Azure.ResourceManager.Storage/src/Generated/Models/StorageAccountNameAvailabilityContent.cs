@@ -5,24 +5,15 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The parameters used to check the availability of the storage account name. </summary>
     public partial class StorageAccountNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of <see cref="StorageAccountNameAvailabilityContent"/>. </summary>
-        /// <param name="name"> The storage account name. </param>
-        /// <param name="resourceType"> The type of resource, Microsoft.Storage/storageAccounts. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountNameAvailabilityContent(string name, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            Name = name;
-            ResourceType = resourceType;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
+        /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
+        [WirePath("type")]
+        internal string Type { get; } = "Microsoft.Storage/storageAccounts";
     }
 }

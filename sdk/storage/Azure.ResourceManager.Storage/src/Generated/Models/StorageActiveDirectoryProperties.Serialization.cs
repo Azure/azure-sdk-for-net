@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(ActiveDirectoryDomainGuid))
             {
                 writer.WritePropertyName("domainGuid"u8);
-                writer.WriteStringValue(ActiveDirectoryDomainGuid.Value);
+                writer.WriteStringValue(ActiveDirectoryDomainGuid);
             }
             if (Optional.IsDefined(DomainSid))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Storage.Models
             string domainName = default;
             string netBiosDomainName = default;
             string forestName = default;
-            Guid? activeDirectoryDomainGuid = default;
+            string activeDirectoryDomainGuid = default;
             string domainSid = default;
             string azureStorageSid = default;
             string samAccountName = default;
@@ -184,11 +184,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("domainGuid"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    activeDirectoryDomainGuid = new Guid(prop.Value.GetString());
+                    activeDirectoryDomainGuid = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("domainSid"u8))

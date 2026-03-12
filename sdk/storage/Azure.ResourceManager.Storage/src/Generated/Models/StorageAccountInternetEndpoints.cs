@@ -18,39 +18,39 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountInternetEndpoints"/>. </summary>
-        public StorageAccountInternetEndpoints()
+        internal StorageAccountInternetEndpoints()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountInternetEndpoints"/>. </summary>
-        /// <param name="blobUri"> Gets the blob endpoint. </param>
-        /// <param name="fileUri"> Gets the file endpoint. </param>
-        /// <param name="webUri"> Gets the web endpoint. </param>
-        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
+        /// <param name="blob"> Gets the blob endpoint. </param>
+        /// <param name="file"> Gets the file endpoint. </param>
+        /// <param name="web"> Gets the web endpoint. </param>
+        /// <param name="dfs"> Gets the dfs endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountInternetEndpoints(Uri blobUri, Uri fileUri, Uri webUri, Uri dfsUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountInternetEndpoints(string blob, string @file, string web, string dfs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BlobUri = blobUri;
-            FileUri = fileUri;
-            WebUri = webUri;
-            DfsUri = dfsUri;
+            Blob = blob;
+            File = @file;
+            Web = web;
+            Dfs = dfs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the blob endpoint. </summary>
         [WirePath("blob")]
-        public Uri BlobUri { get; }
+        public string Blob { get; }
 
         /// <summary> Gets the file endpoint. </summary>
         [WirePath("file")]
-        public Uri FileUri { get; }
+        public string File { get; }
 
         /// <summary> Gets the web endpoint. </summary>
         [WirePath("web")]
-        public Uri WebUri { get; }
+        public string Web { get; }
 
         /// <summary> Gets the dfs endpoint. </summary>
         [WirePath("dfs")]
-        public Uri DfsUri { get; }
+        public string Dfs { get; }
     }
 }

@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsDeleted))
+            if (options.Format != "W" && Optional.IsDefined(Deleted))
             {
                 writer.WritePropertyName("deleted"u8);
-                writer.WriteBooleanValue(IsDeleted.Value);
+                writer.WriteBooleanValue(Deleted.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("defaultEncryptionScope"u8);
                 writer.WriteStringValue(DefaultEncryptionScope);
             }
-            if (Optional.IsDefined(PreventEncryptionScopeOverride))
+            if (Optional.IsDefined(DenyEncryptionScopeOverride))
             {
                 writer.WritePropertyName("denyEncryptionScopeOverride"u8);
-                writer.WriteBooleanValue(PreventEncryptionScopeOverride.Value);
+                writer.WriteBooleanValue(DenyEncryptionScopeOverride.Value);
             }
             if (Optional.IsDefined(PublicAccess))
             {
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string version = default;
-            bool? isDeleted = default;
+            bool? deleted = default;
             DateTimeOffset? deletedOn = default;
             int? remainingRetentionDays = default;
             string defaultEncryptionScope = default;
-            bool? preventEncryptionScopeOverride = default;
+            bool? denyEncryptionScopeOverride = default;
             StoragePublicAccessType? publicAccess = default;
             DateTimeOffset? lastModifiedOn = default;
             StorageLeaseStatus? leaseStatus = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isDeleted = prop.Value.GetBoolean();
+                    deleted = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("deletedTime"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    preventEncryptionScopeOverride = prop.Value.GetBoolean();
+                    denyEncryptionScopeOverride = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicAccess"u8))
@@ -426,11 +426,11 @@ namespace Azure.ResourceManager.Storage.Models
             }
             return new ContainerProperties(
                 version,
-                isDeleted,
+                deleted,
                 deletedOn,
                 remainingRetentionDays,
                 defaultEncryptionScope,
-                preventEncryptionScopeOverride,
+                denyEncryptionScopeOverride,
                 publicAccess,
                 lastModifiedOn,
                 leaseStatus,

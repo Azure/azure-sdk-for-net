@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Multichannel"/>. </summary>
-        /// <param name="isMultiChannelEnabled"> Indicates whether multichannel is enabled. </param>
+        /// <param name="enabled"> Indicates whether multichannel is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Multichannel(bool? isMultiChannelEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Multichannel(bool? enabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsMultiChannelEnabled = isMultiChannelEnabled;
+            Enabled = enabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates whether multichannel is enabled. </summary>
         [WirePath("enabled")]
-        public bool? IsMultiChannelEnabled { get; set; }
+        public bool? Enabled { get; set; }
     }
 }

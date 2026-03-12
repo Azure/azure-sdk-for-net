@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="nextAllowedQuotaDowngradeOn"> Returns the next allowed provisioned storage size downgrade time for the share. This property is only for file shares created under Files Provisioned v1 SSD and Files Provisioned v2 account type. </param>
         /// <param name="nextAllowedProvisionedIopsDowngradeOn"> Returns the next allowed provisioned IOPS downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
         /// <param name="nextAllowedProvisionedBandwidthDowngradeOn"> Returns the next allowed provisioned bandwidth downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
-        /// <param name="enabledProtocol"> The authentication protocol that is used for the file share. Can only be specified when creating a share. </param>
+        /// <param name="enabledProtocols"> The authentication protocol that is used for the file share. Can only be specified when creating a share. </param>
         /// <param name="rootSquash"> The property is for NFS share only. The default is NoRootSquash. </param>
         /// <param name="version"> The version of the share. </param>
-        /// <param name="isDeleted"> Indicates whether the share was deleted. </param>
+        /// <param name="deleted"> Indicates whether the share was deleted. </param>
         /// <param name="deletedOn"> The deleted time if the share was deleted. </param>
         /// <param name="remainingRetentionDays"> Remaining retention days for share that was soft deleted. </param>
         /// <param name="accessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </param>
         /// <param name="fileSharePaidBursting"> File Share Paid Bursting properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProperties(DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, int? provisionedIops, int? provisionedBandwidthMibps, int? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedQuotaDowngradeOn, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IList<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileShareProperties(DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, int? provisionedIops, int? provisionedBandwidthMibps, int? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedQuotaDowngradeOn, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, FileShareEnabledProtocol? enabledProtocols, RootSquashType? rootSquash, string version, bool? deleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IList<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastModifiedOn = lastModifiedOn;
             Metadata = metadata;
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.Storage.Models
             NextAllowedQuotaDowngradeOn = nextAllowedQuotaDowngradeOn;
             NextAllowedProvisionedIopsDowngradeOn = nextAllowedProvisionedIopsDowngradeOn;
             NextAllowedProvisionedBandwidthDowngradeOn = nextAllowedProvisionedBandwidthDowngradeOn;
-            EnabledProtocol = enabledProtocol;
+            EnabledProtocols = enabledProtocols;
             RootSquash = rootSquash;
             Version = version;
-            IsDeleted = isDeleted;
+            Deleted = deleted;
             DeletedOn = deletedOn;
             RemainingRetentionDays = remainingRetentionDays;
             AccessTier = accessTier;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The authentication protocol that is used for the file share. Can only be specified when creating a share. </summary>
         [WirePath("enabledProtocols")]
-        public FileShareEnabledProtocol? EnabledProtocol { get; set; }
+        public FileShareEnabledProtocol? EnabledProtocols { get; set; }
 
         /// <summary> The property is for NFS share only. The default is NoRootSquash. </summary>
         [WirePath("rootSquash")]
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether the share was deleted. </summary>
         [WirePath("deleted")]
-        public bool? IsDeleted { get; }
+        public bool? Deleted { get; }
 
         /// <summary> The deleted time if the share was deleted. </summary>
         [WirePath("deletedTime")]

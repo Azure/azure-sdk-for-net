@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether encryption in transit is required. </summary>
         [WirePath("nfs.encryptionInTransit.required")]
-        public bool? IsRequired
+        public bool? Required
         {
             get
             {
-                return Nfs is null ? default : Nfs.IsRequired;
+                return Nfs is null ? default : Nfs.Required;
             }
             set
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Nfs = new NfsSetting();
                 }
-                Nfs.IsRequired = value;
+                Nfs.Required = value;
             }
         }
     }

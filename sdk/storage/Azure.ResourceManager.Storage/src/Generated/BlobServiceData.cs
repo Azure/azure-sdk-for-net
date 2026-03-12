@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Deprecated in favor of isVersioningEnabled property. </summary>
         [WirePath("properties.automaticSnapshotPolicyEnabled")]
-        public bool? IsAutomaticSnapshotPolicyEnabled
+        public bool? AutomaticSnapshotPolicyEnabled
         {
             get
             {
-                return BlobServiceProperties is null ? default : BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled;
+                return BlobServiceProperties is null ? default : BlobServiceProperties.AutomaticSnapshotPolicyEnabled;
             }
             set
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Storage
                 {
                     BlobServiceProperties = new BlobServicePropertiesProperties();
                 }
-                BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled = value.Value;
+                BlobServiceProperties.AutomaticSnapshotPolicyEnabled = value.Value;
             }
         }
 

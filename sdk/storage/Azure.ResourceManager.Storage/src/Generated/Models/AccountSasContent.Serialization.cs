@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
             writer.WritePropertyName("signedExpiry"u8);
-            writer.WriteStringValue(SharedAccessExpireOn, "O");
+            writer.WriteStringValue(SharedAccessExpiryOn, "O");
             if (Optional.IsDefined(KeyToSign))
             {
                 writer.WritePropertyName("keyToSign"u8);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
             string ipAddressOrRange = default;
             StorageAccountHttpProtocol? protocols = default;
             DateTimeOffset? sharedAccessStartOn = default;
-            DateTimeOffset sharedAccessExpireOn = default;
+            DateTimeOffset sharedAccessExpiryOn = default;
             string keyToSign = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("signedExpiry"u8))
                 {
-                    sharedAccessExpireOn = prop.Value.GetDateTimeOffset("O");
+                    sharedAccessExpiryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("keyToSign"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Storage.Models
                 ipAddressOrRange,
                 protocols,
                 sharedAccessStartOn,
-                sharedAccessExpireOn,
+                sharedAccessExpiryOn,
                 keyToSign,
                 additionalBinaryDataProperties);
         }

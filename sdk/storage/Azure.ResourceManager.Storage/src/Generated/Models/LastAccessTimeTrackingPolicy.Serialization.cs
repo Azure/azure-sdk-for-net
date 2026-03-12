@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(LastAccessTimeTrackingPolicy)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("enable"u8);
-            writer.WriteBooleanValue(IsEnabled);
+            writer.WriteBooleanValue(Enable);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            bool isEnabled = default;
+            bool enable = default;
             LastAccessTimeTrackingPolicyName? name = default;
             int? trackingGranularityInDays = default;
             IList<string> blobType = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (prop.NameEquals("enable"u8))
                 {
-                    isEnabled = prop.Value.GetBoolean();
+                    enable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LastAccessTimeTrackingPolicy(isEnabled, name, trackingGranularityInDays, blobType ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new LastAccessTimeTrackingPolicy(enable, name, trackingGranularityInDays, blobType ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

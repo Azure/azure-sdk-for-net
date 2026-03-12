@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(BlobInventoryPolicyRule)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
+            writer.WriteBooleanValue(Enabled);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("destination"u8);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            bool isEnabled = default;
+            bool enabled = default;
             string name = default;
             string destination = default;
             BlobInventoryPolicyDefinition definition = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (prop.NameEquals("enabled"u8))
                 {
-                    isEnabled = prop.Value.GetBoolean();
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BlobInventoryPolicyRule(isEnabled, name, destination, definition, additionalBinaryDataProperties);
+            return new BlobInventoryPolicyRule(enabled, name, destination, definition, additionalBinaryDataProperties);
         }
     }
 }

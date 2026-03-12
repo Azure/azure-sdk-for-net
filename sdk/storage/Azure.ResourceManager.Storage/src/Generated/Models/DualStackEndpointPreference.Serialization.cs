@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(DualStackEndpointPreference)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsIPv6EndpointToBePublished))
+            if (Optional.IsDefined(PublishIpv6Endpoint))
             {
                 writer.WritePropertyName("publishIpv6Endpoint"u8);
-                writer.WriteBooleanValue(IsIPv6EndpointToBePublished.Value);
+                writer.WriteBooleanValue(PublishIpv6Endpoint.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            bool? isIPv6EndpointToBePublished = default;
+            bool? publishIpv6Endpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isIPv6EndpointToBePublished = prop.Value.GetBoolean();
+                    publishIpv6Endpoint = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DualStackEndpointPreference(isIPv6EndpointToBePublished, additionalBinaryDataProperties);
+            return new DualStackEndpointPreference(publishIpv6Endpoint, additionalBinaryDataProperties);
         }
     }
 }

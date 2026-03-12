@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Tests
             IgnoreNetworkDependencyVersions();
         }
 
-        public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)
+        public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, StorageIdentity identity = null)
         {
             StorageSku skuParameters = sku ?? DefaultSkuNameStandardGRS;
             StorageKind kindParameters = kind ?? DefaultKindStorage;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 accountName = Recording.GenerateAssetName(prefix);
                 StorageAccountNameAvailabilityContent parameter = new StorageAccountNameAvailabilityContent(accountName);
                 StorageAccountNameAvailabilityResult result = await DefaultSubscription.CheckNameAvailabilityAsync(parameter);
-                if (result.IsNameAvailable ?? false)
+                if (result.NameAvailable ?? false)
                 {
                     return accountName;
                 }

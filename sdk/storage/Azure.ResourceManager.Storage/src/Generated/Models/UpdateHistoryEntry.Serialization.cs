@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(UpdateHistoryEntry)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdateType))
+            if (options.Format != "W" && Optional.IsDefined(Update))
             {
                 writer.WritePropertyName("update"u8);
-                writer.WriteStringValue(UpdateType.Value.ToString());
+                writer.WriteStringValue(Update.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WriteStringValue(TenantId);
             }
             if (options.Format != "W" && Optional.IsDefined(Upn))
             {
@@ -156,11 +156,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            ImmutabilityPolicyUpdateType? updateType = default;
+            ImmutabilityPolicyUpdateType? update = default;
             int? immutabilityPeriodSinceCreationInDays = default;
             DateTimeOffset? timestamp = default;
             string objectIdentifier = default;
-            Guid? tenantId = default;
+            string tenantId = default;
             string upn = default;
             bool? allowProtectedAppendWrites = default;
             bool? allowProtectedAppendWritesAll = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    updateType = new ImmutabilityPolicyUpdateType(prop.Value.GetString());
+                    update = new ImmutabilityPolicyUpdateType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("immutabilityPeriodSinceCreationInDays"u8))
@@ -201,11 +201,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = new Guid(prop.Value.GetString());
+                    tenantId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("upn"u8))
@@ -237,7 +233,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             return new UpdateHistoryEntry(
-                updateType,
+                update,
                 immutabilityPeriodSinceCreationInDays,
                 timestamp,
                 objectIdentifier,

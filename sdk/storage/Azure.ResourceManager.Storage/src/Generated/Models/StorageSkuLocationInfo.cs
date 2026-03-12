@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="location"> Describes the location for the product where storage account resource can be created. </param>
         /// <param name="zones"> Describes the available zones for the product where storage account resource can be created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageSkuLocationInfo(AzureLocation? location, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageSkuLocationInfo(string location, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             Zones = zones;
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Describes the location for the product where storage account resource can be created. </summary>
         [WirePath("location")]
-        public AzureLocation? Location { get; }
+        public string Location { get; }
 
         /// <summary> Describes the available zones for the product where storage account resource can be created. </summary>
         [WirePath("zones")]

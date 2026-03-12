@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(StorageAccountNameAvailabilityResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(IsNameAvailable))
+            if (options.Format != "W" && Optional.IsDefined(NameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
-                writer.WriteBooleanValue(IsNameAvailable.Value);
+                writer.WriteBooleanValue(NameAvailable.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Reason))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            bool? isNameAvailable = default;
+            bool? nameAvailable = default;
             StorageAccountNameUnavailableReason? reason = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    isNameAvailable = prop.Value.GetBoolean();
+                    nameAvailable = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageAccountNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties);
+            return new StorageAccountNameAvailabilityResult(nameAvailable, reason, message, additionalBinaryDataProperties);
         }
     }
 }

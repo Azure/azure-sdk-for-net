@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DualStackEndpointPreference"/>. </summary>
-        /// <param name="isIPv6EndpointToBePublished"> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </param>
+        /// <param name="publishIpv6Endpoint"> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DualStackEndpointPreference(bool? isIPv6EndpointToBePublished, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DualStackEndpointPreference(bool? publishIpv6Endpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsIPv6EndpointToBePublished = isIPv6EndpointToBePublished;
+            PublishIpv6Endpoint = publishIpv6Endpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
         [WirePath("publishIpv6Endpoint")]
-        public bool? IsIPv6EndpointToBePublished { get; set; }
+        public bool? PublishIpv6Endpoint { get; set; }
     }
 }

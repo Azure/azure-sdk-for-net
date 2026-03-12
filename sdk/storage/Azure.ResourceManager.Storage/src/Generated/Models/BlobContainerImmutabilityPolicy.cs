@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -19,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BlobContainerImmutabilityPolicy"/>. </summary>
-        public BlobContainerImmutabilityPolicy()
+        internal BlobContainerImmutabilityPolicy()
         {
             UpdateHistory = new ChangeTrackingList<UpdateHistoryEntry>();
         }
@@ -29,7 +28,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="eTag"> ImmutabilityPolicy Etag. </param>
         /// <param name="updateHistory"> The ImmutabilityPolicy update history of the blob container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobContainerImmutabilityPolicy(ImmutabilityPolicyProperty properties, ETag? eTag, IReadOnlyList<UpdateHistoryEntry> updateHistory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobContainerImmutabilityPolicy(ImmutabilityPolicyProperty properties, string eTag, IReadOnlyList<UpdateHistoryEntry> updateHistory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -39,11 +38,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The properties of an ImmutabilityPolicy of a blob container. </summary>
         [WirePath("properties")]
-        internal ImmutabilityPolicyProperty Properties { get; set; }
+        internal ImmutabilityPolicyProperty Properties { get; }
 
         /// <summary> ImmutabilityPolicy Etag. </summary>
         [WirePath("etag")]
-        public ETag? ETag { get; }
+        public string ETag { get; }
 
         /// <summary> The ImmutabilityPolicy update history of the blob container. </summary>
         [WirePath("updateHistory")]
@@ -55,15 +54,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ImmutabilityPeriodSinceCreationInDays;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ImmutabilityPolicyProperty();
-                }
-                Properties.ImmutabilityPeriodSinceCreationInDays = value.Value;
+                return Properties.ImmutabilityPeriodSinceCreationInDays;
             }
         }
 
@@ -73,7 +64,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             get
             {
-                return Properties is null ? default : Properties.State;
+                return Properties.State;
             }
         }
 
@@ -83,15 +74,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             get
             {
-                return Properties is null ? default : Properties.AllowProtectedAppendWrites;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ImmutabilityPolicyProperty();
-                }
-                Properties.AllowProtectedAppendWrites = value.Value;
+                return Properties.AllowProtectedAppendWrites;
             }
         }
 
@@ -101,15 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             get
             {
-                return Properties is null ? default : Properties.AllowProtectedAppendWritesAll;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ImmutabilityPolicyProperty();
-                }
-                Properties.AllowProtectedAppendWritesAll = value.Value;
+                return Properties.AllowProtectedAppendWritesAll;
             }
         }
     }

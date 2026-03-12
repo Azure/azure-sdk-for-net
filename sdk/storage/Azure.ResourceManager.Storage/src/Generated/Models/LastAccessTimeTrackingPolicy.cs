@@ -18,22 +18,22 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LastAccessTimeTrackingPolicy"/>. </summary>
-        /// <param name="isEnabled"> When set to true last access time based tracking is enabled. </param>
-        public LastAccessTimeTrackingPolicy(bool isEnabled)
+        /// <param name="enable"> When set to true last access time based tracking is enabled. </param>
+        public LastAccessTimeTrackingPolicy(bool enable)
         {
-            IsEnabled = isEnabled;
+            Enable = enable;
             BlobType = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LastAccessTimeTrackingPolicy"/>. </summary>
-        /// <param name="isEnabled"> When set to true last access time based tracking is enabled. </param>
+        /// <param name="enable"> When set to true last access time based tracking is enabled. </param>
         /// <param name="name"> Name of the policy. The valid value is AccessTimeTracking. This field is currently read only. </param>
         /// <param name="trackingGranularityInDays"> The field specifies blob object tracking granularity in days, typically how often the blob object should be tracked.This field is currently read only with value as 1. </param>
         /// <param name="blobType"> An array of predefined supported blob types. Only blockBlob is the supported value. This field is currently read only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LastAccessTimeTrackingPolicy(bool isEnabled, LastAccessTimeTrackingPolicyName? name, int? trackingGranularityInDays, IList<string> blobType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LastAccessTimeTrackingPolicy(bool enable, LastAccessTimeTrackingPolicyName? name, int? trackingGranularityInDays, IList<string> blobType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsEnabled = isEnabled;
+            Enable = enable;
             Name = name;
             TrackingGranularityInDays = trackingGranularityInDays;
             BlobType = blobType;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> When set to true last access time based tracking is enabled. </summary>
         [WirePath("enable")]
-        public bool IsEnabled { get; set; }
+        public bool Enable { get; set; }
 
         /// <summary> Name of the policy. The valid value is AccessTimeTracking. This field is currently read only. </summary>
         [WirePath("name")]

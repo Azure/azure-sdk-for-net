@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether the blob container was deleted. </summary>
         [WirePath("properties.deleted")]
-        public bool? IsDeleted
+        public bool? Deleted
         {
             get
             {
-                return Properties.IsDeleted;
+                return Properties.Deleted;
             }
         }
 
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Block override of encryption scope from the container default. </summary>
         [WirePath("properties.denyEncryptionScopeOverride")]
-        public bool? PreventEncryptionScopeOverride
+        public bool? DenyEncryptionScopeOverride
         {
             get
             {
-                return Properties.PreventEncryptionScopeOverride;
+                return Properties.DenyEncryptionScopeOverride;
             }
         }
 

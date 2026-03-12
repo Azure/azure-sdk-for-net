@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceType.ToString());
+            writer.WriteStringValue(Type);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string name = default;
-            ResourceType resourceType = default;
+            string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -135,11 +135,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    @type = prop.Value.GetString();
                     continue;
                 }
             }
-            return new StorageAccountNameAvailabilityContent(name, resourceType, additionalBinaryDataProperties);
+            return new StorageAccountNameAvailabilityContent(name, @type, additionalBinaryDataProperties);
         }
     }
 }

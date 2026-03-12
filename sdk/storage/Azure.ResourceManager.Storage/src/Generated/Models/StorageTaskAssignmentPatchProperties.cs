@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentPatchProperties"/>. </summary>
         /// <param name="taskId"> Id of the corresponding storage task. </param>
-        /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
+        /// <param name="enabled"> Whether the storage task assignment is enabled or not. </param>
         /// <param name="description"> Text that describes the purpose of the storage task assignment. </param>
         /// <param name="executionContext"> The storage task assignment execution context. </param>
         /// <param name="report"> The storage task assignment report. </param>
         /// <param name="provisioningState"> Represents the provisioning state of the storage task assignment. </param>
         /// <param name="runStatus"> Run status of storage task assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskAssignmentPatchProperties(string taskId, bool? isEnabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, StorageTaskAssignmentUpdateReport report, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageTaskAssignmentPatchProperties(string taskId, bool? enabled, string description, StorageTaskAssignmentUpdateExecutionContext executionContext, StorageTaskAssignmentUpdateReport report, StorageProvisioningState? provisioningState, StorageTaskReportProperties runStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskId = taskId;
-            IsEnabled = isEnabled;
+            Enabled = enabled;
             Description = description;
             ExecutionContext = executionContext;
             Report = report;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Whether the storage task assignment is enabled or not. </summary>
         [WirePath("enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool? Enabled { get; set; }
 
         /// <summary> Text that describes the purpose of the storage task assignment. </summary>
         [WirePath("description")]

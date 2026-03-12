@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeleteRetentionPolicy"/>. </summary>
-        /// <param name="isEnabled"> Indicates whether DeleteRetentionPolicy is enabled. </param>
+        /// <param name="enabled"> Indicates whether DeleteRetentionPolicy is enabled. </param>
         /// <param name="days"> Indicates the number of days that the deleted item should be retained. The minimum specified value can be 1 and the maximum value can be 365. </param>
         /// <param name="allowPermanentDelete"> This property when set to true allows deletion of the soft deleted blob versions and snapshots. This property cannot be used blob restore policy. This property only applies to blob service and does not apply to containers or file share. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeleteRetentionPolicy(bool? isEnabled, int? days, bool? allowPermanentDelete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeleteRetentionPolicy(bool? enabled, int? days, bool? allowPermanentDelete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsEnabled = isEnabled;
+            Enabled = enabled;
             Days = days;
             AllowPermanentDelete = allowPermanentDelete;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether DeleteRetentionPolicy is enabled. </summary>
         [WirePath("enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool? Enabled { get; set; }
 
         /// <summary> Indicates the number of days that the deleted item should be retained. The minimum specified value can be 1 and the maximum value can be 365. </summary>
         [WirePath("days")]

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. </param>
         /// <param name="action"> The action of IP ACL rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountIPRule(string ipAddressOrRange, StorageAccountNetworkRuleAction? action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountIPRule(string ipAddressOrRange, StorageAccountIPRuleAction? action, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPAddressOrRange = ipAddressOrRange;
             Action = action;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The action of IP ACL rule. </summary>
         [WirePath("action")]
-        public StorageAccountNetworkRuleAction? Action { get; set; }
+        public StorageAccountIPRuleAction? Action { get; set; }
     }
 }

@@ -18,32 +18,32 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyRule"/>. </summary>
-        /// <param name="isEnabled"> Rule is enabled when set to true. </param>
+        /// <param name="enabled"> Rule is enabled when set to true. </param>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="destination"> Container name where blob inventory files are stored. Must be pre-created. </param>
         /// <param name="definition"> An object that defines the blob inventory policy rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="destination"/> or <paramref name="definition"/> is null. </exception>
-        public BlobInventoryPolicyRule(bool isEnabled, string name, string destination, BlobInventoryPolicyDefinition definition)
+        public BlobInventoryPolicyRule(bool enabled, string name, string destination, BlobInventoryPolicyDefinition definition)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(destination, nameof(destination));
             Argument.AssertNotNull(definition, nameof(definition));
 
-            IsEnabled = isEnabled;
+            Enabled = enabled;
             Name = name;
             Destination = destination;
             Definition = definition;
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyRule"/>. </summary>
-        /// <param name="isEnabled"> Rule is enabled when set to true. </param>
+        /// <param name="enabled"> Rule is enabled when set to true. </param>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="destination"> Container name where blob inventory files are stored. Must be pre-created. </param>
         /// <param name="definition"> An object that defines the blob inventory policy rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobInventoryPolicyRule(bool isEnabled, string name, string destination, BlobInventoryPolicyDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobInventoryPolicyRule(bool enabled, string name, string destination, BlobInventoryPolicyDefinition definition, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsEnabled = isEnabled;
+            Enabled = enabled;
             Name = name;
             Destination = destination;
             Definition = definition;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Rule is enabled when set to true. </summary>
         [WirePath("enabled")]
-        public bool IsEnabled { get; set; }
+        public bool Enabled { get; set; }
 
         /// <summary> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </summary>
         [WirePath("name")]

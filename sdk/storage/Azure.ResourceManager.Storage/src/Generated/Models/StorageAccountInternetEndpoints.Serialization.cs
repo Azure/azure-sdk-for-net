@@ -74,25 +74,25 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(StorageAccountInternetEndpoints)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(BlobUri))
+            if (options.Format != "W" && Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob"u8);
-                writer.WriteStringValue(BlobUri.AbsoluteUri);
+                writer.WriteStringValue(Blob);
             }
-            if (options.Format != "W" && Optional.IsDefined(FileUri))
+            if (options.Format != "W" && Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteStringValue(FileUri.AbsoluteUri);
+                writer.WriteStringValue(File);
             }
-            if (options.Format != "W" && Optional.IsDefined(WebUri))
+            if (options.Format != "W" && Optional.IsDefined(Web))
             {
                 writer.WritePropertyName("web"u8);
-                writer.WriteStringValue(WebUri.AbsoluteUri);
+                writer.WriteStringValue(Web);
             }
-            if (options.Format != "W" && Optional.IsDefined(DfsUri))
+            if (options.Format != "W" && Optional.IsDefined(Dfs))
             {
                 writer.WritePropertyName("dfs"u8);
-                writer.WriteStringValue(DfsUri.AbsoluteUri);
+                writer.WriteStringValue(Dfs);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -136,47 +136,31 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Uri blobUri = default;
-            Uri fileUri = default;
-            Uri webUri = default;
-            Uri dfsUri = default;
+            string blob = default;
+            string @file = default;
+            string web = default;
+            string dfs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("blob"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    blob = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("file"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    fileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    @file = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("web"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    webUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    web = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("dfs"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dfsUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    dfs = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageAccountInternetEndpoints(blobUri, fileUri, webUri, dfsUri, additionalBinaryDataProperties);
+            return new StorageAccountInternetEndpoints(blob, @file, web, dfs, additionalBinaryDataProperties);
         }
     }
 }

@@ -19,29 +19,29 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagementPolicyTagFilter"/>. </summary>
         /// <param name="name"> This is the filter tag name, it can have 1 - 128 characters. </param>
-        /// <param name="operator"> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </param>
+        /// <param name="op"> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </param>
         /// <param name="value"> This is the filter tag value field used for tag based filtering, it can have 0 - 256 characters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="operator"/> or <paramref name="value"/> is null. </exception>
-        public ManagementPolicyTagFilter(string name, string @operator, string value)
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="op"/> or <paramref name="value"/> is null. </exception>
+        public ManagementPolicyTagFilter(string name, string op, string value)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(@operator, nameof(@operator));
+            Argument.AssertNotNull(op, nameof(op));
             Argument.AssertNotNull(value, nameof(value));
 
             Name = name;
-            Operator = @operator;
+            Op = op;
             Value = value;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementPolicyTagFilter"/>. </summary>
         /// <param name="name"> This is the filter tag name, it can have 1 - 128 characters. </param>
-        /// <param name="operator"> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </param>
+        /// <param name="op"> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </param>
         /// <param name="value"> This is the filter tag value field used for tag based filtering, it can have 0 - 256 characters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagementPolicyTagFilter(string name, string @operator, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagementPolicyTagFilter(string name, string op, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Operator = @operator;
+            Op = op;
             Value = value;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> This is the comparison operator which is used for object comparison and filtering. Only == (equality operator) is currently supported. </summary>
         [WirePath("op")]
-        public string Operator { get; set; }
+        public string Op { get; set; }
 
         /// <summary> This is the filter tag value field used for tag based filtering, it can have 0 - 256 characters. </summary>
         [WirePath("value")]

@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            StoragePrivateEndpointConnectionProperties properties = default;
+            PrivateEndpointConnectionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    properties = StoragePrivateEndpointConnectionProperties.DeserializeStoragePrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

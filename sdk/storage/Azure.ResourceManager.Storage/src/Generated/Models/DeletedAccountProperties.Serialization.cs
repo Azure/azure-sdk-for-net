@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -83,22 +82,22 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (options.Format != "W" && Optional.IsDefined(RestoreReference))
             {
                 writer.WritePropertyName("restoreReference"u8);
                 writer.WriteStringValue(RestoreReference);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreationTime))
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreatedOn);
+                writer.WriteStringValue(CreationTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            if (options.Format != "W" && Optional.IsDefined(DeletionTime))
             {
                 writer.WritePropertyName("deletionTime"u8);
-                writer.WriteStringValue(DeletedOn);
+                writer.WriteStringValue(DeletionTime);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,30 +141,22 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            ResourceIdentifier storageAccountResourceId = default;
-            AzureLocation? location = default;
+            string storageAccountResourceId = default;
+            string location = default;
             string restoreReference = default;
-            string createdOn = default;
-            string deletedOn = default;
+            string creationTime = default;
+            string deletionTime = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("storageAccountResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageAccountResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    storageAccountResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(prop.Value.GetString());
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("restoreReference"u8))
@@ -175,12 +166,12 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("creationTime"u8))
                 {
-                    createdOn = prop.Value.GetString();
+                    creationTime = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("deletionTime"u8))
                 {
-                    deletedOn = prop.Value.GetString();
+                    deletionTime = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -192,8 +183,8 @@ namespace Azure.ResourceManager.Storage.Models
                 storageAccountResourceId,
                 location,
                 restoreReference,
-                createdOn,
-                deletedOn,
+                creationTime,
+                deletionTime,
                 additionalBinaryDataProperties);
         }
     }
