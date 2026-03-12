@@ -95,8 +95,9 @@ ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
 
 try
 {
-    // Simulate slow processing that might exceed the lock duration.
-    // ProcessMessageAsync represents your application logic (defined elsewhere).
+    // Process the message — if handling takes longer than the lock duration,
+    // the lock may expire. ProcessMessageAsync represents your application logic
+    // (defined elsewhere).
     await ProcessMessageAsync(message);
 
     // Ensure processing is idempotent — if the lock expires before settlement,
@@ -112,18 +113,6 @@ catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.Messag
     // the lock token is no longer valid.
     Console.WriteLine($"Message lock lost for MessageId={message.MessageId}. " +
         "The message will be redelivered.");
-}
-catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.SessionLockLost)
-{
-    // The lock on the entire session has expired. All messages received
-    // under this session lock are now invalid. Close the session receiver
-    // and re-accept the session to continue processing.
-    //
-    // Note: SessionLockLost only applies when using session-enabled receivers
-    // (via AcceptNextSessionAsync). It is shown here alongside MessageLockLost
-    // for completeness.
-    Console.WriteLine($"Session lock lost for SessionId={message.SessionId}. " +
-        "Re-accept the session to continue.");
 }
 ```
 
@@ -225,8 +214,10 @@ Task ErrorHandler(ProcessErrorEventArgs args)
 
 await processor.StartProcessingAsync();
 
-// Let the processor run. It handles retries internally for transient errors.
-await Task.Delay(TimeSpan.FromMinutes(5));
+// Since the processing happens in the background, we add a Console.ReadKey to
+// allow the processing to continue until a key is pressed.
+Console.ReadKey();
+
 await processor.StopProcessingAsync();
 ```
 
