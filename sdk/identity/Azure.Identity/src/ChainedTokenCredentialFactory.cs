@@ -16,12 +16,12 @@ namespace Azure.Identity
     internal static class ChainedTokenCredentialFactory
     {
         private static readonly string s_validSources =
-            $"'{Constants.VisualStudioCredential}', '{Constants.VisualStudioCodeCredential}', " +
-            $"'{Constants.AzureCliCredential}', '{Constants.AzurePowerShellCredential}', " +
-            $"'{Constants.AzureDeveloperCliCredential}', '{Constants.EnvironmentCredential}', " +
-            $"'{Constants.WorkloadIdentityCredential}', '{Constants.ManagedIdentityCredential}', " +
-            $"'{Constants.InteractiveBrowserCredential}', '{Constants.BrokerCredential}', " +
-            $"'{Constants.AzurePipelinesCredential}', '{Constants.ManagedIdentityAsFederatedIdentityCredential}'";
+            $"'{Constants.AzureCliCredential}', '{Constants.AzureDeveloperCliCredential}', " +
+            $"'{Constants.AzurePipelinesCredential}', '{Constants.AzurePowerShellCredential}', " +
+            $"'{Constants.BrokerCredential}', '{Constants.EnvironmentCredential}', " +
+            $"'{Constants.InteractiveBrowserCredential}', '{Constants.ManagedIdentityCredential}', " +
+            $"'{Constants.ManagedIdentityAsFederatedIdentityCredential}', '{Constants.VisualStudioCredential}', " +
+            $"'{Constants.VisualStudioCodeCredential}', '{Constants.WorkloadIdentityCredential}'";
 
         /// <summary>
         /// Creates an array of TokenCredential instances from the Sources in the parent options.
