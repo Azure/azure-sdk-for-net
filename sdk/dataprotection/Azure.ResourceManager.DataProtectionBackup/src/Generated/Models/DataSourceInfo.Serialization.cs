@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(ObjectType);
             }
             writer.WritePropertyName("resourceID"u8);
-            writer.WriteStringValue(ResourceID);
+            writer.WriteStringValue(ResourceId);
             if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             string dataSourceType = default;
             string objectType = default;
-            ResourceIdentifier resourceID = default;
+            ResourceIdentifier resourceId = default;
             AzureLocation? resourceLocation = default;
             string resourceName = default;
             ResourceType? resourceType = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("resourceID"u8))
                 {
-                    resourceID = new ResourceIdentifier(prop.Value.GetString());
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceLocation"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new DataSourceInfo(
                 dataSourceType,
                 objectType,
-                resourceID,
+                resourceId,
                 resourceLocation,
                 resourceName,
                 resourceType,

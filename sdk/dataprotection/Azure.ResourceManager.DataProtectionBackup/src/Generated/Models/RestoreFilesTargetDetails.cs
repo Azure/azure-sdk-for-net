@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="uri"> Url denoting the restore destination. It can point to container / file share etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filePrefix"/> or <paramref name="uri"/> is null. </exception>
-        public RestoreFilesTargetDetails(string filePrefix, RestoreTargetLocationType restoreTargetLocationType, string uri)
+        public RestoreFilesTargetDetails(string filePrefix, RestoreTargetLocationType restoreTargetLocationType, Uri uri)
         {
             Argument.AssertNotNull(filePrefix, nameof(filePrefix));
             Argument.AssertNotNull(uri, nameof(uri));
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// then this is needed if CrossSubscriptionRestore field of BackupVault is in any of the disabled states
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreFilesTargetDetails(string filePrefix, RestoreTargetLocationType restoreTargetLocationType, string uri, ResourceIdentifier targetResourceArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreFilesTargetDetails(string filePrefix, RestoreTargetLocationType restoreTargetLocationType, Uri uri, ResourceIdentifier targetResourceArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilePrefix = filePrefix;
             RestoreTargetLocationType = restoreTargetLocationType;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public RestoreTargetLocationType RestoreTargetLocationType { get; }
 
         /// <summary> Url denoting the restore destination. It can point to container / file share etc. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
 
         /// <summary>
         /// Full ARM Id denoting the restore destination. It is the ARM Id pointing to container / file share

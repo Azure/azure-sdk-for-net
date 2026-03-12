@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string originalBackupVaultId = default;
             string originalBackupVaultName = default;
             string originalBackupVaultResourcePath = default;
-            ResourceDeletionInfo resourceDeletionInfo = default;
+            DataProtectionResourceDeletionInfo resourceDeletionInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("resourceDeletionInfo"u8))
                 {
-                    resourceDeletionInfo = ResourceDeletionInfo.DeserializeResourceDeletionInfo(prop.Value, options);
+                    resourceDeletionInfo = DataProtectionResourceDeletionInfo.DeserializeDataProtectionResourceDeletionInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

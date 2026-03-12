@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="BackupVaultResourceMoveDetails"/>. </summary>
         /// <param name="operationId"> CorrelationId of latest ResourceMove operation attempted. </param>
-        /// <param name="startTimeUtc"> Start time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
-        /// <param name="completionTimeUtc"> Completion time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
+        /// <param name="startOn"> Start time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
+        /// <param name="completeOn"> Completion time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
         /// <param name="sourceResourcePath"> ARM resource path of source resource. </param>
         /// <param name="targetResourcePath"> ARM resource path of target resource used in latest ResourceMove operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupVaultResourceMoveDetails(string operationId, DateTimeOffset? startTimeUtc, DateTimeOffset? completionTimeUtc, string sourceResourcePath, string targetResourcePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupVaultResourceMoveDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? completeOn, string sourceResourcePath, string targetResourcePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
-            StartTimeUtc = startTimeUtc;
-            CompletionTimeUtc = completionTimeUtc;
+            StartOn = startOn;
+            CompleteOn = completeOn;
             SourceResourcePath = sourceResourcePath;
             TargetResourcePath = targetResourcePath;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string OperationId { get; }
 
         /// <summary> Start time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </summary>
-        public DateTimeOffset? StartTimeUtc { get; }
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> Completion time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </summary>
-        public DateTimeOffset? CompletionTimeUtc { get; }
+        public DateTimeOffset? CompleteOn { get; }
 
         /// <summary> ARM resource path of source resource. </summary>
         public string SourceResourcePath { get; }

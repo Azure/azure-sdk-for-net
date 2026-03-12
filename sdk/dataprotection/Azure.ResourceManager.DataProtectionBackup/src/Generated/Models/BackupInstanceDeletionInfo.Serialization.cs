@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            if (options.Format != "W" && Optional.IsDefined(DeleteOn))
             {
                 writer.WritePropertyName("deletionTime"u8);
-                writer.WriteStringValue(DeletedOn.Value, "O");
+                writer.WriteStringValue(DeleteOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(BillingEndOn))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            DateTimeOffset? deletedOn = default;
+            DateTimeOffset? deleteOn = default;
             DateTimeOffset? billingEndOn = default;
             DateTimeOffset? scheduledPurgeOn = default;
             string deleteActivityId = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
+                    deleteOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("billingEndDate"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupInstanceDeletionInfo(deletedOn, billingEndOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties);
+            return new BackupInstanceDeletionInfo(deleteOn, billingEndOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties);
         }
     }
 }

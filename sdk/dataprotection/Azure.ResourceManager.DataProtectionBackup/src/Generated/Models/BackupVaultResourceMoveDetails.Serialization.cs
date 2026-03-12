@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Optional.IsDefined(StartTimeUtc))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartTimeUtc.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(CompletionTimeUtc))
+            if (Optional.IsDefined(CompleteOn))
             {
                 writer.WritePropertyName("completionTimeUtc"u8);
-                writer.WriteStringValue(CompletionTimeUtc.Value, "O");
+                writer.WriteStringValue(CompleteOn.Value, "O");
             }
             if (Optional.IsDefined(SourceResourcePath))
             {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             string operationId = default;
-            DateTimeOffset? startTimeUtc = default;
-            DateTimeOffset? completionTimeUtc = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? completeOn = default;
             string sourceResourcePath = default;
             string targetResourcePath = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    startTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("completionTimeUtc"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    completionTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    completeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceResourcePath"u8))
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return new BackupVaultResourceMoveDetails(
                 operationId,
-                startTimeUtc,
-                completionTimeUtc,
+                startOn,
+                completeOn,
                 sourceResourcePath,
                 targetResourcePath,
                 additionalBinaryDataProperties);

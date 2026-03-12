@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Deletion info for a tracked resource (Backup Vault). </summary>
-    public partial class ResourceDeletionInfo
+    public partial class DataProtectionResourceDeletionInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceDeletionInfo"/>. </summary>
-        internal ResourceDeletionInfo()
+        /// <summary> Initializes a new instance of <see cref="DataProtectionResourceDeletionInfo"/>. </summary>
+        internal DataProtectionResourceDeletionInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceDeletionInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionResourceDeletionInfo"/>. </summary>
         /// <param name="deletedOn"> Specifies time of deletion for the tracked resource (Backup Vault). </param>
         /// <param name="scheduledPurgeOn"> Specifies the scheduled purge time for the tracked resource (Backup Vault). </param>
         /// <param name="deleteActivityId"> Delete activity ID for troubleshooting the deletion of the tracked resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceDeletionInfo(DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, string deleteActivityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionResourceDeletionInfo(DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, string deleteActivityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeletedOn = deletedOn;
             ScheduledPurgeOn = scheduledPurgeOn;

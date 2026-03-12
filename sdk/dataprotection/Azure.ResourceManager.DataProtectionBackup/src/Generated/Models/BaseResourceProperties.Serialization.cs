@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownBaseResourceProperties))]
     public abstract partial class BaseResourceProperties : IJsonModel<BaseResourceProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="BaseResourceProperties"/> for deserialization. </summary>
-        internal BaseResourceProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BaseResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

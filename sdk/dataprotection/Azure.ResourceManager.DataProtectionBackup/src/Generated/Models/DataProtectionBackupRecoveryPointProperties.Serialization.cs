@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownDataProtectionBackupRecoveryPointProperties))]
     public abstract partial class DataProtectionBackupRecoveryPointProperties : IJsonModel<DataProtectionBackupRecoveryPointProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupRecoveryPointProperties"/> for deserialization. </summary>
-        internal DataProtectionBackupRecoveryPointProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataProtectionBackupRecoveryPointProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 throw new FormatException($"The model {nameof(BackupInstanceProtectionStatusDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ErrorDetails))
+            if (Optional.IsDefined(ProtectionStatusErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails, options);
+                writer.WriteObjectValue(ProtectionStatusErrorDetails, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            UserFacingError errorDetails = default;
+            UserFacingError protectionStatusErrorDetails = default;
             BackupInstanceProtectionStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    errorDetails = UserFacingError.DeserializeUserFacingError(prop.Value, options);
+                    protectionStatusErrorDetails = UserFacingError.DeserializeUserFacingError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupInstanceProtectionStatusDetails(errorDetails, status, additionalBinaryDataProperties);
+            return new BackupInstanceProtectionStatusDetails(protectionStatusErrorDetails, status, additionalBinaryDataProperties);
         }
     }
 }

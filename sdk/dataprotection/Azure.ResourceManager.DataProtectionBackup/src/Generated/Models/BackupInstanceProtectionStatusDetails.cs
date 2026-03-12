@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupInstanceProtectionStatusDetails"/>. </summary>
-        /// <param name="errorDetails"> Specifies the protection status error of the resource. </param>
+        /// <param name="protectionStatusErrorDetails"> Specifies the protection status error of the resource. </param>
         /// <param name="status"> Specifies the protection status of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupInstanceProtectionStatusDetails(UserFacingError errorDetails, BackupInstanceProtectionStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupInstanceProtectionStatusDetails(UserFacingError protectionStatusErrorDetails, BackupInstanceProtectionStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ErrorDetails = errorDetails;
+            ProtectionStatusErrorDetails = protectionStatusErrorDetails;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the protection status error of the resource. </summary>
-        public UserFacingError ErrorDetails { get; set; }
+        public UserFacingError ProtectionStatusErrorDetails { get; set; }
 
         /// <summary> Specifies the protection status of the resource. </summary>
         public BackupInstanceProtectionStatus? Status { get; set; }

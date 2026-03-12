@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public BackupVaultInfrastructureEncryptionState? InfrastructureEncryption { get; set; }
 
         /// <summary> The key uri of the Customer Managed Key. </summary>
-        public string KeyUri
+        public Uri KeyUri
         {
             get
             {

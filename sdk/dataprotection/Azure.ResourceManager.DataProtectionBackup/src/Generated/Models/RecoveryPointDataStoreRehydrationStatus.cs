@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         private readonly string _value;
         private const string CreateInProgressValue = "CREATE_IN_PROGRESS";
-        private const string COMPLETEDValue = "COMPLETED";
+        private const string CompletedValue = "COMPLETED";
         private const string DeleteInProgressValue = "DELETE_IN_PROGRESS";
-        private const string DELETEDValue = "DELETED";
-        private const string FAILEDValue = "FAILED";
+        private const string DeletedValue = "DELETED";
+        private const string FailedValue = "FAILED";
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreRehydrationStatus"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Gets the CreateInProgress. </summary>
         public static RecoveryPointDataStoreRehydrationStatus CreateInProgress { get; } = new RecoveryPointDataStoreRehydrationStatus(CreateInProgressValue);
 
-        /// <summary> Gets the COMPLETED. </summary>
-        public static RecoveryPointDataStoreRehydrationStatus COMPLETED { get; } = new RecoveryPointDataStoreRehydrationStatus(COMPLETEDValue);
+        /// <summary> Gets the Completed. </summary>
+        public static RecoveryPointDataStoreRehydrationStatus Completed { get; } = new RecoveryPointDataStoreRehydrationStatus(CompletedValue);
 
         /// <summary> Gets the DeleteInProgress. </summary>
         public static RecoveryPointDataStoreRehydrationStatus DeleteInProgress { get; } = new RecoveryPointDataStoreRehydrationStatus(DeleteInProgressValue);
 
-        /// <summary> Gets the DELETED. </summary>
-        public static RecoveryPointDataStoreRehydrationStatus DELETED { get; } = new RecoveryPointDataStoreRehydrationStatus(DELETEDValue);
+        /// <summary> Gets the Deleted. </summary>
+        public static RecoveryPointDataStoreRehydrationStatus Deleted { get; } = new RecoveryPointDataStoreRehydrationStatus(DeletedValue);
 
-        /// <summary> Gets the FAILED. </summary>
-        public static RecoveryPointDataStoreRehydrationStatus FAILED { get; } = new RecoveryPointDataStoreRehydrationStatus(FAILEDValue);
+        /// <summary> Gets the Failed. </summary>
+        public static RecoveryPointDataStoreRehydrationStatus Failed { get; } = new RecoveryPointDataStoreRehydrationStatus(FailedValue);
 
         /// <summary> Determines if two <see cref="RecoveryPointDataStoreRehydrationStatus"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

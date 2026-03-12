@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownDataProtectionBackupTriggerContext))]
     public abstract partial class DataProtectionBackupTriggerContext : IJsonModel<DataProtectionBackupTriggerContext>
     {
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupTriggerContext"/> for deserialization. </summary>
-        internal DataProtectionBackupTriggerContext()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataProtectionBackupTriggerContext PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

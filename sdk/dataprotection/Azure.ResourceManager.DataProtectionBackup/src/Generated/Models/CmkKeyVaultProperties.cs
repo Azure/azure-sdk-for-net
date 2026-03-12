@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="CmkKeyVaultProperties"/>. </summary>
         /// <param name="keyUri"> The key uri of the Customer Managed Key. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CmkKeyVaultProperties(string keyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CmkKeyVaultProperties(Uri keyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyUri = keyUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The key uri of the Customer Managed Key. </summary>
-        public string KeyUri { get; set; }
+        public Uri KeyUri { get; set; }
     }
 }

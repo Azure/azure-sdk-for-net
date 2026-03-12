@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RestoreJobRecoveryPointDetails"/>. </summary>
-        /// <param name="recoveryPointID"></param>
+        /// <param name="recoveryPointId"></param>
         /// <param name="recoverOn"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreJobRecoveryPointDetails(string recoveryPointID, DateTimeOffset? recoverOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreJobRecoveryPointDetails(string recoveryPointId, DateTimeOffset? recoverOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RecoveryPointID = recoveryPointID;
+            RecoveryPointId = recoveryPointId;
             RecoverOn = recoverOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the RecoveryPointID. </summary>
-        public string RecoveryPointID { get; set; }
+        /// <summary> Gets or sets the RecoveryPointId. </summary>
+        public string RecoveryPointId { get; set; }
 
         /// <summary> Gets or sets the RecoverOn. </summary>
         public DateTimeOffset? RecoverOn { get; set; }

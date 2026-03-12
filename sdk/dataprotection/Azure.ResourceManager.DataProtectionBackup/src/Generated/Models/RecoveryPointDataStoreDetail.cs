@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="RecoveryPointDataStoreDetail"/>. </summary>
         /// <param name="createdOn"></param>
         /// <param name="expireOn"></param>
-        /// <param name="id"></param>
+        /// <param name="recoveryPointDataStoreId"></param>
         /// <param name="metadata"></param>
         /// <param name="state"></param>
         /// <param name="recoveryPointDataStoreType"></param>
@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="rehydrationExpireOn"></param>
         /// <param name="rehydrationStatus"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPointDataStoreDetail(DateTimeOffset? createdOn, DateTimeOffset? expireOn, Guid? id, string metadata, string state, string recoveryPointDataStoreType, bool? isVisible, DateTimeOffset? rehydrationExpireOn, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPointDataStoreDetail(DateTimeOffset? createdOn, DateTimeOffset? expireOn, Guid? recoveryPointDataStoreId, string metadata, string state, string recoveryPointDataStoreType, bool? isVisible, DateTimeOffset? rehydrationExpireOn, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             ExpireOn = expireOn;
-            Id = id;
+            RecoveryPointDataStoreId = recoveryPointDataStoreId;
             Metadata = metadata;
             State = state;
             RecoveryPointDataStoreType = recoveryPointDataStoreType;
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Gets or sets the ExpireOn. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public Guid? Id { get; set; }
+        /// <summary> Gets or sets the RecoveryPointDataStoreId. </summary>
+        public Guid? RecoveryPointDataStoreId { get; set; }
 
         /// <summary> Gets or sets the Metadata. </summary>
         public string Metadata { get; set; }

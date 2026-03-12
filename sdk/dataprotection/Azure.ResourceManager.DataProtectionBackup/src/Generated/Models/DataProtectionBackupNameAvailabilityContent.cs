@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name for which availability needs to be checked. </param>
-        /// <param name="type"> Describes the Resource type: Microsoft.DataProtection/BackupVaults. </param>
+        /// <param name="resourceType"> Describes the Resource type: Microsoft.DataProtection/BackupVaults. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupNameAvailabilityContent(string name, ResourceType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupNameAvailabilityContent(string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Type = @type;
+            ResourceType = resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string Name { get; set; }
 
         /// <summary> Describes the Resource type: Microsoft.DataProtection/BackupVaults. </summary>
-        public ResourceType? Type { get; set; }
+        public ResourceType? ResourceType { get; set; }
     }
 }

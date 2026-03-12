@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownDataProtectionBackupAuthCredentials))]
     public abstract partial class DataProtectionBackupAuthCredentials : IJsonModel<DataProtectionBackupAuthCredentials>
     {
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupAuthCredentials"/> for deserialization. </summary>
-        internal DataProtectionBackupAuthCredentials()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataProtectionBackupAuthCredentials PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

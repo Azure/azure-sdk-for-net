@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobProperties"/>. </summary>
-        /// <param name="activityID"> Job Activity Id. </param>
+        /// <param name="activityId"> Job Activity Id. </param>
         /// <param name="backupInstanceFriendlyName"> Name of the Backup Instance. </param>
         /// <param name="dataSourceId"> ARM ID of the DataSource. </param>
         /// <param name="dataSourceLocation"> Location of the DataSource. </param>
@@ -32,16 +32,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="operationCategory"> It indicates the type of Job i.e. Backup/Restore/Tiering/Management. </param>
         /// <param name="isProgressEnabled"> Indicated whether progress is enabled for the job. </param>
         /// <param name="sourceResourceGroup"> Resource Group Name of the Datasource. </param>
-        /// <param name="sourceSubscriptionID"> SubscriptionId corresponding to the DataSource. </param>
+        /// <param name="sourceSubscriptionId"> SubscriptionId corresponding to the DataSource. </param>
         /// <param name="startOn"> StartTime of the job(in UTC). </param>
         /// <param name="status"> Status of the job like InProgress/Completed/Failed/Cancelled/CompletedWithWarnings/Cancelling/Paused. </param>
         /// <param name="subscriptionId"> Subscription Id of the corresponding backup vault. </param>
         /// <param name="supportedActions"> List of supported actions. </param>
         /// <param name="vaultName"> Name of the vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="activityID"/>, <paramref name="backupInstanceFriendlyName"/>, <paramref name="dataSourceId"/>, <paramref name="dataSourceName"/>, <paramref name="dataSourceType"/>, <paramref name="operation"/>, <paramref name="operationCategory"/>, <paramref name="sourceResourceGroup"/>, <paramref name="sourceSubscriptionID"/>, <paramref name="status"/>, <paramref name="subscriptionId"/>, <paramref name="supportedActions"/> or <paramref name="vaultName"/> is null. </exception>
-        public DataProtectionBackupJobProperties(string activityID, string backupInstanceFriendlyName, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceType, bool isUserTriggered, string operation, string operationCategory, bool isProgressEnabled, string sourceResourceGroup, string sourceSubscriptionID, DateTimeOffset startOn, string status, string subscriptionId, IEnumerable<string> supportedActions, string vaultName)
+        /// <exception cref="ArgumentNullException"> <paramref name="activityId"/>, <paramref name="backupInstanceFriendlyName"/>, <paramref name="dataSourceId"/>, <paramref name="dataSourceName"/>, <paramref name="dataSourceType"/>, <paramref name="operation"/>, <paramref name="operationCategory"/>, <paramref name="sourceResourceGroup"/>, <paramref name="sourceSubscriptionId"/>, <paramref name="status"/>, <paramref name="subscriptionId"/>, <paramref name="supportedActions"/> or <paramref name="vaultName"/> is null. </exception>
+        public DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceType, bool isUserTriggered, string operation, string operationCategory, bool isProgressEnabled, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IEnumerable<string> supportedActions, string vaultName)
         {
-            Argument.AssertNotNull(activityID, nameof(activityID));
+            Argument.AssertNotNull(activityId, nameof(activityId));
             Argument.AssertNotNull(backupInstanceFriendlyName, nameof(backupInstanceFriendlyName));
             Argument.AssertNotNull(dataSourceId, nameof(dataSourceId));
             Argument.AssertNotNull(dataSourceName, nameof(dataSourceName));
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Argument.AssertNotNull(operation, nameof(operation));
             Argument.AssertNotNull(operationCategory, nameof(operationCategory));
             Argument.AssertNotNull(sourceResourceGroup, nameof(sourceResourceGroup));
-            Argument.AssertNotNull(sourceSubscriptionID, nameof(sourceSubscriptionID));
+            Argument.AssertNotNull(sourceSubscriptionId, nameof(sourceSubscriptionId));
             Argument.AssertNotNull(status, nameof(status));
             Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(supportedActions, nameof(supportedActions));
             Argument.AssertNotNull(vaultName, nameof(vaultName));
 
-            ActivityID = activityID;
+            ActivityId = activityId;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
             DataSourceId = dataSourceId;
             DataSourceLocation = dataSourceLocation;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             OperationCategory = operationCategory;
             IsProgressEnabled = isProgressEnabled;
             SourceResourceGroup = sourceResourceGroup;
-            SourceSubscriptionID = sourceSubscriptionID;
+            SourceSubscriptionId = sourceSubscriptionId;
             StartOn = startOn;
             Status = status;
             SubscriptionId = subscriptionId;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupJobProperties"/>. </summary>
-        /// <param name="activityID"> Job Activity Id. </param>
+        /// <param name="activityId"> Job Activity Id. </param>
         /// <param name="backupInstanceFriendlyName"> Name of the Backup Instance. </param>
         /// <param name="backupInstanceId"> ARM ID of the Backup Instance. </param>
         /// <param name="dataSourceId"> ARM ID of the DataSource. </param>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="rehydrationPriority"> Priority to be used for rehydration. </param>
         /// <param name="restoreType"> It indicates the sub type of operation i.e. in case of Restore it can be ALR/OLR. </param>
         /// <param name="sourceResourceGroup"> Resource Group Name of the Datasource. </param>
-        /// <param name="sourceSubscriptionID"> SubscriptionId corresponding to the DataSource. </param>
+        /// <param name="sourceSubscriptionId"> SubscriptionId corresponding to the DataSource. </param>
         /// <param name="startOn"> StartTime of the job(in UTC). </param>
         /// <param name="status"> Status of the job like InProgress/Completed/Failed/Cancelled/CompletedWithWarnings/Cancelling/Paused. </param>
         /// <param name="subscriptionId"> Subscription Id of the corresponding backup vault. </param>
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupJobProperties(string activityID, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionID, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ActivityID = activityID;
+            ActivityId = activityId;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
             BackupInstanceId = backupInstanceId;
             DataSourceId = dataSourceId;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RehydrationPriority = rehydrationPriority;
             RestoreType = restoreType;
             SourceResourceGroup = sourceResourceGroup;
-            SourceSubscriptionID = sourceSubscriptionID;
+            SourceSubscriptionId = sourceSubscriptionId;
             StartOn = startOn;
             Status = status;
             SubscriptionId = subscriptionId;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Job Activity Id. </summary>
-        public string ActivityID { get; set; }
+        public string ActivityId { get; set; }
 
         /// <summary> Name of the Backup Instance. </summary>
         public string BackupInstanceFriendlyName { get; set; }
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string SourceResourceGroup { get; set; }
 
         /// <summary> SubscriptionId corresponding to the DataSource. </summary>
-        public string SourceSubscriptionID { get; set; }
+        public string SourceSubscriptionId { get; set; }
 
         /// <summary> StartTime of the job(in UTC). </summary>
         public DateTimeOffset StartOn { get; set; }

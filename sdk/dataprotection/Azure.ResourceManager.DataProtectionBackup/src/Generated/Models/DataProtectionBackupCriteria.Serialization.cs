@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownDataProtectionBackupCriteria))]
     public abstract partial class DataProtectionBackupCriteria : IJsonModel<DataProtectionBackupCriteria>
     {
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupCriteria"/> for deserialization. </summary>
-        internal DataProtectionBackupCriteria()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataProtectionBackupCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

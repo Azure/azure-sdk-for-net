@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("datastoreType"u8);
                 writer.WriteStringValue(DataStoreType.Value.ToString());
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(StorageSettingType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(StorageSettingType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             StorageSettingStoreType? dataStoreType = default;
-            StorageSettingType? @type = default;
+            StorageSettingType? storageSettingType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    @type = new StorageSettingType(prop.Value.GetString());
+                    storageSettingType = new StorageSettingType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataProtectionBackupStorageSetting(dataStoreType, @type, additionalBinaryDataProperties);
+            return new DataProtectionBackupStorageSetting(dataStoreType, storageSettingType, additionalBinaryDataProperties);
         }
     }
 }

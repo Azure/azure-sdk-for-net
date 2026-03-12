@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownItemLevelRestoreCriteria))]
     public abstract partial class ItemLevelRestoreCriteria : IJsonModel<ItemLevelRestoreCriteria>
     {
-        /// <summary> Initializes a new instance of <see cref="ItemLevelRestoreCriteria"/> for deserialization. </summary>
-        internal ItemLevelRestoreCriteria()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ItemLevelRestoreCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

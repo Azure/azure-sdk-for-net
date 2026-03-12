@@ -19,30 +19,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataSourceSetInfo"/>. </summary>
-        /// <param name="resourceID"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceID"/> is null. </exception>
-        public DataSourceSetInfo(ResourceIdentifier resourceID)
+        /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
+        public DataSourceSetInfo(ResourceIdentifier resourceId)
         {
-            Argument.AssertNotNull(resourceID, nameof(resourceID));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
-            ResourceID = resourceID;
+            ResourceId = resourceId;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataSourceSetInfo"/>. </summary>
         /// <param name="dataSourceType"> DatasourceType of the resource. </param>
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
-        /// <param name="resourceID"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
+        /// <param name="resourceId"> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </param>
         /// <param name="resourceLocation"> Location of datasource. </param>
         /// <param name="resourceName"> Unique identifier of the resource in the context of parent. </param>
         /// <param name="resourceType"> Resource Type of Datasource. </param>
         /// <param name="resourceUriString"> Uri of the resource. </param>
         /// <param name="resourceProperties"> Properties specific to data source set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataSourceSetInfo(string dataSourceType, string objectType, ResourceIdentifier resourceID, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString, BaseResourceProperties resourceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataSourceSetInfo(string dataSourceType, string objectType, ResourceIdentifier resourceId, AzureLocation? resourceLocation, string resourceName, ResourceType? resourceType, string resourceUriString, BaseResourceProperties resourceProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataSourceType = dataSourceType;
             ObjectType = objectType;
-            ResourceID = resourceID;
+            ResourceId = resourceId;
             ResourceLocation = resourceLocation;
             ResourceName = resourceName;
             ResourceType = resourceType;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string ObjectType { get; set; }
 
         /// <summary> Full ARM ID of the resource. For azure resources, this is ARM ID. For non azure resources, this will be the ID created by backup service via Fabric/Vault. </summary>
-        public ResourceIdentifier ResourceID { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> Location of datasource. </summary>
         public AzureLocation? ResourceLocation { get; set; }

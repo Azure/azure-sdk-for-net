@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="originalBackupVaultResourcePath"> Resource path of the original backup vault. </param>
         /// <param name="resourceDeletionInfo"> Deletion info for the tracked resource (Backup Vault). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionDeletedBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, string originalBackupVaultId, string originalBackupVaultName, string originalBackupVaultResourcePath, ResourceDeletionInfo resourceDeletionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionDeletedBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, string originalBackupVaultId, string originalBackupVaultName, string originalBackupVaultResourcePath, DataProtectionResourceDeletionInfo resourceDeletionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string OriginalBackupVaultResourcePath { get; }
 
         /// <summary> Deletion info for the tracked resource (Backup Vault). </summary>
-        public ResourceDeletionInfo ResourceDeletionInfo { get; }
+        public DataProtectionResourceDeletionInfo ResourceDeletionInfo { get; }
 
         /// <summary> Gets or sets the AlertSettingsForAllJobFailures. </summary>
         public AzureMonitorAlertsState? MonitoringAlertSettingsForAllJobFailures

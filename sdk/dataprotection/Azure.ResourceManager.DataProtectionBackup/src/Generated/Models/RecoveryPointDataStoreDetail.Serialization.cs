@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(Id))
+            if (Optional.IsDefined(RecoveryPointDataStoreId))
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id.Value);
+                writer.WriteStringValue(RecoveryPointDataStoreId.Value);
             }
             if (Optional.IsDefined(Metadata))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             DateTimeOffset? createdOn = default;
             DateTimeOffset? expireOn = default;
-            Guid? id = default;
+            Guid? recoveryPointDataStoreId = default;
             string metadata = default;
             string state = default;
             string recoveryPointDataStoreType = default;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    id = new Guid(prop.Value.GetString());
+                    recoveryPointDataStoreId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("metaData"u8))
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new RecoveryPointDataStoreDetail(
                 createdOn,
                 expireOn,
-                id,
+                recoveryPointDataStoreId,
                 metadata,
                 state,
                 recoveryPointDataStoreType,

@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownDataProtectionBackupCopySetting))]
     public abstract partial class DataProtectionBackupCopySetting : IJsonModel<DataProtectionBackupCopySetting>
     {
-        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupCopySetting"/> for deserialization. </summary>
-        internal DataProtectionBackupCopySetting()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataProtectionBackupCopySetting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

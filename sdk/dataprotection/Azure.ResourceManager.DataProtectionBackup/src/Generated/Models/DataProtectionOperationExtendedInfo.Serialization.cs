@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownDataProtectionOperationExtendedInfo))]
     public abstract partial class DataProtectionOperationExtendedInfo : IJsonModel<DataProtectionOperationExtendedInfo>
     {
-        /// <summary> Initializes a new instance of <see cref="DataProtectionOperationExtendedInfo"/> for deserialization. </summary>
-        internal DataProtectionOperationExtendedInfo()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataProtectionOperationExtendedInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

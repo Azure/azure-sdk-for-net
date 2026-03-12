@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RecoveryPointID))
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointID"u8);
-                writer.WriteStringValue(RecoveryPointID);
+                writer.WriteStringValue(RecoveryPointId);
             }
             if (Optional.IsDefined(RecoverOn))
             {
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            string recoveryPointID = default;
+            string recoveryPointId = default;
             DateTimeOffset? recoverOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("recoveryPointID"u8))
                 {
-                    recoveryPointID = prop.Value.GetString();
+                    recoveryPointId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("recoveryPointTime"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestoreJobRecoveryPointDetails(recoveryPointID, recoverOn, additionalBinaryDataProperties);
+            return new RestoreJobRecoveryPointDetails(recoveryPointId, recoverOn, additionalBinaryDataProperties);
         }
     }
 }

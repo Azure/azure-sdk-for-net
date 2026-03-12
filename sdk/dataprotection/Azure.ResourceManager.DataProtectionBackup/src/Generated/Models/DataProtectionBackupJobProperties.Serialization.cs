@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 throw new FormatException($"The model {nameof(DataProtectionBackupJobProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("activityID"u8);
-            writer.WriteStringValue(ActivityID);
+            writer.WriteStringValue(ActivityId);
             writer.WritePropertyName("backupInstanceFriendlyName"u8);
             writer.WriteStringValue(BackupInstanceFriendlyName);
             if (options.Format != "W" && Optional.IsDefined(BackupInstanceId))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("sourceResourceGroup"u8);
             writer.WriteStringValue(SourceResourceGroup);
             writer.WritePropertyName("sourceSubscriptionID"u8);
-            writer.WriteStringValue(SourceSubscriptionID);
+            writer.WriteStringValue(SourceSubscriptionId);
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("status"u8);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            string activityID = default;
+            string activityId = default;
             string backupInstanceFriendlyName = default;
             ResourceIdentifier backupInstanceId = default;
             ResourceIdentifier dataSourceId = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string rehydrationPriority = default;
             string restoreType = default;
             string sourceResourceGroup = default;
-            string sourceSubscriptionID = default;
+            string sourceSubscriptionId = default;
             DateTimeOffset startOn = default;
             string status = default;
             string subscriptionId = default;
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 if (prop.NameEquals("activityID"u8))
                 {
-                    activityID = prop.Value.GetString();
+                    activityId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("backupInstanceFriendlyName"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("sourceSubscriptionID"u8))
                 {
-                    sourceSubscriptionID = prop.Value.GetString();
+                    sourceSubscriptionId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             return new DataProtectionBackupJobProperties(
-                activityID,
+                activityId,
                 backupInstanceFriendlyName,
                 backupInstanceId,
                 dataSourceId,
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 rehydrationPriority,
                 restoreType,
                 sourceResourceGroup,
-                sourceSubscriptionID,
+                sourceSubscriptionId,
                 startOn,
                 status,
                 subscriptionId,

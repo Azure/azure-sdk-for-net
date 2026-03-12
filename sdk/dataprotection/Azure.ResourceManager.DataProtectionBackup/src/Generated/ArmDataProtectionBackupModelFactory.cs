@@ -264,17 +264,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> ResourceMoveDetails will be returned in response to GetResource call from ARM. </summary>
         /// <param name="operationId"> CorrelationId of latest ResourceMove operation attempted. </param>
-        /// <param name="startTimeUtc"> Start time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
-        /// <param name="completionTimeUtc"> Completion time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
+        /// <param name="startOn"> Start time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
+        /// <param name="completeOn"> Completion time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
         /// <param name="sourceResourcePath"> ARM resource path of source resource. </param>
         /// <param name="targetResourcePath"> ARM resource path of target resource used in latest ResourceMove operation. </param>
         /// <returns> A new <see cref="Models.BackupVaultResourceMoveDetails"/> instance for mocking. </returns>
-        public static BackupVaultResourceMoveDetails BackupVaultResourceMoveDetails(string operationId = default, DateTimeOffset? startTimeUtc = default, DateTimeOffset? completionTimeUtc = default, string sourceResourcePath = default, string targetResourcePath = default)
+        public static BackupVaultResourceMoveDetails BackupVaultResourceMoveDetails(string operationId = default, DateTimeOffset? startOn = default, DateTimeOffset? completeOn = default, string sourceResourcePath = default, string targetResourcePath = default)
         {
             return new BackupVaultResourceMoveDetails(
                 operationId,
-                startTimeUtc,
-                completionTimeUtc,
+                startOn,
+                completeOn,
                 sourceResourcePath,
                 targetResourcePath,
                 additionalBinaryDataProperties: null);
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="originalBackupVaultResourcePath"> Resource path of the original backup vault. </param>
         /// <param name="resourceDeletionInfo"> Deletion info for the tracked resource (Backup Vault). </param>
         /// <returns> A new <see cref="Models.DataProtectionDeletedBackupVaultProperties"/> instance for mocking. </returns>
-        public static DataProtectionDeletedBackupVaultProperties DataProtectionDeletedBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default, string originalBackupVaultId = default, string originalBackupVaultName = default, string originalBackupVaultResourcePath = default, ResourceDeletionInfo resourceDeletionInfo = default)
+        public static DataProtectionDeletedBackupVaultProperties DataProtectionDeletedBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default, string originalBackupVaultId = default, string originalBackupVaultName = default, string originalBackupVaultResourcePath = default, DataProtectionResourceDeletionInfo resourceDeletionInfo = default)
         {
             storageSettings ??= new ChangeTrackingList<DataProtectionBackupStorageSetting>();
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
@@ -385,10 +385,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="deletedOn"> Specifies time of deletion for the tracked resource (Backup Vault). </param>
         /// <param name="scheduledPurgeOn"> Specifies the scheduled purge time for the tracked resource (Backup Vault). </param>
         /// <param name="deleteActivityId"> Delete activity ID for troubleshooting the deletion of the tracked resource. </param>
-        /// <returns> A new <see cref="Models.ResourceDeletionInfo"/> instance for mocking. </returns>
-        public static ResourceDeletionInfo ResourceDeletionInfo(DateTimeOffset? deletedOn = default, DateTimeOffset? scheduledPurgeOn = default, string deleteActivityId = default)
+        /// <returns> A new <see cref="Models.DataProtectionResourceDeletionInfo"/> instance for mocking. </returns>
+        public static DataProtectionResourceDeletionInfo DataProtectionResourceDeletionInfo(DateTimeOffset? deletedOn = default, DateTimeOffset? scheduledPurgeOn = default, string deleteActivityId = default)
         {
-            return new ResourceDeletionInfo(deletedOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties: null);
+            return new DataProtectionResourceDeletionInfo(deletedOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> BaseBackupPolicy resource. </summary>
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// then this is needed if CrossSubscriptionRestore field of BackupVault is in any of the disabled states
         /// </param>
         /// <returns> A new <see cref="Models.RestoreFilesTargetDetails"/> instance for mocking. </returns>
-        public static RestoreFilesTargetDetails RestoreFilesTargetDetails(string filePrefix = default, RestoreTargetLocationType restoreTargetLocationType = default, string uri = default, ResourceIdentifier targetResourceArmId = default)
+        public static RestoreFilesTargetDetails RestoreFilesTargetDetails(string filePrefix = default, RestoreTargetLocationType restoreTargetLocationType = default, Uri uri = default, ResourceIdentifier targetResourceArmId = default)
         {
             return new RestoreFilesTargetDetails(filePrefix, restoreTargetLocationType, uri, targetResourceArmId, additionalBinaryDataProperties: null);
         }
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> RecoveryPoint datastore details. </summary>
         /// <param name="createdOn"></param>
         /// <param name="expireOn"></param>
-        /// <param name="id"></param>
+        /// <param name="recoveryPointDataStoreId"></param>
         /// <param name="metadata"></param>
         /// <param name="state"></param>
         /// <param name="recoveryPointDataStoreType"></param>
@@ -1021,12 +1021,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="rehydrationExpireOn"></param>
         /// <param name="rehydrationStatus"></param>
         /// <returns> A new <see cref="Models.RecoveryPointDataStoreDetail"/> instance for mocking. </returns>
-        public static RecoveryPointDataStoreDetail RecoveryPointDataStoreDetail(DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, Guid? id = default, string metadata = default, string state = default, string recoveryPointDataStoreType = default, bool? isVisible = default, DateTimeOffset? rehydrationExpireOn = default, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus = default)
+        public static RecoveryPointDataStoreDetail RecoveryPointDataStoreDetail(DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, Guid? recoveryPointDataStoreId = default, string metadata = default, string state = default, string recoveryPointDataStoreType = default, bool? isVisible = default, DateTimeOffset? rehydrationExpireOn = default, RecoveryPointDataStoreRehydrationStatus? rehydrationStatus = default)
         {
             return new RecoveryPointDataStoreDetail(
                 createdOn,
                 expireOn,
-                id,
+                recoveryPointDataStoreId,
                 metadata,
                 state,
                 recoveryPointDataStoreType,
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 properties);
         }
 
-        /// <param name="activityID"> Job Activity Id. </param>
+        /// <param name="activityId"> Job Activity Id. </param>
         /// <param name="backupInstanceFriendlyName"> Name of the Backup Instance. </param>
         /// <param name="backupInstanceId"> ARM ID of the Backup Instance. </param>
         /// <param name="dataSourceId"> ARM ID of the DataSource. </param>
@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="rehydrationPriority"> Priority to be used for rehydration. </param>
         /// <param name="restoreType"> It indicates the sub type of operation i.e. in case of Restore it can be ALR/OLR. </param>
         /// <param name="sourceResourceGroup"> Resource Group Name of the Datasource. </param>
-        /// <param name="sourceSubscriptionID"> SubscriptionId corresponding to the DataSource. </param>
+        /// <param name="sourceSubscriptionId"> SubscriptionId corresponding to the DataSource. </param>
         /// <param name="startOn"> StartTime of the job(in UTC). </param>
         /// <param name="status"> Status of the job like InProgress/Completed/Failed/Cancelled/CompletedWithWarnings/Cancelling/Paused. </param>
         /// <param name="subscriptionId"> Subscription Id of the corresponding backup vault. </param>
@@ -1086,13 +1086,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
         /// <returns> A new <see cref="Models.DataProtectionBackupJobProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityID = default, string backupInstanceFriendlyName = default, ResourceIdentifier backupInstanceId = default, ResourceIdentifier dataSourceId = default, AzureLocation dataSourceLocation = default, string dataSourceName = default, string dataSourceSetName = default, string dataSourceType = default, TimeSpan? duration = default, DateTimeOffset? endOn = default, IEnumerable<ResponseError> errorDetails = default, BackupJobExtendedInfo extendedInfo = default, bool isUserTriggered = default, string operation = default, string operationCategory = default, ResourceIdentifier policyId = default, string policyName = default, bool isProgressEnabled = default, Uri progressUri = default, string rehydrationPriority = default, string restoreType = default, string sourceResourceGroup = default, string sourceSubscriptionID = default, DateTimeOffset startOn = default, string status = default, string subscriptionId = default, IEnumerable<string> supportedActions = default, string vaultName = default, ETag? etag = default, string sourceDataStoreName = default, string destinationDataStoreName = default)
+        public static DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId = default, string backupInstanceFriendlyName = default, ResourceIdentifier backupInstanceId = default, ResourceIdentifier dataSourceId = default, AzureLocation dataSourceLocation = default, string dataSourceName = default, string dataSourceSetName = default, string dataSourceType = default, TimeSpan? duration = default, DateTimeOffset? endOn = default, IEnumerable<ResponseError> errorDetails = default, BackupJobExtendedInfo extendedInfo = default, bool isUserTriggered = default, string operation = default, string operationCategory = default, ResourceIdentifier policyId = default, string policyName = default, bool isProgressEnabled = default, Uri progressUri = default, string rehydrationPriority = default, string restoreType = default, string sourceResourceGroup = default, string sourceSubscriptionId = default, DateTimeOffset startOn = default, string status = default, string subscriptionId = default, IEnumerable<string> supportedActions = default, string vaultName = default, ETag? etag = default, string sourceDataStoreName = default, string destinationDataStoreName = default)
         {
             errorDetails ??= new ChangeTrackingList<ResponseError>();
             supportedActions ??= new ChangeTrackingList<string>();
 
             return new DataProtectionBackupJobProperties(
-                activityID,
+                activityId,
                 backupInstanceFriendlyName,
                 backupInstanceId,
                 dataSourceId,
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 rehydrationPriority,
                 restoreType,
                 sourceResourceGroup,
-                sourceSubscriptionID,
+                sourceSubscriptionId,
                 startOn,
                 status,
                 subscriptionId,
@@ -1234,14 +1234,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Deletion Info. </summary>
-        /// <param name="deletedOn"> Specifies time of deletion. </param>
+        /// <param name="deleteOn"> Specifies time of deletion. </param>
         /// <param name="billingEndOn"> Specifies billing end date. </param>
         /// <param name="scheduledPurgeOn"> Specifies purge time. </param>
         /// <param name="deleteActivityId"> Delete activity ID for troubleshooting purpose. </param>
         /// <returns> A new <see cref="Models.BackupInstanceDeletionInfo"/> instance for mocking. </returns>
-        public static BackupInstanceDeletionInfo BackupInstanceDeletionInfo(DateTimeOffset? deletedOn = default, DateTimeOffset? billingEndOn = default, DateTimeOffset? scheduledPurgeOn = default, string deleteActivityId = default)
+        public static BackupInstanceDeletionInfo BackupInstanceDeletionInfo(DateTimeOffset? deleteOn = default, DateTimeOffset? billingEndOn = default, DateTimeOffset? scheduledPurgeOn = default, string deleteActivityId = default)
         {
-            return new BackupInstanceDeletionInfo(deletedOn, billingEndOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties: null);
+            return new BackupInstanceDeletionInfo(deleteOn, billingEndOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Base resource under Microsoft.DataProtection provider namespace. </summary>
@@ -1566,7 +1566,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RestoreJobRecoveryPointDetails RestoreJobRecoveryPointDetails(string recoveryPointId, DateTimeOffset? recoverOn)
         {
-            return new RestoreJobRecoveryPointDetails(default, recoverOn, additionalBinaryDataProperties: null);
+            return new RestoreJobRecoveryPointDetails(recoveryPointId, recoverOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.UserFacingWarningDetail"/>. </summary>
@@ -1629,7 +1629,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             supportedActions ??= new ChangeTrackingList<string>();
 
             return new DataProtectionBackupJobProperties(
-                default,
+                activityId,
                 backupInstanceFriendlyName,
                 backupInstanceId,
                 dataSourceId,
@@ -1651,7 +1651,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 default,
                 restoreType,
                 sourceResourceGroup,
-                default,
+                sourceSubscriptionId,
                 startOn,
                 status,
                 subscriptionId,
