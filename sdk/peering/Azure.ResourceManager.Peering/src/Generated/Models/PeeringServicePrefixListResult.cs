@@ -7,64 +7,39 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The paginated list of peering service prefixes. </summary>
+    /// <summary> The response of a PeeringServicePrefix list operation. </summary>
     internal partial class PeeringServicePrefixListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PeeringServicePrefixListResult"/>. </summary>
-        internal PeeringServicePrefixListResult()
+        /// <param name="value"> The PeeringServicePrefix items on this page. </param>
+        internal PeeringServicePrefixListResult(IEnumerable<PeeringServicePrefixData> value)
         {
-            Value = new ChangeTrackingList<PeeringServicePrefixData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringServicePrefixListResult"/>. </summary>
-        /// <param name="value"> The list of peering service prefixes. </param>
-        /// <param name="nextLink"> The link to fetch the next page of peering service prefixes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringServicePrefixListResult(IReadOnlyList<PeeringServicePrefixData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The PeeringServicePrefix items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringServicePrefixListResult(IList<PeeringServicePrefixData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The list of peering service prefixes. </summary>
-        public IReadOnlyList<PeeringServicePrefixData> Value { get; }
-        /// <summary> The link to fetch the next page of peering service prefixes. </summary>
-        public string NextLink { get; }
+        /// <summary> The PeeringServicePrefix items on this page. </summary>
+        public IList<PeeringServicePrefixData> Value { get; }
+
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

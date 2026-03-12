@@ -27,6 +27,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private Bazs _bazsRestClient;
         private ClientDiagnostics _zoosClientDiagnostics;
         private Zoos _zoosRestClient;
+        private ClientDiagnostics _clustersClientDiagnostics;
+        private Clusters _clustersRestClient;
         private ClientDiagnostics _mgmtTypeSpecClientClientDiagnostics;
         private MgmtTypeSpecClient _mgmtTypeSpecClientRestClient;
         private ClientDiagnostics _sapVirtualInstancesClientDiagnostics;
@@ -56,6 +58,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
+        private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
         private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private MgmtTypeSpecClient MgmtTypeSpecClientRestClient => _mgmtTypeSpecClientRestClient ??= new MgmtTypeSpecClient(MgmtTypeSpecClientClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
@@ -64,9 +70,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private SAPVirtualInstances SAPVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SAPVirtualInstances(SAPVirtualInstancesClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of PlaywrightQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
+        /// <returns> An object representing collection of PlaywrightQuota and their operations over a PlaywrightQuotaResource. </returns>
         public virtual PlaywrightQuotaCollection GetAllPlaywrightQuota(AzureLocation location)
         {
             return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
@@ -122,6 +128,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         public virtual Response<PlaywrightQuotaResource> GetPlaywrightQuota(AzureLocation location, PlaywrightQuotaName playwrightQuotaName, CancellationToken cancellationToken = default)
         {
             return GetAllPlaywrightQuota(location).Get(playwrightQuotaName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PublicSharedConfigs in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of PublicSharedConfigs and their operations over a PublicSharedConfigResource. </returns>
+        public virtual PublicSharedConfigCollection GetPublicSharedConfigs()
+        {
+            return GetCachedClient(client => new PublicSharedConfigCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a SharedConfig
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/publicSharedConfigs/{configName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicSharedConfigs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the SharedConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PublicSharedConfigResource>> GetPublicSharedConfigAsync(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            return await GetPublicSharedConfigs().GetAsync(configName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SharedConfig
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/publicSharedConfigs/{configName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PublicSharedConfigs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configName"> The name of the SharedConfig. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PublicSharedConfigResource> GetPublicSharedConfig(string configName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configName, nameof(configName));
+
+            return GetPublicSharedConfigs().Get(configName, cancellationToken);
         }
 
         /// <summary>
@@ -292,6 +363,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<ZooData, ZooResource>(new ZoosGetBySubscriptionCollectionResultOfT(ZoosRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ZooResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Cluster resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/clusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ClusterResource> GetClustersAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ClusterData, ClusterResource>(new ClustersGetBySubscriptionAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ClusterResource(Client, data));
+        }
+
+        /// <summary>
+        /// List Cluster resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/MgmtTypeSpec/clusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ClusterResource> GetClusters(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ClusterData, ClusterResource>(new ClustersGetBySubscriptionCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ClusterResource(Client, data));
         }
 
         /// <summary>

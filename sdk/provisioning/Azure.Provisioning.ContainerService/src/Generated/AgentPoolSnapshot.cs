@@ -154,7 +154,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the AgentPoolSnapshot.</param>
     public AgentPoolSnapshot(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.ContainerService/snapshots", resourceVersion ?? "2025-04-01")
+        : base(bicepIdentifier, "Microsoft.ContainerService/snapshots", resourceVersion ?? "2025-10-01")
     {
     }
 
@@ -163,6 +163,7 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _creationDataSourceResourceId = DefineProperty<ResourceIdentifier>("CreationDataSourceResourceId", ["properties", "creationData", "sourceResourceId"]);
@@ -183,6 +184,11 @@ public partial class AgentPoolSnapshot : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-10-01.
+        /// </summary>
+        public static readonly string V2025_10_01 = "2025-10-01";
+
         /// <summary>
         /// 2025-04-01.
         /// </summary>

@@ -7,127 +7,173 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary>
-    /// A class representing the AppConfigurationSnapshot data model.
-    /// The snapshot resource.
-    /// </summary>
+    /// <summary> The snapshot resource. </summary>
     public partial class AppConfigurationSnapshotData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotData"/>. </summary>
         public AppConfigurationSnapshotData()
         {
-            Filters = new ChangeTrackingList<SnapshotKeyValueFilter>();
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="snapshotType"> The type of the resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the snapshot. </param>
-        /// <param name="status"> The current status of the snapshot. </param>
-        /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
-        /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </param>
-        /// <param name="createdOn"> The time that the snapshot was created. </param>
-        /// <param name="expireOn"> The time that the snapshot will expire. </param>
-        /// <param name="retentionPeriod"> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </param>
-        /// <param name="size"> The size in bytes of the snapshot. </param>
-        /// <param name="itemsCount"> The amount of key-values in the snapshot. </param>
-        /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not Azure Resource Manager (ARM) tags. </param>
-        /// <param name="eTag"> A value representing the current state of the snapshot. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotType, AppConfigurationProvisioningState? provisioningState, AppConfigurationSnapshotStatus? status, IList<SnapshotKeyValueFilter> filters, SnapshotCompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expireOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> All snapshot properties. </param>
+        internal AppConfigurationSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SnapshotProperties properties) : base(id, name, resourceType, systemData)
         {
-            SnapshotType = snapshotType;
-            ProvisioningState = provisioningState;
-            Status = status;
-            Filters = filters;
-            CompositionType = compositionType;
-            CreatedOn = createdOn;
-            ExpireOn = expireOn;
-            RetentionPeriod = retentionPeriod;
-            Size = size;
-            ItemsCount = itemsCount;
-            Tags = tags;
-            ETag = eTag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> The type of the resource. </summary>
-        [WirePath("type")]
-        public string SnapshotType { get; }
+        /// <summary> All snapshot properties. </summary>
+        [WirePath("properties")]
+        internal SnapshotProperties Properties { get; set; }
+
         /// <summary> The provisioning state of the snapshot. </summary>
         [WirePath("properties.provisioningState")]
-        public AppConfigurationProvisioningState? ProvisioningState { get; }
+        public AppConfigurationProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The current status of the snapshot. </summary>
         [WirePath("properties.status")]
-        public AppConfigurationSnapshotStatus? Status { get; }
+        public AppConfigurationSnapshotStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
         [WirePath("properties.filters")]
-        public IList<SnapshotKeyValueFilter> Filters { get; }
+        public IList<SnapshotKeyValueFilter> Filters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotProperties();
+                }
+                return Properties.Filters;
+            }
+        }
+
         /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
         [WirePath("properties.compositionType")]
-        public SnapshotCompositionType? CompositionType { get; set; }
+        public SnapshotCompositionType? CompositionType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CompositionType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotProperties();
+                }
+                Properties.CompositionType = value.Value;
+            }
+        }
+
         /// <summary> The time that the snapshot was created. </summary>
         [WirePath("properties.created")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The time that the snapshot will expire. </summary>
         [WirePath("properties.expires")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpireOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpireOn;
+            }
+        }
+
         /// <summary> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
         [WirePath("properties.retentionPeriod")]
-        public long? RetentionPeriod { get; set; }
+        public long? RetentionPeriod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RetentionPeriod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotProperties();
+                }
+                Properties.RetentionPeriod = value.Value;
+            }
+        }
+
         /// <summary> The size in bytes of the snapshot. </summary>
         [WirePath("properties.size")]
-        public long? Size { get; }
+        public long? Size
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Size;
+            }
+        }
+
         /// <summary> The amount of key-values in the snapshot. </summary>
         [WirePath("properties.itemsCount")]
-        public long? ItemsCount { get; }
-        /// <summary> The tags of the snapshot. NOTE: These are data plane tags, not Azure Resource Manager (ARM) tags. </summary>
+        public long? ItemsCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ItemsCount;
+            }
+        }
+
+        /// <summary> The tags of the snapshot. NOTE: These are data plane tags, not ARM tags. </summary>
         [WirePath("properties.tags")]
-        public IDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotProperties();
+                }
+                return Properties.Tags;
+            }
+        }
+
         /// <summary> A value representing the current state of the snapshot. </summary>
         [WirePath("properties.etag")]
-        public ETag? ETag { get; }
+        public ETag? ETag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ETag;
+            }
+        }
     }
 }

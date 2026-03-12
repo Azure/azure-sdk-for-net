@@ -28,7 +28,7 @@ extends:
       triggeringPaths:
       - /sdk/resourcemanager/
       - /eng/Versioning.targets
-      - /eng/Packages.Data.props
+      - /eng/centralpackagemanagement
       - /eng/Directory.Build.Common.props
       - /eng/Directory.Build.Common.targets
       - /eng/service.proj
@@ -51,11 +51,6 @@ extends:
     - name: Microsoft.ClientModel.TestFramework
       safeName: MicrosoftClientModelTestFramework
       skipReleaseStage: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Core
-      ExpectedWarningsFilepath: /Azure.Core/tests/compatibility/ExpectedAotWarnings.txt
-    - ArtifactName: Azure.Core.Expressions.DataFactory
-      ExpectedWarningsFilepath: /Azure.Core.Expressions.DataFactory/tests/compatibility/ExpectedAotWarnings.txt
 
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

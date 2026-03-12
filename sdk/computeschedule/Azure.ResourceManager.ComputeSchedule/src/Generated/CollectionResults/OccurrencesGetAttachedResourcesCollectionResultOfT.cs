@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                     yield break;
                 }
                 OccurrenceResourceListResponse result = OccurrenceResourceListResponse.FromResponse(response);
-                yield return Page<OccurrenceResourceData>.FromValues((IReadOnlyList<OccurrenceResourceData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<OccurrenceResourceData>.FromValues((IReadOnlyList<OccurrenceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAttachedResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _scheduledActionName, _occurrenceId, _context) : _client.CreateGetAttachedResourcesRequest(_subscriptionId, _resourceGroupName, _scheduledActionName, _occurrenceId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeScheduleResourceGroupResource.GetAttachedResources");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ScheduledActionOccurrenceResource.GetAttachedResources");
             scope.Start();
             try
             {

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             TryGetApiVersion(DisconnectedOperationsImageResource.ResourceType, out string disconnectedOperationsImageApiVersion);
             _imagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationsImageResource.ResourceType.Namespace, Diagnostics);
-            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsImageApiVersion ?? "2025-06-01-preview");
+            _imagesRestClient = new Images(_imagesClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsImageApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,16 +165,16 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DisconnectedOperationsImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DisconnectedOperationsImageResource> GetAllAsync(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DisconnectedOperationsImageResource> GetAllAsync(string filter = default, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                top,
+                maxCount,
                 skip,
                 context), data => new DisconnectedOperationsImageResource(Client, data));
         }
@@ -204,16 +204,16 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter the result list using the given expression. </param>
-        /// <param name="top"> The number of result items to return. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DisconnectedOperationsImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DisconnectedOperationsImageResource> GetAll(string filter = default, int? top = default, int? skip = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<DisconnectedOperationsImageResource> GetAll(string filter = default, int? maxCount = default, int? skip = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 Id.ResourceGroupName,
                 Id.Name,
                 filter,
-                top,
+                maxCount,
                 skip,
                 context), data => new DisconnectedOperationsImageResource(Client, data));
         }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-03-15. </description>
         /// </item>
         /// </list>
         /// </summary>

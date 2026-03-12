@@ -10,8 +10,13 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
+using System.Xml.Linq;
+using Azure.Core;
 
 namespace BasicTypeSpec
 {
@@ -21,6 +26,18 @@ namespace BasicTypeSpec
         internal static readonly JsonDocumentOptions JsonDocumentOptions = new JsonDocumentOptions
         {
             MaxDepth = 256
+        };
+        internal static readonly XmlWriterSettings XmlWriterSettings = new XmlWriterSettings
+        {
+            Encoding = new UTF8Encoding(false)
+        };
+        private static readonly XmlReaderSettings XmlReaderSettings = new XmlReaderSettings
+        {
+            DtdProcessing = DtdProcessing.Prohibit,
+            XmlResolver = null,
+            MaxCharactersInDocument = 30000000,
+            IgnoreProcessingInstructions = true,
+            IgnoreComments = true
         };
 
         public static object GetObject(this JsonElement element)
@@ -263,6 +280,76 @@ namespace BasicTypeSpec
 #else
             return BinaryData.FromString(element.GetRawText());
 #endif
+        }
+
+        public static DateTimeOffset GetDateTimeOffset(this XElement element, string format) => format switch
+        {
+            "U" => DateTimeOffset.FromUnixTimeSeconds((long)element),
+            _ => TypeFormatters.ParseDateTimeOffset(element.Value, format)
+        };
+
+        public static TimeSpan GetTimeSpan(this XElement element, string format) => TypeFormatters.ParseTimeSpan(element.Value, format);
+
+        public static byte[] GetBytesFromBase64(this XElement element, string format) => format switch
+        {
+            "U" => TypeFormatters.FromBase64UrlString(element.Value),
+            "D" => Convert.FromBase64String(element.Value),
+            _ => throw new ArgumentException("Format is not supported: ", nameof(format))
+        };
+
+        public static void WriteStringValue(this XmlWriter writer, DateTimeOffset value, string format)
+        {
+            writer.WriteValue(TypeFormatters.ToString(value, format));
+        }
+
+        public static void WriteStringValue(this XmlWriter writer, TimeSpan value, string format)
+        {
+            writer.WriteValue(TypeFormatters.ToString(value, format));
+        }
+
+        public static void WriteBase64StringValue(this XmlWriter writer, byte[] value, string format)
+        {
+            writer.WriteValue(TypeFormatters.ToString(value, format));
+        }
+
+        public static void WriteObjectValue<T>(this XmlWriter writer, T value, ModelReaderWriterOptions options = null, string nameHint = null)
+        {
+            switch (value)
+            {
+                case IXmlSerializable xmlSerializable:
+                    xmlSerializable.Write(writer, nameHint);
+                    break;
+                case IPersistableModel<T> persistableModel:
+                    BinaryData data = ModelReaderWriter.Write(persistableModel, options ?? WireOptions, BasicTypeSpecContext.Default);
+                    using (Stream stream = data.ToStream())
+                    {
+                        using (XmlReader reader = XmlReader.Create(stream, XmlReaderSettings))
+                        {
+                            reader.MoveToContent();
+                            if (nameHint != null)
+                            {
+                                writer.WriteStartElement(nameHint);
+                                reader.ReadStartElement();
+                                while (reader.NodeType != XmlNodeType.EndElement)
+                                {
+                                    writer.WriteNode(reader, true);
+                                }
+                                writer.WriteEndElement();
+                            }
+                            else
+                            {
+                                reader.ReadStartElement();
+                                while (reader.NodeType != XmlNodeType.EndElement)
+                                {
+                                    writer.WriteNode(reader, true);
+                                }
+                            }
+                        }
+                    }
+                    return;
+                default:
+                    throw new NotSupportedException($"Not supported type {typeof(T)}");
+            }
         }
     }
 }

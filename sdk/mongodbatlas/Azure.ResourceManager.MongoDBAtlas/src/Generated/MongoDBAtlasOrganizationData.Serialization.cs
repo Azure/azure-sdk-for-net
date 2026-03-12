@@ -25,6 +25,65 @@ namespace Azure.ResourceManager.MongoDBAtlas
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMongoDBAtlasOrganizationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoDBAtlasContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MongoDBAtlasOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MongoDBAtlasOrganizationData IPersistableModel<MongoDBAtlasOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MongoDBAtlasOrganizationData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MongoDBAtlasOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="mongoDBAtlasOrganizationData"> The <see cref="MongoDBAtlasOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MongoDBAtlasOrganizationData mongoDBAtlasOrganizationData)
+        {
+            if (mongoDBAtlasOrganizationData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(mongoDBAtlasOrganizationData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasOrganizationData"/> from. </param>
+        internal static MongoDBAtlasOrganizationData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeMongoDBAtlasOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoDBAtlasOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -183,65 +242,6 @@ namespace Azure.ResourceManager.MongoDBAtlas
                 location,
                 properties,
                 identity);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MongoDBAtlasOrganizationData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMongoDBAtlasContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        MongoDBAtlasOrganizationData IPersistableModel<MongoDBAtlasOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => (MongoDBAtlasOrganizationData)PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<MongoDBAtlasOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeMongoDBAtlasOrganizationData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MongoDBAtlasOrganizationData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MongoDBAtlasOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="mongoDBAtlasOrganizationData"> The <see cref="MongoDBAtlasOrganizationData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MongoDBAtlasOrganizationData mongoDBAtlasOrganizationData)
-        {
-            if (mongoDBAtlasOrganizationData == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(mongoDBAtlasOrganizationData, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MongoDBAtlasOrganizationData"/> from. </param>
-        internal static MongoDBAtlasOrganizationData FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMongoDBAtlasOrganizationData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

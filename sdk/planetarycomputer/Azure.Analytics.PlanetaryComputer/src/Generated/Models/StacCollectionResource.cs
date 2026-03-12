@@ -14,7 +14,6 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md
-    /// 
     /// Represents a STAC collection.
     /// </summary>
     public partial class StacCollectionResource
@@ -65,7 +64,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="assets"> Assets. </param>
         /// <param name="itemAssets">
         /// Item Assets
-        /// 
         /// See the [Item Assets Definition Extension Specification](https://github.com/stac-extensions/item-assets)
         /// </param>
         /// <param name="license"> License identifier for the collection data. </param>
@@ -74,11 +72,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="providers"> Organizations or individuals who provide the collection data. </param>
         /// <param name="summaries">
         /// Summaries
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="additionalProperties"></param>
-        internal StacCollectionResource(string createdOn, string updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string stacVersion, IList<StacLink> links, string title, string @type, IDictionary<string, StacAsset> assets, IDictionary<string, StacItemAsset> itemAssets, string license, StacExtensionExtent extent, IList<string> keywords, IList<StacProvider> providers, IDictionary<string, BinaryData> summaries, IDictionary<string, BinaryData> additionalProperties)
+        internal StacCollectionResource(DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, string id, string description, string stacVersion, IList<StacLink> links, string title, string @type, IDictionary<string, StacAsset> assets, IDictionary<string, StacItemAsset> itemAssets, string license, StacExtensionExtent extent, IList<string> keywords, IList<StacProvider> providers, IDictionary<string, BinaryData> summaries, IDictionary<string, BinaryData> additionalProperties)
         {
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
@@ -101,10 +98,10 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> MSFT Created. </summary>
-        public string CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> MSFT Updated. </summary>
-        public string UpdatedOn { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
 
         /// <summary> MSFT Short Description. </summary>
         public string ShortDescription { get; set; }
@@ -135,7 +132,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Item Assets
-        /// 
         /// See the [Item Assets Definition Extension Specification](https://github.com/stac-extensions/item-assets)
         /// </summary>
         public IDictionary<string, StacItemAsset> ItemAssets { get; }
@@ -154,7 +150,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Summaries
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>

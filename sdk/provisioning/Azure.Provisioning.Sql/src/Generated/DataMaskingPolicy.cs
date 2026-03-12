@@ -134,6 +134,7 @@ public partial class DataMaskingPolicy : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _dataMaskingState = DefineProperty<DataMaskingState>("DataMaskingState", ["properties", "dataMaskingState"]);
         _exemptPrincipals = DefineProperty<string>("ExemptPrincipals", ["properties", "exemptPrincipals"]);

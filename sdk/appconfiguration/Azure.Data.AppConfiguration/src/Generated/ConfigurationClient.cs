@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -367,6 +368,32 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Creates a key-value snapshot. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> The name of the key-value snapshot to create. </param>
+        /// <param name="contentType"> Content-Type header. </param>
+        /// <param name="entity"> The key-value snapshot to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual Operation<ConfigurationSnapshot> CreateSnapshot(WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, ConfigurationSnapshot entity, string syncToken = default, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = CreateSnapshot(waitUntil, name, contentType.ToSerialString(), entity, syncToken, cancellationToken.ToRequestContext());
+            return ProtocolOperationHelpers.Convert(result, response => (ConfigurationSnapshot)response, ClientDiagnostics, "ConfigurationClient.CreateSnapshot");
+        }
+
+        /// <summary> Creates a key-value snapshot. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> The name of the key-value snapshot to create. </param>
+        /// <param name="contentType"> Content-Type header. </param>
+        /// <param name="entity"> The key-value snapshot to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual async Task<Operation<ConfigurationSnapshot>> CreateSnapshotAsync(WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, ConfigurationSnapshot entity, string syncToken = default, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = await CreateSnapshotAsync(waitUntil, name, contentType.ToSerialString(), entity, syncToken, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (ConfigurationSnapshot)response, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync");
         }
 
         /// <summary>

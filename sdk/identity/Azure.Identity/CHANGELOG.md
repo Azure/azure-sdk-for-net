@@ -1,8 +1,26 @@
 # Release History
 
-## 1.18.0-beta.3 (Unreleased)
+## 1.19.0 (2026-03-11)
 
 ### Features Added
+
+- Added support in `ClientCertificateCredential` to specify a path in the form of `cert:/StoreLocation/StoreName/Thumbprint` to refer to a certificate in the platform certificate store - such as the Windows Certificate Store on Windows, and the KeyChain on MacOS - instead of a file on disk. For example to load a certificate from the "My" store in the "CurrentUser" location use the path `cert:/CurrentUser/My/E661583E8FABEF4C0BEF694CBC41C28FB81CD870` (A community contribution, courtesy of _[fowl2](https://github.com/fowl2)_). 
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.83.1.
+
+## 1.18.0 (2026-02-25)
+
+### Features Added
+
+- Added experimental `Microsoft.Extensions.Configuration` and `Microsoft.Extensions.DependencyInjection` integration for Azure SDK clients. For details, see the [Configuration and Dependency Injection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/src/docs/ConfigurationAndDependencyInjection.md) documentation.
+
+- The `WorkloadIdentityCredentialOptions.IsAzureProxyEnabled` property, which enables Azure Kubernetes token proxy mode, is only available in beta releases of this package.
+
+- `AzureDeveloperCliCredential` now parses JSON error output from `azd auth token` to extract clean error messages instead of including raw JSON in exceptions. Error messages like `{"type":"consoleMessage","data":{"message":"ERROR: fetching token: ..."}}` are now displayed as `ERROR: fetching token: ...`.
+
+## 1.18.0-beta.3 (2026-02-20)
 
 ### Breaking Changes
 
@@ -10,7 +28,9 @@
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed a NullReferenceException that occurred during X509Chain validation on Linux when using the Identity Bindings feature.
+
+- Disabled MSAL's internal retry logic for `ConfidentialClientApplication` and `PublicClientApplication` to prevent double retries when combined with Azure SDK's retry policy. Only the configured Azure SDK retry policy is applied, avoiding unexpected additional retry attempts.
 
 ## 1.18.0-beta.2 (2025-11-19)
 

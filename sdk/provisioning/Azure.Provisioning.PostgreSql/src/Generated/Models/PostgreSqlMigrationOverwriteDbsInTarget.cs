@@ -6,9 +6,10 @@
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Indicates whether the databases on the target server can be overwritten, if
-/// already present. If set to False, the migration workflow will wait for a
-/// confirmation, if it detects that the database already exists.
+/// Indicates if databases on the target server can be overwritten when already
+/// present. If set to &apos;False&apos;, when the migration workflow detects
+/// that the database already exists on the target server, it will wait for a
+/// confirmation.
 /// </summary>
 public enum PostgreSqlMigrationOverwriteDbsInTarget
 {

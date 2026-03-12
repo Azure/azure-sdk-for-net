@@ -10,6 +10,13 @@
     <!-- Enable documentation for all projects unless explicitly disabled. -->
     <DocumentationFile>$(IntermediateOutputPath)$(TargetFramework)\$(MSBuildProjectName).xml</DocumentationFile>
 
+    <!-- Tool projects set IsToolProject=true in their Directory.Build.props. They are standalone
+         utilities, not client libraries, generators, or SDK packages. Suppress all classifications. -->
+    <IsGeneratorLibrary Condition="'$(IsToolProject)' == 'true'">false</IsGeneratorLibrary>
+    <IsGeneratorLibraryGenerationTest Condition="'$(IsToolProject)' == 'true'">false</IsGeneratorLibraryGenerationTest>
+    <IsClientLibrary Condition="'$(IsToolProject)' == 'true'">false</IsClientLibrary>
+    <IsShippingLibrary Condition="'$(IsToolProject)' == 'true'">false</IsShippingLibrary>
+
     <!-- Client in this context is any library that is following the new Azure SDK guidelines -->
     <IsGeneratorLibrary Condition="'$(IsGeneratorLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator'))">true</IsGeneratorLibrary>
     <IsGeneratorLibraryGenerationTest Condition="'$(IsGeneratorLibraryGenerationTest)' == '' and $(MSBuildProjectName.StartsWith('Azure.Generator')) and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsGeneratorLibraryGenerationTest>
@@ -17,6 +24,7 @@
     <IncludeAutorestDependency Condition="'$(IncludeAutorestDependency)' != 'true' or '$(IsClientLibrary)' != 'true'">false</IncludeAutorestDependency>
     <IsFunctionsLibrary Condition="'$(IsFunctionsLibrary)' == '' and $(MSBuildProjectName.StartsWith('Microsoft.Azure.WebJobs.Extensions.'))">true</IsFunctionsLibrary>
     <IsSourceGenerator Condition="'$(IsSourceGenerator)' == '' and $(MSBuildProjectName.EndsWith('.SourceGeneration'))">true</IsSourceGenerator>
+    <IsAnalzyer Condition="'$(IsAnalzyer)' == '' and $(MSBuildProjectName.EndsWith('Analyzers'))">true</IsAnalzyer>
 
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
     <IsSamplesProject Condition="'$(IsSamplesProject)' == '' and $(MSBuildProjectName.EndsWith('.Samples'))">true</IsSamplesProject>
@@ -24,7 +32,7 @@
     <IsStressProject Condition="'$(IsStressProject)' == '' and $(MSBuildProjectName.EndsWith('.Stress'))">true</IsStressProject>
     <IsTestSupportProject Condition="'$(IsTestSupportProject)' == '' and '$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
     <IsShippingLibrary Condition="'$(IsShippingLibrary)' == '' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true' and '$(IsPerfProject)' != 'true' and '$(IsSamplesProject)' != 'true' and '$(IsStressProject)' != 'true'">true</IsShippingLibrary>
-    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true' and '$(IsSourceGenerator)' != 'true'">true</IsShippingClientLibrary>
+    <IsShippingClientLibrary Condition="'$(IsClientLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true' and '$(IsSourceGenerator)' != 'true' and '$(IsAnalzyer)' != 'true'">true</IsShippingClientLibrary>
     <TestFrameworkSupportFiles>$(MSBuildThisFileDirectory)/../sdk/core/Azure.Core.TestFramework/src/Shared/*.cs</TestFrameworkSupportFiles>
 
     <IncludeOperationsSharedSource Condition="'$(IncludeOperationsSharedSource)' == '' and ('$(IsMgmtLibrary)' == 'true' or '$(IsGeneratorLibraryGenerationTest)' == 'true') and '$(IsTestProject)' != 'true' and '$(IsPerfProject)' != 'true'">true</IncludeOperationsSharedSource>
@@ -111,6 +119,12 @@
     <AddDotnetfeedProjectSource>false</AddDotnetfeedProjectSource>
   </PropertyGroup>
 
+  <!-- AOT defaults -->
+  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true'">
+    <AotCompatOptOut>false</AotCompatOptOut> <!-- Set to true to opt out of all AOT checks -->
+    <AotAnalyzersOptOut>false</AotAnalyzersOptOut> <!-- Set to true to disable AOT analyzers but still run AOT CI checks -->
+  </PropertyGroup>
+
   <PropertyGroup>
     <EnableClientSdkAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableClientSdkAnalyzers>
     <EnableMicrosoftCodeAnalysisNetAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableMicrosoftCodeAnalysisNetAnalyzers>
@@ -124,7 +138,6 @@
     <GenerateAPIListing Condition="'$(GenerateAPIListing)' == '' AND '$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">true</EnableSourceLink>
     <DefineConstants Condition="'$(BuildSnippets)' == 'true'">$(DefineConstants);SNIPPET</DefineConstants>
-    <AotCompatOptOut>false</AotCompatOptOut>
 
     <!-- All current generation client libraries must support .NET Standard 2.0 unless the architects approve a specific exception. -->
     <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>
@@ -217,7 +230,7 @@
     <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">$(RequiredRunnableTargetFrameworks);netstandard2.0</RequiredTargetFrameworks>
 
     <!-- Source generators, such as System.ClientModel.SourceGeneration, must only target netstandard2.0 -->
-    <RequiredTargetFrameworks Condition="'$(IsSourceGenerator)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(IsSourceGenerator)' == 'true' or '$(IsAnalzyer)' == 'true'">netstandard2.0</RequiredTargetFrameworks>
 
     <!-- Libraries that are part of our code generator only support the current LTS framework -->
     <RequiredTargetFrameworks Condition="'$(IsGeneratorLibrary)' == 'true'">$(LtsTargetFramework)</RequiredTargetFrameworks>
@@ -257,7 +270,7 @@
   </ItemGroup>
 
   <!-- SourceGeneration common settings -->
-  <PropertyGroup Condition="'$(IsSourceGenerator)' == 'true'">
+  <PropertyGroup Condition="'$(IsSourceGenerator)' == 'true' or '$(IsAnalzyer)' == 'true'">
     <OutputItemType>Analyzer</OutputItemType>
     <AnalyzerLanguage>cs</AnalyzerLanguage>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
@@ -356,6 +369,12 @@
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
     <RunSettingsFilePath Condition="'$(AZURE_SKIP_DEFAULT_RUN_SETTINGS)' != 'true'">$(RepoEngPath)\nunit.runsettings</RunSettingsFilePath>
+  </PropertyGroup>
+
+  <!-- Tool projects (sdk/tools/) are standalone utilities, not Azure SDK client libraries. -->
+  <PropertyGroup Condition="'$(IsToolProject)' == 'true'">
+    <PublicSign>false</PublicSign>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">

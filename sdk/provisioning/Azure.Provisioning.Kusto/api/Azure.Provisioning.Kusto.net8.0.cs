@@ -297,11 +297,6 @@ namespace Azure.Provisioning.Kusto
             public static readonly string V2024_04_13;
         }
     }
-    public enum KustoDatabaseCallerRole
-    {
-        Admin = 0,
-        None = 1,
-    }
     public enum KustoDatabaseDefaultPrincipalsModificationKind
     {
         Union = 0,

@@ -97,6 +97,23 @@ model ComputeFleetVmProfile {
   capacityReservation?: CapacityReservationProfile;
 }
 
+/** Provisioning state of the Foo resource. */
+union FooProvisioningState {
+  string,
+
+  /** The resource is being provisioned. */
+  Provisioning: "Provisioning",
+
+  /** The resource has been provisioned successfully. */
+  Succeeded: "Succeeded",
+
+  /** The resource provisioning has failed. */
+  Failed: "Failed",
+
+  /** The resource provisioning has been canceled. */
+  Canceled: "Canceled",
+}
+
 @armResourceOperations
 interface Foos {
   createOrUpdate is ArmResourceCreateOrUpdateAsync<Foo>;
@@ -125,6 +142,15 @@ interface Foos {
     Foo,
     void,
     ArmResponse<FooDependency[]>
+  >;
+
+  /** Get the provisioning state of a Foo resource. */
+  @get
+  @action("getProvisioningState")
+  getProvisioningState is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<FooProvisioningState>
   >;
 }
 

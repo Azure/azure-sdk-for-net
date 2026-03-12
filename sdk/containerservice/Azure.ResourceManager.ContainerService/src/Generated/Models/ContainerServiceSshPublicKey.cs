@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Contains information about SSH certificate public key data.
-    /// Serialized Name: ContainerServiceSshPublicKey
-    /// </summary>
+    /// <summary> Contains information about SSH certificate public key data. </summary>
     public partial class ContainerServiceSshPublicKey
     {
         /// <summary>
@@ -49,10 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceSshPublicKey"/>. </summary>
-        /// <param name="keyData">
-        /// Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers.
-        /// Serialized Name: ContainerServiceSshPublicKey.keyData
-        /// </param>
+        /// <param name="keyData"> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyData"/> is null. </exception>
         public ContainerServiceSshPublicKey(string keyData)
         {
@@ -62,10 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceSshPublicKey"/>. </summary>
-        /// <param name="keyData">
-        /// Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers.
-        /// Serialized Name: ContainerServiceSshPublicKey.keyData
-        /// </param>
+        /// <param name="keyData"> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceSshPublicKey(string keyData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,10 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary>
-        /// Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers.
-        /// Serialized Name: ContainerServiceSshPublicKey.keyData
-        /// </summary>
+        /// <summary> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </summary>
         [WirePath("keyData")]
         public string KeyData { get; set; }
     }

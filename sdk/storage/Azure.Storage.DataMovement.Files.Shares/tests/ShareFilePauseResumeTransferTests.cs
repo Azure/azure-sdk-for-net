@@ -2,18 +2,19 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
-using System.Threading.Tasks;
-using Azure.Storage.Test.Shared;
-using Azure.Storage.DataMovement.Tests;
-using BaseShares::Azure.Storage.Files.Shares;
 using System.IO;
-using NUnit.Framework;
-using BaseShares::Azure.Storage.Files.Shares.Models;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using DMShare::Azure.Storage.DataMovement.Files.Shares;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Storage.DataMovement.Tests;
+using Azure.Storage.Test.Shared;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
+using BaseShares::Azure.Storage.Sas;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
+using NUnit.Framework;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -41,6 +42,33 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
         protected override StorageResourceProvider GetStorageResourceProvider()
             => new ShareFilesStorageResourceProvider(TestEnvironment.Credential);
+
+        protected override StorageResourceProvider GetContainerSasStorageResourceProvider(ShareClient sourceContainer, ShareClient destinationContainer)
+        {
+            // Create Source Container SAS
+            Uri sourceSasUri = sourceContainer.GenerateSasUri(
+                ShareSasPermissions.All,
+                DateTimeOffset.UtcNow.AddHours(1));
+            string sourceSas = new ShareUriBuilder(sourceSasUri).Sas.ToString();
+
+            // Create Destination Container SAS
+            Uri destinationSasUri = destinationContainer.GenerateSasUri(
+                ShareSasPermissions.All,
+                DateTimeOffset.UtcNow.AddHours(1));
+            string destinationSas = new ShareUriBuilder(destinationSasUri).Sas.ToString();
+
+            // Create the provider with a delegate that returns the right SAS per URI
+            Func<Uri, CancellationToken, ValueTask<AzureSasCredential>> getSasCredential = (uri, ct) =>
+            {
+                var builder = new ShareUriBuilder(uri);
+                if (builder.ShareName == sourceContainer.Name)
+                    return new ValueTask<AzureSasCredential>(new AzureSasCredential(sourceSas));
+                if (builder.ShareName == destinationContainer.Name)
+                    return new ValueTask<AzureSasCredential>(new AzureSasCredential(destinationSas));
+                throw new InvalidOperationException($"Unknown container: {builder.ShareName}");
+            };
+            return new ShareFilesStorageResourceProvider(getSasCredential);
+        }
 
         protected override async Task<StorageResource> CreateSourceStorageResourceItemAsync(
             long size,
@@ -128,5 +156,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         {
             return ShareFilesStorageResourceProvider.FromClient(container.GetRootDirectoryClient());
         }
+
+        protected override ShareServiceClient GetAzureSasCredentialServiceClient()
+            => ClientBuilder.GetServiceClientFromAzureSasCredentialConfig(Tenants.TestConfigDefault, default);
     }
 }

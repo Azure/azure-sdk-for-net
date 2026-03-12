@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 {
-    public class ResourcePoolTests: ConnectedVMwareTestBase
+    public class ResourcePoolTests : ConnectedVMwareTestBase
     {
         public ResourcePoolTests(bool isAsync) : base(isAsync)
         {

@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Describes how VMs are added to or removed from Agent Pools. See [billing states](https://docs.microsoft.com/azure/virtual-machines/states-billing).
-    /// Serialized Name: ScaleDownMode
-    /// </summary>
+    /// <summary> Describes how VMs are added to or removed from Agent Pools. See [billing states](https://docs.microsoft.com/azure/virtual-machines/states-billing). </summary>
     public readonly partial struct ScaleDownMode : IEquatable<ScaleDownMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string DeleteValue = "Delete";
         private const string DeallocateValue = "Deallocate";
 
-        /// <summary>
-        /// Create new instances during scale up and remove instances during scale down.
-        /// Serialized Name: ScaleDownMode.Delete
-        /// </summary>
+        /// <summary> Create new instances during scale up and remove instances during scale down. </summary>
         public static ScaleDownMode Delete { get; } = new ScaleDownMode(DeleteValue);
-        /// <summary>
-        /// Attempt to start deallocated instances (if they exist) during scale up and deallocate instances during scale down.
-        /// Serialized Name: ScaleDownMode.Deallocate
-        /// </summary>
+        /// <summary> Attempt to start deallocated instances (if they exist) during scale up and deallocate instances during scale down. </summary>
         public static ScaleDownMode Deallocate { get; } = new ScaleDownMode(DeallocateValue);
         /// <summary> Determines if two <see cref="ScaleDownMode"/> values are the same. </summary>
         public static bool operator ==(ScaleDownMode left, ScaleDownMode right) => left.Equals(right);

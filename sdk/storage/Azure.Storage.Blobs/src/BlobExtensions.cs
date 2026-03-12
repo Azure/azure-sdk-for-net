@@ -3,15 +3,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.ComponentModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
-using Azure.Core;
-using System.IO;
-using System.Globalization;
-using System.ComponentModel;
 
 namespace Azure.Storage.Blobs
 {

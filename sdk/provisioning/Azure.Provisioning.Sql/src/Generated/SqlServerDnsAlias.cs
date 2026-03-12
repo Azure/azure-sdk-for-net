@@ -84,6 +84,7 @@ public partial class SqlServerDnsAlias : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _azureDnsRecord = DefineProperty<string>("AzureDnsRecord", ["properties", "azureDnsRecord"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);

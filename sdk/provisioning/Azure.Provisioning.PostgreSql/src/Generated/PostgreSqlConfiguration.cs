@@ -131,6 +131,7 @@ public partial class PostgreSqlConfiguration : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _source = DefineProperty<string>("Source", ["properties", "source"]);
         _value = DefineProperty<string>("Value", ["properties", "value"]);

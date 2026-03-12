@@ -135,7 +135,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Act
             List<IngestionSourceSummary> sources = new List<IngestionSourceSummary>();
 
-            await foreach (IngestionSourceSummary source in ingestionClient.GetSourcesAsync(top: null, skip: null))
+            await foreach (IngestionSourceSummary source in ingestionClient.GetSourcesAsync(maxCount: null, skip: null))
             {
                 sources.Add(source);
             }

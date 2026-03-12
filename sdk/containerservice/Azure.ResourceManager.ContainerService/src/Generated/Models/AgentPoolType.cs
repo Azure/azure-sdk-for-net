@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The type of Agent Pool.
-    /// Serialized Name: AgentPoolType
-    /// </summary>
+    /// <summary> The type of Agent Pool. </summary>
     public readonly partial struct AgentPoolType : IEquatable<AgentPoolType>
     {
         private readonly string _value;
@@ -29,20 +26,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string AvailabilitySetValue = "AvailabilitySet";
         private const string VirtualMachinesValue = "VirtualMachines";
 
-        /// <summary>
-        /// Create an Agent Pool backed by a Virtual Machine Scale Set.
-        /// Serialized Name: AgentPoolType.VirtualMachineScaleSets
-        /// </summary>
+        /// <summary> Create an Agent Pool backed by a Virtual Machine Scale Set. </summary>
         public static AgentPoolType VirtualMachineScaleSets { get; } = new AgentPoolType(VirtualMachineScaleSetsValue);
-        /// <summary>
-        /// Use of this is strongly discouraged.
-        /// Serialized Name: AgentPoolType.AvailabilitySet
-        /// </summary>
+        /// <summary> Use of this is strongly discouraged. </summary>
         public static AgentPoolType AvailabilitySet { get; } = new AgentPoolType(AvailabilitySetValue);
-        /// <summary>
-        /// Create an Agent Pool backed by a Single Instance VM orchestration mode.
-        /// Serialized Name: AgentPoolType.VirtualMachines
-        /// </summary>
+        /// <summary> Create an Agent Pool backed by a Single Instance VM orchestration mode. </summary>
         public static AgentPoolType VirtualMachines { get; } = new AgentPoolType(VirtualMachinesValue);
         /// <summary> Determines if two <see cref="AgentPoolType"/> values are the same. </summary>
         public static bool operator ==(AgentPoolType left, AgentPoolType right) => left.Equals(right);

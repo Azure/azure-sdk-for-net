@@ -216,7 +216,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md
-        /// 
         /// Represents a STAC collection.
         /// </summary>
         /// <param name="createdOn"> MSFT Created. </param>
@@ -232,7 +231,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="assets"> Assets. </param>
         /// <param name="itemAssets">
         /// Item Assets
-        /// 
         /// See the [Item Assets Definition Extension Specification](https://github.com/stac-extensions/item-assets)
         /// </param>
         /// <param name="license"> License identifier for the collection data. </param>
@@ -241,12 +239,11 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="providers"> Organizations or individuals who provide the collection data. </param>
         /// <param name="summaries">
         /// Summaries
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="PlanetaryComputer.StacCollectionResource"/> instance for mocking. </returns>
-        public static StacCollectionResource StacCollectionResource(string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, string id = default, string description = default, string stacVersion = default, IEnumerable<StacLink> links = default, string title = default, string @type = default, IDictionary<string, StacAsset> assets = default, IDictionary<string, StacItemAsset> itemAssets = default, string license = default, StacExtensionExtent extent = default, IEnumerable<string> keywords = default, IEnumerable<StacProvider> providers = default, IDictionary<string, BinaryData> summaries = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static StacCollectionResource StacCollectionResource(DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, string id = default, string description = default, string stacVersion = default, IEnumerable<StacLink> links = default, string title = default, string @type = default, IDictionary<string, StacAsset> assets = default, IDictionary<string, StacItemAsset> itemAssets = default, string license = default, StacExtensionExtent extent = default, IEnumerable<string> keywords = default, IEnumerable<StacProvider> providers = default, IDictionary<string, BinaryData> summaries = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             stacExtensions ??= new ChangeTrackingList<string>();
             links ??= new ChangeTrackingList<StacLink>();
@@ -280,10 +277,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Link model.
-        /// 
         /// Ref:
         /// http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml
-        /// 
         /// Represents a link.
         /// </summary>
         /// <param name="rel"> The relationship type of the link. </param>
@@ -328,7 +323,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/item-spec.md#asset-object
-        /// 
         /// Represents a STAC asset, which is a file or resource associated with a STAC item.
         /// </summary>
         /// <param name="platform"> Platform that acquired the data. </param>
@@ -372,7 +366,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#provider-object
-        /// 
         /// Represents information about a data provider for STAC collections and items.
         /// </summary>
         /// <param name="name"> Name of the provider organization or individual. </param>
@@ -389,7 +382,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/stac-extensions/item-assets
-        /// 
         /// Represents a STAC item asset, which describes the assets available under any item in the collection.
         /// </summary>
         /// <param name="platform"> Platform that acquired the data. </param>
@@ -433,17 +425,14 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#extent-object
-        /// 
         /// Represents the spatial and temporal extent of a STAC collection.
         /// </summary>
         /// <param name="spatial">
         /// Spatial extent defined by bounding boxes.
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <param name="temporal">
         /// Temporal extent defined by time intervals.
-        /// 
         /// See the [STAC Collection Spec](https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object).
         /// </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacExtensionExtent"/> instance for mocking. </returns>
@@ -454,7 +443,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#spatial-extent-object
-        /// 
         /// Represents the spatial extent of a STAC collection with bounding boxes.
         /// </summary>
         /// <param name="boundingBox"> Array of bounding boxes defining the spatial extent, in format [[west, south, east, north]]. </param>
@@ -468,7 +456,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/collection-spec/collection-spec.md#temporal-extent-object
-        /// 
         /// Represents the temporal extent of a STAC collection with time intervals.
         /// </summary>
         /// <param name="interval"> Array of time intervals in format [[start_datetime, end_datetime]]. </param>
@@ -553,7 +540,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="type"> The type of rendering to apply (raster or vector). </param>
         /// <param name="options">
         /// A URL query-string encoded string of TiTiler rendering options. Valid only for `raster-tile` types.
-        /// 
         /// See [Query Parameters](https://developmentseed.org/titiler/endpoints/cog/#description).
         /// </param>
         /// <param name="vectorOptions">
@@ -651,7 +637,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#_feature_collections_rootcollections
-        /// 
         /// Represents a collection of STAC collections with links.
         /// </summary>
         /// <param name="links"> Links to related resources and endpoints. </param>
@@ -675,7 +660,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-api-spec/blob/master/api-spec.md#ogc-api---features-endpoints
-        /// 
         /// Represents the OGC API conformance declaration.
         /// </summary>
         /// <param name="conformsTo"> List of OGC API conformance classes implemented by this API. </param>
@@ -689,7 +673,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-api-spec/blob/master/api-spec.md#ogc-api---features-endpoints
-        /// 
         /// Represents the STAC API landing page with links to available resources.
         /// </summary>
         /// <param name="createdOn"> MSFT Created. </param>
@@ -704,7 +687,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="type"> Type. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacLandingPage"/> instance for mocking. </returns>
-        public static StacLandingPage StacLandingPage(string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, string id = default, string description = default, string title = default, string stacVersion = default, IEnumerable<Uri> conformsTo = default, IEnumerable<StacLink> links = default, string @type = default)
+        public static StacLandingPage StacLandingPage(DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, string id = default, string description = default, string title = default, string stacVersion = default, IEnumerable<Uri> conformsTo = default, IEnumerable<StacLink> links = default, string @type = default)
         {
             stacExtensions ??= new ChangeTrackingList<string>();
             conformsTo ??= new ChangeTrackingList<Uri>();
@@ -737,7 +720,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="shortDescription"> MSFT Short Description. </param>
         /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacItemOrStacItemCollection"/> instance for mocking. </returns>
-        public static StacItemOrStacItemCollection StacItemOrStacItemCollection(string @type = default, string stacVersion = default, IEnumerable<StacLink> links = default, string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default)
+        public static StacItemOrStacItemCollection StacItemOrStacItemCollection(string @type = default, string stacVersion = default, IEnumerable<StacLink> links = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default)
         {
             links ??= new ChangeTrackingList<StacLink>();
             stacExtensions ??= new ChangeTrackingList<string>();
@@ -755,7 +738,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/itemcollection-spec.md
-        /// 
         /// Represents a collection of STAC Items as a GeoJSON FeatureCollection.
         /// </summary>
         /// <param name="stacVersion"> Stac Version. </param>
@@ -768,7 +750,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Bounding box of all items in format [west, south, east, north]. </param>
         /// <param name="context"> Context information for the search response. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacItemCollectionResource"/> instance for mocking. </returns>
-        public static StacItemCollectionResource StacItemCollectionResource(string stacVersion = default, IEnumerable<StacLink> links = default, string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, IEnumerable<StacItemResource> features = default, IEnumerable<float> boundingBox = default, StacContextExtension context = default)
+        public static StacItemCollectionResource StacItemCollectionResource(string stacVersion = default, IEnumerable<StacLink> links = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, IEnumerable<StacItemResource> features = default, IEnumerable<float> boundingBox = default, StacContextExtension context = default)
         {
             links ??= new ChangeTrackingList<StacLink>();
             stacExtensions ??= new ChangeTrackingList<string>();
@@ -805,7 +787,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="timestamp"> MSFT Timestamp. </param>
         /// <param name="eTag"> MSFT ETag. </param>
         /// <returns> A new <see cref="PlanetaryComputer.StacItemResource"/> instance for mocking. </returns>
-        public static StacItemResource StacItemResource(string stacVersion = default, IEnumerable<StacLink> links = default, string createdOn = default, string updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, GeoJsonGeometry geometry = default, string id = default, string collection = default, IEnumerable<float> boundingBox = default, StacItemProperties properties = default, IDictionary<string, StacAsset> assets = default, string timestamp = default, string eTag = default)
+        public static StacItemResource StacItemResource(string stacVersion = default, IEnumerable<StacLink> links = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string shortDescription = default, IEnumerable<string> stacExtensions = default, GeoJsonGeometry geometry = default, string id = default, string collection = default, IEnumerable<float> boundingBox = default, StacItemProperties properties = default, IDictionary<string, StacAsset> assets = default, DateTimeOffset? timestamp = default, string eTag = default)
         {
             links ??= new ChangeTrackingList<StacLink>();
             stacExtensions ??= new ChangeTrackingList<string>();
@@ -833,15 +815,8 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Represents a GeoJSON geometry object as defined by RFC 7946.
-        /// 
         /// Supported geometry types include:
-        /// - **Point**: A single geographic coordinate.
-        /// - **LineString**: A sequence of geographic coordinates forming a line.
-        /// - **Polygon**: A closed shape defined by linear rings.
-        /// - **MultiPoint**: A collection of Points.
-        /// - **MultiLineString**: A collection of LineStrings.
-        /// - **MultiPolygon**: A collection of Polygons.
-        /// 
+        /// <list type="bullet"><item><description><b>Point</b>: A single geographic coordinate.</description></item><item><description><b>LineString</b>: A sequence of geographic coordinates forming a line.</description></item><item><description><b>Polygon</b>: A closed shape defined by linear rings.</description></item><item><description><b>MultiPoint</b>: A collection of Points.</description></item><item><description><b>MultiLineString</b>: A collection of LineStrings.</description></item><item><description><b>MultiPolygon</b>: A collection of Polygons.</description></item></list>
         /// Used for spatial filtering in STAC.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.PointGeometry"/>, <see cref="PlanetaryComputer.PolygonGeometry"/>, <see cref="PlanetaryComputer.MultiPolygon"/>, <see cref="PlanetaryComputer.MultiLineString"/>, <see cref="PlanetaryComputer.LineString"/>, and <see cref="PlanetaryComputer.MultiPoint"/>.
         /// </summary>
@@ -859,11 +834,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
         /// <returns> A new <see cref="PlanetaryComputer.PointGeometry"/> instance for mocking. </returns>
-        public static PointGeometry PointGeometry(IEnumerable<float> boundingBox = default, string coordinates = default)
+        public static PointGeometry PointGeometry(IEnumerable<float> boundingBox = default, IEnumerable<float> coordinates = default)
         {
             boundingBox ??= new ChangeTrackingList<float>();
+            coordinates ??= new ChangeTrackingList<float>();
 
-            return new PointGeometry(GeometryType.Point, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates);
+            return new PointGeometry(GeometryType.Point, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates.ToList());
         }
 
         /// <summary> Represents a Polygon. </summary>
@@ -882,10 +858,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the multipolygon. </param>
         /// <returns> A new <see cref="PlanetaryComputer.MultiPolygon"/> instance for mocking. </returns>
-        public static MultiPolygon MultiPolygon(IEnumerable<float> boundingBox = default, IEnumerable<IList<IList<float>>> coordinates = default)
+        public static MultiPolygon MultiPolygon(IEnumerable<float> boundingBox = default, IEnumerable<IList<IList<IList<float>>>> coordinates = default)
         {
             boundingBox ??= new ChangeTrackingList<float>();
-            coordinates ??= new ChangeTrackingList<IList<IList<float>>>();
+            coordinates ??= new ChangeTrackingList<IList<IList<IList<float>>>>();
 
             return new MultiPolygon(GeometryType.MultiPolygon, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates.ToList());
         }
@@ -894,10 +870,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the multilinestring. </param>
         /// <returns> A new <see cref="PlanetaryComputer.MultiLineString"/> instance for mocking. </returns>
-        public static MultiLineString MultiLineString(IEnumerable<float> boundingBox = default, IEnumerable<IList<float>> coordinates = default)
+        public static MultiLineString MultiLineString(IEnumerable<float> boundingBox = default, IEnumerable<IList<IList<float>>> coordinates = default)
         {
             boundingBox ??= new ChangeTrackingList<float>();
-            coordinates ??= new ChangeTrackingList<IList<float>>();
+            coordinates ??= new ChangeTrackingList<IList<IList<float>>>();
 
             return new MultiLineString(GeometryType.MultiLineString, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates.ToList());
         }
@@ -906,10 +882,10 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the linestring. </param>
         /// <returns> A new <see cref="PlanetaryComputer.LineString"/> instance for mocking. </returns>
-        public static LineString LineString(IEnumerable<float> boundingBox = default, IEnumerable<float> coordinates = default)
+        public static LineString LineString(IEnumerable<float> boundingBox = default, IEnumerable<IList<float>> coordinates = default)
         {
             boundingBox ??= new ChangeTrackingList<float>();
-            coordinates ??= new ChangeTrackingList<float>();
+            coordinates ??= new ChangeTrackingList<IList<float>>();
 
             return new LineString(GeometryType.LineString, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates.ToList());
         }
@@ -918,17 +894,16 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>
         /// <param name="coordinates"> The coordinates of the multipoint. </param>
         /// <returns> A new <see cref="PlanetaryComputer.MultiPoint"/> instance for mocking. </returns>
-        public static MultiPoint MultiPoint(IEnumerable<float> boundingBox = default, IEnumerable<float> coordinates = default)
+        public static MultiPoint MultiPoint(IEnumerable<float> boundingBox = default, IEnumerable<IList<float>> coordinates = default)
         {
             boundingBox ??= new ChangeTrackingList<float>();
-            coordinates ??= new ChangeTrackingList<float>();
+            coordinates ??= new ChangeTrackingList<IList<float>>();
 
             return new MultiPoint(GeometryType.MultiPoint, boundingBox.ToList(), additionalBinaryDataProperties: null, coordinates.ToList());
         }
 
         /// <summary>
         /// Properties of a STAC Item containing metadata about the asset.
-        /// 
         /// https://github.com/radiantearth/stac-spec/blob/v1.0.0/item-spec/item-spec.md#properties-object
         /// </summary>
         /// <param name="platform"> Platform that acquired the data. </param>
@@ -971,7 +946,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-api-spec/tree/master/extensions/context#context-extension-specification
-        /// 
         /// Context information for a search response including pagination details.
         /// </summary>
         /// <param name="returned"> Number of items returned in the response. </param>
@@ -996,6 +970,16 @@ namespace Azure.Analytics.PlanetaryComputer
             return new StacQueryable(name, definition, createIndex, dataType, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Queryable definitions response. </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="PlanetaryComputer.QueryableDefinitionsResponse"/> instance for mocking. </returns>
+        public static QueryableDefinitionsResponse QueryableDefinitionsResponse(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new QueryableDefinitionsResponse(additionalProperties);
+        }
+
         /// <summary>
         /// Search model.
         /// *
@@ -1009,27 +993,22 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="limit"> Maximum number of results to return. </param>
         /// <param name="conformanceClass">
         /// Conf
-        /// 
         /// Overrides datetime validation from the base request model.
         /// </param>
         /// <param name="query">
         /// STAC Query
-        /// 
         /// See the [STAC Query Extension](https://github.com/stac-api-extensions/query).
         /// </param>
         /// <param name="sortBy">
         /// Sort criteria for the search results.
-        /// 
         /// See the [STAC Sort Extension](https://github.com/stac-api-extensions/sort).
         /// </param>
         /// <param name="fields">
         /// Specifies which fields to include or exclude in the STAC search results.
-        /// 
         /// See the [STAC Fields Extension](https://github.com/stac-api-extensions/fields).
         /// </param>
         /// <param name="filter">
         /// CQL2 Filter
-        /// 
         /// See the [STAC Filter Extension](https://github.com/stac-api-extensions/filter).
         /// </param>
         /// <param name="filterCoordinateReferenceSystem"> Coordinate reference system for the filter. </param>
@@ -1067,7 +1046,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/radiantearth/stac-api-spec/tree/master/extensions/sort#sort-api-extension
-        /// 
         /// Represents a sort specification for STAC API queries.
         /// </summary>
         /// <param name="field"> The field name to sort by. </param>
@@ -1080,11 +1058,9 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// FieldsExtension.
-        /// 
         /// Attributes:
         /// include: set of fields to include.
         /// exclude: set of fields to exclude.
-        /// 
         /// Controls which fields to include or exclude from the response.
         /// </summary>
         /// <param name="include"> Array of field names to include in the response. </param>
@@ -1100,7 +1076,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrixSet.json
-        /// 
         /// A definition of a tile matrix set following the Tile Matrix Set standard.
         /// For tileset metadata, such a description (in `tileMatrixSet` property) is only
         /// required for offline use,
@@ -1161,13 +1136,10 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Tile Matrix Definition
-        /// 
         /// A tile matrix, usually corresponding to a particular zoom level of a
         /// TileMatrixSet.
-        /// 
         /// ref:
         /// https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/tileMatrix.json
-        /// 
         /// Definition of a tile matrix at a specific zoom level within a tile matrix set
         /// </summary>
         /// <param name="title"> Human-readable title of the tile matrix level. </param>
@@ -1196,7 +1168,6 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="matrixHeight"> Number of tiles vertically at this matrix level. </param>
         /// <param name="variableMatrixWidths">
         /// Describes the rows that has variable matrix width
-        /// 
         /// ref: https://github.com/opengeospatial/2D-Tile-Matrix-Set/blob/master/schemas/tms/2.0/json/variableMatrixWidth.json
         /// </param>
         /// <returns> A new <see cref="PlanetaryComputer.TileMatrix"/> instance for mocking. </returns>
@@ -1233,48 +1204,14 @@ namespace Azure.Analytics.PlanetaryComputer
             return new VariableMatrixWidth(coalesce, minTileRow, maxTileRow, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Geographic extent of a dataset expressed as a bounding box. </summary>
-        /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.StacItemBounds"/> instance for mocking. </returns>
-        public static StacItemBounds StacItemBounds(IEnumerable<float> bounds = default)
-        {
-            bounds ??= new ChangeTrackingList<float>();
-
-            return new StacItemBounds(bounds.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> GeoJSON Feature object representing a geographic entity. </summary>
-        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
-        /// <param name="type"> GeoJSON type identifier for Feature. </param>
-        /// <param name="properties"> Feature properties. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.GeoJsonFeature"/> instance for mocking. </returns>
-        public static GeoJsonFeature GeoJsonFeature(GeoJsonGeometry geometry = default, FeatureType @type = default, IDictionary<string, BinaryData> properties = default)
-        {
-            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new GeoJsonFeature(geometry, @type, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> STAC Item representing a spatiotemporal asset with statistical information. </summary>
-        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
-        /// <param name="type"> GeoJSON type identifier for Feature. </param>
-        /// <param name="properties"> Feature properties. </param>
-        /// <returns> A new <see cref="PlanetaryComputer.StacItemStatisticsGeoJson"/> instance for mocking. </returns>
-        public static StacItemStatisticsGeoJson StacItemStatisticsGeoJson(GeoJsonGeometry geometry = default, FeatureType @type = default, StacItemStatisticsGeoJsonProperties properties = default)
-        {
-            return new StacItemStatisticsGeoJson(geometry, @type, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Properties for STAC Item statistics GeoJSON Feature. </summary>
-        /// <param name="statistics"> Statistical information for each band in the asset. </param>
+        /// <summary> Return dataset's statistics. </summary>
         /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="PlanetaryComputer.StacItemStatisticsGeoJsonProperties"/> instance for mocking. </returns>
-        public static StacItemStatisticsGeoJsonProperties StacItemStatisticsGeoJsonProperties(IDictionary<string, BandStatistics> statistics = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        /// <returns> A new <see cref="PlanetaryComputer.AssetStatisticsResponse"/> instance for mocking. </returns>
+        public static AssetStatisticsResponse AssetStatisticsResponse(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
         {
-            statistics ??= new ChangeTrackingDictionary<string, BandStatistics>();
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new StacItemStatisticsGeoJsonProperties(statistics, additionalProperties);
+            return new AssetStatisticsResponse(additionalProperties);
         }
 
         /// <summary> Statistical information about a data band. </summary>
@@ -1325,6 +1262,50 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Geographic extent of a dataset expressed as a bounding box. </summary>
+        /// <param name="bounds"> Array of coordinates defining the bounding box [west, south, east, north]. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.StacItemBounds"/> instance for mocking. </returns>
+        public static StacItemBounds StacItemBounds(IEnumerable<float> bounds = default)
+        {
+            bounds ??= new ChangeTrackingList<float>();
+
+            return new StacItemBounds(bounds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> GeoJSON Feature object representing a geographic entity. </summary>
+        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
+        /// <param name="type"> GeoJSON type identifier for Feature. </param>
+        /// <param name="properties"> Feature properties. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.GeoJsonFeature"/> instance for mocking. </returns>
+        public static GeoJsonFeature GeoJsonFeature(GeoJsonGeometry geometry = default, FeatureType @type = default, IDictionary<string, BinaryData> properties = default)
+        {
+            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new GeoJsonFeature(geometry, @type, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> STAC Item representing a spatiotemporal asset with statistical information. </summary>
+        /// <param name="geometry"> Geometry object defining the feature's shape. </param>
+        /// <param name="type"> GeoJSON type identifier for Feature. </param>
+        /// <param name="properties"> Feature properties. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.StacItemStatisticsGeoJson"/> instance for mocking. </returns>
+        public static StacItemStatisticsGeoJson StacItemStatisticsGeoJson(GeoJsonGeometry geometry = default, FeatureType @type = default, StacItemStatisticsGeoJsonProperties properties = default)
+        {
+            return new StacItemStatisticsGeoJson(geometry, @type, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for STAC Item statistics GeoJSON Feature. </summary>
+        /// <param name="statistics"> Statistical information for each band in the asset. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="PlanetaryComputer.StacItemStatisticsGeoJsonProperties"/> instance for mocking. </returns>
+        public static StacItemStatisticsGeoJsonProperties StacItemStatisticsGeoJsonProperties(IDictionary<string, BandStatistics> statistics = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            statistics ??= new ChangeTrackingDictionary<string, BandStatistics>();
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new StacItemStatisticsGeoJsonProperties(statistics, additionalProperties);
+        }
+
         /// <summary> GeoJSON Feature object containing rio-tiler model information. </summary>
         /// <param name="type"> GeoJSON type identifier. </param>
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
@@ -1332,16 +1313,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Unique identifier for the feature. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
         /// <returns> A new <see cref="PlanetaryComputer.TilerInfoGeoJsonFeature"/> instance for mocking. </returns>
-        public static TilerInfoGeoJsonFeature TilerInfoGeoJsonFeature(FeatureType @type = default, GeoJsonGeometry geometry = default, IDictionary<string, TilerInfo> properties = default, string id = default, float? boundingBox = default)
+        public static TilerInfoGeoJsonFeature TilerInfoGeoJsonFeature(FeatureType @type = default, GeoJsonGeometry geometry = default, IDictionary<string, TilerInfo> properties = default, string id = default, IEnumerable<float> boundingBox = default)
         {
             properties ??= new ChangeTrackingDictionary<string, TilerInfo>();
+            boundingBox ??= new ChangeTrackingList<float>();
 
             return new TilerInfoGeoJsonFeature(
                 @type,
                 geometry,
                 properties,
                 id,
-                boundingBox,
+                boundingBox.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -1394,6 +1376,16 @@ namespace Azure.Analytics.PlanetaryComputer
                 maxZoom,
                 coordinateReferenceSystem,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Return dataset's basic info. </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="PlanetaryComputer.TilerInfoMapResponse"/> instance for mocking. </returns>
+        public static TilerInfoMapResponse TilerInfoMapResponse(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new TilerInfoMapResponse(additionalProperties);
         }
 
         /// <summary> Response model for point query operations providing values at a specific location. </summary>
@@ -1456,7 +1448,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// TileJSON metadata describing a tile set according to the TileJSON specification
-        /// 
         /// Based on https://github.com/mapbox/tilejson-spec/tree/master/2.2.0
         /// </summary>
         /// <param name="tileJson"> TileJson. </param>
@@ -1502,6 +1493,16 @@ namespace Azure.Analytics.PlanetaryComputer
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> ClassMap legend response model. </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="PlanetaryComputer.ClassMapLegendResponse"/> instance for mocking. </returns>
+        public static ClassMapLegendResponse ClassMapLegendResponse(IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new ClassMapLegendResponse(additionalProperties);
+        }
+
         /// <summary> Asset information for the specified point. </summary>
         /// <param name="id"> STAC item ID. </param>
         /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
@@ -1516,10 +1517,23 @@ namespace Azure.Analytics.PlanetaryComputer
             return new StacItemPointAsset(id, boundingBox.ToList(), assets, collectionId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Represents GeoJSON with feature with an asset property. </summary>
+        /// <param name="id"> Unique identifier for the feature. </param>
+        /// <param name="collection"> ID of the STAC collection this item belongs to. </param>
+        /// <param name="boundingBox"> Bounding box coordinates for the feature. </param>
+        /// <param name="assets"> Assets. </param>
+        /// <returns> A new <see cref="PlanetaryComputer.TilerAssetGeoJson"/> instance for mocking. </returns>
+        public static TilerAssetGeoJson TilerAssetGeoJson(string id = default, string collection = default, IEnumerable<float> boundingBox = default, IDictionary<string, StacAsset> assets = default)
+        {
+            boundingBox ??= new ChangeTrackingList<float>();
+            assets ??= new ChangeTrackingDictionary<string, StacAsset>();
+
+            return new TilerAssetGeoJson(id, collection, boundingBox.ToList(), assets, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Information about a registered STAC search query. </summary>
         /// <param name="search">
         /// Details of the saved search query
-        /// 
         /// See the [PgSTAC Search table definition](https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915).
         /// </param>
         /// <param name="links"> Related links for the search query. </param>
@@ -1533,7 +1547,6 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Stored search query
-        /// 
         /// See:
         /// https://github.com/stac-utils/pgstac/blob/3499daa2bfa700ae7bb07503795c169bf2ebafc7/sql/004_search.sql#L907-L915
         /// </summary>

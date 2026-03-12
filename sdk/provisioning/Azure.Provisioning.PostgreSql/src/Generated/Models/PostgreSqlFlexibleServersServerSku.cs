@@ -11,13 +11,13 @@ using System;
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Sku information related properties of a server.
+/// Compute information of a server.
 /// </summary>
 public partial class PostgreSqlFlexibleServersServerSku : ProvisionableConstruct
 {
     /// <summary>
-    /// The name of the sku, typically, tier + family + cores, e.g.
-    /// Standard_D4s_v3.
+    /// Compute tier and size of the database server. This object is empty for
+    /// an Azure Database for PostgreSQL single server.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -26,7 +26,7 @@ public partial class PostgreSqlFlexibleServersServerSku : ProvisionableConstruct
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// The tier of the particular SKU, e.g. Burstable.
+    /// Tier of the compute assigned to a server.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerSkuTier> Tier 
     {

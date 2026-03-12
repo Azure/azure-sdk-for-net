@@ -32,7 +32,7 @@ namespace Azure.AI.Projects
         {
             /// <summary> Azure AI API version 2025-05-01. </summary>
             V2025_05_01 = 1,
-            /// <summary> Azure AI API version v1. </summary>
+            /// <summary> Microsoft Foundry API version v1. </summary>
             V1 = 2
         }
     }

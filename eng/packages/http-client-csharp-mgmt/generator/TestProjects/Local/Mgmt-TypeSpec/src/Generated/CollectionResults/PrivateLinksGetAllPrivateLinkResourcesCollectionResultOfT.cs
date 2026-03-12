@@ -49,7 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 PrivateLinkListResult result = PrivateLinkListResult.FromResponse(response);
-                yield return Page<PrivateLink>.FromValues((IReadOnlyList<PrivateLink>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<PrivateLink>.FromValues((IReadOnlyList<PrivateLink>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

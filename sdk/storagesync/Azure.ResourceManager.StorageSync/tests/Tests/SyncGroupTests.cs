@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.StorageSync.Models;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using System;
 
 namespace Azure.ResourceManager.StorageSync.Tests
 {
@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         private StorageSyncGroupCreateOrUpdateContent _storageSyncGroupCreateOrUpdateContent;
         private StorageSyncServiceResource _storageSyncServiceResource;
 
-        public SyncGroupTests(bool async) : base(async, ModeFromSourceCode )
+        public SyncGroupTests(bool async) : base(async, ModeFromSourceCode)
         {
         }
 

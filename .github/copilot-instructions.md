@@ -1,5 +1,7 @@
 # Project Overview
 
+> **Note**: For general AI agent guidelines and repository overview, see [AGENTS.md](https://github.com/Azure/azure-sdk-for-net/blob/main/AGENTS.md) at the repository root.
+
 This repo contains Azure SDKs for various Azure services and tools that generate them.
 
 ## Prerequisites
@@ -19,11 +21,13 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 
 - Always run `npm install` in the `/eng/packages/http-client-csharp` directory before running the generator.
 - Always run `/eng/packages/http-client-csharp/eng/scripts/Generate.ps1` to regenerate the test projects to validate the result of generator code changes.
+- For emitter changes, always run `npm run lint` and `npm run prettier` in the `/eng/packages/http-client-csharp` directory to ensure the changes won't break CI.
 
 ### Azure Management Generator
 
 - Always run `npm install` in the `/eng/packages/http-client-csharp-mgmt` directory before running the generator.
 - Always run `/eng/packages/http-client-csharp-mgmt/eng/scripts/Generate.ps1` to regenerate the test projects to validate the result of generator code changes.
+- For emitter changes, always run `npm run lint` and `npm run prettier` in the `/eng/packages/http-client-csharp-mgmt` directory to ensure the changes won't break CI.
 
 ## Local SDK Generation and Package Lifecycle (TypeSpec)
 
@@ -40,3 +44,7 @@ Ask the user for clarification if repository path or configuration file is ambig
 ## SDK release
 
 For detailed workflow instructions, see [SDK Release](https://github.com/Azure/azure-sdk-for-net/tree/main/eng/common/instructions/copilot/sdk-release.instructions.md).
+
+## Pre-Commit Validation
+
+Before committing changes to SDK packages under `sdk/`, always run the pre-commit validation checks described in the `pre-commit-checks` skill. These checks run `dotnet format`, regenerate public API listings, update snippets, and regenerate code as needed. They may produce additional file changes that must be included in the commit.

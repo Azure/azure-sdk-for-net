@@ -16,7 +16,7 @@ namespace Azure.Provisioning.PostgreSql;
 public partial class PostgreSqlMigrationSecretParameters : ProvisionableConstruct
 {
     /// <summary>
-    /// Admin credentials for source and target servers.
+    /// Credentials of administrator users for source and target servers.
     /// </summary>
     public PostgreSqlMigrationAdminCredentials AdminCredentials 
     {
@@ -26,8 +26,8 @@ public partial class PostgreSqlMigrationSecretParameters : ProvisionableConstruc
     private PostgreSqlMigrationAdminCredentials? _adminCredentials;
 
     /// <summary>
-    /// Gets or sets the username for the source server. This user need not be
-    /// an admin.
+    /// Gets or sets the name of the user for the source server. This user
+    /// doesn&apos;t need to be an administrator.
     /// </summary>
     public BicepValue<string> SourceServerUsername 
     {
@@ -37,8 +37,8 @@ public partial class PostgreSqlMigrationSecretParameters : ProvisionableConstruc
     private BicepValue<string>? _sourceServerUsername;
 
     /// <summary>
-    /// Gets or sets the username for the target server. This user need not be
-    /// an admin.
+    /// Gets or sets the name of the user for the target server. This user
+    /// doesn&apos;t need to be an administrator.
     /// </summary>
     public BicepValue<string> TargetServerUsername 
     {

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
         protected AzureLocation DefaultLocation => AzureLocation.CanadaCentral;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
-       protected ResourceGroupResource DefaultResourceGroup { get; private set; }
+        protected ResourceGroupResource DefaultResourceGroup { get; private set; }
         protected Stack<Action> CleanupActions { get; } = new Stack<Action>();
         protected string amlFSSubnetResourceId;
         protected ResourceGroupResource amlFSResourceGroup;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             DefaultResourceGroup = await this.DefaultSubscription.GetResourceGroupAsync("rg-amajaistoragecache");
             amlFSResourceGroup = DefaultResourceGroup;
-            amlFSStorageAccountId = "/subscriptions/" + DefaultSubscription.Id.SubscriptionId +"/resourceGroups/"+ DefaultResourceGroup.Id.Name +"/providers/Microsoft.Storage/storageAccounts/" + "sdktestingstorageaccount";
+            amlFSStorageAccountId = "/subscriptions/" + DefaultSubscription.Id.SubscriptionId + "/resourceGroups/" + DefaultResourceGroup.Id.Name + "/providers/Microsoft.Storage/storageAccounts/" + "sdktestingstorageaccount";
             amlFSSubnetResourceId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" + "/subnets/fsSubnet";
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
         {
             AmlFileSystemCollection amlFSCollectionVar = this.amlFSResourceGroup.GetAmlFileSystems();
             string amlFSName = name ?? Recording.GenerateAssetName("testamlFS");
-            string subnetId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" +"/subnets/fsSubnet";
+            string subnetId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" + "/subnets/fsSubnet";
             string amlFSHsmContainer = amlFSStorageAccountId + "/blobServices/default/containers/importcontainer";
             string amlFSHsmLoggingContainer = amlFSStorageAccountId + "/blobServices/default/containers/loggingcontainer";
             AmlFileSystemData dataVar = new AmlFileSystemData(this.DefaultLocation)

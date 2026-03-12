@@ -302,7 +302,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             if (fileAttributesOffset > 0)
             {
                 reader.BaseStream.Position = fileAttributesOffset;
-                ntfsFileAttributes = (NtfsFileAttributes) reader.ReadInt32();
+                ntfsFileAttributes = (NtfsFileAttributes)reader.ReadInt32();
             }
 
             // File Created On

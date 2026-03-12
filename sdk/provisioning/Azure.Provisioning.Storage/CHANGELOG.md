@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2026-03-02)
+
+### Breaking Changes
+
+- `StorageAccount.PrivateEndpointConnections` has been renamed to `StorageAccount.PrivateEndpointConnectionResources` and its type changed from `BicepList<StoragePrivateEndpointConnectionData>` to `BicepList<StoragePrivateEndpointConnection>`. The old property is preserved but marked as obsolete.
+- `StorageActiveDirectoryProperties.DomainGuid` has been renamed to `StorageActiveDirectoryProperties.ActiveDirectoryDomainGuid`. The old property is preserved but marked as obsolete.
+- `ExecutionTrigger.TriggerType` has been renamed to `ExecutionTrigger.TaskExecutionTriggerType` with type changed from `ExecutionTriggerType` to `TaskExecutionTriggerType`. The old property is preserved but marked as obsolete.
+
+### Other Changes
+
+- Regenerated from `Azure.ResourceManager.Storage` version 1.6.0 with new API version `2025-06-01`.
 
 ## 1.1.2 (2025-07-15)
 

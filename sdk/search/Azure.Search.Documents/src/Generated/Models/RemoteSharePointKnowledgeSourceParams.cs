@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
@@ -17,11 +18,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSourceParams"/>. </summary>
         /// <param name="knowledgeSourceName"> The name of the index the params apply to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeSourceName"/> is null. </exception>
-        public RemoteSharePointKnowledgeSourceParams(string knowledgeSourceName) : base(knowledgeSourceName)
+        public RemoteSharePointKnowledgeSourceParams(string knowledgeSourceName) : base(knowledgeSourceName, KnowledgeSourceKind.RemoteSharePoint)
         {
             Argument.AssertNotNull(knowledgeSourceName, nameof(knowledgeSourceName));
 
-            Kind = KnowledgeSourceKind.RemoteSharePoint;
         }
 
         /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSourceParams"/>. </summary>
@@ -31,17 +31,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filterExpressionAddOn"> A filter condition applied to the SharePoint data source. It must be specified in the Keyword Query Language syntax. It will be combined as a conjunction with the filter expression specified in the knowledge source definition. </param>
-        internal RemoteSharePointKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string filterExpressionAddOn) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, rerankerThreshold, kind, serializedAdditionalRawData)
+        internal RemoteSharePointKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string filterExpressionAddOn) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, rerankerThreshold, kind, additionalBinaryDataProperties)
         {
             FilterExpressionAddOn = filterExpressionAddOn;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RemoteSharePointKnowledgeSourceParams"/> for deserialization. </summary>
-        internal RemoteSharePointKnowledgeSourceParams()
-        {
         }
 
         /// <summary> A filter condition applied to the SharePoint data source. It must be specified in the Keyword Query Language syntax. It will be combined as a conjunction with the filter expression specified in the knowledge source definition. </summary>

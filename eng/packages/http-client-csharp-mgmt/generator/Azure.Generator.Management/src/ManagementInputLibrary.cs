@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text.Json;
 using Azure.Generator.Management.Models;
 using Microsoft.TypeSpec.Generator.Input;
 
@@ -23,7 +22,7 @@ namespace Azure.Generator.Management
         private ArmProviderSchema? _providerSchema;
         private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
 
-        private IReadOnlyDictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
+        private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)>? _resourceUpdateModelToResourceNameMap;
 
         internal IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
 
@@ -139,16 +138,17 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> InputMethodClientMap => _intMethodClientMap ??= ConstructMethodClientMap();
 
-        private IReadOnlyDictionary<InputModelType, string> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
+        private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
-        internal ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
+        /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
+        public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 
         // If there're multiple API versions in the input namespace, use the last one as the default.
         internal string DefaultApiVersion => InputNamespace.ApiVersions.Last();
 
-        private IReadOnlyDictionary<InputModelType, string> BuildResourceUpdateModelToResourceNameMap()
+        private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
         {
-            Dictionary<InputModelType, (string ResourceName, int Count)> tempMap = new();
+            Dictionary<InputModelType, (string ResourceName, int Count, bool IsAlsoUsedInCreate)> tempMap = new();
 
             foreach (var metadata in ResourceMetadatas)
             {
@@ -159,13 +159,14 @@ namespace Azure.Generator.Management
                     {
                         if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != metadata.ResourceModel)
                         {
+                            bool isAlsoUsedInCreate = IsModelUsedInCreateOperation(metadata, updateModel);
                             if (tempMap.TryGetValue(updateModel, out var existing))
                             {
-                                tempMap[updateModel] = (existing.ResourceName, existing.Count + 1);
+                                tempMap[updateModel] = (existing.ResourceName, existing.Count + 1, existing.IsAlsoUsedInCreate || isAlsoUsedInCreate);
                             }
                             else
                             {
-                                tempMap[updateModel] = (metadata.ResourceModel.Name, 1);
+                                tempMap[updateModel] = (metadata.ResourceModel.Name, 1, isAlsoUsedInCreate);
                             }
                             break;
                         }
@@ -176,7 +177,23 @@ namespace Azure.Generator.Management
             // Only keep update models that are used in exactly one resource (count == 1)
             return tempMap
                 .Where(kvp => kvp.Value.Count == 1)
-                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ResourceName);
+                .ToDictionary(kvp => kvp.Key, kvp => (kvp.Value.ResourceName, kvp.Value.IsAlsoUsedInCreate));
+        }
+
+        private static bool IsModelUsedInCreateOperation(ResourceMetadata metadata, InputModelType model)
+        {
+            var createMethod = metadata.Methods.Where(m => m.Kind == ResourceOperationKind.Create).FirstOrDefault()?.InputMethod;
+            if (createMethod is { Operation.HttpMethod: "PUT" })
+            {
+                foreach (var parameter in createMethod.Parameters)
+                {
+                    if (parameter.Location == InputRequestLocation.Body && parameter.Type == model)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> ConstructMethodClientMap()
@@ -201,19 +218,44 @@ namespace Azure.Generator.Management
                 return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
             }
 
-            var armProviderDecorator = rootClient.Decorators.FirstOrDefault(d => d.Name == ArmProviderSchemaDecoratorName);
+            var armProviderDecorators = rootClient.Decorators
+                .Where(d => d.Name == ArmProviderSchemaDecoratorName)
+                .ToList();
 
-            if (armProviderDecorator?.Arguments != null)
+            if (armProviderDecorators.Count == 0)
             {
-                // Filter out methods that should be omitted during deserialization
-                return ArmProviderSchema.Deserialize(
-                    armProviderDecorator.Arguments,
-                    this,
-                    methodFilter: m => !_methodsToOmit.Contains(m.InputMethod.CrossLanguageDefinitionId));
+                // Fallback to empty schema if decorator not found
+                return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
             }
 
-            // Fallback to empty schema if decorator not found
-            return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
+            var resourcesByIdPattern = new Dictionary<string, ResourceMetadata>(StringComparer.OrdinalIgnoreCase);
+            var nonResourceMethodsById = new Dictionary<string, NonResourceMethod>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (var decorator in armProviderDecorators)
+            {
+                if (decorator.Arguments == null)
+                {
+                    continue;
+                }
+
+                // Filter out methods that should be omitted during deserialization
+                var schema = ArmProviderSchema.Deserialize(
+                    decorator.Arguments,
+                    this,
+                    methodFilter: m => !_methodsToOmit.Contains(m.InputMethod.CrossLanguageDefinitionId));
+
+                foreach (var resource in schema.Resources)
+                {
+                    resourcesByIdPattern.TryAdd(resource.ResourceIdPattern, resource);
+                }
+
+                foreach (var nonResourceMethod in schema.NonResourceMethods)
+                {
+                    nonResourceMethodsById.TryAdd(nonResourceMethod.InputMethod.CrossLanguageDefinitionId, nonResourceMethod);
+                }
+            }
+
+            return new ArmProviderSchema(resourcesByIdPattern.Values.ToList(), nonResourceMethodsById.Values.ToList());
         }
 
         internal InputServiceMethod? GetMethodByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
@@ -222,11 +264,22 @@ namespace Azure.Generator.Management
         internal InputClient? GetClientByMethod(InputServiceMethod method)
             => InputMethodClientMap.TryGetValue(method, out var client) ? client : null;
 
-        internal bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
+        /// <summary> Determines whether the specified model is a resource model. </summary>
+        /// <param name="model"> The input model type to check. </param>
+        /// <returns> <c>true</c> if the model is a resource model; otherwise, <c>false</c>. </returns>
+        public bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
 
-        internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName)
+        internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName, out bool isAlsoUsedInCreate)
         {
-            return ResourceUpdateModelToResourceNameMap.TryGetValue(model, out resourceName);
+            if (ResourceUpdateModelToResourceNameMap.TryGetValue(model, out var entry))
+            {
+                resourceName = entry.ResourceName;
+                isAlsoUsedInCreate = entry.IsAlsoUsedInCreate;
+                return true;
+            }
+            resourceName = null;
+            isAlsoUsedInCreate = false;
+            return false;
         }
     }
 }

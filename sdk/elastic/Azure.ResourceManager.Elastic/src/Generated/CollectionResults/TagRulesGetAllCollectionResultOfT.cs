@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Elastic
                     yield break;
                 }
                 MonitoringTagRulesListResponse result = MonitoringTagRulesListResponse.FromResponse(response);
-                yield return Page<ElasticTagRuleData>.FromValues((IReadOnlyList<ElasticTagRuleData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<ElasticTagRuleData>.FromValues((IReadOnlyList<ElasticTagRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

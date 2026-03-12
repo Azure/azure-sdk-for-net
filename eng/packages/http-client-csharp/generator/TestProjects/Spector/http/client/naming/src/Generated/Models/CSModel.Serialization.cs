@@ -16,6 +16,19 @@ namespace Client.Naming.Model
     {
         internal CSModel() => throw null;
 
+        protected virtual CSModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
+
+        BinaryData IPersistableModel<CSModel>.Write(ModelReaderWriterOptions options) => throw null;
+
+        CSModel IPersistableModel<CSModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
+
+        string IPersistableModel<CSModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
+
+        /// <param name="csModel"> The <see cref="CSModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CSModel csModel) => throw null;
+
         void IJsonModel<CSModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
@@ -23,18 +36,5 @@ namespace Client.Naming.Model
         CSModel IJsonModel<CSModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         protected virtual CSModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
-
-        BinaryData IPersistableModel<CSModel>.Write(ModelReaderWriterOptions options) => throw null;
-
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
-
-        CSModel IPersistableModel<CSModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        protected virtual CSModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
-
-        string IPersistableModel<CSModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="csModel"> The <see cref="CSModel"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(CSModel csModel) => throw null;
     }
 }

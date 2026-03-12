@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.EventGrid.SystemEvents": "2018-01-01"
+  }
+}

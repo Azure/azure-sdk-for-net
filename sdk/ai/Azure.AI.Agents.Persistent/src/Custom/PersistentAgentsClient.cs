@@ -5,8 +5,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
@@ -90,7 +90,7 @@ namespace Azure.AI.Agents.Persistent
 
         public PersistentAgentsAdministrationClient Administration { get => _client; }
         public PersistentAgentsFiles Files { get => _client.GetPersistentAgentsFilesClient(); }
-        public ThreadMessages Messages { get => _client.GetThreadMessagesClient();}
+        public ThreadMessages Messages { get => _client.GetThreadMessagesClient(); }
         public Threads Threads { get => _client.GetThreadsClient(); }
         public ThreadRuns Runs { get => _client.GetThreadRunsClient(); }
         public VectorStores VectorStores { get => _client.GetVectorStoresClient(); }

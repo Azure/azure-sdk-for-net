@@ -30,7 +30,7 @@
     <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(SupportsNetStandard20)' != 'true'">$(ApiCompatRunnableTargetFramework)</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsShippingLibrary)' == 'true' and '$(AotCompatOptOut)' == 'false'">
+  <PropertyGroup Condition="'$(AotCompatOptOut)' == 'false' and '$(AotAnalyzersOptOut)' == 'false'">
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
   </PropertyGroup>
 
@@ -66,6 +66,33 @@
     <Exec ConsoleToMSBuild="true" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(CodeChecksScriptPath) -ProjectDirectory $(MSBuildProjectDirectory)"/>
   </Target>
 
+  <!--
+    ==============================================================
+      Central Package Management Metadata Propagation
+      CPM does not propagate metadata such as PrivateAssets from 
+      PackageVersion to PackageReference. This bridges that gap 
+      so the intent can be declared centrally in Directory.Packages.props.
+      This must operate at evaluation time (not inside a Target) for
+      NuGet restore to observe the metadata. MSBuild evaluation does
+      not support dynamic metadata inspection, so each known NuGet
+      metadata type is handled explicitly.
+    ==============================================================
+  -->
+  <ItemGroup>
+    <_CpmPrivateAssets Include="@(PackageVersion->HasMetadata('PrivateAssets'))" />
+    <_CpmIncludeAssets Include="@(PackageVersion->HasMetadata('IncludeAssets'))" />
+    <_CpmExcludeAssets Include="@(PackageVersion->HasMetadata('ExcludeAssets'))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="@(_CpmPrivateAssets)" PrivateAssets="%(_CpmPrivateAssets.PrivateAssets)" />
+    <PackageReference Update="@(_CpmIncludeAssets)" IncludeAssets="%(_CpmIncludeAssets.IncludeAssets)" />
+    <PackageReference Update="@(_CpmExcludeAssets)" ExcludeAssets="%(_CpmExcludeAssets.ExcludeAssets)" />
+  </ItemGroup>
+
+  <!--
+    Configure the README for build and packaging
+  -->
   <PropertyGroup>
     <OriginalReadmeMdPath>$(PackageRootDirectory)/README.md</OriginalReadmeMdPath>
     <ProcessedReadmeMdPath>$(IntermediateOutputPath)README.md</ProcessedReadmeMdPath>
@@ -96,7 +123,7 @@
     TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
   -->
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true' and '$(OS)' != 'Windows_NT'">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" PrivateAssets="all" IsImplicitlyDefined="true" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
   <!-- Add Client SDK Tools -->
@@ -104,6 +131,7 @@
     <PackageReference Condition="'$(IncludeAutorestDependency)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
+    <ProjectReference Condition="'$(EnableClientSdkAnalyzers)' == 'true' and '$(MSBuildProjectName)' != 'Azure.SdkAnalyzers'" Include="$(RepoRoot)\sdk\tools\Azure.SdkAnalyzers\src\Azure.SdkAnalyzers.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableMicrosoftCodeAnalysisNetAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="All" />
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
   </ItemGroup>
@@ -113,6 +141,33 @@
     <None Include="$(PackageIconPath)" Pack="true" PackagePath=""/>
     <None Condition="Exists('$(PackageRootDirectory)/CHANGELOG.md')" Include="$(PackageRootDirectory)/CHANGELOG.md" Pack="true" PackagePath=""/>
   </ItemGroup>
+
+  <!--
+    ConfigurationSchema.json auto-pack
+    Any shippable client library with a schema/ConfigurationSchema.json (sibling of src/)
+    gets the schema packed at the NuGet package root and a static .targets file packed into
+    buildTransitive/{tfm}/ that registers the JsonSchemaSegment for appsettings.*.json.
+    Individual packages only need to add the JSON file — no extra MSBuild configuration.
+  -->
+  <PropertyGroup>
+    <ConfigurationSchemaPath>$(PackageRootDirectory)/schema/ConfigurationSchema.json</ConfigurationSchemaPath>
+    <HasConfigurationSchema Condition="'$(IsShippingClientLibrary)' == 'true' and Exists('$(ConfigurationSchemaPath)')">true</HasConfigurationSchema>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(HasConfigurationSchema)' == 'true'">
+    <None Include="$(ConfigurationSchemaPath)" Pack="true" PackagePath="ConfigurationSchema.json" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(HasConfigurationSchema)' == 'true'">
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_PackConfigurationSchemaTargets</TargetsForTfmSpecificContentInPackage>
+  </PropertyGroup>
+
+  <Target Name="_PackConfigurationSchemaTargets">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(RepoEngPath)/ConfigurationSchema.targets"
+                              PackagePath="buildTransitive/$(TargetFramework)/$(PackageId).targets" />
+    </ItemGroup>
+  </Target>
 
   <!-- Add App.config to enable server GC in net462 perf and stress projects -->
   <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net462'">
@@ -146,30 +201,35 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
-  <!-- Remove packages built into the .NET 6+ runtime -->
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
+  <!-- 
+    Remove packages built into the .NET runtime 
+
+    NOTE:
+      This is only safe for packages in the same line as the target framework.  Because of edge cases with
+      dependencies and versions, it should not be applied for other runtimes.   For example:
+
+      - Safe: removing BCL packages in the 10.x line for the `net10.0` target.  
+      - Unsafe: removing BCL packages in the 10.x line for the `net8.0` target, even though an earlier version is built-in.
+  -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
+    <PackageReference Remove="Microsoft.CSharp" />
     <PackageReference Remove="System.Buffers" />
     <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Formats.Asn1" />
+    <PackageReference Remove="System.IO.Compression" />
+    <PackageReference Remove="System.Linq.Async" />
+    <PackageReference Remove="System.Linq.AsyncEnumerable" />
     <PackageReference Remove="System.Memory" />
     <PackageReference Remove="System.Net.Http" />
+    <PackageReference Remove="System.Net.WebSockets.Client" />
     <PackageReference Remove="System.Numerics.Vectors" />
+    <PackageReference Remove="System.Reflection.Emit" />
+    <PackageReference Remove="System.Runtime.InteropServices" />
+    <PackageReference Remove="System.Security.Cryptography.X509Certificates" />
     <PackageReference Remove="System.Text.Encodings.Web" />
     <PackageReference Remove="System.Text.Json" />
     <PackageReference Remove="System.Threading.Channels" />
     <PackageReference Remove="System.Threading.Tasks.Extensions" />
-  </ItemGroup>
-
-  <!-- Remove packages built into the .NET 10+ runtime -->
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net10.0'))">
-    <PackageReference Remove="Microsoft.CSharp" />
-    <PackageReference Remove="System.Formats.Asn1" />
-    <PackageReference Remove="System.Linq.Async" />
-    <PackageReference Remove="System.Linq.AsyncEnumerable" />
-    <PackageReference Remove="System.IO.Compression" />
-    <PackageReference Remove="System.Net.WebSockets.Client" />
-    <PackageReference Remove="System.Reflection.Emit" />
-    <PackageReference Remove="System.Runtime.InteropServices" />
-    <PackageReference Remove="System.Security.Cryptography.X509Certificates" />
     <PackageReference Remove="System.ValueTuple" />
   </ItemGroup>
 
@@ -189,10 +249,7 @@
   <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
   <Import Project="CodeGeneration.targets" Condition="'$(IncludeAutorestDependency)' != 'true'" />
 
-  <!-- CentralPackageVersions properties -->
   <PropertyGroup>
-    <CentralPackagesFile>$(MSBuildThisFileDirectory)Packages.Data.props</CentralPackagesFile>
-    <CentralPackageVersionPackagePath>$(MSBuildThisFileDirectory)Microsoft.Build.CentralPackageVersions\2.0.46\Sdk</CentralPackageVersionPackagePath>
     <UseProjectReferenceToAzureClients Condition="'$(UseProjectReferenceToAzureClients)' == ''">false</UseProjectReferenceToAzureClients>
   </PropertyGroup>
 
@@ -333,7 +390,7 @@
 
     <ItemGroup>
       <_AllReferencesWithVersions Include="@(_ProjectReferencesWithoutDevVersions)" Version="%(ProjectVersion)" />
-      <_AllReferencesWithVersions Include="@(PackageReference)" Condition="!$([System.String]::Copy('%(PackageReference.PrivateAssets)').ToLower().Equals('all'))"/>
+      <_AllReferencesWithVersions Include="@(PackageReference)" Version="%(PackageReference.Version)" Condition="!$([System.String]::Copy('%(PackageReference.PrivateAssets)').ToLower().Equals('all'))"/>
 
       <PreviewPackageReferences Include="@(_AllReferencesWithVersions)" Condition="$([System.String]::Copy('%(Version)').Contains('-'))" />
     </ItemGroup>
@@ -348,7 +405,7 @@
 
   <!-- Fixup netstandard2.malformed docs issue https://github.com/saucecontrol/InheritDoc#bad-netstandard-docs -->
   <ItemGroup Condition="'$(InheritDocEnabled)' != 'false' and '$(TargetFramework)' == 'netstandard2.0'">
-    <PackageDownload Include="NETStandard.Library.Ref" />
+    <PackageDownload Include="NETStandard.Library.Ref" Version="[2.1.0]" />
     <InheritDocReference Include="$(NugetPackageRoot)\netstandard.library.ref\2.1.0\ref\netstandard2.1\netstandard.xml" />
   </ItemGroup>
 
@@ -395,7 +452,7 @@
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
 
       <!-- Format package info line for output -->
-      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(AotCompatOptOut)'</PackageInfoText>
+      <PackageInfoText Condition="'$(IsShippingLibrary)' == 'true'">'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' </PackageInfoText>
     </PropertyGroup>
 
     <ItemGroup Condition="'$(IsShippingLibrary)' == 'true'">
@@ -438,10 +495,33 @@
       <_ProjectName Condition="'$(TestDependsIncludePackageRootDirectoryOnly)' == 'true'">$(PackageRootDirectory)</_ProjectName>
     </PropertyGroup>
 
-    <ItemGroup Condition="'@(_DependsOnGiven)' != '@(_TestDependsOnDendencies)' and '$(IsClientLibrary)' == 'true'" >
+    <ItemGroup Condition="'@(_DependsOnGiven)' != '@(_TestDependsOnDendencies)' and '$(IsClientLibrary)' == 'true' and '$(IsGeneratorLibrary)' != 'true'" >
       <ProjectsToInclude Include="$(_ProjectName)" />
     </ItemGroup>
   </Target>
 
-  <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />
+  <!--
+    Central Package Management Enforcement
+
+    These targets prevent projects from bypassing central package version
+    management by re-enabling VersionOverride or disabling CPM in their
+    local Directory.Build.props / .csproj files.
+
+    If you have a legitimate need to override a package version, add a scoped
+    entry to eng/centralpackagemanagement/Directory.Packages.props with
+    appropriate conditions. See eng/centralpackagemanagement/README.md.
+  -->
+  <Target Name="EnforceCentralPackageManagement" BeforeTargets="Restore;Build;CollectPackageReferences">
+    <!-- Block re-enabling VersionOverride -->
+    <Error
+      Condition="'$(CentralPackageVersionOverrideEnabled)' == 'true'"
+      Text="AZSDK0001: Package version overrides are disabled in this repository. Do not set CentralPackageVersionOverrideEnabled='true'. See eng/centralpackagemanagement/README.md for guidance."
+      Code="AZSDK0001" />
+
+    <!-- Block disabling central package management entirely -->
+    <Error
+      Condition="'$(ManagePackageVersionsCentrally)' == 'false'"
+      Text="AZSDK0001: Central Package Management is required in this repository. Do not set ManagePackageVersionsCentrally='false'. See eng/centralpackagemanagement/README.md for guidance."
+      Code="AZSDK0001" />
+  </Target>
 </Project>

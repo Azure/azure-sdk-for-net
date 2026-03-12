@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// Storage profile for the container service cluster.
-    /// Serialized Name: ManagedClusterStorageProfile
-    /// </summary>
+    /// <summary> Storage profile for the container service cluster. </summary>
     public partial class ManagedClusterStorageProfile
     {
         /// <summary>
@@ -54,22 +51,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterStorageProfile"/>. </summary>
-        /// <param name="diskCsiDriver">
-        /// AzureDisk CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.diskCSIDriver
-        /// </param>
-        /// <param name="fileCsiDriver">
-        /// AzureFile CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.fileCSIDriver
-        /// </param>
-        /// <param name="snapshotController">
-        /// Snapshot Controller settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.snapshotController
-        /// </param>
-        /// <param name="blobCsiDriver">
-        /// AzureBlob CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.blobCSIDriver
-        /// </param>
+        /// <param name="diskCsiDriver"> AzureDisk CSI Driver settings for the storage profile. </param>
+        /// <param name="fileCsiDriver"> AzureFile CSI Driver settings for the storage profile. </param>
+        /// <param name="snapshotController"> Snapshot Controller settings for the storage profile. </param>
+        /// <param name="blobCsiDriver"> AzureBlob CSI Driver settings for the storage profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterStorageProfile(ManagedClusterStorageProfileDiskCsiDriver diskCsiDriver, ManagedClusterStorageProfileFileCsiDriver fileCsiDriver, ManagedClusterStorageProfileSnapshotController snapshotController, ManagedClusterStorageProfileBlobCsiDriver blobCsiDriver, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -80,28 +65,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// AzureDisk CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.diskCSIDriver
-        /// </summary>
+        /// <summary> AzureDisk CSI Driver settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileDiskCsiDriver DiskCsiDriver { get; set; }
 
-        /// <summary>
-        /// AzureFile CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.fileCSIDriver
-        /// </summary>
+        /// <summary> AzureFile CSI Driver settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileFileCsiDriver FileCsiDriver { get; set; }
 
-        /// <summary>
-        /// Snapshot Controller settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.snapshotController
-        /// </summary>
+        /// <summary> Snapshot Controller settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileSnapshotController SnapshotController { get; set; }
 
-        /// <summary>
-        /// AzureBlob CSI Driver settings for the storage profile.
-        /// Serialized Name: ManagedClusterStorageProfile.blobCSIDriver
-        /// </summary>
+        /// <summary> AzureBlob CSI Driver settings for the storage profile. </summary>
         internal ManagedClusterStorageProfileBlobCsiDriver BlobCsiDriver { get; set; }
     }
 }

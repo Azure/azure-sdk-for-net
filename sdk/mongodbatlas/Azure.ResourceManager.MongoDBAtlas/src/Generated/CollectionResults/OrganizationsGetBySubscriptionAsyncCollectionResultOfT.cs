@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
                     yield break;
                 }
                 OrganizationResourceListResult result = OrganizationResourceListResult.FromResponse(response);
-                yield return Page<MongoDBAtlasOrganizationData>.FromValues((IReadOnlyList<MongoDBAtlasOrganizationData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<MongoDBAtlasOrganizationData>.FromValues((IReadOnlyList<MongoDBAtlasOrganizationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

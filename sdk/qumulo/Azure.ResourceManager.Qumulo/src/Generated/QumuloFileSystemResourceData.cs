@@ -133,7 +133,11 @@ namespace Azure.ResourceManager.Qumulo
         {
             get
             {
-                return Properties is null ? default : Properties.PrivateIPs;
+                if (Properties is null)
+                {
+                    Properties = new FileSystemResourceProperties();
+                }
+                return Properties.PrivateIPs;
             }
         }
 

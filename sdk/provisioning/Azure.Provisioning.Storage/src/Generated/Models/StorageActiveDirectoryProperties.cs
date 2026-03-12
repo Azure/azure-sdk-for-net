@@ -17,7 +17,14 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
 {
     /// <summary>
     /// Specifies the primary domain that the AD DNS server is authoritative
-    /// for.
+    /// for. This property is required if directoryServiceOptions is set to AD
+    /// (AD DS authentication). If directoryServiceOptions is set to AADDS
+    /// (Entra DS authentication), providing this property is optional, as it
+    /// will be inferred automatically if omitted. If directoryServiceOptions
+    /// is set to AADKERB (Entra authentication), this property is optional;
+    /// it is needed to support configuration of directory- and file-level
+    /// permissions via Windows File Explorer, but is not required for
+    /// authentication.
     /// </summary>
     public BicepValue<string> DomainName 
     {
@@ -27,7 +34,9 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
     private BicepValue<string>? _domainName;
 
     /// <summary>
-    /// Specifies the NetBIOS domain name.
+    /// Specifies the NetBIOS domain name. If directoryServiceOptions is set to
+    /// AD (AD DS authentication), this property is required. Otherwise, it
+    /// can be omitted.
     /// </summary>
     public BicepValue<string> NetBiosDomainName 
     {
@@ -37,7 +46,9 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
     private BicepValue<string>? _netBiosDomainName;
 
     /// <summary>
-    /// Specifies the Active Directory forest to get.
+    /// Specifies the Active Directory forest to get. If
+    /// directoryServiceOptions is set to AD (AD DS authentication), this
+    /// property is required. Otherwise, it can be omitted.
     /// </summary>
     public BicepValue<string> ForestName 
     {
@@ -47,17 +58,26 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
     private BicepValue<string>? _forestName;
 
     /// <summary>
-    /// Specifies the domain GUID.
+    /// Specifies the domain GUID. If directoryServiceOptions is set to AD (AD
+    /// DS authentication), this property is required. If
+    /// directoryServiceOptions is set to AADDS (Entra DS authentication),
+    /// this property can be omitted. If directoryServiceOptions is set to
+    /// AADKERB (Entra authentication), this property is optional; it is
+    /// needed to support configuration of directory- and file-level
+    /// permissions via Windows File Explorer, but is not required for
+    /// authentication.
     /// </summary>
-    public BicepValue<Guid> DomainGuid 
+    public BicepValue<Guid> ActiveDirectoryDomainGuid 
     {
-        get { Initialize(); return _domainGuid!; }
-        set { Initialize(); _domainGuid!.Assign(value); }
+        get { Initialize(); return _activeDirectoryDomainGuid!; }
+        set { Initialize(); _activeDirectoryDomainGuid!.Assign(value); }
     }
-    private BicepValue<Guid>? _domainGuid;
+    private BicepValue<Guid>? _activeDirectoryDomainGuid;
 
     /// <summary>
-    /// Specifies the security identifier (SID).
+    /// Specifies the security identifier (SID) of the AD domain. If
+    /// directoryServiceOptions is set to AD (AD DS authentication), this
+    /// property is required. Otherwise, it can be omitted.
     /// </summary>
     public BicepValue<string> DomainSid 
     {
@@ -67,7 +87,9 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
     private BicepValue<string>? _domainSid;
 
     /// <summary>
-    /// Specifies the security identifier (SID) for Azure Storage.
+    /// Specifies the security identifier (SID) for Azure Storage. If
+    /// directoryServiceOptions is set to AD (AD DS authentication), this
+    /// property is required. Otherwise, it can be omitted.
     /// </summary>
     public BicepValue<string> AzureStorageSid 
     {
@@ -77,7 +99,11 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
     private BicepValue<string>? _azureStorageSid;
 
     /// <summary>
-    /// Specifies the Active Directory SAMAccountName for Azure Storage.
+    /// Specifies the Active Directory SAMAccountName for Azure Storage. If
+    /// directoryServiceOptions is set to AD (AD DS authentication), this
+    /// property is optional. If provided, accountType should also be
+    /// provided. For directoryServiceOptions AADDS (Entra DS authentication)
+    /// or AADKERB (Entra authentication), this property can be omitted.
     /// </summary>
     public BicepValue<string> SamAccountName 
     {
@@ -87,7 +113,11 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
     private BicepValue<string>? _samAccountName;
 
     /// <summary>
-    /// Specifies the Active Directory account type for Azure Storage.
+    /// Specifies the Active Directory account type for Azure Storage. If
+    /// directoryServiceOptions is set to AD (AD DS authentication), this
+    /// property is optional. If provided, samAccountName should also be
+    /// provided. For directoryServiceOptions AADDS (Entra DS authentication)
+    /// or AADKERB (Entra authentication), this property can be omitted.
     /// </summary>
     public BicepValue<ActiveDirectoryAccountType> AccountType 
     {
@@ -113,10 +143,13 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
         _domainName = DefineProperty<string>("DomainName", ["domainName"]);
         _netBiosDomainName = DefineProperty<string>("NetBiosDomainName", ["netBiosDomainName"]);
         _forestName = DefineProperty<string>("ForestName", ["forestName"]);
-        _domainGuid = DefineProperty<Guid>("DomainGuid", ["domainGuid"]);
+        _activeDirectoryDomainGuid = DefineProperty<Guid>("ActiveDirectoryDomainGuid", ["domainGuid"]);
         _domainSid = DefineProperty<string>("DomainSid", ["domainSid"]);
         _azureStorageSid = DefineProperty<string>("AzureStorageSid", ["azureStorageSid"]);
         _samAccountName = DefineProperty<string>("SamAccountName", ["samAccountName"]);
         _accountType = DefineProperty<ActiveDirectoryAccountType>("AccountType", ["accountType"]);
+        DefineAdditionalProperties();
     }
+
+    private partial void DefineAdditionalProperties();
 }

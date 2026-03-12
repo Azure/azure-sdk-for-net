@@ -15,14 +15,37 @@ overrides:
       - tsve
   - filename: '**/sdk/provisioning/Azure.Provisioning.PostgreSql/**/*.cs'
     words:
+      - apsara
       - awsec
+      - dbrds
       - postgre
+      - ssdlrs
   - filename: '**/sdk/provisioning/Azure.Provisioning.Sql/**/*.cs'
     words:
       - freemium
   - filename: '**/sdk/provisioning/Azure.Provisioning.Storage/**/*.cs'
     words:
       - mibps
+  - filename: '**/sdk/provisioning/Azure.Provisioning.ContainerService/**/*.cs'
+    words:
+      - aksadvancednetworking
+      - aren
+      - doesn
+      - iloveyou
+      - karpenter
+      - kata
+      - krustlet
+      - kubeletidentity
+      - numa
+      - ossku
+      - reimaged
+      - reimaging
+      - rmem
+      - schedulable
+      - snat
+      - tcpkeepalive
+      - undrainable
+      - vtpm
   - filename: '**/sdk/provisioning/Azure.Provisioning.Network/**/*.cs'
     words:
       - dscp

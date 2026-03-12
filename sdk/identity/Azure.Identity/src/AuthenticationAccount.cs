@@ -4,7 +4,8 @@
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
-{   internal class AuthenticationAccount : IAccount
+{
+    internal class AuthenticationAccount : IAccount
     {
         private AuthenticationRecord _profile;
 

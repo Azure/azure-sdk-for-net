@@ -13,12 +13,12 @@ using System;
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
-/// Information describing the identities associated with this application.
+/// Identities associated with a server.
 /// </summary>
 public partial class PostgreSqlFlexibleServerUserAssignedIdentity : ProvisionableConstruct
 {
     /// <summary>
-    /// represents user assigned identities map.
+    /// Map of user assigned managed identities.
     /// </summary>
     public BicepDictionary<UserAssignedIdentityDetails> UserAssignedIdentities 
     {
@@ -28,8 +28,18 @@ public partial class PostgreSqlFlexibleServerUserAssignedIdentity : Provisionabl
     private BicepDictionary<UserAssignedIdentityDetails>? _userAssignedIdentities;
 
     /// <summary>
-    /// the types of identities associated with this resource; currently
-    /// restricted to &apos;None and UserAssigned&apos;.
+    /// Identifier of the object of the service principal associated to the
+    /// user assigned managed identity.
+    /// </summary>
+    public BicepValue<Guid> PrincipalId 
+    {
+        get { Initialize(); return _principalId!; }
+        set { Initialize(); _principalId!.Assign(value); }
+    }
+    private BicepValue<Guid>? _principalId;
+
+    /// <summary>
+    /// Types of identities associated with a server.
     /// </summary>
     public BicepValue<PostgreSqlFlexibleServerIdentityType> IdentityType 
     {
@@ -39,7 +49,7 @@ public partial class PostgreSqlFlexibleServerUserAssignedIdentity : Provisionabl
     private BicepValue<PostgreSqlFlexibleServerIdentityType>? _identityType;
 
     /// <summary>
-    /// Tenant id of the server.
+    /// Identifier of the tenant of a server.
     /// </summary>
     public BicepValue<Guid> TenantId 
     {
@@ -62,6 +72,7 @@ public partial class PostgreSqlFlexibleServerUserAssignedIdentity : Provisionabl
     {
         base.DefineProvisionableProperties();
         _userAssignedIdentities = DefineDictionaryProperty<UserAssignedIdentityDetails>("UserAssignedIdentities", ["userAssignedIdentities"]);
+        _principalId = DefineProperty<Guid>("PrincipalId", ["principalId"]);
         _identityType = DefineProperty<PostgreSqlFlexibleServerIdentityType>("IdentityType", ["type"]);
         _tenantId = DefineProperty<Guid>("TenantId", ["tenantId"], isOutput: true);
     }

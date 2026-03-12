@@ -17,6 +17,58 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     /// <summary> Represent ListIngressGatewayCredentials Request object. </summary>
     public partial class ListIngressGatewayCredentialsContent : IJsonModel<ListIngressGatewayCredentialsContent>
     {
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ListIngressGatewayCredentialsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ListIngressGatewayCredentialsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeListIngressGatewayCredentialsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListIngressGatewayCredentialsContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ListIngressGatewayCredentialsContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ListIngressGatewayCredentialsContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ListIngressGatewayCredentialsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ListIngressGatewayCredentialsContent IPersistableModel<ListIngressGatewayCredentialsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ListIngressGatewayCredentialsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="listIngressGatewayCredentialsContent"> The <see cref="ListIngressGatewayCredentialsContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ListIngressGatewayCredentialsContent listIngressGatewayCredentialsContent)
+        {
+            if (listIngressGatewayCredentialsContent == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(listIngressGatewayCredentialsContent, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ListIngressGatewayCredentialsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -101,58 +153,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
             }
             return new ListIngressGatewayCredentialsContent(serviceName, additionalBinaryDataProperties);
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ListIngressGatewayCredentialsContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ListIngressGatewayCredentialsContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ListIngressGatewayCredentialsContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ListIngressGatewayCredentialsContent IPersistableModel<ListIngressGatewayCredentialsContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ListIngressGatewayCredentialsContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<ListIngressGatewayCredentialsContent>)this).GetFormatFromOptions(options) : options.Format;
-            switch (format)
-            {
-                case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        return DeserializeListIngressGatewayCredentialsContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ListIngressGatewayCredentialsContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ListIngressGatewayCredentialsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="listIngressGatewayCredentialsContent"> The <see cref="ListIngressGatewayCredentialsContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ListIngressGatewayCredentialsContent listIngressGatewayCredentialsContent)
-        {
-            if (listIngressGatewayCredentialsContent == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(listIngressGatewayCredentialsContent, ModelSerializationExtensions.WireOptions);
-            return content;
         }
     }
 }

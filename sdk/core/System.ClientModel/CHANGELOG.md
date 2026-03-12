@@ -1,16 +1,34 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
+- Added `JsonPatch.EnumerateArray` method that iterates over JSON array elements at a specified path, yielding each element as raw UTF-8 bytes.
+- Added `CollectionResult<T>.FromPages` and `AsyncCollectionResult<T>.FromPages` static factory methods that create collection result instances from pre-existing pages of values for testing. 
+- Added `IsReadOnly` property to `ClientPipelineOptions` and `ClientLoggingOptions` so callers can check whether options can still be modified without catching an exception.
+- Added `Clone()` method to `ClientPipelineOptions` and `ClientLoggingOptions` that creates a new mutable instance from an existing instance that may be read-only.
+
+### Bugs Fixed
+
+- Fixed implicit conversion operator for `ClientResult<T>` to not throw exceptions on null inputs per Framework Design Guidelines. Null inputs now return `default`.
+
+### Other Changes
+
 ### Breaking Changes
+
+- Added nullability annotation to the `ClientResult<T>` implicit conversion operator parameter to indicate that null is a valid input. This change was made because throwing exceptions from implicit conversions violates the [Framework Design Guidelines](https://learn.microsoft.com/dotnet/standard/design-guidelines/operator-overloads).
+
+## 1.9.0 (2026-01-27)
+
+### Features Added
+
+- Added core support for Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection.
+- Added `JsonModel<T>` abstract base class that provides a simplified way to implement `IJsonModel<T>` for JSON serialization and deserialization.
 
 ### Bugs Fixed
 
 - Fixed an issue with `ClientRetryPolicy` where delays were being calculated using the retry count instead of the attempt count, causing the initial retry to occur without delay and subsequent retries to be performed more quickly than intended.
-
-### Other Changes
 
 ## 1.8.1 (2025-11-10)
 

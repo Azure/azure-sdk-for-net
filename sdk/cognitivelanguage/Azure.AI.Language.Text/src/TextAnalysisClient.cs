@@ -5,14 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Azure.Core;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms.  The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href=\"https://docs.microsoft.com/azure/cognitive-services/language-service/overview\"&gt;https://docs.microsoft.com/azure/cognitive-services/language-service/overview&lt;/a&gt;.0. </summary>
+    /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms.  The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href="https://docs.microsoft.com/azure/cognitive-services/language-service/overview"&gt;https://docs.microsoft.com/azure/cognitive-services/language-service/overview&lt;/a&gt;.0. </summary>
+    [CodeGenType("TextAnalysis")]
+    [CodeGenSuppress("TextAnalysisClient", typeof(Uri), typeof(TokenCredential), typeof(TextAnalysisClientOptions))]
     public partial class TextAnalysisClient
     {
         /// <summary> Initializes a new instance of TextAnalysisClient. </summary>
@@ -31,7 +34,7 @@ namespace Azure.AI.Language.Text
             _tokenCredential = credential;
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
-            _pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(credential, authorizationScope) }, Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
         }
@@ -43,7 +46,7 @@ namespace Azure.AI.Language.Text
         /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textInput"/> or <paramref name="actions"/> is null. </exception>
-        public virtual Response<AnalyzeTextOperationState> AnalyzeTextOperation(MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, CancellationToken cancellationToken = default)
+        public virtual Response<AnalyzeTextJobState> AnalyzeTextOperation(MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
@@ -52,15 +55,15 @@ namespace Azure.AI.Language.Text
             using var scope = ClientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
-            AnalyzeTextSubmitJobRequest analyzeTextOperationInput = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, cancelAfter: null, serializedAdditionalRawData: null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            AnalyzeTextSubmitJobRequest analyzeTextOperationInput = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, null, null);
+            RequestContext context = cancellationToken.ToRequestContext();
 
             try
             {
-                using HttpMessage message = CreateAnalyzeTextSubmitOperationRequest(analyzeTextOperationInput.ToRequestContent(), context);
-                var operation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, scopeName, OperationFinalStateVia.OperationLocation, context, WaitUntil.Completed);
+                using HttpMessage message = CreateAnalyzeTextSubmitJobRequest(analyzeTextOperationInput, context);
+                var operation = ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, scopeName, OperationFinalStateVia.OperationLocation, context, WaitUntil.Completed);
                 Response response = operation.GetRawResponse();
-                return Response.FromValue(AnalyzeTextOperationState.FromResponse(response), response);
+                return Response.FromValue((AnalyzeTextJobState)response, response);
             }
             catch (Exception e)
             {
@@ -76,7 +79,7 @@ namespace Azure.AI.Language.Text
         /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textInput"/> or <paramref name="actions"/> is null. </exception>
-        public virtual async Task<Response<AnalyzeTextOperationState>> AnalyzeTextOperationAsync(MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnalyzeTextJobState>> AnalyzeTextOperationAsync(MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
@@ -85,15 +88,15 @@ namespace Azure.AI.Language.Text
             using var scope = ClientDiagnostics.CreateScope(scopeName);
             scope.Start();
 
-            AnalyzeTextSubmitJobRequest analyzeTextOperationInput = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, cancelAfter: null, serializedAdditionalRawData: null);
-            RequestContext context = FromCancellationToken(cancellationToken);
+            AnalyzeTextSubmitJobRequest analyzeTextOperationInput = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, null, null);
+            RequestContext context = cancellationToken.ToRequestContext();
 
             try
             {
-                using HttpMessage message = CreateAnalyzeTextSubmitOperationRequest(analyzeTextOperationInput.ToRequestContent(), context);
-                var operation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, scopeName, OperationFinalStateVia.OperationLocation, context, WaitUntil.Completed).ConfigureAwait(false);
+                using HttpMessage message = CreateAnalyzeTextSubmitJobRequest(analyzeTextOperationInput, context);
+                var operation = await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, scopeName, OperationFinalStateVia.OperationLocation, context, WaitUntil.Completed).ConfigureAwait(false);
                 Response response = operation.GetRawResponse();
-                return Response.FromValue(AnalyzeTextOperationState.FromResponse(response), response);
+                return Response.FromValue((AnalyzeTextJobState)response, response);
             }
             catch (Exception e)
             {

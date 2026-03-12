@@ -6,17 +6,13 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Serialization;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Models
 {
-    // Hide the untyped SuggestResult
-    [CodeGenModel("SuggestResult")]
-    internal partial class SuggestResult { }
-
     /// <summary>
     /// A result containing a document found by a suggestion query, plus
     /// associated metadata.
@@ -42,7 +38,7 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         internal SearchSuggestion() { }
 
-        #pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
+#pragma warning disable CS1572 // Not all parameters will be used depending on feature flags
         /// <summary>
         /// Deserialize a SearchSuggestion and its model.
         /// </summary>
@@ -64,7 +60,7 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions options,
             bool async,
             CancellationToken cancellationToken)
-        #pragma warning restore CS1572
+#pragma warning restore CS1572
         {
             Debug.Assert(options != null);
 

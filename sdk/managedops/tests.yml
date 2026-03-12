@@ -1,0 +1,11 @@
+trigger: none
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    SDKType: client
+    ServiceDirectory: managedops
+    BuildInParallel: true
+    TimeoutInMinutes: 30
+    Clouds: 'Public'
+    SupportedClouds: 'Public'

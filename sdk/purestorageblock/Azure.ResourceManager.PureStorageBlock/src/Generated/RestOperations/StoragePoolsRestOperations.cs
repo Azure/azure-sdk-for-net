@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -91,7 +97,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -112,7 +121,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -129,7 +141,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/PureStorage.Block/storagePools", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -141,7 +156,18 @@ namespace Azure.ResourceManager.PureStorageBlock
         internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +183,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/PureStorage.Block/storagePools", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -169,7 +198,18 @@ namespace Azure.ResourceManager.PureStorageBlock
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -189,7 +229,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
             uri.AppendPath("/getHealthStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -209,7 +252,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
             uri.AppendPath("/getAvsConnection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -229,7 +275,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
             uri.AppendPath("/getAvsStatus", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -249,7 +298,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
             uri.AppendPath("/enableAvsConnection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -270,7 +322,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
             uri.AppendPath("/disableAvsConnection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -289,7 +344,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
             uri.AppendPath("/finalizeAvsConnection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -310,7 +368,10 @@ namespace Azure.ResourceManager.PureStorageBlock
             uri.AppendPath("/providers/PureStorage.Block/storagePools/", false);
             uri.AppendPath(storagePoolName, true);
             uri.AppendPath("/repairAvsConnection", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

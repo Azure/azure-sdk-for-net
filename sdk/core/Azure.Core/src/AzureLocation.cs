@@ -339,6 +339,21 @@ namespace Azure.Core
         /// </summary>
         public static AzureLocation SpainCentral { get; } = CreateStaticReference("spaincentral", "Spain Central");
 
+        /// <summary>
+        /// Public cloud location for Indonesia Central.
+        /// </summary>
+        public static AzureLocation IndonesiaCentral { get; } = CreateStaticReference("indonesiacentral", "Indonesia Central");
+
+        /// <summary>
+        /// Public cloud location for New Zealand North.
+        /// </summary>
+        public static AzureLocation NewZealandNorth { get; } = CreateStaticReference("newzealandnorth", "New Zealand North");
+
+        /// <summary>
+        /// Public cloud location for Malaysia West.
+        /// </summary>
+        public static AzureLocation MalaysiaWest { get; } = CreateStaticReference("malaysiawest", "Malaysia West");
+
         #endregion
 
         /// <summary> Initializes a new instance of Location. </summary>
@@ -420,18 +435,19 @@ namespace Azure.Core
         /// Creates a new location implicitly from a string.
         /// </summary>
         /// <param name="location"> String to be assigned in the Name form. </param>
-        public static implicit operator AzureLocation(string location)
+        public static implicit operator AzureLocation(string? location)
         {
-            if (!ReferenceEquals(location, null))
+            if (ReferenceEquals(location, null))
             {
-                AzureLocation value;
-                if (PublicCloudLocations.TryGetValue(location, out value))
-                {
-                    return value;
-                }
+                return default;
             }
 
-            return new AzureLocation(location!);
+            if (PublicCloudLocations.TryGetValue(location, out AzureLocation value))
+            {
+                return value;
+            }
+
+            return new AzureLocation(location);
         }
 
         /// <summary>
@@ -472,7 +488,7 @@ namespace Azure.Core
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            return Name?.GetHashCode() ?? 0;
         }
 
         /// <summary>

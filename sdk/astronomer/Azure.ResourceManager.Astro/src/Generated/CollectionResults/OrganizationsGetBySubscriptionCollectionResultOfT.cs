@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Astro
                     yield break;
                 }
                 OrganizationResourceListResult result = OrganizationResourceListResult.FromResponse(response);
-                yield return Page<AstroOrganizationData>.FromValues((IReadOnlyList<AstroOrganizationData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<AstroOrganizationData>.FromValues((IReadOnlyList<AstroOrganizationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

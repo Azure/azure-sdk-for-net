@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     public readonly partial struct NeonComputeEndpointStatus : IEquatable<NeonComputeEndpointStatus>
     {
         private readonly string _value;
+        /// <summary> The compute endpoint is currently initializing. </summary>
+        private const string InitValue = "init";
+        /// <summary> The compute endpoint is currently active. </summary>
+        private const string ActiveValue = "active";
+        /// <summary> The compute endpoint is currently idle. </summary>
+        private const string IdleValue = "idle";
 
         /// <summary> Initializes a new instance of <see cref="NeonComputeEndpointStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NeonComputeEndpointStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InitValue = "init";
-        private const string ActiveValue = "active";
-        private const string IdleValue = "idle";
+            _value = value;
+        }
 
         /// <summary> The compute endpoint is currently initializing. </summary>
         public static NeonComputeEndpointStatus Init { get; } = new NeonComputeEndpointStatus(InitValue);
+
         /// <summary> The compute endpoint is currently active. </summary>
         public static NeonComputeEndpointStatus Active { get; } = new NeonComputeEndpointStatus(ActiveValue);
+
         /// <summary> The compute endpoint is currently idle. </summary>
         public static NeonComputeEndpointStatus Idle { get; } = new NeonComputeEndpointStatus(IdleValue);
+
         /// <summary> Determines if two <see cref="NeonComputeEndpointStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NeonComputeEndpointStatus left, NeonComputeEndpointStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NeonComputeEndpointStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NeonComputeEndpointStatus left, NeonComputeEndpointStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NeonComputeEndpointStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NeonComputeEndpointStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NeonComputeEndpointStatus(string value) => new NeonComputeEndpointStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NeonComputeEndpointStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NeonComputeEndpointStatus?(string value) => value == null ? null : new NeonComputeEndpointStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NeonComputeEndpointStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NeonComputeEndpointStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

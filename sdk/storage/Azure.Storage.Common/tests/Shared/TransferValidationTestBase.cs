@@ -203,7 +203,8 @@ namespace Azure.Storage.Test.Shared
                 {
                     Assert.AreEqual(Convert.ToBase64String(expectedChecksum), checksum);
                 }
-            };
+            }
+            ;
 
             return request =>
             {
@@ -309,7 +310,8 @@ namespace Azure.Storage.Test.Shared
                 {
                     Assert.Fail($"{headerName} expected on response but was not found.");
                 }
-            };
+            }
+            ;
 
             return response =>
             {
@@ -1106,8 +1108,8 @@ namespace Azure.Storage.Test.Shared
             StorageTransferOptions transferOptions = split
                 ? new StorageTransferOptions
                 {
-                    InitialTransferSize = dataLength/2,
-                    MaximumTransferSize = dataLength/2
+                    InitialTransferSize = dataLength / 2,
+                    MaximumTransferSize = dataLength / 2
                 }
                 : new StorageTransferOptions
                 {
@@ -1748,9 +1750,9 @@ namespace Azure.Storage.Test.Shared
         }
 
         [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader, false, false)]
-        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader-1, false, false)]
-        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader+1, true, false)]
-        [TestCase(StorageChecksumAlgorithm.MD5, Constants.StructuredMessage.MaxDownloadCrcWithHeader+1, false, true)]
+        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader - 1, false, false)]
+        [TestCase(StorageChecksumAlgorithm.StorageCrc64, Constants.StructuredMessage.MaxDownloadCrcWithHeader + 1, true, false)]
+        [TestCase(StorageChecksumAlgorithm.MD5, Constants.StructuredMessage.MaxDownloadCrcWithHeader + 1, false, true)]
         public virtual async Task DownloadApporpriatelyUsesStructuredMessage(
             StorageChecksumAlgorithm algorithm,
             int? downloadLen,
@@ -2030,7 +2032,8 @@ namespace Azure.Storage.Test.Shared
             [ValueSource(nameof(GetValidationAlgorithms))] StorageChecksumAlgorithm algorithm)
         {
             using var _ = AzureEventSourceListener.CreateConsoleLogger();
-            int dataLen = algorithm.ResolveAuto() switch {
+            int dataLen = algorithm.ResolveAuto() switch
+            {
                 StorageChecksumAlgorithm.StorageCrc64 => 5 * Constants.MB, // >4MB for multisegment
                 _ => Constants.KB,
             };

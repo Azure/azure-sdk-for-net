@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure.Analytics.Synapse.Artifacts;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Analytics.Synapse.Tests;
@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
             private readonly NotebookClient _client;
             public NotebookResource Resource;
 
-            private DisposableNotebook (NotebookClient client, NotebookResource resource)
+            private DisposableNotebook(NotebookClient client, NotebookResource resource)
             {
                 _client = client;
                 Resource = resource;
@@ -34,14 +34,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             public string Name => Resource.Name;
 
-            public static async ValueTask<DisposableNotebook> Create (NotebookClient client, TestRecording recording) =>
-                new DisposableNotebook (client, await CreateResource(client, recording));
+            public static async ValueTask<DisposableNotebook> Create(NotebookClient client, TestRecording recording) =>
+                new DisposableNotebook(client, await CreateResource(client, recording));
 
-            public static async ValueTask<NotebookResource> CreateResource (NotebookClient client, TestRecording recording)
+            public static async ValueTask<NotebookResource> CreateResource(NotebookClient client, TestRecording recording)
             {
                 string name = recording.GenerateId("Notebook", 16);
 
-                Notebook notebook = new Notebook (
+                Notebook notebook = new Notebook(
                     new NotebookMetadata { LanguageInfo = new NotebookLanguageInfo(name: "Python") },
                     notebookFormat: 4,
                     notebookFormatMinor: 2,
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
 
             public async ValueTask DisposeAsync()
             {
-                NotebookDeleteNotebookOperation operation = await _client.StartDeleteNotebookAsync (Name);
+                NotebookDeleteNotebookOperation operation = await _client.StartDeleteNotebookAsync(Name);
                 await operation.WaitForCompletionResponseAsync();
             }
         }
@@ -74,8 +74,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         [RecordedTest]
         public async Task TestGetNotebook()
         {
-            NotebookClient client = CreateClient ();
-            await using DisposableNotebook notebook = await DisposableNotebook.Create (client, this.Recording);
+            NotebookClient client = CreateClient();
+            await using DisposableNotebook notebook = await DisposableNotebook.Create(client, this.Recording);
 
             IList<NotebookResource> notebooks = await client.GetNotebooksByWorkspaceAsync().ToListAsync();
             Assert.GreaterOrEqual(notebooks.Count, 1);
@@ -94,9 +94,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             NotebookClient client = CreateClient();
 
-            NotebookResource resource = await DisposableNotebook.CreateResource (client, this.Recording);
+            NotebookResource resource = await DisposableNotebook.CreateResource(client, this.Recording);
 
-            NotebookDeleteNotebookOperation operation = await client.StartDeleteNotebookAsync (resource.Name);
+            NotebookDeleteNotebookOperation operation = await client.StartDeleteNotebookAsync(resource.Name);
             await operation.WaitAndAssertSuccessfulCompletion();
         }
 
@@ -105,28 +105,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Tests
         {
             NotebookClient client = CreateClient();
 
-            NotebookResource resource = await DisposableNotebook.CreateResource (client, Recording);
+            NotebookResource resource = await DisposableNotebook.CreateResource(client, Recording);
 
             string newNotebookName = Recording.GenerateId("Notebook2", 16);
 
-            NotebookRenameNotebookOperation renameOperation = await client.StartRenameNotebookAsync (resource.Name, new ArtifactRenameRequest () { NewName = newNotebookName } );
+            NotebookRenameNotebookOperation renameOperation = await client.StartRenameNotebookAsync(resource.Name, new ArtifactRenameRequest() { NewName = newNotebookName });
             await renameOperation.WaitForCompletionResponseAsync();
 
-            NotebookResource notebook = await client.GetNotebookAsync (newNotebookName);
-            Assert.AreEqual (newNotebookName, notebook.Name);
+            NotebookResource notebook = await client.GetNotebookAsync(newNotebookName);
+            Assert.AreEqual(newNotebookName, notebook.Name);
 
-            NotebookDeleteNotebookOperation operation = await client.StartDeleteNotebookAsync (newNotebookName);
+            NotebookDeleteNotebookOperation operation = await client.StartDeleteNotebookAsync(newNotebookName);
             await operation.WaitForCompletionResponseAsync();
         }
 
-        [Ignore ("https://github.com/Azure/azure-sdk-for-net/issues/18080 - Notebook summary appears to require Synapse.Spark execution first")]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/18080 - Notebook summary appears to require Synapse.Spark execution first")]
         [RecordedTest]
         public async Task TestGetSummary()
         {
             NotebookClient client = CreateClient();
 
-            await using DisposableNotebook notebook = await DisposableNotebook.Create (client, this.Recording);
-            AsyncPageable<NotebookResource> summary = client.GetNotebookSummaryByWorkSpaceAsync ();
+            await using DisposableNotebook notebook = await DisposableNotebook.Create(client, this.Recording);
+            AsyncPageable<NotebookResource> summary = client.GetNotebookSummaryByWorkSpaceAsync();
             Assert.GreaterOrEqual((await summary.ToListAsync()).Count, 1);
         }
     }

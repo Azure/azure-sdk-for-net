@@ -13,157 +13,293 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    /// <summary>
-    /// A class representing the AppConfigurationStore data model.
-    /// The configuration store along with all resource properties. The Configuration Store will have all information to begin utilizing it.
-    /// </summary>
+    /// <summary> The configuration store along with all resource properties. The Configuration Store will have all information to begin utilizing it. </summary>
     public partial class AppConfigurationStoreData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> The sku of the configuration store. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public AppConfigurationStoreData(AzureLocation location, AppConfigurationSku sku) : base(location)
-        {
-            Argument.AssertNotNull(sku, nameof(sku));
-
-            Sku = sku;
-            PrivateEndpointConnections = new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of a configuration store. </param>
         /// <param name="identity"> The managed identity information, if configured. </param>
         /// <param name="sku"> The sku of the configuration store. </param>
-        /// <param name="provisioningState"> The provisioning state of the configuration store. </param>
-        /// <param name="createdOn"> The creation date of configuration store. </param>
-        /// <param name="endpoint"> The DNS endpoint where the configuration store API will be available. </param>
-        /// <param name="encryption"> The encryption settings of the configuration store. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
-        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
-        /// <param name="softDeleteRetentionInDays"> The amount of time in days that the configuration store will be retained when it is soft deleted. </param>
-        /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
-        /// <param name="dataPlaneProxy"> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </param>
-        /// <param name="createMode"> Indicates whether the configuration store need to be recovered. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationStoreEncryptionProperties encryption, IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, AppConfigurationCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ConfigurationStoreProperties properties, ManagedServiceIdentity identity, AppConfigurationSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
             Sku = sku;
-            ProvisioningState = provisioningState;
-            CreatedOn = createdOn;
-            Endpoint = endpoint;
-            Encryption = encryption;
-            PrivateEndpointConnections = privateEndpointConnections;
-            PublicNetworkAccess = publicNetworkAccess;
-            DisableLocalAuth = disableLocalAuth;
-            SoftDeleteRetentionInDays = softDeleteRetentionInDays;
-            EnablePurgeProtection = enablePurgeProtection;
-            DataPlaneProxy = dataPlaneProxy;
-            CreateMode = createMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppConfigurationStoreData"/> for deserialization. </summary>
-        internal AppConfigurationStoreData()
-        {
-        }
+        /// <summary> The properties of a configuration store. </summary>
+        [WirePath("properties")]
+        internal ConfigurationStoreProperties Properties { get; set; }
 
         /// <summary> The managed identity information, if configured. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> The sku of the configuration store. </summary>
+        [WirePath("sku")]
         internal AppConfigurationSku Sku { get; set; }
-        /// <summary> The SKU name of the configuration store. </summary>
-        [WirePath("sku.name")]
-        public string SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set => Sku = new AppConfigurationSku(value);
-        }
 
         /// <summary> The provisioning state of the configuration store. </summary>
         [WirePath("properties.provisioningState")]
-        public AppConfigurationProvisioningState? ProvisioningState { get; }
+        public AppConfigurationProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The creation date of configuration store. </summary>
         [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
         [WirePath("properties.endpoint")]
-        public string Endpoint { get; }
-        /// <summary> The encryption settings of the configuration store. </summary>
-        internal AppConfigurationStoreEncryptionProperties Encryption { get; set; }
-        /// <summary> Key vault properties. </summary>
-        [WirePath("properties.encryption.keyVaultProperties")]
-        public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
+        public string Endpoint
         {
-            get => Encryption is null ? default : Encryption.KeyVaultProperties;
-            set
+            get
             {
-                if (Encryption is null)
-                    Encryption = new AppConfigurationStoreEncryptionProperties();
-                Encryption.KeyVaultProperties = value;
+                return Properties is null ? default : Properties.Endpoint;
             }
         }
 
         /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
         [WirePath("properties.privateEndpointConnections")]
-        public IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections { get; }
+        public IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
         [WirePath("properties.publicNetworkAccess")]
-        public AppConfigurationPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public AppConfigurationPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> Disables all authentication methods other than AAD authentication. </summary>
         [WirePath("properties.disableLocalAuth")]
-        public bool? DisableLocalAuth { get; set; }
+        public bool? DisableLocalAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableLocalAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                Properties.DisableLocalAuth = value.Value;
+            }
+        }
+
         /// <summary> The amount of time in days that the configuration store will be retained when it is soft deleted. </summary>
         [WirePath("properties.softDeleteRetentionInDays")]
-        public int? SoftDeleteRetentionInDays { get; set; }
+        public int? SoftDeleteRetentionInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftDeleteRetentionInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                Properties.SoftDeleteRetentionInDays = value.Value;
+            }
+        }
+
+        /// <summary> The duration in seconds to retain new key value revisions. Defaults to 604800 (7 days) for Free SKU stores and 2592000 (30 days) for Standard SKU stores and Premium SKU stores. </summary>
+        [WirePath("properties.defaultKeyValueRevisionRetentionPeriodInSeconds")]
+        public long? DefaultKeyValueRevisionRetentionPeriodInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultKeyValueRevisionRetentionPeriodInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                Properties.DefaultKeyValueRevisionRetentionPeriodInSeconds = value.Value;
+            }
+        }
+
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
         [WirePath("properties.enablePurgeProtection")]
-        public bool? EnablePurgeProtection { get; set; }
+        public bool? EnablePurgeProtection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnablePurgeProtection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                Properties.EnablePurgeProtection = value.Value;
+            }
+        }
+
         /// <summary> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </summary>
         [WirePath("properties.dataPlaneProxy")]
-        public AppConfigurationDataPlaneProxyProperties DataPlaneProxy { get; set; }
+        public AppConfigurationDataPlaneProxyProperties DataPlaneProxy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataPlaneProxy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                Properties.DataPlaneProxy = value;
+            }
+        }
+
         /// <summary> Indicates whether the configuration store need to be recovered. </summary>
         [WirePath("properties.createMode")]
-        public AppConfigurationCreateMode? CreateMode { get; set; }
+        public AppConfigurationCreateMode? CreateMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreateMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                Properties.CreateMode = value.Value;
+            }
+        }
+
+        /// <summary> Key vault properties. </summary>
+        [WirePath("properties.encryption.keyVaultProperties")]
+        public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionKeyVaultProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                Properties.EncryptionKeyVaultProperties = value;
+            }
+        }
+
+        /// <summary> Resource ID of a resource enabling telemetry collection. </summary>
+        [WirePath("properties.telemetry.resourceId")]
+        public ResourceIdentifier TelemetryResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TelemetryResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                Properties.TelemetryResourceId = value;
+            }
+        }
+
+        /// <summary> Managed-On-Behalf-Of broker resources. </summary>
+        [WirePath("properties.managedOnBehalfOfConfiguration.moboBrokerResources")]
+        public IReadOnlyList<AppConfigurationMoboBrokerResourceInfo> ManagedOnBehalfOfMoboBrokerResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                return Properties.ManagedOnBehalfOfMoboBrokerResources;
+            }
+        }
+
+        /// <summary> Resource ID of an Azure Front Door profile. </summary>
+        [WirePath("properties.azureFrontDoor.resourceId")]
+        public ResourceIdentifier AzureFrontDoorResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureFrontDoorResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConfigurationStoreProperties();
+                }
+                Properties.AzureFrontDoorResourceId = value;
+            }
+        }
+
+        /// <summary> The SKU name of the configuration store. </summary>
+        [WirePath("sku.name")]
+        public string SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                Sku = new AppConfigurationSku(value);
+            }
+        }
     }
 }

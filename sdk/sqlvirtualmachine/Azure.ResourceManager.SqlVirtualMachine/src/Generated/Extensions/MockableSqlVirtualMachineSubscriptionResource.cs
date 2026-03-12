@@ -6,151 +6,85 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableSqlVirtualMachineSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _sqlVmGroupSqlVmGroupsClientDiagnostics;
-        private SqlVirtualMachineGroupsRestOperations _sqlVmGroupSqlVmGroupsRestClient;
-        private ClientDiagnostics _sqlVmSqlVirtualMachinesClientDiagnostics;
-        private SqlVirtualMachinesRestOperations _sqlVmSqlVirtualMachinesRestClient;
+        private ClientDiagnostics _sqlVirtualMachinesClientDiagnostics;
+        private SqlVirtualMachines _sqlVirtualMachinesRestClient;
+        private ClientDiagnostics _sqlVirtualMachineGroupsClientDiagnostics;
+        private SqlVirtualMachineGroups _sqlVirtualMachineGroupsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSqlVirtualMachineSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSqlVirtualMachineSubscriptionResource for mocking. </summary>
         protected MockableSqlVirtualMachineSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSqlVirtualMachineSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSqlVirtualMachineSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSqlVirtualMachineSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics => _sqlVmGroupSqlVmGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmGroupResource.ResourceType.Namespace, Diagnostics);
-        private SqlVirtualMachineGroupsRestOperations SqlVmGroupSqlVirtualMachineGroupsRestClient => _sqlVmGroupSqlVmGroupsRestClient ??= new SqlVirtualMachineGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlVmGroupResource.ResourceType));
-        private ClientDiagnostics SqlVmSqlVirtualMachinesClientDiagnostics => _sqlVmSqlVirtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine", SqlVmResource.ResourceType.Namespace, Diagnostics);
-        private SqlVirtualMachinesRestOperations SqlVmSqlVirtualMachinesRestClient => _sqlVmSqlVirtualMachinesRestClient ??= new SqlVirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlVmResource.ResourceType));
+        private ClientDiagnostics SqlVirtualMachinesClientDiagnostics => _sqlVirtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private SqlVirtualMachines SqlVirtualMachinesRestClient => _sqlVirtualMachinesRestClient ??= new SqlVirtualMachines(SqlVirtualMachinesClientDiagnostics, Pipeline, Endpoint, "2023-10-01");
 
-        /// <summary>
-        /// Gets all SQL virtual machine groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVirtualMachineGroups_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlVmGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVmGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlVmGroupResource> GetSqlVmGroupsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmGroupSqlVirtualMachineGroupsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlVmGroupSqlVirtualMachineGroupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics, Pipeline, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVmGroups", "value", "nextLink", cancellationToken);
-        }
+        private ClientDiagnostics SqlVirtualMachineGroupsClientDiagnostics => _sqlVirtualMachineGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SqlVirtualMachine.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Gets all SQL virtual machine groups in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVirtualMachineGroups_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlVmGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVmGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlVmGroupResource> GetSqlVmGroups(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmGroupSqlVirtualMachineGroupsRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlVmGroupSqlVirtualMachineGroupsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlVmGroupResource(Client, SqlVmGroupData.DeserializeSqlVmGroupData(e)), SqlVmGroupSqlVirtualMachineGroupsClientDiagnostics, Pipeline, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVmGroups", "value", "nextLink", cancellationToken);
-        }
+        private SqlVirtualMachineGroups SqlVirtualMachineGroupsRestClient => _sqlVirtualMachineGroupsRestClient ??= new SqlVirtualMachineGroups(SqlVirtualMachineGroupsClientDiagnostics, Pipeline, Endpoint, "2023-10-01");
 
         /// <summary>
         /// Gets all SQL virtual machines in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVirtualMachines_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlVirtualMachines_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlVmResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVmResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlVmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlVmResource> GetSqlVmsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmSqlVirtualMachinesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlVmSqlVirtualMachinesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlVmResource(Client, SqlVmData.DeserializeSqlVmData(e)), SqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVms", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetAllAsyncCollectionResultOfT(SqlVirtualMachinesRestClient, Id.SubscriptionId, context), data => new SqlVmResource(Client, data));
         }
 
         /// <summary>
         /// Gets all SQL virtual machines in a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SqlVirtualMachines_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> SqlVirtualMachines_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-02-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SqlVmResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,9 +92,67 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <returns> A collection of <see cref="SqlVmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlVmResource> GetSqlVms(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmSqlVirtualMachinesRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlVmSqlVirtualMachinesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlVmResource(Client, SqlVmData.DeserializeSqlVmData(e)), SqlVmSqlVirtualMachinesClientDiagnostics, Pipeline, "MockableSqlVirtualMachineSubscriptionResource.GetSqlVms", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SqlVmData, SqlVmResource>(new SqlVirtualMachinesGetAllCollectionResultOfT(SqlVirtualMachinesRestClient, Id.SubscriptionId, context), data => new SqlVmResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all SQL virtual machine groups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SqlVirtualMachineGroups_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlVmGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlVmGroupResource> GetSqlVmGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetAllAsyncCollectionResultOfT(SqlVirtualMachineGroupsRestClient, Id.SubscriptionId, context), data => new SqlVmGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all SQL virtual machine groups in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SqlVirtualMachineGroups_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SqlVmGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlVmGroupResource> GetSqlVmGroups(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SqlVmGroupData, SqlVmGroupResource>(new SqlVirtualMachineGroupsGetAllCollectionResultOfT(SqlVirtualMachineGroupsRestClient, Id.SubscriptionId, context), data => new SqlVmGroupResource(Client, data));
         }
     }
 }

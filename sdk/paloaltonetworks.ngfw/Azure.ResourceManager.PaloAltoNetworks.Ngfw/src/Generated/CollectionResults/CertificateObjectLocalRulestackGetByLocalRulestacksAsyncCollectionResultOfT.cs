@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     yield break;
                 }
                 CertificateObjectLocalRulestackResourceListResult result = CertificateObjectLocalRulestackResourceListResult.FromResponse(response);
-                yield return Page<LocalRulestackCertificateObjectData>.FromValues((IReadOnlyList<LocalRulestackCertificateObjectData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<LocalRulestackCertificateObjectData>.FromValues((IReadOnlyList<LocalRulestackCertificateObjectData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

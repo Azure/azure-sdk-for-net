@@ -125,7 +125,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedOne",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -162,7 +163,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedThree",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -199,7 +201,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientA.renamedFive",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -290,7 +293,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedTwo",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -327,7 +331,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedFour",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},
@@ -364,7 +369,8 @@
             "generateProtocolMethod": true,
             "generateConvenienceMethod": true,
             "crossLanguageDefinitionId": "Client.Structure.MultiClient.ClientB.renamedSix",
-            "decorators": []
+            "decorators": [],
+            "namespace": "Client.Structure.MultiClient"
           },
           "parameters": [],
           "response": {},

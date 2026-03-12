@@ -2,6 +2,7 @@ parameters:
   ServiceDirectory: ''
   TestResourcesDirectory: ''
   ArmTemplateParameters: '@{}'
+  AdditionalParameters: '@{}'
   DeleteAfterHours: 8
   Location: ''
   EnvVars: {}
@@ -103,7 +104,8 @@ steps:
             -Location '${{ parameters.Location }}' `
             -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
             @subscriptionConfiguration `
-            -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+            -ArmTemplateParameters ${{ parameters.ArmTemplateParameters }} `
+            -AdditionalParameters ${{ parameters.AdditionalParameters }} `
             -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
             -SelfContainedPostScript $postScriptPath `
             -CI `
@@ -148,7 +150,8 @@ steps:
           -Location '${{ parameters.Location }}' `
           -DeleteAfterHours '${{ parameters.DeleteAfterHours }}' `
           @subscriptionConfiguration `
-          -AdditionalParameters ${{ parameters.ArmTemplateParameters }} `
+          -ArmTemplateParameters ${{ parameters.ArmTemplateParameters }} `
+          -AdditionalParameters ${{ parameters.AdditionalParameters }} `
           -AllowIpRanges ('$(azsdk-corp-net-ip-ranges)' -split ',') `
           -CI `
           -ServicePrincipalAuth `

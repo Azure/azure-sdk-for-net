@@ -1,6 +1,6 @@
 # Release History
 
-## 1.8.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.9.0 (2026-02-27)
+
+### Features Added
+
+- Added `ConfigurationClientSettings` to support creating a `ConfigurationClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
+
+## 1.8.0 (2026-01-27)
+
+### Features Added
+
+- Added new methods, `CheckConfigurationSettings` and `CheckConfigurationSettingsAsync`, which can be used to check settings from the Azure App Configuration store using HEAD requests, returning only headers without the response body. [#54669](https://github.com/Azure/azure-sdk-for-net/pull/54669)
+
+### Other Changes
+
+- Added internal pipeline policy to handle audience error and surface up an improved error message. [#53834](https://github.com/Azure/azure-sdk-for-net/pull/53834)
 
 ## 1.7.0 (2025-11-07)
 

@@ -48,7 +48,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -60,7 +63,18 @@ namespace Azure.ResourceManager.OracleDatabase
         internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -79,7 +93,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +117,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -119,7 +139,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -137,7 +160,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +183,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -169,7 +198,18 @@ namespace Azure.ResourceManager.OracleDatabase
         internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage);
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -189,7 +229,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
             uri.AppendPath("/switchover", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -211,7 +254,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
             uri.AppendPath("/failover", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -233,7 +279,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
             uri.AppendPath("/generateWallet", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -255,7 +304,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
             uri.AppendPath("/restore", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -277,7 +329,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
             uri.AppendPath("/shrink", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -297,7 +352,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
             uri.AppendPath("/changeDisasterRecoveryConfiguration", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -319,7 +377,10 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/autonomousDatabases/", false);
             uri.AppendPath(autonomousdatabasename, true);
             uri.AppendPath("/action", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

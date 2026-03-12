@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     yield break;
                 }
                 InformaticaOrganizationResourceListResult result = InformaticaOrganizationResourceListResult.FromResponse(response);
-                yield return Page<InformaticaOrganizationData>.FromValues((IReadOnlyList<InformaticaOrganizationData>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<InformaticaOrganizationData>.FromValues((IReadOnlyList<InformaticaOrganizationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

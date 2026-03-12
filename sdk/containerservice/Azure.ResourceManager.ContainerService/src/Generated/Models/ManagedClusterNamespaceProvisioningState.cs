@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary>
-    /// The current provisioning state of the namespace.
-    /// Serialized Name: NamespaceProvisioningState
-    /// </summary>
+    /// <summary> The current provisioning state of the namespace. </summary>
     public readonly partial struct ManagedClusterNamespaceProvisioningState : IEquatable<ManagedClusterNamespaceProvisioningState>
     {
         private readonly string _value;
@@ -32,35 +29,17 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary>
-        /// Updating
-        /// Serialized Name: NamespaceProvisioningState.Updating
-        /// </summary>
+        /// <summary> Updating. </summary>
         public static ManagedClusterNamespaceProvisioningState Updating { get; } = new ManagedClusterNamespaceProvisioningState(UpdatingValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: NamespaceProvisioningState.Deleting
-        /// </summary>
+        /// <summary> Deleting. </summary>
         public static ManagedClusterNamespaceProvisioningState Deleting { get; } = new ManagedClusterNamespaceProvisioningState(DeletingValue);
-        /// <summary>
-        /// Creating
-        /// Serialized Name: NamespaceProvisioningState.Creating
-        /// </summary>
+        /// <summary> Creating. </summary>
         public static ManagedClusterNamespaceProvisioningState Creating { get; } = new ManagedClusterNamespaceProvisioningState(CreatingValue);
-        /// <summary>
-        /// Succeeded
-        /// Serialized Name: NamespaceProvisioningState.Succeeded
-        /// </summary>
+        /// <summary> Succeeded. </summary>
         public static ManagedClusterNamespaceProvisioningState Succeeded { get; } = new ManagedClusterNamespaceProvisioningState(SucceededValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: NamespaceProvisioningState.Failed
-        /// </summary>
+        /// <summary> Failed. </summary>
         public static ManagedClusterNamespaceProvisioningState Failed { get; } = new ManagedClusterNamespaceProvisioningState(FailedValue);
-        /// <summary>
-        /// Canceled
-        /// Serialized Name: NamespaceProvisioningState.Canceled
-        /// </summary>
+        /// <summary> Canceled. </summary>
         public static ManagedClusterNamespaceProvisioningState Canceled { get; } = new ManagedClusterNamespaceProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ManagedClusterNamespaceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterNamespaceProvisioningState left, ManagedClusterNamespaceProvisioningState right) => left.Equals(right);

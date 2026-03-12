@@ -2,25 +2,24 @@
 // Licensed under the MIT License.
 extern alias BaseShares;
 extern alias DMShare;
-
 using System;
-using System.Threading.Tasks;
-using Azure.Storage.Test.Shared;
-using Azure.Storage.DataMovement.Tests;
-using BaseShares::Azure.Storage.Files.Shares;
 using System.IO;
+using System.Security.AccessControl;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-using BaseShares::Azure.Storage.Files.Shares.Models;
+using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Test;
-using System.Threading;
+using Azure.Storage.Test.Shared;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using BaseShares::Azure.Storage.Files.Shares.Specialized;
 using BaseShares::Azure.Storage.Sas;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using DMShare::Azure.Storage.DataMovement.Files.Shares;
-using System.Text.RegularExpressions;
-using System.Security.AccessControl;
+using NUnit.Framework;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -69,11 +68,25 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         protected override async Task<bool> DestinationExistsAsync(ShareFileClient objectClient)
             => await objectClient.ExistsAsync();
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
             => await SourceClientBuilder.GetTestShareSasAsync(service, containerName);
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceSasDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
+            => await SourceClientBuilder.GetTestShareAzureSasCredentialAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestShareSasAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationSasDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetTestShareAzureSasCredentialAsync(service, containerName);
 
         private async Task<ShareFileClient> CreateFileClientWithShortPermissionsAsync(
             ShareClient container,
@@ -107,7 +120,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                             ContentDisposition = _defaultContentDisposition,
                             CacheControl = _defaultCacheControl
                         },
-                        Metadata =  _defaultMetadata,
+                        Metadata = _defaultMetadata,
                         SmbProperties = new FileSmbProperties()
                         {
                             FileAttributes = _defaultFileAttributes,
@@ -254,6 +267,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareClientOptions options = null,
             Stream contents = null,
             TransferPropertiesTestType propertiesTestType = default,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => CreateFileClientWithPermissionKeyAsync(
                 container,
@@ -277,6 +291,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string objectName = null,
             ShareClientOptions options = null,
             Stream contents = null,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => CreateFileClientWithPermissionKeyAsync(
                 container,
@@ -1667,7 +1682,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     ContentDisposition = _defaultContentDisposition,
                     CacheControl = _defaultCacheControl
                 },
-                Metadata =  _defaultMetadata,
+                Metadata = _defaultMetadata,
                 SmbProperties = new FileSmbProperties()
                 {
                     FileAttributes = NtfsFileAttributes.ReadOnly | NtfsFileAttributes.Archive,

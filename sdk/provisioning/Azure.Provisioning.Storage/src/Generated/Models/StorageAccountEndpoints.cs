@@ -89,6 +89,15 @@ public partial class StorageAccountEndpoints : ProvisionableConstruct
     private StorageAccountInternetEndpoints? _internetEndpoints;
 
     /// <summary>
+    /// Gets the IPv6 storage endpoints.
+    /// </summary>
+    public StorageAccountIPv6Endpoints IPv6Endpoints 
+    {
+        get { Initialize(); return _iPv6Endpoints!; }
+    }
+    private StorageAccountIPv6Endpoints? _iPv6Endpoints;
+
+    /// <summary>
     /// Creates a new StorageAccountEndpoints.
     /// </summary>
     public StorageAccountEndpoints()
@@ -109,5 +118,6 @@ public partial class StorageAccountEndpoints : ProvisionableConstruct
         _dfsUri = DefineProperty<Uri>("DfsUri", ["dfs"], isOutput: true);
         _microsoftEndpoints = DefineModelProperty<StorageAccountMicrosoftEndpoints>("MicrosoftEndpoints", ["microsoftEndpoints"], isOutput: true);
         _internetEndpoints = DefineModelProperty<StorageAccountInternetEndpoints>("InternetEndpoints", ["internetEndpoints"], isOutput: true);
+        _iPv6Endpoints = DefineModelProperty<StorageAccountIPv6Endpoints>("IPv6Endpoints", ["ipv6Endpoints"], isOutput: true);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeOrder;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     public readonly partial struct EdgeOrderProductChargingType : IEquatable<EdgeOrderProductChargingType>
     {
         private readonly string _value;
+        /// <summary> Per order charging type. </summary>
+        private const string PerOrderValue = "PerOrder";
+        /// <summary> Per device charging type. </summary>
+        private const string PerDeviceValue = "PerDevice";
 
         /// <summary> Initializes a new instance of <see cref="EdgeOrderProductChargingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeOrderProductChargingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PerOrderValue = "PerOrder";
-        private const string PerDeviceValue = "PerDevice";
+            _value = value;
+        }
 
         /// <summary> Per order charging type. </summary>
         public static EdgeOrderProductChargingType PerOrder { get; } = new EdgeOrderProductChargingType(PerOrderValue);
+
         /// <summary> Per device charging type. </summary>
         public static EdgeOrderProductChargingType PerDevice { get; } = new EdgeOrderProductChargingType(PerDeviceValue);
+
         /// <summary> Determines if two <see cref="EdgeOrderProductChargingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeOrderProductChargingType left, EdgeOrderProductChargingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeOrderProductChargingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeOrderProductChargingType left, EdgeOrderProductChargingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeOrderProductChargingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeOrderProductChargingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeOrderProductChargingType(string value) => new EdgeOrderProductChargingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeOrderProductChargingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeOrderProductChargingType?(string value) => value == null ? null : new EdgeOrderProductChargingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeOrderProductChargingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeOrderProductChargingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

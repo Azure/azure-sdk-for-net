@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         [AsyncOnly]
         public async Task NetworkFabrics()
         {
-           NetworkFabricCollection collection = ResourceGroupResource.GetNetworkFabrics();
+            NetworkFabricCollection collection = ResourceGroupResource.GetNetworkFabrics();
 
             TestContext.Out.WriteLine($"Entered into the Network Fabric tests....");
 

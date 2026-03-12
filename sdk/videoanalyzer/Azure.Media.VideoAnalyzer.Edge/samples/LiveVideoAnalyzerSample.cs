@@ -3,16 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Media.VideoAnalyzer.Edge.Models;
 using Microsoft.Azure.Devices;
-using NUnit.Framework;
 using Newtonsoft.Json.Linq;
-using System.Threading.Tasks;
-using System.IO;
-using System.Text;
-using Azure.Core;
-using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Samples
 {
@@ -156,7 +156,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
 
         private LivePipeline BuildLivePipeline(string topologyName)
         {
-        #region Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
+            #region Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
             var livePipelineProps = new LivePipelineProperties
             {
                 Description = "Sample description",
@@ -169,12 +169,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Samples
             {
                 Properties = livePipelineProps
             };
-        #endregion Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
+            #endregion Snippet:Azure_VideoAnalyzerSamples_BuildLivePipeline
         }
 
         private PipelineTopology BuildPipelineTopology()
         {
-        #region Snippet:Azure_VideoAnalyzerSamples_BuildPipelineTopology
+            #region Snippet:Azure_VideoAnalyzerSamples_BuildPipelineTopology
             var pipelineTopologyProps = new PipelineTopologyProperties
             {
                 Description = "Continuous video recording to a Video Analyzer video",

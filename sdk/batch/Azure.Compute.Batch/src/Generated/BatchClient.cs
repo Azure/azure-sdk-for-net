@@ -6718,19 +6718,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetTaskFile(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFile");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
                 Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
                 Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -6774,19 +6774,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetTaskFileAsync(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFile");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
                 Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
                 Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -6882,19 +6882,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetTaskFilePropertiesInternal(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFilePropertiesInternal");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -6928,19 +6928,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetTaskFilePropertiesInternalAsync(string jobId, string taskId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetTaskFilePropertiesInternal");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 using HttpMessage message = CreateGetTaskFilePropertiesInternalRequest(jobId, taskId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -7172,8 +7172,8 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// [Protocol Method] You can add a user Account to a Compute Node only when it is in the idle or
-        /// running state.
+        /// [Protocol Method] You can add a user Account to a Compute Node only when it is in the idle or 
+        /// running state. Before you can remotely login to a Compute Node you must configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -7215,8 +7215,8 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// [Protocol Method] You can add a user Account to a Compute Node only when it is in the idle or
-        /// running state.
+        /// [Protocol Method] You can add a user Account to a Compute Node only when it is in the idle or 
+        /// running state. Before you can remotely login to a Compute Node you must configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -7258,8 +7258,8 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// You can add a user Account to a Compute Node only when it is in the idle or
-        /// running state.
+        /// You can add a user Account to a Compute Node only when it is in the idle or 
+        /// running state. Before you can remotely login to a Compute Node you must configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the machine on which you want to create a user Account. </param>
@@ -7284,8 +7284,8 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// You can add a user Account to a Compute Node only when it is in the idle or
-        /// running state.
+        /// You can add a user Account to a Compute Node only when it is in the idle or 
+        /// running state. Before you can remotely login to a Compute Node you must configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the machine on which you want to create a user Account. </param>
@@ -7311,7 +7311,8 @@ namespace Azure.Compute.Batch
 
         /// <summary>
         /// [Protocol Method] You can delete a user Account to a Compute Node only when it is in the idle or
-        /// running state.
+        /// running state. Before you can remotely login to a Compute Node you must configure 
+        /// access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -7354,7 +7355,8 @@ namespace Azure.Compute.Batch
 
         /// <summary>
         /// [Protocol Method] You can delete a user Account to a Compute Node only when it is in the idle or
-        /// running state.
+        /// running state. Before you can remotely login to a Compute Node you must configure 
+        /// access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -7397,7 +7399,8 @@ namespace Azure.Compute.Batch
 
         /// <summary>
         /// You can delete a user Account to a Compute Node only when it is in the idle or
-        /// running state.
+        /// running state. Before you can remotely login to a Compute Node you must configure 
+        /// access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the machine on which you want to delete a user Account. </param>
@@ -7423,7 +7426,8 @@ namespace Azure.Compute.Batch
 
         /// <summary>
         /// You can delete a user Account to a Compute Node only when it is in the idle or
-        /// running state.
+        /// running state. Before you can remotely login to a Compute Node you must configure 
+        /// access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the machine on which you want to delete a user Account. </param>
@@ -8426,8 +8430,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// [Protocol Method] Before you can remotely login to a Compute Node using the remote login settings, 
-        /// you must create a user Account on the Compute Node.
+        /// [Protocol Method] Before you can remotely login to a Compute Node using the remote login settings, you must create a user Account on the Compute Node and configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -8467,8 +8470,7 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary>
-        /// [Protocol Method] Before you can remotely login to a Compute Node using the remote login settings, 
-        /// you must create a user Account on the Compute Node.
+        /// [Protocol Method] Before you can remotely login to a Compute Node using the remote login settings, you must create a user Account on the Compute Node and configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -8507,10 +8509,7 @@ namespace Azure.Compute.Batch
             }
         }
 
-        /// <summary>
-        /// Before you can remotely login to a Compute Node using the remote login settings, 
-        /// you must create a user Account on the Compute Node.
-        /// </summary>
+        /// <summary> Before you can remotely login to a Compute Node using the remote login settings, you must create a user Account on the Compute Node and configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration. </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node for which to obtain the remote login settings. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -8532,10 +8531,7 @@ namespace Azure.Compute.Batch
             return Response.FromValue((BatchNodeRemoteLoginSettings)result, result);
         }
 
-        /// <summary>
-        /// Before you can remotely login to a Compute Node using the remote login settings, 
-        /// you must create a user Account on the Compute Node.
-        /// </summary>
+        /// <summary> Before you can remotely login to a Compute Node using the remote login settings, you must create a user Account on the Compute Node and configure access ports for SSH and RDP. For more information, see https://learn.microsoft.com/azure/batch/pool-endpoint-configuration. </summary>
         /// <param name="poolId"> The ID of the Pool that contains the Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node for which to obtain the remote login settings. </param>
         /// <param name="timeOutInSeconds"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
@@ -9348,19 +9344,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetNodeFile(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFile");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
                 Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
                 Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -9404,19 +9400,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetNodeFileAsync(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, string ocpRange, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFile");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
                 Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
                 Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
@@ -9512,19 +9508,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetNodeFilePropertiesInternal(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFilePropertiesInternal");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -9558,19 +9554,19 @@ namespace Azure.Compute.Batch
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetNodeFilePropertiesInternalAsync(string poolId, string nodeId, string filePath, TimeSpan? timeOutInSeconds, DateTimeOffset? ocpDate, RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions?.IfMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-Match header for this operation.");
-            }
-            if (requestConditions?.IfNoneMatch != null)
-            {
-                throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
-            }
-
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BatchClient.GetNodeFilePropertiesInternal");
             scope.Start();
             try
             {
+                if (requestConditions?.IfMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-Match header for this operation.");
+                }
+                if (requestConditions?.IfNoneMatch != null)
+                {
+                    throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
+                }
+
                 using HttpMessage message = CreateGetNodeFilePropertiesInternalRequest(poolId, nodeId, filePath, timeOutInSeconds, ocpDate, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }

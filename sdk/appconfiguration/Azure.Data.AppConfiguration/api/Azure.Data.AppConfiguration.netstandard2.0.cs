@@ -26,6 +26,7 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClient
     {
         protected ConfigurationClient() { }
+        public ConfigurationClient(Azure.Data.AppConfiguration.ConfigurationClientSettings settings) { }
         public ConfigurationClient(string connectionString) { }
         public ConfigurationClient(string connectionString, Azure.Data.AppConfiguration.ConfigurationClientOptions options) { }
         public ConfigurationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
@@ -39,6 +40,8 @@ namespace Azure.Data.AppConfiguration
         public virtual Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot> ArchiveSnapshot(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> ArchiveSnapshotAsync(string snapshotName, Azure.MatchConditions matchConditions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AppConfiguration.ConfigurationSnapshot>> ArchiveSnapshotAsync(string snapshotName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> CheckConfigurationSettings(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> CheckConfigurationSettingsAsync(Azure.Data.AppConfiguration.SettingSelector selector, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Data.AppConfiguration.CreateSnapshotOperation CreateSnapshot(Azure.WaitUntil wait, string snapshotName, Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Data.AppConfiguration.CreateSnapshotOperation> CreateSnapshotAsync(Azure.WaitUntil wait, string snapshotName, Azure.Data.AppConfiguration.ConfigurationSnapshot snapshot, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteConfigurationSetting(Azure.Data.AppConfiguration.ConfigurationSetting setting, bool onlyIfUnchanged = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -101,6 +104,13 @@ namespace Azure.Data.AppConfiguration
             V2023_10_01 = 1,
             V2023_11_01 = 2,
         }
+    }
+    public partial class ConfigurationClientSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ConfigurationClientSettings() { }
+        public System.Uri? Endpoint { get { throw null; } set { } }
+        public Azure.Data.AppConfiguration.ConfigurationClientOptions? Options { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public static partial class ConfigurationModelFactory
     {
