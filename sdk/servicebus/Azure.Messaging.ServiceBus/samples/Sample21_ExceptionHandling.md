@@ -89,6 +89,11 @@ string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 
 await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+
+// Send a message so the queue has something to receive.
+ServiceBusSender sender = client.CreateSender(queueName);
+await sender.SendMessageAsync(new ServiceBusMessage("Hello"));
+
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();

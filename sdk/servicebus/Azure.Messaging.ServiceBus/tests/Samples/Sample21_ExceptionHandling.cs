@@ -111,6 +111,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 string queueName = scope.QueueName;
                 await using var client = CreateClient();
 #endif
+
+                // Send a message so the queue has something to receive.
+                ServiceBusSender sender = client.CreateSender(queueName);
+                await sender.SendMessageAsync(new ServiceBusMessage("Hello"));
+
                 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
                 ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
