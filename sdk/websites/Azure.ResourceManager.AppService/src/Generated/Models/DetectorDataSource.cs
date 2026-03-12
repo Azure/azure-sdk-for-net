@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Class representing data source used by the detectors. </summary>
+    /// <summary>
+    /// Class representing data source used by the detectors
+    /// Serialized Name: DataSource
+    /// </summary>
     public partial class DetectorDataSource
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DetectorDataSource"/>. </summary>
-        /// <param name="instructions"> Instructions if any for the data source. </param>
-        /// <param name="dataSourceUri"> Datasource Uri Links. </param>
+        /// <param name="instructions">
+        /// Instructions if any for the data source
+        /// Serialized Name: DataSource.instructions
+        /// </param>
+        /// <param name="dataSourceUri">
+        /// Datasource Uri Links
+        /// Serialized Name: DataSource.dataSourceUri
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DetectorDataSource(IList<string> instructions, IList<AppServiceNameValuePair> dataSourceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,10 +72,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Instructions if any for the data source. </summary>
+        /// <summary>
+        /// Instructions if any for the data source
+        /// Serialized Name: DataSource.instructions
+        /// </summary>
         [WirePath("instructions")]
         public IList<string> Instructions { get; }
-        /// <summary> Datasource Uri Links. </summary>
+        /// <summary>
+        /// Datasource Uri Links
+        /// Serialized Name: DataSource.dataSourceUri
+        /// </summary>
         [WirePath("dataSourceUri")]
         public IList<AppServiceNameValuePair> DataSourceUri { get; }
     }

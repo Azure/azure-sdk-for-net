@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The CertificateOrderContact. </summary>
+    /// <summary>
+    /// The CertificateOrderContact.
+    /// Serialized Name: CertificateOrderContact
+    /// </summary>
     public partial class CertificateOrderContact
     {
         /// <summary>
@@ -51,10 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CertificateOrderContact"/>. </summary>
-        /// <param name="email"></param>
-        /// <param name="nameFirst"></param>
-        /// <param name="nameLast"></param>
-        /// <param name="phone"></param>
+        /// <param name="email"> Serialized Name: CertificateOrderContact.email. </param>
+        /// <param name="nameFirst"> Serialized Name: CertificateOrderContact.nameFirst. </param>
+        /// <param name="nameLast"> Serialized Name: CertificateOrderContact.nameLast. </param>
+        /// <param name="phone"> Serialized Name: CertificateOrderContact.phone. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CertificateOrderContact(string email, string nameFirst, string nameLast, string phone, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +68,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the email. </summary>
+        /// <summary> Serialized Name: CertificateOrderContact.email. </summary>
         [WirePath("email")]
         public string Email { get; }
-        /// <summary> Gets the name first. </summary>
+        /// <summary> Serialized Name: CertificateOrderContact.nameFirst. </summary>
         [WirePath("nameFirst")]
         public string NameFirst { get; }
-        /// <summary> Gets the name last. </summary>
+        /// <summary> Serialized Name: CertificateOrderContact.nameLast. </summary>
         [WirePath("nameLast")]
         public string NameLast { get; }
-        /// <summary> Gets the phone. </summary>
+        /// <summary> Serialized Name: CertificateOrderContact.phone. </summary>
         [WirePath("phone")]
         public string Phone { get; }
     }

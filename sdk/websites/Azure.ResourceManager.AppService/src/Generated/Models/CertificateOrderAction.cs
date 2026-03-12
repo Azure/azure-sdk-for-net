@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Certificate order action. </summary>
+    /// <summary>
+    /// Certificate order action.
+    /// Serialized Name: CertificateOrderAction
+    /// </summary>
     public partial class CertificateOrderAction : ResourceData
     {
         /// <summary>
@@ -57,8 +60,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="actionType"> Action type. </param>
-        /// <param name="createdOn"> Time at which the certificate action was performed. </param>
+        /// <param name="actionType">
+        /// Action type.
+        /// Serialized Name: CertificateOrderAction.actionType
+        /// </param>
+        /// <param name="createdOn">
+        /// Time at which the certificate action was performed.
+        /// Serialized Name: CertificateOrderAction.createdAt
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CertificateOrderAction(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateOrderActionType? actionType, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -67,10 +76,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Action type. </summary>
+        /// <summary>
+        /// Action type.
+        /// Serialized Name: CertificateOrderAction.actionType
+        /// </summary>
         [WirePath("actionType")]
         public CertificateOrderActionType? ActionType { get; }
-        /// <summary> Time at which the certificate action was performed. </summary>
+        /// <summary>
+        /// Time at which the certificate action was performed.
+        /// Serialized Name: CertificateOrderAction.createdAt
+        /// </summary>
         [WirePath("createdAt")]
         public DateTimeOffset? CreatedOn { get; }
     }

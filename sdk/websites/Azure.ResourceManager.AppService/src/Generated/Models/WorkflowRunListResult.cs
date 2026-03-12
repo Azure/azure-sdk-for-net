@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The list of workflow runs. </summary>
+    /// <summary>
+    /// The list of workflow runs.
+    /// Serialized Name: WorkflowRunListResult
+    /// </summary>
     internal partial class WorkflowRunListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunListResult"/>. </summary>
-        /// <param name="value"> A list of workflow runs. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of workflow runs.
+        /// Serialized Name: WorkflowRunListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: WorkflowRunListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowRunListResult(IReadOnlyList<WorkflowRunData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of workflow runs. </summary>
+        /// <summary>
+        /// A list of workflow runs.
+        /// Serialized Name: WorkflowRunListResult.value
+        /// </summary>
         public IReadOnlyList<WorkflowRunData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: WorkflowRunListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Information regarding availability of a resource name for DNL apps with regionalized default hostnames. </summary>
+    /// <summary>
+    /// Information regarding availability of a resource name for DNL apps with regionalized default hostnames.
+    /// Serialized Name: DnlResourceNameAvailability
+    /// </summary>
     public partial class DnlResourceNameAvailabilityResult
     {
         /// <summary>
@@ -51,10 +54,19 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnlResourceNameAvailabilityResult"/>. </summary>
-        /// <param name="hostName"></param>
-        /// <param name="nameAvailable"> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </param>
-        /// <param name="reason"> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </param>
-        /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </param>
+        /// <param name="hostName"> Serialized Name: DnlResourceNameAvailability.hostName. </param>
+        /// <param name="nameAvailable">
+        /// &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both.
+        /// Serialized Name: DnlResourceNameAvailability.nameAvailable
+        /// </param>
+        /// <param name="reason">
+        /// &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable.
+        /// Serialized Name: DnlResourceNameAvailability.reason
+        /// </param>
+        /// <param name="message">
+        /// If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name.
+        /// Serialized Name: DnlResourceNameAvailability.message
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnlResourceNameAvailabilityResult(string hostName, bool? nameAvailable, AppServiceNameUnavailableReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +77,25 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the host name. </summary>
+        /// <summary> Serialized Name: DnlResourceNameAvailability.hostName. </summary>
         [WirePath("hostName")]
         public string HostName { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both.
+        /// Serialized Name: DnlResourceNameAvailability.nameAvailable
+        /// </summary>
         [WirePath("nameAvailable")]
         public bool? NameAvailable { get; }
-        /// <summary> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </summary>
+        /// <summary>
+        /// &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable.
+        /// Serialized Name: DnlResourceNameAvailability.reason
+        /// </summary>
         [WirePath("reason")]
         public AppServiceNameUnavailableReason? Reason { get; }
-        /// <summary> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </summary>
+        /// <summary>
+        /// If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name.
+        /// Serialized Name: DnlResourceNameAvailability.message
+        /// </summary>
         [WirePath("message")]
         public string Message { get; }
     }

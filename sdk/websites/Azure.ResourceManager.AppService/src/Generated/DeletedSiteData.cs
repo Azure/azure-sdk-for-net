@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the DeletedSite data model.
     /// A deleted app.
+    /// Serialized Name: DeletedSite
     /// </summary>
     public partial class DeletedSiteData : ResourceData
     {
@@ -60,15 +61,42 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="deletedSiteId"> Numeric id for the deleted site. </param>
-        /// <param name="deletedTimestamp"> Time in UTC when the app was deleted. </param>
-        /// <param name="subscription"> Subscription containing the deleted site. </param>
-        /// <param name="resourceGroup"> ResourceGroup that contained the deleted site. </param>
-        /// <param name="deletedSiteName"> Name of the deleted site. </param>
-        /// <param name="slot"> Slot of the deleted site. </param>
-        /// <param name="kindPropertiesKind"> Kind of site that was deleted. </param>
-        /// <param name="geoRegionName"> Geo Region of the deleted site. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="deletedSiteId">
+        /// Numeric id for the deleted site
+        /// Serialized Name: DeletedSite.properties.deletedSiteId
+        /// </param>
+        /// <param name="deletedTimestamp">
+        /// Time in UTC when the app was deleted.
+        /// Serialized Name: DeletedSite.properties.deletedTimestamp
+        /// </param>
+        /// <param name="subscription">
+        /// Subscription containing the deleted site
+        /// Serialized Name: DeletedSite.properties.subscription
+        /// </param>
+        /// <param name="resourceGroup">
+        /// ResourceGroup that contained the deleted site
+        /// Serialized Name: DeletedSite.properties.resourceGroup
+        /// </param>
+        /// <param name="deletedSiteName">
+        /// Name of the deleted site
+        /// Serialized Name: DeletedSite.properties.deletedSiteName
+        /// </param>
+        /// <param name="slot">
+        /// Slot of the deleted site
+        /// Serialized Name: DeletedSite.properties.slot
+        /// </param>
+        /// <param name="kindPropertiesKind">
+        /// Kind of site that was deleted
+        /// Serialized Name: DeletedSite.properties.kind
+        /// </param>
+        /// <param name="geoRegionName">
+        /// Geo Region of the deleted site
+        /// Serialized Name: DeletedSite.properties.geoRegionName
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -84,31 +112,58 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Numeric id for the deleted site. </summary>
+        /// <summary>
+        /// Numeric id for the deleted site
+        /// Serialized Name: DeletedSite.properties.deletedSiteId
+        /// </summary>
         [WirePath("properties.deletedSiteId")]
         public int? DeletedSiteId { get; }
-        /// <summary> Time in UTC when the app was deleted. </summary>
+        /// <summary>
+        /// Time in UTC when the app was deleted.
+        /// Serialized Name: DeletedSite.properties.deletedTimestamp
+        /// </summary>
         [WirePath("properties.deletedTimestamp")]
         public string DeletedTimestamp { get; }
-        /// <summary> Subscription containing the deleted site. </summary>
+        /// <summary>
+        /// Subscription containing the deleted site
+        /// Serialized Name: DeletedSite.properties.subscription
+        /// </summary>
         [WirePath("properties.subscription")]
         public string Subscription { get; }
-        /// <summary> ResourceGroup that contained the deleted site. </summary>
+        /// <summary>
+        /// ResourceGroup that contained the deleted site
+        /// Serialized Name: DeletedSite.properties.resourceGroup
+        /// </summary>
         [WirePath("properties.resourceGroup")]
         public string ResourceGroup { get; }
-        /// <summary> Name of the deleted site. </summary>
+        /// <summary>
+        /// Name of the deleted site
+        /// Serialized Name: DeletedSite.properties.deletedSiteName
+        /// </summary>
         [WirePath("properties.deletedSiteName")]
         public string DeletedSiteName { get; }
-        /// <summary> Slot of the deleted site. </summary>
+        /// <summary>
+        /// Slot of the deleted site
+        /// Serialized Name: DeletedSite.properties.slot
+        /// </summary>
         [WirePath("properties.slot")]
         public string Slot { get; }
-        /// <summary> Kind of site that was deleted. </summary>
+        /// <summary>
+        /// Kind of site that was deleted
+        /// Serialized Name: DeletedSite.properties.kind
+        /// </summary>
         [WirePath("properties.kind")]
         public string KindPropertiesKind { get; }
-        /// <summary> Geo Region of the deleted site. </summary>
+        /// <summary>
+        /// Geo Region of the deleted site
+        /// Serialized Name: DeletedSite.properties.geoRegionName
+        /// </summary>
         [WirePath("properties.geoRegionName")]
         public string GeoRegionName { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

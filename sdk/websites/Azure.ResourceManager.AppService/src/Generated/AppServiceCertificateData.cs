@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the AppServiceCertificate data model.
     /// Key Vault container ARM resource for a certificate that is purchased through Azure.
+    /// Serialized Name: AppServiceCertificateResource
     /// </summary>
     public partial class AppServiceCertificateData : TrackedResourceData
     {
@@ -64,10 +65,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="keyVaultId"> Key Vault resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
-        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="keyVaultId">
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificateResource.properties.keyVaultId
+        /// </param>
+        /// <param name="keyVaultSecretName">
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificateResource.properties.keyVaultSecretName
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificateResource.properties.provisioningState
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
+        /// Serialized Name: Resource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -83,16 +96,28 @@ namespace Azure.ResourceManager.AppService
         {
         }
 
-        /// <summary> Key Vault resource Id. </summary>
+        /// <summary>
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificateResource.properties.keyVaultId
+        /// </summary>
         [WirePath("properties.keyVaultId")]
         public ResourceIdentifier KeyVaultId { get; set; }
-        /// <summary> Key Vault secret name. </summary>
+        /// <summary>
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificateResource.properties.keyVaultSecretName
+        /// </summary>
         [WirePath("properties.keyVaultSecretName")]
         public string KeyVaultSecretName { get; set; }
-        /// <summary> Status of the Key Vault secret. </summary>
+        /// <summary>
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificateResource.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public KeyVaultSecretStatus? ProvisioningState { get; }
-        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
+        /// <summary>
+        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
+        /// Serialized Name: Resource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

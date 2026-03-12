@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Describes main public IP address and any extra virtual IPs. </summary>
+    /// <summary>
+    /// Describes main public IP address and any extra virtual IPs.
+    /// Serialized Name: AddressResponse
+    /// </summary>
     public partial class AppServiceEnvironmentAddressResult : ResourceData
     {
         /// <summary>
@@ -60,11 +63,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="serviceIPAddress"> Main public virtual IP. </param>
-        /// <param name="internalIPAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
-        /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
-        /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="serviceIPAddress">
+        /// Main public virtual IP.
+        /// Serialized Name: AddressResponse.properties.serviceIpAddress
+        /// </param>
+        /// <param name="internalIPAddress">
+        /// Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode.
+        /// Serialized Name: AddressResponse.properties.internalIpAddress
+        /// </param>
+        /// <param name="outboundIPAddresses">
+        /// IP addresses appearing on outbound connections.
+        /// Serialized Name: AddressResponse.properties.outboundIpAddresses
+        /// </param>
+        /// <param name="virtualIPMappings">
+        /// Additional virtual IPs.
+        /// Serialized Name: AddressResponse.properties.vipMappings
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -76,19 +94,34 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Main public virtual IP. </summary>
+        /// <summary>
+        /// Main public virtual IP.
+        /// Serialized Name: AddressResponse.properties.serviceIpAddress
+        /// </summary>
         [WirePath("properties.serviceIpAddress")]
         public IPAddress ServiceIPAddress { get; set; }
-        /// <summary> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </summary>
+        /// <summary>
+        /// Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode.
+        /// Serialized Name: AddressResponse.properties.internalIpAddress
+        /// </summary>
         [WirePath("properties.internalIpAddress")]
         public IPAddress InternalIPAddress { get; set; }
-        /// <summary> IP addresses appearing on outbound connections. </summary>
+        /// <summary>
+        /// IP addresses appearing on outbound connections.
+        /// Serialized Name: AddressResponse.properties.outboundIpAddresses
+        /// </summary>
         [WirePath("properties.outboundIpAddresses")]
         public IList<IPAddress> OutboundIPAddresses { get; }
-        /// <summary> Additional virtual IPs. </summary>
+        /// <summary>
+        /// Additional virtual IPs.
+        /// Serialized Name: AddressResponse.properties.vipMappings
+        /// </summary>
         [WirePath("properties.vipMappings")]
         public IList<VirtualIPMapping> VirtualIPMappings { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

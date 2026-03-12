@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> SSL certificate details. </summary>
+    /// <summary>
+    /// SSL certificate details.
+    /// Serialized Name: CertificateDetails
+    /// </summary>
     public partial class AppServiceCertificateDetails
     {
         /// <summary>
@@ -51,15 +54,42 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceCertificateDetails"/>. </summary>
-        /// <param name="version"> Certificate Version. </param>
-        /// <param name="serialNumber"> Certificate Serial Number. </param>
-        /// <param name="thumbprintString"> Certificate Thumbprint. </param>
-        /// <param name="subject"> Certificate Subject. </param>
-        /// <param name="notBefore"> Date Certificate is valid from. </param>
-        /// <param name="notAfter"> Date Certificate is valid to. </param>
-        /// <param name="signatureAlgorithm"> Certificate Signature algorithm. </param>
-        /// <param name="issuer"> Certificate Issuer. </param>
-        /// <param name="rawData"> Raw certificate data. </param>
+        /// <param name="version">
+        /// Certificate Version.
+        /// Serialized Name: CertificateDetails.version
+        /// </param>
+        /// <param name="serialNumber">
+        /// Certificate Serial Number.
+        /// Serialized Name: CertificateDetails.serialNumber
+        /// </param>
+        /// <param name="thumbprintString">
+        /// Certificate Thumbprint.
+        /// Serialized Name: CertificateDetails.thumbprint
+        /// </param>
+        /// <param name="subject">
+        /// Certificate Subject.
+        /// Serialized Name: CertificateDetails.subject
+        /// </param>
+        /// <param name="notBefore">
+        /// Date Certificate is valid from.
+        /// Serialized Name: CertificateDetails.notBefore
+        /// </param>
+        /// <param name="notAfter">
+        /// Date Certificate is valid to.
+        /// Serialized Name: CertificateDetails.notAfter
+        /// </param>
+        /// <param name="signatureAlgorithm">
+        /// Certificate Signature algorithm.
+        /// Serialized Name: CertificateDetails.signatureAlgorithm
+        /// </param>
+        /// <param name="issuer">
+        /// Certificate Issuer.
+        /// Serialized Name: CertificateDetails.issuer
+        /// </param>
+        /// <param name="rawData">
+        /// Raw certificate data.
+        /// Serialized Name: CertificateDetails.rawData
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceCertificateDetails(int? version, string serialNumber, string thumbprintString, string subject, DateTimeOffset? notBefore, DateTimeOffset? notAfter, string signatureAlgorithm, string issuer, string rawData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,31 +105,58 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Certificate Version. </summary>
+        /// <summary>
+        /// Certificate Version.
+        /// Serialized Name: CertificateDetails.version
+        /// </summary>
         [WirePath("version")]
         public int? Version { get; }
-        /// <summary> Certificate Serial Number. </summary>
+        /// <summary>
+        /// Certificate Serial Number.
+        /// Serialized Name: CertificateDetails.serialNumber
+        /// </summary>
         [WirePath("serialNumber")]
         public string SerialNumber { get; }
-        /// <summary> Certificate Thumbprint. </summary>
+        /// <summary>
+        /// Certificate Thumbprint.
+        /// Serialized Name: CertificateDetails.thumbprint
+        /// </summary>
         [WirePath("thumbprint")]
         public string ThumbprintString { get; }
-        /// <summary> Certificate Subject. </summary>
+        /// <summary>
+        /// Certificate Subject.
+        /// Serialized Name: CertificateDetails.subject
+        /// </summary>
         [WirePath("subject")]
         public string Subject { get; }
-        /// <summary> Date Certificate is valid from. </summary>
+        /// <summary>
+        /// Date Certificate is valid from.
+        /// Serialized Name: CertificateDetails.notBefore
+        /// </summary>
         [WirePath("notBefore")]
         public DateTimeOffset? NotBefore { get; }
-        /// <summary> Date Certificate is valid to. </summary>
+        /// <summary>
+        /// Date Certificate is valid to.
+        /// Serialized Name: CertificateDetails.notAfter
+        /// </summary>
         [WirePath("notAfter")]
         public DateTimeOffset? NotAfter { get; }
-        /// <summary> Certificate Signature algorithm. </summary>
+        /// <summary>
+        /// Certificate Signature algorithm.
+        /// Serialized Name: CertificateDetails.signatureAlgorithm
+        /// </summary>
         [WirePath("signatureAlgorithm")]
         public string SignatureAlgorithm { get; }
-        /// <summary> Certificate Issuer. </summary>
+        /// <summary>
+        /// Certificate Issuer.
+        /// Serialized Name: CertificateDetails.issuer
+        /// </summary>
         [WirePath("issuer")]
         public string Issuer { get; }
-        /// <summary> Raw certificate data. </summary>
+        /// <summary>
+        /// Raw certificate data.
+        /// Serialized Name: CertificateDetails.rawData
+        /// </summary>
         [WirePath("rawData")]
         public string RawData { get; }
     }

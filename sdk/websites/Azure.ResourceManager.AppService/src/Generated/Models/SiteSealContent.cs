@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Site seal request. </summary>
+    /// <summary>
+    /// Site seal request.
+    /// Serialized Name: SiteSealRequest
+    /// </summary>
     public partial class SiteSealContent
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteSealContent"/>. </summary>
-        /// <param name="isLightTheme"> If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme. </param>
-        /// <param name="locale"> Locale of site seal. </param>
+        /// <param name="isLightTheme">
+        /// If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme.
+        /// Serialized Name: SiteSealRequest.lightTheme
+        /// </param>
+        /// <param name="locale">
+        /// Locale of site seal.
+        /// Serialized Name: SiteSealRequest.locale
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteSealContent(bool? isLightTheme, string locale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme. </summary>
+        /// <summary>
+        /// If &lt;code&gt;true&lt;/code&gt; use the light color theme for site seal; otherwise, use the default color theme.
+        /// Serialized Name: SiteSealRequest.lightTheme
+        /// </summary>
         [WirePath("lightTheme")]
         public bool? IsLightTheme { get; set; }
-        /// <summary> Locale of site seal. </summary>
+        /// <summary>
+        /// Locale of site seal.
+        /// Serialized Name: SiteSealRequest.locale
+        /// </summary>
         [WirePath("locale")]
         public string Locale { get; set; }
     }

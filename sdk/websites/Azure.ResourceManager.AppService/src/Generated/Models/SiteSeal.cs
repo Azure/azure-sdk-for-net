@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Site seal. </summary>
+    /// <summary>
+    /// Site seal
+    /// Serialized Name: SiteSeal
+    /// </summary>
     public partial class SiteSeal
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SiteSeal"/>. </summary>
-        /// <param name="html"> HTML snippet. </param>
+        /// <param name="html">
+        /// HTML snippet
+        /// Serialized Name: SiteSeal.html
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="html"/> is null. </exception>
         internal SiteSeal(string html)
         {
@@ -56,7 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteSeal"/>. </summary>
-        /// <param name="html"> HTML snippet. </param>
+        /// <param name="html">
+        /// HTML snippet
+        /// Serialized Name: SiteSeal.html
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteSeal(string html, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +78,10 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> HTML snippet. </summary>
+        /// <summary>
+        /// HTML snippet
+        /// Serialized Name: SiteSeal.html
+        /// </summary>
         [WirePath("html")]
         public string Html { get; }
     }

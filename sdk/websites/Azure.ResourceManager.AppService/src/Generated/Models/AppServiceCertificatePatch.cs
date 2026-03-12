@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Key Vault container ARM resource for a certificate that is purchased through Azure. </summary>
+    /// <summary>
+    /// Key Vault container ARM resource for a certificate that is purchased through Azure.
+    /// Serialized Name: AppServiceCertificatePatchResource
+    /// </summary>
     public partial class AppServiceCertificatePatch : ResourceData
     {
         /// <summary>
@@ -57,10 +60,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="keyVaultId"> Key Vault resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
-        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="keyVaultId">
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.keyVaultId
+        /// </param>
+        /// <param name="keyVaultSecretName">
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.keyVaultSecretName
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.provisioningState
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceCertificatePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -71,16 +86,28 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Key Vault resource Id. </summary>
+        /// <summary>
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.keyVaultId
+        /// </summary>
         [WirePath("properties.keyVaultId")]
         public ResourceIdentifier KeyVaultId { get; set; }
-        /// <summary> Key Vault secret name. </summary>
+        /// <summary>
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.keyVaultSecretName
+        /// </summary>
         [WirePath("properties.keyVaultSecretName")]
         public string KeyVaultSecretName { get; set; }
-        /// <summary> Status of the Key Vault secret. </summary>
+        /// <summary>
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificatePatchResource.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public KeyVaultSecretStatus? ProvisioningState { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of static site user provided function apps. </summary>
+    /// <summary>
+    /// Collection of static site user provided function apps.
+    /// Serialized Name: StaticSiteUserProvidedFunctionAppsCollection
+    /// </summary>
     internal partial class StaticSiteUserProvidedFunctionAppsListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteUserProvidedFunctionAppsListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: StaticSiteUserProvidedFunctionAppsCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteUserProvidedFunctionAppsListResult(IEnumerable<StaticSiteUserProvidedFunctionAppData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteUserProvidedFunctionAppsListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: StaticSiteUserProvidedFunctionAppsCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: StaticSiteUserProvidedFunctionAppsCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteUserProvidedFunctionAppsListResult(IReadOnlyList<StaticSiteUserProvidedFunctionAppData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: StaticSiteUserProvidedFunctionAppsCollection.value
+        /// </summary>
         public IReadOnlyList<StaticSiteUserProvidedFunctionAppData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: StaticSiteUserProvidedFunctionAppsCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

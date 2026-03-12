@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the DiagnosticCategory data model.
     /// Class representing detector definition
+    /// Serialized Name: DiagnosticCategory
     /// </summary>
     public partial class DiagnosticCategoryData : ResourceData
     {
@@ -60,8 +61,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description of the diagnostic category. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="description">
+        /// Description of the diagnostic category
+        /// Serialized Name: DiagnosticCategory.properties.description
+        /// </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DiagnosticCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -70,10 +77,16 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Description of the diagnostic category. </summary>
+        /// <summary>
+        /// Description of the diagnostic category
+        /// Serialized Name: DiagnosticCategory.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Key Vault container for a certificate that is purchased through Azure. </summary>
+    /// <summary>
+    /// Key Vault container for a certificate that is purchased through Azure.
+    /// Serialized Name: AppServiceCertificate
+    /// </summary>
     public partial class AppServiceCertificateProperties
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceCertificateProperties"/>. </summary>
-        /// <param name="keyVaultId"> Key Vault resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
-        /// <param name="provisioningState"> Status of the Key Vault secret. </param>
+        /// <param name="keyVaultId">
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificate.keyVaultId
+        /// </param>
+        /// <param name="keyVaultSecretName">
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificate.keyVaultSecretName
+        /// </param>
+        /// <param name="provisioningState">
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificate.provisioningState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceCertificateProperties(ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +76,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Key Vault resource Id. </summary>
+        /// <summary>
+        /// Key Vault resource Id.
+        /// Serialized Name: AppServiceCertificate.keyVaultId
+        /// </summary>
         [WirePath("keyVaultId")]
         public ResourceIdentifier KeyVaultId { get; set; }
-        /// <summary> Key Vault secret name. </summary>
+        /// <summary>
+        /// Key Vault secret name.
+        /// Serialized Name: AppServiceCertificate.keyVaultSecretName
+        /// </summary>
         [WirePath("keyVaultSecretName")]
         public string KeyVaultSecretName { get; set; }
-        /// <summary> Status of the Key Vault secret. </summary>
+        /// <summary>
+        /// Status of the Key Vault secret.
+        /// Serialized Name: AppServiceCertificate.provisioningState
+        /// </summary>
         [WirePath("provisioningState")]
         public KeyVaultSecretStatus? ProvisioningState { get; }
     }

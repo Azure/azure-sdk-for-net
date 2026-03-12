@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Scale and concurrency settings for the HTTP trigger. </summary>
+    /// <summary>
+    /// Scale and concurrency settings for the HTTP trigger.
+    /// Serialized Name: FunctionsScaleAndConcurrencyTriggersHttp
+    /// </summary>
     internal partial class FunctionsScaleAndConcurrencyTriggersHttp
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionsScaleAndConcurrencyTriggersHttp"/>. </summary>
-        /// <param name="concurrentHttpPerInstanceConcurrency"> The maximum number of concurrent HTTP trigger invocations per instance. </param>
+        /// <param name="concurrentHttpPerInstanceConcurrency">
+        /// The maximum number of concurrent HTTP trigger invocations per instance.
+        /// Serialized Name: FunctionsScaleAndConcurrencyTriggersHttp.perInstanceConcurrency
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FunctionsScaleAndConcurrencyTriggersHttp(int? concurrentHttpPerInstanceConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The maximum number of concurrent HTTP trigger invocations per instance. </summary>
+        /// <summary>
+        /// The maximum number of concurrent HTTP trigger invocations per instance.
+        /// Serialized Name: FunctionsScaleAndConcurrencyTriggersHttp.perInstanceConcurrency
+        /// </summary>
         [WirePath("perInstanceConcurrency")]
         public int? ConcurrentHttpPerInstanceConcurrency { get; set; }
     }

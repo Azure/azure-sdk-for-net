@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Single sign-on request information for domain management. </summary>
+    /// <summary>
+    /// Single sign-on request information for domain management.
+    /// Serialized Name: DomainControlCenterSsoRequest
+    /// </summary>
     public partial class DomainControlCenterSsoRequestInfo
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DomainControlCenterSsoRequestInfo"/>. </summary>
-        /// <param name="uri"> URL where the single sign-on request is to be made. </param>
-        /// <param name="postParameterKey"> Post parameter key. </param>
-        /// <param name="postParameterValue"> Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value. </param>
+        /// <param name="uri">
+        /// URL where the single sign-on request is to be made.
+        /// Serialized Name: DomainControlCenterSsoRequest.url
+        /// </param>
+        /// <param name="postParameterKey">
+        /// Post parameter key.
+        /// Serialized Name: DomainControlCenterSsoRequest.postParameterKey
+        /// </param>
+        /// <param name="postParameterValue">
+        /// Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value.
+        /// Serialized Name: DomainControlCenterSsoRequest.postParameterValue
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DomainControlCenterSsoRequestInfo(Uri uri, string postParameterKey, string postParameterValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> URL where the single sign-on request is to be made. </summary>
+        /// <summary>
+        /// URL where the single sign-on request is to be made.
+        /// Serialized Name: DomainControlCenterSsoRequest.url
+        /// </summary>
         [WirePath("url")]
         public Uri Uri { get; }
-        /// <summary> Post parameter key. </summary>
+        /// <summary>
+        /// Post parameter key.
+        /// Serialized Name: DomainControlCenterSsoRequest.postParameterKey
+        /// </summary>
         [WirePath("postParameterKey")]
         public string PostParameterKey { get; }
-        /// <summary> Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value. </summary>
+        /// <summary>
+        /// Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value.
+        /// Serialized Name: DomainControlCenterSsoRequest.postParameterValue
+        /// </summary>
         [WirePath("postParameterValue")]
         public string PostParameterValue { get; }
     }

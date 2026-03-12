@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Address information for domain registration. </summary>
+    /// <summary>
+    /// Address information for domain registration.
+    /// Serialized Name: Address
+    /// </summary>
     public partial class RegistrationAddressInfo
     {
         /// <summary>
@@ -46,11 +49,26 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RegistrationAddressInfo"/>. </summary>
-        /// <param name="address1"> First line of an Address. </param>
-        /// <param name="city"> The city for the address. </param>
-        /// <param name="country"> The country for the address. </param>
-        /// <param name="postalCode"> The postal code for the address. </param>
-        /// <param name="state"> The state or province for the address. </param>
+        /// <param name="address1">
+        /// First line of an Address.
+        /// Serialized Name: Address.address1
+        /// </param>
+        /// <param name="city">
+        /// The city for the address.
+        /// Serialized Name: Address.city
+        /// </param>
+        /// <param name="country">
+        /// The country for the address.
+        /// Serialized Name: Address.country
+        /// </param>
+        /// <param name="postalCode">
+        /// The postal code for the address.
+        /// Serialized Name: Address.postalCode
+        /// </param>
+        /// <param name="state">
+        /// The state or province for the address.
+        /// Serialized Name: Address.state
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="address1"/>, <paramref name="city"/>, <paramref name="country"/>, <paramref name="postalCode"/> or <paramref name="state"/> is null. </exception>
         public RegistrationAddressInfo(string address1, string city, string country, string postalCode, string state)
         {
@@ -68,12 +86,30 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RegistrationAddressInfo"/>. </summary>
-        /// <param name="address1"> First line of an Address. </param>
-        /// <param name="address2"> The second line of the Address. Optional. </param>
-        /// <param name="city"> The city for the address. </param>
-        /// <param name="country"> The country for the address. </param>
-        /// <param name="postalCode"> The postal code for the address. </param>
-        /// <param name="state"> The state or province for the address. </param>
+        /// <param name="address1">
+        /// First line of an Address.
+        /// Serialized Name: Address.address1
+        /// </param>
+        /// <param name="address2">
+        /// The second line of the Address. Optional.
+        /// Serialized Name: Address.address2
+        /// </param>
+        /// <param name="city">
+        /// The city for the address.
+        /// Serialized Name: Address.city
+        /// </param>
+        /// <param name="country">
+        /// The country for the address.
+        /// Serialized Name: Address.country
+        /// </param>
+        /// <param name="postalCode">
+        /// The postal code for the address.
+        /// Serialized Name: Address.postalCode
+        /// </param>
+        /// <param name="state">
+        /// The state or province for the address.
+        /// Serialized Name: Address.state
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RegistrationAddressInfo(string address1, string address2, string city, string country, string postalCode, string state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -91,22 +127,40 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> First line of an Address. </summary>
+        /// <summary>
+        /// First line of an Address.
+        /// Serialized Name: Address.address1
+        /// </summary>
         [WirePath("address1")]
         public string Address1 { get; set; }
-        /// <summary> The second line of the Address. Optional. </summary>
+        /// <summary>
+        /// The second line of the Address. Optional.
+        /// Serialized Name: Address.address2
+        /// </summary>
         [WirePath("address2")]
         public string Address2 { get; set; }
-        /// <summary> The city for the address. </summary>
+        /// <summary>
+        /// The city for the address.
+        /// Serialized Name: Address.city
+        /// </summary>
         [WirePath("city")]
         public string City { get; set; }
-        /// <summary> The country for the address. </summary>
+        /// <summary>
+        /// The country for the address.
+        /// Serialized Name: Address.country
+        /// </summary>
         [WirePath("country")]
         public string Country { get; set; }
-        /// <summary> The postal code for the address. </summary>
+        /// <summary>
+        /// The postal code for the address.
+        /// Serialized Name: Address.postalCode
+        /// </summary>
         [WirePath("postalCode")]
         public string PostalCode { get; set; }
-        /// <summary> The state or province for the address. </summary>
+        /// <summary>
+        /// The state or province for the address.
+        /// Serialized Name: Address.state
+        /// </summary>
         [WirePath("state")]
         public string State { get; set; }
     }

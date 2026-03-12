@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.AppService
     /// <summary>
     /// A class representing the RelayServiceConnectionEntity data model.
     /// Hybrid Connection for an App Service app.
+    /// Serialized Name: RelayServiceConnectionEntity
     /// </summary>
     public partial class RelayServiceConnectionEntityData : ResourceData
     {
@@ -60,13 +61,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="entityName"></param>
-        /// <param name="entityConnectionString"></param>
-        /// <param name="resourceConnectionString"></param>
-        /// <param name="hostname"></param>
-        /// <param name="port"></param>
-        /// <param name="biztalkUri"></param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="entityName"> Serialized Name: RelayServiceConnectionEntity.properties.entityName. </param>
+        /// <param name="entityConnectionString"> Serialized Name: RelayServiceConnectionEntity.properties.entityConnectionString. </param>
+        /// <param name="resourceConnectionString"> Serialized Name: RelayServiceConnectionEntity.properties.resourceConnectionString. </param>
+        /// <param name="hostname"> Serialized Name: RelayServiceConnectionEntity.properties.hostname. </param>
+        /// <param name="port"> Serialized Name: RelayServiceConnectionEntity.properties.port. </param>
+        /// <param name="biztalkUri"> Serialized Name: RelayServiceConnectionEntity.properties.biztalkUri. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RelayServiceConnectionEntityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string entityName, string entityConnectionString, string resourceConnectionString, string hostname, int? port, Uri biztalkUri, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -80,25 +84,28 @@ namespace Azure.ResourceManager.AppService
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the entity name. </summary>
+        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.entityName. </summary>
         [WirePath("properties.entityName")]
         public string EntityName { get; set; }
-        /// <summary> Gets or sets the entity connection string. </summary>
+        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.entityConnectionString. </summary>
         [WirePath("properties.entityConnectionString")]
         public string EntityConnectionString { get; set; }
-        /// <summary> Gets or sets the resource connection string. </summary>
+        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.resourceConnectionString. </summary>
         [WirePath("properties.resourceConnectionString")]
         public string ResourceConnectionString { get; set; }
-        /// <summary> Gets or sets the hostname. </summary>
+        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.hostname. </summary>
         [WirePath("properties.hostname")]
         public string Hostname { get; set; }
-        /// <summary> Gets or sets the port. </summary>
+        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.port. </summary>
         [WirePath("properties.port")]
         public int? Port { get; set; }
-        /// <summary> Gets or sets the biztalk uri. </summary>
+        /// <summary> Serialized Name: RelayServiceConnectionEntity.properties.biztalkUri. </summary>
         [WirePath("properties.biztalkUri")]
         public Uri BiztalkUri { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Additional workflow properties. </summary>
+    /// <summary>
+    /// Additional workflow properties.
+    /// Serialized Name: WorkflowEnvelopeProperties
+    /// </summary>
     public partial class WorkflowEnvelopeProperties
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowEnvelopeProperties"/>. </summary>
-        /// <param name="files"> Gets or sets the files. </param>
-        /// <param name="flowState"> Gets or sets the state of the workflow. </param>
-        /// <param name="health"> Gets or sets workflow health. </param>
+        /// <param name="files">
+        /// Gets or sets the files.
+        /// Serialized Name: WorkflowEnvelopeProperties.files
+        /// </param>
+        /// <param name="flowState">
+        /// Gets or sets the state of the workflow.
+        /// Serialized Name: WorkflowEnvelopeProperties.flowState
+        /// </param>
+        /// <param name="health">
+        /// Gets or sets workflow health.
+        /// Serialized Name: WorkflowEnvelopeProperties.health
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowEnvelopeProperties(IReadOnlyDictionary<string, BinaryData> files, WorkflowState? flowState, WorkflowHealth health, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,6 +78,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary>
         /// Gets or sets the files.
+        /// Serialized Name: WorkflowEnvelopeProperties.files
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -96,10 +109,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         [WirePath("files")]
         public IReadOnlyDictionary<string, BinaryData> Files { get; }
-        /// <summary> Gets or sets the state of the workflow. </summary>
+        /// <summary>
+        /// Gets or sets the state of the workflow.
+        /// Serialized Name: WorkflowEnvelopeProperties.flowState
+        /// </summary>
         [WirePath("flowState")]
         public WorkflowState? FlowState { get; }
-        /// <summary> Gets or sets workflow health. </summary>
+        /// <summary>
+        /// Gets or sets workflow health.
+        /// Serialized Name: WorkflowEnvelopeProperties.health
+        /// </summary>
         [WirePath("health")]
         public WorkflowHealth Health { get; }
     }

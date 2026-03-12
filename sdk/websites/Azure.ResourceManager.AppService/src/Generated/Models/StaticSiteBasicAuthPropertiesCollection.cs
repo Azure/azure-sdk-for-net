@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of static site basic auth. </summary>
+    /// <summary>
+    /// Collection of static site basic auth.
+    /// Serialized Name: StaticSiteBasicAuthPropertiesCollection
+    /// </summary>
     internal partial class StaticSiteBasicAuthPropertiesCollection
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteBasicAuthPropertiesCollection"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal StaticSiteBasicAuthPropertiesCollection(IEnumerable<StaticSiteBasicAuthPropertyData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteBasicAuthPropertiesCollection"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal StaticSiteBasicAuthPropertiesCollection(IReadOnlyList<StaticSiteBasicAuthPropertyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesCollection.value
+        /// </summary>
         public IReadOnlyList<StaticSiteBasicAuthPropertyData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: StaticSiteBasicAuthPropertiesCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

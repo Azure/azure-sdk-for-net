@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> ARM resource for a domain. </summary>
+    /// <summary>
+    /// ARM resource for a domain.
+    /// Serialized Name: DomainPatchResource
+    /// </summary>
     public partial class AppServiceDomainPatch : ResourceData
     {
         /// <summary>
@@ -60,30 +63,88 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="contactAdmin"> Administrative contact. </param>
-        /// <param name="contactBilling"> Billing contact. </param>
-        /// <param name="contactRegistrant"> Registrant contact. </param>
-        /// <param name="contactTech"> Technical contact. </param>
-        /// <param name="registrationStatus"> Domain registration status. </param>
-        /// <param name="provisioningState"> Domain provisioning state. </param>
-        /// <param name="nameServers"> Name servers. </param>
-        /// <param name="isDomainPrivacyEnabled"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="createdOn"> Domain creation timestamp. </param>
-        /// <param name="expireOn"> Domain expiration timestamp. </param>
-        /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
-        /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="contactAdmin">
+        /// Administrative contact.
+        /// Serialized Name: DomainPatchResource.properties.contactAdmin
+        /// </param>
+        /// <param name="contactBilling">
+        /// Billing contact.
+        /// Serialized Name: DomainPatchResource.properties.contactBilling
+        /// </param>
+        /// <param name="contactRegistrant">
+        /// Registrant contact.
+        /// Serialized Name: DomainPatchResource.properties.contactRegistrant
+        /// </param>
+        /// <param name="contactTech">
+        /// Technical contact.
+        /// Serialized Name: DomainPatchResource.properties.contactTech
+        /// </param>
+        /// <param name="registrationStatus">
+        /// Domain registration status.
+        /// Serialized Name: DomainPatchResource.properties.registrationStatus
+        /// </param>
+        /// <param name="provisioningState">
+        /// Domain provisioning state.
+        /// Serialized Name: DomainPatchResource.properties.provisioningState
+        /// </param>
+        /// <param name="nameServers">
+        /// Name servers.
+        /// Serialized Name: DomainPatchResource.properties.nameServers
+        /// </param>
+        /// <param name="isDomainPrivacyEnabled">
+        /// &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: DomainPatchResource.properties.privacy
+        /// </param>
+        /// <param name="createdOn">
+        /// Domain creation timestamp.
+        /// Serialized Name: DomainPatchResource.properties.createdTime
+        /// </param>
+        /// <param name="expireOn">
+        /// Domain expiration timestamp.
+        /// Serialized Name: DomainPatchResource.properties.expirationTime
+        /// </param>
+        /// <param name="lastRenewedOn">
+        /// Timestamp when the domain was renewed last time.
+        /// Serialized Name: DomainPatchResource.properties.lastRenewedTime
+        /// </param>
+        /// <param name="isAutoRenew">
+        /// &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: DomainPatchResource.properties.autoRenew
+        /// </param>
         /// <param name="isReadyForDnsRecordManagement">
         /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
         ///  it is hosted on name servers Azure has programmatic access to.
+        /// Serialized Name: DomainPatchResource.properties.readyForDnsRecordManagement
         /// </param>
-        /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
-        /// <param name="consent"> Legal agreement consent. </param>
-        /// <param name="domainNotRenewableReasons"> Reasons why domain is not renewable. </param>
-        /// <param name="dnsType"> Current DNS type. </param>
-        /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
-        /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
-        /// <param name="authCode"></param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="managedHostNames">
+        /// All hostnames derived from the domain and assigned to Azure resources.
+        /// Serialized Name: DomainPatchResource.properties.managedHostNames
+        /// </param>
+        /// <param name="consent">
+        /// Legal agreement consent.
+        /// Serialized Name: DomainPatchResource.properties.consent
+        /// </param>
+        /// <param name="domainNotRenewableReasons">
+        /// Reasons why domain is not renewable.
+        /// Serialized Name: DomainPatchResource.properties.domainNotRenewableReasons
+        /// </param>
+        /// <param name="dnsType">
+        /// Current DNS type
+        /// Serialized Name: DomainPatchResource.properties.dnsType
+        /// </param>
+        /// <param name="dnsZoneId">
+        /// Azure DNS Zone to use
+        /// Serialized Name: DomainPatchResource.properties.dnsZoneId
+        /// </param>
+        /// <param name="targetDnsType">
+        /// Target DNS type (would be used for migration)
+        /// Serialized Name: DomainPatchResource.properties.targetDnsType
+        /// </param>
+        /// <param name="authCode"> Serialized Name: DomainPatchResource.properties.authCode. </param>
+        /// <param name="kind">
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppServiceDomainPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isReadyForDnsRecordManagement, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, string dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -111,70 +172,128 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Administrative contact. </summary>
+        /// <summary>
+        /// Administrative contact.
+        /// Serialized Name: DomainPatchResource.properties.contactAdmin
+        /// </summary>
         [WirePath("properties.contactAdmin")]
         public RegistrationContactInfo ContactAdmin { get; set; }
-        /// <summary> Billing contact. </summary>
+        /// <summary>
+        /// Billing contact.
+        /// Serialized Name: DomainPatchResource.properties.contactBilling
+        /// </summary>
         [WirePath("properties.contactBilling")]
         public RegistrationContactInfo ContactBilling { get; set; }
-        /// <summary> Registrant contact. </summary>
+        /// <summary>
+        /// Registrant contact.
+        /// Serialized Name: DomainPatchResource.properties.contactRegistrant
+        /// </summary>
         [WirePath("properties.contactRegistrant")]
         public RegistrationContactInfo ContactRegistrant { get; set; }
-        /// <summary> Technical contact. </summary>
+        /// <summary>
+        /// Technical contact.
+        /// Serialized Name: DomainPatchResource.properties.contactTech
+        /// </summary>
         [WirePath("properties.contactTech")]
         public RegistrationContactInfo ContactTech { get; set; }
-        /// <summary> Domain registration status. </summary>
+        /// <summary>
+        /// Domain registration status.
+        /// Serialized Name: DomainPatchResource.properties.registrationStatus
+        /// </summary>
         [WirePath("properties.registrationStatus")]
         public AppServiceDomainStatus? RegistrationStatus { get; }
-        /// <summary> Domain provisioning state. </summary>
+        /// <summary>
+        /// Domain provisioning state.
+        /// Serialized Name: DomainPatchResource.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> Name servers. </summary>
+        /// <summary>
+        /// Name servers.
+        /// Serialized Name: DomainPatchResource.properties.nameServers
+        /// </summary>
         [WirePath("properties.nameServers")]
         public IReadOnlyList<string> NameServers { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: DomainPatchResource.properties.privacy
+        /// </summary>
         [WirePath("properties.privacy")]
         public bool? IsDomainPrivacyEnabled { get; set; }
-        /// <summary> Domain creation timestamp. </summary>
+        /// <summary>
+        /// Domain creation timestamp.
+        /// Serialized Name: DomainPatchResource.properties.createdTime
+        /// </summary>
         [WirePath("properties.createdTime")]
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Domain expiration timestamp. </summary>
+        /// <summary>
+        /// Domain expiration timestamp.
+        /// Serialized Name: DomainPatchResource.properties.expirationTime
+        /// </summary>
         [WirePath("properties.expirationTime")]
         public DateTimeOffset? ExpireOn { get; }
-        /// <summary> Timestamp when the domain was renewed last time. </summary>
+        /// <summary>
+        /// Timestamp when the domain was renewed last time.
+        /// Serialized Name: DomainPatchResource.properties.lastRenewedTime
+        /// </summary>
         [WirePath("properties.lastRenewedTime")]
         public DateTimeOffset? LastRenewedOn { get; }
-        /// <summary> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        /// <summary>
+        /// &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;.
+        /// Serialized Name: DomainPatchResource.properties.autoRenew
+        /// </summary>
         [WirePath("properties.autoRenew")]
         public bool? IsAutoRenew { get; set; }
         /// <summary>
         /// &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and
         ///  it is hosted on name servers Azure has programmatic access to.
+        /// Serialized Name: DomainPatchResource.properties.readyForDnsRecordManagement
         /// </summary>
         [WirePath("properties.readyForDnsRecordManagement")]
         public bool? IsReadyForDnsRecordManagement { get; }
-        /// <summary> All hostnames derived from the domain and assigned to Azure resources. </summary>
+        /// <summary>
+        /// All hostnames derived from the domain and assigned to Azure resources.
+        /// Serialized Name: DomainPatchResource.properties.managedHostNames
+        /// </summary>
         [WirePath("properties.managedHostNames")]
         public IReadOnlyList<AppServiceHostName> ManagedHostNames { get; }
-        /// <summary> Legal agreement consent. </summary>
+        /// <summary>
+        /// Legal agreement consent.
+        /// Serialized Name: DomainPatchResource.properties.consent
+        /// </summary>
         [WirePath("properties.consent")]
         public DomainPurchaseConsent Consent { get; set; }
-        /// <summary> Reasons why domain is not renewable. </summary>
+        /// <summary>
+        /// Reasons why domain is not renewable.
+        /// Serialized Name: DomainPatchResource.properties.domainNotRenewableReasons
+        /// </summary>
         [WirePath("properties.domainNotRenewableReasons")]
         public IReadOnlyList<DomainNotRenewableReason> DomainNotRenewableReasons { get; }
-        /// <summary> Current DNS type. </summary>
+        /// <summary>
+        /// Current DNS type
+        /// Serialized Name: DomainPatchResource.properties.dnsType
+        /// </summary>
         [WirePath("properties.dnsType")]
         public AppServiceDnsType? DnsType { get; set; }
-        /// <summary> Azure DNS Zone to use. </summary>
+        /// <summary>
+        /// Azure DNS Zone to use
+        /// Serialized Name: DomainPatchResource.properties.dnsZoneId
+        /// </summary>
         [WirePath("properties.dnsZoneId")]
         public string DnsZoneId { get; set; }
-        /// <summary> Target DNS type (would be used for migration). </summary>
+        /// <summary>
+        /// Target DNS type (would be used for migration)
+        /// Serialized Name: DomainPatchResource.properties.targetDnsType
+        /// </summary>
         [WirePath("properties.targetDnsType")]
         public AppServiceDnsType? TargetDnsType { get; set; }
-        /// <summary> Gets or sets the auth code. </summary>
+        /// <summary> Serialized Name: DomainPatchResource.properties.authCode. </summary>
         [WirePath("properties.authCode")]
         public string AuthCode { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary>
+        /// Kind of resource.
+        /// Serialized Name: ProxyOnlyResource.kind
+        /// </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

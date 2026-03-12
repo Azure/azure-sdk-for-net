@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The list of workflow triggers. </summary>
+    /// <summary>
+    /// The list of workflow triggers.
+    /// Serialized Name: WorkflowTriggerListResult
+    /// </summary>
     internal partial class WorkflowTriggerListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowTriggerListResult"/>. </summary>
-        /// <param name="value"> A list of workflow triggers. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of workflow triggers.
+        /// Serialized Name: WorkflowTriggerListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: WorkflowTriggerListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WorkflowTriggerListResult(IReadOnlyList<WorkflowTriggerData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.AppService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of workflow triggers. </summary>
+        /// <summary>
+        /// A list of workflow triggers.
+        /// Serialized Name: WorkflowTriggerListResult.value
+        /// </summary>
         public IReadOnlyList<WorkflowTriggerData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: WorkflowTriggerListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

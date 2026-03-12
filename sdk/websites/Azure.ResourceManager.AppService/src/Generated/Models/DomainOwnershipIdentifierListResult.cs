@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> Collection of domain ownership identifiers. </summary>
+    /// <summary>
+    /// Collection of domain ownership identifiers.
+    /// Serialized Name: DomainOwnershipIdentifierCollection
+    /// </summary>
     internal partial class DomainOwnershipIdentifierListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.AppService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DomainOwnershipIdentifierListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: DomainOwnershipIdentifierCollection.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal DomainOwnershipIdentifierListResult(IEnumerable<DomainOwnershipIdentifierData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DomainOwnershipIdentifierListResult"/>. </summary>
-        /// <param name="value"> Collection of resources. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Collection of resources.
+        /// Serialized Name: DomainOwnershipIdentifierCollection.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: DomainOwnershipIdentifierCollection.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DomainOwnershipIdentifierListResult(IReadOnlyList<DomainOwnershipIdentifierData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
         }
 
-        /// <summary> Collection of resources. </summary>
+        /// <summary>
+        /// Collection of resources.
+        /// Serialized Name: DomainOwnershipIdentifierCollection.value
+        /// </summary>
         public IReadOnlyList<DomainOwnershipIdentifierData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: DomainOwnershipIdentifierCollection.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }
