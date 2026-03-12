@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Identity;
 using NUnit.Framework;
@@ -14,101 +13,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
     public class Sample20_PerformancePatterns : ServiceBusLiveTestBase
     {
         [Test]
-        public async Task ConcurrentSends()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
-            {
-                #region Snippet:ServiceBusConcurrentSends
-#if SNIPPET
-                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
-                string queueName = "<queue_name>";
-
-                await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
-#else
-                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
-                string queueName = scope.QueueName;
-
-                await using var client = new ServiceBusClient(fullyQualifiedNamespace, TestEnvironment.Credential);
-#endif
-                await using ServiceBusSender sender = client.CreateSender(queueName);
-
-                var messages = new List<ServiceBusMessage>();
-                for (int i = 0; i < 100; i++)
-                {
-                    messages.Add(new ServiceBusMessage($"Message {i}"));
-                }
-
-                // Send all messages concurrently. Each SendMessageAsync call initiates
-                // an independent AMQP transfer, and Task.WhenAll waits for all of them.
-                IEnumerable<Task> sendTasks = messages.Select(m => sender.SendMessageAsync(m));
-                await Task.WhenAll(sendTasks);
-                #endregion
-            }
-        }
-
-        [Test]
-        public async Task ThrottledConcurrentSends()
-        {
-            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
-            {
-                #region Snippet:ServiceBusThrottledConcurrentSends
-#if SNIPPET
-                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
-                string queueName = "<queue_name>";
-
-                await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
-#else
-                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
-                string queueName = scope.QueueName;
-
-                await using var client = new ServiceBusClient(fullyQualifiedNamespace, TestEnvironment.Credential);
-#endif
-                await using ServiceBusSender sender = client.CreateSender(queueName);
-
-                var messages = new List<ServiceBusMessage>();
-#if SNIPPET
-                for (int i = 0; i < 1000; i++)
-#else
-                for (int i = 0; i < 50; i++)
-#endif
-                {
-                    messages.Add(new ServiceBusMessage($"Message {i}"));
-                }
-
-                // Limit to 10 concurrent sends to avoid overwhelming the connection.
-                using var semaphore = new SemaphoreSlim(10);
-                var tasks = new List<Task>();
-
-                async Task SendAsync(ServiceBusMessage msg)
-                {
-                    await semaphore.WaitAsync();
-                    try
-                    {
-                        await sender.SendMessageAsync(msg);
-                    }
-                    finally
-                    {
-                        semaphore.Release();
-                    }
-                }
-
-                foreach (ServiceBusMessage message in messages)
-                {
-                    tasks.Add(SendAsync(message));
-                }
-
-                await Task.WhenAll(tasks);
-                #endregion
-            }
-        }
-
-        [Test]
         public async Task BatchSend()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
             {
                 #region Snippet:ServiceBusBatchSend
 #if SNIPPET
+                // The fully qualified Service Bus namespace, which is likely to be similar to
+                // "{yournamespace}.servicebus.windows.net".
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 
@@ -153,6 +65,41 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         }
 
         [Test]
+        public async Task ConcurrentSends()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                #region Snippet:ServiceBusConcurrentSends
+#if SNIPPET
+                // The fully qualified Service Bus namespace, which is likely to be similar to
+                // "{yournamespace}.servicebus.windows.net".
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+                string queueName = "<queue_name>";
+
+                await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+#else
+                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+                string queueName = scope.QueueName;
+
+                await using var client = new ServiceBusClient(fullyQualifiedNamespace, TestEnvironment.Credential);
+#endif
+                await using ServiceBusSender sender = client.CreateSender(queueName);
+
+                var messages = new List<ServiceBusMessage>();
+                for (int i = 0; i < 100; i++)
+                {
+                    messages.Add(new ServiceBusMessage($"Message {i}"));
+                }
+
+                // Send all messages concurrently. Each SendMessageAsync call initiates
+                // an independent AMQP transfer, and Task.WhenAll waits for all of them.
+                IEnumerable<Task> sendTasks = messages.Select(m => sender.SendMessageAsync(m));
+                await Task.WhenAll(sendTasks);
+                #endregion
+            }
+        }
+
+        [Test]
         [Ignore("Only verifying that the sample builds")]
         public async Task ProcessorMaxConcurrentCalls()
         {
@@ -160,6 +107,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusProcessorMaxConcurrentCalls
 #if SNIPPET
+                // The fully qualified Service Bus namespace, which is likely to be similar to
+                // "{yournamespace}.servicebus.windows.net".
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 
@@ -173,9 +122,10 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 await using ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
                 {
-                    // Process up to 20 messages concurrently. Tune this based on
-                    // the processing time per message and the desired throughput.
-                    MaxConcurrentCalls = 20,
+                    // Start with a value close to the processor count and tune based on
+                    // testing. High ratios of concurrent tasks to processors cause thread
+                    // pool contention and unpredictable stalls.
+                    MaxConcurrentCalls = Environment.ProcessorCount,
 
                     // AutoCompleteMessages is true by default. Messages are completed
                     // automatically after the handler returns without throwing.
@@ -186,8 +136,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 {
                     Console.WriteLine($"Received: {args.Message.Body}");
 
-                    // Simulate work. With MaxConcurrentCalls = 20, up to 20 of these
-                    // run in parallel.
+                    // Simulate work.
                     await Task.Delay(TimeSpan.FromMilliseconds(100), args.CancellationToken);
                 };
 
@@ -219,6 +168,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusPrefetchCount
 #if SNIPPET
+                // The fully qualified Service Bus namespace, which is likely to be similar to
+                // "{yournamespace}.servicebus.windows.net".
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 
@@ -274,6 +225,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusProcessorPrefetchCount
 #if SNIPPET
+                // The fully qualified Service Bus namespace, which is likely to be similar to
+                // "{yournamespace}.servicebus.windows.net".
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 
@@ -287,8 +240,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 await using ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
                 {
-                    MaxConcurrentCalls = 20,
-                    PrefetchCount = 100
+                    MaxConcurrentCalls = Environment.ProcessorCount,
+                    PrefetchCount = Environment.ProcessorCount * 3
                 });
 
                 processor.ProcessMessageAsync += async args =>
@@ -325,6 +278,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusHighThroughputProcessor
 #if SNIPPET
+                // The fully qualified Service Bus namespace, which is likely to be similar to
+                // "{yournamespace}.servicebus.windows.net".
                 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
 
@@ -338,11 +293,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 await using ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
                 {
-                    // High concurrency for I/O-bound processing.
-                    MaxConcurrentCalls = 50,
+                    // Start with a value close to the processor count. Increase only
+                    // after testing confirms the host can sustain the concurrency without
+                    // thread pool contention or lock expiration.
+                    MaxConcurrentCalls = Environment.ProcessorCount * 2,
 
-                    // Aggressive prefetch to keep the pipeline full.
-                    PrefetchCount = 200,
+                    // Keep prefetch proportional to concurrent calls.
+                    PrefetchCount = Environment.ProcessorCount * 4,
 
                     // Extend auto-lock renewal for long processing times.
                     MaxAutoLockRenewalDuration = TimeSpan.FromMinutes(10)
@@ -350,9 +307,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 processor.ProcessMessageAsync += async args =>
                 {
-                    // Process the message. With these settings, up to 50 messages
-                    // are processed concurrently, and the prefetch buffer keeps
-                    // the pipeline saturated.
                     Console.WriteLine($"Processing: {args.Message.MessageId}");
                     await Task.Delay(TimeSpan.FromMilliseconds(50), args.CancellationToken);
                 };
@@ -367,7 +321,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 try
                 {
-                    // Let the processor run, then stop when done.
                     await Task.Delay(TimeSpan.FromSeconds(30));
                 }
                 finally
