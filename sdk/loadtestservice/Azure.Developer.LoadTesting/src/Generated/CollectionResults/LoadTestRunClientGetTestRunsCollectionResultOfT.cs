@@ -30,8 +30,8 @@ namespace Azure.Developer.LoadTesting
         /// <summary> Initializes a new instance of LoadTestRunClientGetTestRunsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The LoadTestRunClient client used to send requests. </param>
         /// <param name="orderby">
-        /// Sort on the supported fields in (field asc/desc) format. eg: executedDateTime
-        /// asc. Supported fields - executedDateTime
+        /// Sort on the supported fields in (field asc/desc) format. eg: createdDateTime asc.
+        /// Supported fields - createdDateTime, executedDateTime (legacy)
         /// </param>
         /// <param name="search">
         /// Prefix based, case sensitive search on searchable fields - description,

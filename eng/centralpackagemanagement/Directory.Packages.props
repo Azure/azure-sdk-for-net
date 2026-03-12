@@ -1,4 +1,4 @@
-<Project>
+ <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <CentralPackageVersionOverrideEnabled>false</CentralPackageVersionOverrideEnabled>
@@ -111,7 +111,7 @@
     <PackageVersion Include="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
     <PackageVersion Include="Azure.Data.AppConfiguration" Version="1.9.0"/>
     <PackageVersion Include="Azure.Data.Tables" Version="12.11.0" />
-    <PackageVersion Include="Azure.Identity" Version="1.18.0" />
+    <PackageVersion Include="Azure.Identity" Version="1.19.0" />
     <PackageVersion Include="Azure.Messaging.EventGrid" Version="4.21.0" />
     <PackageVersion Include="Azure.Messaging.EventGrid.SystemEvents" Version="1.0.0" />
     <PackageVersion Include="Azure.Messaging.EventHubs" Version="5.12.2" />
@@ -178,9 +178,9 @@
     <!-- Other approved packages -->
     <PackageVersion Include="Microsoft.Azure.Amqp" Version="2.7.0" />
     <PackageVersion Include="Microsoft.Azure.WebPubSub.Common" Version="1.5.0" />
-    <PackageVersion Include="Microsoft.Identity.Client" Version="4.78.0" />
-    <PackageVersion Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.78.0" />
-    <PackageVersion Include="Microsoft.Identity.Client.Broker" Version="4.78.0" />
+    <PackageVersion Include="Microsoft.Identity.Client" Version="4.83.1" />
+    <PackageVersion Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.83.1" />
+    <PackageVersion Include="Microsoft.Identity.Client.Broker" Version="4.83.1" />
     <PackageVersion Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.15.0" />
     <PackageVersion Include="Microsoft.IdentityModel.Tokens" Version="8.15.0" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />

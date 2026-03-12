@@ -13,7 +13,7 @@ try
     global::Azure.Response result = this.Pipeline.ProcessMessage(message, context);
     global::Azure.Response<global::Samples.ResponseTypeData> response = global::Azure.Response.FromValue(global::Samples.ResponseTypeData.FromResponse(result), result);
     global::Azure.Core.RequestUriBuilder uri = message.Request.Uri;
-    global::Azure.Core.RehydrationToken rehydrationToken = global::Azure.Core.NextLinkOperationImplementation.GetRehydrationToken(global::Azure.Core.RequestMethod.Get, uri.ToUri(), uri.ToString(), "None", null, global::Azure.Core.OperationFinalStateVia.OriginalUri.ToString());
+    global::Azure.Core.RehydrationToken rehydrationToken = global::Azure.Core.NextLinkOperationImplementation.GetRehydrationToken(global::Azure.Core.RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, global::Azure.Core.OperationFinalStateVia.OriginalUri.ToString());
     global::Samples.SamplesArmOperation<global::Samples.ResponseTypeResource> operation = new global::Samples.SamplesArmOperation<global::Samples.ResponseTypeResource>(global::Azure.Response.FromValue(new global::Samples.ResponseTypeResource(this.Client, response.Value), response.GetRawResponse()), rehydrationToken);
     if ((waitUntil == global::Azure.WaitUntil.Completed))
     {
