@@ -6,46 +6,56 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Purview.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Purview
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AccountData))]
     [ModelReaderWriterBuildable(typeof(AccountList))]
+    [ModelReaderWriterBuildable(typeof(AccountMergeInfo))]
+    [ModelReaderWriterBuildable(typeof(AccountPatch))]
+    [ModelReaderWriterBuildable(typeof(AccountPropertiesAccountStatus))]
+    [ModelReaderWriterBuildable(typeof(AccountPropertiesEndpoints))]
+    [ModelReaderWriterBuildable(typeof(AccountPropertiesManagedResources))]
+    [ModelReaderWriterBuildable(typeof(AccountResource))]
+    [ModelReaderWriterBuildable(typeof(AccountSku))]
+    [ModelReaderWriterBuildable(typeof(AccountStatusErrorDetails))]
     [ModelReaderWriterBuildable(typeof(CloudConnectors))]
     [ModelReaderWriterBuildable(typeof(CollectionAdminUpdateContent))]
     [ModelReaderWriterBuildable(typeof(DefaultPurviewAccountPayload))]
+    [ModelReaderWriterBuildable(typeof(ErrorModel))]
+    [ModelReaderWriterBuildable(typeof(ErrorResponseModelError))]
+    [ModelReaderWriterBuildable(typeof(Identity))]
+    [ModelReaderWriterBuildable(typeof(KafkaConfigurationData))]
     [ModelReaderWriterBuildable(typeof(KafkaConfigurationList))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(KafkaConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(KafkaConfigurationResource))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionList))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionStatusUpdateContent))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionStatusUpdateResult))]
+    [ModelReaderWriterBuildable(typeof(PrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourceList))]
     [ModelReaderWriterBuildable(typeof(PurviewAccountAccessKey))]
-    [ModelReaderWriterBuildable(typeof(PurviewAccountData))]
     [ModelReaderWriterBuildable(typeof(PurviewAccountEndpoint))]
     [ModelReaderWriterBuildable(typeof(PurviewAccountNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(PurviewAccountNameAvailabilityResult))]
-    [ModelReaderWriterBuildable(typeof(PurviewAccountPatch))]
     [ModelReaderWriterBuildable(typeof(PurviewAccountProperties))]
-    [ModelReaderWriterBuildable(typeof(PurviewAccountResource))]
-    [ModelReaderWriterBuildable(typeof(PurviewAccountSku))]
     [ModelReaderWriterBuildable(typeof(PurviewAccountStatus))]
     [ModelReaderWriterBuildable(typeof(PurviewBatchFeatureContent))]
     [ModelReaderWriterBuildable(typeof(PurviewBatchFeatureStatus))]
     [ModelReaderWriterBuildable(typeof(PurviewCredentials))]
     [ModelReaderWriterBuildable(typeof(PurviewIngestionStorage))]
-    [ModelReaderWriterBuildable(typeof(PurviewKafkaConfigurationData))]
-    [ModelReaderWriterBuildable(typeof(PurviewKafkaConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(PurviewManagedResource))]
     [ModelReaderWriterBuildable(typeof(PurviewPrivateEndpointConnectionData))]
-    [ModelReaderWriterBuildable(typeof(PurviewPrivateEndpointConnectionResource))]
-    [ModelReaderWriterBuildable(typeof(PurviewPrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(PurviewPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(PurviewPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(PurviewPrivateLinkServiceConnectionState))]
@@ -55,8 +65,7 @@ namespace Azure.ResourceManager.Purview
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UsageList))]
-    [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
+    [ModelReaderWriterBuildable(typeof(Models.UserAssignedIdentity))]
     public partial class AzureResourceManagerPurviewContext : ModelReaderWriterContext
     {
     }
