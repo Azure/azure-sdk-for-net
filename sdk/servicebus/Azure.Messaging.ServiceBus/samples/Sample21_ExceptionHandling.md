@@ -237,6 +237,8 @@ string queueName = "<queue_name>";
 await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ServiceBusSender sender = client.CreateSender(queueName);
 
+// Application-level retries — on top of the client's built-in retries (default: 3).
+// Set ServiceBusClientOptions.RetryOptions.MaxRetries = 0 for full manual control.
 int maxAttempts = 3;
 int attempt = 0;
 
@@ -280,9 +282,9 @@ while (attempt < maxAttempts)
 | `MessageSizeExceeded` | No | Reduce payload or upgrade to Premium tier |
 | `MessagingEntityDisabled` | No | Re-enable the entity in the portal |
 | `QuotaExceeded` | No | Free space or scale the namespace |
-| `ServiceBusy` | Yes | Back off and rethrow; see [Using IsTransient for retry decisions](#using-istransient-for-retry-decisions) below |
-| `ServiceTimeout` | Yes | Log and rethrow; see [Using IsTransient for retry decisions](#using-istransient-for-retry-decisions) below |
-| `ServiceCommunicationProblem` | Yes | Check network connectivity and rethrow; see [Using IsTransient for retry decisions](#using-istransient-for-retry-decisions) below |
+| `ServiceBusy` | Yes | Back off and rethrow; see [Using IsTransient for retry decisions](#using-istransient-for-retry-decisions) |
+| `ServiceTimeout` | Yes | Log and rethrow; see [Using IsTransient for retry decisions](#using-istransient-for-retry-decisions) |
+| `ServiceCommunicationProblem` | Yes | Check network connectivity and rethrow; see [Using IsTransient for retry decisions](#using-istransient-for-retry-decisions) |
 | `SessionCannotBeLocked` | No | Session is locked by another receiver |
 | `SessionLockLost` | No | Re-accept the session to continue |
 | `MessagingEntityAlreadyExists` | No | Entity already exists; skip creation |

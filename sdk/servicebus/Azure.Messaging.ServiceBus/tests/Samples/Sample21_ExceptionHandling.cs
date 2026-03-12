@@ -277,6 +277,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #endif
                 ServiceBusSender sender = client.CreateSender(queueName);
 
+                // Application-level retries — on top of the client's built-in retries (default: 3).
+                // Set ServiceBusClientOptions.RetryOptions.MaxRetries = 0 for full manual control.
                 int maxAttempts = 3;
                 int attempt = 0;
 
