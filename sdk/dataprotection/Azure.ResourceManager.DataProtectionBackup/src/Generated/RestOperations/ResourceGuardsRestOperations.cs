@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetDefaultDeleteResourceGuardProxyObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetDeleteResourceGuardProxyObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

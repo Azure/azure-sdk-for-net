@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetDefaultDisableSoftDeleteObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetDisableSoftDeleteObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultUpdateProtectedItemObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetUpdateProtectedItemObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultUpdateProtectionPolicyObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetUpdateProtectionPolicyObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultDeleteProtectedItemObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetDeleteProtectedItemObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultBackupSecurityPinObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetBackupSecurityPinObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
