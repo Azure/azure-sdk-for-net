@@ -71,20 +71,6 @@
           "type": "integer",
           "description": "Maximum size of logged message content in bytes.",
           "minimum": 0
-        },
-        "AllowedHeaderNames": {
-          "type": "array",
-          "description": "HTTP header names to include in logs.",
-          "items": {
-            "type": "string"
-          }
-        },
-        "AllowedQueryParameters": {
-          "type": "array",
-          "description": "Query parameter names to include in logs.",
-          "items": {
-            "type": "string"
-          }
         }
       },
       "additionalProperties": false
