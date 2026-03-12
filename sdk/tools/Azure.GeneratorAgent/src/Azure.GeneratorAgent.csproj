@@ -7,7 +7,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <IsToolProject>true</IsToolProject>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
+    <UseAppHost>false</UseAppHost>
     <Version>1.0.0-beta.1</Version>
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
