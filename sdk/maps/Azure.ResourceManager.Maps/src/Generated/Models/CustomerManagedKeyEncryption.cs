@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
         /// <param name="keyEncryptionKeyUri"> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomerManagedKeyEncryption(CustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, string keyEncryptionKeyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomerManagedKeyEncryption(CustomerManagedKeyEncryptionKeyIdentity keyEncryptionKeyIdentity, Uri keyEncryptionKeyUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyEncryptionKeyIdentity = keyEncryptionKeyIdentity;
             KeyEncryptionKeyUri = keyEncryptionKeyUri;
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Maps.Models
         public CustomerManagedKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get; set; }
 
         /// <summary> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </summary>
-        public string KeyEncryptionKeyUri { get; set; }
+        public Uri KeyEncryptionKeyUri { get; set; }
     }
 }

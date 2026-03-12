@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> The storage units to be allocated. Integer values from 1 to 100, inclusive. </summary>
-        public int StorageUnits
+        public int? StorageUnits
         {
             get
             {
-                return Properties is null ? default : Properties.StorageUnits;
+                return Properties is null ? default(int?) : Properties.StorageUnits;
             }
             set
             {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Maps.Models
                 {
                     Properties = new MapsCreatorProperties();
                 }
-                Properties.StorageUnits = value;
+                Properties.StorageUnits = value ?? default;
             }
         }
 

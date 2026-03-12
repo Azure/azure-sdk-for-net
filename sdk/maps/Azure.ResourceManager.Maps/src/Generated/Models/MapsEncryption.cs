@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="infrastructureEncryption"> Values are enabled and disabled. </param>
         /// <param name="customerManagedKeyEncryption"> All Customer-managed key encryption properties for the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MapsEncryption(InfrastructureEncryption? infrastructureEncryption, CustomerManagedKeyEncryption customerManagedKeyEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MapsEncryption(MapsInfrastructureEncryption? infrastructureEncryption, CustomerManagedKeyEncryption customerManagedKeyEncryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InfrastructureEncryption = infrastructureEncryption;
             CustomerManagedKeyEncryption = customerManagedKeyEncryption;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> Values are enabled and disabled. </summary>
-        public InfrastructureEncryption? InfrastructureEncryption { get; set; }
+        public MapsInfrastructureEncryption? InfrastructureEncryption { get; set; }
 
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>
         public CustomerManagedKeyEncryption CustomerManagedKeyEncryption { get; set; }

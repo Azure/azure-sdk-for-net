@@ -12,7 +12,7 @@ using Azure.ResourceManager.Maps;
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> (Optional) Discouraged to include in resource definition. Only needed where it is possible to disable platform (AKA infrastructure) encryption. Azure SQL TDE is an example of this. Values are enabled and disabled. </summary>
-    public readonly partial struct InfrastructureEncryption : IEquatable<InfrastructureEncryption>
+    public readonly partial struct MapsInfrastructureEncryption : IEquatable<MapsInfrastructureEncryption>
     {
         private readonly string _value;
         /// <summary> Encryption is enabled. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Maps.Models
         /// <summary> Encryption is disabled. </summary>
         private const string DisabledValue = "disabled";
 
-        /// <summary> Initializes a new instance of <see cref="InfrastructureEncryption"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsInfrastructureEncryption"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public InfrastructureEncryption(string value)
+        public MapsInfrastructureEncryption(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> Encryption is enabled. </summary>
-        public static InfrastructureEncryption Enabled { get; } = new InfrastructureEncryption(EnabledValue);
+        public static MapsInfrastructureEncryption Enabled { get; } = new MapsInfrastructureEncryption(EnabledValue);
 
         /// <summary> Encryption is disabled. </summary>
-        public static InfrastructureEncryption Disabled { get; } = new InfrastructureEncryption(DisabledValue);
+        public static MapsInfrastructureEncryption Disabled { get; } = new MapsInfrastructureEncryption(DisabledValue);
 
-        /// <summary> Determines if two <see cref="InfrastructureEncryption"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="MapsInfrastructureEncryption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(InfrastructureEncryption left, InfrastructureEncryption right) => left.Equals(right);
+        public static bool operator ==(MapsInfrastructureEncryption left, MapsInfrastructureEncryption right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="InfrastructureEncryption"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="MapsInfrastructureEncryption"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(InfrastructureEncryption left, InfrastructureEncryption right) => !left.Equals(right);
+        public static bool operator !=(MapsInfrastructureEncryption left, MapsInfrastructureEncryption right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="InfrastructureEncryption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MapsInfrastructureEncryption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InfrastructureEncryption(string value) => new InfrastructureEncryption(value);
+        public static implicit operator MapsInfrastructureEncryption(string value) => new MapsInfrastructureEncryption(value);
 
-        /// <summary> Converts a string to a <see cref="InfrastructureEncryption"/>. </summary>
+        /// <summary> Converts a string to a <see cref="MapsInfrastructureEncryption"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator InfrastructureEncryption?(string value) => value == null ? null : new InfrastructureEncryption(value);
+        public static implicit operator MapsInfrastructureEncryption?(string value) => value == null ? null : new MapsInfrastructureEncryption(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is InfrastructureEncryption other && Equals(other);
+        public override bool Equals(object obj) => obj is MapsInfrastructureEncryption other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(InfrastructureEncryption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MapsInfrastructureEncryption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

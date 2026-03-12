@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Maps.Models
     {
         public CustomerManagedKeyEncryption() { }
         public Azure.ResourceManager.Maps.Models.CustomerManagedKeyEncryptionKeyIdentity KeyEncryptionKeyIdentity { get { throw null; } set { } }
-        public string KeyEncryptionKeyUri { get { throw null; } set { } }
+        public System.Uri KeyEncryptionKeyUri { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Maps.Models.CustomerManagedKeyEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Maps.Models.CustomerManagedKeyEncryption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -326,23 +326,6 @@ namespace Azure.ResourceManager.Maps.Models
         Azure.ResourceManager.Maps.Models.CustomerManagedKeyEncryptionKeyIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.CustomerManagedKeyEncryptionKeyIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.CustomerManagedKeyEncryptionKeyIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.CustomerManagedKeyEncryptionKeyIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct InfrastructureEncryption : System.IEquatable<Azure.ResourceManager.Maps.Models.InfrastructureEncryption>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public InfrastructureEncryption(string value) { throw null; }
-        public static Azure.ResourceManager.Maps.Models.InfrastructureEncryption Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Maps.Models.InfrastructureEncryption Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Maps.Models.InfrastructureEncryption other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Maps.Models.InfrastructureEncryption left, Azure.ResourceManager.Maps.Models.InfrastructureEncryption right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Maps.Models.InfrastructureEncryption (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.Maps.Models.InfrastructureEncryption? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Maps.Models.InfrastructureEncryption left, Azure.ResourceManager.Maps.Models.InfrastructureEncryption right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class LocationsItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.LocationsItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.LocationsItem>
     {
@@ -381,6 +364,7 @@ namespace Azure.ResourceManager.Maps.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MapsAccountKind(string value) { throw null; }
+        public static Azure.ResourceManager.Maps.Models.MapsAccountKind Gen1 { get { throw null; } }
         public static Azure.ResourceManager.Maps.Models.MapsAccountKind Gen2 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maps.Models.MapsAccountKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -395,6 +379,7 @@ namespace Azure.ResourceManager.Maps.Models
     {
         public MapsAccountPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.MapsCorsRule> CorsRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.MapsCorsRule> CorsRulesValue { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.Maps.Models.MapsEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -421,6 +406,7 @@ namespace Azure.ResourceManager.Maps.Models
     {
         public MapsAccountProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.MapsCorsRule> CorsRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.MapsCorsRule> CorsRulesValue { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.Maps.Models.MapsEncryption Encryption { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Maps.Models.MapsLinkedResource> LinkedResources { get { throw null; } }
@@ -491,7 +477,7 @@ namespace Azure.ResourceManager.Maps.Models
         public MapsCreatorPatch() { }
         public int? ConsumedStorageUnitSizeInBytes { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
-        public int StorageUnits { get { throw null; } set { } }
+        public int? StorageUnits { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public int? TotalStorageUnitSizeInBytes { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Maps.Models.MapsCreatorPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -525,7 +511,7 @@ namespace Azure.ResourceManager.Maps.Models
     {
         public MapsEncryption() { }
         public Azure.ResourceManager.Maps.Models.CustomerManagedKeyEncryption CustomerManagedKeyEncryption { get { throw null; } set { } }
-        public Azure.ResourceManager.Maps.Models.InfrastructureEncryption? InfrastructureEncryption { get { throw null; } set { } }
+        public Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption? InfrastructureEncryption { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Maps.Models.MapsEncryption JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Maps.Models.MapsEncryption PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -552,6 +538,23 @@ namespace Azure.ResourceManager.Maps.Models
         public static implicit operator Azure.ResourceManager.Maps.Models.MapsIdentityType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.Maps.Models.MapsIdentityType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Maps.Models.MapsIdentityType left, Azure.ResourceManager.Maps.Models.MapsIdentityType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MapsInfrastructureEncryption : System.IEquatable<Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MapsInfrastructureEncryption(string value) { throw null; }
+        public static Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption left, Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption left, Azure.ResourceManager.Maps.Models.MapsInfrastructureEncryption right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class MapsKeySpecification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Maps.Models.MapsKeySpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Maps.Models.MapsKeySpecification>
@@ -693,6 +696,8 @@ namespace Azure.ResourceManager.Maps.Models
         private readonly int _dummyPrimitive;
         public MapsSkuName(string value) { throw null; }
         public static Azure.ResourceManager.Maps.Models.MapsSkuName G2 { get { throw null; } }
+        public static Azure.ResourceManager.Maps.Models.MapsSkuName S0 { get { throw null; } }
+        public static Azure.ResourceManager.Maps.Models.MapsSkuName S1 { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maps.Models.MapsSkuName other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }

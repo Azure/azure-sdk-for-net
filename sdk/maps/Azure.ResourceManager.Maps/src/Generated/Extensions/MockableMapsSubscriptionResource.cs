@@ -13,7 +13,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maps;
-using Azure.ResourceManager.Maps.Models;
 using System.ClientModel.Primitives;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;

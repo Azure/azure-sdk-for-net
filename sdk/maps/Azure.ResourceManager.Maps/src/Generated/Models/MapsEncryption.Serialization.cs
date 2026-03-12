@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 return null;
             }
-            InfrastructureEncryption? infrastructureEncryption = default;
+            MapsInfrastructureEncryption? infrastructureEncryption = default;
             CustomerManagedKeyEncryption customerManagedKeyEncryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    infrastructureEncryption = new InfrastructureEncryption(prop.Value.GetString());
+                    infrastructureEncryption = new MapsInfrastructureEncryption(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("customerManagedKeyEncryption"u8))
