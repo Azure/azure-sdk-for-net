@@ -95,7 +95,7 @@ using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
 
 If you use the [Application Insights SDK](https://learn.microsoft.com/azure/azure-monitor/app/app-insights-overview) and the `ServiceBusProcessor`, send and process operations are tracked and correlated automatically — no extra code required.
 
-For manual processing (using `ServiceBusReceiver` directly), you can start a request telemetry operation that correlates with the incoming message:
+For finer-grained control — for example, to add custom telemetry or explicitly set the parent context — you can start a request telemetry operation manually within the processor callback:
 
 ```C# Snippet:ServiceBusAppInsightsManualProcessing
 async Task ProcessAsync(ProcessMessageEventArgs args)
@@ -203,11 +203,16 @@ The following operations emit diagnostic activities:
 | `ServiceBusReceiver.Complete` | `CompleteMessageAsync` |
 | `ServiceBusReceiver.DeadLetter` | `DeadLetterMessageAsync` |
 | `ServiceBusReceiver.Defer` | `DeferMessageAsync` |
+| `ServiceBusReceiver.Delete` | `DeleteMessagesAsync` |
+| `ServiceBusReceiver.Purge` | `PurgeMessagesAsync` |
 | `ServiceBusReceiver.RenewMessageLock` | `RenewMessageLockAsync` |
 | `ServiceBusSessionReceiver.RenewSessionLock` | `RenewSessionLockAsync` |
 | `ServiceBusSessionReceiver.GetSessionState` | `GetSessionStateAsync` |
 | `ServiceBusSessionReceiver.SetSessionState` | `SetSessionStateAsync` |
 | `ServiceBusProcessor.ProcessMessage` | Callback on `ProcessMessageAsync` |
 | `ServiceBusSessionProcessor.ProcessSessionMessage` | Callback on `ProcessMessageAsync` |
+| `ServiceBusRuleManager.CreateRule` | `CreateRuleAsync` |
+| `ServiceBusRuleManager.DeleteRule` | `DeleteRuleAsync` |
+| `ServiceBusRuleManager.GetRules` | `GetRulesAsync` |
 
 For more details on the Azure SDK distributed tracing conventions, see [Diagnostics samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
