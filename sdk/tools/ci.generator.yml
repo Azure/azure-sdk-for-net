@@ -21,6 +21,10 @@ pr:
     include:
     - sdk/tools/Azure.GeneratorAgent/
 
+variables:
+  - name: Skip.CreateApiReview
+    value: 'true'
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
