@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Index;
             ResourceIdentifier postgreSqlFlexibleServerTuningOptionResourceId = PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
-            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = client.GetPostgreSqlFlexibleServerTuningOptionResource(postgreSqlFlexibleServerTuningOptionResourceId);
+            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerTuningOptionResource(client, postgreSqlFlexibleServerTuningOptionResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerTuningOptionResource result = await postgreSqlFlexibleServerTuningOption.GetAsync();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Index;
             ResourceIdentifier postgreSqlFlexibleServerTuningOptionResourceId = PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
-            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = client.GetPostgreSqlFlexibleServerTuningOptionResource(postgreSqlFlexibleServerTuningOptionResourceId);
+            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerTuningOptionResource(client, postgreSqlFlexibleServerTuningOptionResourceId);
 
             // invoke the operation and iterate over the result
             PostgreSqlFlexibleServerRecommendationFilterType? recommendationType = PostgreSqlFlexibleServerRecommendationFilterType.CreateIndex;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Index;
             ResourceIdentifier postgreSqlFlexibleServerTuningOptionResourceId = PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
-            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = client.GetPostgreSqlFlexibleServerTuningOptionResource(postgreSqlFlexibleServerTuningOptionResourceId);
+            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerTuningOptionResource(client, postgreSqlFlexibleServerTuningOptionResourceId);
 
             // invoke the operation and iterate over the result
             await foreach (ObjectRecommendation item in postgreSqlFlexibleServerTuningOption.GetRecommendationsAsync())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Table;
             ResourceIdentifier postgreSqlFlexibleServerTuningOptionResourceId = PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
-            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = client.GetPostgreSqlFlexibleServerTuningOptionResource(postgreSqlFlexibleServerTuningOptionResourceId);
+            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerTuningOptionResource(client, postgreSqlFlexibleServerTuningOptionResourceId);
 
             // invoke the operation and iterate over the result
             PostgreSqlFlexibleServerRecommendationFilterType? recommendationType = PostgreSqlFlexibleServerRecommendationFilterType.AnalyzeTable;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerTuningOptionType tuningOption = PostgreSqlFlexibleServerTuningOptionType.Table;
             ResourceIdentifier postgreSqlFlexibleServerTuningOptionResourceId = PostgreSqlFlexibleServerTuningOptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, tuningOption);
-            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = client.GetPostgreSqlFlexibleServerTuningOptionResource(postgreSqlFlexibleServerTuningOptionResourceId);
+            PostgreSqlFlexibleServerTuningOptionResource postgreSqlFlexibleServerTuningOption = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerTuningOptionResource(client, postgreSqlFlexibleServerTuningOptionResourceId);
 
             // invoke the operation and iterate over the result
             await foreach (ObjectRecommendation item in postgreSqlFlexibleServerTuningOption.GetRecommendationsAsync())

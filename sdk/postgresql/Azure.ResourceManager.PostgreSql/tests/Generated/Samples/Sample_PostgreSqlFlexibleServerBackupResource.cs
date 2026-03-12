@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string backupName = "backup_638830782181266873";
             ResourceIdentifier postgreSqlFlexibleServerBackupResourceId = PostgreSqlFlexibleServerBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
-            PostgreSqlFlexibleServerBackupResource postgreSqlFlexibleServerBackup = client.GetPostgreSqlFlexibleServerBackupResource(postgreSqlFlexibleServerBackupResourceId);
+            PostgreSqlFlexibleServerBackupResource postgreSqlFlexibleServerBackup = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerBackupResource(client, postgreSqlFlexibleServerBackupResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerBackupResource result = await postgreSqlFlexibleServerBackup.GetAsync();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string backupName = "ondemandbackup-20250601T183022";
             ResourceIdentifier postgreSqlFlexibleServerBackupResourceId = PostgreSqlFlexibleServerBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
-            PostgreSqlFlexibleServerBackupResource postgreSqlFlexibleServerBackup = client.GetPostgreSqlFlexibleServerBackupResource(postgreSqlFlexibleServerBackupResourceId);
+            PostgreSqlFlexibleServerBackupResource postgreSqlFlexibleServerBackup = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerBackupResource(client, postgreSqlFlexibleServerBackupResourceId);
 
             // invoke the operation
             await postgreSqlFlexibleServerBackup.DeleteAsync(WaitUntil.Completed);
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string backupName = "ondemandbackup-20250601T183022";
             ResourceIdentifier postgreSqlFlexibleServerBackupResourceId = PostgreSqlFlexibleServerBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
-            PostgreSqlFlexibleServerBackupResource postgreSqlFlexibleServerBackup = client.GetPostgreSqlFlexibleServerBackupResource(postgreSqlFlexibleServerBackupResourceId);
+            PostgreSqlFlexibleServerBackupResource postgreSqlFlexibleServerBackup = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerBackupResource(client, postgreSqlFlexibleServerBackupResourceId);
 
             // invoke the operation
             ArmOperation<PostgreSqlFlexibleServerBackupResource> lro = await postgreSqlFlexibleServerBackup.UpdateAsync(WaitUntil.Completed);

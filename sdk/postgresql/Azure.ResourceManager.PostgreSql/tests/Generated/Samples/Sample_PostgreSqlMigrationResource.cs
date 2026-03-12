@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string migrationName = "examplemigration";
             ResourceIdentifier postgreSqlMigrationResourceId = PostgreSqlMigrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, migrationName);
-            PostgreSqlMigrationResource postgreSqlMigration = client.GetPostgreSqlMigrationResource(postgreSqlMigrationResourceId);
+            PostgreSqlMigrationResource postgreSqlMigration = PostgreSqlFlexibleServersExtensions.GetPostgreSqlMigrationResource(client, postgreSqlMigrationResourceId);
 
             // invoke the operation
             PostgreSqlMigrationResource result = await postgreSqlMigration.GetAsync();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string migrationName = "examplemigration";
             ResourceIdentifier postgreSqlMigrationResourceId = PostgreSqlMigrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, migrationName);
-            PostgreSqlMigrationResource postgreSqlMigration = client.GetPostgreSqlMigrationResource(postgreSqlMigrationResourceId);
+            PostgreSqlMigrationResource postgreSqlMigration = PostgreSqlFlexibleServersExtensions.GetPostgreSqlMigrationResource(client, postgreSqlMigrationResourceId);
 
             // invoke the operation
             PostgreSqlMigrationResource result = await postgreSqlMigration.GetAsync();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string migrationName = "examplemigration";
             ResourceIdentifier postgreSqlMigrationResourceId = PostgreSqlMigrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, migrationName);
-            PostgreSqlMigrationResource postgreSqlMigration = client.GetPostgreSqlMigrationResource(postgreSqlMigrationResourceId);
+            PostgreSqlMigrationResource postgreSqlMigration = PostgreSqlFlexibleServersExtensions.GetPostgreSqlMigrationResource(client, postgreSqlMigrationResourceId);
 
             // invoke the operation
             PostgreSqlMigrationResource result = await postgreSqlMigration.GetAsync();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string migrationName = "examplemigration";
             ResourceIdentifier postgreSqlMigrationResourceId = PostgreSqlMigrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, migrationName);
-            PostgreSqlMigrationResource postgreSqlMigration = client.GetPostgreSqlMigrationResource(postgreSqlMigrationResourceId);
+            PostgreSqlMigrationResource postgreSqlMigration = PostgreSqlFlexibleServersExtensions.GetPostgreSqlMigrationResource(client, postgreSqlMigrationResourceId);
 
             // invoke the operation
             PostgreSqlMigrationResource result = await postgreSqlMigration.GetAsync();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string migrationName = "examplemigration";
             ResourceIdentifier postgreSqlMigrationResourceId = PostgreSqlMigrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, migrationName);
-            PostgreSqlMigrationResource postgreSqlMigration = client.GetPostgreSqlMigrationResource(postgreSqlMigrationResourceId);
+            PostgreSqlMigrationResource postgreSqlMigration = PostgreSqlFlexibleServersExtensions.GetPostgreSqlMigrationResource(client, postgreSqlMigrationResourceId);
 
             // invoke the operation
             PostgreSqlMigrationResource result = await postgreSqlMigration.GetAsync();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string migrationName = "examplemigration";
             ResourceIdentifier postgreSqlMigrationResourceId = PostgreSqlMigrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, migrationName);
-            PostgreSqlMigrationResource postgreSqlMigration = client.GetPostgreSqlMigrationResource(postgreSqlMigrationResourceId);
+            PostgreSqlMigrationResource postgreSqlMigration = PostgreSqlFlexibleServersExtensions.GetPostgreSqlMigrationResource(client, postgreSqlMigrationResourceId);
 
             // invoke the operation
             await postgreSqlMigration.DeleteAsync(WaitUntil.Completed);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string migrationName = "examplemigration";
             ResourceIdentifier postgreSqlMigrationResourceId = PostgreSqlMigrationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, migrationName);
-            PostgreSqlMigrationResource postgreSqlMigration = client.GetPostgreSqlMigrationResource(postgreSqlMigrationResourceId);
+            PostgreSqlMigrationResource postgreSqlMigration = PostgreSqlFlexibleServersExtensions.GetPostgreSqlMigrationResource(client, postgreSqlMigrationResourceId);
 
             // invoke the operation
             PostgreSqlMigrationPatch patch = new PostgreSqlMigrationPatch

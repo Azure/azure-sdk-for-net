@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerResource result = await postgreSqlFlexibleServer.GetAsync();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerResource result = await postgreSqlFlexibleServer.GetAsync();
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerResource result = await postgreSqlFlexibleServer.GetAsync();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             await postgreSqlFlexibleServer.DeleteAsync(WaitUntil.Completed);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerRestartParameter postgreSqlFlexibleServerRestartParameter = new PostgreSqlFlexibleServerRestartParameter
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             await postgreSqlFlexibleServer.RestartAsync(WaitUntil.Completed);
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             await postgreSqlFlexibleServer.StartAsync(WaitUntil.Completed);
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             await postgreSqlFlexibleServer.StopAsync(WaitUntil.Completed);
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation and iterate over the result
             await foreach (PostgreSqlFlexibleServerCapabilityProperties item in postgreSqlFlexibleServer.GetServerCapabilitiesAsync())
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlCheckMigrationNameAvailabilityContent content = new PostgreSqlCheckMigrationNameAvailabilityContent("examplemigration", new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers/migrations"));
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation and iterate over the result
             await foreach (PostgreSqlFlexibleServerLogFile item in postgreSqlFlexibleServer.GetPostgreSqlFlexibleServerLogFilesAsync())
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerLtrPreBackupContent content = new PostgreSqlFlexibleServerLtrPreBackupContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"));
@@ -820,7 +820,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerLtrBackupContent content = new PostgreSqlFlexibleServerLtrBackupContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"), new PostgreSqlFlexibleServerBackupStoreDetails(new string[] { "sasuri" }));

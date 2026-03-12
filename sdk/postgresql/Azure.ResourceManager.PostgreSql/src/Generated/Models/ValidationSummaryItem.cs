@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -27,13 +26,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="ValidationSummaryItem"/>. </summary>
         /// <param name="validationSummaryItemType"> Validation type. </param>
         /// <param name="state"> Validation status for migration. </param>
-        /// <param name="messages"> Validation messages. </param>
+        /// <param name="messagesInternal"> Validation messages. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationSummaryItem(string validationSummaryItemType, PostgreSqlFlexibleServersValidationState? state, IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> messages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidationSummaryItem(string validationSummaryItemType, PostgreSqlFlexibleServersValidationState? state, IList<PostgreSqlFlexibleServersValidationMessage> messagesInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidationSummaryItemType = validationSummaryItemType;
             State = state;
-            MessagesInternal = messages?.ToList();
+            MessagesInternal = messagesInternal;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

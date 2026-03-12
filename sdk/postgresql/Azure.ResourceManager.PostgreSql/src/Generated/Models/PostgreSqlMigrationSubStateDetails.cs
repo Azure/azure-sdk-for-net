@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -26,13 +25,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationSubStateDetails"/>. </summary>
         /// <param name="currentSubState"> Substate of migration. </param>
-        /// <param name="dbDetails"></param>
+        /// <param name="dbDetailsInternal"></param>
         /// <param name="validationDetails"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails, PostgreSqlFlexibleServersValidationDetails validationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState, IDictionary<string, DbMigrationStatus> dbDetailsInternal, PostgreSqlFlexibleServersValidationDetails validationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CurrentSubState = currentSubState;
-            DbDetailsInternal = dbDetails is null ? new ChangeTrackingDictionary<string, DbMigrationStatus>() : dbDetails.ToDictionary(kv => kv.Key, kv => kv.Value);
+            DbDetailsInternal = dbDetailsInternal;
             ValidationDetails = validationDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

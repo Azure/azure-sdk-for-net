@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<MigrateNetworkStatus>> MigrateNetworkModeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DbMigrateNetworkStatus>> MigrateNetworkModeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _serversClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.MigrateNetworkMode");
             scope.Start();
@@ -796,8 +796,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _serversRestClient.CreateMigrateNetworkModeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                FlexibleServersArmOperation<MigrateNetworkStatus> operation = new FlexibleServersArmOperation<MigrateNetworkStatus>(
-                    new MigrateNetworkStatusOperationSource(),
+                FlexibleServersArmOperation<DbMigrateNetworkStatus> operation = new FlexibleServersArmOperation<DbMigrateNetworkStatus>(
+                    new DbMigrateNetworkStatusOperationSource(),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<MigrateNetworkStatus> MigrateNetworkMode(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DbMigrateNetworkStatus> MigrateNetworkMode(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _serversClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.MigrateNetworkMode");
             scope.Start();
@@ -851,8 +851,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 };
                 HttpMessage message = _serversRestClient.CreateMigrateNetworkModeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                FlexibleServersArmOperation<MigrateNetworkStatus> operation = new FlexibleServersArmOperation<MigrateNetworkStatus>(
-                    new MigrateNetworkStatusOperationSource(),
+                FlexibleServersArmOperation<DbMigrateNetworkStatus> operation = new FlexibleServersArmOperation<DbMigrateNetworkStatus>(
+                    new DbMigrateNetworkStatusOperationSource(),
                     _serversClientDiagnostics,
                     Pipeline,
                     message.Request,

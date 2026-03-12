@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("endedOn"u8);
                 writer.WriteStringValue(EndedOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Summary))
+            if (Optional.IsCollectionDefined(SummaryInternal))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStartArray();
-                foreach (ValidationSummaryItem item in Summary)
+                foreach (ValidationSummaryItem item in SummaryInternal)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string databaseName = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            IReadOnlyList<ValidationSummaryItem> summary = default;
+            IList<ValidationSummaryItem> summaryInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         array.Add(ValidationSummaryItem.DeserializeValidationSummaryItem(item, options));
                     }
-                    summary = array;
+                    summaryInternal = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DbLevelValidationStatus(databaseName, startedOn, endedOn, summary ?? new ChangeTrackingList<ValidationSummaryItem>(), additionalBinaryDataProperties);
+            return new DbLevelValidationStatus(databaseName, startedOn, endedOn, summaryInternal ?? new ChangeTrackingList<ValidationSummaryItem>(), additionalBinaryDataProperties);
         }
     }
 }

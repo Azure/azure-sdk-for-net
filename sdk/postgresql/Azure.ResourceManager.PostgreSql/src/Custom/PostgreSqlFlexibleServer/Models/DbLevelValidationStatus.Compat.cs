@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             get => (IReadOnlyList<ValidationSummaryItem>)SummaryInternal;
         }
 
+        [CodeGenMember("Summary")]
         internal IList<ValidationSummaryItem> SummaryInternal { get; }
     }
 }

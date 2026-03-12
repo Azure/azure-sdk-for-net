@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             get => (IReadOnlyList<ValidationSummaryItem>)ServerLevelValidationDetailsInternal;
         }
 
+        [CodeGenMember("ServerLevelValidationDetails")]
         internal IList<ValidationSummaryItem> ServerLevelValidationDetailsInternal { get; }
 
         /// <summary> Details of database level validations. </summary>
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             get => (IReadOnlyList<DbLevelValidationStatus>)DbLevelValidationDetailsInternal;
         }
 
+        [CodeGenMember("DbLevelValidationDetails")]
         internal IList<DbLevelValidationStatus> DbLevelValidationDetailsInternal { get; }
     }
 }

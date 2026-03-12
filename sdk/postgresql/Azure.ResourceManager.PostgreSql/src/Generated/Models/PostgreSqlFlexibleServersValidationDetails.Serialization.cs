@@ -90,21 +90,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("validationEndTimeInUtc"u8);
                 writer.WriteStringValue(ValidationEndTimeInUtc.Value, "O");
             }
-            if (Optional.IsCollectionDefined(ServerLevelValidationDetails))
+            if (Optional.IsCollectionDefined(ServerLevelValidationDetailsInternal))
             {
                 writer.WritePropertyName("serverLevelValidationDetails"u8);
                 writer.WriteStartArray();
-                foreach (ValidationSummaryItem item in ServerLevelValidationDetails)
+                foreach (ValidationSummaryItem item in ServerLevelValidationDetailsInternal)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(DbLevelValidationDetails))
+            if (Optional.IsCollectionDefined(DbLevelValidationDetailsInternal))
             {
                 writer.WritePropertyName("dbLevelValidationDetails"u8);
                 writer.WriteStartArray();
-                foreach (DbLevelValidationStatus item in DbLevelValidationDetails)
+                foreach (DbLevelValidationStatus item in DbLevelValidationDetailsInternal)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -155,8 +155,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServersValidationState? status = default;
             DateTimeOffset? validationStartTimeInUtc = default;
             DateTimeOffset? validationEndTimeInUtc = default;
-            IReadOnlyList<ValidationSummaryItem> serverLevelValidationDetails = default;
-            IReadOnlyList<DbLevelValidationStatus> dbLevelValidationDetails = default;
+            IList<ValidationSummaryItem> serverLevelValidationDetailsInternal = default;
+            IList<DbLevelValidationStatus> dbLevelValidationDetailsInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         array.Add(ValidationSummaryItem.DeserializeValidationSummaryItem(item, options));
                     }
-                    serverLevelValidationDetails = array;
+                    serverLevelValidationDetailsInternal = array;
                     continue;
                 }
                 if (prop.NameEquals("dbLevelValidationDetails"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         array.Add(DbLevelValidationStatus.DeserializeDbLevelValidationStatus(item, options));
                     }
-                    dbLevelValidationDetails = array;
+                    dbLevelValidationDetailsInternal = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -224,8 +224,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 status,
                 validationStartTimeInUtc,
                 validationEndTimeInUtc,
-                serverLevelValidationDetails ?? new ChangeTrackingList<ValidationSummaryItem>(),
-                dbLevelValidationDetails ?? new ChangeTrackingList<DbLevelValidationStatus>(),
+                serverLevelValidationDetailsInternal ?? new ChangeTrackingList<ValidationSummaryItem>(),
+                dbLevelValidationDetailsInternal ?? new ChangeTrackingList<DbLevelValidationStatus>(),
                 additionalBinaryDataProperties);
         }
     }

@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             get => (IReadOnlyList<string>)IndexColumnsInternal;
         }
 
+        [CodeGenMember("IndexColumns")]
         internal IList<string> IndexColumnsInternal { get; }
 
         /// <summary> Included columns of the index. </summary>
@@ -31,6 +32,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             get => (IReadOnlyList<string>)IncludedColumnsInternal;
         }
 
+        [CodeGenMember("IncludedColumns")]
         internal IList<string> IncludedColumnsInternal { get; }
     }
 }

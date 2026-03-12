@@ -12,23 +12,23 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> The status of a network migration operation. </summary>
-    public partial class MigrateNetworkStatus
+    public partial class DbMigrateNetworkStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrateNetworkStatus"/>. </summary>
-        internal MigrateNetworkStatus()
+        /// <summary> Initializes a new instance of <see cref="DbMigrateNetworkStatus"/>. </summary>
+        internal DbMigrateNetworkStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrateNetworkStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DbMigrateNetworkStatus"/>. </summary>
         /// <param name="subscriptionId"> The ID of the subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="state"> The state of the network migration operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrateNetworkStatus(Guid? subscriptionId, string resourceGroupName, string serverName, NetworkMigrationState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DbMigrateNetworkStatus(Guid? subscriptionId, string resourceGroupName, string serverName, DbNetworkMigrationState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The state of the network migration operation. </summary>
         [WirePath("state")]
-        public NetworkMigrationState? State { get; }
+        public DbNetworkMigrationState? State { get; }
     }
 }

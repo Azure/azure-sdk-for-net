@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            string result = await tenantResource.ExecuteGetPrivateDnsZoneSuffixAsync();
+            string result = await FlexibleServersExtensions.ExecuteGetPrivateDnsZoneSuffixAsync(tenantResource);
 
             Console.WriteLine($"Succeeded: {result}");
         }

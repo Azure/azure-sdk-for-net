@@ -16,58 +16,58 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> The status of a network migration operation. </summary>
-    public partial class MigrateNetworkStatus : IJsonModel<MigrateNetworkStatus>
+    public partial class DbMigrateNetworkStatus : IJsonModel<DbMigrateNetworkStatus>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrateNetworkStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DbMigrateNetworkStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrateNetworkStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DbMigrateNetworkStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMigrateNetworkStatus(document.RootElement, options);
+                        return DeserializeDbMigrateNetworkStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateNetworkStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DbMigrateNetworkStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrateNetworkStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DbMigrateNetworkStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateNetworkStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DbMigrateNetworkStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MigrateNetworkStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DbMigrateNetworkStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrateNetworkStatus IPersistableModel<MigrateNetworkStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DbMigrateNetworkStatus IPersistableModel<DbMigrateNetworkStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MigrateNetworkStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DbMigrateNetworkStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MigrateNetworkStatus"/> from. </param>
-        internal static MigrateNetworkStatus FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DbMigrateNetworkStatus"/> from. </param>
+        internal static DbMigrateNetworkStatus FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDbMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MigrateNetworkStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DbMigrateNetworkStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrateNetworkStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DbMigrateNetworkStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateNetworkStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DbMigrateNetworkStatus)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(SubscriptionId))
             {
@@ -122,24 +122,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrateNetworkStatus IJsonModel<MigrateNetworkStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DbMigrateNetworkStatus IJsonModel<DbMigrateNetworkStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrateNetworkStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DbMigrateNetworkStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrateNetworkStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DbMigrateNetworkStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateNetworkStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DbMigrateNetworkStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrateNetworkStatus(document.RootElement, options);
+            return DeserializeDbMigrateNetworkStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MigrateNetworkStatus DeserializeMigrateNetworkStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static DbMigrateNetworkStatus DeserializeDbMigrateNetworkStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Guid? subscriptionId = default;
             string resourceGroupName = default;
             string serverName = default;
-            NetworkMigrationState? state = default;
+            DbNetworkMigrationState? state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    state = new NetworkMigrationState(prop.Value.GetString());
+                    state = new DbNetworkMigrationState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, additionalBinaryDataProperties);
+            return new DbMigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, additionalBinaryDataProperties);
         }
     }
 }

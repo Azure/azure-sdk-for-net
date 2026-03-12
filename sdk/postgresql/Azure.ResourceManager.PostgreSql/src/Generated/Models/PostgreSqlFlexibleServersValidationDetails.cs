@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -29,16 +28,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="status"> Validation status for migration. </param>
         /// <param name="validationStartTimeInUtc"> Start time (UTC) for validation. </param>
         /// <param name="validationEndTimeInUtc"> End time (UTC) for validation. </param>
-        /// <param name="serverLevelValidationDetails"> Details of server level validations. </param>
-        /// <param name="dbLevelValidationDetails"> Details of server level validations. </param>
+        /// <param name="serverLevelValidationDetailsInternal"> Details of server level validations. </param>
+        /// <param name="dbLevelValidationDetailsInternal"> Details of server level validations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status, DateTimeOffset? validationStartTimeInUtc, DateTimeOffset? validationEndTimeInUtc, IReadOnlyList<ValidationSummaryItem> serverLevelValidationDetails, IReadOnlyList<DbLevelValidationStatus> dbLevelValidationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status, DateTimeOffset? validationStartTimeInUtc, DateTimeOffset? validationEndTimeInUtc, IList<ValidationSummaryItem> serverLevelValidationDetailsInternal, IList<DbLevelValidationStatus> dbLevelValidationDetailsInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ValidationStartTimeInUtc = validationStartTimeInUtc;
             ValidationEndTimeInUtc = validationEndTimeInUtc;
-            ServerLevelValidationDetailsInternal = serverLevelValidationDetails?.ToList();
-            DbLevelValidationDetailsInternal = dbLevelValidationDetails?.ToList();
+            ServerLevelValidationDetailsInternal = serverLevelValidationDetailsInternal;
+            DbLevelValidationDetailsInternal = dbLevelValidationDetailsInternal;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

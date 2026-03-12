@@ -15,30 +15,30 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary></summary>
-    internal partial class MigrateNetworkStatusOperationSource : IOperationSource<MigrateNetworkStatus>
+    internal partial class DbMigrateNetworkStatusOperationSource : IOperationSource<DbMigrateNetworkStatus>
     {
         /// <summary></summary>
-        internal MigrateNetworkStatusOperationSource()
+        internal DbMigrateNetworkStatusOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        MigrateNetworkStatus IOperationSource<MigrateNetworkStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        DbMigrateNetworkStatus IOperationSource<DbMigrateNetworkStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            MigrateNetworkStatus result = MigrateNetworkStatus.DeserializeMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DbMigrateNetworkStatus result = DbMigrateNetworkStatus.DeserializeDbMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
             return result;
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<MigrateNetworkStatus> IOperationSource<MigrateNetworkStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DbMigrateNetworkStatus> IOperationSource<DbMigrateNetworkStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            MigrateNetworkStatus result = MigrateNetworkStatus.DeserializeMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DbMigrateNetworkStatus result = DbMigrateNetworkStatus.DeserializeDbMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
             return result;
         }
     }

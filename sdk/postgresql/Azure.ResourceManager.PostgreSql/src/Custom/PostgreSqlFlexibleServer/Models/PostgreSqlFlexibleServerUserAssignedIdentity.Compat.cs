@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
+        [CodeGenMember("UserAssignedIdentities")]
         internal IDictionary<string, UserIdentity> UserAssignedIdentitiesInternal { get; }
     }
 }

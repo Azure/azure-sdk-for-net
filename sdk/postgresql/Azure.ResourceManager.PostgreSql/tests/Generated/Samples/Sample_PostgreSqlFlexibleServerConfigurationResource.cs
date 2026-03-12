@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string configurationName = "array_nulls";
             ResourceIdentifier postgreSqlFlexibleServerConfigurationResourceId = PostgreSqlFlexibleServerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, configurationName);
-            PostgreSqlFlexibleServerConfigurationResource postgreSqlFlexibleServerConfiguration = client.GetPostgreSqlFlexibleServerConfigurationResource(postgreSqlFlexibleServerConfigurationResourceId);
+            PostgreSqlFlexibleServerConfigurationResource postgreSqlFlexibleServerConfiguration = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerConfigurationResource(client, postgreSqlFlexibleServerConfigurationResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerConfigurationResource result = await postgreSqlFlexibleServerConfiguration.GetAsync();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string configurationName = "constraint_exclusion";
             ResourceIdentifier postgreSqlFlexibleServerConfigurationResourceId = PostgreSqlFlexibleServerConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, configurationName);
-            PostgreSqlFlexibleServerConfigurationResource postgreSqlFlexibleServerConfiguration = client.GetPostgreSqlFlexibleServerConfigurationResource(postgreSqlFlexibleServerConfigurationResourceId);
+            PostgreSqlFlexibleServerConfigurationResource postgreSqlFlexibleServerConfiguration = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerConfigurationResource(client, postgreSqlFlexibleServerConfigurationResourceId);
 
             // invoke the operation
             PostgreSqlFlexibleServerConfigurationData data = new PostgreSqlFlexibleServerConfigurationData

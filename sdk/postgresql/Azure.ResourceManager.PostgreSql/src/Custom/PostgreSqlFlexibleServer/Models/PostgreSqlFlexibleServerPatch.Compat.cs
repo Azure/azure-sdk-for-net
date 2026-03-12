@@ -198,6 +198,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
+        [CodeGenMember("Sku")]
         internal SkuForPatch SkuInternal { get; set; }
 
         /// <summary> The administrator&apos;s login name. </summary>

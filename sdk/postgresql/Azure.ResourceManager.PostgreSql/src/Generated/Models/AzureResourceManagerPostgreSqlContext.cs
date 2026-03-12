@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PostgreSql
     [ModelReaderWriterBuildable(typeof(DatabaseList))]
     [ModelReaderWriterBuildable(typeof(DatabaseProperties))]
     [ModelReaderWriterBuildable(typeof(DbLevelValidationStatus))]
-    [ModelReaderWriterBuildable(typeof(MigrateNetworkStatus))]
+    [ModelReaderWriterBuildable(typeof(DbMigrateNetworkStatus))]
     [ModelReaderWriterBuildable(typeof(DbMigrationStatus))]
     [ModelReaderWriterBuildable(typeof(ErrorAdditionalInfo))]
     [ModelReaderWriterBuildable(typeof(ErrorResponse))]

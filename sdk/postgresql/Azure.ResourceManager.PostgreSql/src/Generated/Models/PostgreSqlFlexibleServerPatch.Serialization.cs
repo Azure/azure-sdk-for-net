@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(SkuInternal))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue<SkuForPatch>(SkuInternal, options);
+                writer.WriteObjectValue(SkuInternal, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            SkuForPatch sku = default;
+            SkuForPatch skuInternal = default;
             PostgreSqlFlexibleServerUserAssignedIdentity identity = default;
             ServerPropertiesForPatch properties = default;
             IDictionary<string, string> tags = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sku = SkuForPatch.DeserializeSkuForPatch(prop.Value, options);
+                    skuInternal = SkuForPatch.DeserializeSkuForPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PostgreSqlFlexibleServerPatch(sku, identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new PostgreSqlFlexibleServerPatch(skuInternal, identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string virtualEndpointName = "examplebasename";
             ResourceIdentifier virtualEndpointResourceId = VirtualEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, virtualEndpointName);
-            VirtualEndpointResource virtualEndpointResource = client.GetVirtualEndpointResource(virtualEndpointResourceId);
+            VirtualEndpointResource virtualEndpointResource = PostgreSqlFlexibleServersExtensions.GetVirtualEndpointResource(client, virtualEndpointResourceId);
 
             // invoke the operation
             VirtualEndpointResource result = await virtualEndpointResource.GetAsync();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string virtualEndpointName = "examplebasename";
             ResourceIdentifier virtualEndpointResourceId = VirtualEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, virtualEndpointName);
-            VirtualEndpointResource virtualEndpointResource = client.GetVirtualEndpointResource(virtualEndpointResourceId);
+            VirtualEndpointResource virtualEndpointResource = PostgreSqlFlexibleServersExtensions.GetVirtualEndpointResource(client, virtualEndpointResourceId);
 
             // invoke the operation
             await virtualEndpointResource.DeleteAsync(WaitUntil.Completed);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string virtualEndpointName = "examplebasename";
             ResourceIdentifier virtualEndpointResourceId = VirtualEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, virtualEndpointName);
-            VirtualEndpointResource virtualEndpointResource = client.GetVirtualEndpointResource(virtualEndpointResourceId);
+            VirtualEndpointResource virtualEndpointResource = PostgreSqlFlexibleServersExtensions.GetVirtualEndpointResource(client, virtualEndpointResourceId);
 
             // invoke the operation
             VirtualEndpointResourcePatch patch = new VirtualEndpointResourcePatch

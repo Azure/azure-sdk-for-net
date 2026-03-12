@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             bool? isNameAvailable = default;
-            PostgreSqlFlexibleServerNameUnavailableReason? reason = default;
+            CheckNameAvailabilityReason? reasonInternal = default;
             string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    reason = new PostgreSqlFlexibleServerNameUnavailableReason(prop.Value.GetString());
+                    reasonInternal = new CheckNameAvailabilityReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             return new PostgreSqlFlexibleServerNameAvailabilityResult(
                 isNameAvailable,
-                reason,
+                reasonInternal,
                 message,
                 additionalBinaryDataProperties,
                 name,

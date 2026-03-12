@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -28,14 +27,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="databaseName"> Name of database. </param>
         /// <param name="startedOn"> Start time of a database level validation. </param>
         /// <param name="endedOn"> End time of a database level validation. </param>
-        /// <param name="summary"> Summary of database level validations. </param>
+        /// <param name="summaryInternal"> Summary of database level validations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DbLevelValidationStatus(string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, IReadOnlyList<ValidationSummaryItem> summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DbLevelValidationStatus(string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, IList<ValidationSummaryItem> summaryInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             StartedOn = startedOn;
             EndedOn = endedOn;
-            SummaryInternal = summary?.ToList();
+            SummaryInternal = summaryInternal;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

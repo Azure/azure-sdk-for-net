@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             get => (IReadOnlyDictionary<string, DbMigrationStatus>)DbDetailsInternal;
         }
 
+        [CodeGenMember("DbDetails")]
         internal IDictionary<string, DbMigrationStatus> DbDetailsInternal { get; }
     }
 }

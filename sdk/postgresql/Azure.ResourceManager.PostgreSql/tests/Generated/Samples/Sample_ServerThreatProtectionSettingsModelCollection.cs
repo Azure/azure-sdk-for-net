@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this ServerThreatProtectionSettingsModelResource
             ServerThreatProtectionSettingsModelCollection collection = postgreSqlFlexibleServer.GetServerThreatProtectionSettingsModels();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this ServerThreatProtectionSettingsModelResource
             ServerThreatProtectionSettingsModelCollection collection = postgreSqlFlexibleServer.GetServerThreatProtectionSettingsModels();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this ServerThreatProtectionSettingsModelResource
             ServerThreatProtectionSettingsModelCollection collection = postgreSqlFlexibleServer.GetServerThreatProtectionSettingsModels();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this ServerThreatProtectionSettingsModelResource
             ServerThreatProtectionSettingsModelCollection collection = postgreSqlFlexibleServer.GetServerThreatProtectionSettingsModels();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string resourceGroupName = "exampleresourcegroup";
             string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(client, postgreSqlFlexibleServerResourceId);
 
             // get the collection of this ServerThreatProtectionSettingsModelResource
             ServerThreatProtectionSettingsModelCollection collection = postgreSqlFlexibleServer.GetServerThreatProtectionSettingsModels();

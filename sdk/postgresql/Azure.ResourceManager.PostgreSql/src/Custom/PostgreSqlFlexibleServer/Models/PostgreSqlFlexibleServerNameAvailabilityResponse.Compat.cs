@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
+        [CodeGenMember("Reason")]
         internal CheckNameAvailabilityReason? ReasonInternal { get; }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             var serverId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, serverName);
-            var server = Client.GetPostgreSqlFlexibleServerResource(serverId);
+            var server = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(Client, serverId);
             return server.GetReplicas(cancellationToken);
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
 
             var serverId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, serverName);
-            var server = Client.GetPostgreSqlFlexibleServerResource(serverId);
+            var server = PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServerResource(Client, serverId);
             return server.GetReplicasAsync(cancellationToken);
         }
     }

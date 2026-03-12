@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             get => (IReadOnlyList<PostgreSqlFlexibleServersValidationMessage>)MessagesInternal;
         }
 
+        [CodeGenMember("Messages")]
         internal IList<PostgreSqlFlexibleServersValidationMessage> MessagesInternal { get; }
     }
 }

@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("indexName"u8);
                 writer.WriteStringValue(IndexName);
             }
-            if (Optional.IsCollectionDefined(IndexColumns))
+            if (Optional.IsCollectionDefined(IndexColumnsInternal))
             {
                 writer.WritePropertyName("indexColumns"u8);
                 writer.WriteStartArray();
-                foreach (string item in IndexColumns)
+                foreach (string item in IndexColumnsInternal)
                 {
                     if (item == null)
                     {
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedColumns))
+            if (Optional.IsCollectionDefined(IncludedColumnsInternal))
             {
                 writer.WritePropertyName("includedColumns"u8);
                 writer.WriteStartArray();
-                foreach (string item in IncludedColumns)
+                foreach (string item in IncludedColumnsInternal)
                 {
                     if (item == null)
                     {
@@ -177,8 +177,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string table = default;
             string indexType = default;
             string indexName = default;
-            IReadOnlyList<string> indexColumns = default;
-            IReadOnlyList<string> includedColumns = default;
+            IList<string> indexColumnsInternal = default;
+            IList<string> includedColumnsInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             array.Add(item.GetString());
                         }
                     }
-                    indexColumns = array;
+                    indexColumnsInternal = array;
                     continue;
                 }
                 if (prop.NameEquals("includedColumns"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             array.Add(item.GetString());
                         }
                     }
-                    includedColumns = array;
+                    includedColumnsInternal = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -260,8 +260,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 table,
                 indexType,
                 indexName,
-                indexColumns ?? new ChangeTrackingList<string>(),
-                includedColumns ?? new ChangeTrackingList<string>(),
+                indexColumnsInternal ?? new ChangeTrackingList<string>(),
+                includedColumnsInternal ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

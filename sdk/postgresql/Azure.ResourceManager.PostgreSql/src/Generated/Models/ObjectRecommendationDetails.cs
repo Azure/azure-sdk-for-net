@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
@@ -31,18 +30,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="table"> Table name. </param>
         /// <param name="indexType"> Index type. </param>
         /// <param name="indexName"> Index name. </param>
-        /// <param name="indexColumns"> Index columns. </param>
-        /// <param name="includedColumns"> Index included columns. </param>
+        /// <param name="indexColumnsInternal"> Index columns. </param>
+        /// <param name="includedColumnsInternal"> Index included columns. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ObjectRecommendationDetails(string databaseName, string schema, string table, string indexType, string indexName, IReadOnlyList<string> indexColumns, IReadOnlyList<string> includedColumns, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ObjectRecommendationDetails(string databaseName, string schema, string table, string indexType, string indexName, IList<string> indexColumnsInternal, IList<string> includedColumnsInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DatabaseName = databaseName;
             Schema = schema;
             Table = table;
             IndexType = indexType;
             IndexName = indexName;
-            IndexColumnsInternal = indexColumns?.ToList();
-            IncludedColumnsInternal = includedColumns?.ToList();
+            IndexColumnsInternal = indexColumnsInternal;
+            IncludedColumnsInternal = includedColumnsInternal;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

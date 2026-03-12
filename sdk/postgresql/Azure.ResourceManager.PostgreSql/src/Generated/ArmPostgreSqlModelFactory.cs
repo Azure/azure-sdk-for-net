@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Details of migration substate. </summary>
         /// <param name="currentSubState"> Substate of migration. </param>
-        /// <param name="dbDetails"></param>
+        /// <param name="dbDetailsInternal"></param>
         /// <param name="validationDetails"></param>
         /// <returns> A new <see cref="Models.PostgreSqlMigrationSubStateDetails"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = default, IReadOnlyDictionary<string, DbMigrationStatus> dbDetails = default, PostgreSqlFlexibleServersValidationDetails validationDetails = default)
+        public static PostgreSqlMigrationSubStateDetails PostgreSqlMigrationSubStateDetails(PostgreSqlMigrationSubState? currentSubState = default, IDictionary<string, DbMigrationStatus> dbDetailsInternal = default, PostgreSqlFlexibleServersValidationDetails validationDetails = default)
         {
-            dbDetails ??= new ChangeTrackingDictionary<string, DbMigrationStatus>();
+            dbDetailsInternal ??= new ChangeTrackingDictionary<string, DbMigrationStatus>();
 
-            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetails, validationDetails, additionalBinaryDataProperties: null);
+            return new PostgreSqlMigrationSubStateDetails(currentSubState, dbDetailsInternal, validationDetails, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Migration state of a database. </summary>
@@ -159,33 +159,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="status"> Validation status for migration. </param>
         /// <param name="validationStartTimeInUtc"> Start time (UTC) for validation. </param>
         /// <param name="validationEndTimeInUtc"> End time (UTC) for validation. </param>
-        /// <param name="serverLevelValidationDetails"> Details of server level validations. </param>
-        /// <param name="dbLevelValidationDetails"> Details of server level validations. </param>
+        /// <param name="serverLevelValidationDetailsInternal"> Details of server level validations. </param>
+        /// <param name="dbLevelValidationDetailsInternal"> Details of server level validations. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServersValidationDetails"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServersValidationDetails PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status = default, DateTimeOffset? validationStartTimeInUtc = default, DateTimeOffset? validationEndTimeInUtc = default, IEnumerable<ValidationSummaryItem> serverLevelValidationDetails = default, IEnumerable<DbLevelValidationStatus> dbLevelValidationDetails = default)
+        public static PostgreSqlFlexibleServersValidationDetails PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status = default, DateTimeOffset? validationStartTimeInUtc = default, DateTimeOffset? validationEndTimeInUtc = default, IEnumerable<ValidationSummaryItem> serverLevelValidationDetailsInternal = default, IEnumerable<DbLevelValidationStatus> dbLevelValidationDetailsInternal = default)
         {
-            serverLevelValidationDetails ??= new ChangeTrackingList<ValidationSummaryItem>();
-            dbLevelValidationDetails ??= new ChangeTrackingList<DbLevelValidationStatus>();
+            serverLevelValidationDetailsInternal ??= new ChangeTrackingList<ValidationSummaryItem>();
+            dbLevelValidationDetailsInternal ??= new ChangeTrackingList<DbLevelValidationStatus>();
 
             return new PostgreSqlFlexibleServersValidationDetails(
                 status,
                 validationStartTimeInUtc,
                 validationEndTimeInUtc,
-                serverLevelValidationDetails.ToList(),
-                dbLevelValidationDetails.ToList(),
+                serverLevelValidationDetailsInternal.ToList(),
+                dbLevelValidationDetailsInternal.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> Validation summary object. </summary>
         /// <param name="validationSummaryItemType"> Validation type. </param>
         /// <param name="state"> Validation status for migration. </param>
-        /// <param name="messages"> Validation messages. </param>
+        /// <param name="messagesInternal"> Validation messages. </param>
         /// <returns> A new <see cref="Models.ValidationSummaryItem"/> instance for mocking. </returns>
-        public static ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = default, PostgreSqlFlexibleServersValidationState? state = default, IEnumerable<PostgreSqlFlexibleServersValidationMessage> messages = default)
+        public static ValidationSummaryItem ValidationSummaryItem(string validationSummaryItemType = default, PostgreSqlFlexibleServersValidationState? state = default, IEnumerable<PostgreSqlFlexibleServersValidationMessage> messagesInternal = default)
         {
-            messages ??= new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>();
+            messagesInternal ??= new ChangeTrackingList<PostgreSqlFlexibleServersValidationMessage>();
 
-            return new ValidationSummaryItem(validationSummaryItemType, state, messages.ToList(), additionalBinaryDataProperties: null);
+            return new ValidationSummaryItem(validationSummaryItemType, state, messagesInternal.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Validation message object. </summary>
@@ -201,13 +201,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="databaseName"> Name of database. </param>
         /// <param name="startedOn"> Start time of a database level validation. </param>
         /// <param name="endedOn"> End time of a database level validation. </param>
-        /// <param name="summary"> Summary of database level validations. </param>
+        /// <param name="summaryInternal"> Summary of database level validations. </param>
         /// <returns> A new <see cref="Models.DbLevelValidationStatus"/> instance for mocking. </returns>
-        public static DbLevelValidationStatus DbLevelValidationStatus(string databaseName = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, IEnumerable<ValidationSummaryItem> summary = default)
+        public static DbLevelValidationStatus DbLevelValidationStatus(string databaseName = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, IEnumerable<ValidationSummaryItem> summaryInternal = default)
         {
-            summary ??= new ChangeTrackingList<ValidationSummaryItem>();
+            summaryInternal ??= new ChangeTrackingList<ValidationSummaryItem>();
 
-            return new DbLevelValidationStatus(databaseName, startedOn, endedOn, summary.ToList(), additionalBinaryDataProperties: null);
+            return new DbLevelValidationStatus(databaseName, startedOn, endedOn, summaryInternal.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Database server metadata. </summary>
@@ -230,10 +230,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServersServerSku(name, tier, additionalBinaryDataProperties: null);
         }
 
-        // WORKAROUND: PostgreSqlMigrationPatch factory method removed - it references internal type
-        // MigrationSecretParametersForPatch. [CodeGenSuppress] in ArmPostgreSqlModelFactory.Compat.cs should
-        // suppress this but doesn't work for ModelFactory methods (generator bug).
-        // See: ArmPostgreSqlFlexibleServersModelFactory for backward-compatible factory methods.
+        // NOTE: PostgreSqlMigrationPatch factory method removed - uses internal MigrationSecretParametersForPatch type.
 
         /// <summary> Availability of a migration name. </summary>
         /// <param name="name"> Name of the migration to check for validity and availability. </param>
@@ -382,34 +379,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 groupIds is null && privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null));
         }
 
-        /// <summary> Identities associated with a server. </summary>
-        /// <param name="userAssignedIdentities"> Map of user assigned managed identities. </param>
-        /// <param name="principalId"> Identifier of the object of the service principal associated to the user assigned managed identity. </param>
-        /// <param name="identityType"> Types of identities associated with a server. </param>
-        /// <param name="tenantId"> Identifier of the tenant of a server. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerUserAssignedIdentity PostgreSqlFlexibleServerUserAssignedIdentity(IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default, Guid? principalId = default, PostgreSqlFlexibleServerIdentityType identityType = default, Guid? tenantId = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
-
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, principalId, identityType, tenantId, additionalBinaryDataProperties: null);
-        }
-
-        // WORKAROUND: PostgreSqlFlexibleServerPatch factory method removed - it references internal types
-        // (SkuForPatch, BackupForPatch, HighAvailabilityForPatch, MaintenanceWindowForPatch, AuthConfigForPatch).
-        // [CodeGenSuppress] in ArmPostgreSqlModelFactory.Compat.cs should suppress this but doesn't work
-        // for ModelFactory methods (generator bug).
-        // See: ArmPostgreSqlFlexibleServersModelFactory for backward-compatible factory methods.
+        // NOTE: PostgreSqlFlexibleServerUserAssignedIdentity and PostgreSqlFlexibleServerPatch factory methods
+        // removed - they expose internal types (UserIdentity, SkuForPatch, etc.) due to [CodeGenMember] redirects.
 
         /// <summary> The status of a network migration operation. </summary>
         /// <param name="subscriptionId"> The ID of the subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="state"> The state of the network migration operation. </param>
-        /// <returns> A new <see cref="Models.MigrateNetworkStatus"/> instance for mocking. </returns>
-        public static MigrateNetworkStatus MigrateNetworkStatus(Guid? subscriptionId = default, string resourceGroupName = default, string serverName = default, NetworkMigrationState? state = default)
+        /// <returns> A new <see cref="Models.DbMigrateNetworkStatus"/> instance for mocking. </returns>
+        public static DbMigrateNetworkStatus DbMigrateNetworkStatus(Guid? subscriptionId = default, string resourceGroupName = default, string serverName = default, DbNetworkMigrationState? state = default)
         {
-            return new MigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, additionalBinaryDataProperties: null);
+            return new DbMigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1013,13 +994,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="table"> Table name. </param>
         /// <param name="indexType"> Index type. </param>
         /// <param name="indexName"> Index name. </param>
-        /// <param name="indexColumns"> Index columns. </param>
-        /// <param name="includedColumns"> Index included columns. </param>
+        /// <param name="indexColumnsInternal"> Index columns. </param>
+        /// <param name="includedColumnsInternal"> Index included columns. </param>
         /// <returns> A new <see cref="Models.ObjectRecommendationDetails"/> instance for mocking. </returns>
-        public static ObjectRecommendationDetails ObjectRecommendationDetails(string databaseName = default, string schema = default, string table = default, string indexType = default, string indexName = default, IEnumerable<string> indexColumns = default, IEnumerable<string> includedColumns = default)
+        public static ObjectRecommendationDetails ObjectRecommendationDetails(string databaseName = default, string schema = default, string table = default, string indexType = default, string indexName = default, IEnumerable<string> indexColumnsInternal = default, IEnumerable<string> includedColumnsInternal = default)
         {
-            indexColumns ??= new ChangeTrackingList<string>();
-            includedColumns ??= new ChangeTrackingList<string>();
+            indexColumnsInternal ??= new ChangeTrackingList<string>();
+            includedColumnsInternal ??= new ChangeTrackingList<string>();
 
             return new ObjectRecommendationDetails(
                 databaseName,
@@ -1027,38 +1008,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 table,
                 indexType,
                 indexName,
-                indexColumns.ToList(),
-                includedColumns.ToList(),
+                indexColumnsInternal.ToList(),
+                includedColumnsInternal.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Availability of a name. </summary>
-        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is not available. </param>
-        /// <param name="name"> Name for which validity and availability was checked. </param>
-        /// <param name="resourceType"> Type of resource. It can be 'Microsoft.DBforPostgreSQL/flexibleServers' or 'Microsoft.DBforPostgreSQL/flexibleServers/virtualendpoints'. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResult"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerNameAvailabilityResult PostgreSqlFlexibleServerNameAvailabilityResult(bool? isNameAvailable = default, PostgreSqlFlexibleServerNameUnavailableReason? reason = default, string message = default, string name = default, ResourceType? resourceType = default)
-        {
-            return new PostgreSqlFlexibleServerNameAvailabilityResult(
-                isNameAvailable,
-                reason,
-                message,
-                additionalBinaryDataProperties: null,
-                name,
-                resourceType);
-        }
-
-        /// <summary> The check availability result. </summary>
-        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is not available. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerNameAvailabilityResponse PostgreSqlFlexibleServerNameAvailabilityResponse(bool? isNameAvailable = default, PostgreSqlFlexibleServerNameUnavailableReason? reason = default, string message = default)
-        {
-            return new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
-        }
+        // NOTE: PostgreSqlFlexibleServerNameAvailabilityResult and PostgreSqlFlexibleServerNameAvailabilityResponse
+        // factory methods removed - they expose internal CheckNameAvailabilityReason type (generator limitation with [CodeGenMember]).
 
         /// <summary> Quota usage for servers. </summary>
         /// <param name="name"> Name of quota usage for servers. </param>

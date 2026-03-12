@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 ResourceType = new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers"),
             };
-            PostgreSqlFlexibleServerNameAvailabilityResult result = await subscriptionResource.CheckPostgreSqlFlexibleServerNameAvailabilityAsync(content);
+            PostgreSqlFlexibleServerNameAvailabilityResult result = await PostgreSqlFlexibleServersExtensions.CheckPostgreSqlFlexibleServerNameAvailabilityAsync(subscriptionResource, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 ResourceType = new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers"),
             };
-            PostgreSqlFlexibleServerNameAvailabilityResult result = await subscriptionResource.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(locationName, content);
+            PostgreSqlFlexibleServerNameAvailabilityResult result = await PostgreSqlFlexibleServersExtensions.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(subscriptionResource, locationName, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (PostgreSqlFlexibleServerResource item in subscriptionResource.GetPostgreSqlFlexibleServersAsync())
+            await foreach (PostgreSqlFlexibleServerResource item in PostgreSqlFlexibleServersExtensions.GetPostgreSqlFlexibleServersAsync(subscriptionResource))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation locationName = new AzureLocation("eastus");
-            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in subscriptionResource.ExecuteLocationBasedCapabilitiesAsync(locationName))
+            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in PostgreSqlFlexibleServersExtensions.ExecuteLocationBasedCapabilitiesAsync(subscriptionResource, locationName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 VirtualNetworkArmResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.Network/virtualNetworks/examplevirtualnetwork"),
             };
-            PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult result = await subscriptionResource.ExecuteVirtualNetworkSubnetUsageAsync(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
+            PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult result = await PostgreSqlFlexibleServersExtensions.ExecuteVirtualNetworkSubnetUsageAsync(subscriptionResource, locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation locationName = new AzureLocation("eastus");
-            await foreach (PostgreSqlFlexibleServerQuotaUsage item in subscriptionResource.GetQuotaUsagesAsync(locationName))
+            await foreach (PostgreSqlFlexibleServerQuotaUsage item in PostgreSqlFlexibleServersExtensions.GetQuotaUsagesAsync(subscriptionResource, locationName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
