@@ -5,11 +5,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    /// <summary>
-    /// Backward compatibility shim: S0 and S1 were removed in API version 2025-10-01-preview
-    /// but must be preserved to avoid breaking existing customers using the GA SDK (1.1.0).
-    /// MapsSkuName is an extensible enum so adding the values back is safe.
-    /// </summary>
+    /// <summary> The name of the SKU, in standard format (such as G2). </summary>
     public readonly partial struct MapsSkuName
     {
         /// <summary> S0. </summary>

@@ -199,39 +199,5 @@ namespace Azure.ResourceManager.Maps
 
             return GetMockableMapsSubscriptionResource(subscriptionResource).GetMapsAccounts(cancellationToken);
         }
-
-        /// <summary>
-        /// Get the result of a long running azure asynchronous operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMapsSubscriptionResource.GetAsync(WaitUntil, AzureLocation, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal static async Task<ArmOperation> GetAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            return await GetMockableMapsSubscriptionResource(subscriptionResource).GetAsync(waitUntil, location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the result of a long running azure asynchronous operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMapsSubscriptionResource.Get(WaitUntil, AzureLocation, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal static ArmOperation Get(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            return GetMockableMapsSubscriptionResource(subscriptionResource).Get(waitUntil, location, operationId, cancellationToken);
-        }
     }
 }

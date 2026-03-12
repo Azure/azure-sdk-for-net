@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -22,10 +21,6 @@ namespace Azure.ResourceManager.Maps.Mocking
     {
         private ClientDiagnostics _accountsClientDiagnostics;
         private Accounts _accountsRestClient;
-        private ClientDiagnostics _operationResultClientDiagnostics;
-        private OperationResult _operationResultRestClient;
-        private ClientDiagnostics _operationStatusClientDiagnostics;
-        private OperationStatus _operationStatusRestClient;
 
         /// <summary> Initializes a new instance of MockableMapsSubscriptionResource for mocking. </summary>
         protected MockableMapsSubscriptionResource()
@@ -42,14 +37,6 @@ namespace Azure.ResourceManager.Maps.Mocking
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
-
-        private ClientDiagnostics OperationResultClientDiagnostics => _operationResultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private OperationResult OperationResultRestClient => _operationResultRestClient ??= new OperationResult(OperationResultClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
-
-        private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private OperationStatus OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatus(OperationStatusClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
         /// <summary>
         /// Get all Maps Accounts in a Subscription
@@ -105,100 +92,6 @@ namespace Azure.ResourceManager.Maps.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MapsAccountResource(Client, data));
-        }
-
-        /// <summary>
-        /// Get the result of a long running azure asynchronous operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maps/locations/{location}/operationResults/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OperationResultOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<ArmOperation> GetAsync(WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = OperationResultClientDiagnostics.CreateScope("MockableMapsSubscriptionResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = OperationResultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MapsArmOperation operation = new MapsArmOperation(OperationResultClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the result of a long running azure asynchronous operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maps/locations/{location}/operationResults/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OperationResultOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual ArmOperation Get(WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = OperationResultClientDiagnostics.CreateScope("MockableMapsSubscriptionResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = OperationResultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                MapsArmOperation operation = new MapsArmOperation(OperationResultClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletionResponse(cancellationToken);
-                }
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

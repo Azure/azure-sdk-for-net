@@ -6,11 +6,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    /// <summary>
-    /// Backward compatibility shim: the AutoRest-generated SDK exposed CORS rules via a
-    /// flattened property named CorsRulesValue (from cors.corsRules). The TypeSpec migration
-    /// renamed it to CorsRules. This shim preserves the old property name for existing callers.
-    /// </summary>
+    /// <summary> Parameters used to update an existing Maps Account. </summary>
     public partial class MapsAccountPatch
     {
         /// <summary>
