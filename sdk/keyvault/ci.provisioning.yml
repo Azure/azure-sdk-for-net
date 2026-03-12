@@ -1,0 +1,29 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/keyvault/ci.provisioning.yml
+    - sdk/keyvault/Azure.Provisioning.KeyVault
+
+parameters:
+  - name: release_Azure_Provisioning_KeyVault
+    displayName: 'Azure.Provisioning.KeyVault'
+    type: boolean
+    default: false
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SdkType: data
+    ServiceDirectory: keyvault
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Provisioning.KeyVault
+      safeName: AzureProvisioningKeyVault
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_KeyVault }}

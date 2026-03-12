@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11205.157 d18.0
+VisualStudioVersion = 18.0.11205.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Provisioning", "Azure.Provisioning\src\Azure.Provisioning.csproj", "{A2363999-F8EF-4C2F-8DDE-6777AE903BB3}"
 EndProject
@@ -61,10 +61,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventHubs", "Azure.Provisioning.EventHubs\src\Azure.Provisioning.EventHubs.csproj", "{93B327CF-8FAD-4112-8193-D20026BC76B1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventHubs.Tests", "Azure.Provisioning.EventHubs\tests\Azure.Provisioning.EventHubs.Tests.csproj", "{B3F7B4D6-4D4E-42AF-944A-5D10AA3A0BEA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.KeyVault", "Azure.Provisioning.KeyVault\src\Azure.Provisioning.KeyVault.csproj", "{47B41BF9-10BB-4536-A39C-514AED908003}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.KeyVault.Tests", "Azure.Provisioning.KeyVault\tests\Azure.Provisioning.KeyVault.Tests.csproj", "{8BDD2240-731D-4ADA-AC70-9EC70C46D715}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kubernetes", "Azure.Provisioning.Kubernetes\src\Azure.Provisioning.Kubernetes.csproj", "{ED3BF558-C208-4245-A310-1C95936C2030}"
 EndProject
@@ -248,14 +244,6 @@ Global
 		{B3F7B4D6-4D4E-42AF-944A-5D10AA3A0BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3F7B4D6-4D4E-42AF-944A-5D10AA3A0BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3F7B4D6-4D4E-42AF-944A-5D10AA3A0BEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47B41BF9-10BB-4536-A39C-514AED908003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47B41BF9-10BB-4536-A39C-514AED908003}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47B41BF9-10BB-4536-A39C-514AED908003}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47B41BF9-10BB-4536-A39C-514AED908003}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8BDD2240-731D-4ADA-AC70-9EC70C46D715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8BDD2240-731D-4ADA-AC70-9EC70C46D715}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8BDD2240-731D-4ADA-AC70-9EC70C46D715}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8BDD2240-731D-4ADA-AC70-9EC70C46D715}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ED3BF558-C208-4245-A310-1C95936C2030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ED3BF558-C208-4245-A310-1C95936C2030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED3BF558-C208-4245-A310-1C95936C2030}.Release|Any CPU.ActiveCfg = Release|Any CPU
