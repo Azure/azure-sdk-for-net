@@ -184,7 +184,7 @@ await processor.StopProcessingAsync();
 
 ## Using the receiver instead of the processor
 
-If you need more control over the receive loop, you can use `ServiceBusReceiver` directly. Unlike the processor, the receiver does not renew locks automatically -- you must renew them yourself.  The most common approach is by using a background task.
+If you need more control over the receive loop, you can use `ServiceBusReceiver` directly. Unlike the processor, the receiver does not renew locks automatically -- you must renew them yourself. The most common approach is by using a background task.
 
 ```C# Snippet:ServiceBusLongRunningWithReceiver
 // The fully qualified Service Bus namespace, which is likely to be similar to
