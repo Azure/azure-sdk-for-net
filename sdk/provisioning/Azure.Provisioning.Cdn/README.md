@@ -24,6 +24,157 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
+### Create a CDN Profile and Endpoint with Custom Origin
+
+This example demonstrates how to create a CDN profile and endpoint with a custom origin, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cdn/cdn-with-custom-origin/main.bicep).
+
+```C# Snippet:CdnWithCustomOrigin
+Infrastructure infra = new();
+
+ProvisioningParameter profileName = new(nameof(profileName), typeof(string))
+{
+    Description = "Name of the CDN Profile."
+};
+infra.Add(profileName);
+
+ProvisioningParameter endpointName = new(nameof(endpointName), typeof(string))
+{
+    Description = "Name of the CDN Endpoint, must be unique."
+};
+infra.Add(endpointName);
+
+ProvisioningParameter originUrl = new(nameof(originUrl), typeof(string))
+{
+    Description = "Url of the origin."
+};
+infra.Add(originUrl);
+
+CdnProfile profile = new(nameof(profile), CdnProfile.ResourceVersions.V2025_06_01)
+{
+    Name = profileName,
+    Location = new AzureLocation("global"),
+    SkuName = CdnSkuName.StandardMicrosoft
+};
+infra.Add(profile);
+
+CdnEndpoint endpoint = new(nameof(endpoint), CdnEndpoint.ResourceVersions.V2025_06_01)
+{
+    Parent = profile,
+    Name = endpointName,
+    Location = new AzureLocation("global"),
+    OriginHostHeader = originUrl,
+    IsHttpAllowed = true,
+    IsHttpsAllowed = true,
+    QueryStringCachingBehavior = QueryStringCachingBehavior.IgnoreQueryString,
+    IsCompressionEnabled = true,
+    ContentTypesToCompress =
+    {
+        "application/javascript",
+        "application/json",
+        "application/xml",
+        "text/css",
+        "text/html",
+        "text/plain"
+    },
+    Origins =
+    {
+        new DeepCreatedOrigin
+        {
+            Name = "origin1",
+            HostName = originUrl
+        }
+    }
+};
+infra.Add(endpoint);
+
+infra.Add(new ProvisioningOutput("endpointHostName", typeof(string)) { Value = endpoint.HostName });
+```
+
+### Create a Front Door Standard/Premium Profile
+
+This example demonstrates how to create a Front Door Standard/Premium profile with an endpoint, origin group, origin, and route, based on the [Azure quickstart template](https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.cdn/front-door-standard-premium/main.bicep).
+
+```C# Snippet:FrontDoorStandardPremium
+Infrastructure infra = new();
+
+ProvisioningParameter originHostName = new(nameof(originHostName), typeof(string))
+{
+    Description = "The host name that should be used when connecting from Front Door to the origin."
+};
+infra.Add(originHostName);
+
+CdnProfile profile = new(nameof(profile), CdnProfile.ResourceVersions.V2025_06_01)
+{
+    Name = "MyFrontDoor",
+    Location = new AzureLocation("global"),
+    SkuName = CdnSkuName.StandardAzureFrontDoor
+};
+infra.Add(profile);
+
+FrontDoorEndpoint endpoint = new(nameof(endpoint), FrontDoorEndpoint.ResourceVersions.V2025_06_01)
+{
+    Parent = profile,
+    Name = "MyEndpoint",
+    Location = new AzureLocation("global"),
+    EnabledState = EnabledState.Enabled
+};
+infra.Add(endpoint);
+
+FrontDoorOriginGroup originGroup = new(nameof(originGroup), FrontDoorOriginGroup.ResourceVersions.V2025_06_01)
+{
+    Parent = profile,
+    Name = "MyOriginGroup",
+    LoadBalancingSettings = new LoadBalancingSettings
+    {
+        SampleSize = 4,
+        SuccessfulSamplesRequired = 3
+    },
+    HealthProbeSettings = new HealthProbeSettings
+    {
+        ProbePath = "/",
+        ProbeRequestType = HealthProbeRequestType.Head,
+        ProbeProtocol = HealthProbeProtocol.Http,
+        ProbeIntervalInSeconds = 100
+    }
+};
+infra.Add(originGroup);
+
+FrontDoorOrigin origin = new(nameof(origin), FrontDoorOrigin.ResourceVersions.V2025_06_01)
+{
+    Parent = originGroup,
+    Name = "MyOrigin",
+    HostName = originHostName,
+    HttpPort = 80,
+    HttpsPort = 443,
+    OriginHostHeader = originHostName,
+    Priority = 1,
+    Weight = 1000
+};
+infra.Add(origin);
+
+FrontDoorRoute route = new(nameof(route), FrontDoorRoute.ResourceVersions.V2025_06_01)
+{
+    Parent = endpoint,
+    Name = "MyRoute",
+    OriginGroupId = originGroup.Id,
+    SupportedProtocols =
+    {
+        FrontDoorEndpointProtocol.Http,
+        FrontDoorEndpointProtocol.Https
+    },
+    PatternsToMatch =
+    {
+        "/*"
+    },
+    ForwardingProtocol = ForwardingProtocol.HttpsOnly,
+    LinkToDefaultDomain = LinkToDefaultDomain.Enabled,
+    HttpsRedirect = HttpsRedirect.Enabled
+};
+infra.Add(route);
+
+infra.Add(new ProvisioningOutput("frontDoorEndpointHostName", typeof(string)) { Value = endpoint.HostName });
+```
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
