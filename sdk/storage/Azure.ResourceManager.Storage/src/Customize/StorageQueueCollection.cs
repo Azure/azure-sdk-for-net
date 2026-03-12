@@ -37,22 +37,26 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Lists all queues. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ListQueue> GetAll(string maxpagesize, string filter, CancellationToken cancellationToken)
-            => Client.GetQueueServiceResource(Id).GetAll(maxpagesize, filter, cancellationToken);
+        public virtual Pageable<StorageQueueResource> GetAll(string maxpagesize, string filter, CancellationToken cancellationToken)
+            => new PageableWrapper<ListQueue, StorageQueueResource>(
+                Client.GetQueueServiceResource(Id).GetAll(maxpagesize, filter, cancellationToken),
+                item => Client.GetStorageQueueResource(item.Id));
 
         /// <summary> Lists all queues. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ListQueue> GetAllAsync(string maxpagesize, string filter, CancellationToken cancellationToken)
-            => Client.GetQueueServiceResource(Id).GetAllAsync(maxpagesize, filter, cancellationToken);
+        public virtual AsyncPageable<StorageQueueResource> GetAllAsync(string maxpagesize, string filter, CancellationToken cancellationToken)
+            => new AsyncPageableWrapper<ListQueue, StorageQueueResource>(
+                Client.GetQueueServiceResource(Id).GetAllAsync(maxpagesize, filter, cancellationToken),
+                item => Client.GetStorageQueueResource(item.Id));
 
         /// <summary> Lists all queues. Backward-compatible overload with int maxpagesize. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<ListQueue> GetAll(int? maxpagesize, string filter, CancellationToken cancellationToken)
+        public virtual Pageable<StorageQueueResource> GetAll(int? maxpagesize, string filter, CancellationToken cancellationToken)
             => GetAll(maxpagesize?.ToString(), filter, cancellationToken);
 
         /// <summary> Lists all queues. Backward-compatible overload with int maxpagesize. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<ListQueue> GetAllAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)
+        public virtual AsyncPageable<StorageQueueResource> GetAllAsync(int? maxpagesize, string filter, CancellationToken cancellationToken)
             => GetAllAsync(maxpagesize?.ToString(), filter, cancellationToken);
     }
 }

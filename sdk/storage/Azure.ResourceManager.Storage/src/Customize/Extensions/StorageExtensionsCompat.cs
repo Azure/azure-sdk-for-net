@@ -33,5 +33,15 @@ namespace Azure.ResourceManager.Storage
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(this SubscriptionResource subscriptionResource, StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken)
             => GetMockableStorageSubscriptionResource(subscriptionResource).CheckStorageAccountNameAvailability(content, cancellationToken);
+
+        /// <summary> Lists deleted accounts under the subscription. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            => GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
+
+        /// <summary> Lists deleted accounts under the subscription. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static Pageable<DeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
+            => GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccounts(cancellationToken);
     }
 }

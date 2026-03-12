@@ -37,22 +37,26 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Lists all file shares. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<FileShareItem> GetAll(string maxpagesize, string filter, string expand, CancellationToken cancellationToken)
-            => Client.GetFileServiceResource(Id).GetAll(maxpagesize, filter, expand, cancellationToken);
+        public virtual Pageable<FileShareResource> GetAll(string maxpagesize, string filter, string expand, CancellationToken cancellationToken)
+            => new PageableWrapper<FileShareItem, FileShareResource>(
+                Client.GetFileServiceResource(Id).GetAll(maxpagesize, filter, expand, cancellationToken),
+                item => Client.GetFileShareResource(item.Id));
 
         /// <summary> Lists all file shares. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<FileShareItem> GetAllAsync(string maxpagesize, string filter, string expand, CancellationToken cancellationToken)
-            => Client.GetFileServiceResource(Id).GetAllAsync(maxpagesize, filter, expand, cancellationToken);
+        public virtual AsyncPageable<FileShareResource> GetAllAsync(string maxpagesize, string filter, string expand, CancellationToken cancellationToken)
+            => new AsyncPageableWrapper<FileShareItem, FileShareResource>(
+                Client.GetFileServiceResource(Id).GetAllAsync(maxpagesize, filter, expand, cancellationToken),
+                item => Client.GetFileShareResource(item.Id));
 
         /// <summary> Lists all file shares. Backward-compatible overload with int maxpagesize. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<FileShareItem> GetAll(int? maxpagesize, string filter, string expand, CancellationToken cancellationToken)
+        public virtual Pageable<FileShareResource> GetAll(int? maxpagesize, string filter, string expand, CancellationToken cancellationToken)
             => GetAll(maxpagesize?.ToString(), filter, expand, cancellationToken);
 
         /// <summary> Lists all file shares. Backward-compatible overload with int maxpagesize. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<FileShareItem> GetAllAsync(int? maxpagesize, string filter, string expand, CancellationToken cancellationToken)
+        public virtual AsyncPageable<FileShareResource> GetAllAsync(int? maxpagesize, string filter, string expand, CancellationToken cancellationToken)
             => GetAllAsync(maxpagesize?.ToString(), filter, expand, cancellationToken);
     }
 }

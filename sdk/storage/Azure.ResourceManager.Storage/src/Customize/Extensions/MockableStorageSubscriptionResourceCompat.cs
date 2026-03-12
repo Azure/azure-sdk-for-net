@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,5 +33,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(StorageAccountNameAvailabilityContent content, CancellationToken cancellationToken)
             => CheckNameAvailability(content, cancellationToken);
+
+        /// <summary> Lists deleted accounts under the subscription. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(CancellationToken cancellationToken)
+            => throw new NotSupportedException("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.");
+
+        /// <summary> Lists deleted accounts under the subscription. Backward-compatible overload. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<DeletedAccountResource> GetDeletedAccounts(CancellationToken cancellationToken)
+            => throw new NotSupportedException("This overload is no longer supported. Use GetDeletedAccounts() to obtain the DeletedAccountCollection, then access individual deleted accounts by location and name.");
     }
 }
