@@ -19,7 +19,21 @@ namespace Azure.ResourceManager.Batch
     /// </summary>
     public partial class BatchAccountPoolData : ResourceData
     {
-        /// <summary> The configuration for compute nodes in a pool based on the Azure Virtual Machines infrastructure. </summary>
-        public BatchDeploymentConfiguration DeploymentConfiguration { get; set; }
+        /// <summary> Deployment configuration properties. </summary>
+        public BatchDeploymentConfiguration DeploymentConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeploymentConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PoolProperties();
+                }
+                Properties.DeploymentConfiguration = value;
+            }
+        }
     }
 }
