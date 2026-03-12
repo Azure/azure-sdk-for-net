@@ -129,7 +129,7 @@ catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.Sessio
 
 To avoid lock expiration in the first place:
 - **Use the processor**: `ServiceBusProcessor` automatically renews message locks via `MaxAutoLockRenewalDuration`.
-- **Keep processing fast**: if processing takes longer than the lock duration (default 60 seconds for queues), either increase the lock duration on the entity or use auto-lock renewal.
+- **Keep processing fast**: if processing takes longer than the lock duration configured for the queue or subscription, either increase the lock duration on the entity or use auto-lock renewal.
 - **Use `MaxAutoLockRenewalDuration`**: set this to at least the longest expected processing time (including retries or delays in your handler), plus ~25% margin. Set this on `ServiceBusProcessorOptions` or call receiver-level lock renewal for long-running work.
 
 ## Error handling in the processor
