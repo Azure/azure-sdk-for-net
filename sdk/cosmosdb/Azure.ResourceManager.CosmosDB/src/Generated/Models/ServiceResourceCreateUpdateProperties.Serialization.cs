@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
+    /// <summary>
+    /// Properties in ServiceResourceCreateUpdateParameters.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>, <see cref="GraphAPIComputeServiceResourceCreateUpdateProperties"/>, and <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownServiceResourceCreateUpdateProperties))]
-    public partial class ServiceResourceCreateUpdateProperties : IUtf8JsonSerializable, IJsonModel<ServiceResourceCreateUpdateProperties>
+    public abstract partial class ServiceResourceCreateUpdateProperties : IJsonModel<ServiceResourceCreateUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceResourceCreateUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ServiceResourceCreateUpdateProperties"/> for deserialization. </summary>
+        internal ServiceResourceCreateUpdateProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceResourceCreateUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceResourceCreateUpdateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceResourceCreateUpdateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceResourceCreateUpdateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceResourceCreateUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceResourceCreateUpdateProperties IPersistableModel<ServiceResourceCreateUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceResourceCreateUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceResourceCreateUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +77,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceResourceCreateUpdateProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(InstanceSize))
             {
                 writer.WritePropertyName("instanceSize"u8);
@@ -46,15 +94,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("serviceType"u8);
             writer.WriteStringValue(ServiceType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,68 +111,46 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        ServiceResourceCreateUpdateProperties IJsonModel<ServiceResourceCreateUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceResourceCreateUpdateProperties IJsonModel<ServiceResourceCreateUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceResourceCreateUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceResourceCreateUpdateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceResourceCreateUpdateProperties(document.RootElement, options);
         }
 
-        internal static ServiceResourceCreateUpdateProperties DeserializeServiceResourceCreateUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceResourceCreateUpdateProperties DeserializeServiceResourceCreateUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("serviceType", out JsonElement discriminator))
+            if (element.TryGetProperty("serviceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "DataTransfer": return DataTransferServiceResourceCreateUpdateProperties.DeserializeDataTransferServiceResourceCreateUpdateProperties(element, options);
-                    case "GraphAPICompute": return GraphApiComputeServiceResourceCreateUpdateProperties.DeserializeGraphApiComputeServiceResourceCreateUpdateProperties(element, options);
-                    case "MaterializedViewsBuilder": return MaterializedViewsBuilderServiceResourceCreateUpdateProperties.DeserializeMaterializedViewsBuilderServiceResourceCreateUpdateProperties(element, options);
-                    case "SqlDedicatedGateway": return SqlDedicatedGatewayServiceResourceCreateUpdateProperties.DeserializeSqlDedicatedGatewayServiceResourceCreateUpdateProperties(element, options);
+                    case "DataTransfer":
+                        return DataTransferServiceResourceCreateUpdateProperties.DeserializeDataTransferServiceResourceCreateUpdateProperties(element, options);
+                    case "SqlDedicatedGateway":
+                        return SqlDedicatedGatewayServiceResourceCreateUpdateProperties.DeserializeSqlDedicatedGatewayServiceResourceCreateUpdateProperties(element, options);
+                    case "GraphAPICompute":
+                        return GraphAPIComputeServiceResourceCreateUpdateProperties.DeserializeGraphAPIComputeServiceResourceCreateUpdateProperties(element, options);
+                    case "MaterializedViewsBuilder":
+                        return MaterializedViewsBuilderServiceResourceCreateUpdateProperties.DeserializeMaterializedViewsBuilderServiceResourceCreateUpdateProperties(element, options);
                 }
             }
             return UnknownServiceResourceCreateUpdateProperties.DeserializeUnknownServiceResourceCreateUpdateProperties(element, options);
         }
-
-        BinaryData IPersistableModel<ServiceResourceCreateUpdateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceResourceCreateUpdateProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ServiceResourceCreateUpdateProperties IPersistableModel<ServiceResourceCreateUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeServiceResourceCreateUpdateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceResourceCreateUpdateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ServiceResourceCreateUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

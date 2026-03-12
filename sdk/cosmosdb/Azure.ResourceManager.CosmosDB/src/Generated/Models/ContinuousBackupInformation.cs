@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Information about the status of continuous backups. </summary>
     internal partial class ContinuousBackupInformation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContinuousBackupInformation"/>. </summary>
         internal ContinuousBackupInformation()
@@ -52,15 +23,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="ContinuousBackupInformation"/>. </summary>
         /// <param name="latestRestorableTimestamp"> The latest restorable timestamp for a resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContinuousBackupInformation(DateTimeOffset? latestRestorableTimestamp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContinuousBackupInformation(string latestRestorableTimestamp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LatestRestorableTimestamp = latestRestorableTimestamp;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The latest restorable timestamp for a resource. </summary>
-        [WirePath("latestRestorableTimestamp")]
-        public DateTimeOffset? LatestRestorableTimestamp { get; }
+        public string LatestRestorableTimestamp { get; }
     }
 }

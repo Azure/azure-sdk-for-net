@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal static partial class NetworkAclBypassExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this NetworkAclBypass value) => value switch
         {
             NetworkAclBypass.None => "None",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NetworkAclBypass value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static NetworkAclBypass ToNetworkAclBypass(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return NetworkAclBypass.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureServices")) return NetworkAclBypass.AzureServices;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return NetworkAclBypass.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureServices"))
+            {
+                return NetworkAclBypass.AzureServices;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NetworkAclBypass value.");
         }
     }

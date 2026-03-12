@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBOperationType : IEquatable<CosmosDBOperationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBOperationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBOperationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreateValue = "Create";
         private const string ReplaceValue = "Replace";
         private const string DeleteValue = "Delete";
         private const string RecreateValue = "Recreate";
         private const string SystemOperationValue = "SystemOperation";
 
-        /// <summary> Create. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBOperationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Create. </summary>
         public static CosmosDBOperationType Create { get; } = new CosmosDBOperationType(CreateValue);
-        /// <summary> Replace. </summary>
+
+        /// <summary> Gets the Replace. </summary>
         public static CosmosDBOperationType Replace { get; } = new CosmosDBOperationType(ReplaceValue);
-        /// <summary> Delete. </summary>
+
+        /// <summary> Gets the Delete. </summary>
         public static CosmosDBOperationType Delete { get; } = new CosmosDBOperationType(DeleteValue);
-        /// <summary> Recreate. </summary>
+
+        /// <summary> Gets the Recreate. </summary>
         public static CosmosDBOperationType Recreate { get; } = new CosmosDBOperationType(RecreateValue);
-        /// <summary> SystemOperation. </summary>
+
+        /// <summary> Gets the SystemOperation. </summary>
         public static CosmosDBOperationType SystemOperation { get; } = new CosmosDBOperationType(SystemOperationValue);
+
         /// <summary> Determines if two <see cref="CosmosDBOperationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBOperationType left, CosmosDBOperationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBOperationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBOperationType left, CosmosDBOperationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBOperationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBOperationType(string value) => new CosmosDBOperationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBOperationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBOperationType?(string value) => value == null ? null : new CosmosDBOperationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBOperationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBOperationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

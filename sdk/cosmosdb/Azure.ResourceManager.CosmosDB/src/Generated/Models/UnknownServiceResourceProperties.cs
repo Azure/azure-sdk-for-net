@@ -10,8 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Unknown version of ServiceResourceProperties. </summary>
-    internal partial class UnknownServiceResourceProperties : CosmosDBServiceProperties
+    internal partial class UnknownServiceResourceProperties : ServiceResourceProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownServiceResourceProperties"/>. </summary>
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
@@ -19,14 +18,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
         /// <param name="status"> Describes the status of a service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        internal UnknownServiceResourceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, CosmosDBServiceStatus? status, IDictionary<string, BinaryData> additionalProperties) : base(createdOn, instanceSize, instanceCount, serviceType, status, additionalProperties)
-        {
-            ServiceType = serviceType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownServiceResourceProperties"/> for deserialization. </summary>
-        internal UnknownServiceResourceProperties()
+        /// <param name="additionalProperties"></param>
+        internal UnknownServiceResourceProperties(DateTimeOffset? createdOn, CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, ServiceStatus? status, IReadOnlyDictionary<string, BinaryData> additionalProperties) : base(createdOn, instanceSize, instanceCount, serviceType != default ? serviceType : "unknown", status, additionalProperties)
         {
         }
     }

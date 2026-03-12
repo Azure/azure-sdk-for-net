@@ -14,25 +14,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class SqlDedicatedGatewayServiceResourceCreateUpdateProperties : ServiceResourceCreateUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>. </summary>
-        public SqlDedicatedGatewayServiceResourceCreateUpdateProperties()
+        public SqlDedicatedGatewayServiceResourceCreateUpdateProperties() : base(CosmosDBServiceType.SqlDedicatedGateway)
         {
-            ServiceType = CosmosDBServiceType.SqlDedicatedGateway;
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>. </summary>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dedicatedGatewayType"> DedicatedGatewayType for the service. </param>
-        internal SqlDedicatedGatewayServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> serializedAdditionalRawData, DedicatedGatewayType? dedicatedGatewayType) : base(instanceSize, instanceCount, serviceType, serializedAdditionalRawData)
+        internal SqlDedicatedGatewayServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DedicatedGatewayType? dedicatedGatewayType) : base(instanceSize, instanceCount, serviceType, additionalBinaryDataProperties)
         {
             DedicatedGatewayType = dedicatedGatewayType;
-            ServiceType = serviceType;
         }
 
         /// <summary> DedicatedGatewayType for the service. </summary>
-        [WirePath("dedicatedGatewayType")]
         public DedicatedGatewayType? DedicatedGatewayType { get; set; }
     }
 }

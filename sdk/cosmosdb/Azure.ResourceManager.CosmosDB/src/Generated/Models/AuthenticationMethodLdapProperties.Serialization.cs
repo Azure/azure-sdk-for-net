@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class AuthenticationMethodLdapProperties : IUtf8JsonSerializable, IJsonModel<AuthenticationMethodLdapProperties>
+    /// <summary> Ldap authentication method properties. This feature is in preview. </summary>
+    public partial class AuthenticationMethodLdapProperties : IJsonModel<AuthenticationMethodLdapProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationMethodLdapProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AuthenticationMethodLdapProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAuthenticationMethodLdapProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AuthenticationMethodLdapProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AuthenticationMethodLdapProperties IPersistableModel<AuthenticationMethodLdapProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AuthenticationMethodLdapProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AuthenticationMethodLdapProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ServerHostname))
             {
                 writer.WritePropertyName("serverHostname"u8);
@@ -70,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("serverCertificates"u8);
                 writer.WriteStartArray();
-                foreach (var item in ServerCertificates)
+                foreach (CassandraCertificate item in ServerCertificates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -81,15 +119,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("connectionTimeoutInMs"u8);
                 writer.WriteNumberValue(ConnectionTimeoutInMs.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -98,22 +136,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        AuthenticationMethodLdapProperties IJsonModel<AuthenticationMethodLdapProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AuthenticationMethodLdapProperties IJsonModel<AuthenticationMethodLdapProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AuthenticationMethodLdapProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAuthenticationMethodLdapProperties(document.RootElement, options);
         }
 
-        internal static AuthenticationMethodLdapProperties DeserializeAuthenticationMethodLdapProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AuthenticationMethodLdapProperties DeserializeAuthenticationMethodLdapProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -126,73 +169,71 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string searchFilterTemplate = default;
             IList<CassandraCertificate> serverCertificates = default;
             int? connectionTimeoutInMs = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("serverHostname"u8))
+                if (prop.NameEquals("serverHostname"u8))
                 {
-                    serverHostname = property.Value.GetString();
+                    serverHostname = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverPort"u8))
+                if (prop.NameEquals("serverPort"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    serverPort = property.Value.GetInt32();
+                    serverPort = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("serviceUserDistinguishedName"u8))
+                if (prop.NameEquals("serviceUserDistinguishedName"u8))
                 {
-                    serviceUserDistinguishedName = property.Value.GetString();
+                    serviceUserDistinguishedName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceUserPassword"u8))
+                if (prop.NameEquals("serviceUserPassword"u8))
                 {
-                    serviceUserPassword = property.Value.GetString();
+                    serviceUserPassword = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("searchBaseDistinguishedName"u8))
+                if (prop.NameEquals("searchBaseDistinguishedName"u8))
                 {
-                    searchBaseDistinguishedName = property.Value.GetString();
+                    searchBaseDistinguishedName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("searchFilterTemplate"u8))
+                if (prop.NameEquals("searchFilterTemplate"u8))
                 {
-                    searchFilterTemplate = property.Value.GetString();
+                    searchFilterTemplate = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCertificates"u8))
+                if (prop.NameEquals("serverCertificates"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CassandraCertificate.DeserializeCassandraCertificate(item, options));
                     }
                     serverCertificates = array;
                     continue;
                 }
-                if (property.NameEquals("connectionTimeoutInMs"u8))
+                if (prop.NameEquals("connectionTimeoutInMs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    connectionTimeoutInMs = property.Value.GetInt32();
+                    connectionTimeoutInMs = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AuthenticationMethodLdapProperties(
                 serverHostname,
                 serverPort,
@@ -202,223 +243,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 searchFilterTemplate,
                 serverCertificates ?? new ChangeTrackingList<CassandraCertificate>(),
                 connectionTimeoutInMs,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerHostname), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serverHostname: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServerHostname))
-                {
-                    builder.Append("  serverHostname: ");
-                    if (ServerHostname.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServerHostname}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServerHostname}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerPort), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serverPort: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServerPort))
-                {
-                    builder.Append("  serverPort: ");
-                    builder.AppendLine($"{ServerPort.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUserDistinguishedName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceUserDistinguishedName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceUserDistinguishedName))
-                {
-                    builder.Append("  serviceUserDistinguishedName: ");
-                    if (ServiceUserDistinguishedName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServiceUserDistinguishedName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServiceUserDistinguishedName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUserPassword), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceUserPassword: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceUserPassword))
-                {
-                    builder.Append("  serviceUserPassword: ");
-                    if (ServiceUserPassword.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServiceUserPassword}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServiceUserPassword}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchBaseDistinguishedName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  searchBaseDistinguishedName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SearchBaseDistinguishedName))
-                {
-                    builder.Append("  searchBaseDistinguishedName: ");
-                    if (SearchBaseDistinguishedName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SearchBaseDistinguishedName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SearchBaseDistinguishedName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SearchFilterTemplate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  searchFilterTemplate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SearchFilterTemplate))
-                {
-                    builder.Append("  searchFilterTemplate: ");
-                    if (SearchFilterTemplate.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SearchFilterTemplate}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SearchFilterTemplate}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCertificates), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serverCertificates: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ServerCertificates))
-                {
-                    if (ServerCertificates.Any())
-                    {
-                        builder.Append("  serverCertificates: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ServerCertificates)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  serverCertificates: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionTimeoutInMs), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  connectionTimeoutInMs: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectionTimeoutInMs))
-                {
-                    builder.Append("  connectionTimeoutInMs: ");
-                    builder.AppendLine($"{ConnectionTimeoutInMs.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AuthenticationMethodLdapProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AuthenticationMethodLdapProperties IPersistableModel<AuthenticationMethodLdapProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AuthenticationMethodLdapProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAuthenticationMethodLdapProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AuthenticationMethodLdapProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AuthenticationMethodLdapProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

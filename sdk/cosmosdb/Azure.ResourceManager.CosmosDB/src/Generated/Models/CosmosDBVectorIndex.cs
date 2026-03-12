@@ -7,93 +7,59 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CosmosDBVectorIndex. </summary>
     public partial class CosmosDBVectorIndex
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBVectorIndex"/>. </summary>
         /// <param name="path"> The path to the vector field in the document. </param>
-        /// <param name="indexType"> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </param>
+        /// <param name="type"> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        public CosmosDBVectorIndex(string path, CosmosDBVectorIndexType indexType)
+        public CosmosDBVectorIndex(string path, VectorIndexType @type)
         {
             Argument.AssertNotNull(path, nameof(path));
 
             Path = path;
-            IndexType = indexType;
+            Type = @type;
             VectorIndexShardKey = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBVectorIndex"/>. </summary>
         /// <param name="path"> The path to the vector field in the document. </param>
-        /// <param name="indexType"> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </param>
+        /// <param name="type"> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </param>
         /// <param name="quantizationByteSize"> The number of bytes used in product quantization of the vectors. A larger value may result in better recall for vector searches at the expense of latency. This is only applicable for the quantizedFlat and diskANN vector index types. </param>
         /// <param name="indexingSearchListSize"> This is the size of the candidate list of approximate neighbors stored while building the DiskANN index as part of the optimization processes. Large values may improve recall at the expense of latency. This is only applicable for the diskANN vector index type. </param>
         /// <param name="vectorIndexShardKey"> Array of shard keys for the vector index. This is only applicable for the quantizedFlat and diskANN vector index types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBVectorIndex(string path, CosmosDBVectorIndexType indexType, long? quantizationByteSize, long? indexingSearchListSize, IList<string> vectorIndexShardKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBVectorIndex(string path, VectorIndexType @type, long? quantizationByteSize, long? indexingSearchListSize, IList<string> vectorIndexShardKey, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Path = path;
-            IndexType = indexType;
+            Type = @type;
             QuantizationByteSize = quantizationByteSize;
             IndexingSearchListSize = indexingSearchListSize;
             VectorIndexShardKey = vectorIndexShardKey;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBVectorIndex"/> for deserialization. </summary>
-        internal CosmosDBVectorIndex()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The path to the vector field in the document. </summary>
-        [WirePath("path")]
         public string Path { get; set; }
+
         /// <summary> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </summary>
-        [WirePath("type")]
-        public CosmosDBVectorIndexType IndexType { get; set; }
+        public VectorIndexType Type { get; set; }
+
         /// <summary> The number of bytes used in product quantization of the vectors. A larger value may result in better recall for vector searches at the expense of latency. This is only applicable for the quantizedFlat and diskANN vector index types. </summary>
-        [WirePath("quantizationByteSize")]
         public long? QuantizationByteSize { get; set; }
+
         /// <summary> This is the size of the candidate list of approximate neighbors stored while building the DiskANN index as part of the optimization processes. Large values may improve recall at the expense of latency. This is only applicable for the diskANN vector index type. </summary>
-        [WirePath("indexingSearchListSize")]
         public long? IndexingSearchListSize { get; set; }
+
         /// <summary> Array of shard keys for the vector index. This is only applicable for the quantizedFlat and diskANN vector index types. </summary>
-        [WirePath("vectorIndexShardKey")]
         public IList<string> VectorIndexShardKey { get; }
     }
 }

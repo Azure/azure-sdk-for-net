@@ -12,67 +12,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary>
     /// Properties in ServiceResourceCreateUpdateParameters.
-    /// Please note <see cref="ServiceResourceCreateUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="GraphApiComputeServiceResourceCreateUpdateProperties"/>, <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/> and <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataTransferServiceResourceCreateUpdateProperties"/>, <see cref="SqlDedicatedGatewayServiceResourceCreateUpdateProperties"/>, <see cref="GraphAPIComputeServiceResourceCreateUpdateProperties"/>, and <see cref="MaterializedViewsBuilderServiceResourceCreateUpdateProperties"/>.
     /// </summary>
     public abstract partial class ServiceResourceCreateUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceResourceCreateUpdateProperties"/>. </summary>
-        protected ServiceResourceCreateUpdateProperties()
+        /// <param name="serviceType"> ServiceType for the service. </param>
+        private protected ServiceResourceCreateUpdateProperties(CosmosDBServiceType serviceType)
         {
+            ServiceType = serviceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceResourceCreateUpdateProperties"/>. </summary>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceSize = instanceSize;
             InstanceCount = instanceCount;
             ServiceType = serviceType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Instance type for the service. </summary>
-        [WirePath("instanceSize")]
         public CosmosDBServiceSize? InstanceSize { get; set; }
+
         /// <summary> Instance count for the service. </summary>
-        [WirePath("instanceCount")]
         public int? InstanceCount { get; set; }
+
         /// <summary> ServiceType for the service. </summary>
         internal CosmosDBServiceType ServiceType { get; set; }
     }

@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBVectorIndex : IUtf8JsonSerializable, IJsonModel<CosmosDBVectorIndex>
+    /// <summary> The CosmosDBVectorIndex. </summary>
+    public partial class CosmosDBVectorIndex : IJsonModel<CosmosDBVectorIndex>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBVectorIndex>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CosmosDBVectorIndex"/> for deserialization. </summary>
+        internal CosmosDBVectorIndex()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CosmosDBVectorIndex PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCosmosDBVectorIndex(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBVectorIndex)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBVectorIndex)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CosmosDBVectorIndex>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBVectorIndex IPersistableModel<CosmosDBVectorIndex>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CosmosDBVectorIndex>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CosmosDBVectorIndex>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,16 +74,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBVectorIndex)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(IndexType.ToString());
+            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(QuantizationByteSize))
             {
                 writer.WritePropertyName("quantizationByteSize"u8);
@@ -54,21 +97,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("vectorIndexShardKey"u8);
                 writer.WriteStartArray();
-                foreach (var item in VectorIndexShardKey)
+                foreach (string item in VectorIndexShardKey)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,239 +125,100 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        CosmosDBVectorIndex IJsonModel<CosmosDBVectorIndex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CosmosDBVectorIndex IJsonModel<CosmosDBVectorIndex>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CosmosDBVectorIndex JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CosmosDBVectorIndex)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCosmosDBVectorIndex(document.RootElement, options);
         }
 
-        internal static CosmosDBVectorIndex DeserializeCosmosDBVectorIndex(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CosmosDBVectorIndex DeserializeCosmosDBVectorIndex(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string path = default;
-            CosmosDBVectorIndexType type = default;
+            VectorIndexType @type = default;
             long? quantizationByteSize = default;
             long? indexingSearchListSize = default;
             IList<string> vectorIndexShardKey = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("path"u8))
+                if (prop.NameEquals("path"u8))
                 {
-                    path = property.Value.GetString();
+                    path = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new CosmosDBVectorIndexType(property.Value.GetString());
+                    @type = new VectorIndexType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("quantizationByteSize"u8))
+                if (prop.NameEquals("quantizationByteSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    quantizationByteSize = property.Value.GetInt64();
+                    quantizationByteSize = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("indexingSearchListSize"u8))
+                if (prop.NameEquals("indexingSearchListSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    indexingSearchListSize = property.Value.GetInt64();
+                    indexingSearchListSize = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("vectorIndexShardKey"u8))
+                if (prop.NameEquals("vectorIndexShardKey"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     vectorIndexShardKey = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CosmosDBVectorIndex(
                 path,
-                type,
+                @type,
                 quantizationByteSize,
                 indexingSearchListSize,
                 vectorIndexShardKey ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  path: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Path))
-                {
-                    builder.Append("  path: ");
-                    if (Path.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Path}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Path}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IndexType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  type: ");
-                builder.AppendLine($"'{IndexType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuantizationByteSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  quantizationByteSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QuantizationByteSize))
-                {
-                    builder.Append("  quantizationByteSize: ");
-                    builder.AppendLine($"'{QuantizationByteSize.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IndexingSearchListSize), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  indexingSearchListSize: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IndexingSearchListSize))
-                {
-                    builder.Append("  indexingSearchListSize: ");
-                    builder.AppendLine($"'{IndexingSearchListSize.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VectorIndexShardKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vectorIndexShardKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(VectorIndexShardKey))
-                {
-                    if (VectorIndexShardKey.Any())
-                    {
-                        builder.Append("  vectorIndexShardKey: ");
-                        builder.AppendLine("[");
-                        foreach (var item in VectorIndexShardKey)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CosmosDBVectorIndex>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CosmosDBVectorIndex)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CosmosDBVectorIndex IPersistableModel<CosmosDBVectorIndex>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBVectorIndex>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCosmosDBVectorIndex(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CosmosDBVectorIndex)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CosmosDBVectorIndex>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

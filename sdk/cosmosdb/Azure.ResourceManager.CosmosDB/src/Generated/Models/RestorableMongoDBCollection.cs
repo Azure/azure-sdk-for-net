@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> An Azure Cosmos DB MongoDB collection event. </summary>
-    public partial class RestorableMongoDBCollection : ResourceData
+    public partial class RestorableMongoDBCollection
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestorableMongoDBCollection"/>. </summary>
         internal RestorableMongoDBCollection()
@@ -53,20 +22,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableMongoDBCollection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resource"> The resource of an Azure Cosmos DB MongoDB collection event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableMongoDBCollection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableMongoDBCollectionResourceInfo resource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The properties of a MongoDB collection event. </param>
+        /// <param name="id"> The unique resource Identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableMongoDBCollection(RestorableMongodbCollectionProperties properties, string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Resource = resource;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            Id = id;
+            Name = name;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The properties of a MongoDB collection event. </summary>
+        internal RestorableMongodbCollectionProperties Properties { get; }
+
+        /// <summary> The unique resource Identifier of the ARM resource. </summary>
+        public string Id { get; }
+
+        /// <summary> The name of the ARM resource. </summary>
+        public string Name { get; }
+
+        /// <summary> The type of Azure resource. </summary>
+        public string Type { get; }
+
         /// <summary> The resource of an Azure Cosmos DB MongoDB collection event. </summary>
-        [WirePath("properties.resource")]
-        public ExtendedRestorableMongoDBCollectionResourceInfo Resource { get; }
+        public ExtendedRestorableMongoDBCollectionResourceInfo Resource
+        {
+            get
+            {
+                return Properties.Resource;
+            }
+        }
     }
 }

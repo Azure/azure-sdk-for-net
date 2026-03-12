@@ -5,223 +5,289 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableCosmosDBSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _cosmosDBAccountDatabaseAccountsClientDiagnostics;
-        private DatabaseAccountsRestOperations _cosmosDBAccountDatabaseAccountsRestClient;
-        private ClientDiagnostics _cassandraClusterClientDiagnostics;
-        private CassandraClustersRestOperations _cassandraClusterRestClient;
-        private ClientDiagnostics _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics;
-        private RestorableDatabaseAccountsRestOperations _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient;
-        private ClientDiagnostics _cosmosDBFleetFleetClientDiagnostics;
-        private FleetRestOperations _cosmosDBFleetFleetRestClient;
+        private ClientDiagnostics _databaseAccountsClientDiagnostics;
+        private DatabaseAccounts _databaseAccountsRestClient;
+        private ClientDiagnostics _garnetClustersClientDiagnostics;
+        private GarnetClusters _garnetClustersRestClient;
+        private ClientDiagnostics _cassandraClustersClientDiagnostics;
+        private CassandraClusters _cassandraClustersRestClient;
+        private ClientDiagnostics _throughputPoolsClientDiagnostics;
+        private ThroughputPools _throughputPoolsRestClient;
+        private ClientDiagnostics _fleetClientDiagnostics;
+        private Fleet _fleetRestClient;
+        private ClientDiagnostics _restorableDatabaseAccountsClientDiagnostics;
+        private RestorableDatabaseAccounts _restorableDatabaseAccountsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCosmosDBSubscriptionResource for mocking. </summary>
         protected MockableCosmosDBSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCosmosDBSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCosmosDBSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics CosmosDBAccountDatabaseAccountsClientDiagnostics => _cosmosDBAccountDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-        private DatabaseAccountsRestOperations CosmosDBAccountDatabaseAccountsRestClient => _cosmosDBAccountDatabaseAccountsRestClient ??= new DatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBAccountResource.ResourceType));
-        private ClientDiagnostics CassandraClusterClientDiagnostics => _cassandraClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraClusterResource.ResourceType.Namespace, Diagnostics);
-        private CassandraClustersRestOperations CassandraClusterRestClient => _cassandraClusterRestClient ??= new CassandraClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CassandraClusterResource.ResourceType));
-        private ClientDiagnostics RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics => _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableCosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
-        private RestorableDatabaseAccountsRestOperations RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RestorableCosmosDBAccountResource.ResourceType));
-        private ClientDiagnostics CosmosDBFleetFleetClientDiagnostics => _cosmosDBFleetFleetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBFleetResource.ResourceType.Namespace, Diagnostics);
-        private FleetRestOperations CosmosDBFleetFleetRestClient => _cosmosDBFleetFleetRestClient ??= new FleetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBFleetResource.ResourceType));
+        private ClientDiagnostics DatabaseAccountsClientDiagnostics => _databaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private DatabaseAccounts DatabaseAccountsRestClient => _databaseAccountsRestClient ??= new DatabaseAccounts(DatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
 
-        /// <summary> Gets a collection of CosmosDBLocationResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of CosmosDBLocationResources and their operations over a CosmosDBLocationResource. </returns>
-        public virtual CosmosDBLocationCollection GetCosmosDBLocations()
-        {
-            return GetCachedClient(client => new CosmosDBLocationCollection(client, Id));
-        }
+        private ClientDiagnostics GarnetClustersClientDiagnostics => _garnetClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary>
-        /// Get the properties of an existing Cosmos DB location
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBLocationResource>> GetCosmosDBLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        private GarnetClusters GarnetClustersRestClient => _garnetClustersRestClient ??= new GarnetClusters(GarnetClustersClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+
+        private ClientDiagnostics CassandraClustersClientDiagnostics => _cassandraClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private CassandraClusters CassandraClustersRestClient => _cassandraClustersRestClient ??= new CassandraClusters(CassandraClustersClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+
+        private ClientDiagnostics ThroughputPoolsClientDiagnostics => _throughputPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ThroughputPools ThroughputPoolsRestClient => _throughputPoolsRestClient ??= new ThroughputPools(ThroughputPoolsClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+
+        private ClientDiagnostics FleetClientDiagnostics => _fleetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Fleet FleetRestClient => _fleetRestClient ??= new Fleet(FleetClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+
+        private ClientDiagnostics RestorableDatabaseAccountsClientDiagnostics => _restorableDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private RestorableDatabaseAccounts RestorableDatabaseAccountsRestClient => _restorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccounts(RestorableDatabaseAccountsClientDiagnostics, Pipeline, Endpoint, "2025-11-01-preview");
+
+        /// <summary> Gets a collection of LocationGetResults in the <see cref="SubscriptionResource"/>. </summary>
+        /// <returns> An object representing collection of LocationGetResults and their operations over a LocationGetResultResource. </returns>
+        public virtual LocationGetResultCollection GetLocationGetResults()
         {
-            return await GetCosmosDBLocations().GetAsync(location, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new LocationGetResultCollection(client, Id));
         }
 
         /// <summary>
         /// Get the properties of an existing Cosmos DB location
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Locations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CosmosDBLocationResource> GetCosmosDBLocation(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LocationGetResultResource>> GetLocationGetResultAsync(string location, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBLocations().Get(location, cancellationToken);
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            return await GetLocationGetResults().GetAsync(location, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of an existing Cosmos DB location
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LocationGetResults_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LocationGetResultResource> GetLocationGetResult(string location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(location, nameof(location));
+
+            return GetLocationGetResults().Get(location, cancellationToken);
         }
 
         /// <summary>
         /// Lists all the Azure Cosmos DB database accounts available under the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseAccounts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBAccountResource> GetCosmosDBAccountsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseAccountGetResultsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatabaseAccountGetResultsResource> GetDatabaseAccountGetResultsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBAccountDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBAccountResource(Client, CosmosDBAccountData.DeserializeCosmosDBAccountData(e)), CosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DatabaseAccountGetResultsData, DatabaseAccountGetResultsResource>(new DatabaseAccountsGetAllAsyncCollectionResultOfT(DatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DatabaseAccountGetResultsResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the Azure Cosmos DB database accounts available under the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/databaseAccounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseAccounts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseAccounts_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBAccountResource> GetCosmosDBAccounts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatabaseAccountGetResultsResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatabaseAccountGetResultsResource> GetDatabaseAccountGetResults(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBAccountDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBAccountResource(Client, CosmosDBAccountData.DeserializeCosmosDBAccountData(e)), CosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DatabaseAccountGetResultsData, DatabaseAccountGetResultsResource>(new DatabaseAccountsGetAllCollectionResultOfT(DatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DatabaseAccountGetResultsResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all Garnet clusters in this subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/garnetClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GarnetClusters_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GarnetClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GarnetClusterResource> GetGarnetClusterResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<GarnetClusterResourceData, GarnetClusterResource>(new GarnetClustersGetBySubscriptionAsyncCollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new GarnetClusterResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all Garnet clusters in this subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/garnetClusters. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GarnetClusters_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GarnetClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GarnetClusterResource> GetGarnetClusterResources(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<GarnetClusterResourceData, GarnetClusterResource>(new GarnetClustersGetBySubscriptionCollectionResultOfT(GarnetClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new GarnetClusterResource(Client, data));
         }
 
         /// <summary>
         /// List all managed Cassandra clusters in this subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CassandraClusters_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CassandraClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CassandraClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CassandraClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CassandraClusterResource> GetCassandraClustersAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CassandraClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraClusterResource(Client, CassandraClusterData.DeserializeCassandraClusterData(e)), CassandraClusterClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCassandraClusters", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ClusterResourceData, CassandraClusterResource>(new CassandraClustersGetBySubscriptionAsyncCollectionResultOfT(CassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CassandraClusterResource(Client, data));
         }
 
         /// <summary>
         /// List all managed Cassandra clusters in this subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/cassandraClusters. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CassandraClusters_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterResources_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CassandraClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,126 +295,179 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> A collection of <see cref="CassandraClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CassandraClusterResource> GetCassandraClusters(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CassandraClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraClusterResource(Client, CassandraClusterData.DeserializeCassandraClusterData(e)), CassandraClusterClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCassandraClusters", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ClusterResourceData, CassandraClusterResource>(new CassandraClustersGetBySubscriptionCollectionResultOfT(CassandraClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new CassandraClusterResource(Client, data));
         }
 
         /// <summary>
-        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
+        /// Lists all the Azure Cosmos DB Throughput Pools available under the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/throughputPools. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDatabaseAccounts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ThroughputPoolResource> GetThroughputPoolResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ThroughputPoolResourceData, ThroughputPoolResource>(new ThroughputPoolsGetAllAsyncCollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ThroughputPoolResource(Client, data));
         }
 
         /// <summary>
-        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
+        /// Lists all the Azure Cosmos DB Throughput Pools available under the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/throughputPools. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorableDatabaseAccounts_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ThroughputPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ThroughputPoolResource> GetThroughputPoolResources(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the fleets under the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/fleets</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleet_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBFleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CosmosDBFleetResource> GetCosmosDBFleetsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBFleetFleetRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBFleetFleetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBFleetResource(Client, CosmosDBFleetData.DeserializeCosmosDBFleetData(e)), CosmosDBFleetFleetClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCosmosDBFleets", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ThroughputPoolResourceData, ThroughputPoolResource>(new ThroughputPoolsGetAllCollectionResultOfT(ThroughputPoolsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ThroughputPoolResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the fleets under the subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/fleets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/fleets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleet_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetResources_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBFleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CosmosDBFleetResource> GetCosmosDBFleets(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FleetResource> GetFleetResourcesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBFleetFleetRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBFleetFleetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBFleetResource(Client, CosmosDBFleetData.DeserializeCosmosDBFleetData(e)), CosmosDBFleetFleetClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCosmosDBFleets", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FleetResourceData, FleetResource>(new FleetGetAllAsyncCollectionResultOfT(FleetRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FleetResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the fleets under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/fleets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FleetResources_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FleetResource> GetFleetResources(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FleetResourceData, FleetResource>(new FleetGetAllCollectionResultOfT(FleetRestClient, Guid.Parse(Id.SubscriptionId), context), data => new FleetResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RestorableDatabaseAccountsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RestorableDatabaseAccountGetResultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RestorableDatabaseAccountGetResultResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<RestorableDatabaseAccountGetResultData, RestorableDatabaseAccountGetResultResource>(new RestorableDatabaseAccountsGetAllAsyncCollectionResultOfT(RestorableDatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new RestorableDatabaseAccountGetResultResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/restorableDatabaseAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> RestorableDatabaseAccountsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RestorableDatabaseAccountGetResultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RestorableDatabaseAccountGetResultResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<RestorableDatabaseAccountGetResultData, RestorableDatabaseAccountGetResultResource>(new RestorableDatabaseAccountsGetAllCollectionResultOfT(RestorableDatabaseAccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new RestorableDatabaseAccountGetResultResource(Client, data));
         }
     }
 }

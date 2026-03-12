@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    internal class CassandraClusterOperationSource : IOperationSource<CassandraClusterResource>
+    /// <summary></summary>
+    internal partial class CassandraClusterOperationSource : IOperationSource<CassandraClusterResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal CassandraClusterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         CassandraClusterResource IOperationSource<CassandraClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CassandraClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ClusterResourceData data = ClusterResourceData.DeserializeClusterResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new CassandraClusterResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<CassandraClusterResource> IOperationSource<CassandraClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CassandraClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
-            return await Task.FromResult(new CassandraClusterResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ClusterResourceData data = ClusterResourceData.DeserializeClusterResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new CassandraClusterResource(_client, data);
         }
     }
 }

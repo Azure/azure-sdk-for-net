@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBServiceType : IEquatable<CosmosDBServiceType>
     {
         private readonly string _value;
+        private const string SqlDedicatedGatewayValue = "SqlDedicatedGateway";
+        private const string DataTransferValue = "DataTransfer";
+        private const string GraphAPIComputeValue = "GraphAPICompute";
+        private const string MaterializedViewsBuilderValue = "MaterializedViewsBuilder";
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CosmosDBServiceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SqlDedicatedGatewayValue = "SqlDedicatedGateway";
-        private const string DataTransferValue = "DataTransfer";
-        private const string GraphApiComputeValue = "GraphAPICompute";
-        private const string MaterializedViewsBuilderValue = "MaterializedViewsBuilder";
-
-        /// <summary> SqlDedicatedGateway. </summary>
+        /// <summary> Gets the SqlDedicatedGateway. </summary>
         public static CosmosDBServiceType SqlDedicatedGateway { get; } = new CosmosDBServiceType(SqlDedicatedGatewayValue);
-        /// <summary> DataTransfer. </summary>
+
+        /// <summary> Gets the DataTransfer. </summary>
         public static CosmosDBServiceType DataTransfer { get; } = new CosmosDBServiceType(DataTransferValue);
-        /// <summary> GraphAPICompute. </summary>
-        public static CosmosDBServiceType GraphApiCompute { get; } = new CosmosDBServiceType(GraphApiComputeValue);
-        /// <summary> MaterializedViewsBuilder. </summary>
+
+        /// <summary> Gets the GraphAPICompute. </summary>
+        public static CosmosDBServiceType GraphAPICompute { get; } = new CosmosDBServiceType(GraphAPIComputeValue);
+
+        /// <summary> Gets the MaterializedViewsBuilder. </summary>
         public static CosmosDBServiceType MaterializedViewsBuilder { get; } = new CosmosDBServiceType(MaterializedViewsBuilderValue);
+
         /// <summary> Determines if two <see cref="CosmosDBServiceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBServiceType left, CosmosDBServiceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBServiceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBServiceType left, CosmosDBServiceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBServiceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBServiceType(string value) => new CosmosDBServiceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBServiceType?(string value) => value == null ? null : new CosmosDBServiceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBServiceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBServiceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

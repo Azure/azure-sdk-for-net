@@ -8,8 +8,8 @@
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.CosmosDB.</Description>
     <PackageTags>azure;management;arm;resource manager;cosmosdb</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
-    <NoWarn>$(NoWarn);CS1591;</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <NoWarn>$(NoWarn);CS1591;CS0108;</NoWarn>
+
   </PropertyGroup>
 
 </Project>

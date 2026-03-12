@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Cosmos DB indexing policy. </summary>
     public partial class CosmosDBIndexingPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBIndexingPolicy"/>. </summary>
         public CosmosDBIndexingPolicy()
@@ -57,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBIndexingPolicy"/>. </summary>
-        /// <param name="isAutomatic"> Indicates if the indexing policy is automatic. </param>
+        /// <param name="automatic"> Indicates if the indexing policy is automatic. </param>
         /// <param name="indexingMode"> Indicates the indexing mode. </param>
         /// <param name="includedPaths"> List of paths to include in the indexing. </param>
         /// <param name="excludedPaths"> List of paths to exclude from indexing. </param>
@@ -65,10 +37,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="spatialIndexes"> List of spatial specifics. </param>
         /// <param name="vectorIndexes"> List of paths to include in the vector indexing. </param>
         /// <param name="fullTextIndexes"> List of paths to include in the full text indexing. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBIndexingPolicy(bool? isAutomatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes, IList<CosmosDBVectorIndex> vectorIndexes, IList<FullTextIndexPath> fullTextIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBIndexingPolicy(bool? automatic, CosmosDBIndexingMode? indexingMode, IList<CosmosDBIncludedPath> includedPaths, IList<CosmosDBExcludedPath> excludedPaths, IList<IList<CosmosDBCompositePath>> compositeIndexes, IList<SpatialSpec> spatialIndexes, IList<CosmosDBVectorIndex> vectorIndexes, IList<FullTextIndexPath> fullTextIndexes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsAutomatic = isAutomatic;
+            Automatic = automatic;
             IndexingMode = indexingMode;
             IncludedPaths = includedPaths;
             ExcludedPaths = excludedPaths;
@@ -76,32 +48,31 @@ namespace Azure.ResourceManager.CosmosDB.Models
             SpatialIndexes = spatialIndexes;
             VectorIndexes = vectorIndexes;
             FullTextIndexes = fullTextIndexes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates if the indexing policy is automatic. </summary>
-        [WirePath("automatic")]
-        public bool? IsAutomatic { get; set; }
+        public bool? Automatic { get; set; }
+
         /// <summary> Indicates the indexing mode. </summary>
-        [WirePath("indexingMode")]
         public CosmosDBIndexingMode? IndexingMode { get; set; }
+
         /// <summary> List of paths to include in the indexing. </summary>
-        [WirePath("includedPaths")]
         public IList<CosmosDBIncludedPath> IncludedPaths { get; }
+
         /// <summary> List of paths to exclude from indexing. </summary>
-        [WirePath("excludedPaths")]
         public IList<CosmosDBExcludedPath> ExcludedPaths { get; }
+
         /// <summary> List of composite path list. </summary>
-        [WirePath("compositeIndexes")]
         public IList<IList<CosmosDBCompositePath>> CompositeIndexes { get; }
+
         /// <summary> List of spatial specifics. </summary>
-        [WirePath("spatialIndexes")]
         public IList<SpatialSpec> SpatialIndexes { get; }
+
         /// <summary> List of paths to include in the vector indexing. </summary>
-        [WirePath("vectorIndexes")]
         public IList<CosmosDBVectorIndex> VectorIndexes { get; }
+
         /// <summary> List of paths to include in the full text indexing. </summary>
-        [WirePath("fullTextIndexes")]
         public IList<FullTextIndexPath> FullTextIndexes { get; }
     }
 }

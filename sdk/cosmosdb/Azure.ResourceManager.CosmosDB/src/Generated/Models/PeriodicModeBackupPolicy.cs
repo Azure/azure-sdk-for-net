@@ -14,24 +14,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class PeriodicModeBackupPolicy : CosmosDBAccountBackupPolicy
     {
         /// <summary> Initializes a new instance of <see cref="PeriodicModeBackupPolicy"/>. </summary>
-        public PeriodicModeBackupPolicy()
+        public PeriodicModeBackupPolicy() : base(BackupPolicyType.Periodic)
         {
-            BackupPolicyType = BackupPolicyType.Periodic;
         }
 
         /// <summary> Initializes a new instance of <see cref="PeriodicModeBackupPolicy"/>. </summary>
-        /// <param name="backupPolicyType"> Describes the mode of backups. </param>
+        /// <param name="type"> Describes the mode of backups. </param>
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="periodicModeProperties"> Configuration values for periodic mode backup. </param>
-        internal PeriodicModeBackupPolicy(BackupPolicyType backupPolicyType, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> serializedAdditionalRawData, PeriodicModeProperties periodicModeProperties) : base(backupPolicyType, migrationState, serializedAdditionalRawData)
+        internal PeriodicModeBackupPolicy(BackupPolicyType @type, BackupPolicyMigrationState migrationState, IDictionary<string, BinaryData> additionalBinaryDataProperties, PeriodicModeProperties periodicModeProperties) : base(@type, migrationState, additionalBinaryDataProperties)
         {
             PeriodicModeProperties = periodicModeProperties;
-            BackupPolicyType = backupPolicyType;
         }
 
         /// <summary> Configuration values for periodic mode backup. </summary>
-        [WirePath("periodicModeProperties")]
         public PeriodicModeProperties PeriodicModeProperties { get; set; }
     }
 }

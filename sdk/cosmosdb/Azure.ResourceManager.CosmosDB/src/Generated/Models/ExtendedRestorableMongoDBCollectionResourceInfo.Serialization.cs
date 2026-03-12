@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedRestorableMongoDBCollectionResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedRestorableMongoDBCollectionResourceInfo>
+    /// <summary> The resource of an Azure Cosmos DB MongoDB collection event. </summary>
+    public partial class ExtendedRestorableMongoDBCollectionResourceInfo : IJsonModel<ExtendedRestorableMongoDBCollectionResourceInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedRestorableMongoDBCollectionResourceInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExtendedRestorableMongoDBCollectionResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExtendedRestorableMongoDBCollectionResourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedRestorableMongoDBCollectionResourceInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedRestorableMongoDBCollectionResourceInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtendedRestorableMongoDBCollectionResourceInfo IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExtendedRestorableMongoDBCollectionResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExtendedRestorableMongoDBCollectionResourceInfo)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Rid))
             {
                 writer.WritePropertyName("_rid"u8);
@@ -60,25 +99,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && Optional.IsDefined(CollectionName))
+            if (options.Format != "W" && Optional.IsDefined(OwnerId))
             {
                 writer.WritePropertyName("ownerId"u8);
-                writer.WriteStringValue(CollectionName);
+                writer.WriteStringValue(OwnerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(CollectionId))
+            if (options.Format != "W" && Optional.IsDefined(OwnerResourceId))
             {
                 writer.WritePropertyName("ownerResourceId"u8);
-                writer.WriteStringValue(CollectionId);
+                writer.WriteStringValue(OwnerResourceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,22 +126,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        ExtendedRestorableMongoDBCollectionResourceInfo IJsonModel<ExtendedRestorableMongoDBCollectionResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExtendedRestorableMongoDBCollectionResourceInfo IJsonModel<ExtendedRestorableMongoDBCollectionResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExtendedRestorableMongoDBCollectionResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExtendedRestorableMongoDBCollectionResourceInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExtendedRestorableMongoDBCollectionResourceInfo(document.RootElement, options);
         }
 
-        internal static ExtendedRestorableMongoDBCollectionResourceInfo DeserializeExtendedRestorableMongoDBCollectionResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExtendedRestorableMongoDBCollectionResourceInfo DeserializeExtendedRestorableMongoDBCollectionResourceInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,55 +158,53 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string eventTimestamp = default;
             string ownerId = default;
             string ownerResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("_rid"u8))
+                if (prop.NameEquals("_rid"u8))
                 {
-                    rid = property.Value.GetString();
+                    rid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationType"u8))
+                if (prop.NameEquals("operationType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operationType = new CosmosDBOperationType(property.Value.GetString());
+                    operationType = new CosmosDBOperationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("canUndelete"u8))
+                if (prop.NameEquals("canUndelete"u8))
                 {
-                    canUndelete = property.Value.GetString();
+                    canUndelete = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("canUndeleteReason"u8))
+                if (prop.NameEquals("canUndeleteReason"u8))
                 {
-                    canUndeleteReason = property.Value.GetString();
+                    canUndeleteReason = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventTimestamp"u8))
+                if (prop.NameEquals("eventTimestamp"u8))
                 {
-                    eventTimestamp = property.Value.GetString();
+                    eventTimestamp = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ownerId"u8))
+                if (prop.NameEquals("ownerId"u8))
                 {
-                    ownerId = property.Value.GetString();
+                    ownerId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ownerResourceId"u8))
+                if (prop.NameEquals("ownerResourceId"u8))
                 {
-                    ownerResourceId = property.Value.GetString();
+                    ownerResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ExtendedRestorableMongoDBCollectionResourceInfo(
                 rid,
                 operationType,
@@ -171,208 +213,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 eventTimestamp,
                 ownerId,
                 ownerResourceId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  _rid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Rid))
-                {
-                    builder.Append("  _rid: ");
-                    if (Rid.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Rid}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Rid}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperationType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  operationType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OperationType))
-                {
-                    builder.Append("  operationType: ");
-                    builder.AppendLine($"'{OperationType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanUndelete), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  canUndelete: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CanUndelete))
-                {
-                    builder.Append("  canUndelete: ");
-                    if (CanUndelete.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CanUndelete}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CanUndelete}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanUndeleteReason), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  canUndeleteReason: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CanUndeleteReason))
-                {
-                    builder.Append("  canUndeleteReason: ");
-                    if (CanUndeleteReason.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CanUndeleteReason}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CanUndeleteReason}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventTimestamp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  eventTimestamp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EventTimestamp))
-                {
-                    builder.Append("  eventTimestamp: ");
-                    if (EventTimestamp.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EventTimestamp}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EventTimestamp}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CollectionName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ownerId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CollectionName))
-                {
-                    builder.Append("  ownerId: ");
-                    if (CollectionName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CollectionName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CollectionName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CollectionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ownerResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CollectionId))
-                {
-                    builder.Append("  ownerResourceId: ");
-                    if (CollectionId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CollectionId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CollectionId}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ExtendedRestorableMongoDBCollectionResourceInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExtendedRestorableMongoDBCollectionResourceInfo IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExtendedRestorableMongoDBCollectionResourceInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExtendedRestorableMongoDBCollectionResourceInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExtendedRestorableMongoDBCollectionResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class RestoreParametersBase : IUtf8JsonSerializable, IJsonModel<RestoreParametersBase>
+    /// <summary> Parameters to indicate the information about the restore. </summary>
+    public partial class RestoreParametersBase : IJsonModel<RestoreParametersBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreParametersBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestoreParametersBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreParametersBase>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRestoreParametersBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RestoreParametersBase)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreParametersBase>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RestoreParametersBase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RestoreParametersBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestoreParametersBase IPersistableModel<RestoreParametersBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RestoreParametersBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestoreParametersBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreParametersBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreParametersBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestoreParametersBase)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(RestoreSource))
             {
                 writer.WritePropertyName("restoreSource"u8);
@@ -45,20 +84,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
-            if (Optional.IsDefined(IsRestoreWithTtlDisabled))
+            if (Optional.IsDefined(RestoreWithTtlDisabled))
             {
                 writer.WritePropertyName("restoreWithTtlDisabled"u8);
-                writer.WriteBooleanValue(IsRestoreWithTtlDisabled.Value);
+                writer.WriteBooleanValue(RestoreWithTtlDisabled.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,22 +106,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        RestoreParametersBase IJsonModel<RestoreParametersBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestoreParametersBase IJsonModel<RestoreParametersBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestoreParametersBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreParametersBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreParametersBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestoreParametersBase)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRestoreParametersBase(document.RootElement, options);
         }
 
-        internal static RestoreParametersBase DeserializeRestoreParametersBase(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RestoreParametersBase DeserializeRestoreParametersBase(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,143 +134,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string restoreSource = default;
             DateTimeOffset? restoreTimestampInUtc = default;
             bool? restoreWithTtlDisabled = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("restoreSource"u8))
+                if (prop.NameEquals("restoreSource"u8))
                 {
-                    restoreSource = property.Value.GetString();
+                    restoreSource = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restoreTimestampInUtc"u8))
+                if (prop.NameEquals("restoreTimestampInUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restoreTimestampInUtc = property.Value.GetDateTimeOffset("O");
+                    restoreTimestampInUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("restoreWithTtlDisabled"u8))
+                if (prop.NameEquals("restoreWithTtlDisabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    restoreWithTtlDisabled = property.Value.GetBoolean();
+                    restoreWithTtlDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new RestoreParametersBase(restoreSource, restoreTimestampInUtc, restoreWithTtlDisabled, serializedAdditionalRawData);
+            return new RestoreParametersBase(restoreSource, restoreTimestampInUtc, restoreWithTtlDisabled, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreSource), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  restoreSource: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RestoreSource))
-                {
-                    builder.Append("  restoreSource: ");
-                    if (RestoreSource.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RestoreSource}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RestoreSource}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreTimestampInUtc), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  restoreTimestampInUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RestoreTimestampInUtc))
-                {
-                    builder.Append("  restoreTimestampInUtc: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(RestoreTimestampInUtc.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRestoreWithTtlDisabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  restoreWithTtlDisabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsRestoreWithTtlDisabled))
-                {
-                    builder.Append("  restoreWithTtlDisabled: ");
-                    var boolValue = IsRestoreWithTtlDisabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RestoreParametersBase>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreParametersBase>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RestoreParametersBase)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RestoreParametersBase IPersistableModel<RestoreParametersBase>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreParametersBase>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRestoreParametersBase(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RestoreParametersBase)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RestoreParametersBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBIndexKind : IEquatable<CosmosDBIndexKind>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBIndexKind"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBIndexKind(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string HashValue = "Hash";
         private const string RangeValue = "Range";
         private const string SpatialValue = "Spatial";
 
-        /// <summary> Hash. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBIndexKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBIndexKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Hash. </summary>
         public static CosmosDBIndexKind Hash { get; } = new CosmosDBIndexKind(HashValue);
-        /// <summary> Range. </summary>
+
+        /// <summary> Gets the Range. </summary>
         public static CosmosDBIndexKind Range { get; } = new CosmosDBIndexKind(RangeValue);
-        /// <summary> Spatial. </summary>
+
+        /// <summary> Gets the Spatial. </summary>
         public static CosmosDBIndexKind Spatial { get; } = new CosmosDBIndexKind(SpatialValue);
+
         /// <summary> Determines if two <see cref="CosmosDBIndexKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBIndexKind left, CosmosDBIndexKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBIndexKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBIndexKind left, CosmosDBIndexKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBIndexKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBIndexKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBIndexKind(string value) => new CosmosDBIndexKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBIndexKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBIndexKind?(string value) => value == null ? null : new CosmosDBIndexKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBIndexKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBIndexKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

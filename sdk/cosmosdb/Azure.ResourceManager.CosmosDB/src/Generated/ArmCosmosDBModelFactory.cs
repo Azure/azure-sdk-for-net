@@ -7,25 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmCosmosDBModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="provisioningState"> The status of the Cosmos DB account at the time the operation was called. The status can be one of following. 'Creating' – the Cosmos DB account is being created. When an account is in Creating state, only properties that are specified as input for the Create Cosmos DB account operation are returned. 'Succeeded' – the Cosmos DB account is active for use. 'Updating' – the Cosmos DB account is being updated. 'Deleting' – the Cosmos DB account is being deleted. 'Failed' – the Cosmos DB account failed creation. 'DeletionFailed' – the Cosmos DB account deletion failed. </param>
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="documentEndpoint"> The connection endpoint for the Cosmos DB database account. </param>
         /// <param name="databaseAccountOfferType"> The offer type for the Cosmos DB database account. Default value: Standard. </param>
         /// <param name="ipRules"> List of IpRules. </param>
@@ -46,178 +45,394 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
         /// <param name="defaultIdentity"> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
-        /// <param name="isFreeTierEnabled"> Flag to indicate whether Free Tier is enabled. </param>
-        /// <param name="apiServerVersion"> API specific properties. </param>
-        /// <param name="isAnalyticalStorageEnabled"> Flag to indicate whether to enable storage analytics. </param>
-        /// <param name="analyticalStorageSchemaType"> Analytical storage specific properties. </param>
+        /// <param name="enableFreeTier"> Flag to indicate whether Free Tier is enabled. </param>
+        /// <param name="enableAnalyticalStorage"> Flag to indicate whether to enable storage analytics. </param>
         /// <param name="instanceId"> A unique identifier assigned to the database account. </param>
         /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="backupPolicy">
-        /// The object representing the policy for taking backups on an account.
-        /// Please note <see cref="CosmosDBAccountBackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
-        /// </param>
+        /// <param name="backupPolicy"> The object representing the policy for taking backups on an account. </param>
         /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
         /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
-        /// <param name="capacityTotalThroughputLimit"> The object that represents all properties related to capacity enforcement on an account. </param>
+        /// <param name="capacityMode"> Indicates the capacityMode of the Cosmos DB account. </param>
+        /// <param name="capacityModeChangeTransitionState"> The object that represents the migration state for the CapacityMode of the Cosmos DB account. </param>
+        /// <param name="enableMaterializedViews"> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </param>
         /// <param name="keysMetadata"> The object that represents the metadata for the Account Keys of the Cosmos DB account. </param>
         /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
-        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default value is Tls 1.2. Cassandra and Mongo APIs only work with Tls 1.2. </param>
-        /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity feature on the account. </param>
+        /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </param>
+        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </param>
         /// <param name="customerManagedKeyStatus"> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </param>
-        /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of PerRegionPerPartitionAutoscale feature on the account. </param>
         /// <param name="keyVaultKeyUriVersion"> The version of the Customer Managed Key currently being used by the account. </param>
         /// <param name="enablePriorityBasedExecution"> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </param>
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBAccountData"/> instance for mocking. </returns>
-        public static CosmosDBAccountData CosmosDBAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBAccountKind? kind = null, ManagedServiceIdentity identity = null, string provisioningState = null, string documentEndpoint = null, CosmosDBAccountOfferType? databaseAccountOfferType = null, IEnumerable<CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = null, bool? enableAutomaticFailover = null, ConsistencyPolicy consistencyPolicy = null, IEnumerable<CosmosDBAccountCapability> capabilities = null, IEnumerable<CosmosDBAccountLocation> writeLocations = null, IEnumerable<CosmosDBAccountLocation> readLocations = null, IEnumerable<CosmosDBAccountLocation> locations = null, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies = null, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = null, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections = null, bool? enableMultipleWriteLocations = null, bool? enableCassandraConnector = null, ConnectorOffer? connectorOffer = null, bool? disableKeyBasedMetadataWriteAccess = null, Uri keyVaultKeyUri = null, string defaultIdentity = null, CosmosDBPublicNetworkAccess? publicNetworkAccess = null, bool? isFreeTierEnabled = null, CosmosDBServerVersion? apiServerVersion = null, bool? isAnalyticalStorageEnabled = null, AnalyticalStorageSchemaType? analyticalStorageSchemaType = null, Guid? instanceId = null, CosmosDBAccountCreateMode? createMode = null, CosmosDBAccountRestoreParameters restoreParameters = null, CosmosDBAccountBackupPolicy backupPolicy = null, IEnumerable<CosmosDBAccountCorsPolicy> cors = null, NetworkAclBypass? networkAclBypass = null, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = null, bool? disableLocalAuth = null, int? capacityTotalThroughputLimit = null, DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = null, CosmosDBMinimalTlsVersion? minimalTlsVersion = null, bool? enableBurstCapacity = null, string customerManagedKeyStatus = null, bool? enablePerRegionPerPartitionAutoscale = null, string keyVaultKeyUriVersion = null, bool? enablePriorityBasedExecution = null, DefaultPriorityLevel? defaultPriorityLevel = null)
+        /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
+        /// <param name="enableAllVersionsAndDeletesChangeFeed"> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </param>
+        /// <param name="throughputPoolDedicatedRUs"> Total dedicated throughput (RU/s) for database account. Represents the sum of all manual provisioned throughput and all autoscale max RU/s across all shared throughput databases and dedicated throughput containers in the account for 1 region. READ ONLY. </param>
+        /// <param name="throughputPoolMaxConsumableRUs"> When this account is part of a fleetspace with throughput pooling enabled, this is the maximum additional throughput (RU/s) that can be consumed from the pool, summed across all shared throughput databases and dedicated throughput containers in the account for 1 region.  READ ONLY. </param>
+        /// <param name="apiServerVersion"> Describes the version of the MongoDB account. </param>
+        /// <param name="analyticalStorageSchemaType"> Describes the types of schema for analytical storage. </param>
+        /// <param name="diagnosticLogEnableFullTextQuery"> Describe the level of detail with which queries are to be logged. </param>
+        /// <param name="capacityTotalThroughputLimit"> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
+        /// <returns> A new <see cref="CosmosDB.DatabaseAccountGetResultsData"/> instance for mocking. </returns>
+        public static DatabaseAccountGetResultsData DatabaseAccountGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string documentEndpoint = default, DatabaseAccountGetPropertiesDatabaseAccountOfferType? databaseAccountOfferType = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<Capability> capabilities = default, IEnumerable<Location> writeLocations = default, IEnumerable<Location> readLocations = default, IEnumerable<Location> locations = default, IEnumerable<CosmosDBFailoverPolicy> failoverPolicies = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, IEnumerable<CosmosDBPrivateEndpointConnectionData> privateEndpointConnections = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, string keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? enableFreeTier = default, bool? enableAnalyticalStorage = default, string instanceId = default, CosmosDBAccountCreateMode? createMode = default, RestoreParameters restoreParameters = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, CapacityMode? capacityMode = default, CapacityModeChangeTransitionState capacityModeChangeTransitionState = default, bool? enableMaterializedViews = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, bool? enableBurstCapacity = default, MinimalTlsVersion? minimalTlsVersion = default, string customerManagedKeyStatus = default, string keyVaultKeyUriVersion = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default, bool? enablePerRegionPerPartitionAutoscale = default, bool? enableAllVersionsAndDeletesChangeFeed = default, long? throughputPoolDedicatedRUs = default, long? throughputPoolMaxConsumableRUs = default, CosmosDBServerVersion? apiServerVersion = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default, int? capacityTotalThroughputLimit = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default, DatabaseAccountKind? kind = default)
         {
-            tags ??= new Dictionary<string, string>();
-            ipRules ??= new List<CosmosDBIPAddressOrRange>();
-            capabilities ??= new List<CosmosDBAccountCapability>();
-            writeLocations ??= new List<CosmosDBAccountLocation>();
-            readLocations ??= new List<CosmosDBAccountLocation>();
-            locations ??= new List<CosmosDBAccountLocation>();
-            failoverPolicies ??= new List<CosmosDBFailoverPolicy>();
-            virtualNetworkRules ??= new List<CosmosDBVirtualNetworkRule>();
-            privateEndpointConnections ??= new List<CosmosDBPrivateEndpointConnectionData>();
-            cors ??= new List<CosmosDBAccountCorsPolicy>();
-            networkAclBypassResourceIds ??= new List<ResourceIdentifier>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CosmosDBAccountData(
+            return new DatabaseAccountGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && documentEndpoint is null && databaseAccountOfferType is null && ipRules is null && isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && consistencyPolicy is null && capabilities is null && writeLocations is null && readLocations is null && locations is null && failoverPolicies is null && virtualNetworkRules is null && privateEndpointConnections is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && connectorOffer is null && disableKeyBasedMetadataWriteAccess is null && keyVaultKeyUri is null && defaultIdentity is null && publicNetworkAccess is null && enableFreeTier is null && enableAnalyticalStorage is null && instanceId is null && createMode is null && restoreParameters is null && backupPolicy is null && cors is null && networkAclBypass is null && networkAclBypassResourceIds is null && disableLocalAuth is null && capacityMode is null && capacityModeChangeTransitionState is null && enableMaterializedViews is null && keysMetadata is null && enablePartitionMerge is null && enableBurstCapacity is null && minimalTlsVersion is null && customerManagedKeyStatus is null && keyVaultKeyUriVersion is null && enablePriorityBasedExecution is null && defaultPriorityLevel is null && enablePerRegionPerPartitionAutoscale is null && enableAllVersionsAndDeletesChangeFeed is null && throughputPoolDedicatedRUs is null && throughputPoolMaxConsumableRUs is null && apiServerVersion is null && analyticalStorageSchemaType is null && diagnosticLogEnableFullTextQuery is null && capacityTotalThroughputLimit is null ? default : new DatabaseAccountGetProperties(
+                    provisioningState,
+                    documentEndpoint,
+                    databaseAccountOfferType,
+                    (ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>()).ToList(),
+                    isVirtualNetworkFilterEnabled,
+                    enableAutomaticFailover,
+                    consistencyPolicy,
+                    (capabilities ?? new ChangeTrackingList<Capability>()).ToList(),
+                    (writeLocations ?? new ChangeTrackingList<Location>()).ToList(),
+                    (readLocations ?? new ChangeTrackingList<Location>()).ToList(),
+                    (locations ?? new ChangeTrackingList<Location>()).ToList(),
+                    (failoverPolicies ?? new ChangeTrackingList<CosmosDBFailoverPolicy>()).ToList(),
+                    (virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>()).ToList(),
+                    (privateEndpointConnections ?? new ChangeTrackingList<CosmosDBPrivateEndpointConnectionData>()).ToList(),
+                    enableMultipleWriteLocations,
+                    enableCassandraConnector,
+                    connectorOffer,
+                    disableKeyBasedMetadataWriteAccess,
+                    keyVaultKeyUri,
+                    defaultIdentity,
+                    publicNetworkAccess,
+                    enableFreeTier,
+                    new ApiProperties(apiServerVersion, null),
+                    enableAnalyticalStorage,
+                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, null),
+                    instanceId,
+                    createMode,
+                    restoreParameters,
+                    backupPolicy,
+                    (cors ?? new ChangeTrackingList<CorsPolicy>()).ToList(),
+                    networkAclBypass,
+                    (networkAclBypassResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                    new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, null),
+                    disableLocalAuth,
+                    new Capacity(capacityTotalThroughputLimit, null),
+                    capacityMode,
+                    capacityModeChangeTransitionState,
+                    enableMaterializedViews,
+                    keysMetadata,
+                    enablePartitionMerge,
+                    enableBurstCapacity,
+                    minimalTlsVersion,
+                    customerManagedKeyStatus,
+                    keyVaultKeyUriVersion,
+                    enablePriorityBasedExecution,
+                    defaultPriorityLevel,
+                    enablePerRegionPerPartitionAutoscale,
+                    enableAllVersionsAndDeletesChangeFeed,
+                    throughputPoolDedicatedRUs,
+                    throughputPoolMaxConsumableRUs,
+                    null),
                 tags,
                 location,
-                kind,
                 identity,
-                provisioningState,
-                documentEndpoint,
-                databaseAccountOfferType,
-                ipRules?.ToList(),
-                isVirtualNetworkFilterEnabled,
-                enableAutomaticFailover,
-                consistencyPolicy,
-                capabilities?.ToList(),
-                writeLocations?.ToList(),
-                readLocations?.ToList(),
-                locations?.ToList(),
-                failoverPolicies?.ToList(),
-                virtualNetworkRules?.ToList(),
-                privateEndpointConnections?.ToList(),
-                enableMultipleWriteLocations,
-                enableCassandraConnector,
-                connectorOffer,
-                disableKeyBasedMetadataWriteAccess,
-                keyVaultKeyUri,
-                defaultIdentity,
-                publicNetworkAccess,
-                isFreeTierEnabled,
-                apiServerVersion != null ? new ApiProperties(apiServerVersion, serializedAdditionalRawData: null) : null,
-                isAnalyticalStorageEnabled,
-                analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType, serializedAdditionalRawData: null) : null,
-                instanceId,
-                createMode,
-                restoreParameters,
-                backupPolicy,
-                cors?.ToList(),
-                networkAclBypass,
-                networkAclBypassResourceIds?.ToList(),
-                disableLocalAuth,
-                capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit, serializedAdditionalRawData: null) : null,
-                keysMetadata,
-                enablePartitionMerge,
-                minimalTlsVersion,
-                enableBurstCapacity,
-                customerManagedKeyStatus,
-                enablePerRegionPerPartitionAutoscale,
-                keyVaultKeyUriVersion,
-                enablePriorityBasedExecution,
-                defaultPriorityLevel,
-                serializedAdditionalRawData: null);
+                kind);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountLocation"/>. </summary>
+        /// <summary> A region in which the Azure Cosmos DB database account is deployed. </summary>
         /// <param name="id"> The unique identifier of the region within the database account. Example: &lt;accountName&gt;-&lt;locationName&gt;. </param>
         /// <param name="locationName"> The name of the region. </param>
         /// <param name="documentEndpoint"> The connection endpoint for the specific region. Example: https://&lt;accountName&gt;-&lt;locationName&gt;.documents.azure.com:443/. </param>
-        /// <param name="provisioningState"> The status of the Cosmos DB account at the time the operation was called. The status can be one of following. 'Creating' – the Cosmos DB account is being created. When an account is in Creating state, only properties that are specified as input for the Create Cosmos DB account operation are returned. 'Succeeded' – the Cosmos DB account is active for use. 'Updating' – the Cosmos DB account is being updated. 'Deleting' – the Cosmos DB account is being deleted. 'Failed' – the Cosmos DB account failed creation. 'DeletionFailed' – the Cosmos DB account deletion failed. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="failoverPriority"> The failover priority of the region. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </param>
         /// <param name="isZoneRedundant"> Flag to indicate whether or not this region is an AvailabilityZone region. </param>
-        /// <returns> A new <see cref="Models.CosmosDBAccountLocation"/> instance for mocking. </returns>
-        public static CosmosDBAccountLocation CosmosDBAccountLocation(string id = null, AzureLocation? locationName = null, string documentEndpoint = null, string provisioningState = null, int? failoverPriority = null, bool? isZoneRedundant = null)
+        /// <returns> A new <see cref="Models.Location"/> instance for mocking. </returns>
+        public static Location Location(string id = default, string locationName = default, string documentEndpoint = default, string provisioningState = default, int? failoverPriority = default, bool? isZoneRedundant = default)
         {
-            return new CosmosDBAccountLocation(
+            return new Location(
                 id,
                 locationName,
                 documentEndpoint,
                 provisioningState,
                 failoverPriority,
                 isZoneRedundant,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBFailoverPolicy"/>. </summary>
+        /// <summary> The failover policy for a given region of a database account. </summary>
         /// <param name="id"> The unique identifier of the region in which the database account replicates to. Example: &lt;accountName&gt;-&lt;locationName&gt;. </param>
         /// <param name="locationName"> The name of the region in which the database account exists. </param>
         /// <param name="failoverPriority"> The failover priority of the region. A failover priority of 0 indicates a write region. The maximum value for a failover priority = (total number of regions - 1). Failover priority values must be unique for each of the regions in which the database account exists. </param>
         /// <returns> A new <see cref="Models.CosmosDBFailoverPolicy"/> instance for mocking. </returns>
-        public static CosmosDBFailoverPolicy CosmosDBFailoverPolicy(string id = null, AzureLocation? locationName = null, int? failoverPriority = null)
+        public static CosmosDBFailoverPolicy CosmosDBFailoverPolicy(string id = default, string locationName = default, int? failoverPriority = default)
         {
-            return new CosmosDBFailoverPolicy(id, locationName, failoverPriority, serializedAdditionalRawData: null);
+            return new CosmosDBFailoverPolicy(id, locationName, failoverPriority, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
-        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateLinkServiceConnectionState"> Connection State of the Private Endpoint Connection. </param>
         /// <param name="groupId"> Group id of the private endpoint. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
+        /// <param name="privateEndpointId"> Resource id of the private endpoint. </param>
         /// <returns> A new <see cref="CosmosDB.CosmosDBPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static CosmosDBPrivateEndpointConnectionData CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, CosmosDBPrivateLinkServiceConnectionStateProperty connectionState = null, string groupId = null, string provisioningState = null)
+        public static CosmosDBPrivateEndpointConnectionData CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = default, string groupId = default, string provisioningState = default, string privateEndpointId = default)
         {
             return new CosmosDBPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId != null ? new PrivateEndpointProperty(privateEndpointId, serializedAdditionalRawData: null) : null,
-                connectionState,
-                groupId,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                privateLinkServiceConnectionState is null && groupId is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, null), privateLinkServiceConnectionState, groupId, provisioningState, null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBPrivateLinkServiceConnectionStateProperty"/>. </summary>
+        /// <summary> Connection State of the Private Endpoint Connection. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> Any action that is required beyond basic workflow (approve/ reject/ disconnect). </param>
         /// <returns> A new <see cref="Models.CosmosDBPrivateLinkServiceConnectionStateProperty"/> instance for mocking. </returns>
-        public static CosmosDBPrivateLinkServiceConnectionStateProperty CosmosDBPrivateLinkServiceConnectionStateProperty(string status = null, string description = null, string actionsRequired = null)
+        public static CosmosDBPrivateLinkServiceConnectionStateProperty CosmosDBPrivateLinkServiceConnectionStateProperty(string status = default, string description = default, string actionsRequired = default)
         {
-            return new CosmosDBPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, serializedAdditionalRawData: null);
+            return new CosmosDBPrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DatabaseAccountKeysMetadata"/>. </summary>
-        /// <param name="primaryMasterKeyGeneratedOn"> The metadata related to the Primary Read-Write Key for the given Cosmos DB database account. </param>
-        /// <param name="secondaryMasterKeyGeneratedOn"> The metadata related to the Secondary Read-Write Key for the given Cosmos DB database account. </param>
-        /// <param name="primaryReadonlyMasterKeyGeneratedOn"> The metadata related to the Primary Read-Only Key for the given Cosmos DB database account. </param>
-        /// <param name="secondaryReadonlyMasterKeyGeneratedOn"> The metadata related to the Secondary Read-Only Key for the given Cosmos DB database account. </param>
+        /// <summary> Parameters to indicate the information about the restore. </summary>
+        /// <param name="restoreSource"> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </param>
+        /// <param name="restoreTimestampInUtc"> Time to which the account has to be restored (ISO-8601 format). </param>
+        /// <param name="restoreWithTtlDisabled"> Specifies whether the restored account will have Time-To-Live disabled upon the successful restore. </param>
+        /// <param name="restoreMode"> Describes the mode of the restore. </param>
+        /// <param name="databasesToRestore"> List of specific databases available for restore. </param>
+        /// <param name="gremlinDatabasesToRestore"> List of specific gremlin databases available for restore. </param>
+        /// <param name="tablesToRestore"> List of specific tables available for restore. </param>
+        /// <param name="sourceBackupLocation"> The source backup location for restore. </param>
+        /// <returns> A new <see cref="Models.RestoreParameters"/> instance for mocking. </returns>
+        public static RestoreParameters RestoreParameters(string restoreSource = default, DateTimeOffset? restoreTimestampInUtc = default, bool? restoreWithTtlDisabled = default, RestoreMode? restoreMode = default, IEnumerable<DatabaseRestoreResourceInfo> databasesToRestore = default, IEnumerable<GremlinDatabaseRestoreResource> gremlinDatabasesToRestore = default, IEnumerable<string> tablesToRestore = default, string sourceBackupLocation = default)
+        {
+            databasesToRestore ??= new ChangeTrackingList<DatabaseRestoreResourceInfo>();
+            gremlinDatabasesToRestore ??= new ChangeTrackingList<GremlinDatabaseRestoreResource>();
+            tablesToRestore ??= new ChangeTrackingList<string>();
+
+            return new RestoreParameters(
+                restoreSource,
+                restoreTimestampInUtc,
+                restoreWithTtlDisabled,
+                additionalBinaryDataProperties: null,
+                restoreMode,
+                databasesToRestore.ToList(),
+                gremlinDatabasesToRestore.ToList(),
+                tablesToRestore.ToList(),
+                sourceBackupLocation);
+        }
+
+        /// <summary> Specific Databases to restore. </summary>
+        /// <param name="databaseName"> The name of the database available for restore. </param>
+        /// <param name="collectionNames"> The names of the collections available for restore. </param>
+        /// <returns> A new <see cref="Models.DatabaseRestoreResourceInfo"/> instance for mocking. </returns>
+        public static DatabaseRestoreResourceInfo DatabaseRestoreResourceInfo(string databaseName = default, IEnumerable<string> collectionNames = default)
+        {
+            collectionNames ??= new ChangeTrackingList<string>();
+
+            return new DatabaseRestoreResourceInfo(databaseName, collectionNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specific Gremlin Databases to restore. </summary>
+        /// <param name="databaseName"> The name of the gremlin database available for restore. </param>
+        /// <param name="graphNames"> The names of the graphs available for restore. </param>
+        /// <returns> A new <see cref="Models.GremlinDatabaseRestoreResource"/> instance for mocking. </returns>
+        public static GremlinDatabaseRestoreResource GremlinDatabaseRestoreResource(string databaseName = default, IEnumerable<string> graphNames = default)
+        {
+            graphNames ??= new ChangeTrackingList<string>();
+
+            return new GremlinDatabaseRestoreResource(databaseName, graphNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The transition state information related capacity mode change with update request. </summary>
+        /// <param name="capacityModeTransitionStatus"> The transition status of capacity mode. </param>
+        /// <param name="currentCapacityMode"> Indicates the current capacity mode of the account. </param>
+        /// <param name="previousCapacityMode"> Indicates the previous capacity mode of the account before successful transition. </param>
+        /// <param name="capacityModeTransitionBeginTimestamp"> Begin time in UTC of the capacity mode change. </param>
+        /// <param name="capacityModeTransitionEndTimestamp"> End time in UTC of the capacity mode change. </param>
+        /// <param name="capacityModeLastSuccessfulTransitionEndTimestamp"> End time in UTC of the last successful capacity mode change. </param>
+        /// <returns> A new <see cref="Models.CapacityModeChangeTransitionState"/> instance for mocking. </returns>
+        public static CapacityModeChangeTransitionState CapacityModeChangeTransitionState(CapacityModeTransitionStatus? capacityModeTransitionStatus = default, CapacityMode? currentCapacityMode = default, CapacityMode? previousCapacityMode = default, DateTimeOffset? capacityModeTransitionBeginTimestamp = default, DateTimeOffset? capacityModeTransitionEndTimestamp = default, DateTimeOffset? capacityModeLastSuccessfulTransitionEndTimestamp = default)
+        {
+            return new CapacityModeChangeTransitionState(
+                capacityModeTransitionStatus,
+                currentCapacityMode,
+                previousCapacityMode,
+                capacityModeTransitionBeginTimestamp,
+                capacityModeTransitionEndTimestamp,
+                capacityModeLastSuccessfulTransitionEndTimestamp,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="primaryMasterKeyGenerationOn"> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </param>
+        /// <param name="secondaryMasterKeyGenerationOn"> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </param>
+        /// <param name="primaryReadonlyMasterKeyGenerationOn"> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </param>
+        /// <param name="secondaryReadonlyMasterKeyGenerationOn"> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </param>
         /// <returns> A new <see cref="Models.DatabaseAccountKeysMetadata"/> instance for mocking. </returns>
-        public static DatabaseAccountKeysMetadata DatabaseAccountKeysMetadata(DateTimeOffset? primaryMasterKeyGeneratedOn = null, DateTimeOffset? secondaryMasterKeyGeneratedOn = null, DateTimeOffset? primaryReadonlyMasterKeyGeneratedOn = null, DateTimeOffset? secondaryReadonlyMasterKeyGeneratedOn = null)
+        public static DatabaseAccountKeysMetadata DatabaseAccountKeysMetadata(DateTimeOffset? primaryMasterKeyGenerationOn = default, DateTimeOffset? secondaryMasterKeyGenerationOn = default, DateTimeOffset? primaryReadonlyMasterKeyGenerationOn = default, DateTimeOffset? secondaryReadonlyMasterKeyGenerationOn = default)
         {
-            return new DatabaseAccountKeysMetadata(primaryMasterKeyGeneratedOn != null ? new AccountKeyMetadata(primaryMasterKeyGeneratedOn, serializedAdditionalRawData: null) : null, secondaryMasterKeyGeneratedOn != null ? new AccountKeyMetadata(secondaryMasterKeyGeneratedOn, serializedAdditionalRawData: null) : null, primaryReadonlyMasterKeyGeneratedOn != null ? new AccountKeyMetadata(primaryReadonlyMasterKeyGeneratedOn, serializedAdditionalRawData: null) : null, secondaryReadonlyMasterKeyGeneratedOn != null ? new AccountKeyMetadata(secondaryReadonlyMasterKeyGeneratedOn, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+            return new DatabaseAccountKeysMetadata(primaryMasterKeyGenerationOn is null ? default : new AccountKeyMetadata(primaryMasterKeyGenerationOn, null), secondaryMasterKeyGenerationOn is null ? default : new AccountKeyMetadata(secondaryMasterKeyGenerationOn, null), primaryReadonlyMasterKeyGenerationOn is null ? default : new AccountKeyMetadata(primaryReadonlyMasterKeyGenerationOn, null), secondaryReadonlyMasterKeyGenerationOn is null ? default : new AccountKeyMetadata(secondaryReadonlyMasterKeyGenerationOn, null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountPatch"/>. </summary>
+        /// <summary> Identity for the resource. </summary>
+        /// <param name="principalId"> The principal id of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="tenantId"> The tenant id of the system assigned identity. This property will only be provided for a system assigned identity. </param>
+        /// <param name="type"> The type of identity used for the resource. The type 'SystemAssigned,UserAssigned' includes both an implicitly created identity and a set of user assigned identities. The type 'None' will remove any identities from the service. </param>
+        /// <param name="userAssignedIdentities"> The list of user identities associated with resource. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
+        /// <returns> A new <see cref="Models.ManagedServiceIdentity"/> instance for mocking. </returns>
+        public static ManagedServiceIdentity ManagedServiceIdentity(string principalId = default, string tenantId = default, ResourceIdentityType? @type = default, IDictionary<string, ManagedServiceIdentityUserAssignedIdentities> userAssignedIdentities = default)
+        {
+            userAssignedIdentities ??= new ChangeTrackingDictionary<string, ManagedServiceIdentityUserAssignedIdentities>();
+
+            return new ManagedServiceIdentity(principalId, tenantId, @type, userAssignedIdentities, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ManagedServiceIdentityUserAssignedIdentities. </summary>
+        /// <param name="principalId"> The principal id of user assigned identity. </param>
+        /// <param name="clientId"> The client id of user assigned identity. </param>
+        /// <returns> A new <see cref="Models.ManagedServiceIdentityUserAssignedIdentities"/> instance for mocking. </returns>
+        public static ManagedServiceIdentityUserAssignedIdentities ManagedServiceIdentityUserAssignedIdentities(string principalId = default, string clientId = default)
+        {
+            return new ManagedServiceIdentityUserAssignedIdentities(principalId, clientId, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
+        /// <param name="consistencyPolicy"> The consistency policy for the Cosmos DB account. </param>
+        /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
+        /// <param name="ipRules"> List of IpRules. </param>
+        /// <param name="isVirtualNetworkFilterEnabled"> Flag to indicate whether to enable/disable Virtual Network ACL rules. </param>
+        /// <param name="enableAutomaticFailover"> Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account. </param>
+        /// <param name="capabilities"> List of Cosmos DB capabilities for the account. </param>
+        /// <param name="virtualNetworkRules"> List of Virtual Network ACL rules configured for the Cosmos DB account. </param>
+        /// <param name="enableMultipleWriteLocations"> Enables the account to write in multiple locations. </param>
+        /// <param name="enableCassandraConnector"> Enables the cassandra connector on the Cosmos DB C* account. </param>
+        /// <param name="connectorOffer"> The cassandra connector offer type for the Cosmos DB database C* account. </param>
+        /// <param name="disableKeyBasedMetadataWriteAccess"> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </param>
+        /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
+        /// <param name="defaultIdentity"> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </param>
+        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
+        /// <param name="enableFreeTier"> Flag to indicate whether Free Tier is enabled. </param>
+        /// <param name="enableAnalyticalStorage"> Flag to indicate whether to enable storage analytics. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
+        /// <param name="backupPolicy"> The object representing the policy for taking backups on an account. </param>
+        /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
+        /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
+        /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
+        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        /// <param name="capacityMode"> Indicates the capacityMode of the Cosmos DB account. </param>
+        /// <param name="enableMaterializedViews"> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </param>
+        /// <param name="keysMetadata"> This property is ignored during the update/create operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </param>
+        /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
+        /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </param>
+        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </param>
+        /// <param name="customerManagedKeyStatus"> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </param>
+        /// <param name="enablePriorityBasedExecution"> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </param>
+        /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
+        /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
+        /// <param name="enableAllVersionsAndDeletesChangeFeed"> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </param>
+        /// <param name="apiServerVersion"> Describes the version of the MongoDB account. </param>
+        /// <param name="analyticalStorageSchemaType"> Describes the types of schema for analytical storage. </param>
+        /// <param name="diagnosticLogEnableFullTextQuery"> Describe the level of detail with which queries are to be logged. </param>
+        /// <param name="capacityTotalThroughputLimit"> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </param>
+        /// <returns> A new <see cref="Models.DatabaseAccountCreateUpdateParameters"/> instance for mocking. </returns>
+        public static DatabaseAccountCreateUpdateParameters DatabaseAccountCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, DatabaseAccountKind? kind = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<Location> locations = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, IEnumerable<Capability> capabilities = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, string keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? enableFreeTier = default, bool? enableAnalyticalStorage = default, CosmosDBAccountCreateMode? createMode = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<string> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, RestoreParameters restoreParameters = default, CapacityMode? capacityMode = default, bool? enableMaterializedViews = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, bool? enableBurstCapacity = default, MinimalTlsVersion? minimalTlsVersion = default, string customerManagedKeyStatus = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default, bool? enablePerRegionPerPartitionAutoscale = default, bool? enableAllVersionsAndDeletesChangeFeed = default, CosmosDBServerVersion? apiServerVersion = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default, int? capacityTotalThroughputLimit = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DatabaseAccountCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                kind,
+                consistencyPolicy is null && locations is null && ipRules is null && isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && capabilities is null && virtualNetworkRules is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && connectorOffer is null && disableKeyBasedMetadataWriteAccess is null && keyVaultKeyUri is null && defaultIdentity is null && publicNetworkAccess is null && enableFreeTier is null && enableAnalyticalStorage is null && createMode is null && backupPolicy is null && cors is null && networkAclBypass is null && networkAclBypassResourceIds is null && disableLocalAuth is null && restoreParameters is null && capacityMode is null && enableMaterializedViews is null && keysMetadata is null && enablePartitionMerge is null && enableBurstCapacity is null && minimalTlsVersion is null && customerManagedKeyStatus is null && enablePriorityBasedExecution is null && defaultPriorityLevel is null && enablePerRegionPerPartitionAutoscale is null && enableAllVersionsAndDeletesChangeFeed is null && apiServerVersion is null && analyticalStorageSchemaType is null && diagnosticLogEnableFullTextQuery is null && capacityTotalThroughputLimit is null ? default : new DatabaseAccountCreateUpdateProperties(
+                    consistencyPolicy,
+                    (locations ?? new ChangeTrackingList<Location>()).ToList(),
+                    keyVaultKeyUri,
+                    (ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>()).ToList(),
+                    isVirtualNetworkFilterEnabled,
+                    enableAutomaticFailover,
+                    (capabilities ?? new ChangeTrackingList<Capability>()).ToList(),
+                    (virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>()).ToList(),
+                    enableMultipleWriteLocations,
+                    enableCassandraConnector,
+                    connectorOffer,
+                    disableKeyBasedMetadataWriteAccess,
+                    defaultIdentity,
+                    customerManagedKeyStatus,
+                    publicNetworkAccess,
+                    enableFreeTier,
+                    new ApiProperties(apiServerVersion, null),
+                    enableAnalyticalStorage,
+                    new AnalyticalStorageConfiguration(analyticalStorageSchemaType, null),
+                    createMode,
+                    backupPolicy,
+                    (cors ?? new ChangeTrackingList<CorsPolicy>()).ToList(),
+                    networkAclBypass,
+                    (networkAclBypassResourceIds ?? new ChangeTrackingList<string>()).ToList(),
+                    new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, null),
+                    disableLocalAuth,
+                    restoreParameters,
+                    new Capacity(capacityTotalThroughputLimit, null),
+                    capacityMode,
+                    enableMaterializedViews,
+                    keysMetadata,
+                    enablePartitionMerge,
+                    enableBurstCapacity,
+                    minimalTlsVersion,
+                    default,
+                    enablePriorityBasedExecution,
+                    defaultPriorityLevel,
+                    enablePerRegionPerPartitionAutoscale,
+                    enableAllVersionsAndDeletesChangeFeed,
+                    null));
+        }
+
+        /// <summary> The core properties of ARM resources. </summary>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="Models.ARMResourceProperties"/> instance for mocking. </returns>
+        public static ARMResourceProperties ARMResourceProperties(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ARMResourceProperties(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
         /// <param name="location"> The location of the resource group to which the resource belongs. </param>
         /// <param name="identity"> Identity for the resource. </param>
@@ -235,50 +450,41 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
         /// <param name="defaultIdentity"> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </param>
         /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
-        /// <param name="isFreeTierEnabled"> Flag to indicate whether Free Tier is enabled. </param>
-        /// <param name="apiServerVersion"> API specific properties. Currently, supported only for MongoDB API. </param>
-        /// <param name="isAnalyticalStorageEnabled"> Flag to indicate whether to enable storage analytics. </param>
-        /// <param name="analyticalStorageSchemaType"> Analytical storage specific properties. </param>
-        /// <param name="backupPolicy">
-        /// The object representing the policy for taking backups on an account.
-        /// Please note <see cref="CosmosDBAccountBackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
-        /// </param>
+        /// <param name="enableFreeTier"> Flag to indicate whether Free Tier is enabled. </param>
+        /// <param name="enableAnalyticalStorage"> Flag to indicate whether to enable storage analytics. </param>
+        /// <param name="backupPolicy"> The object representing the policy for taking backups on an account. </param>
         /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
         /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
         /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
         /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
-        /// <param name="capacityTotalThroughputLimit"> The object that represents all properties related to capacity enforcement on an account. </param>
+        /// <param name="capacityMode"> Indicates the capacityMode of the Cosmos DB account. </param>
+        /// <param name="enableMaterializedViews"> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </param>
         /// <param name="keysMetadata"> This property is ignored during the update operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </param>
         /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
-        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default value is Tls 1.2. Cassandra and Mongo APIs only work with Tls 1.2. </param>
-        /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity feature on the account. </param>
+        /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </param>
+        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </param>
         /// <param name="customerManagedKeyStatus"> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </param>
-        /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of PerRegionPerPartitionAutoscale feature on the account. </param>
         /// <param name="enablePriorityBasedExecution"> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </param>
         /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
-        /// <returns> A new <see cref="Models.CosmosDBAccountPatch"/> instance for mocking. </returns>
-        public static CosmosDBAccountPatch CosmosDBAccountPatch(IDictionary<string, string> tags = null, AzureLocation? location = null, ManagedServiceIdentity identity = null, ConsistencyPolicy consistencyPolicy = null, IEnumerable<CosmosDBAccountLocation> locations = null, IEnumerable<CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = null, bool? enableAutomaticFailover = null, IEnumerable<CosmosDBAccountCapability> capabilities = null, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = null, bool? enableMultipleWriteLocations = null, bool? enableCassandraConnector = null, ConnectorOffer? connectorOffer = null, bool? disableKeyBasedMetadataWriteAccess = null, Uri keyVaultKeyUri = null, string defaultIdentity = null, CosmosDBPublicNetworkAccess? publicNetworkAccess = null, bool? isFreeTierEnabled = null, CosmosDBServerVersion? apiServerVersion = null, bool? isAnalyticalStorageEnabled = null, AnalyticalStorageSchemaType? analyticalStorageSchemaType = null, CosmosDBAccountBackupPolicy backupPolicy = null, IEnumerable<CosmosDBAccountCorsPolicy> cors = null, NetworkAclBypass? networkAclBypass = null, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = null, bool? disableLocalAuth = null, int? capacityTotalThroughputLimit = null, DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = null, CosmosDBMinimalTlsVersion? minimalTlsVersion = null, bool? enableBurstCapacity = null, string customerManagedKeyStatus = null, bool? enablePerRegionPerPartitionAutoscale = null, bool? enablePriorityBasedExecution = null, DefaultPriorityLevel? defaultPriorityLevel = null)
+        /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of Per-Region Per-partition autoscale Preview feature on the account. </param>
+        /// <param name="enableAllVersionsAndDeletesChangeFeed"> Flag to indicate if All Versions and Deletes Change feed feature is enabled on the account. </param>
+        /// <param name="apiServerVersion"> Describes the version of the MongoDB account. </param>
+        /// <param name="analyticalStorageSchemaType"> Describes the types of schema for analytical storage. </param>
+        /// <param name="diagnosticLogEnableFullTextQuery"> Describe the level of detail with which queries are to be logged. </param>
+        /// <param name="capacityTotalThroughputLimit"> The total throughput limit imposed on the account. A totalThroughputLimit of 2000 imposes a strict limit of max throughput that can be provisioned on that account to be 2000. A totalThroughputLimit of -1 indicates no limits on provisioning of throughput. </param>
+        /// <returns> A new <see cref="Models.DatabaseAccountGetResultsPatch"/> instance for mocking. </returns>
+        public static DatabaseAccountGetResultsPatch DatabaseAccountGetResultsPatch(IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default, ConsistencyPolicy consistencyPolicy = default, IEnumerable<Location> locations = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = default, bool? isVirtualNetworkFilterEnabled = default, bool? enableAutomaticFailover = default, IEnumerable<Capability> capabilities = default, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = default, bool? enableMultipleWriteLocations = default, bool? enableCassandraConnector = default, ConnectorOffer? connectorOffer = default, bool? disableKeyBasedMetadataWriteAccess = default, string keyVaultKeyUri = default, string defaultIdentity = default, CosmosDBPublicNetworkAccess? publicNetworkAccess = default, bool? enableFreeTier = default, bool? enableAnalyticalStorage = default, CosmosDBAccountBackupPolicy backupPolicy = default, IEnumerable<CorsPolicy> cors = default, NetworkAclBypass? networkAclBypass = default, IEnumerable<string> networkAclBypassResourceIds = default, bool? disableLocalAuth = default, CapacityMode? capacityMode = default, bool? enableMaterializedViews = default, DatabaseAccountKeysMetadata keysMetadata = default, bool? enablePartitionMerge = default, bool? enableBurstCapacity = default, MinimalTlsVersion? minimalTlsVersion = default, string customerManagedKeyStatus = default, bool? enablePriorityBasedExecution = default, DefaultPriorityLevel? defaultPriorityLevel = default, bool? enablePerRegionPerPartitionAutoscale = default, bool? enableAllVersionsAndDeletesChangeFeed = default, CosmosDBServerVersion? apiServerVersion = default, AnalyticalStorageSchemaType? analyticalStorageSchemaType = default, EnableFullTextQuery? diagnosticLogEnableFullTextQuery = default, int? capacityTotalThroughputLimit = default)
         {
-            tags ??= new Dictionary<string, string>();
-            locations ??= new List<CosmosDBAccountLocation>();
-            ipRules ??= new List<CosmosDBIPAddressOrRange>();
-            capabilities ??= new List<CosmosDBAccountCapability>();
-            virtualNetworkRules ??= new List<CosmosDBVirtualNetworkRule>();
-            cors ??= new List<CosmosDBAccountCorsPolicy>();
-            networkAclBypassResourceIds ??= new List<ResourceIdentifier>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CosmosDBAccountPatch(
-                tags,
-                location,
-                identity,
+            return new DatabaseAccountGetResultsPatch(tags, location, identity, consistencyPolicy is null && locations is null && ipRules is null && isVirtualNetworkFilterEnabled is null && enableAutomaticFailover is null && capabilities is null && virtualNetworkRules is null && enableMultipleWriteLocations is null && enableCassandraConnector is null && connectorOffer is null && disableKeyBasedMetadataWriteAccess is null && keyVaultKeyUri is null && defaultIdentity is null && publicNetworkAccess is null && enableFreeTier is null && enableAnalyticalStorage is null && backupPolicy is null && cors is null && networkAclBypass is null && networkAclBypassResourceIds is null && disableLocalAuth is null && capacityMode is null && enableMaterializedViews is null && keysMetadata is null && enablePartitionMerge is null && enableBurstCapacity is null && minimalTlsVersion is null && customerManagedKeyStatus is null && enablePriorityBasedExecution is null && defaultPriorityLevel is null && enablePerRegionPerPartitionAutoscale is null && enableAllVersionsAndDeletesChangeFeed is null && apiServerVersion is null && analyticalStorageSchemaType is null && diagnosticLogEnableFullTextQuery is null && capacityTotalThroughputLimit is null ? default : new DatabaseAccountUpdateProperties(
                 consistencyPolicy,
-                locations?.ToList(),
-                ipRules?.ToList(),
+                (locations ?? new ChangeTrackingList<Location>()).ToList(),
+                (ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>()).ToList(),
                 isVirtualNetworkFilterEnabled,
                 enableAutomaticFailover,
-                capabilities?.ToList(),
-                virtualNetworkRules?.ToList(),
+                (capabilities ?? new ChangeTrackingList<Capability>()).ToList(),
+                (virtualNetworkRules ?? new ChangeTrackingList<CosmosDBVirtualNetworkRule>()).ToList(),
                 enableMultipleWriteLocations,
                 enableCassandraConnector,
                 connectorOffer,
@@ -286,196 +492,130 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 keyVaultKeyUri,
                 defaultIdentity,
                 publicNetworkAccess,
-                isFreeTierEnabled,
-                apiServerVersion != null ? new ApiProperties(apiServerVersion, serializedAdditionalRawData: null) : null,
-                isAnalyticalStorageEnabled,
-                analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType, serializedAdditionalRawData: null) : null,
+                enableFreeTier,
+                new ApiProperties(apiServerVersion, null),
+                enableAnalyticalStorage,
+                new AnalyticalStorageConfiguration(analyticalStorageSchemaType, null),
                 backupPolicy,
-                cors?.ToList(),
+                (cors ?? new ChangeTrackingList<CorsPolicy>()).ToList(),
                 networkAclBypass,
-                networkAclBypassResourceIds?.ToList(),
+                (networkAclBypassResourceIds ?? new ChangeTrackingList<string>()).ToList(),
+                new DiagnosticLogSettings(diagnosticLogEnableFullTextQuery, null),
                 disableLocalAuth,
-                capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit, serializedAdditionalRawData: null) : null,
+                new Capacity(capacityTotalThroughputLimit, null),
+                capacityMode,
+                enableMaterializedViews,
                 keysMetadata,
                 enablePartitionMerge,
-                minimalTlsVersion,
                 enableBurstCapacity,
+                minimalTlsVersion,
                 customerManagedKeyStatus,
-                enablePerRegionPerPartitionAutoscale,
                 enablePriorityBasedExecution,
                 defaultPriorityLevel,
-                serializedAdditionalRawData: null);
+                enablePerRegionPerPartitionAutoscale,
+                enableAllVersionsAndDeletesChangeFeed,
+                null), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="kind"> Indicates the type of database account. This can only be set at database account creation. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="consistencyPolicy"> The consistency policy for the Cosmos DB account. </param>
-        /// <param name="locations"> An array that contains the georeplication locations enabled for the Cosmos DB account. </param>
-        /// <param name="databaseAccountOfferType"> The offer type for the database. </param>
-        /// <param name="ipRules"> List of IpRules. </param>
-        /// <param name="isVirtualNetworkFilterEnabled"> Flag to indicate whether to enable/disable Virtual Network ACL rules. </param>
-        /// <param name="enableAutomaticFailover"> Enables automatic failover of the write region in the rare event that the region is unavailable due to an outage. Automatic failover will result in a new write region for the account and is chosen based on the failover priorities configured for the account. </param>
-        /// <param name="capabilities"> List of Cosmos DB capabilities for the account. </param>
-        /// <param name="virtualNetworkRules"> List of Virtual Network ACL rules configured for the Cosmos DB account. </param>
-        /// <param name="enableMultipleWriteLocations"> Enables the account to write in multiple locations. </param>
-        /// <param name="enableCassandraConnector"> Enables the cassandra connector on the Cosmos DB C* account. </param>
-        /// <param name="connectorOffer"> The cassandra connector offer type for the Cosmos DB database C* account. </param>
-        /// <param name="disableKeyBasedMetadataWriteAccess"> Disable write operations on metadata resources (databases, containers, throughput) via account keys. </param>
-        /// <param name="keyVaultKeyUri"> The URI of the key vault. </param>
-        /// <param name="defaultIdentity"> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </param>
-        /// <param name="publicNetworkAccess"> Whether requests from Public Network are allowed. </param>
-        /// <param name="isFreeTierEnabled"> Flag to indicate whether Free Tier is enabled. </param>
-        /// <param name="apiServerVersion"> API specific properties. Currently, supported only for MongoDB API. </param>
-        /// <param name="isAnalyticalStorageEnabled"> Flag to indicate whether to enable storage analytics. </param>
-        /// <param name="analyticalStorageSchemaType"> Analytical storage specific properties. </param>
-        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
-        /// <param name="backupPolicy">
-        /// The object representing the policy for taking backups on an account.
-        /// Please note <see cref="CosmosDBAccountBackupPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ContinuousModeBackupPolicy"/> and <see cref="PeriodicModeBackupPolicy"/>.
-        /// </param>
-        /// <param name="cors"> The CORS policy for the Cosmos DB database account. </param>
-        /// <param name="networkAclBypass"> Indicates what services are allowed to bypass firewall checks. </param>
-        /// <param name="networkAclBypassResourceIds"> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </param>
-        /// <param name="disableLocalAuth"> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </param>
-        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="capacityTotalThroughputLimit"> The object that represents all properties related to capacity enforcement on an account. </param>
-        /// <param name="keysMetadata"> This property is ignored during the update/create operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </param>
-        /// <param name="enablePartitionMerge"> Flag to indicate enabling/disabling of Partition Merge feature on the account. </param>
-        /// <param name="minimalTlsVersion"> Indicates the minimum allowed Tls version. The default value is Tls 1.2. Cassandra and Mongo APIs only work with Tls 1.2. </param>
-        /// <param name="enableBurstCapacity"> Flag to indicate enabling/disabling of Burst Capacity feature on the account. </param>
-        /// <param name="customerManagedKeyStatus"> Indicates the status of the Customer Managed Key feature on the account. In case there are errors, the property provides troubleshooting guidance. </param>
-        /// <param name="enablePerRegionPerPartitionAutoscale"> Flag to indicate enabling/disabling of PerRegionPerPartitionAutoscale feature on the account. </param>
-        /// <param name="enablePriorityBasedExecution"> Flag to indicate enabling/disabling of Priority Based Execution Preview feature on the account. </param>
-        /// <param name="defaultPriorityLevel"> Enum to indicate default Priority Level of request for Priority Based Execution. </param>
-        /// <returns> A new <see cref="Models.CosmosDBAccountCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CosmosDBAccountCreateOrUpdateContent CosmosDBAccountCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBAccountKind? kind = null, ManagedServiceIdentity identity = null, ConsistencyPolicy consistencyPolicy = null, IEnumerable<CosmosDBAccountLocation> locations = null, CosmosDBAccountOfferType databaseAccountOfferType = default, IEnumerable<CosmosDBIPAddressOrRange> ipRules = null, bool? isVirtualNetworkFilterEnabled = null, bool? enableAutomaticFailover = null, IEnumerable<CosmosDBAccountCapability> capabilities = null, IEnumerable<CosmosDBVirtualNetworkRule> virtualNetworkRules = null, bool? enableMultipleWriteLocations = null, bool? enableCassandraConnector = null, ConnectorOffer? connectorOffer = null, bool? disableKeyBasedMetadataWriteAccess = null, Uri keyVaultKeyUri = null, string defaultIdentity = null, CosmosDBPublicNetworkAccess? publicNetworkAccess = null, bool? isFreeTierEnabled = null, CosmosDBServerVersion? apiServerVersion = null, bool? isAnalyticalStorageEnabled = null, AnalyticalStorageSchemaType? analyticalStorageSchemaType = null, CosmosDBAccountCreateMode? createMode = null, CosmosDBAccountBackupPolicy backupPolicy = null, IEnumerable<CosmosDBAccountCorsPolicy> cors = null, NetworkAclBypass? networkAclBypass = null, IEnumerable<ResourceIdentifier> networkAclBypassResourceIds = null, bool? disableLocalAuth = null, CosmosDBAccountRestoreParameters restoreParameters = null, int? capacityTotalThroughputLimit = null, DatabaseAccountKeysMetadata keysMetadata = null, bool? enablePartitionMerge = null, CosmosDBMinimalTlsVersion? minimalTlsVersion = null, bool? enableBurstCapacity = null, string customerManagedKeyStatus = null, bool? enablePerRegionPerPartitionAutoscale = null, bool? enablePriorityBasedExecution = null, DefaultPriorityLevel? defaultPriorityLevel = null)
+        /// <summary> The list of new failover policies for the failover priority change. </summary>
+        /// <param name="failoverPolicies"> List of failover policies. </param>
+        /// <returns> A new <see cref="Models.CosmosDBFailoverPolicies"/> instance for mocking. </returns>
+        public static CosmosDBFailoverPolicies CosmosDBFailoverPolicies(IEnumerable<CosmosDBFailoverPolicy> failoverPolicies = default)
         {
-            tags ??= new Dictionary<string, string>();
-            locations ??= new List<CosmosDBAccountLocation>();
-            ipRules ??= new List<CosmosDBIPAddressOrRange>();
-            capabilities ??= new List<CosmosDBAccountCapability>();
-            virtualNetworkRules ??= new List<CosmosDBVirtualNetworkRule>();
-            cors ??= new List<CosmosDBAccountCorsPolicy>();
-            networkAclBypassResourceIds ??= new List<ResourceIdentifier>();
+            failoverPolicies ??= new ChangeTrackingList<CosmosDBFailoverPolicy>();
 
-            return new CosmosDBAccountCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                kind,
-                identity,
-                consistencyPolicy,
-                locations?.ToList(),
-                databaseAccountOfferType,
-                ipRules?.ToList(),
-                isVirtualNetworkFilterEnabled,
-                enableAutomaticFailover,
-                capabilities?.ToList(),
-                virtualNetworkRules?.ToList(),
-                enableMultipleWriteLocations,
-                enableCassandraConnector,
-                connectorOffer,
-                disableKeyBasedMetadataWriteAccess,
-                keyVaultKeyUri,
-                defaultIdentity,
-                publicNetworkAccess,
-                isFreeTierEnabled,
-                apiServerVersion != null ? new ApiProperties(apiServerVersion, serializedAdditionalRawData: null) : null,
-                isAnalyticalStorageEnabled,
-                analyticalStorageSchemaType != null ? new AnalyticalStorageConfiguration(analyticalStorageSchemaType, serializedAdditionalRawData: null) : null,
-                createMode,
-                backupPolicy,
-                cors?.ToList(),
-                networkAclBypass,
-                networkAclBypassResourceIds?.ToList(),
-                disableLocalAuth,
-                restoreParameters,
-                capacityTotalThroughputLimit != null ? new CosmosDBAccountCapacity(capacityTotalThroughputLimit, serializedAdditionalRawData: null) : null,
-                keysMetadata,
-                enablePartitionMerge,
-                minimalTlsVersion,
-                enableBurstCapacity,
-                customerManagedKeyStatus,
-                enablePerRegionPerPartitionAutoscale,
-                enablePriorityBasedExecution,
-                defaultPriorityLevel,
-                serializedAdditionalRawData: null);
+            return new CosmosDBFailoverPolicies(failoverPolicies.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountKeyList"/>. </summary>
+        /// <summary> The access keys for the given database account. </summary>
         /// <param name="primaryReadonlyMasterKey"> Base 64 encoded value of the primary read-only key. </param>
         /// <param name="secondaryReadonlyMasterKey"> Base 64 encoded value of the secondary read-only key. </param>
         /// <param name="primaryMasterKey"> Base 64 encoded value of the primary read-write key. </param>
         /// <param name="secondaryMasterKey"> Base 64 encoded value of the secondary read-write key. </param>
-        /// <returns> A new <see cref="Models.CosmosDBAccountKeyList"/> instance for mocking. </returns>
-        public static CosmosDBAccountKeyList CosmosDBAccountKeyList(string primaryReadonlyMasterKey = null, string secondaryReadonlyMasterKey = null, string primaryMasterKey = null, string secondaryMasterKey = null)
+        /// <returns> A new <see cref="Models.DatabaseAccountListKeysResult"/> instance for mocking. </returns>
+        public static DatabaseAccountListKeysResult DatabaseAccountListKeysResult(string primaryReadonlyMasterKey = default, string secondaryReadonlyMasterKey = default, string primaryMasterKey = default, string secondaryMasterKey = default)
         {
-            return new CosmosDBAccountKeyList(primaryReadonlyMasterKey, secondaryReadonlyMasterKey, serializedAdditionalRawData: null, primaryMasterKey, secondaryMasterKey);
+            return new DatabaseAccountListKeysResult(primaryReadonlyMasterKey, secondaryReadonlyMasterKey, additionalBinaryDataProperties: null, primaryMasterKey, secondaryMasterKey);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountReadOnlyKeyList"/>. </summary>
+        /// <summary> The read-only access keys for the given database account. </summary>
         /// <param name="primaryReadonlyMasterKey"> Base 64 encoded value of the primary read-only key. </param>
         /// <param name="secondaryReadonlyMasterKey"> Base 64 encoded value of the secondary read-only key. </param>
-        /// <returns> A new <see cref="Models.CosmosDBAccountReadOnlyKeyList"/> instance for mocking. </returns>
-        public static CosmosDBAccountReadOnlyKeyList CosmosDBAccountReadOnlyKeyList(string primaryReadonlyMasterKey = null, string secondaryReadonlyMasterKey = null)
+        /// <returns> A new <see cref="Models.DatabaseAccountListReadOnlyKeysResult"/> instance for mocking. </returns>
+        public static DatabaseAccountListReadOnlyKeysResult DatabaseAccountListReadOnlyKeysResult(string primaryReadonlyMasterKey = default, string secondaryReadonlyMasterKey = default)
         {
-            return new CosmosDBAccountReadOnlyKeyList(primaryReadonlyMasterKey, secondaryReadonlyMasterKey, serializedAdditionalRawData: null);
+            return new DatabaseAccountListReadOnlyKeysResult(primaryReadonlyMasterKey, secondaryReadonlyMasterKey, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBAccountConnectionString"/>. </summary>
+        /// <summary> The connection strings for the given database account. </summary>
+        /// <param name="connectionStrings"> An array that contains the connection strings for the Cosmos DB account. </param>
+        /// <returns> A new <see cref="Models.DatabaseAccountListConnectionStringsResult"/> instance for mocking. </returns>
+        public static DatabaseAccountListConnectionStringsResult DatabaseAccountListConnectionStringsResult(IEnumerable<CosmosDBConnectionString> connectionStrings = default)
+        {
+            connectionStrings ??= new ChangeTrackingList<CosmosDBConnectionString>();
+
+            return new DatabaseAccountListConnectionStringsResult(connectionStrings.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Connection string for the Cosmos DB account. </summary>
         /// <param name="connectionString"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
         /// <param name="keyKind"> Kind of the connection string key. </param>
-        /// <param name="keyType"> Type of the connection string. </param>
-        /// <returns> A new <see cref="Models.CosmosDBAccountConnectionString"/> instance for mocking. </returns>
-        public static CosmosDBAccountConnectionString CosmosDBAccountConnectionString(string connectionString = null, string description = null, CosmosDBKind? keyKind = null, CosmosDBType? keyType = null)
+        /// <param name="type"> Type of the connection string. </param>
+        /// <returns> A new <see cref="Models.CosmosDBConnectionString"/> instance for mocking. </returns>
+        public static CosmosDBConnectionString CosmosDBConnectionString(string connectionString = default, string description = default, CosmosDBKind? keyKind = default, Type? @type = default)
         {
-            return new CosmosDBAccountConnectionString(connectionString, description, keyKind, keyType, serializedAdditionalRawData: null);
+            return new CosmosDBConnectionString(connectionString, description, keyKind, @type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBBaseMetric"/>. </summary>
+        /// <summary> Cosmos DB region to online or offline. </summary>
+        /// <param name="region"> Cosmos DB region, with spaces between words and each word capitalized. </param>
+        /// <returns> A new <see cref="Models.RegionForOnlineOffline"/> instance for mocking. </returns>
+        public static RegionForOnlineOffline RegionForOnlineOffline(string region = default)
+        {
+            return new RegionForOnlineOffline(region, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Parameters to regenerate the keys within the database account. </summary>
+        /// <param name="keyKind"> The access key to regenerate. </param>
+        /// <returns> A new <see cref="Models.DatabaseAccountRegenerateKeyParameters"/> instance for mocking. </returns>
+        public static DatabaseAccountRegenerateKeyParameters DatabaseAccountRegenerateKeyParameters(KeyKind keyKind = default)
+        {
+            return new DatabaseAccountRegenerateKeyParameters(keyKind, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Metric data. </summary>
         /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The metric values for the specified time window and timestep. </param>
-        /// <returns> A new <see cref="Models.CosmosDBBaseMetric"/> instance for mocking. </returns>
-        public static CosmosDBBaseMetric CosmosDBBaseMetric(DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string timeGrain = null, CosmosDBMetricUnitType? unit = null, CosmosDBMetricName name = null, IEnumerable<CosmosDBMetricValue> metricValues = null)
+        /// <returns> A new <see cref="Models.Metric"/> instance for mocking. </returns>
+        public static Metric Metric(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CosmosDBMetricUnitType? unit = default, CosmosDBMetricName name = default, IEnumerable<CosmosDBMetricValue> metricValues = default)
         {
-            metricValues ??= new List<CosmosDBMetricValue>();
+            metricValues ??= new ChangeTrackingList<CosmosDBMetricValue>();
 
-            return new CosmosDBBaseMetric(
+            return new Metric(
                 startOn,
                 endOn,
                 timeGrain,
                 unit,
                 name,
-                metricValues?.ToList(),
-                serializedAdditionalRawData: null);
+                metricValues.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBMetricName"/>. </summary>
+        /// <summary> A metric name. </summary>
         /// <param name="value"> The name of the metric. </param>
         /// <param name="localizedValue"> The friendly name of the metric. </param>
         /// <returns> A new <see cref="Models.CosmosDBMetricName"/> instance for mocking. </returns>
-        public static CosmosDBMetricName CosmosDBMetricName(string value = null, string localizedValue = null)
+        public static CosmosDBMetricName CosmosDBMetricName(string value = default, string localizedValue = default)
         {
-            return new CosmosDBMetricName(value, localizedValue, serializedAdditionalRawData: null);
+            return new CosmosDBMetricName(value, localizedValue, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBMetricValue"/>. </summary>
+        /// <summary> Represents metrics values. </summary>
         /// <param name="count"> The number of values for the metric. </param>
         /// <param name="average"> The average value of the metric. </param>
         /// <param name="maximum"> The max value of the metric. </param>
@@ -483,7 +623,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="timestamp"> The metric timestamp (ISO-8601 format). </param>
         /// <param name="total"> The total value of the metric. </param>
         /// <returns> A new <see cref="Models.CosmosDBMetricValue"/> instance for mocking. </returns>
-        public static CosmosDBMetricValue CosmosDBMetricValue(int? count = null, double? average = null, double? maximum = null, double? minimum = null, DateTimeOffset? timestamp = null, double? total = null)
+        public static CosmosDBMetricValue CosmosDBMetricValue(int? count = default, double? average = default, double? maximum = default, double? minimum = default, DateTimeOffset? timestamp = default, double? total = default)
         {
             return new CosmosDBMetricValue(
                 count,
@@ -492,10 +632,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 minimum,
                 timestamp,
                 total,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBPercentileMetric"/>. </summary>
+        /// <summary> The usage data for a usage request. </summary>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="name"> The name information for the metric. </param>
+        /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
+        /// <param name="limit"> Maximum value for this metric. </param>
+        /// <param name="currentValue"> Current value for this metric. </param>
+        /// <returns> A new <see cref="Models.CosmosDBUsage"/> instance for mocking. </returns>
+        public static CosmosDBUsage CosmosDBUsage(CosmosDBMetricUnitType? unit = default, CosmosDBMetricName name = default, string quotaPeriod = default, long? limit = default, long? currentValue = default)
+        {
+            return new CosmosDBUsage(
+                unit,
+                name,
+                quotaPeriod,
+                limit,
+                currentValue,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The definition of a metric. </summary>
+        /// <param name="metricAvailabilities"> The list of metric availabilities for the account. </param>
+        /// <param name="primaryAggregationType"> The primary aggregation type of the metric. </param>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="resourceUri"> The resource uri of the database. </param>
+        /// <param name="name"> The name information for the metric. </param>
+        /// <returns> A new <see cref="Models.CosmosDBMetricDefinition"/> instance for mocking. </returns>
+        public static CosmosDBMetricDefinition CosmosDBMetricDefinition(IEnumerable<CosmosDBMetricAvailability> metricAvailabilities = default, CosmosDBMetricPrimaryAggregationType? primaryAggregationType = default, CosmosDBMetricUnitType? unit = default, string resourceUri = default, CosmosDBMetricName name = default)
+        {
+            metricAvailabilities ??= new ChangeTrackingList<CosmosDBMetricAvailability>();
+
+            return new CosmosDBMetricDefinition(
+                metricAvailabilities.ToList(),
+                primaryAggregationType,
+                unit,
+                resourceUri,
+                name,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The availability of the metric. </summary>
+        /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
+        /// <param name="retention"> The retention for the metric values. </param>
+        /// <returns> A new <see cref="Models.CosmosDBMetricAvailability"/> instance for mocking. </returns>
+        public static CosmosDBMetricAvailability CosmosDBMetricAvailability(string timeGrain = default, string retention = default)
+        {
+            return new CosmosDBMetricAvailability(timeGrain, retention, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Percentile Metric data. </summary>
         /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
@@ -503,9 +690,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The percentile metric values for the specified time window and timestep. </param>
         /// <returns> A new <see cref="Models.CosmosDBPercentileMetric"/> instance for mocking. </returns>
-        public static CosmosDBPercentileMetric CosmosDBPercentileMetric(DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string timeGrain = null, CosmosDBMetricUnitType? unit = null, CosmosDBMetricName name = null, IEnumerable<PercentileMetricValue> metricValues = null)
+        public static CosmosDBPercentileMetric CosmosDBPercentileMetric(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CosmosDBMetricUnitType? unit = default, CosmosDBMetricName name = default, IEnumerable<PercentileMetricValue> metricValues = default)
         {
-            metricValues ??= new List<PercentileMetricValue>();
+            metricValues ??= new ChangeTrackingList<PercentileMetricValue>();
 
             return new CosmosDBPercentileMetric(
                 startOn,
@@ -513,11 +700,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 timeGrain,
                 unit,
                 name,
-                metricValues?.ToList(),
-                serializedAdditionalRawData: null);
+                metricValues.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PercentileMetricValue"/>. </summary>
+        /// <summary> Represents percentile metrics values. </summary>
         /// <param name="count"> The number of values for the metric. </param>
         /// <param name="average"> The average value of the metric. </param>
         /// <param name="maximum"> The max value of the metric. </param>
@@ -532,7 +719,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="p95"> The 95th percentile value for the metric. </param>
         /// <param name="p99"> The 99th percentile value for the metric. </param>
         /// <returns> A new <see cref="Models.PercentileMetricValue"/> instance for mocking. </returns>
-        public static PercentileMetricValue PercentileMetricValue(int? count = null, double? average = null, double? maximum = null, double? minimum = null, DateTimeOffset? timestamp = null, double? total = null, double? p10 = null, double? p25 = null, double? p50 = null, double? p75 = null, double? p90 = null, double? p95 = null, double? p99 = null)
+        public static PercentileMetricValue PercentileMetricValue(int? count = default, double? average = default, double? maximum = default, double? minimum = default, DateTimeOffset? timestamp = default, double? total = default, double? p10 = default, double? p25 = default, double? p50 = default, double? p75 = default, double? p90 = default, double? p95 = default, double? p99 = default)
         {
             return new PercentileMetricValue(
                 count,
@@ -541,7 +728,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 minimum,
                 timestamp,
                 total,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 p10,
                 p25,
                 p50,
@@ -551,7 +738,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 p99);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PartitionMetric"/>. </summary>
+        /// <summary> The metric values for a single partition. </summary>
         /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
@@ -561,9 +748,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="partitionId"> The partition id (GUID identifier) of the metric values. </param>
         /// <param name="partitionKeyRangeId"> The partition key range id (integer identifier) of the metric values. </param>
         /// <returns> A new <see cref="Models.PartitionMetric"/> instance for mocking. </returns>
-        public static PartitionMetric PartitionMetric(DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, string timeGrain = null, CosmosDBMetricUnitType? unit = null, CosmosDBMetricName name = null, IEnumerable<CosmosDBMetricValue> metricValues = null, Guid? partitionId = null, string partitionKeyRangeId = null)
+        public static PartitionMetric PartitionMetric(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, CosmosDBMetricUnitType? unit = default, CosmosDBMetricName name = default, IEnumerable<CosmosDBMetricValue> metricValues = default, string partitionId = default, string partitionKeyRangeId = default)
         {
-            metricValues ??= new List<CosmosDBMetricValue>();
+            metricValues ??= new ChangeTrackingList<CosmosDBMetricValue>();
 
             return new PartitionMetric(
                 startOn,
@@ -571,31 +758,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 timeGrain,
                 unit,
                 name,
-                metricValues?.ToList(),
-                serializedAdditionalRawData: null,
+                metricValues.ToList(),
+                additionalBinaryDataProperties: null,
                 partitionId,
                 partitionKeyRangeId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBBaseUsage"/>. </summary>
-        /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="name"> The name information for the metric. </param>
-        /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
-        /// <param name="limit"> Maximum value for this metric. </param>
-        /// <param name="currentValue"> Current value for this metric. </param>
-        /// <returns> A new <see cref="Models.CosmosDBBaseUsage"/> instance for mocking. </returns>
-        public static CosmosDBBaseUsage CosmosDBBaseUsage(CosmosDBMetricUnitType? unit = null, CosmosDBMetricName name = null, string quotaPeriod = null, long? limit = null, long? currentValue = null)
-        {
-            return new CosmosDBBaseUsage(
-                unit,
-                name,
-                quotaPeriod,
-                limit,
-                currentValue,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PartitionUsage"/>. </summary>
+        /// <summary> The partition level usage data for a usage request. </summary>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="quotaPeriod"> The quota period used to summarize the usage values. </param>
@@ -604,7 +773,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="partitionId"> The partition id (GUID identifier) of the usages. </param>
         /// <param name="partitionKeyRangeId"> The partition key range id (integer identifier) of the usages. </param>
         /// <returns> A new <see cref="Models.PartitionUsage"/> instance for mocking. </returns>
-        public static PartitionUsage PartitionUsage(CosmosDBMetricUnitType? unit = null, CosmosDBMetricName name = null, string quotaPeriod = null, long? limit = null, long? currentValue = null, Guid? partitionId = null, string partitionKeyRangeId = null)
+        public static PartitionUsage PartitionUsage(CosmosDBMetricUnitType? unit = default, CosmosDBMetricName name = default, string quotaPeriod = default, long? limit = default, long? currentValue = default, string partitionId = default, string partitionKeyRangeId = default)
         {
             return new PartitionUsage(
                 unit,
@@ -612,1164 +781,2523 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 quotaPeriod,
                 limit,
                 currentValue,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 partitionId,
                 partitionKeyRangeId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBMetricDefinition"/>. </summary>
-        /// <param name="metricAvailabilities"> The list of metric availabilities for the account. </param>
-        /// <param name="primaryAggregationType"> The primary aggregation type of the metric. </param>
-        /// <param name="unit"> The unit of the metric. </param>
-        /// <param name="resourceId"> The resource uri of the database. </param>
-        /// <param name="name"> The name information for the metric. </param>
-        /// <returns> A new <see cref="Models.CosmosDBMetricDefinition"/> instance for mocking. </returns>
-        public static CosmosDBMetricDefinition CosmosDBMetricDefinition(IEnumerable<CosmosDBMetricAvailability> metricAvailabilities = null, CosmosDBMetricPrimaryAggregationType? primaryAggregationType = null, CosmosDBMetricUnitType? unit = null, ResourceIdentifier resourceId = null, CosmosDBMetricName name = null)
+        /// <summary> A Cosmos DB Copy Job. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of a Copy Job. </param>
+        /// <returns> A new <see cref="CosmosDB.CopyJobGetResultsData"/> instance for mocking. </returns>
+        public static CopyJobGetResultsData CopyJobGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CopyJobProperties properties = default)
         {
-            metricAvailabilities ??= new List<CosmosDBMetricAvailability>();
-
-            return new CosmosDBMetricDefinition(
-                metricAvailabilities?.ToList(),
-                primaryAggregationType,
-                unit,
-                resourceId,
-                name,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBMetricAvailability"/>. </summary>
-        /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
-        /// <param name="retention"> The retention for the metric values. </param>
-        /// <returns> A new <see cref="Models.CosmosDBMetricAvailability"/> instance for mocking. </returns>
-        public static CosmosDBMetricAvailability CosmosDBMetricAvailability(string timeGrain = null, string retention = null)
-        {
-            return new CosmosDBMetricAvailability(timeGrain, retention, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlDatabaseData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <param name="options"></param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBSqlDatabaseData"/> instance for mocking. </returns>
-        public static CosmosDBSqlDatabaseData CosmosDBSqlDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedCosmosDBSqlDatabaseResourceInfo resource = null, CosmosDBSqlDatabasePropertiesConfig options = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new CosmosDBSqlDatabaseData(
+            return new CopyJobGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlDatabaseResourceInfo"/>. </summary>
-        /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
+        /// <param name="jobProperties"> Job Properties. </param>
+        /// <param name="status"> Job Status. </param>
+        /// <param name="processedCount"> Processed Count. </param>
+        /// <param name="totalCount"> Total Count. </param>
+        /// <param name="lastUpdatedUtcOn"> Last Updated Time (ISO-8601 format). </param>
+        /// <param name="workerCount"> Worker count. </param>
+        /// <param name="error"> The error object. </param>
+        /// <param name="duration"> Total Duration of Job. </param>
+        /// <param name="mode"> Mode of job execution. </param>
+        /// <returns> A new <see cref="Models.CopyJobProperties"/> instance for mocking. </returns>
+        public static CopyJobProperties CopyJobProperties(BaseCopyJobProperties jobProperties = default, CopyJobStatus? status = default, long? processedCount = default, long? totalCount = default, DateTimeOffset? lastUpdatedUtcOn = default, int? workerCount = default, ResponseError error = default, string duration = default, CopyJobMode? mode = default)
+        {
+            return new CopyJobProperties(
+                jobProperties,
+                status,
+                processedCount,
+                totalCount,
+                lastUpdatedUtcOn,
+                workerCount,
+                error is null ? default : new ErrorResponse(error, null),
+                duration,
+                mode,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="sourceDetailsRemoteAccountName"> Name of remote account in case of cross-account data transfer. </param>
+        /// <param name="destinationDetailsRemoteAccountName"> Name of remote account in case of cross-account data transfer. </param>
+        /// <param name="tasks"> Copy Job tasks. </param>
+        /// <returns> A new <see cref="Models.CassandraRUToCassandraRUCopyJobProperties"/> instance for mocking. </returns>
+        public static CassandraRUToCassandraRUCopyJobProperties CassandraRUToCassandraRUCopyJobProperties(string sourceDetailsRemoteAccountName = default, string destinationDetailsRemoteAccountName = default, IEnumerable<CassandraRUToCassandraRUCopyJobTask> tasks = default)
+        {
+            tasks ??= new ChangeTrackingList<CassandraRUToCassandraRUCopyJobTask>();
+
+            return new CassandraRUToCassandraRUCopyJobProperties(CopyJobType.CassandraRUToCassandraRU, additionalBinaryDataProperties: null, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, null), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, null), tasks.ToList());
+        }
+
+        /// <summary> The CassandraRUToCassandraRUCopyJobTask. </summary>
+        /// <param name="totalCount"> Task level Total Count. </param>
+        /// <param name="processedCount"> Task level Processed Count. </param>
+        /// <param name="source"> Source Cassandra table. </param>
+        /// <param name="destination"> Destination Cassandra table. </param>
+        /// <returns> A new <see cref="Models.CassandraRUToCassandraRUCopyJobTask"/> instance for mocking. </returns>
+        public static CassandraRUToCassandraRUCopyJobTask CassandraRUToCassandraRUCopyJobTask(long? totalCount = default, long? processedCount = default, CosmosDBCassandraTable source = default, CosmosDBCassandraTable destination = default)
+        {
+            return new CassandraRUToCassandraRUCopyJobTask(totalCount, processedCount, additionalBinaryDataProperties: null, source, destination);
+        }
+
+        /// <summary> The properties of a Copy Job Task. </summary>
+        /// <param name="totalCount"> Task level Total Count. </param>
+        /// <param name="processedCount"> Task level Processed Count. </param>
+        /// <returns> A new <see cref="Models.BaseCopyJobTask"/> instance for mocking. </returns>
+        public static BaseCopyJobTask BaseCopyJobTask(long? totalCount = default, long? processedCount = default)
+        {
+            return new BaseCopyJobTask(totalCount, processedCount, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="sourceDetailsEndpointUri"> Azure Blob container endpoint. </param>
+        /// <param name="destinationDetailsRemoteAccountName"> Name of remote account in case of cross-account data transfer. </param>
+        /// <param name="tasks"> Copy Job tasks. </param>
+        /// <returns> A new <see cref="Models.BlobToCassandraRUCopyJobProperties"/> instance for mocking. </returns>
+        public static BlobToCassandraRUCopyJobProperties BlobToCassandraRUCopyJobProperties(string sourceDetailsEndpointUri = default, string destinationDetailsRemoteAccountName = default, IEnumerable<BlobToCassandraRUCopyJobTask> tasks = default)
+        {
+            tasks ??= new ChangeTrackingList<BlobToCassandraRUCopyJobTask>();
+
+            return new BlobToCassandraRUCopyJobProperties(CopyJobType.AzureBlobStorageToCassandraRU, additionalBinaryDataProperties: null, sourceDetailsEndpointUri is null ? default : new AzureBlobSourceSinkDetails(sourceDetailsEndpointUri, null), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, null), tasks.ToList());
+        }
+
+        /// <param name="totalCount"> Task level Total Count. </param>
+        /// <param name="processedCount"> Task level Processed Count. </param>
+        /// <param name="sourceContainerName"> Azure Blob container. </param>
+        /// <param name="destination"> Destination Cassandra table. </param>
+        /// <returns> A new <see cref="Models.BlobToCassandraRUCopyJobTask"/> instance for mocking. </returns>
+        public static BlobToCassandraRUCopyJobTask BlobToCassandraRUCopyJobTask(long? totalCount = default, long? processedCount = default, string sourceContainerName = default, CosmosDBCassandraTable destination = default)
+        {
+            return new BlobToCassandraRUCopyJobTask(totalCount, processedCount, additionalBinaryDataProperties: null, sourceContainerName is null ? default : new AzureBlobContainer(sourceContainerName, null), destination);
+        }
+
+        /// <param name="sourceDetailsRemoteAccountName"> Name of remote account in case of cross-account data transfer. </param>
+        /// <param name="destinationDetailsEndpointUri"> Azure Blob container endpoint. </param>
+        /// <param name="tasks"> Copy Job tasks. </param>
+        /// <returns> A new <see cref="Models.CassandraRUToBlobCopyJobProperties"/> instance for mocking. </returns>
+        public static CassandraRUToBlobCopyJobProperties CassandraRUToBlobCopyJobProperties(string sourceDetailsRemoteAccountName = default, string destinationDetailsEndpointUri = default, IEnumerable<CassandraRUToBlobCopyJobTask> tasks = default)
+        {
+            tasks ??= new ChangeTrackingList<CassandraRUToBlobCopyJobTask>();
+
+            return new CassandraRUToBlobCopyJobProperties(CopyJobType.CassandraRUToAzureBlobStorage, additionalBinaryDataProperties: null, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, null), destinationDetailsEndpointUri is null ? default : new AzureBlobSourceSinkDetails(destinationDetailsEndpointUri, null), tasks.ToList());
+        }
+
+        /// <param name="totalCount"> Task level Total Count. </param>
+        /// <param name="processedCount"> Task level Processed Count. </param>
+        /// <param name="source"> Source Cassandra table. </param>
+        /// <param name="destinationContainerName"> Azure Blob container. </param>
+        /// <returns> A new <see cref="Models.CassandraRUToBlobCopyJobTask"/> instance for mocking. </returns>
+        public static CassandraRUToBlobCopyJobTask CassandraRUToBlobCopyJobTask(long? totalCount = default, long? processedCount = default, CosmosDBCassandraTable source = default, string destinationContainerName = default)
+        {
+            return new CassandraRUToBlobCopyJobTask(totalCount, processedCount, additionalBinaryDataProperties: null, source, destinationContainerName is null ? default : new AzureBlobContainer(destinationContainerName, null));
+        }
+
+        /// <param name="sourceDetailsRemoteAccountName"> Name of remote account in case of cross-account data transfer. </param>
+        /// <param name="destinationDetailsRemoteAccountName"> Name of remote account in case of cross-account data transfer. </param>
+        /// <param name="tasks"> Copy Job tasks. </param>
+        /// <returns> A new <see cref="Models.MongoRUToMongoRUCopyJobProperties"/> instance for mocking. </returns>
+        public static MongoRUToMongoRUCopyJobProperties MongoRUToMongoRUCopyJobProperties(string sourceDetailsRemoteAccountName = default, string destinationDetailsRemoteAccountName = default, IEnumerable<MongoRUToMongoRUCopyJobTask> tasks = default)
+        {
+            tasks ??= new ChangeTrackingList<MongoRUToMongoRUCopyJobTask>();
+
+            return new MongoRUToMongoRUCopyJobProperties(CopyJobType.MongoRUToMongoRU, additionalBinaryDataProperties: null, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, null), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, null), tasks.ToList());
+        }
+
+        /// <summary> The MongoRUToMongoRUCopyJobTask. </summary>
+        /// <param name="totalCount"> Task level Total Count. </param>
+        /// <param name="processedCount"> Task level Processed Count. </param>
+        /// <param name="source"> Source Mongo (RU) collection. </param>
+        /// <param name="destination"> Destination Mongo (RU) collection. </param>
+        /// <returns> A new <see cref="Models.MongoRUToMongoRUCopyJobTask"/> instance for mocking. </returns>
+        public static MongoRUToMongoRUCopyJobTask MongoRUToMongoRUCopyJobTask(long? totalCount = default, long? processedCount = default, CosmosDBMongoCollection source = default, CosmosDBMongoCollection destination = default)
+        {
+            return new MongoRUToMongoRUCopyJobTask(totalCount, processedCount, additionalBinaryDataProperties: null, source, destination);
+        }
+
+        /// <param name="sourceDetailsRemoteAccountName"> Name of remote account in case of cross-account data transfer. </param>
+        /// <param name="destinationDetails"> Destination Mongo (vCore) DataStore details. </param>
+        /// <param name="tasks"> Copy Job tasks. </param>
+        /// <returns> A new <see cref="Models.MongoRUToMongoVCoreCopyJobProperties"/> instance for mocking. </returns>
+        public static MongoRUToMongoVCoreCopyJobProperties MongoRUToMongoVCoreCopyJobProperties(string sourceDetailsRemoteAccountName = default, MongoVCoreSourceSinkDetails destinationDetails = default, IEnumerable<MongoRUToMongoVCoreCopyJobTask> tasks = default)
+        {
+            tasks ??= new ChangeTrackingList<MongoRUToMongoVCoreCopyJobTask>();
+
+            return new MongoRUToMongoVCoreCopyJobProperties(CopyJobType.MongoRUToMongoVCore, additionalBinaryDataProperties: null, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, null), destinationDetails, tasks.ToList());
+        }
+
+        /// <summary> The MongoRUToMongoVCoreCopyJobTask. </summary>
+        /// <param name="totalCount"> Task level Total Count. </param>
+        /// <param name="processedCount"> Task level Processed Count. </param>
+        /// <param name="source"> Source Mongo (RU) collection. </param>
+        /// <param name="destination"> Destination Mongo (vCore) collection. </param>
+        /// <returns> A new <see cref="Models.MongoRUToMongoVCoreCopyJobTask"/> instance for mocking. </returns>
+        public static MongoRUToMongoVCoreCopyJobTask MongoRUToMongoVCoreCopyJobTask(long? totalCount = default, long? processedCount = default, CosmosDBMongoCollection source = default, CosmosDBMongoVCoreCollection destination = default)
+        {
+            return new MongoRUToMongoVCoreCopyJobTask(totalCount, processedCount, additionalBinaryDataProperties: null, source, destination);
+        }
+
+        /// <param name="sourceDetailsRemoteAccountName"> Name of remote account in case of cross-account data transfer. </param>
+        /// <param name="destinationDetailsRemoteAccountName"> Name of remote account in case of cross-account data transfer. </param>
+        /// <param name="tasks"> Copy Job tasks. </param>
+        /// <returns> A new <see cref="Models.NoSqlRUToNoSqlRUCopyJobProperties"/> instance for mocking. </returns>
+        public static NoSqlRUToNoSqlRUCopyJobProperties NoSqlRUToNoSqlRUCopyJobProperties(string sourceDetailsRemoteAccountName = default, string destinationDetailsRemoteAccountName = default, IEnumerable<NoSqlRUToNoSqlRUCopyJobTask> tasks = default)
+        {
+            tasks ??= new ChangeTrackingList<NoSqlRUToNoSqlRUCopyJobTask>();
+
+            return new NoSqlRUToNoSqlRUCopyJobProperties(CopyJobType.NoSqlRUToNoSqlRU, additionalBinaryDataProperties: null, sourceDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(sourceDetailsRemoteAccountName, null), destinationDetailsRemoteAccountName is null ? default : new CosmosDBSourceSinkDetails(destinationDetailsRemoteAccountName, null), tasks.ToList());
+        }
+
+        /// <summary> The NoSqlRUToNoSqlRUCopyJobTask. </summary>
+        /// <param name="totalCount"> Task level Total Count. </param>
+        /// <param name="processedCount"> Task level Processed Count. </param>
+        /// <param name="source"> Source SQL container. </param>
+        /// <param name="destination"> Destination SQL container. </param>
+        /// <returns> A new <see cref="Models.NoSqlRUToNoSqlRUCopyJobTask"/> instance for mocking. </returns>
+        public static NoSqlRUToNoSqlRUCopyJobTask NoSqlRUToNoSqlRUCopyJobTask(long? totalCount = default, long? processedCount = default, CosmosDBNoSqlContainer source = default, CosmosDBNoSqlContainer destination = default)
+        {
+            return new NoSqlRUToNoSqlRUCopyJobTask(totalCount, processedCount, additionalBinaryDataProperties: null, source, destination);
+        }
+
+        /// <summary> Error Response. </summary>
+        /// <param name="code"> Error code. </param>
+        /// <param name="message"> Error message indicating why the operation failed. </param>
+        /// <returns> A new <see cref="Models.CosmosDBErrorResult"/> instance for mocking. </returns>
+        public static CosmosDBErrorResult CosmosDBErrorResult(string code = default, string message = default)
+        {
+            return new CosmosDBErrorResult(code, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="resourceId"> Name of the Cosmos DB Graph. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.GraphResourceGetResultsData"/> instance for mocking. </returns>
+        public static GraphResourceGetResultsData GraphResourceGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GraphResourceGetPropertiesOptions options = default, string resourceId = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new GraphResourceGetResultsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                options is null && resourceId is null ? default : new GraphResourceGetProperties(new GraphResourceGetPropertiesResource(resourceId, null), options, null),
+                tags,
+                location,
+                identity);
+        }
+
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.GraphResourceGetPropertiesOptions"/> instance for mocking. </returns>
+        public static GraphResourceGetPropertiesOptions GraphResourceGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new GraphResourceGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.OptionsResource"/> instance for mocking. </returns>
+        public static OptionsResource OptionsResource(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new OptionsResource(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
+        /// <param name="resourceId"> Name of the Cosmos DB Graph. </param>
+        /// <returns> A new <see cref="Models.GraphResourceCreateUpdateParameters"/> instance for mocking. </returns>
+        public static GraphResourceCreateUpdateParameters GraphResourceCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, CreateUpdateOptions options = default, string resourceId = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new GraphResourceCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                options is null && resourceId is null ? default : new GraphResourceCreateUpdateProperties(new GraphResource(resourceId, null), options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.SqlDatabaseGetResultsData"/> instance for mocking. </returns>
+        public static SqlDatabaseGetResultsData SqlDatabaseGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlDatabaseGetPropertiesResource resource = default, SqlDatabaseGetPropertiesOptions options = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlDatabaseGetResultsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new SqlDatabaseGetProperties(resource, options, null),
+                tags,
+                location,
+                identity);
+        }
+
+        /// <param name="id"> Name of the Cosmos DB SQL database. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
         /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedCosmosDBSqlDatabaseResourceInfo ExtendedCosmosDBSqlDatabaseResourceInfo(string databaseName = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string colls = null, string users = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.SqlDatabaseGetPropertiesResource"/> instance for mocking. </returns>
+        public static SqlDatabaseGetPropertiesResource SqlDatabaseGetPropertiesResource(string id = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, string rid = default, float? ts = default, string etag = default, string colls = default, string users = default)
         {
-            return new ExtendedCosmosDBSqlDatabaseResourceInfo(
-                databaseName,
+            return new SqlDatabaseGetPropertiesResource(
+                id,
                 restoreParameters,
                 createMode,
-                serializedAdditionalRawData: null,
-                colls,
-                users,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
-                etag);
+                ts,
+                etag,
+                colls,
+                users);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlDatabaseCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.SqlDatabaseGetPropertiesOptions"/> instance for mocking. </returns>
+        public static SqlDatabaseGetPropertiesOptions SqlDatabaseGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new SqlDatabaseGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="resource"> The standard JSON format of a SQL database. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlDatabaseCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CosmosDBSqlDatabaseCreateOrUpdateContent CosmosDBSqlDatabaseCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBSqlDatabaseResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
+        /// <returns> A new <see cref="Models.SqlDatabaseCreateUpdateParameters"/> instance for mocking. </returns>
+        public static SqlDatabaseCreateUpdateParameters SqlDatabaseCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, SqlDatabaseResource resource = default, CreateUpdateOptions options = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CosmosDBSqlDatabaseCreateOrUpdateContent(
+            return new SqlDatabaseCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new SqlDatabaseCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <summary> List of physical partitions and their properties returned by a merge operation. </summary>
+        /// <param name="physicalPartitionStorageInfoItems"> List of physical partitions and their properties. </param>
+        /// <returns> A new <see cref="Models.PhysicalPartitionStorageInfoCollection"/> instance for mocking. </returns>
+        public static PhysicalPartitionStorageInfoCollection PhysicalPartitionStorageInfoCollection(IEnumerable<PhysicalPartitionStorageInfo> physicalPartitionStorageInfoItems = default)
+        {
+            physicalPartitionStorageInfoItems ??= new ChangeTrackingList<PhysicalPartitionStorageInfo>();
+
+            return new PhysicalPartitionStorageInfoCollection(physicalPartitionStorageInfoItems.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The storage of a physical partition. </summary>
+        /// <param name="id"> The unique identifier of the partition. </param>
+        /// <param name="storageInKB"> The storage in KB for the physical partition. </param>
+        /// <returns> A new <see cref="Models.PhysicalPartitionStorageInfo"/> instance for mocking. </returns>
+        public static PhysicalPartitionStorageInfo PhysicalPartitionStorageInfo(string id = default, double? storageInKB = default)
+        {
+            return new PhysicalPartitionStorageInfo(id, storageInKB, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.ThroughputSettingsGetResultsData"/> instance for mocking. </returns>
+        public static ThroughputSettingsGetResultsData ThroughputSettingsGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ThroughputSettingsGetPropertiesResource resource = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ThroughputSettingsGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                resource is null ? default : new ThroughputSettingsGetProperties(resource, null),
                 tags,
                 location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.ThroughputSettingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <returns> A new <see cref="CosmosDB.ThroughputSettingData"/> instance for mocking. </returns>
-        public static ThroughputSettingData ThroughputSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedThroughputSettingsResourceInfo resource = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ThroughputSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedThroughputSettingsResourceInfo"/>. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="autoscaleSettings"> Cosmos DB resource for autoscale settings. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="minimumThroughput"> The minimum throughput of the resource. </param>
         /// <param name="offerReplacePending"> The throughput replace is pending. </param>
         /// <param name="instantMaximumThroughput"> The offer throughput value to instantly scale up without triggering splits. </param>
         /// <param name="softAllowedMaximumThroughput"> The maximum throughput value or the maximum maxThroughput value (for autoscale) that can be specified. </param>
+        /// <param name="throughputBuckets"> Array of throughput bucket limits to be applied to the Cosmos DB container. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedThroughputSettingsResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedThroughputSettingsResourceInfo ExtendedThroughputSettingsResourceInfo(int? throughput = null, AutoscaleSettingsResourceInfo autoscaleSettings = null, string minimumThroughput = null, string offerReplacePending = null, string instantMaximumThroughput = null, string softAllowedMaximumThroughput = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.ThroughputSettingsGetPropertiesResource"/> instance for mocking. </returns>
+        public static ThroughputSettingsGetPropertiesResource ThroughputSettingsGetPropertiesResource(int? throughput = default, AutoscaleSettingsResource autoscaleSettings = default, string minimumThroughput = default, string offerReplacePending = default, string instantMaximumThroughput = default, string softAllowedMaximumThroughput = default, IEnumerable<ThroughputBucketResource> throughputBuckets = default, string rid = default, float? ts = default, string etag = default)
         {
-            return new ExtendedThroughputSettingsResourceInfo(
+            throughputBuckets ??= new ChangeTrackingList<ThroughputBucketResource>();
+
+            return new ThroughputSettingsGetPropertiesResource(
                 throughput,
                 autoscaleSettings,
                 minimumThroughput,
                 offerReplacePending,
                 instantMaximumThroughput,
                 softAllowedMaximumThroughput,
-                serializedAdditionalRawData: null,
+                throughputBuckets.ToList(),
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ThroughputSettingsResourceInfo"/>. </summary>
+        /// <summary> Cosmos DB resource throughput object. Either throughput is required or autoscaleSettings is required, but not both. </summary>
         /// <param name="throughput"> Value of the Cosmos DB resource throughput. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="autoscaleSettings"> Cosmos DB resource for autoscale settings. Either throughput is required or autoscaleSettings is required, but not both. </param>
         /// <param name="minimumThroughput"> The minimum throughput of the resource. </param>
         /// <param name="offerReplacePending"> The throughput replace is pending. </param>
         /// <param name="instantMaximumThroughput"> The offer throughput value to instantly scale up without triggering splits. </param>
         /// <param name="softAllowedMaximumThroughput"> The maximum throughput value or the maximum maxThroughput value (for autoscale) that can be specified. </param>
-        /// <returns> A new <see cref="Models.ThroughputSettingsResourceInfo"/> instance for mocking. </returns>
-        public static ThroughputSettingsResourceInfo ThroughputSettingsResourceInfo(int? throughput = null, AutoscaleSettingsResourceInfo autoscaleSettings = null, string minimumThroughput = null, string offerReplacePending = null, string instantMaximumThroughput = null, string softAllowedMaximumThroughput = null)
+        /// <param name="throughputBuckets"> Array of throughput bucket limits to be applied to the Cosmos DB container. </param>
+        /// <returns> A new <see cref="Models.ThroughputSettingsResource"/> instance for mocking. </returns>
+        public static ThroughputSettingsResource ThroughputSettingsResource(int? throughput = default, AutoscaleSettingsResource autoscaleSettings = default, string minimumThroughput = default, string offerReplacePending = default, string instantMaximumThroughput = default, string softAllowedMaximumThroughput = default, IEnumerable<ThroughputBucketResource> throughputBuckets = default)
         {
-            return new ThroughputSettingsResourceInfo(
+            throughputBuckets ??= new ChangeTrackingList<ThroughputBucketResource>();
+
+            return new ThroughputSettingsResource(
                 throughput,
                 autoscaleSettings,
                 minimumThroughput,
                 offerReplacePending,
                 instantMaximumThroughput,
                 softAllowedMaximumThroughput,
-                serializedAdditionalRawData: null);
+                throughputBuckets.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AutoscaleSettingsResourceInfo"/>. </summary>
         /// <param name="maxThroughput"> Represents maximum throughput container can scale up to. </param>
-        /// <param name="autoUpgradeThroughputPolicy"> Cosmos DB resource auto-upgrade policy. </param>
+        /// <param name="autoUpgradeThroughputPolicy"> Represents throughput policy which service must adhere to for auto-upgrade. </param>
         /// <param name="targetMaxThroughput"> Represents target maximum throughput container can scale up to once offer is no longer in pending state. </param>
-        /// <returns> A new <see cref="Models.AutoscaleSettingsResourceInfo"/> instance for mocking. </returns>
-        public static AutoscaleSettingsResourceInfo AutoscaleSettingsResourceInfo(int maxThroughput = default, ThroughputPolicyResourceInfo autoUpgradeThroughputPolicy = null, int? targetMaxThroughput = null)
+        /// <returns> A new <see cref="Models.AutoscaleSettingsResource"/> instance for mocking. </returns>
+        public static AutoscaleSettingsResource AutoscaleSettingsResource(int maxThroughput = default, ThroughputPolicyResource autoUpgradeThroughputPolicy = default, int? targetMaxThroughput = default)
         {
-            return new AutoscaleSettingsResourceInfo(maxThroughput, autoUpgradeThroughputPolicy != null ? new AutoUpgradePolicyResourceInfo(autoUpgradeThroughputPolicy, serializedAdditionalRawData: null) : null, targetMaxThroughput, serializedAdditionalRawData: null);
+            return new AutoscaleSettingsResource(maxThroughput, autoUpgradeThroughputPolicy is null ? default : new AutoUpgradePolicyResource(autoUpgradeThroughputPolicy, null), targetMaxThroughput, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ThroughputSettingsUpdateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="resource"> The standard JSON format of a resource throughput. </param>
-        /// <returns> A new <see cref="Models.ThroughputSettingsUpdateData"/> instance for mocking. </returns>
-        public static ThroughputSettingsUpdateData ThroughputSettingsUpdateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ThroughputSettingsResourceInfo resource = null)
+        /// <returns> A new <see cref="Models.ThroughputSettingsUpdateParameters"/> instance for mocking. </returns>
+        public static ThroughputSettingsUpdateParameters ThroughputSettingsUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, ThroughputSettingsResource resource = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ThroughputSettingsUpdateData(
+            return new ThroughputSettingsUpdateParameters(
                 id,
                 name,
-                resourceType,
-                systemData,
-                tags,
+                @type,
                 location,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlContainerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <param name="options"></param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBSqlContainerData"/> instance for mocking. </returns>
-        public static CosmosDBSqlContainerData CosmosDBSqlContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedCosmosDBSqlContainerResourceInfo resource = null, CosmosDBSqlContainerPropertiesConfig options = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new CosmosDBSqlContainerData(
-                id,
-                name,
-                resourceType,
-                systemData,
                 tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null ? default : new ThroughputSettingsUpdateProperties(resource, null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlContainerResourceInfo"/>. </summary>
-        /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
-        /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </param>
-        /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
-        /// <param name="defaultTtl"> Default time to live. </param>
-        /// <param name="uniqueKeys"> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </param>
-        /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the container. </param>
-        /// <param name="clientEncryptionPolicy"> The client encryption policy for the container. </param>
-        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
-        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
-        /// <param name="computedProperties"> List of computed properties. </param>
-        /// <param name="vectorEmbeddings"> The vector embedding policy for the container. </param>
-        /// <param name="fullTextPolicy"> The FullText policy for the container. </param>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlContainerResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedCosmosDBSqlContainerResourceInfo ExtendedCosmosDBSqlContainerResourceInfo(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, IEnumerable<ComputedProperty> computedProperties = null, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings = null, FullTextPolicy fullTextPolicy = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="resourcePhysicalPartitionIds"> Array of PhysicalPartitionId objects. </param>
+        /// <returns> A new <see cref="Models.RetrieveThroughputParameters"/> instance for mocking. </returns>
+        public static RetrieveThroughputParameters RetrieveThroughputParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, IEnumerable<PhysicalPartitionId> resourcePhysicalPartitionIds = default)
         {
-            uniqueKeys ??= new List<CosmosDBUniqueKey>();
-            computedProperties ??= new List<ComputedProperty>();
-            vectorEmbeddings ??= new List<CosmosDBVectorEmbedding>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ExtendedCosmosDBSqlContainerResourceInfo(
-                containerName,
-                indexingPolicy,
-                partitionKey,
-                defaultTtl,
-                uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList(), serializedAdditionalRawData: null) : null,
-                conflictResolutionPolicy,
-                clientEncryptionPolicy,
-                analyticalStorageTtl,
-                restoreParameters,
-                createMode,
-                computedProperties?.ToList(),
-                vectorEmbeddings != null ? new VectorEmbeddingPolicy(vectorEmbeddings?.ToList(), serializedAdditionalRawData: null) : null,
-                fullTextPolicy,
-                serializedAdditionalRawData: null,
-                rid,
-                timestamp,
-                etag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBContainerPartitionKey"/>. </summary>
-        /// <param name="paths"> List of paths using which data within the container can be partitioned. </param>
-        /// <param name="kind"> Indicates the kind of algorithm used for partitioning. For MultiHash, multiple partition keys (upto three maximum) are supported for container create. </param>
-        /// <param name="version"> Indicates the version of the partition key definition. </param>
-        /// <param name="isSystemKey"> Indicates if the container is using a system generated partition key. </param>
-        /// <returns> A new <see cref="Models.CosmosDBContainerPartitionKey"/> instance for mocking. </returns>
-        public static CosmosDBContainerPartitionKey CosmosDBContainerPartitionKey(IEnumerable<string> paths = null, CosmosDBPartitionKind? kind = null, int? version = null, bool? isSystemKey = null)
-        {
-            paths ??= new List<string>();
-
-            return new CosmosDBContainerPartitionKey(paths?.ToList(), kind, version, isSystemKey, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlContainerCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"> The standard JSON format of a container. </param>
-        /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlContainerCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CosmosDBSqlContainerCreateOrUpdateContent CosmosDBSqlContainerCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBSqlContainerResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new CosmosDBSqlContainerCreateOrUpdateContent(
+            return new RetrieveThroughputParameters(
                 id,
                 name,
-                resourceType,
-                systemData,
+                @type,
+                location,
                 tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                identity,
+                additionalBinaryDataProperties: null,
+                resourcePhysicalPartitionIds is null ? default : new RetrieveThroughputProperties(new RetrieveThroughputPropertiesResource((resourcePhysicalPartitionIds ?? new ChangeTrackingList<PhysicalPartitionId>()).ToList(), null), null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlClientEncryptionKeyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resource"></param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBSqlClientEncryptionKeyData"/> instance for mocking. </returns>
-        public static CosmosDBSqlClientEncryptionKeyData CosmosDBSqlClientEncryptionKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBSqlClientEncryptionKeyProperties resource = null)
+        /// <summary> PhysicalPartitionId object. </summary>
+        /// <param name="id"> Id of a physical partition. </param>
+        /// <returns> A new <see cref="Models.PhysicalPartitionId"/> instance for mocking. </returns>
+        public static PhysicalPartitionId PhysicalPartitionId(string id = default)
         {
-            return new CosmosDBSqlClientEncryptionKeyData(
+            return new PhysicalPartitionId(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="resourcePhysicalPartitionThroughputInfo"> Array of physical partition throughput info objects. </param>
+        /// <returns> A new <see cref="Models.PhysicalPartitionThroughputInfoResult"/> instance for mocking. </returns>
+        public static PhysicalPartitionThroughputInfoResult PhysicalPartitionThroughputInfoResult(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, IEnumerable<PhysicalPartitionThroughputInfoResource> resourcePhysicalPartitionThroughputInfo = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PhysicalPartitionThroughputInfoResult(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resourcePhysicalPartitionThroughputInfo is null ? default : new PhysicalPartitionThroughputInfoResultProperties(new PhysicalPartitionThroughputInfoResultPropertiesResource((resourcePhysicalPartitionThroughputInfo ?? new ChangeTrackingList<PhysicalPartitionThroughputInfoResource>()).ToList(), null), null));
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="resource"> The standard JSON format of a resource throughput. </param>
+        /// <returns> A new <see cref="Models.RedistributeThroughputParameters"/> instance for mocking. </returns>
+        public static RedistributeThroughputParameters RedistributeThroughputParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, RedistributeThroughputPropertiesResource resource = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RedistributeThroughputParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null ? default : new RedistributeThroughputProperties(resource, null));
+        }
+
+        /// <summary> Resource to redistribute throughput for Azure Cosmos DB resource. </summary>
+        /// <param name="throughputPolicy"> ThroughputPolicy to apply for throughput redistribution. </param>
+        /// <param name="targetPhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
+        /// <param name="sourcePhysicalPartitionThroughputInfo"> Array of PhysicalPartitionThroughputInfoResource objects. </param>
+        /// <returns> A new <see cref="Models.RedistributeThroughputPropertiesResource"/> instance for mocking. </returns>
+        public static RedistributeThroughputPropertiesResource RedistributeThroughputPropertiesResource(ThroughputPolicyType throughputPolicy = default, IEnumerable<PhysicalPartitionThroughputInfoResource> targetPhysicalPartitionThroughputInfo = default, IEnumerable<PhysicalPartitionThroughputInfoResource> sourcePhysicalPartitionThroughputInfo = default)
+        {
+            targetPhysicalPartitionThroughputInfo ??= new ChangeTrackingList<PhysicalPartitionThroughputInfoResource>();
+            sourcePhysicalPartitionThroughputInfo ??= new ChangeTrackingList<PhysicalPartitionThroughputInfoResource>();
+
+            return new RedistributeThroughputPropertiesResource(throughputPolicy, targetPhysicalPartitionThroughputInfo.ToList(), sourcePhysicalPartitionThroughputInfo.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <returns> A new <see cref="CosmosDB.ClientEncryptionKeyGetResultsData"/> instance for mocking. </returns>
+        public static ClientEncryptionKeyGetResultsData ClientEncryptionKeyGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ClientEncryptionKeyGetPropertiesResource resource = default)
+        {
+            return new ClientEncryptionKeyGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                resource,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                resource is null ? default : new ClientEncryptionKeyGetProperties(resource, null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlClientEncryptionKeyProperties"/>. </summary>
         /// <param name="id"> Name of the ClientEncryptionKey. </param>
         /// <param name="encryptionAlgorithm"> Encryption algorithm that will be used along with this client encryption key to encrypt/decrypt data. </param>
         /// <param name="wrappedDataEncryptionKey"> Wrapped (encrypted) form of the key represented as a byte array. </param>
         /// <param name="keyWrapMetadata"> Metadata for the wrapping provider that can be used to unwrap the wrapped client encryption key. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlClientEncryptionKeyProperties"/> instance for mocking. </returns>
-        public static CosmosDBSqlClientEncryptionKeyProperties CosmosDBSqlClientEncryptionKeyProperties(string id = null, string encryptionAlgorithm = null, byte[] wrappedDataEncryptionKey = null, CosmosDBKeyWrapMetadata keyWrapMetadata = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.ClientEncryptionKeyGetPropertiesResource"/> instance for mocking. </returns>
+        public static ClientEncryptionKeyGetPropertiesResource ClientEncryptionKeyGetPropertiesResource(string id = default, string encryptionAlgorithm = default, BinaryData wrappedDataEncryptionKey = default, KeyWrapMetadata keyWrapMetadata = default, string rid = default, float? ts = default, string etag = default)
         {
-            return new CosmosDBSqlClientEncryptionKeyProperties(
+            return new ClientEncryptionKeyGetPropertiesResource(
                 id,
                 encryptionAlgorithm,
                 wrappedDataEncryptionKey,
                 keyWrapMetadata,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlStoredProcedureData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBSqlStoredProcedureData"/> instance for mocking. </returns>
-        public static CosmosDBSqlStoredProcedureData CosmosDBSqlStoredProcedureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedCosmosDBSqlStoredProcedureResourceInfo resource = null)
+        /// <param name="resource"> The standard JSON format of a ClientEncryptionKey. </param>
+        /// <returns> A new <see cref="Models.ClientEncryptionKeyCreateUpdateParameters"/> instance for mocking. </returns>
+        public static ClientEncryptionKeyCreateUpdateParameters ClientEncryptionKeyCreateUpdateParameters(ClientEncryptionKeyResource resource = default)
         {
-            tags ??= new Dictionary<string, string>();
+            return new ClientEncryptionKeyCreateUpdateParameters(resource is null ? default : new ClientEncryptionKeyCreateUpdateProperties(resource, null), additionalBinaryDataProperties: null);
+        }
 
-            return new CosmosDBSqlStoredProcedureData(
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.SqlContainerGetResultsData"/> instance for mocking. </returns>
+        public static SqlContainerGetResultsData SqlContainerGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlContainerGetPropertiesResource resource = default, SqlContainerGetPropertiesOptions options = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlContainerGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new SqlContainerGetProperties(resource, options, null),
                 tags,
                 location,
-                resource,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlStoredProcedureResourceInfo"/>. </summary>
-        /// <param name="storedProcedureName"> Name of the Cosmos DB SQL storedProcedure. </param>
+        /// <param name="id"> Name of the Cosmos DB SQL container. </param>
+        /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </param>
+        /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
+        /// <param name="defaultTtl"> Default time to live. </param>
+        /// <param name="uniqueKeys"> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </param>
+        /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the container. </param>
+        /// <param name="clientEncryptionPolicy"> The client encryption policy for the container. </param>
+        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
+        /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
+        /// <param name="materializedViews"> Materialized Views defined on the container. </param>
+        /// <param name="materializedViewsThroughputBucketForBuild"> Throughput bucket assigned for the materialized view operations on source container. </param>
+        /// <param name="computedProperties"> List of computed properties. </param>
+        /// <param name="vectorEmbeddings"> List of vector embeddings. </param>
+        /// <param name="fullTextPolicy"> The FullText policy for the container. </param>
+        /// <param name="dataMaskingPolicy"> The Data Masking policy for the container. </param>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        /// <returns> A new <see cref="Models.SqlContainerGetPropertiesResource"/> instance for mocking. </returns>
+        public static SqlContainerGetPropertiesResource SqlContainerGetPropertiesResource(string id = default, CosmosDBIndexingPolicy indexingPolicy = default, CosmosDBContainerPartitionKey partitionKey = default, int? defaultTtl = default, IEnumerable<CosmosDBUniqueKey> uniqueKeys = default, ConflictResolutionPolicy conflictResolutionPolicy = default, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = default, long? analyticalStorageTtl = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, MaterializedViewDefinition materializedViewDefinition = default, IEnumerable<MaterializedViewDetails> materializedViews = default, int? materializedViewsThroughputBucketForBuild = default, IEnumerable<ComputedProperty> computedProperties = default, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings = default, FullTextPolicy fullTextPolicy = default, DataMaskingPolicy dataMaskingPolicy = default, string rid = default, float? ts = default, string etag = default)
+        {
+            materializedViews ??= new ChangeTrackingList<MaterializedViewDetails>();
+            computedProperties ??= new ChangeTrackingList<ComputedProperty>();
+
+            return new SqlContainerGetPropertiesResource(
+                id,
+                indexingPolicy,
+                partitionKey,
+                defaultTtl,
+                uniqueKeys is null ? default : new CosmosDBUniqueKeyPolicy((uniqueKeys ?? new ChangeTrackingList<CosmosDBUniqueKey>()).ToList(), null),
+                conflictResolutionPolicy,
+                clientEncryptionPolicy,
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                materializedViewDefinition,
+                materializedViews.ToList(),
+                materializedViewsThroughputBucketForBuild is null ? default : new MaterializedViewsProperties(materializedViewsThroughputBucketForBuild, null),
+                computedProperties.ToList(),
+                vectorEmbeddings is null ? default : new VectorEmbeddingPolicy((vectorEmbeddings ?? new ChangeTrackingList<CosmosDBVectorEmbedding>()).ToList(), null),
+                fullTextPolicy,
+                dataMaskingPolicy,
+                additionalBinaryDataProperties: null,
+                rid,
+                ts,
+                etag);
+        }
+
+        /// <param name="id"> Name of the Cosmos DB SQL container. </param>
+        /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </param>
+        /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
+        /// <param name="defaultTtl"> Default time to live. </param>
+        /// <param name="uniqueKeys"> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </param>
+        /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the container. </param>
+        /// <param name="clientEncryptionPolicy"> The client encryption policy for the container. </param>
+        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
+        /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
+        /// <param name="materializedViews"> Materialized Views defined on the container. </param>
+        /// <param name="materializedViewsThroughputBucketForBuild"> Throughput bucket assigned for the materialized view operations on source container. </param>
+        /// <param name="computedProperties"> List of computed properties. </param>
+        /// <param name="vectorEmbeddings"> List of vector embeddings. </param>
+        /// <param name="fullTextPolicy"> The FullText policy for the container. </param>
+        /// <param name="dataMaskingPolicy"> The Data Masking policy for the container. </param>
+        /// <returns> A new <see cref="Models.SqlContainerResource"/> instance for mocking. </returns>
+        public static SqlContainerResource SqlContainerResource(string id = default, CosmosDBIndexingPolicy indexingPolicy = default, CosmosDBContainerPartitionKey partitionKey = default, int? defaultTtl = default, IEnumerable<CosmosDBUniqueKey> uniqueKeys = default, ConflictResolutionPolicy conflictResolutionPolicy = default, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = default, long? analyticalStorageTtl = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, MaterializedViewDefinition materializedViewDefinition = default, IEnumerable<MaterializedViewDetails> materializedViews = default, int? materializedViewsThroughputBucketForBuild = default, IEnumerable<ComputedProperty> computedProperties = default, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings = default, FullTextPolicy fullTextPolicy = default, DataMaskingPolicy dataMaskingPolicy = default)
+        {
+            materializedViews ??= new ChangeTrackingList<MaterializedViewDetails>();
+            computedProperties ??= new ChangeTrackingList<ComputedProperty>();
+
+            return new SqlContainerResource(
+                id,
+                indexingPolicy,
+                partitionKey,
+                defaultTtl,
+                uniqueKeys is null ? default : new CosmosDBUniqueKeyPolicy((uniqueKeys ?? new ChangeTrackingList<CosmosDBUniqueKey>()).ToList(), null),
+                conflictResolutionPolicy,
+                clientEncryptionPolicy,
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                materializedViewDefinition,
+                materializedViews.ToList(),
+                materializedViewsThroughputBucketForBuild is null ? default : new MaterializedViewsProperties(materializedViewsThroughputBucketForBuild, null),
+                computedProperties.ToList(),
+                vectorEmbeddings is null ? default : new VectorEmbeddingPolicy((vectorEmbeddings ?? new ChangeTrackingList<CosmosDBVectorEmbedding>()).ToList(), null),
+                fullTextPolicy,
+                dataMaskingPolicy,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cosmos DB indexing policy. </summary>
+        /// <param name="automatic"> Indicates if the indexing policy is automatic. </param>
+        /// <param name="indexingMode"> Indicates the indexing mode. </param>
+        /// <param name="includedPaths"> List of paths to include in the indexing. </param>
+        /// <param name="excludedPaths"> List of paths to exclude from indexing. </param>
+        /// <param name="compositeIndexes"> List of composite path list. </param>
+        /// <param name="spatialIndexes"> List of spatial specifics. </param>
+        /// <param name="vectorIndexes"> List of paths to include in the vector indexing. </param>
+        /// <param name="fullTextIndexes"> List of paths to include in the full text indexing. </param>
+        /// <returns> A new <see cref="Models.CosmosDBIndexingPolicy"/> instance for mocking. </returns>
+        public static CosmosDBIndexingPolicy CosmosDBIndexingPolicy(bool? automatic = default, CosmosDBIndexingMode? indexingMode = default, IEnumerable<CosmosDBIncludedPath> includedPaths = default, IEnumerable<CosmosDBExcludedPath> excludedPaths = default, IEnumerable<IList<CosmosDBCompositePath>> compositeIndexes = default, IEnumerable<SpatialSpec> spatialIndexes = default, IEnumerable<CosmosDBVectorIndex> vectorIndexes = default, IEnumerable<FullTextIndexPath> fullTextIndexes = default)
+        {
+            includedPaths ??= new ChangeTrackingList<CosmosDBIncludedPath>();
+            excludedPaths ??= new ChangeTrackingList<CosmosDBExcludedPath>();
+            compositeIndexes ??= new ChangeTrackingList<IList<CosmosDBCompositePath>>();
+            spatialIndexes ??= new ChangeTrackingList<SpatialSpec>();
+            vectorIndexes ??= new ChangeTrackingList<CosmosDBVectorIndex>();
+            fullTextIndexes ??= new ChangeTrackingList<FullTextIndexPath>();
+
+            return new CosmosDBIndexingPolicy(
+                automatic,
+                indexingMode,
+                includedPaths.ToList(),
+                excludedPaths.ToList(),
+                compositeIndexes.ToList(),
+                spatialIndexes.ToList(),
+                vectorIndexes.ToList(),
+                fullTextIndexes.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The paths that are included in indexing. </summary>
+        /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
+        /// <param name="indexes"> List of indexes for this path. </param>
+        /// <returns> A new <see cref="Models.CosmosDBIncludedPath"/> instance for mocking. </returns>
+        public static CosmosDBIncludedPath CosmosDBIncludedPath(string path = default, IEnumerable<CosmosDBPathIndexes> indexes = default)
+        {
+            indexes ??= new ChangeTrackingList<CosmosDBPathIndexes>();
+
+            return new CosmosDBIncludedPath(path, indexes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SpatialSpec. </summary>
+        /// <param name="path"> The path for which the indexing behavior applies to. Index paths typically start with root and end with wildcard (/path/*). </param>
+        /// <param name="types"> List of path's spatial type. </param>
+        /// <returns> A new <see cref="Models.SpatialSpec"/> instance for mocking. </returns>
+        public static SpatialSpec SpatialSpec(string path = default, IEnumerable<CosmosDBSpatialType> types = default)
+        {
+            types ??= new ChangeTrackingList<CosmosDBSpatialType>();
+
+            return new SpatialSpec(path, types.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CosmosDBVectorIndex. </summary>
+        /// <param name="path"> The path to the vector field in the document. </param>
+        /// <param name="type"> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </param>
+        /// <param name="quantizationByteSize"> The number of bytes used in product quantization of the vectors. A larger value may result in better recall for vector searches at the expense of latency. This is only applicable for the quantizedFlat and diskANN vector index types. </param>
+        /// <param name="indexingSearchListSize"> This is the size of the candidate list of approximate neighbors stored while building the DiskANN index as part of the optimization processes. Large values may improve recall at the expense of latency. This is only applicable for the diskANN vector index type. </param>
+        /// <param name="vectorIndexShardKey"> Array of shard keys for the vector index. This is only applicable for the quantizedFlat and diskANN vector index types. </param>
+        /// <returns> A new <see cref="Models.CosmosDBVectorIndex"/> instance for mocking. </returns>
+        public static CosmosDBVectorIndex CosmosDBVectorIndex(string path = default, VectorIndexType @type = default, long? quantizationByteSize = default, long? indexingSearchListSize = default, IEnumerable<string> vectorIndexShardKey = default)
+        {
+            vectorIndexShardKey ??= new ChangeTrackingList<string>();
+
+            return new CosmosDBVectorIndex(
+                path,
+                @type,
+                quantizationByteSize,
+                indexingSearchListSize,
+                vectorIndexShardKey.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The configuration of the partition key to be used for partitioning data into multiple partitions. </summary>
+        /// <param name="paths"> List of paths using which data within the container can be partitioned. </param>
+        /// <param name="kind"> Indicates the kind of algorithm used for partitioning. For MultiHash, multiple partition keys (upto three maximum) are supported for container create. </param>
+        /// <param name="version"> Indicates the version of the partition key definition. </param>
+        /// <param name="systemKey"> Indicates if the container is using a system generated partition key. </param>
+        /// <returns> A new <see cref="Models.CosmosDBContainerPartitionKey"/> instance for mocking. </returns>
+        public static CosmosDBContainerPartitionKey CosmosDBContainerPartitionKey(IEnumerable<string> paths = default, CosmosDBPartitionKind? kind = default, int? version = default, bool? systemKey = default)
+        {
+            paths ??= new ChangeTrackingList<string>();
+
+            return new CosmosDBContainerPartitionKey(paths.ToList(), kind, version, systemKey, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The unique key on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>
+        /// <param name="paths"> List of paths must be unique for each document in the Azure Cosmos DB service. </param>
+        /// <returns> A new <see cref="Models.CosmosDBUniqueKey"/> instance for mocking. </returns>
+        public static CosmosDBUniqueKey CosmosDBUniqueKey(IEnumerable<string> paths = default)
+        {
+            paths ??= new ChangeTrackingList<string>();
+
+            return new CosmosDBUniqueKey(paths.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cosmos DB client encryption policy. </summary>
+        /// <param name="includedPaths"> Paths of the item that need encryption along with path-specific settings. </param>
+        /// <param name="policyFormatVersion"> Version of the client encryption policy definition. Supported versions are 1 and 2. Version 2 supports id and partition key path encryption. </param>
+        /// <returns> A new <see cref="Models.CosmosDBClientEncryptionPolicy"/> instance for mocking. </returns>
+        public static CosmosDBClientEncryptionPolicy CosmosDBClientEncryptionPolicy(IEnumerable<CosmosDBClientEncryptionIncludedPath> includedPaths = default, int policyFormatVersion = default)
+        {
+            includedPaths ??= new ChangeTrackingList<CosmosDBClientEncryptionIncludedPath>();
+
+            return new CosmosDBClientEncryptionPolicy(includedPaths.ToList(), policyFormatVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Materialized View definition for the container. </summary>
+        /// <param name="sourceCollectionRid"> An unique identifier for the source collection. This is a system generated property. </param>
+        /// <param name="sourceCollectionId"> The name of the source container on which the Materialized View will be created. </param>
+        /// <param name="definition"> The definition should be an SQL query which would be used to fetch data from the source container to populate into the Materialized View container. </param>
+        /// <param name="throughputBucketForBuild"> Throughput bucket assigned for the materialized view operations on target container. </param>
+        /// <returns> A new <see cref="Models.MaterializedViewDefinition"/> instance for mocking. </returns>
+        public static MaterializedViewDefinition MaterializedViewDefinition(string sourceCollectionRid = default, string sourceCollectionId = default, string definition = default, int? throughputBucketForBuild = default)
+        {
+            return new MaterializedViewDefinition(sourceCollectionRid, sourceCollectionId, definition, throughputBucketForBuild, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cosmos DB FullText Policy. </summary>
+        /// <param name="defaultLanguage"> The default language for a full text paths. </param>
+        /// <param name="fullTextPaths"> List of FullText Paths. </param>
+        /// <returns> A new <see cref="Models.FullTextPolicy"/> instance for mocking. </returns>
+        public static FullTextPolicy FullTextPolicy(string defaultLanguage = default, IEnumerable<FullTextPath> fullTextPaths = default)
+        {
+            fullTextPaths ??= new ChangeTrackingList<FullTextPath>();
+
+            return new FullTextPolicy(defaultLanguage, fullTextPaths.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Data masking policy for the container. </summary>
+        /// <param name="includedPaths"> List of JSON paths to include in the masking policy. </param>
+        /// <param name="excludedPaths"> List of JSON paths to exclude from masking. </param>
+        /// <param name="isPolicyEnabled"> Flag indicating whether the data masking policy is enabled. </param>
+        /// <returns> A new <see cref="Models.DataMaskingPolicy"/> instance for mocking. </returns>
+        public static DataMaskingPolicy DataMaskingPolicy(IEnumerable<DataMaskingPolicyIncludedPathsItem> includedPaths = default, IEnumerable<DataMaskingPolicyExcludedPathsItem> excludedPaths = default, bool? isPolicyEnabled = default)
+        {
+            includedPaths ??= new ChangeTrackingList<DataMaskingPolicyIncludedPathsItem>();
+            excludedPaths ??= new ChangeTrackingList<DataMaskingPolicyExcludedPathsItem>();
+
+            return new DataMaskingPolicy(includedPaths.ToList(), excludedPaths.ToList(), isPolicyEnabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.SqlContainerGetPropertiesOptions"/> instance for mocking. </returns>
+        public static SqlContainerGetPropertiesOptions SqlContainerGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new SqlContainerGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="resource"> The standard JSON format of a container. </param>
+        /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
+        /// <returns> A new <see cref="Models.SqlContainerCreateUpdateParameters"/> instance for mocking. </returns>
+        public static SqlContainerCreateUpdateParameters SqlContainerCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, SqlContainerResource resource = default, CreateUpdateOptions options = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlContainerCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new SqlContainerCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="continuousBackupInformationLatestRestorableTimestamp"> The latest restorable timestamp for a resource. </param>
+        /// <returns> A new <see cref="Models.CosmosDBBackupInformation"/> instance for mocking. </returns>
+        public static CosmosDBBackupInformation CosmosDBBackupInformation(string continuousBackupInformationLatestRestorableTimestamp = default)
+        {
+            return new CosmosDBBackupInformation(continuousBackupInformationLatestRestorableTimestamp is null ? default : new ContinuousBackupInformation(continuousBackupInformationLatestRestorableTimestamp, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.SqlStoredProcedureGetResultsData"/> instance for mocking. </returns>
+        public static SqlStoredProcedureGetResultsData SqlStoredProcedureGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlStoredProcedureGetPropertiesResource resource = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlStoredProcedureGetResultsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                resource is null ? default : new SqlStoredProcedureGetProperties(resource, null),
+                tags,
+                location,
+                identity);
+        }
+
+        /// <param name="id"> Name of the Cosmos DB SQL storedProcedure. </param>
         /// <param name="body"> Body of the Stored Procedure. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlStoredProcedureResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedCosmosDBSqlStoredProcedureResourceInfo ExtendedCosmosDBSqlStoredProcedureResourceInfo(string storedProcedureName = null, string body = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.SqlStoredProcedureGetPropertiesResource"/> instance for mocking. </returns>
+        public static SqlStoredProcedureGetPropertiesResource SqlStoredProcedureGetPropertiesResource(string id = default, string body = default, string rid = default, float? ts = default, string etag = default)
         {
-            return new ExtendedCosmosDBSqlStoredProcedureResourceInfo(
-                storedProcedureName,
+            return new SqlStoredProcedureGetPropertiesResource(
+                id,
                 body,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlStoredProcedureCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="resource"> The standard JSON format of a storedProcedure. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlStoredProcedureCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CosmosDBSqlStoredProcedureCreateOrUpdateContent CosmosDBSqlStoredProcedureCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBSqlStoredProcedureResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
+        /// <returns> A new <see cref="Models.SqlStoredProcedureCreateUpdateParameters"/> instance for mocking. </returns>
+        public static SqlStoredProcedureCreateUpdateParameters SqlStoredProcedureCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, SqlStoredProcedureResource resource = default, CreateUpdateOptions options = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CosmosDBSqlStoredProcedureCreateOrUpdateContent(
+            return new SqlStoredProcedureCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new SqlStoredProcedureCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.SqlUserDefinedFunctionGetResultsData"/> instance for mocking. </returns>
+        public static SqlUserDefinedFunctionGetResultsData SqlUserDefinedFunctionGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlUserDefinedFunctionGetPropertiesResource resource = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlUserDefinedFunctionGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                resource is null ? default : new SqlUserDefinedFunctionGetProperties(resource, null),
                 tags,
                 location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlUserDefinedFunctionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBSqlUserDefinedFunctionData"/> instance for mocking. </returns>
-        public static CosmosDBSqlUserDefinedFunctionData CosmosDBSqlUserDefinedFunctionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo resource = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new CosmosDBSqlUserDefinedFunctionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo"/>. </summary>
-        /// <param name="functionName"> Name of the Cosmos DB SQL userDefinedFunction. </param>
+        /// <param name="id"> Name of the Cosmos DB SQL userDefinedFunction. </param>
         /// <param name="body"> Body of the User Defined Function. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(string functionName = null, string body = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.SqlUserDefinedFunctionGetPropertiesResource"/> instance for mocking. </returns>
+        public static SqlUserDefinedFunctionGetPropertiesResource SqlUserDefinedFunctionGetPropertiesResource(string id = default, string body = default, string rid = default, float? ts = default, string etag = default)
         {
-            return new ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo(
-                functionName,
+            return new SqlUserDefinedFunctionGetPropertiesResource(
+                id,
                 body,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="resource"> The standard JSON format of a userDefinedFunction. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBSqlUserDefinedFunctionResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
+        /// <returns> A new <see cref="Models.SqlUserDefinedFunctionCreateUpdateParameters"/> instance for mocking. </returns>
+        public static SqlUserDefinedFunctionCreateUpdateParameters SqlUserDefinedFunctionCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, SqlUserDefinedFunctionResource resource = default, CreateUpdateOptions options = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent(
+            return new SqlUserDefinedFunctionCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new SqlUserDefinedFunctionCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.SqlTriggerGetResultsData"/> instance for mocking. </returns>
+        public static SqlTriggerGetResultsData SqlTriggerGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlTriggerGetPropertiesResource resource = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlTriggerGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                resource is null ? default : new SqlTriggerGetProperties(resource, null),
                 tags,
                 location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlTriggerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBSqlTriggerData"/> instance for mocking. </returns>
-        public static CosmosDBSqlTriggerData CosmosDBSqlTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedCosmosDBSqlTriggerResourceInfo resource = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new CosmosDBSqlTriggerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedCosmosDBSqlTriggerResourceInfo"/>. </summary>
-        /// <param name="triggerName"> Name of the Cosmos DB SQL trigger. </param>
+        /// <param name="id"> Name of the Cosmos DB SQL trigger. </param>
         /// <param name="body"> Body of the Trigger. </param>
         /// <param name="triggerType"> Type of the Trigger. </param>
         /// <param name="triggerOperation"> The operation the trigger is associated with. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedCosmosDBSqlTriggerResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedCosmosDBSqlTriggerResourceInfo ExtendedCosmosDBSqlTriggerResourceInfo(string triggerName = null, string body = null, CosmosDBSqlTriggerType? triggerType = null, CosmosDBSqlTriggerOperation? triggerOperation = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.SqlTriggerGetPropertiesResource"/> instance for mocking. </returns>
+        public static SqlTriggerGetPropertiesResource SqlTriggerGetPropertiesResource(string id = default, string body = default, TriggerType? triggerType = default, TriggerOperation? triggerOperation = default, string rid = default, float? ts = default, string etag = default)
         {
-            return new ExtendedCosmosDBSqlTriggerResourceInfo(
-                triggerName,
+            return new SqlTriggerGetPropertiesResource(
+                id,
                 body,
                 triggerType,
                 triggerOperation,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBSqlTriggerCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="resource"> The standard JSON format of a trigger. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.CosmosDBSqlTriggerCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CosmosDBSqlTriggerCreateOrUpdateContent CosmosDBSqlTriggerCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBSqlTriggerResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
+        /// <returns> A new <see cref="Models.SqlTriggerCreateUpdateParameters"/> instance for mocking. </returns>
+        public static SqlTriggerCreateUpdateParameters SqlTriggerCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, SqlTriggerResource resource = default, CreateUpdateOptions options = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CosmosDBSqlTriggerCreateOrUpdateContent(
+            return new SqlTriggerCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new SqlTriggerCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
+        /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
+        /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
+        /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
+        /// <returns> A new <see cref="CosmosDB.SqlRoleDefinitionGetResultsData"/> instance for mocking. </returns>
+        public static SqlRoleDefinitionGetResultsData SqlRoleDefinitionGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleName = default, RoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<Permission> permissions = default)
+        {
+            return new SqlRoleDefinitionGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new SqlRoleDefinitionResource(roleName, @type, (assignableScopes ?? new ChangeTrackingList<string>()).ToList(), (permissions ?? new ChangeTrackingList<Permission>()).ToList(), null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBDatabaseData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <param name="options"></param>
-        /// <returns> A new <see cref="CosmosDB.MongoDBDatabaseData"/> instance for mocking. </returns>
-        public static MongoDBDatabaseData MongoDBDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedMongoDBDatabaseResourceInfo resource = null, MongoDBDatabasePropertiesConfig options = null)
+        /// <summary> The set of data plane operations permitted through this Role Definition. </summary>
+        /// <param name="id"> The id for the permission. </param>
+        /// <param name="dataActions"> An array of data actions that are allowed. </param>
+        /// <param name="notDataActions"> An array of data actions that are denied. </param>
+        /// <returns> A new <see cref="Models.Permission"/> instance for mocking. </returns>
+        public static Permission Permission(string id = default, IEnumerable<string> dataActions = default, IEnumerable<string> notDataActions = default)
         {
-            tags ??= new Dictionary<string, string>();
+            dataActions ??= new ChangeTrackingList<string>();
+            notDataActions ??= new ChangeTrackingList<string>();
 
-            return new MongoDBDatabaseData(
+            return new Permission(id, dataActions.ToList(), notDataActions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
+        /// <param name="scope"> The data plane resource path for which access is being granted through this Role Assignment. </param>
+        /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
+        /// <returns> A new <see cref="CosmosDB.SqlRoleAssignmentGetResultsData"/> instance for mocking. </returns>
+        public static SqlRoleAssignmentGetResultsData SqlRoleAssignmentGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleDefinitionId = default, string scope = default, string principalId = default)
+        {
+            return new SqlRoleAssignmentGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                roleDefinitionId is null && scope is null && principalId is null ? default : new SqlRoleAssignmentResource(roleDefinitionId, scope, principalId, null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedMongoDBDatabaseResourceInfo"/>. </summary>
-        /// <param name="databaseName"> Name of the Cosmos DB MongoDB database. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.MongoDBDatabaseGetResultsData"/> instance for mocking. </returns>
+        public static MongoDBDatabaseGetResultsData MongoDBDatabaseGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoDBDatabaseGetPropertiesResource resource = default, MongoDBDatabaseGetPropertiesOptions options = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MongoDBDatabaseGetResultsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new MongoDBDatabaseGetProperties(resource, options, null),
+                tags,
+                location,
+                identity);
+        }
+
+        /// <param name="id"> Name of the Cosmos DB MongoDB database. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
-        /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedMongoDBDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedMongoDBDatabaseResourceInfo ExtendedMongoDBDatabaseResourceInfo(string databaseName = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.MongoDBDatabaseGetPropertiesResource"/> instance for mocking. </returns>
+        public static MongoDBDatabaseGetPropertiesResource MongoDBDatabaseGetPropertiesResource(string id = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, string rid = default, float? ts = default, string etag = default)
         {
-            return new ExtendedMongoDBDatabaseResourceInfo(
-                databaseName,
+            return new MongoDBDatabaseGetPropertiesResource(
+                id,
                 restoreParameters,
                 createMode,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBDatabaseCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.MongoDBDatabaseGetPropertiesOptions"/> instance for mocking. </returns>
+        public static MongoDBDatabaseGetPropertiesOptions MongoDBDatabaseGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new MongoDBDatabaseGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="resource"> The standard JSON format of a MongoDB database. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.MongoDBDatabaseCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static MongoDBDatabaseCreateOrUpdateContent MongoDBDatabaseCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MongoDBDatabaseResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
+        /// <returns> A new <see cref="Models.MongoDBDatabaseCreateUpdateParameters"/> instance for mocking. </returns>
+        public static MongoDBDatabaseCreateUpdateParameters MongoDBDatabaseCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, MongoDBDatabaseResource resource = default, CreateUpdateOptions options = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MongoDBDatabaseCreateOrUpdateContent(
+            return new MongoDBDatabaseCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new MongoDBDatabaseCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.MongoDBCollectionGetResultsData"/> instance for mocking. </returns>
+        public static MongoDBCollectionGetResultsData MongoDBCollectionGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MongoDBCollectionGetPropertiesResource resource = default, MongoDBCollectionGetPropertiesOptions options = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MongoDBCollectionGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new MongoDBCollectionGetProperties(resource, options, null),
                 tags,
                 location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBCollectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <param name="options"></param>
-        /// <returns> A new <see cref="CosmosDB.MongoDBCollectionData"/> instance for mocking. </returns>
-        public static MongoDBCollectionData MongoDBCollectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedMongoDBCollectionResourceInfo resource = null, MongoDBCollectionPropertiesConfig options = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new MongoDBCollectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedMongoDBCollectionResourceInfo"/>. </summary>
-        /// <param name="collectionName"> Name of the Cosmos DB MongoDB collection. </param>
+        /// <param name="id"> Name of the Cosmos DB MongoDB collection. </param>
         /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
         /// <param name="indexes"> List of index keys. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedMongoDBCollectionResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedMongoDBCollectionResourceInfo ExtendedMongoDBCollectionResourceInfo(string collectionName = null, IDictionary<string, string> shardKey = null, IEnumerable<MongoDBIndex> indexes = null, int? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.MongoDBCollectionGetPropertiesResource"/> instance for mocking. </returns>
+        public static MongoDBCollectionGetPropertiesResource MongoDBCollectionGetPropertiesResource(string id = default, IDictionary<string, string> shardKey = default, IEnumerable<MongoIndex> indexes = default, int? analyticalStorageTtl = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, string rid = default, float? ts = default, string etag = default)
         {
-            shardKey ??= new Dictionary<string, string>();
-            indexes ??= new List<MongoDBIndex>();
+            shardKey ??= new ChangeTrackingDictionary<string, string>();
+            indexes ??= new ChangeTrackingList<MongoIndex>();
 
-            return new ExtendedMongoDBCollectionResourceInfo(
-                collectionName,
+            return new MongoDBCollectionGetPropertiesResource(
+                id,
                 shardKey,
-                indexes?.ToList(),
+                indexes.ToList(),
                 analyticalStorageTtl,
                 restoreParameters,
                 createMode,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoDBCollectionCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"> The standard JSON format of a MongoDB collection. </param>
-        /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.MongoDBCollectionCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static MongoDBCollectionCreateOrUpdateContent MongoDBCollectionCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MongoDBCollectionResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new MongoDBCollectionCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBTableData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <param name="options"></param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBTableData"/> instance for mocking. </returns>
-        public static CosmosDBTableData CosmosDBTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBTablePropertiesResource resource = null, CosmosDBTablePropertiesOptions options = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new CosmosDBTableData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBTablePropertiesResource"/>. </summary>
-        /// <param name="tableName"> Name of the Cosmos DB table. </param>
+        /// <summary> Cosmos DB MongoDB collection resource object. </summary>
+        /// <param name="id"> Name of the Cosmos DB MongoDB collection. </param>
+        /// <param name="shardKey"> A key-value pair of shard keys to be applied for the request. </param>
+        /// <param name="indexes"> List of index keys. </param>
+        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
-        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.CosmosDBTablePropertiesResource"/> instance for mocking. </returns>
-        public static CosmosDBTablePropertiesResource CosmosDBTablePropertiesResource(string tableName = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.MongoDBCollectionResource"/> instance for mocking. </returns>
+        public static MongoDBCollectionResource MongoDBCollectionResource(string id = default, IDictionary<string, string> shardKey = default, IEnumerable<MongoIndex> indexes = default, int? analyticalStorageTtl = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default)
         {
-            return new CosmosDBTablePropertiesResource(
-                tableName,
+            shardKey ??= new ChangeTrackingDictionary<string, string>();
+            indexes ??= new ChangeTrackingList<MongoIndex>();
+
+            return new MongoDBCollectionResource(
+                id,
+                shardKey,
+                indexes.ToList(),
+                analyticalStorageTtl,
                 restoreParameters,
                 createMode,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.MongoDBCollectionGetPropertiesOptions"/> instance for mocking. </returns>
+        public static MongoDBCollectionGetPropertiesOptions MongoDBCollectionGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new MongoDBCollectionGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="resource"> The standard JSON format of a MongoDB collection. </param>
+        /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
+        /// <returns> A new <see cref="Models.MongoDBCollectionCreateUpdateParameters"/> instance for mocking. </returns>
+        public static MongoDBCollectionCreateUpdateParameters MongoDBCollectionCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, MongoDBCollectionResource resource = default, CreateUpdateOptions options = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MongoDBCollectionCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new MongoDBCollectionCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
+        /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
+        /// <param name="databaseName"> The database name for which access is being granted for this Role Definition. </param>
+        /// <param name="privileges"> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </param>
+        /// <param name="roles"> The set of roles inherited by this Role Definition. </param>
+        /// <returns> A new <see cref="CosmosDB.MongoRoleDefinitionGetResultsData"/> instance for mocking. </returns>
+        public static MongoRoleDefinitionGetResultsData MongoRoleDefinitionGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleName = default, MongoDBRoleDefinitionType? @type = default, string databaseName = default, IEnumerable<Privilege> privileges = default, IEnumerable<MongoDBRole> roles = default)
+        {
+            return new MongoRoleDefinitionGetResultsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                roleName is null && @type is null && databaseName is null && privileges is null && roles is null ? default : new MongoRoleDefinitionResource(
+                    roleName,
+                    @type,
+                    databaseName,
+                    (privileges ?? new ChangeTrackingList<Privilege>()).ToList(),
+                    (roles ?? new ChangeTrackingList<MongoDBRole>()).ToList(),
+                    null));
+        }
+
+        /// <summary> The set of data plane operations permitted through this Role Definition. </summary>
+        /// <param name="resource"> An Azure Cosmos DB Mongo DB Resource. </param>
+        /// <param name="actions"> An array of actions that are allowed. </param>
+        /// <returns> A new <see cref="Models.Privilege"/> instance for mocking. </returns>
+        public static Privilege Privilege(PrivilegeResource resource = default, IEnumerable<string> actions = default)
+        {
+            actions ??= new ChangeTrackingList<string>();
+
+            return new Privilege(resource, actions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="userName"> The user name for User Definition. </param>
+        /// <param name="password"> The password for User Definition. Response does not contain user password. </param>
+        /// <param name="databaseName"> The database name for which access is being granted for this User Definition. </param>
+        /// <param name="customData"> A custom definition for the USer Definition. </param>
+        /// <param name="roles"> The set of roles inherited by the User Definition. </param>
+        /// <param name="mechanisms"> The Mongo Auth mechanism. For now, we only support auth mechanism SCRAM-SHA-256. </param>
+        /// <returns> A new <see cref="CosmosDB.MongoUserDefinitionGetResultsData"/> instance for mocking. </returns>
+        public static MongoUserDefinitionGetResultsData MongoUserDefinitionGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string userName = default, string password = default, string databaseName = default, string customData = default, IEnumerable<MongoDBRole> roles = default, string mechanisms = default)
+        {
+            return new MongoUserDefinitionGetResultsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                userName is null && password is null && databaseName is null && customData is null && roles is null && mechanisms is null ? default : new MongoUserDefinitionResource(
+                    userName,
+                    password,
+                    databaseName,
+                    customData,
+                    (roles ?? new ChangeTrackingList<MongoDBRole>()).ToList(),
+                    mechanisms,
+                    null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.TableGetResultsData"/> instance for mocking. </returns>
+        public static TableGetResultsData TableGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TableGetPropertiesResource resource = default, TableGetPropertiesOptions options = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TableGetResultsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new TableGetProperties(resource, options, null),
+                tags,
+                location,
+                identity);
+        }
+
+        /// <param name="id"> Name of the Cosmos DB table. </param>
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        /// <returns> A new <see cref="Models.TableGetPropertiesResource"/> instance for mocking. </returns>
+        public static TableGetPropertiesResource TableGetPropertiesResource(string id = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, string rid = default, float? ts = default, string etag = default)
+        {
+            return new TableGetPropertiesResource(
+                id,
+                restoreParameters,
+                createMode,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBTableCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.TableGetPropertiesOptions"/> instance for mocking. </returns>
+        public static TableGetPropertiesOptions TableGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new TableGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="resource"> The standard JSON format of a Table. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.CosmosDBTableCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CosmosDBTableCreateOrUpdateContent CosmosDBTableCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBTableResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
+        /// <returns> A new <see cref="Models.TableCreateUpdateParameters"/> instance for mocking. </returns>
+        public static TableCreateUpdateParameters TableCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, TableResource resource = default, CreateUpdateOptions options = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CosmosDBTableCreateOrUpdateContent(
+            return new TableCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new TableCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id0"> The path id for the Role Definition. </param>
+        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
+        /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
+        /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Table Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
+        /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
+        /// <returns> A new <see cref="CosmosDB.TableRoleDefinitionResourceData"/> instance for mocking. </returns>
+        public static TableRoleDefinitionResourceData TableRoleDefinitionResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string id0 = default, string roleName = default, RoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<Permission> permissions = default)
+        {
+            return new TableRoleDefinitionResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                id0 is null && roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new TableRoleDefinitionResourceProperties(
+                    id0,
+                    roleName,
+                    @type,
+                    (assignableScopes ?? new ChangeTrackingList<string>()).ToList(),
+                    (permissions ?? new ChangeTrackingList<Permission>()).ToList(),
+                    null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraKeyspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <param name="options"></param>
-        /// <returns> A new <see cref="CosmosDB.CassandraKeyspaceData"/> instance for mocking. </returns>
-        public static CassandraKeyspaceData CassandraKeyspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedCassandraKeyspaceResourceInfo resource = null, CassandraKeyspacePropertiesConfig options = null)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
+        /// <param name="scope"> The data plane resource path for which access is being granted through this Table Role Assignment. </param>
+        /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Table Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.TableRoleAssignmentResourceData"/> instance for mocking. </returns>
+        public static TableRoleAssignmentResourceData TableRoleAssignmentResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleDefinitionId = default, string scope = default, string principalId = default, string provisioningState = default)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new CassandraKeyspaceData(
+            return new TableRoleAssignmentResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                roleDefinitionId is null && scope is null && principalId is null && provisioningState is null ? default : new TableRoleAssignmentResourceProperties(roleDefinitionId, scope, principalId, provisioningState, null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedCassandraKeyspaceResourceInfo"/>. </summary>
-        /// <param name="keyspaceName"> Name of the Cosmos DB Cassandra keyspace. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.CassandraKeyspaceGetResultsData"/> instance for mocking. </returns>
+        public static CassandraKeyspaceGetResultsData CassandraKeyspaceGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CassandraKeyspaceGetPropertiesResource resource = default, CassandraKeyspaceGetPropertiesOptions options = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CassandraKeyspaceGetResultsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new CassandraKeyspaceGetProperties(resource, options, null),
+                tags,
+                location,
+                identity);
+        }
+
+        /// <param name="id"> Name of the Cosmos DB Cassandra keyspace. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedCassandraKeyspaceResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedCassandraKeyspaceResourceInfo ExtendedCassandraKeyspaceResourceInfo(string keyspaceName = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.CassandraKeyspaceGetPropertiesResource"/> instance for mocking. </returns>
+        public static CassandraKeyspaceGetPropertiesResource CassandraKeyspaceGetPropertiesResource(string id = default, string rid = default, float? ts = default, string etag = default)
         {
-            return new ExtendedCassandraKeyspaceResourceInfo(keyspaceName, serializedAdditionalRawData: null, rid, timestamp, etag);
+            return new CassandraKeyspaceGetPropertiesResource(id, additionalBinaryDataProperties: null, rid, ts, etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraKeyspaceCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resourceKeyspaceName"> The standard JSON format of a Cassandra keyspace. </param>
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.CassandraKeyspaceGetPropertiesOptions"/> instance for mocking. </returns>
+        public static CassandraKeyspaceGetPropertiesOptions CassandraKeyspaceGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new CassandraKeyspaceGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.CassandraKeyspaceCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CassandraKeyspaceCreateOrUpdateContent CassandraKeyspaceCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string resourceKeyspaceName = null, CosmosDBCreateUpdateConfig options = null)
+        /// <param name="resourceId"> Name of the Cosmos DB Cassandra keyspace. </param>
+        /// <returns> A new <see cref="Models.CassandraKeyspaceCreateUpdateParameters"/> instance for mocking. </returns>
+        public static CassandraKeyspaceCreateUpdateParameters CassandraKeyspaceCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, CreateUpdateOptions options = default, string resourceId = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CassandraKeyspaceCreateOrUpdateContent(
+            return new CassandraKeyspaceCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                options is null && resourceId is null ? default : new CassandraKeyspaceCreateUpdateProperties(new CassandraKeyspaceResource(resourceId, null), options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.CassandraTableGetResultsData"/> instance for mocking. </returns>
+        public static CassandraTableGetResultsData CassandraTableGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CassandraTableGetPropertiesResource resource = default, CassandraTableGetPropertiesOptions options = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CassandraTableGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new CassandraTableGetProperties(resource, options, null),
                 tags,
                 location,
-                resourceKeyspaceName != null ? new CassandraKeyspaceResourceInfo(resourceKeyspaceName, serializedAdditionalRawData: null) : null,
-                options,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraTableData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <param name="options"></param>
-        /// <returns> A new <see cref="CosmosDB.CassandraTableData"/> instance for mocking. </returns>
-        public static CassandraTableData CassandraTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedCassandraTableResourceInfo resource = null, CassandraTablePropertiesConfig options = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new CassandraTableData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedCassandraTableResourceInfo"/>. </summary>
-        /// <param name="tableName"> Name of the Cosmos DB Cassandra table. </param>
+        /// <param name="id"> Name of the Cosmos DB Cassandra table. </param>
         /// <param name="defaultTtl"> Time to live of the Cosmos DB Cassandra table. </param>
         /// <param name="schema"> Schema of the Cosmos DB Cassandra table. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedCassandraTableResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedCassandraTableResourceInfo ExtendedCassandraTableResourceInfo(string tableName = null, int? defaultTtl = null, CassandraSchema schema = null, int? analyticalStorageTtl = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.CassandraTableGetPropertiesResource"/> instance for mocking. </returns>
+        public static CassandraTableGetPropertiesResource CassandraTableGetPropertiesResource(string id = default, int? defaultTtl = default, CassandraSchema schema = default, int? analyticalStorageTtl = default, string rid = default, float? ts = default, string etag = default)
         {
-            return new ExtendedCassandraTableResourceInfo(
-                tableName,
+            return new CassandraTableGetPropertiesResource(
+                id,
                 defaultTtl,
                 schema,
                 analyticalStorageTtl,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraTableCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Cosmos DB Cassandra table schema. </summary>
+        /// <param name="columns"> List of Cassandra table columns. </param>
+        /// <param name="partitionKeys"> List of partition key. </param>
+        /// <param name="clusterKeys"> List of cluster key. </param>
+        /// <returns> A new <see cref="Models.CassandraSchema"/> instance for mocking. </returns>
+        public static CassandraSchema CassandraSchema(IEnumerable<CassandraColumn> columns = default, IEnumerable<CassandraPartitionKey> partitionKeys = default, IEnumerable<CassandraClusterKey> clusterKeys = default)
+        {
+            columns ??= new ChangeTrackingList<CassandraColumn>();
+            partitionKeys ??= new ChangeTrackingList<CassandraPartitionKey>();
+            clusterKeys ??= new ChangeTrackingList<CassandraClusterKey>();
+
+            return new CassandraSchema(columns.ToList(), partitionKeys.ToList(), clusterKeys.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.CassandraTableGetPropertiesOptions"/> instance for mocking. </returns>
+        public static CassandraTableGetPropertiesOptions CassandraTableGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new CassandraTableGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="resource"> The standard JSON format of a Cassandra table. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.CassandraTableCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static CassandraTableCreateOrUpdateContent CassandraTableCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CassandraTableResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
+        /// <returns> A new <see cref="Models.CassandraTableCreateUpdateParameters"/> instance for mocking. </returns>
+        public static CassandraTableCreateUpdateParameters CassandraTableCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, CassandraTableResource resource = default, CreateUpdateOptions options = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CassandraTableCreateOrUpdateContent(
+            return new CassandraTableCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new CassandraTableCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.CassandraViewGetResultsData"/> instance for mocking. </returns>
+        public static CassandraViewGetResultsData CassandraViewGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CassandraViewGetPropertiesResource resource = default, CassandraViewGetPropertiesOptions options = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CassandraViewGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new CassandraViewGetProperties(resource, options, null),
                 tags,
                 location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.GremlinDatabaseData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <param name="options"></param>
-        /// <returns> A new <see cref="CosmosDB.GremlinDatabaseData"/> instance for mocking. </returns>
-        public static GremlinDatabaseData GremlinDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedGremlinDatabaseResourceInfo resource = null, GremlinDatabasePropertiesConfig options = null)
+        /// <param name="id"> Name of the Cosmos DB Cassandra view. </param>
+        /// <param name="viewDefinition"> View Definition of the Cosmos DB Cassandra view. </param>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        /// <returns> A new <see cref="Models.CassandraViewGetPropertiesResource"/> instance for mocking. </returns>
+        public static CassandraViewGetPropertiesResource CassandraViewGetPropertiesResource(string id = default, string viewDefinition = default, string rid = default, float? ts = default, string etag = default)
         {
-            tags ??= new Dictionary<string, string>();
+            return new CassandraViewGetPropertiesResource(
+                id,
+                viewDefinition,
+                additionalBinaryDataProperties: null,
+                rid,
+                ts,
+                etag);
+        }
 
-            return new GremlinDatabaseData(
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.CassandraViewGetPropertiesOptions"/> instance for mocking. </returns>
+        public static CassandraViewGetPropertiesOptions CassandraViewGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new CassandraViewGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="resource"> The standard JSON format of a Cassandra view. </param>
+        /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
+        /// <returns> A new <see cref="Models.CassandraViewCreateUpdateParameters"/> instance for mocking. </returns>
+        public static CassandraViewCreateUpdateParameters CassandraViewCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, CassandraViewResource resource = default, CreateUpdateOptions options = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CassandraViewCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new CassandraViewCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id0"> The path id for the Role Definition. </param>
+        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
+        /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
+        /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Cassandra Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
+        /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
+        /// <returns> A new <see cref="CosmosDB.CassandraRoleDefinitionResourceData"/> instance for mocking. </returns>
+        public static CassandraRoleDefinitionResourceData CassandraRoleDefinitionResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string id0 = default, string roleName = default, RoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<Permission> permissions = default)
+        {
+            return new CassandraRoleDefinitionResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                id0 is null && roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new CassandraRoleDefinitionResourceProperties(
+                    id0,
+                    roleName,
+                    @type,
+                    (assignableScopes ?? new ChangeTrackingList<string>()).ToList(),
+                    (permissions ?? new ChangeTrackingList<Permission>()).ToList(),
+                    null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedGremlinDatabaseResourceInfo"/>. </summary>
-        /// <param name="databaseName"> Name of the Cosmos DB Gremlin database. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
+        /// <param name="scope"> The data plane resource path for which access is being granted through this Cassandra Role Assignment. </param>
+        /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Cassandra Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.CassandraRoleAssignmentResourceData"/> instance for mocking. </returns>
+        public static CassandraRoleAssignmentResourceData CassandraRoleAssignmentResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleDefinitionId = default, string scope = default, string principalId = default, string provisioningState = default)
+        {
+            return new CassandraRoleAssignmentResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                roleDefinitionId is null && scope is null && principalId is null && provisioningState is null ? default : new CassandraRoleAssignmentResourceProperties(roleDefinitionId, scope, principalId, provisioningState, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.GremlinDatabaseGetResultsData"/> instance for mocking. </returns>
+        public static GremlinDatabaseGetResultsData GremlinDatabaseGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GremlinDatabaseGetPropertiesResource resource = default, GremlinDatabaseGetPropertiesOptions options = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new GremlinDatabaseGetResultsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new GremlinDatabaseGetProperties(resource, options, null),
+                tags,
+                location,
+                identity);
+        }
+
+        /// <param name="id"> Name of the Cosmos DB Gremlin database. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedGremlinDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedGremlinDatabaseResourceInfo ExtendedGremlinDatabaseResourceInfo(string databaseName = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.GremlinDatabaseGetPropertiesResource"/> instance for mocking. </returns>
+        public static GremlinDatabaseGetPropertiesResource GremlinDatabaseGetPropertiesResource(string id = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, string rid = default, float? ts = default, string etag = default)
         {
-            return new ExtendedGremlinDatabaseResourceInfo(
-                databaseName,
+            return new GremlinDatabaseGetPropertiesResource(
+                id,
                 restoreParameters,
                 createMode,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GremlinDatabaseCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.GremlinDatabaseGetPropertiesOptions"/> instance for mocking. </returns>
+        public static GremlinDatabaseGetPropertiesOptions GremlinDatabaseGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new GremlinDatabaseGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="resource"> The standard JSON format of a Gremlin database. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.GremlinDatabaseCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static GremlinDatabaseCreateOrUpdateContent GremlinDatabaseCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GremlinDatabaseResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
+        /// <returns> A new <see cref="Models.GremlinDatabaseCreateUpdateParameters"/> instance for mocking. </returns>
+        public static GremlinDatabaseCreateUpdateParameters GremlinDatabaseCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, GremlinDatabaseResource resource = default, CreateUpdateOptions options = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new GremlinDatabaseCreateOrUpdateContent(
+            return new GremlinDatabaseCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new GremlinDatabaseCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resource"> Gets the Resource. </param>
+        /// <param name="options"> Gets the Options. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.GremlinGraphGetResultsData"/> instance for mocking. </returns>
+        public static GremlinGraphGetResultsData GremlinGraphGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GremlinGraphGetPropertiesResource resource = default, GremlinGraphGetPropertiesOptions options = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new GremlinGraphGetResultsData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new GremlinGraphGetProperties(resource, options, null),
                 tags,
                 location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.GremlinGraphData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resource"></param>
-        /// <param name="options"></param>
-        /// <returns> A new <see cref="CosmosDB.GremlinGraphData"/> instance for mocking. </returns>
-        public static GremlinGraphData GremlinGraphData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedGremlinGraphResourceInfo resource = null, GremlinGraphPropertiesConfig options = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new GremlinGraphData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedGremlinGraphResourceInfo"/>. </summary>
-        /// <param name="graphName"> Name of the Cosmos DB Gremlin graph. </param>
+        /// <param name="id"> Name of the Cosmos DB Gremlin graph. </param>
         /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the graph. </param>
         /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
         /// <param name="defaultTtl"> Default time to live. </param>
-        /// <param name="uniqueKeys"> The unique key policy configuration for specifying uniqueness constraints on documents in the collection in the Azure Cosmos DB service. </param>
+        /// <param name="uniqueKeys"> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </param>
         /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the graph. </param>
         /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        /// <returns> A new <see cref="Models.ExtendedGremlinGraphResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedGremlinGraphResourceInfo ExtendedGremlinGraphResourceInfo(string graphName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        /// <returns> A new <see cref="Models.GremlinGraphGetPropertiesResource"/> instance for mocking. </returns>
+        public static GremlinGraphGetPropertiesResource GremlinGraphGetPropertiesResource(string id = default, CosmosDBIndexingPolicy indexingPolicy = default, CosmosDBContainerPartitionKey partitionKey = default, int? defaultTtl = default, IEnumerable<CosmosDBUniqueKey> uniqueKeys = default, ConflictResolutionPolicy conflictResolutionPolicy = default, long? analyticalStorageTtl = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, string rid = default, float? ts = default, string etag = default)
         {
-            uniqueKeys ??= new List<CosmosDBUniqueKey>();
-
-            return new ExtendedGremlinGraphResourceInfo(
-                graphName,
+            return new GremlinGraphGetPropertiesResource(
+                id,
                 indexingPolicy,
                 partitionKey,
                 defaultTtl,
-                uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList(), serializedAdditionalRawData: null) : null,
+                uniqueKeys is null ? default : new CosmosDBUniqueKeyPolicy((uniqueKeys ?? new ChangeTrackingList<CosmosDBUniqueKey>()).ToList(), null),
                 conflictResolutionPolicy,
                 analyticalStorageTtl,
                 restoreParameters,
                 createMode,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
+                ts,
                 etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GremlinGraphCreateOrUpdateContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="throughput"> Value of the Cosmos DB resource throughput or autoscaleSettings. Use the ThroughputSetting resource when retrieving offer details. </param>
+        /// <param name="autoscaleMaxThroughput"> Represents maximum throughput, the resource can scale up to. </param>
+        /// <returns> A new <see cref="Models.GremlinGraphGetPropertiesOptions"/> instance for mocking. </returns>
+        public static GremlinGraphGetPropertiesOptions GremlinGraphGetPropertiesOptions(int? throughput = default, int? autoscaleMaxThroughput = default)
+        {
+            return new GremlinGraphGetPropertiesOptions(throughput, autoscaleMaxThroughput is null ? default : new AutoscaleSettings(autoscaleMaxThroughput, null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <param name="tags"> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="resource"> The standard JSON format of a Gremlin graph. </param>
         /// <param name="options"> A key-value pair of options to be applied for the request. This corresponds to the headers sent with the request. </param>
-        /// <returns> A new <see cref="Models.GremlinGraphCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static GremlinGraphCreateOrUpdateContent GremlinGraphCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GremlinGraphResourceInfo resource = null, CosmosDBCreateUpdateConfig options = null)
+        /// <returns> A new <see cref="Models.GremlinGraphCreateUpdateParameters"/> instance for mocking. </returns>
+        public static GremlinGraphCreateUpdateParameters GremlinGraphCreateUpdateParameters(string id = default, string name = default, string @type = default, string location = default, IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default, GremlinGraphResource resource = default, CreateUpdateOptions options = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new GremlinGraphCreateOrUpdateContent(
+            return new GremlinGraphCreateUpdateParameters(
+                id,
+                name,
+                @type,
+                location,
+                tags,
+                identity,
+                additionalBinaryDataProperties: null,
+                resource is null && options is null ? default : new GremlinGraphCreateUpdateProperties(resource, options, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id0"> The path id for the Role Definition. </param>
+        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
+        /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
+        /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Gremlin Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
+        /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
+        /// <returns> A new <see cref="CosmosDB.GremlinRoleDefinitionResourceData"/> instance for mocking. </returns>
+        public static GremlinRoleDefinitionResourceData GremlinRoleDefinitionResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string id0 = default, string roleName = default, RoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<Permission> permissions = default)
+        {
+            return new GremlinRoleDefinitionResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                id0 is null && roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new GremlinRoleDefinitionResourceProperties(
+                    id0,
+                    roleName,
+                    @type,
+                    (assignableScopes ?? new ChangeTrackingList<string>()).ToList(),
+                    (permissions ?? new ChangeTrackingList<Permission>()).ToList(),
+                    null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
+        /// <param name="scope"> The data plane resource path for which access is being granted through this Gremlin Role Assignment. </param>
+        /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Gremlin Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.GremlinRoleAssignmentResourceData"/> instance for mocking. </returns>
+        public static GremlinRoleAssignmentResourceData GremlinRoleAssignmentResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleDefinitionId = default, string scope = default, string principalId = default, string provisioningState = default)
+        {
+            return new GremlinRoleAssignmentResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                roleDefinitionId is null && scope is null && principalId is null && provisioningState is null ? default : new GremlinRoleAssignmentResourceProperties(roleDefinitionId, scope, principalId, provisioningState, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="jobName"> Job Name. </param>
+        /// <param name="source"> Source DataStore details. </param>
+        /// <param name="destination"> Destination DataStore details. </param>
+        /// <param name="status"> Job Status. </param>
+        /// <param name="processedCount"> Processed Count. </param>
+        /// <param name="totalCount"> Total Count. </param>
+        /// <param name="lastUpdatedUtcOn"> Last Updated Time (ISO-8601 format). </param>
+        /// <param name="workerCount"> Worker count. </param>
+        /// <param name="error"> Error response for Faulted job. </param>
+        /// <param name="duration"> Total Duration of Job. </param>
+        /// <param name="mode"> Mode of job execution. </param>
+        /// <returns> A new <see cref="CosmosDB.DataTransferJobGetResultsData"/> instance for mocking. </returns>
+        public static DataTransferJobGetResultsData DataTransferJobGetResultsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string jobName = default, DataTransferDataSourceSink source = default, DataTransferDataSourceSink destination = default, string status = default, long? processedCount = default, long? totalCount = default, DateTimeOffset? lastUpdatedUtcOn = default, int? workerCount = default, CosmosDBErrorResult error = default, string duration = default, DataTransferJobMode? mode = default)
+        {
+            return new DataTransferJobGetResultsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                jobName is null && source is null && destination is null && status is null && processedCount is null && totalCount is null && lastUpdatedUtcOn is null && workerCount is null && error is null && duration is null && mode is null ? default : new DataTransferJobProperties(
+                    jobName,
+                    source,
+                    destination,
+                    status,
+                    processedCount,
+                    totalCount,
+                    lastUpdatedUtcOn,
+                    workerCount,
+                    error,
+                    duration,
+                    mode,
+                    null));
+        }
+
+        /// <summary> The properties of a DataTransfer Job. </summary>
+        /// <param name="jobName"> Job Name. </param>
+        /// <param name="source"> Source DataStore details. </param>
+        /// <param name="destination"> Destination DataStore details. </param>
+        /// <param name="status"> Job Status. </param>
+        /// <param name="processedCount"> Processed Count. </param>
+        /// <param name="totalCount"> Total Count. </param>
+        /// <param name="lastUpdatedUtcOn"> Last Updated Time (ISO-8601 format). </param>
+        /// <param name="workerCount"> Worker count. </param>
+        /// <param name="error"> Error response for Faulted job. </param>
+        /// <param name="duration"> Total Duration of Job. </param>
+        /// <param name="mode"> Mode of job execution. </param>
+        /// <returns> A new <see cref="Models.DataTransferJobProperties"/> instance for mocking. </returns>
+        public static DataTransferJobProperties DataTransferJobProperties(string jobName = default, DataTransferDataSourceSink source = default, DataTransferDataSourceSink destination = default, string status = default, long? processedCount = default, long? totalCount = default, DateTimeOffset? lastUpdatedUtcOn = default, int? workerCount = default, CosmosDBErrorResult error = default, string duration = default, DataTransferJobMode? mode = default)
+        {
+            return new DataTransferJobProperties(
+                jobName,
+                source,
+                destination,
+                status,
+                processedCount,
+                totalCount,
+                lastUpdatedUtcOn,
+                workerCount,
+                error,
+                duration,
+                mode,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Parameters to create Data Transfer Job. </summary>
+        /// <param name="id"> The unique resource identifier of the database account. </param>
+        /// <param name="name"> The name of the database account. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="properties"> Data Transfer Create Job Properties. </param>
+        /// <returns> A new <see cref="Models.CreateJobRequest"/> instance for mocking. </returns>
+        public static CreateJobRequest CreateJobRequest(string id = default, string name = default, string @type = default, DataTransferJobProperties properties = default)
+        {
+            return new CreateJobRequest(id, name, @type, additionalBinaryDataProperties: null, properties);
+        }
+
+        /// <summary> The resource model definition for a ARM proxy resource. It will have everything other than required location and tags. </summary>
+        /// <param name="id"> The unique resource identifier of the database account. </param>
+        /// <param name="name"> The name of the database account. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <returns> A new <see cref="Models.ARMProxyResource"/> instance for mocking. </returns>
+        public static ARMProxyResource ARMProxyResource(string id = default, string name = default, string @type = default)
+        {
+            return new ARMProxyResource(id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Representation of a Garnet cache cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.GarnetClusterResourceData"/> instance for mocking. </returns>
+        public static GarnetClusterResourceData GarnetClusterResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GarnetClusterResourceProperties properties = default, ManagedCassandraManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new GarnetClusterResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                resource,
-                options,
-                serializedAdditionalRawData: null);
+                properties,
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBLocationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Cosmos DB location metadata. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBLocationData"/> instance for mocking. </returns>
-        public static CosmosDBLocationData CosmosDBLocationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBLocationProperties properties = null)
+        /// <summary> Properties of a Garnet cache cluster. </summary>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="subnetId"> Resource id of a subnet that this cluster's management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </param>
+        /// <param name="endPoints"> Endpoints for clients to connect to the cluster. </param>
+        /// <param name="replicationFactor"> Number of copies of data maintained by the cluster. </param>
+        /// <param name="nodeCount"> Number of nodes. </param>
+        /// <param name="nodeSku"> Virtual Machine SKU used for clusters. Default value is Standard_DS14_v2. </param>
+        /// <param name="availabilityZone"> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the garnet cluster virtual machines. </param>
+        /// <param name="allocationState"> Allocation state of the cluster and data center resources. Active implies the virtual machines of the cluster are allocated, deallocated implies virtual machines and resources are deallocated. </param>
+        /// <param name="clusterType"> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </param>
+        /// <param name="provisionError"> Error related to resource provisioning. </param>
+        /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
+        /// <returns> A new <see cref="Models.GarnetClusterResourceProperties"/> instance for mocking. </returns>
+        public static GarnetClusterResourceProperties GarnetClusterResourceProperties(GarnetCacheProvisioningState? provisioningState = default, ResourceIdentifier subnetId = default, IEnumerable<GarnetClusterResourcePropertiesEndPointsItem> endPoints = default, int? replicationFactor = default, int? nodeCount = default, string nodeSku = default, bool? availabilityZone = default, AllocationState? allocationState = default, ClusterType? clusterType = default, ResponseError provisionError = default, IEnumerable<string> extensions = default)
         {
-            return new CosmosDBLocationData(
+            endPoints ??= new ChangeTrackingList<GarnetClusterResourcePropertiesEndPointsItem>();
+            extensions ??= new ChangeTrackingList<string>();
+
+            return new GarnetClusterResourceProperties(
+                provisioningState,
+                subnetId,
+                endPoints.ToList(),
+                replicationFactor,
+                nodeCount,
+                nodeSku,
+                availabilityZone,
+                allocationState,
+                clusterType,
+                provisionError,
+                extensions.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Endpoint for clients to connect to the cluster. </summary>
+        /// <param name="ipAddress"> Ipv4 address of the endpoint. </param>
+        /// <param name="port"> Port number. </param>
+        /// <returns> A new <see cref="Models.GarnetClusterResourcePropertiesEndPointsItem"/> instance for mocking. </returns>
+        public static GarnetClusterResourcePropertiesEndPointsItem GarnetClusterResourcePropertiesEndPointsItem(string ipAddress = default, int? port = default)
+        {
+            return new GarnetClusterResourcePropertiesEndPointsItem(ipAddress, port, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Identity for the resource. </summary>
+        /// <param name="principalId"> The object id of the identity resource. </param>
+        /// <param name="tenantId"> The tenant id of the resource. </param>
+        /// <param name="type"> The type of the resource. </param>
+        /// <returns> A new <see cref="Models.ManagedCassandraManagedServiceIdentity"/> instance for mocking. </returns>
+        public static ManagedCassandraManagedServiceIdentity ManagedCassandraManagedServiceIdentity(string principalId = default, string tenantId = default, ManagedCassandraResourceIdentityType? @type = default)
+        {
+            return new ManagedCassandraManagedServiceIdentity(principalId, tenantId, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of a Garnet cache cluster for updates. </summary>
+        /// <param name="clusterType"> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </param>
+        /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
+        /// <returns> A new <see cref="Models.GarnetClusterResourcePatchProperties"/> instance for mocking. </returns>
+        public static GarnetClusterResourcePatchProperties GarnetClusterResourcePatchProperties(ClusterType? clusterType = default, IEnumerable<string> extensions = default)
+        {
+            extensions ??= new ChangeTrackingList<string>();
+
+            return new GarnetClusterResourcePatchProperties(clusterType, extensions.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network security perimeter (NSP) configuration resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Network security configuration properties. </param>
+        /// <returns> A new <see cref="CosmosDB.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NetworkSecurityPerimeterConfigurationProperties properties = default)
+        {
+            return new NetworkSecurityPerimeterConfigurationData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBLocationProperties"/>. </summary>
-        /// <param name="doesSupportAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
+        /// <summary> Network security configuration properties. </summary>
+        /// <param name="provisioningState"></param>
+        /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
+        /// <param name="networkSecurityPerimeter"></param>
+        /// <param name="resourceAssociation"></param>
+        /// <param name="profile"></param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<ProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, ResourceAssociation resourceAssociation = default, NetworkSecurityProfile profile = default)
+        {
+            provisioningIssues ??= new ChangeTrackingList<ProvisioningIssue>();
+
+            return new NetworkSecurityPerimeterConfigurationProperties(
+                provisioningState,
+                provisioningIssues.ToList(),
+                networkSecurityPerimeter,
+                resourceAssociation,
+                profile,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a provisioning issue for a network security perimeter configuration. </summary>
+        /// <param name="name"> Name of the issue. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
+        public static ProvisioningIssue ProvisioningIssue(string name = default, ProvisioningIssueProperties properties = default)
+        {
+            return new ProvisioningIssue(name, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details of a provisioning issue for a network security perimeter (NSP) configuration. Resource providers should generate separate provisioning issue elements for each separate issue detected, and include a meaningful and distinctive description, as well as any appropriate suggestedResourceIds and suggestedAccessRules. </summary>
+        /// <param name="issueType"> Type of issue. </param>
+        /// <param name="severity"> Severity of the issue. </param>
+        /// <param name="description"> Description of the issue. </param>
+        /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
+        /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
+        /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static ProvisioningIssueProperties ProvisioningIssueProperties(IssueType? issueType = default, Severity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<AccessRule> suggestedAccessRules = default)
+        {
+            suggestedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
+            suggestedAccessRules ??= new ChangeTrackingList<AccessRule>();
+
+            return new ProvisioningIssueProperties(
+                issueType,
+                severity,
+                description,
+                suggestedResourceIds.ToList(),
+                suggestedAccessRules.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Access rule in a network security perimeter configuration profile. </summary>
+        /// <param name="name"> Name of the access rule. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.AccessRule"/> instance for mocking. </returns>
+        public static AccessRule AccessRule(string name = default, AccessRuleProperties properties = default)
+        {
+            return new AccessRule(name, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of Access Rule. </summary>
+        /// <param name="direction"></param>
+        /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
+        /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
+        /// <param name="networkSecurityPerimeters"> Network security perimeters for inbound rules. </param>
+        /// <param name="fullyQualifiedDomainNames"> Fully qualified domain names (FQDN) for outbound rules. </param>
+        /// <param name="emailAddresses"> Email addresses for outbound rules. </param>
+        /// <param name="phoneNumbers"> Phone numbers for outbound rules. </param>
+        /// <returns> A new <see cref="Models.AccessRuleProperties"/> instance for mocking. </returns>
+        public static AccessRuleProperties AccessRuleProperties(AccessRuleDirection? direction = default, IEnumerable<string> addressPrefixes = default, IEnumerable<AccessRulePropertiesSubscription> subscriptions = default, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = default, IEnumerable<string> fullyQualifiedDomainNames = default, IEnumerable<string> emailAddresses = default, IEnumerable<string> phoneNumbers = default)
+        {
+            addressPrefixes ??= new ChangeTrackingList<string>();
+            subscriptions ??= new ChangeTrackingList<AccessRulePropertiesSubscription>();
+            networkSecurityPerimeters ??= new ChangeTrackingList<NetworkSecurityPerimeter>();
+            fullyQualifiedDomainNames ??= new ChangeTrackingList<string>();
+            emailAddresses ??= new ChangeTrackingList<string>();
+            phoneNumbers ??= new ChangeTrackingList<string>();
+
+            return new AccessRuleProperties(
+                direction,
+                addressPrefixes.ToList(),
+                subscriptions.ToList(),
+                networkSecurityPerimeters.ToList(),
+                fullyQualifiedDomainNames.ToList(),
+                emailAddresses.ToList(),
+                phoneNumbers.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The AccessRulePropertiesSubscription. </summary>
+        /// <param name="id"> The fully qualified Azure resource ID of the subscription e.g. ('/subscriptions/00000000-0000-0000-0000-000000000000'). </param>
+        /// <returns> A new <see cref="Models.AccessRulePropertiesSubscription"/> instance for mocking. </returns>
+        public static AccessRulePropertiesSubscription AccessRulePropertiesSubscription(ResourceIdentifier id = default)
+        {
+            return new AccessRulePropertiesSubscription(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information about a network security perimeter (NSP). </summary>
+        /// <param name="id"> Fully qualified Azure resource ID of the NSP resource. </param>
+        /// <param name="perimeterGuid"> Universal unique ID (UUID) of the network security perimeter. </param>
+        /// <param name="location"> Location of the network security perimeter. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeter"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeter NetworkSecurityPerimeter(ResourceIdentifier id = default, Guid? perimeterGuid = default, string location = default)
+        {
+            return new NetworkSecurityPerimeter(id, perimeterGuid, location, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Information about resource association. </summary>
+        /// <param name="name"> Name of the resource association. </param>
+        /// <param name="accessMode"></param>
+        /// <returns> A new <see cref="Models.ResourceAssociation"/> instance for mocking. </returns>
+        public static ResourceAssociation ResourceAssociation(string name = default, ResourceAssociationAccessMode? accessMode = default)
+        {
+            return new ResourceAssociation(name, accessMode, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network security perimeter configuration profile. </summary>
+        /// <param name="name"> Name of the profile. </param>
+        /// <param name="accessRulesVersion"> Current access rules version. </param>
+        /// <param name="accessRules"> List of Access Rules. </param>
+        /// <param name="diagnosticSettingsVersion"> Current diagnostic settings version. </param>
+        /// <param name="enabledLogCategories"> List of log categories that are enabled. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityProfile"/> instance for mocking. </returns>
+        public static NetworkSecurityProfile NetworkSecurityProfile(string name = default, int? accessRulesVersion = default, IEnumerable<AccessRule> accessRules = default, int? diagnosticSettingsVersion = default, IEnumerable<string> enabledLogCategories = default)
+        {
+            accessRules ??= new ChangeTrackingList<AccessRule>();
+            enabledLogCategories ??= new ChangeTrackingList<string>();
+
+            return new NetworkSecurityProfile(
+                name,
+                accessRulesVersion,
+                accessRules.ToList(),
+                diagnosticSettingsVersion,
+                enabledLogCategories.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="notebookServerEndpoint"> Specifies the endpoint of Notebook server. </param>
+        /// <param name="status"> Status of the notebook workspace. Possible values are: Creating, Online, Deleting, Failed, Updating. </param>
+        /// <returns> A new <see cref="CosmosDB.NotebookWorkspaceData"/> instance for mocking. </returns>
+        public static NotebookWorkspaceData NotebookWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string notebookServerEndpoint = default, string status = default)
+        {
+            return new NotebookWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                notebookServerEndpoint is null && status is null ? default : new NotebookWorkspaceProperties(notebookServerEndpoint, status, null));
+        }
+
+        /// <summary> Parameters to create a notebook workspace resource. </summary>
+        /// <param name="id"> The unique resource identifier of the database account. </param>
+        /// <param name="name"> The name of the database account. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <returns> A new <see cref="Models.NotebookWorkspaceCreateUpdateParameters"/> instance for mocking. </returns>
+        public static NotebookWorkspaceCreateUpdateParameters NotebookWorkspaceCreateUpdateParameters(string id = default, string name = default, string @type = default)
+        {
+            return new NotebookWorkspaceCreateUpdateParameters(id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The connection info for the given notebook workspace. </summary>
+        /// <param name="authToken"> Specifies auth token used for connecting to Notebook server (uses token-based auth). </param>
+        /// <param name="notebookServerEndpoint"> Specifies the endpoint of Notebook server. </param>
+        /// <returns> A new <see cref="Models.NotebookWorkspaceConnectionInfoResult"/> instance for mocking. </returns>
+        public static NotebookWorkspaceConnectionInfoResult NotebookWorkspaceConnectionInfoResult(string authToken = default, string notebookServerEndpoint = default)
+        {
+            return new NotebookWorkspaceConnectionInfoResult(authToken, notebookServerEndpoint, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
+        /// <returns> A new <see cref="CosmosDB.CosmosDBPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static CosmosDBPrivateLinkResourceData CosmosDBPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            return new CosmosDBPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new CosmosDBPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="action"> Indicates whether what action to take for the Chaos Fault. </param>
+        /// <param name="region"> Region of the account where the Chaos Fault is to be enabled/disabled. </param>
+        /// <param name="databaseName"> Database name. </param>
+        /// <param name="containerName"> Container name. </param>
+        /// <param name="provisioningState"> A provisioning state of the Chaos Fault. </param>
+        /// <returns> A new <see cref="CosmosDB.ChaosFaultResourceData"/> instance for mocking. </returns>
+        public static ChaosFaultResourceData ChaosFaultResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SupportedActions? action = default, string region = default, string databaseName = default, string containerName = default, string provisioningState = default)
+        {
+            return new ChaosFaultResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                action is null && region is null && databaseName is null && containerName is null && provisioningState is null ? default : new ChaosFaultProperties(
+                    action,
+                    region,
+                    databaseName,
+                    containerName,
+                    provisioningState,
+                    null));
+        }
+
+        /// <summary> Cosmos DB location get result. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Cosmos DB location metadata. </param>
+        /// <returns> A new <see cref="CosmosDB.LocationGetResultData"/> instance for mocking. </returns>
+        public static LocationGetResultData LocationGetResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LocationProperties properties = default)
+        {
+            return new LocationGetResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Cosmos DB location metadata. </summary>
+        /// <param name="supportsAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
         /// <param name="isResidencyRestricted"> Flag indicating whether the location is residency sensitive. </param>
         /// <param name="backupStorageRedundancies"> The properties of available backup storage redundancies. </param>
         /// <param name="isSubscriptionRegionAccessAllowedForRegular"> Flag indicating whether the subscription have access in region for Non-Availability Zones. </param>
         /// <param name="isSubscriptionRegionAccessAllowedForAz"> Flag indicating whether the subscription have access in region for Availability Zones(Az). </param>
         /// <param name="status"> Enum to indicate current buildout status of the region. </param>
-        /// <returns> A new <see cref="Models.CosmosDBLocationProperties"/> instance for mocking. </returns>
-        public static CosmosDBLocationProperties CosmosDBLocationProperties(bool? doesSupportAvailabilityZone = null, bool? isResidencyRestricted = null, IEnumerable<CosmosDBBackupStorageRedundancy> backupStorageRedundancies = null, bool? isSubscriptionRegionAccessAllowedForRegular = null, bool? isSubscriptionRegionAccessAllowedForAz = null, CosmosDBStatus? status = null)
+        /// <returns> A new <see cref="Models.LocationProperties"/> instance for mocking. </returns>
+        public static LocationProperties LocationProperties(bool? supportsAvailabilityZone = default, bool? isResidencyRestricted = default, IEnumerable<CosmosDBBackupStorageRedundancy> backupStorageRedundancies = default, bool? isSubscriptionRegionAccessAllowedForRegular = default, bool? isSubscriptionRegionAccessAllowedForAz = default, CosmosDBStatus? status = default)
         {
-            backupStorageRedundancies ??= new List<CosmosDBBackupStorageRedundancy>();
+            backupStorageRedundancies ??= new ChangeTrackingList<CosmosDBBackupStorageRedundancy>();
 
-            return new CosmosDBLocationProperties(
-                doesSupportAvailabilityZone,
+            return new LocationProperties(
+                supportsAvailabilityZone,
                 isResidencyRestricted,
-                backupStorageRedundancies?.ToList(),
+                backupStorageRedundancies.ToList(),
                 isSubscriptionRegionAccessAllowedForRegular,
                 isSubscriptionRegionAccessAllowedForAz,
                 status,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Representation of a managed Cassandra cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of a managed Cassandra cluster. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
-        /// <returns> A new <see cref="CosmosDB.CassandraClusterData"/> instance for mocking. </returns>
-        public static CassandraClusterData CassandraClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CassandraClusterProperties properties = null, ManagedServiceIdentity identity = null)
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.ClusterResourceData"/> instance for mocking. </returns>
+        public static ClusterResourceData ClusterResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ClusterResourceProperties properties = default, IDictionary<string, string> tags = default, string location = default, ManagedCassandraManagedServiceIdentity identity = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CassandraClusterData(
+            return new ClusterResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
+                properties,
                 tags,
                 location,
-                properties,
-                identity,
-                serializedAdditionalRawData: null);
+                identity);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the resource at the time the operation was called. </param>
         /// <param name="restoreFromBackupId"> To create an empty cluster, omit this field or set it to null. To restore a backup into a new cluster, set this field to the resource id of the backup. </param>
         /// <param name="delegatedManagementSubnetId"> Resource id of a subnet that this cluster's management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </param>
@@ -1777,29 +3305,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="clusterNameOverride"> If you need to set the clusterName property in cassandra.yaml to something besides the resource name of the cluster, set the value to use on this property. </param>
         /// <param name="authenticationMethod"> Which authentication method Cassandra should use to authenticate clients. 'None' turns off authentication, so should not be used except in emergencies. 'Cassandra' is the default password based authentication. The default is 'Cassandra'. </param>
         /// <param name="initialCassandraAdminPassword"> Initial password for clients connecting as admin to the cluster. Should be changed after cluster creation. Returns null on GET. This field only applies when the authenticationMethod field is 'Cassandra'. </param>
-        /// <param name="prometheusEndpointIPAddress"> Hostname or IP address where the Prometheus endpoint containing data about the managed Cassandra nodes can be reached. </param>
-        /// <param name="isRepairEnabled"> Should automatic repairs run on this cluster? If omitted, this is true, and should stay true unless you are running a hybrid cluster where you are already doing your own repairs. </param>
+        /// <param name="prometheusEndpointIpAddress"> IP address of this seed node. </param>
+        /// <param name="repairEnabled"> Should automatic repairs run on this cluster? If omitted, this is true, and should stay true unless you are running a hybrid cluster where you are already doing your own repairs. </param>
+        /// <param name="autoReplicate"> The form of AutoReplicate that is being used by this cluster. </param>
         /// <param name="clientCertificates"> List of TLS certificates used to authorize clients connecting to the cluster. All connections are TLS encrypted whether clientCertificates is set or not, but if clientCertificates is set, the managed Cassandra cluster will reject all connections not bearing a TLS client certificate that can be validated from one or more of the public certificates in this property. </param>
         /// <param name="externalGossipCertificates"> List of TLS certificates used to authorize gossip from unmanaged data centers. The TLS certificates of all nodes in unmanaged data centers must be verifiable using one of the certificates provided in this property. </param>
         /// <param name="gossipCertificates"> List of TLS certificates that unmanaged nodes must trust for gossip with managed nodes. All managed nodes will present TLS client certificates that are verifiable using one of the certificates provided in this property. </param>
         /// <param name="externalSeedNodes"> List of IP addresses of seed nodes in unmanaged data centers. These will be added to the seed node lists of all managed nodes. </param>
         /// <param name="seedNodes"> List of IP addresses of seed nodes in the managed data centers. These should be added to the seed node lists of all unmanaged nodes. </param>
+        /// <param name="externalDataCenters"> List of the data center names for unmanaged data centers in this cluster to be included in auto-replication. </param>
         /// <param name="hoursBetweenBackups"> (Deprecated) Number of hours to wait between taking a backup of the cluster. </param>
-        /// <param name="isDeallocated"> Whether the cluster and associated data centers has been deallocated. </param>
-        /// <param name="isCassandraAuditLoggingEnabled"> Whether Cassandra audit logging is enabled. </param>
+        /// <param name="deallocated"> Whether the cluster and associated data centers has been deallocated. </param>
+        /// <param name="cassandraAuditLoggingEnabled"> Whether Cassandra audit logging is enabled. </param>
+        /// <param name="clusterType"> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </param>
         /// <param name="provisionError"> Error related to resource provisioning. </param>
+        /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
+        /// <param name="backupSchedules"> List of backup schedules that define when you want to back up your data. </param>
+        /// <param name="scheduledEventStrategy"> How the nodes in the cluster react to scheduled events. </param>
         /// <param name="azureConnectionMethod"> How to connect to the azure services needed for running the cluster. </param>
-        /// <param name="privateLinkResourceId"> If the Connection Method is VPN, this is the Id of the private link resource that the datacenters need to connect to. </param>
-        /// <returns> A new <see cref="Models.CassandraClusterProperties"/> instance for mocking. </returns>
-        public static CassandraClusterProperties CassandraClusterProperties(CassandraProvisioningState? provisioningState = null, string restoreFromBackupId = null, ResourceIdentifier delegatedManagementSubnetId = null, string cassandraVersion = null, string clusterNameOverride = null, CassandraAuthenticationMethod? authenticationMethod = null, string initialCassandraAdminPassword = null, string prometheusEndpointIPAddress = null, bool? isRepairEnabled = null, IEnumerable<CassandraCertificate> clientCertificates = null, IEnumerable<CassandraCertificate> externalGossipCertificates = null, IEnumerable<CassandraCertificate> gossipCertificates = null, IEnumerable<CassandraDataCenterSeedNode> externalSeedNodes = null, IEnumerable<CassandraDataCenterSeedNode> seedNodes = null, int? hoursBetweenBackups = null, bool? isDeallocated = null, bool? isCassandraAuditLoggingEnabled = null, CassandraError provisionError = null, ServiceConnectionType? azureConnectionMethod = null, ResourceIdentifier privateLinkResourceId = null)
+        /// <param name="privateLinkResourceId"> If the Connection Method is Vpn, this is the Id of the private link resource that the datacenters need to connect to. </param>
+        /// <returns> A new <see cref="Models.ClusterResourceProperties"/> instance for mocking. </returns>
+        public static ClusterResourceProperties ClusterResourceProperties(ManagedCassandraProvisioningState? provisioningState = default, string restoreFromBackupId = default, string delegatedManagementSubnetId = default, string cassandraVersion = default, string clusterNameOverride = default, CassandraAuthenticationMethod? authenticationMethod = default, string initialCassandraAdminPassword = default, string prometheusEndpointIpAddress = default, bool? repairEnabled = default, CassandraAutoReplicateForm? autoReplicate = default, IEnumerable<CassandraCertificate> clientCertificates = default, IEnumerable<CassandraCertificate> externalGossipCertificates = default, IEnumerable<CassandraCertificate> gossipCertificates = default, IEnumerable<SeedNode> externalSeedNodes = default, IEnumerable<SeedNode> seedNodes = default, IEnumerable<string> externalDataCenters = default, int? hoursBetweenBackups = default, bool? deallocated = default, bool? cassandraAuditLoggingEnabled = default, ClusterType? clusterType = default, CassandraError provisionError = default, IEnumerable<string> extensions = default, IEnumerable<CassandraClusterBackupSchedule> backupSchedules = default, ScheduledEventStrategy? scheduledEventStrategy = default, AzureConnectionType? azureConnectionMethod = default, ResourceIdentifier privateLinkResourceId = default)
         {
-            clientCertificates ??= new List<CassandraCertificate>();
-            externalGossipCertificates ??= new List<CassandraCertificate>();
-            gossipCertificates ??= new List<CassandraCertificate>();
-            externalSeedNodes ??= new List<CassandraDataCenterSeedNode>();
-            seedNodes ??= new List<CassandraDataCenterSeedNode>();
+            clientCertificates ??= new ChangeTrackingList<CassandraCertificate>();
+            externalGossipCertificates ??= new ChangeTrackingList<CassandraCertificate>();
+            gossipCertificates ??= new ChangeTrackingList<CassandraCertificate>();
+            externalSeedNodes ??= new ChangeTrackingList<SeedNode>();
+            seedNodes ??= new ChangeTrackingList<SeedNode>();
+            externalDataCenters ??= new ChangeTrackingList<string>();
+            extensions ??= new ChangeTrackingList<string>();
+            backupSchedules ??= new ChangeTrackingList<CassandraClusterBackupSchedule>();
 
-            return new CassandraClusterProperties(
+            return new ClusterResourceProperties(
                 provisioningState,
                 restoreFromBackupId,
                 delegatedManagementSubnetId,
@@ -1807,69 +3344,250 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 clusterNameOverride,
                 authenticationMethod,
                 initialCassandraAdminPassword,
-                prometheusEndpointIPAddress != null ? new CassandraDataCenterSeedNode(prometheusEndpointIPAddress, serializedAdditionalRawData: null) : null,
-                isRepairEnabled,
-                clientCertificates?.ToList(),
-                externalGossipCertificates?.ToList(),
-                gossipCertificates?.ToList(),
-                externalSeedNodes?.ToList(),
-                seedNodes?.ToList(),
+                prometheusEndpointIpAddress is null ? default : new SeedNode(prometheusEndpointIpAddress, null),
+                repairEnabled,
+                autoReplicate,
+                clientCertificates.ToList(),
+                externalGossipCertificates.ToList(),
+                gossipCertificates.ToList(),
+                externalSeedNodes.ToList(),
+                seedNodes.ToList(),
+                externalDataCenters.ToList(),
                 hoursBetweenBackups,
-                isDeallocated,
-                isCassandraAuditLoggingEnabled,
+                deallocated,
+                cassandraAuditLoggingEnabled,
+                clusterType,
                 provisionError,
+                extensions.ToList(),
+                backupSchedules.ToList(),
+                scheduledEventStrategy,
                 azureConnectionMethod,
                 privateLinkResourceId,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraCommandPostBody"/>. </summary>
+        /// <summary> Specification of which command to run where. </summary>
         /// <param name="command"> The command which should be run. </param>
         /// <param name="arguments"> The arguments for the command to be run. </param>
         /// <param name="host"> IP address of the cassandra host to run the command on. </param>
         /// <param name="cassandraStopStart"> If true, stops cassandra before executing the command and then start it again. </param>
-        /// <param name="allowWrite"> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </param>
-        /// <returns> A new <see cref="Models.CassandraCommandPostBody"/> instance for mocking. </returns>
-        public static CassandraCommandPostBody CassandraCommandPostBody(string command = null, IDictionary<string, string> arguments = null, string host = null, bool? cassandraStopStart = null, bool? allowWrite = null)
+        /// <param name="readwrite"> If true, allows the command to <i>write</i> to the cassandra directory, otherwise read-only. </param>
+        /// <returns> A new <see cref="Models.CommandPostBody"/> instance for mocking. </returns>
+        public static CommandPostBody CommandPostBody(string command = default, IDictionary<string, string> arguments = default, string host = default, bool? cassandraStopStart = default, bool? readwrite = default)
         {
-            arguments ??= new Dictionary<string, string>();
+            arguments ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CassandraCommandPostBody(
+            return new CommandPostBody(
                 command,
                 arguments,
                 host,
                 cassandraStopStart,
-                allowWrite,
-                serializedAdditionalRawData: null);
+                readwrite,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraCommandOutput"/>. </summary>
+        /// <summary> Response of /command api. </summary>
         /// <param name="commandOutput"> Output of the command. </param>
         /// <returns> A new <see cref="Models.CassandraCommandOutput"/> instance for mocking. </returns>
-        public static CassandraCommandOutput CassandraCommandOutput(string commandOutput = null)
+        public static CassandraCommandOutput CassandraCommandOutput(string commandOutput = default)
         {
-            return new CassandraCommandOutput(commandOutput, serializedAdditionalRawData: null);
+            return new CassandraCommandOutput(commandOutput, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CassandraDataCenterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of a managed Cassandra data center. </param>
-        /// <returns> A new <see cref="CosmosDB.CassandraDataCenterData"/> instance for mocking. </returns>
-        public static CassandraDataCenterData CassandraDataCenterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CassandraDataCenterProperties properties = null)
+        /// <summary> Specification of which command to run where. </summary>
+        /// <param name="command"> The command which should be run. </param>
+        /// <param name="arguments"> The arguments for the command to be run. </param>
+        /// <param name="host"> IP address of the cassandra host to run the command on. </param>
+        /// <param name="cassandraStopStart"> If true, stops cassandra before executing the command and then start it again. </param>
+        /// <param name="readWrite"> If true, allows the command to <i>write</i> to the cassandra directory, otherwise read-only. </param>
+        /// <returns> A new <see cref="Models.CommandAsyncPostBody"/> instance for mocking. </returns>
+        public static CommandAsyncPostBody CommandAsyncPostBody(string command = default, BinaryData arguments = default, string host = default, bool? cassandraStopStart = default, bool? readWrite = default)
         {
-            return new CassandraDataCenterData(
+            return new CommandAsyncPostBody(
+                command,
+                arguments,
+                host,
+                cassandraStopStart,
+                readWrite,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> resource representing a command. </summary>
+        /// <param name="command"> The command which should be run. </param>
+        /// <param name="commandId"> The unique id of command. </param>
+        /// <param name="arguments"> The arguments for the command to be run. </param>
+        /// <param name="host"> IP address of the cassandra host to run the command on. </param>
+        /// <param name="isAdmin"> Whether command has admin privileges. </param>
+        /// <param name="cassandraStopStart"> If true, stops cassandra before executing the command and then start it again. </param>
+        /// <param name="readWrite"> If true, allows the command to <i>write</i> to the cassandra directory, otherwise read-only. </param>
+        /// <param name="result"> Result output of the command. </param>
+        /// <param name="status"> Status of the command. </param>
+        /// <param name="outputFile"> The name of the file where the result is written. </param>
+        /// <returns> A new <see cref="Models.CommandPublicResource"/> instance for mocking. </returns>
+        public static CommandPublicResource CommandPublicResource(string command = default, string commandId = default, BinaryData arguments = default, string host = default, bool? isAdmin = default, bool? cassandraStopStart = default, bool? readWrite = default, string result = default, CommandStatus? status = default, string outputFile = default)
+        {
+            return new CommandPublicResource(
+                command,
+                commandId,
+                arguments,
+                host,
+                isAdmin,
+                cassandraStopStart,
+                readWrite,
+                result,
+                status,
+                outputFile,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A restorable backup of a Cassandra cluster. </summary>
+        /// <param name="backupId"> The unique identifier of backup. </param>
+        /// <param name="backupState"> The current state of the backup. </param>
+        /// <param name="backupStartTimestamp"> The time at which the backup process begins. </param>
+        /// <param name="backupStopTimestamp"> The time at which the backup process ends. </param>
+        /// <param name="backupExpiryTimestamp"> The time at which the backup will expire. </param>
+        /// <returns> A new <see cref="Models.CassandraClusterBackupResourceInfo"/> instance for mocking. </returns>
+        public static CassandraClusterBackupResourceInfo CassandraClusterBackupResourceInfo(string backupId = default, CassandraClusterBackupState? backupState = default, DateTimeOffset? backupStartTimestamp = default, DateTimeOffset? backupStopTimestamp = default, DateTimeOffset? backupExpiryTimestamp = default)
+        {
+            return new CassandraClusterBackupResourceInfo(
+                backupId,
+                backupState,
+                backupStartTimestamp,
+                backupStopTimestamp,
+                backupExpiryTimestamp,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="etag"></param>
+        /// <param name="reaperStatus"></param>
+        /// <param name="connectionErrors"> List relevant information about any connection errors to the Datacenters. </param>
+        /// <param name="errors"> List relevant information about any errors about cluster, data center and connection error. </param>
+        /// <param name="dataCenters"> List of the status of each datacenter in this cluster. </param>
+        /// <returns> A new <see cref="Models.CassandraClusterPublicStatus"/> instance for mocking. </returns>
+        public static CassandraClusterPublicStatus CassandraClusterPublicStatus(string etag = default, ManagedCassandraReaperStatus reaperStatus = default, IEnumerable<CassandraConnectionError> connectionErrors = default, IEnumerable<CassandraError> errors = default, IEnumerable<CassandraClusterPublicStatusDataCentersItem> dataCenters = default)
+        {
+            connectionErrors ??= new ChangeTrackingList<CassandraConnectionError>();
+            errors ??= new ChangeTrackingList<CassandraError>();
+            dataCenters ??= new ChangeTrackingList<CassandraClusterPublicStatusDataCentersItem>();
+
+            return new CassandraClusterPublicStatus(
+                etag,
+                reaperStatus,
+                connectionErrors.ToList(),
+                errors.ToList(),
+                dataCenters.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ManagedCassandraReaperStatus. </summary>
+        /// <param name="healthy"></param>
+        /// <param name="repairRunIds"> Dictionary of &lt;string&gt;. </param>
+        /// <param name="repairSchedules"> Dictionary of &lt;string&gt;. </param>
+        /// <returns> A new <see cref="Models.ManagedCassandraReaperStatus"/> instance for mocking. </returns>
+        public static ManagedCassandraReaperStatus ManagedCassandraReaperStatus(bool? healthy = default, IDictionary<string, string> repairRunIds = default, IDictionary<string, string> repairSchedules = default)
+        {
+            repairRunIds ??= new ChangeTrackingDictionary<string, string>();
+            repairSchedules ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ManagedCassandraReaperStatus(healthy, repairRunIds, repairSchedules, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CassandraConnectionError. </summary>
+        /// <param name="connectionState"> The kind of connection error that occurred. </param>
+        /// <param name="ipFrom"> The IP of host that originated the failed connection. </param>
+        /// <param name="ipTo"> The IP that the connection attempted to reach. </param>
+        /// <param name="port"> The TCP port the connection was attempted on. </param>
+        /// <param name="exception"> Detailed error message about the failed connection. </param>
+        /// <returns> A new <see cref="Models.CassandraConnectionError"/> instance for mocking. </returns>
+        public static CassandraConnectionError CassandraConnectionError(ConnectionState? connectionState = default, string ipFrom = default, string ipTo = default, int? port = default, string exception = default)
+        {
+            return new CassandraConnectionError(
+                connectionState,
+                ipFrom,
+                ipTo,
+                port,
+                exception,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CassandraClusterPublicStatusDataCentersItem. </summary>
+        /// <param name="name"> The name of this Datacenter. </param>
+        /// <param name="seedNodes"> A list of all seed nodes in the cluster, managed and unmanaged. </param>
+        /// <param name="nodes"></param>
+        /// <returns> A new <see cref="Models.CassandraClusterPublicStatusDataCentersItem"/> instance for mocking. </returns>
+        public static CassandraClusterPublicStatusDataCentersItem CassandraClusterPublicStatusDataCentersItem(string name = default, IEnumerable<string> seedNodes = default, IEnumerable<CassandraClusterDataCenterNodeItem> nodes = default)
+        {
+            seedNodes ??= new ChangeTrackingList<string>();
+            nodes ??= new ChangeTrackingList<CassandraClusterDataCenterNodeItem>();
+
+            return new CassandraClusterPublicStatusDataCentersItem(name, seedNodes.ToList(), nodes.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CassandraClusterDataCenterNodeItem. </summary>
+        /// <param name="address"> The node's IP address. </param>
+        /// <param name="state"> The state of the node in Cassandra ring. </param>
+        /// <param name="status"></param>
+        /// <param name="cassandraProcessStatus"> Cassandra service status on this node. </param>
+        /// <param name="load"> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </param>
+        /// <param name="tokens"> List of tokens this node covers. </param>
+        /// <param name="size"></param>
+        /// <param name="hostID"> The network ID of the node. </param>
+        /// <param name="rack"> The rack this node is part of. </param>
+        /// <param name="timestamp"> The timestamp when these statistics were captured. </param>
+        /// <param name="diskUsedKB"> The amount of disk used, in kB, of the directory /var/lib/cassandra. </param>
+        /// <param name="diskFreeKB"> The amount of disk free, in kB, of the directory /var/lib/cassandra. </param>
+        /// <param name="memoryUsedKB"> Used memory (calculated as total - free - buffers - cache), in kB. </param>
+        /// <param name="memoryBuffersAndCachedKB"> Memory used by kernel buffers (Buffers in /proc/meminfo) and page cache and slabs (Cached and SReclaimable in /proc/meminfo), in kB. </param>
+        /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
+        /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
+        /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
+        /// <param name="isLatestModel"> If node has been updated to latest model. </param>
+        /// <returns> A new <see cref="Models.CassandraClusterDataCenterNodeItem"/> instance for mocking. </returns>
+        public static CassandraClusterDataCenterNodeItem CassandraClusterDataCenterNodeItem(string address = default, CassandraNodeState? state = default, string status = default, string cassandraProcessStatus = default, string load = default, IEnumerable<string> tokens = default, int? size = default, string hostID = default, string rack = default, string timestamp = default, long? diskUsedKB = default, long? diskFreeKB = default, long? memoryUsedKB = default, long? memoryBuffersAndCachedKB = default, long? memoryFreeKB = default, long? memoryTotalKB = default, double? cpuUsage = default, bool? isLatestModel = default)
+        {
+            tokens ??= new ChangeTrackingList<string>();
+
+            return new CassandraClusterDataCenterNodeItem(
+                address,
+                state,
+                status,
+                cassandraProcessStatus,
+                load,
+                tokens.ToList(),
+                size,
+                hostID,
+                rack,
+                timestamp,
+                diskUsedKB,
+                diskFreeKB,
+                memoryUsedKB,
+                memoryBuffersAndCachedKB,
+                memoryFreeKB,
+                memoryTotalKB,
+                cpuUsage,
+                isLatestModel,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A managed Cassandra data center. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of a managed Cassandra data center. </param>
+        /// <returns> A new <see cref="CosmosDB.DataCenterResourceData"/> instance for mocking. </returns>
+        public static DataCenterResourceData DataCenterResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataCenterResourceProperties properties = default)
+        {
+            return new DataCenterResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraDataCenterProperties"/>. </summary>
+        /// <summary> Properties of a managed Cassandra data center. </summary>
         /// <param name="provisioningState"> The status of the resource at the time the operation was called. </param>
         /// <param name="dataCenterLocation"> The region this data center should be created in. </param>
         /// <param name="delegatedSubnetId"> Resource id of a subnet the nodes in this data center should have their network interfaces connected to. The subnet must be in the same region specified in 'dataCenterLocation' and must be able to route to the subnet specified in the cluster's 'delegatedManagementSubnetId' property. This resource id will be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </param>
@@ -1881,100 +3599,890 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="sku"> Virtual Machine SKU used for data centers. Default value is Standard_DS14_v2. </param>
         /// <param name="diskSku"> Disk SKU used for data centers. Default value is P30. </param>
         /// <param name="diskCapacity"> Number of disks attached to each node. Default is 4. </param>
-        /// <param name="doesSupportAvailabilityZone"> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
+        /// <param name="availabilityZone"> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
         /// <param name="authenticationMethodLdapProperties"> Ldap authentication method properties. This feature is in preview. </param>
         /// <param name="deallocated"> Whether the data center has been deallocated. </param>
         /// <param name="provisionError"> Error related to resource provisioning. </param>
-        /// <param name="privateEndpointIPAddress"> Ip of the VPN Endpoint for this data center. </param>
-        /// <returns> A new <see cref="Models.CassandraDataCenterProperties"/> instance for mocking. </returns>
-        public static CassandraDataCenterProperties CassandraDataCenterProperties(CassandraProvisioningState? provisioningState = null, AzureLocation? dataCenterLocation = null, ResourceIdentifier delegatedSubnetId = null, int? nodeCount = null, IEnumerable<CassandraDataCenterSeedNode> seedNodes = null, string base64EncodedCassandraYamlFragment = null, Uri managedDiskCustomerKeyUri = null, Uri backupStorageCustomerKeyUri = null, string sku = null, string diskSku = null, int? diskCapacity = null, bool? doesSupportAvailabilityZone = null, AuthenticationMethodLdapProperties authenticationMethodLdapProperties = null, bool? deallocated = null, CassandraError provisionError = null, string privateEndpointIPAddress = null)
+        /// <param name="privateEndpointIpAddress"> Ip of the VPN Endpoint for this data center. </param>
+        /// <returns> A new <see cref="Models.DataCenterResourceProperties"/> instance for mocking. </returns>
+        public static DataCenterResourceProperties DataCenterResourceProperties(ManagedCassandraProvisioningState? provisioningState = default, string dataCenterLocation = default, string delegatedSubnetId = default, int? nodeCount = default, IEnumerable<SeedNode> seedNodes = default, string base64EncodedCassandraYamlFragment = default, string managedDiskCustomerKeyUri = default, string backupStorageCustomerKeyUri = default, string sku = default, string diskSku = default, int? diskCapacity = default, bool? availabilityZone = default, AuthenticationMethodLdapProperties authenticationMethodLdapProperties = default, bool? deallocated = default, CassandraError provisionError = default, string privateEndpointIpAddress = default)
         {
-            seedNodes ??= new List<CassandraDataCenterSeedNode>();
+            seedNodes ??= new ChangeTrackingList<SeedNode>();
 
-            return new CassandraDataCenterProperties(
+            return new DataCenterResourceProperties(
                 provisioningState,
                 dataCenterLocation,
                 delegatedSubnetId,
                 nodeCount,
-                seedNodes?.ToList(),
+                seedNodes.ToList(),
                 base64EncodedCassandraYamlFragment,
                 managedDiskCustomerKeyUri,
                 backupStorageCustomerKeyUri,
                 sku,
                 diskSku,
                 diskCapacity,
-                doesSupportAvailabilityZone,
+                availabilityZone,
                 authenticationMethodLdapProperties,
                 deallocated,
                 provisionError,
-                privateEndpointIPAddress,
-                serializedAdditionalRawData: null);
+                privateEndpointIpAddress,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterPublicStatus"/>. </summary>
-        /// <param name="etag"></param>
-        /// <param name="reaperStatus"></param>
-        /// <param name="connectionErrors"> List relevant information about any connection errors to the Datacenters. </param>
-        /// <param name="errors"> List relevant information about any errors about cluster, data center and connection error. </param>
-        /// <param name="dataCenters"> List of the status of each datacenter in this cluster. </param>
-        /// <returns> A new <see cref="Models.CassandraClusterPublicStatus"/> instance for mocking. </returns>
-        public static CassandraClusterPublicStatus CassandraClusterPublicStatus(ETag? etag = null, CassandraReaperStatus reaperStatus = null, IEnumerable<CassandraConnectionError> connectionErrors = null, IEnumerable<CassandraError> errors = null, IEnumerable<CassandraClusterPublicStatusDataCentersItem> dataCenters = null)
+        /// <summary> Ldap authentication method properties. This feature is in preview. </summary>
+        /// <param name="serverHostname"> Hostname of the LDAP server. </param>
+        /// <param name="serverPort"> Port of the LDAP server. </param>
+        /// <param name="serviceUserDistinguishedName"> Distinguished name of the look up user account, who can look up user details on authentication. </param>
+        /// <param name="serviceUserPassword"> Password of the look up user. </param>
+        /// <param name="searchBaseDistinguishedName"> Distinguished name of the object to start the recursive search of users from. </param>
+        /// <param name="searchFilterTemplate"> Template to use for searching. Defaults to (cn=%s) where %s will be replaced by the username used to login. </param>
+        /// <param name="serverCertificates"></param>
+        /// <param name="connectionTimeoutInMs"> Timeout for connecting to the LDAP server in miliseconds. The default is 5000 ms. </param>
+        /// <returns> A new <see cref="Models.AuthenticationMethodLdapProperties"/> instance for mocking. </returns>
+        public static AuthenticationMethodLdapProperties AuthenticationMethodLdapProperties(string serverHostname = default, int? serverPort = default, string serviceUserDistinguishedName = default, string serviceUserPassword = default, string searchBaseDistinguishedName = default, string searchFilterTemplate = default, IEnumerable<CassandraCertificate> serverCertificates = default, int? connectionTimeoutInMs = default)
         {
-            connectionErrors ??= new List<CassandraConnectionError>();
-            errors ??= new List<CassandraError>();
-            dataCenters ??= new List<CassandraClusterPublicStatusDataCentersItem>();
+            serverCertificates ??= new ChangeTrackingList<CassandraCertificate>();
 
-            return new CassandraClusterPublicStatus(
+            return new AuthenticationMethodLdapProperties(
+                serverHostname,
+                serverPort,
+                serviceUserDistinguishedName,
+                serviceUserPassword,
+                searchBaseDistinguishedName,
+                searchFilterTemplate,
+                serverCertificates.ToList(),
+                connectionTimeoutInMs,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="accountName"> The name of the global database account. </param>
+        /// <param name="createdOn"> The creation time of the restorable database account (ISO-8601 format). </param>
+        /// <param name="oldestRestorableOn"> The least recent time at which the database account can be restored to (ISO-8601 format). </param>
+        /// <param name="deletedOn"> The time at which the restorable database account has been deleted (ISO-8601 format). </param>
+        /// <param name="apiType"> The API type of the restorable database account. </param>
+        /// <param name="restorableLocations"> List of regions where the of the database account can be restored from. </param>
+        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
+        /// <returns> A new <see cref="CosmosDB.RestorableDatabaseAccountGetResultData"/> instance for mocking. </returns>
+        public static RestorableDatabaseAccountGetResultData RestorableDatabaseAccountGetResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string accountName = default, DateTimeOffset? createdOn = default, DateTimeOffset? oldestRestorableOn = default, DateTimeOffset? deletedOn = default, CosmosDBApiType? apiType = default, IEnumerable<RestorableLocationResource> restorableLocations = default, string location = default)
+        {
+            return new RestorableDatabaseAccountGetResultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                accountName is null && createdOn is null && oldestRestorableOn is null && deletedOn is null && apiType is null && restorableLocations is null ? default : new RestorableDatabaseAccountProperties(
+                    accountName,
+                    createdOn,
+                    oldestRestorableOn,
+                    deletedOn,
+                    apiType,
+                    (restorableLocations ?? new ChangeTrackingList<RestorableLocationResource>()).ToList(),
+                    null),
+                location);
+        }
+
+        /// <summary> Properties of the regional restorable account. </summary>
+        /// <param name="locationName"> The location of the regional restorable account. </param>
+        /// <param name="regionalDatabaseAccountInstanceId"> The instance id of the regional restorable account. </param>
+        /// <param name="createdOn"> The creation time of the regional restorable database account (ISO-8601 format). </param>
+        /// <param name="deletedOn"> The time at which the regional restorable database account has been deleted (ISO-8601 format). </param>
+        /// <returns> A new <see cref="Models.RestorableLocationResource"/> instance for mocking. </returns>
+        public static RestorableLocationResource RestorableLocationResource(string locationName = default, string regionalDatabaseAccountInstanceId = default, DateTimeOffset? createdOn = default, DateTimeOffset? deletedOn = default)
+        {
+            return new RestorableLocationResource(locationName, regionalDatabaseAccountInstanceId, createdOn, deletedOn, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="resource"> The resource of an Azure Cosmos DB SQL database event. </param>
+        /// <param name="id"> The unique resource Identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <returns> A new <see cref="Models.RestorableSqlDatabaseGetResult"/> instance for mocking. </returns>
+        public static RestorableSqlDatabaseGetResult RestorableSqlDatabaseGetResult(RestorableSqlDatabasePropertiesResource resource = default, string id = default, string name = default, string @type = default)
+        {
+            return new RestorableSqlDatabaseGetResult(resource is null ? default : new RestorableSqlDatabaseProperties(resource, null), id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The resource of an Azure Cosmos DB SQL database event. </summary>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="operationType"> The operation type of this database event. </param>
+        /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
+        /// <param name="eventTimestamp"> The time when this database event happened. </param>
+        /// <param name="ownerId"> The name of the SQL database. </param>
+        /// <param name="ownerResourceId"> The resource ID of the SQL database. </param>
+        /// <param name="database"> Cosmos DB SQL database resource object. </param>
+        /// <returns> A new <see cref="Models.RestorableSqlDatabasePropertiesResource"/> instance for mocking. </returns>
+        public static RestorableSqlDatabasePropertiesResource RestorableSqlDatabasePropertiesResource(string rid = default, CosmosDBOperationType? operationType = default, string canUndelete = default, string canUndeleteReason = default, string eventTimestamp = default, string ownerId = default, string ownerResourceId = default, RestorableSqlDatabasePropertiesResourceDatabase database = default)
+        {
+            return new RestorableSqlDatabasePropertiesResource(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                database,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Name of the Cosmos DB SQL database. </param>
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
+        /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>
+        /// <param name="self"> A system generated property that specifies the addressable path of the database resource. </param>
+        /// <returns> A new <see cref="Models.RestorableSqlDatabasePropertiesResourceDatabase"/> instance for mocking. </returns>
+        public static RestorableSqlDatabasePropertiesResourceDatabase RestorableSqlDatabasePropertiesResourceDatabase(string id = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, string rid = default, float? ts = default, string etag = default, string colls = default, string users = default, string self = default)
+        {
+            return new RestorableSqlDatabasePropertiesResourceDatabase(
+                id,
+                restoreParameters,
+                createMode,
+                additionalBinaryDataProperties: null,
+                rid,
+                ts,
                 etag,
-                reaperStatus,
-                connectionErrors?.ToList(),
-                errors?.ToList(),
-                dataCenters?.ToList(),
-                serializedAdditionalRawData: null);
+                colls,
+                users,
+                self);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraReaperStatus"/>. </summary>
-        /// <param name="isHealthy"></param>
-        /// <param name="repairRunIds"> Dictionary of &lt;string&gt;. </param>
-        /// <param name="repairSchedules"> Dictionary of &lt;string&gt;. </param>
-        /// <returns> A new <see cref="Models.CassandraReaperStatus"/> instance for mocking. </returns>
-        public static CassandraReaperStatus CassandraReaperStatus(bool? isHealthy = null, IReadOnlyDictionary<string, string> repairRunIds = null, IReadOnlyDictionary<string, string> repairSchedules = null)
+        /// <param name="resource"> The resource of an Azure Cosmos DB SQL container event. </param>
+        /// <param name="id"> The unique resource Identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <returns> A new <see cref="Models.RestorableSqlContainerGetResult"/> instance for mocking. </returns>
+        public static RestorableSqlContainerGetResult RestorableSqlContainerGetResult(RestorableSqlContainerPropertiesResource resource = default, string id = default, string name = default, string @type = default)
         {
-            repairRunIds ??= new Dictionary<string, string>();
-            repairSchedules ??= new Dictionary<string, string>();
-
-            return new CassandraReaperStatus(isHealthy, repairRunIds, repairSchedules, serializedAdditionalRawData: null);
+            return new RestorableSqlContainerGetResult(resource is null ? default : new RestorableSqlContainerProperties(resource, null), id, name, @type, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraConnectionError"/>. </summary>
-        /// <param name="connectionState"> The kind of connection error that occurred. </param>
-        /// <param name="ipFrom"> The IP of host that originated the failed connection. </param>
-        /// <param name="ipTo"> The IP that the connection attempted to reach. </param>
-        /// <param name="port"> The TCP port the connection was attempted on. </param>
-        /// <param name="exception"> Detailed error message about the failed connection. </param>
-        /// <returns> A new <see cref="Models.CassandraConnectionError"/> instance for mocking. </returns>
-        public static CassandraConnectionError CassandraConnectionError(CassandraConnectionState? connectionState = null, string ipFrom = null, string ipTo = null, int? port = null, string exception = null)
+        /// <summary> The resource of an Azure Cosmos DB SQL container event. </summary>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="operationType"> The operation type of this container event. </param>
+        /// <param name="canUndelete"> A state of this container to identify if this container is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this container can not be restored in same account. </param>
+        /// <param name="eventTimestamp"> The when this container event happened. </param>
+        /// <param name="ownerId"> The name of this SQL container. </param>
+        /// <param name="ownerResourceId"> The resource ID of this SQL container. </param>
+        /// <param name="container"> Cosmos DB SQL container resource object. </param>
+        /// <returns> A new <see cref="Models.RestorableSqlContainerPropertiesResource"/> instance for mocking. </returns>
+        public static RestorableSqlContainerPropertiesResource RestorableSqlContainerPropertiesResource(string rid = default, CosmosDBOperationType? operationType = default, string canUndelete = default, string canUndeleteReason = default, string eventTimestamp = default, string ownerId = default, string ownerResourceId = default, RestorableSqlContainerPropertiesResourceContainer container = default)
         {
-            return new CassandraConnectionError(
-                connectionState,
-                ipFrom,
-                ipTo,
-                port,
-                exception,
-                serializedAdditionalRawData: null);
+            return new RestorableSqlContainerPropertiesResource(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                container,
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterPublicStatusDataCentersItem"/>. </summary>
-        /// <param name="name"> The name of this Datacenter. </param>
-        /// <param name="seedNodes"> A list of all seed nodes in the cluster, managed and unmanaged. </param>
-        /// <param name="nodes"></param>
-        /// <returns> A new <see cref="Models.CassandraClusterPublicStatusDataCentersItem"/> instance for mocking. </returns>
-        public static CassandraClusterPublicStatusDataCentersItem CassandraClusterPublicStatusDataCentersItem(string name = null, IEnumerable<string> seedNodes = null, IEnumerable<CassandraClusterDataCenterNodeItem> nodes = null)
+        /// <param name="id"> Name of the Cosmos DB SQL container. </param>
+        /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </param>
+        /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
+        /// <param name="defaultTtl"> Default time to live. </param>
+        /// <param name="uniqueKeys"> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </param>
+        /// <param name="conflictResolutionPolicy"> The conflict resolution policy for the container. </param>
+        /// <param name="clientEncryptionPolicy"> The client encryption policy for the container. </param>
+        /// <param name="analyticalStorageTtl"> Analytical TTL. </param>
+        /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
+        /// <param name="createMode"> Enum to indicate the mode of account creation. </param>
+        /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
+        /// <param name="materializedViews"> Materialized Views defined on the container. </param>
+        /// <param name="materializedViewsThroughputBucketForBuild"> Throughput bucket assigned for the materialized view operations on source container. </param>
+        /// <param name="computedProperties"> List of computed properties. </param>
+        /// <param name="vectorEmbeddings"> List of vector embeddings. </param>
+        /// <param name="fullTextPolicy"> The FullText policy for the container. </param>
+        /// <param name="dataMaskingPolicy"> The Data Masking policy for the container. </param>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="ts"> A system generated property that denotes the last updated timestamp of the resource. </param>
+        /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
+        /// <param name="self"> A system generated property that specifies the addressable path of the container resource. </param>
+        /// <returns> A new <see cref="Models.RestorableSqlContainerPropertiesResourceContainer"/> instance for mocking. </returns>
+        public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string id = default, CosmosDBIndexingPolicy indexingPolicy = default, CosmosDBContainerPartitionKey partitionKey = default, int? defaultTtl = default, IEnumerable<CosmosDBUniqueKey> uniqueKeys = default, ConflictResolutionPolicy conflictResolutionPolicy = default, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = default, long? analyticalStorageTtl = default, ResourceRestoreParameters restoreParameters = default, CosmosDBAccountCreateMode? createMode = default, MaterializedViewDefinition materializedViewDefinition = default, IEnumerable<MaterializedViewDetails> materializedViews = default, int? materializedViewsThroughputBucketForBuild = default, IEnumerable<ComputedProperty> computedProperties = default, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings = default, FullTextPolicy fullTextPolicy = default, DataMaskingPolicy dataMaskingPolicy = default, string rid = default, float? ts = default, string etag = default, string self = default)
         {
-            seedNodes ??= new List<string>();
-            nodes ??= new List<CassandraClusterDataCenterNodeItem>();
+            materializedViews ??= new ChangeTrackingList<MaterializedViewDetails>();
+            computedProperties ??= new ChangeTrackingList<ComputedProperty>();
 
-            return new CassandraClusterPublicStatusDataCentersItem(name, seedNodes?.ToList(), nodes?.ToList(), serializedAdditionalRawData: null);
+            return new RestorableSqlContainerPropertiesResourceContainer(
+                id,
+                indexingPolicy,
+                partitionKey,
+                defaultTtl,
+                uniqueKeys is null ? default : new CosmosDBUniqueKeyPolicy((uniqueKeys ?? new ChangeTrackingList<CosmosDBUniqueKey>()).ToList(), null),
+                conflictResolutionPolicy,
+                clientEncryptionPolicy,
+                analyticalStorageTtl,
+                restoreParameters,
+                createMode,
+                materializedViewDefinition,
+                materializedViews.ToList(),
+                materializedViewsThroughputBucketForBuild is null ? default : new MaterializedViewsProperties(materializedViewsThroughputBucketForBuild, null),
+                computedProperties.ToList(),
+                vectorEmbeddings is null ? default : new VectorEmbeddingPolicy((vectorEmbeddings ?? new ChangeTrackingList<CosmosDBVectorEmbedding>()).ToList(), null),
+                fullTextPolicy,
+                dataMaskingPolicy,
+                additionalBinaryDataProperties: null,
+                rid,
+                ts,
+                etag,
+                self);
+        }
+
+        /// <summary> Specific Databases to restore. </summary>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="databaseName"> The name of the database available for restore. </param>
+        /// <param name="collectionNames"> The names of the collections available for restore. </param>
+        /// <returns> A new <see cref="Models.RestorableSqlResourceData"/> instance for mocking. </returns>
+        public static RestorableSqlResourceData RestorableSqlResourceData(string id = default, string name = default, string @type = default, string databaseName = default, IEnumerable<string> collectionNames = default)
+        {
+            collectionNames ??= new ChangeTrackingList<string>();
+
+            return new RestorableSqlResourceData(
+                id,
+                name,
+                @type,
+                databaseName,
+                collectionNames.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="resource"> The resource of an Azure Cosmos DB MongoDB database event. </param>
+        /// <param name="id"> The unique resource Identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <returns> A new <see cref="Models.RestorableMongodbDatabaseGetResult"/> instance for mocking. </returns>
+        public static RestorableMongodbDatabaseGetResult RestorableMongodbDatabaseGetResult(RestorableMongodbDatabasePropertiesResource resource = default, string id = default, string name = default, string @type = default)
+        {
+            return new RestorableMongodbDatabaseGetResult(resource is null ? default : new RestorableMongodbDatabaseProperties(resource, null), id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The resource of an Azure Cosmos DB MongoDB database event. </summary>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="operationType"> The operation type of this database event. </param>
+        /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
+        /// <param name="eventTimestamp"> The time when this database event happened. </param>
+        /// <param name="ownerId"> The name of this MongoDB database. </param>
+        /// <param name="ownerResourceId"> The resource ID of this MongoDB database. </param>
+        /// <returns> A new <see cref="Models.RestorableMongodbDatabasePropertiesResource"/> instance for mocking. </returns>
+        public static RestorableMongodbDatabasePropertiesResource RestorableMongodbDatabasePropertiesResource(string rid = default, CosmosDBOperationType? operationType = default, string canUndelete = default, string canUndeleteReason = default, string eventTimestamp = default, string ownerId = default, string ownerResourceId = default)
+        {
+            return new RestorableMongodbDatabasePropertiesResource(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="resource"> The resource of an Azure Cosmos DB MongoDB collection event. </param>
+        /// <param name="id"> The unique resource Identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <returns> A new <see cref="Models.RestorableMongoDBCollection"/> instance for mocking. </returns>
+        public static RestorableMongoDBCollection RestorableMongoDBCollection(ExtendedRestorableMongoDBCollectionResourceInfo resource = default, string id = default, string name = default, string @type = default)
+        {
+            return new RestorableMongoDBCollection(resource is null ? default : new RestorableMongodbCollectionProperties(resource, null), id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The resource of an Azure Cosmos DB MongoDB collection event. </summary>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="operationType"> The operation type of this collection event. </param>
+        /// <param name="canUndelete"> A state of this collection to identify if this container is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this collection can not be restored in same account. </param>
+        /// <param name="eventTimestamp"> The time when this collection event happened. </param>
+        /// <param name="ownerId"> The name of this MongoDB collection. </param>
+        /// <param name="ownerResourceId"> The resource ID of this MongoDB collection. </param>
+        /// <returns> A new <see cref="Models.ExtendedRestorableMongoDBCollectionResourceInfo"/> instance for mocking. </returns>
+        public static ExtendedRestorableMongoDBCollectionResourceInfo ExtendedRestorableMongoDBCollectionResourceInfo(string rid = default, CosmosDBOperationType? operationType = default, string canUndelete = default, string canUndeleteReason = default, string eventTimestamp = default, string ownerId = default, string ownerResourceId = default)
+        {
+            return new ExtendedRestorableMongoDBCollectionResourceInfo(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specific Databases to restore. </summary>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="databaseName"> The name of the database available for restore. </param>
+        /// <param name="collectionNames"> The names of the collections available for restore. </param>
+        /// <returns> A new <see cref="Models.RestorableMongoDBResourceData"/> instance for mocking. </returns>
+        public static RestorableMongoDBResourceData RestorableMongoDBResourceData(string id = default, string name = default, string @type = default, string databaseName = default, IEnumerable<string> collectionNames = default)
+        {
+            collectionNames ??= new ChangeTrackingList<string>();
+
+            return new RestorableMongoDBResourceData(
+                id,
+                name,
+                @type,
+                databaseName,
+                collectionNames.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="resource"> The resource of an Azure Cosmos DB Gremlin database event. </param>
+        /// <param name="id"> The unique resource Identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <returns> A new <see cref="Models.RestorableGremlinDatabaseGetResult"/> instance for mocking. </returns>
+        public static RestorableGremlinDatabaseGetResult RestorableGremlinDatabaseGetResult(RestorableGremlinDatabasePropertiesResource resource = default, string id = default, string name = default, string @type = default)
+        {
+            return new RestorableGremlinDatabaseGetResult(resource is null ? default : new RestorableGremlinDatabaseProperties(resource, null), id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The resource of an Azure Cosmos DB Gremlin database event. </summary>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="operationType"> The operation type of this database event. </param>
+        /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
+        /// <param name="eventTimestamp"> The time when this database event happened. </param>
+        /// <param name="ownerId"> The name of this Gremlin database. </param>
+        /// <param name="ownerResourceId"> The resource ID of this Gremlin database. </param>
+        /// <returns> A new <see cref="Models.RestorableGremlinDatabasePropertiesResource"/> instance for mocking. </returns>
+        public static RestorableGremlinDatabasePropertiesResource RestorableGremlinDatabasePropertiesResource(string rid = default, CosmosDBOperationType? operationType = default, string canUndelete = default, string canUndeleteReason = default, string eventTimestamp = default, string ownerId = default, string ownerResourceId = default)
+        {
+            return new RestorableGremlinDatabasePropertiesResource(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="resource"> The resource of an Azure Cosmos DB Gremlin graph event. </param>
+        /// <param name="id"> The unique resource Identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <returns> A new <see cref="Models.RestorableGremlinGraphGetResult"/> instance for mocking. </returns>
+        public static RestorableGremlinGraphGetResult RestorableGremlinGraphGetResult(RestorableGremlinGraphPropertiesResource resource = default, string id = default, string name = default, string @type = default)
+        {
+            return new RestorableGremlinGraphGetResult(resource is null ? default : new RestorableGremlinGraphProperties(resource, null), id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The resource of an Azure Cosmos DB Gremlin graph event. </summary>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="operationType"> The operation type of this graph event. </param>
+        /// <param name="canUndelete"> A state of this graph to identify if this graph is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this graph can not be restored in same account. </param>
+        /// <param name="eventTimestamp"> The time when this graph event happened. </param>
+        /// <param name="ownerId"> The name of this Gremlin graph. </param>
+        /// <param name="ownerResourceId"> The resource ID of this Gremlin graph. </param>
+        /// <returns> A new <see cref="Models.RestorableGremlinGraphPropertiesResource"/> instance for mocking. </returns>
+        public static RestorableGremlinGraphPropertiesResource RestorableGremlinGraphPropertiesResource(string rid = default, CosmosDBOperationType? operationType = default, string canUndelete = default, string canUndeleteReason = default, string eventTimestamp = default, string ownerId = default, string ownerResourceId = default)
+        {
+            return new RestorableGremlinGraphPropertiesResource(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specific Databases to restore. </summary>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <param name="databaseName"> The name of the gremlin database available for restore. </param>
+        /// <param name="graphNames"> The names of the graphs available for restore. </param>
+        /// <returns> A new <see cref="Models.RestorableGremlinResourcesGetResult"/> instance for mocking. </returns>
+        public static RestorableGremlinResourcesGetResult RestorableGremlinResourcesGetResult(string id = default, string name = default, string @type = default, string databaseName = default, IEnumerable<string> graphNames = default)
+        {
+            graphNames ??= new ChangeTrackingList<string>();
+
+            return new RestorableGremlinResourcesGetResult(
+                id,
+                name,
+                @type,
+                databaseName,
+                graphNames.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="resource"> The resource of an Azure Cosmos DB Table event. </param>
+        /// <param name="id"> The unique resource Identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <returns> A new <see cref="Models.RestorableTableGetResult"/> instance for mocking. </returns>
+        public static RestorableTableGetResult RestorableTableGetResult(RestorableTablePropertiesResource resource = default, string id = default, string name = default, string @type = default)
+        {
+            return new RestorableTableGetResult(resource is null ? default : new RestorableTableProperties(resource, null), id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The resource of an Azure Cosmos DB Table event. </summary>
+        /// <param name="rid"> A system generated property. A unique identifier. </param>
+        /// <param name="operationType"> The operation type of this table event. </param>
+        /// <param name="canUndelete"> A state of this table to identify if this table is restorable in same account. </param>
+        /// <param name="canUndeleteReason"> The reason why this table can not be restored in same account. </param>
+        /// <param name="eventTimestamp"> The time when this table event happened. </param>
+        /// <param name="ownerId"> The name of this Table. </param>
+        /// <param name="ownerResourceId"> The resource ID of this Table. </param>
+        /// <returns> A new <see cref="Models.RestorableTablePropertiesResource"/> instance for mocking. </returns>
+        public static RestorableTablePropertiesResource RestorableTablePropertiesResource(string rid = default, CosmosDBOperationType? operationType = default, string canUndelete = default, string canUndeleteReason = default, string eventTimestamp = default, string ownerId = default, string ownerResourceId = default)
+        {
+            return new RestorableTablePropertiesResource(
+                rid,
+                operationType,
+                canUndelete,
+                canUndeleteReason,
+                eventTimestamp,
+                ownerId,
+                ownerResourceId,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specific Databases to restore. </summary>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the Table. </param>
+        /// <param name="type"> The type of Azure resource. </param>
+        /// <returns> A new <see cref="Models.RestorableTableResourcesGetResult"/> instance for mocking. </returns>
+        public static RestorableTableResourcesGetResult RestorableTableResourcesGetResult(string id = default, string name = default, string @type = default)
+        {
+            return new RestorableTableResourcesGetResult(id, name, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for the database account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Services response resource. </param>
+        /// <returns> A new <see cref="CosmosDB.ServiceResourceData"/> instance for mocking. </returns>
+        public static ServiceResourceData ServiceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceResourceProperties properties = default)
+        {
+            return new ServiceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary>
+        /// Services response resource.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataTransferServiceResourceProperties"/>, <see cref="Models.SqlDedicatedGatewayServiceResourceProperties"/>, <see cref="Models.GraphAPIComputeServiceResourceProperties"/>, and <see cref="Models.MaterializedViewsBuilderServiceResourceProperties"/>.
+        /// </summary>
+        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
+        /// <param name="instanceSize"> Instance type for the service. </param>
+        /// <param name="instanceCount"> Instance count for the service. </param>
+        /// <param name="serviceType"> ServiceType for the service. </param>
+        /// <param name="status"> Describes the status of a service. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.ServiceResourceProperties"/> instance for mocking. </returns>
+        public static ServiceResourceProperties ServiceResourceProperties(DateTimeOffset? createdOn = default, CosmosDBServiceSize? instanceSize = default, int? instanceCount = default, string serviceType = default, ServiceStatus? status = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new UnknownServiceResourceProperties(
+                createdOn,
+                instanceSize,
+                instanceCount,
+                new CosmosDBServiceType(serviceType),
+                status,
+                additionalProperties);
+        }
+
+        /// <summary> Properties for DataTransferServiceResource. </summary>
+        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
+        /// <param name="instanceSize"> Instance type for the service. </param>
+        /// <param name="instanceCount"> Instance count for the service. </param>
+        /// <param name="status"> Describes the status of a service. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="locations"> An array that contains all of the locations for the service. </param>
+        /// <returns> A new <see cref="Models.DataTransferServiceResourceProperties"/> instance for mocking. </returns>
+        public static DataTransferServiceResourceProperties DataTransferServiceResourceProperties(DateTimeOffset? createdOn = default, CosmosDBServiceSize? instanceSize = default, int? instanceCount = default, ServiceStatus? status = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default, IEnumerable<DataTransferRegionalServiceResource> locations = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            locations ??= new ChangeTrackingList<DataTransferRegionalServiceResource>();
+
+            return new DataTransferServiceResourceProperties(
+                createdOn,
+                instanceSize,
+                instanceCount,
+                CosmosDBServiceType.DataTransfer,
+                status,
+                additionalProperties,
+                locations.ToList());
+        }
+
+        /// <summary> Resource for a regional service location. </summary>
+        /// <param name="name"> The regional service name. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="status"> Describes the status of a service. </param>
+        /// <returns> A new <see cref="Models.DataTransferRegionalServiceResource"/> instance for mocking. </returns>
+        public static DataTransferRegionalServiceResource DataTransferRegionalServiceResource(string name = default, string location = default, ServiceStatus? status = default)
+        {
+            return new DataTransferRegionalServiceResource(name, location, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Resource for a regional service location. </summary>
+        /// <param name="name"> The regional service name. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="status"> Describes the status of a service. </param>
+        /// <returns> A new <see cref="Models.RegionalServiceResource"/> instance for mocking. </returns>
+        public static RegionalServiceResource RegionalServiceResource(string name = default, string location = default, ServiceStatus? status = default)
+        {
+            return new RegionalServiceResource(name, location, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties for SqlDedicatedGatewayServiceResource. </summary>
+        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
+        /// <param name="instanceSize"> Instance type for the service. </param>
+        /// <param name="instanceCount"> Instance count for the service. </param>
+        /// <param name="status"> Describes the status of a service. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="sqlDedicatedGatewayEndpoint"> SqlDedicatedGateway endpoint for the service. </param>
+        /// <param name="dedicatedGatewayType"> DedicatedGatewayType for the service. </param>
+        /// <param name="locations"> An array that contains all of the locations for the service. </param>
+        /// <returns> A new <see cref="Models.SqlDedicatedGatewayServiceResourceProperties"/> instance for mocking. </returns>
+        public static SqlDedicatedGatewayServiceResourceProperties SqlDedicatedGatewayServiceResourceProperties(DateTimeOffset? createdOn = default, CosmosDBServiceSize? instanceSize = default, int? instanceCount = default, ServiceStatus? status = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default, string sqlDedicatedGatewayEndpoint = default, DedicatedGatewayType? dedicatedGatewayType = default, IEnumerable<SqlDedicatedGatewayRegionalServiceResource> locations = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            locations ??= new ChangeTrackingList<SqlDedicatedGatewayRegionalServiceResource>();
+
+            return new SqlDedicatedGatewayServiceResourceProperties(
+                createdOn,
+                instanceSize,
+                instanceCount,
+                CosmosDBServiceType.SqlDedicatedGateway,
+                status,
+                additionalProperties,
+                sqlDedicatedGatewayEndpoint,
+                dedicatedGatewayType,
+                locations.ToList());
+        }
+
+        /// <summary> Resource for a regional service location. </summary>
+        /// <param name="name"> The regional service name. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="status"> Describes the status of a service. </param>
+        /// <param name="sqlDedicatedGatewayEndpoint"> The regional endpoint for SqlDedicatedGateway. </param>
+        /// <returns> A new <see cref="Models.SqlDedicatedGatewayRegionalServiceResource"/> instance for mocking. </returns>
+        public static SqlDedicatedGatewayRegionalServiceResource SqlDedicatedGatewayRegionalServiceResource(string name = default, string location = default, ServiceStatus? status = default, string sqlDedicatedGatewayEndpoint = default)
+        {
+            return new SqlDedicatedGatewayRegionalServiceResource(name, location, status, additionalBinaryDataProperties: null, sqlDedicatedGatewayEndpoint);
+        }
+
+        /// <summary> Properties for GraphAPIComputeServiceResource. </summary>
+        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
+        /// <param name="instanceSize"> Instance type for the service. </param>
+        /// <param name="instanceCount"> Instance count for the service. </param>
+        /// <param name="status"> Describes the status of a service. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="graphApiComputeEndpoint"> GraphAPICompute endpoint for the service. </param>
+        /// <param name="locations"> An array that contains all of the locations for the service. </param>
+        /// <returns> A new <see cref="Models.GraphAPIComputeServiceResourceProperties"/> instance for mocking. </returns>
+        public static GraphAPIComputeServiceResourceProperties GraphAPIComputeServiceResourceProperties(DateTimeOffset? createdOn = default, CosmosDBServiceSize? instanceSize = default, int? instanceCount = default, ServiceStatus? status = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default, string graphApiComputeEndpoint = default, IEnumerable<GraphAPIComputeRegionalServiceResource> locations = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            locations ??= new ChangeTrackingList<GraphAPIComputeRegionalServiceResource>();
+
+            return new GraphAPIComputeServiceResourceProperties(
+                createdOn,
+                instanceSize,
+                instanceCount,
+                CosmosDBServiceType.GraphAPICompute,
+                status,
+                additionalProperties,
+                graphApiComputeEndpoint,
+                locations.ToList());
+        }
+
+        /// <summary> Resource for a regional service location. </summary>
+        /// <param name="name"> The regional service name. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="status"> Describes the status of a service. </param>
+        /// <param name="graphApiComputeEndpoint"> The regional endpoint for GraphAPICompute. </param>
+        /// <returns> A new <see cref="Models.GraphAPIComputeRegionalServiceResource"/> instance for mocking. </returns>
+        public static GraphAPIComputeRegionalServiceResource GraphAPIComputeRegionalServiceResource(string name = default, string location = default, ServiceStatus? status = default, string graphApiComputeEndpoint = default)
+        {
+            return new GraphAPIComputeRegionalServiceResource(name, location, status, additionalBinaryDataProperties: null, graphApiComputeEndpoint);
+        }
+
+        /// <summary> Properties for MaterializedViewsBuilderServiceResource. </summary>
+        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
+        /// <param name="instanceSize"> Instance type for the service. </param>
+        /// <param name="instanceCount"> Instance count for the service. </param>
+        /// <param name="status"> Describes the status of a service. </param>
+        /// <param name="additionalProperties"></param>
+        /// <param name="locations"> An array that contains all of the locations for the service. </param>
+        /// <returns> A new <see cref="Models.MaterializedViewsBuilderServiceResourceProperties"/> instance for mocking. </returns>
+        public static MaterializedViewsBuilderServiceResourceProperties MaterializedViewsBuilderServiceResourceProperties(DateTimeOffset? createdOn = default, CosmosDBServiceSize? instanceSize = default, int? instanceCount = default, ServiceStatus? status = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default, IEnumerable<MaterializedViewsBuilderRegionalServiceResource> locations = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+            locations ??= new ChangeTrackingList<MaterializedViewsBuilderRegionalServiceResource>();
+
+            return new MaterializedViewsBuilderServiceResourceProperties(
+                createdOn,
+                instanceSize,
+                instanceCount,
+                CosmosDBServiceType.MaterializedViewsBuilder,
+                status,
+                additionalProperties,
+                locations.ToList());
+        }
+
+        /// <summary> Resource for a regional service location. </summary>
+        /// <param name="name"> The regional service name. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="status"> Describes the status of a service. </param>
+        /// <returns> A new <see cref="Models.MaterializedViewsBuilderRegionalServiceResource"/> instance for mocking. </returns>
+        public static MaterializedViewsBuilderRegionalServiceResource MaterializedViewsBuilderRegionalServiceResource(string name = default, string location = default, ServiceStatus? status = default)
+        {
+            return new MaterializedViewsBuilderRegionalServiceResource(name, location, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> A provisioning state of the ThroughputPool. </param>
+        /// <param name="maxThroughput"> Value for throughput to be shared among CosmosDB resources in the pool. </param>
+        /// <returns> A new <see cref="CosmosDB.ThroughputPoolResourceData"/> instance for mocking. </returns>
+        public static ThroughputPoolResourceData ThroughputPoolResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBStatus? provisioningState = default, int? maxThroughput = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ThroughputPoolResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                provisioningState is null && maxThroughput is null ? default : new ThroughputPoolProperties(provisioningState, maxThroughput, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> A provisioning state of the ThroughputPool Account. </param>
+        /// <param name="accountResourceIdentifier"> The resource identifier of global database account in the throughputPool. </param>
+        /// <param name="accountLocation"> The location of  global database account in the throughputPool. </param>
+        /// <param name="accountInstanceId"> The instance id of global database account in the throughputPool. </param>
+        /// <returns> A new <see cref="CosmosDB.ThroughputPoolAccountResourceData"/> instance for mocking. </returns>
+        public static ThroughputPoolAccountResourceData ThroughputPoolAccountResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBStatus? provisioningState = default, string accountResourceIdentifier = default, string accountLocation = default, string accountInstanceId = default)
+        {
+            return new ThroughputPoolAccountResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && accountResourceIdentifier is null && accountLocation is null && accountInstanceId is null ? default : new ThroughputPoolAccountProperties(provisioningState, accountResourceIdentifier, accountLocation, accountInstanceId, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="id0"> The path id for the Role Definition. </param>
+        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
+        /// <param name="type"> Indicates whether the Role Definition was built-in or user created. </param>
+        /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which MongoMI Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
+        /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
+        /// <returns> A new <see cref="CosmosDB.MongoMIRoleDefinitionResourceData"/> instance for mocking. </returns>
+        public static MongoMIRoleDefinitionResourceData MongoMIRoleDefinitionResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string id0 = default, string roleName = default, RoleDefinitionType? @type = default, IEnumerable<string> assignableScopes = default, IEnumerable<Permission> permissions = default)
+        {
+            return new MongoMIRoleDefinitionResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                id0 is null && roleName is null && @type is null && assignableScopes is null && permissions is null ? default : new MongoMIRoleDefinitionResourceProperties(
+                    id0,
+                    roleName,
+                    @type,
+                    (assignableScopes ?? new ChangeTrackingList<string>()).ToList(),
+                    (permissions ?? new ChangeTrackingList<Permission>()).ToList(),
+                    null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
+        /// <param name="scope"> The data plane resource path for which access is being granted through this MongoMI Role Assignment. </param>
+        /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this MongoMI Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="CosmosDB.MongoMIRoleAssignmentResourceData"/> instance for mocking. </returns>
+        public static MongoMIRoleAssignmentResourceData MongoMIRoleAssignmentResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string roleDefinitionId = default, string scope = default, string principalId = default, string provisioningState = default)
+        {
+            return new MongoMIRoleAssignmentResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                roleDefinitionId is null && scope is null && principalId is null && provisioningState is null ? default : new MongoMIRoleAssignmentResourceProperties(roleDefinitionId, scope, principalId, provisioningState, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> A provisioning state of the Fleet. </param>
+        /// <returns> A new <see cref="CosmosDB.FleetResourceData"/> instance for mocking. </returns>
+        public static FleetResourceData FleetResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CosmosDBStatus? provisioningState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FleetResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                provisioningState is null ? default : new FleetResourceProperties(provisioningState, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> A provisioning state of the FleetAnalytics. </param>
+        /// <param name="storageLocationType"> The type of the fleet analytics resource. </param>
+        /// <param name="storageLocationUri"> The unique identifier of the fleet analytics resource. </param>
+        /// <returns> A new <see cref="CosmosDB.FleetAnalyticsResourceData"/> instance for mocking. </returns>
+        public static FleetAnalyticsResourceData FleetAnalyticsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBStatus? provisioningState = default, FleetAnalyticsPropertiesStorageLocationType? storageLocationType = default, string storageLocationUri = default)
+        {
+            return new FleetAnalyticsResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && storageLocationType is null && storageLocationUri is null ? default : new FleetAnalyticsProperties(provisioningState, storageLocationType, storageLocationUri, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> A provisioning state of the Fleetspace. </param>
+        /// <param name="fleetspaceApiKind"> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </param>
+        /// <param name="serviceTier"> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </param>
+        /// <param name="dataRegions"> List of data regions assigned to the fleetspace. Eg [westus2]. </param>
+        /// <param name="throughputPoolConfiguration"> Configuration for throughput pool in the fleetspace. </param>
+        /// <returns> A new <see cref="CosmosDB.FleetspaceResourceData"/> instance for mocking. </returns>
+        public static FleetspaceResourceData FleetspaceResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBStatus? provisioningState = default, FleetspacePropertiesFleetspaceApiKind? fleetspaceApiKind = default, FleetspacePropertiesServiceTier? serviceTier = default, IEnumerable<string> dataRegions = default, FleetspacePropertiesThroughputPoolConfiguration throughputPoolConfiguration = default)
+        {
+            return new FleetspaceResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && fleetspaceApiKind is null && serviceTier is null && dataRegions is null && throughputPoolConfiguration is null ? default : new FleetspaceProperties(
+                    provisioningState,
+                    fleetspaceApiKind,
+                    serviceTier,
+                    (dataRegions ?? new ChangeTrackingList<string>()).ToList(),
+                    throughputPoolConfiguration,
+                    null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> A provisioning state of the Fleetspace Account. </param>
+        /// <param name="globalDatabaseAccountProperties"> Configuration for fleetspace Account in the fleetspace. </param>
+        /// <returns> A new <see cref="CosmosDB.FleetspaceAccountResourceData"/> instance for mocking. </returns>
+        public static FleetspaceAccountResourceData FleetspaceAccountResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CosmosDBStatus? provisioningState = default, FleetspaceAccountPropertiesGlobalDatabaseAccountProperties globalDatabaseAccountProperties = default)
+        {
+            return new FleetspaceAccountResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                provisioningState is null && globalDatabaseAccountProperties is null ? default : new FleetspaceAccountProperties(provisioningState, globalDatabaseAccountProperties, null));
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBPrivateEndpointConnectionData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="privateEndpointId"> Private endpoint which the connection belongs to. </param>
+        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
+        /// <param name="groupId"> Group id of the private endpoint. </param>
+        /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
+        /// <returns> A new <see cref="CosmosDB.CosmosDBPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CosmosDBPrivateEndpointConnectionData CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, CosmosDBPrivateLinkServiceConnectionStateProperty connectionState, string groupId, string provisioningState)
+        {
+            return new CosmosDBPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBMetricDefinition"/>. </summary>
+        /// <param name="metricAvailabilities"> The list of metric availabilities for the account. </param>
+        /// <param name="primaryAggregationType"> The primary aggregation type of the metric. </param>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="resourceId"> The resource uri of the database. </param>
+        /// <param name="name"> The name information for the metric. </param>
+        /// <returns> A new <see cref="Models.CosmosDBMetricDefinition"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CosmosDBMetricDefinition CosmosDBMetricDefinition(IEnumerable<CosmosDBMetricAvailability> metricAvailabilities, CosmosDBMetricPrimaryAggregationType? primaryAggregationType, CosmosDBMetricUnitType? unit, ResourceIdentifier resourceId, CosmosDBMetricName name)
+        {
+            metricAvailabilities ??= new ChangeTrackingList<CosmosDBMetricAvailability>();
+
+            return new CosmosDBMetricDefinition(
+                metricAvailabilities.ToList(),
+                primaryAggregationType,
+                unit,
+                default,
+                name,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterDataCenterNodeItem"/>. </summary>
@@ -1996,9 +4504,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
         /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
         /// <returns> A new <see cref="Models.CassandraClusterDataCenterNodeItem"/> instance for mocking. </returns>
-        public static CassandraClusterDataCenterNodeItem CassandraClusterDataCenterNodeItem(string address = null, CassandraNodeState? state = null, string status = null, string cassandraProcessStatus = null, string load = null, IEnumerable<string> tokens = null, int? size = null, Guid? hostId = null, string rack = null, string timestamp = null, long? diskUsedKB = null, long? diskFreeKB = null, long? memoryUsedKB = null, long? memoryBuffersAndCachedKB = null, long? memoryFreeKB = null, long? memoryTotalKB = null, double? cpuUsage = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CassandraClusterDataCenterNodeItem CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IEnumerable<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
         {
-            tokens ??= new List<string>();
+            tokens ??= new ChangeTrackingList<string>();
 
             return new CassandraClusterDataCenterNodeItem(
                 address,
@@ -2006,9 +4515,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 status,
                 cassandraProcessStatus,
                 load,
-                tokens?.ToList(),
+                tokens.ToList(),
                 size,
-                hostId,
+                default,
                 rack,
                 timestamp,
                 diskUsedKB,
@@ -2018,233 +4527,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 memoryFreeKB,
                 memoryTotalKB,
                 cpuUsage,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBRoleDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
-        /// <param name="roleDefinitionType"> Indicates whether the Role Definition was built-in or user created. </param>
-        /// <param name="databaseName"> The database name for which access is being granted for this Role Definition. </param>
-        /// <param name="privileges"> A set of privileges contained by the Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Scopes higher than Database are not enforceable as privilege. </param>
-        /// <param name="roles"> The set of roles inherited by this Role Definition. </param>
-        /// <returns> A new <see cref="CosmosDB.MongoDBRoleDefinitionData"/> instance for mocking. </returns>
-        public static MongoDBRoleDefinitionData MongoDBRoleDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string roleName = null, MongoDBRoleDefinitionType? roleDefinitionType = null, string databaseName = null, IEnumerable<MongoDBPrivilege> privileges = null, IEnumerable<MongoDBRole> roles = null)
-        {
-            privileges ??= new List<MongoDBPrivilege>();
-            roles ??= new List<MongoDBRole>();
-
-            return new MongoDBRoleDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                roleName,
-                roleDefinitionType,
-                databaseName,
-                privileges?.ToList(),
-                roles?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.MongoDBUserDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="userName"> The user name for User Definition. </param>
-        /// <param name="password"> The password for User Definition. Response does not contain user password. </param>
-        /// <param name="databaseName"> The database name for which access is being granted for this User Definition. </param>
-        /// <param name="customData"> A custom definition for the USer Definition. </param>
-        /// <param name="roles"> The set of roles inherited by the User Definition. </param>
-        /// <param name="mechanisms"> The Mongo Auth mechanism. For now, we only support auth mechanism SCRAM-SHA-256. </param>
-        /// <returns> A new <see cref="CosmosDB.MongoDBUserDefinitionData"/> instance for mocking. </returns>
-        public static MongoDBUserDefinitionData MongoDBUserDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string userName = null, string password = null, string databaseName = null, string customData = null, IEnumerable<MongoDBRole> roles = null, string mechanisms = null)
-        {
-            roles ??= new List<MongoDBRole>();
-
-            return new MongoDBUserDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                userName,
-                password,
-                databaseName,
-                customData,
-                roles?.ToList(),
-                mechanisms,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource required zone names. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static CosmosDBPrivateLinkResourceData CosmosDBPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new CosmosDBPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId,
-                requiredMembers?.ToList(),
-                requiredZoneNames?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlRoleDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="roleName"> A user-friendly name for the Role Definition. Must be unique for the database account. </param>
-        /// <param name="roleDefinitionType"> Indicates whether the Role Definition was built-in or user created. </param>
-        /// <param name="assignableScopes"> A set of fully qualified Scopes at or below which Role Assignments may be created using this Role Definition. This will allow application of this Role Definition on the entire database account or any underlying Database / Collection. Must have at least one element. Scopes higher than Database account are not enforceable as assignable Scopes. Note that resources referenced in assignable Scopes need not exist. </param>
-        /// <param name="permissions"> The set of operations allowed through this Role Definition. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBSqlRoleDefinitionData"/> instance for mocking. </returns>
-        public static CosmosDBSqlRoleDefinitionData CosmosDBSqlRoleDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string roleName = null, CosmosDBSqlRoleDefinitionType? roleDefinitionType = null, IEnumerable<string> assignableScopes = null, IEnumerable<CosmosDBSqlRolePermission> permissions = null)
-        {
-            assignableScopes ??= new List<string>();
-            permissions ??= new List<CosmosDBSqlRolePermission>();
-
-            return new CosmosDBSqlRoleDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                roleName,
-                roleDefinitionType,
-                assignableScopes?.ToList(),
-                permissions?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBSqlRoleAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
-        /// <param name="scope"> The data plane resource path for which access is being granted through this Role Assignment. </param>
-        /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBSqlRoleAssignmentData"/> instance for mocking. </returns>
-        public static CosmosDBSqlRoleAssignmentData CosmosDBSqlRoleAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier roleDefinitionId = null, string scope = null, Guid? principalId = null)
-        {
-            return new CosmosDBSqlRoleAssignmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                roleDefinitionId,
-                scope,
-                principalId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.RestorableCosmosDBAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The location of the resource group to which the resource belongs. </param>
-        /// <param name="accountName"> The name of the global database account. </param>
-        /// <param name="createdOn"> The creation time of the restorable database account (ISO-8601 format). </param>
-        /// <param name="deletedOn"> The time at which the restorable database account has been deleted (ISO-8601 format). </param>
-        /// <param name="oldestRestorableOn"> The least recent time at which the database account can be restored to (ISO-8601 format). </param>
-        /// <param name="apiType"> The API type of the restorable database account. </param>
-        /// <param name="restorableLocations"> List of regions where the of the database account can be restored from. </param>
-        /// <returns> A new <see cref="CosmosDB.RestorableCosmosDBAccountData"/> instance for mocking. </returns>
-        public static RestorableCosmosDBAccountData RestorableCosmosDBAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string accountName = null, DateTimeOffset? createdOn = null, DateTimeOffset? deletedOn = null, DateTimeOffset? oldestRestorableOn = null, CosmosDBApiType? apiType = null, IEnumerable<RestorableLocationResourceInfo> restorableLocations = null)
-        {
-            restorableLocations ??= new List<RestorableLocationResourceInfo>();
-
-            return new RestorableCosmosDBAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                location,
-                accountName,
-                createdOn,
-                deletedOn,
-                oldestRestorableOn,
-                apiType,
-                restorableLocations?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableLocationResourceInfo"/>. </summary>
-        /// <param name="locationName"> The location of the regional restorable account. </param>
-        /// <param name="regionalDatabaseAccountInstanceId"> The instance id of the regional restorable account. </param>
-        /// <param name="createdOn"> The creation time of the regional restorable database account (ISO-8601 format). </param>
-        /// <param name="deletedOn"> The time at which the regional restorable database account has been deleted (ISO-8601 format). </param>
-        /// <returns> A new <see cref="Models.RestorableLocationResourceInfo"/> instance for mocking. </returns>
-        public static RestorableLocationResourceInfo RestorableLocationResourceInfo(AzureLocation? locationName = null, string regionalDatabaseAccountInstanceId = null, DateTimeOffset? createdOn = null, DateTimeOffset? deletedOn = null)
-        {
-            return new RestorableLocationResourceInfo(locationName, regionalDatabaseAccountInstanceId, createdOn, deletedOn, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBBackupInformation"/>. </summary>
-        /// <param name="continuousBackupInformationLatestRestorableTimestamp"> Information about the status of continuous backups. </param>
-        /// <returns> A new <see cref="Models.CosmosDBBackupInformation"/> instance for mocking. </returns>
-        public static CosmosDBBackupInformation CosmosDBBackupInformation(DateTimeOffset? continuousBackupInformationLatestRestorableTimestamp = null)
-        {
-            return new CosmosDBBackupInformation(continuousBackupInformationLatestRestorableTimestamp != null ? new ContinuousBackupInformation(continuousBackupInformationLatestRestorableTimestamp, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableSqlDatabase"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resource"> The resource of an Azure Cosmos DB SQL database event. </param>
-        /// <returns> A new <see cref="Models.RestorableSqlDatabase"/> instance for mocking. </returns>
-        public static RestorableSqlDatabase RestorableSqlDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableSqlDatabaseResourceInfo resource = null)
-        {
-            return new RestorableSqlDatabase(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableSqlDatabaseResourceInfo"/>. </summary>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="operationType"> The operation type of this database event. </param>
-        /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
-        /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
-        /// <param name="eventTimestamp"> The time when this database event happened. </param>
-        /// <param name="databaseName"> The name of the SQL database. </param>
-        /// <param name="databaseId"> The resource ID of the SQL database. </param>
-        /// <param name="database"> Cosmos DB SQL database resource object. </param>
-        /// <returns> A new <see cref="Models.ExtendedRestorableSqlDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableSqlDatabaseResourceInfo ExtendedRestorableSqlDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string databaseName = null, string databaseId = null, RestorableSqlDatabasePropertiesResourceDatabase database = null)
-        {
-            return new ExtendedRestorableSqlDatabaseResourceInfo(
-                rid,
-                operationType,
-                canUndelete,
-                canUndeleteReason,
-                eventTimestamp,
-                databaseName,
-                databaseId,
-                database,
-                serializedAdditionalRawData: null);
+                default,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableSqlDatabasePropertiesResourceDatabase"/>. </summary>
@@ -2258,61 +4542,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <returns> A new <see cref="Models.RestorableSqlDatabasePropertiesResourceDatabase"/> instance for mocking. </returns>
-        public static RestorableSqlDatabasePropertiesResourceDatabase RestorableSqlDatabasePropertiesResourceDatabase(string databaseName = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, string colls = null, string users = null, string self = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestorableSqlDatabasePropertiesResourceDatabase RestorableSqlDatabasePropertiesResourceDatabase(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string colls, string users, string self, string rid, float? timestamp, ETag? etag)
         {
             return new RestorableSqlDatabasePropertiesResourceDatabase(
-                databaseName,
+                default,
                 restoreParameters,
                 createMode,
-                serializedAdditionalRawData: null,
+                additionalBinaryDataProperties: null,
+                rid,
+                default,
+                default,
                 colls,
                 users,
-                self,
-                rid,
-                timestamp,
-                etag);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableSqlContainer"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resource"> The resource of an Azure Cosmos DB SQL container event. </param>
-        /// <returns> A new <see cref="Models.RestorableSqlContainer"/> instance for mocking. </returns>
-        public static RestorableSqlContainer RestorableSqlContainer(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableSqlContainerResourceInfo resource = null)
-        {
-            return new RestorableSqlContainer(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableSqlContainerResourceInfo"/>. </summary>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="operationType"> The operation type of this container event. </param>
-        /// <param name="canUndelete"> A state of this container to identify if this container is restorable in same account. </param>
-        /// <param name="canUndeleteReason"> The reason why this container can not be restored in same account. </param>
-        /// <param name="eventTimestamp"> The when this container event happened. </param>
-        /// <param name="containerName"> The name of this SQL container. </param>
-        /// <param name="containerId"> The resource ID of this SQL container. </param>
-        /// <param name="container"> Cosmos DB SQL container resource object. </param>
-        /// <returns> A new <see cref="Models.ExtendedRestorableSqlContainerResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableSqlContainerResourceInfo ExtendedRestorableSqlContainerResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string containerName = null, string containerId = null, RestorableSqlContainerPropertiesResourceContainer container = null)
-        {
-            return new ExtendedRestorableSqlContainerResourceInfo(
-                rid,
-                operationType,
-                canUndelete,
-                canUndeleteReason,
-                eventTimestamp,
-                containerName,
-                containerId,
-                container,
-                serializedAdditionalRawData: null);
+                self);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableSqlContainerPropertiesResourceContainer"/>. </summary>
@@ -2334,31 +4577,36 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
         /// <returns> A new <see cref="Models.RestorableSqlContainerPropertiesResourceContainer"/> instance for mocking. </returns>
-        public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string containerName = null, CosmosDBIndexingPolicy indexingPolicy = null, CosmosDBContainerPartitionKey partitionKey = null, int? defaultTtl = null, IEnumerable<CosmosDBUniqueKey> uniqueKeys = null, ConflictResolutionPolicy conflictResolutionPolicy = null, CosmosDBClientEncryptionPolicy clientEncryptionPolicy = null, long? analyticalStorageTtl = null, ResourceRestoreParameters restoreParameters = null, CosmosDBAccountCreateMode? createMode = null, IEnumerable<ComputedProperty> computedProperties = null, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings = null, FullTextPolicy fullTextPolicy = null, string self = null, string rid = null, float? timestamp = null, ETag? etag = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestorableSqlContainerPropertiesResourceContainer RestorableSqlContainerPropertiesResourceContainer(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, IEnumerable<CosmosDBUniqueKey> uniqueKeys, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IEnumerable<ComputedProperty> computedProperties, IEnumerable<CosmosDBVectorEmbedding> vectorEmbeddings, FullTextPolicy fullTextPolicy, string self, string rid, float? timestamp, ETag? etag)
         {
-            uniqueKeys ??= new List<CosmosDBUniqueKey>();
-            computedProperties ??= new List<ComputedProperty>();
-            vectorEmbeddings ??= new List<CosmosDBVectorEmbedding>();
+            uniqueKeys ??= new ChangeTrackingList<CosmosDBUniqueKey>();
+            computedProperties ??= new ChangeTrackingList<ComputedProperty>();
+            vectorEmbeddings ??= new ChangeTrackingList<CosmosDBVectorEmbedding>();
 
             return new RestorableSqlContainerPropertiesResourceContainer(
-                containerName,
+                default,
                 indexingPolicy,
                 partitionKey,
                 defaultTtl,
-                uniqueKeys != null ? new CosmosDBUniqueKeyPolicy(uniqueKeys?.ToList(), serializedAdditionalRawData: null) : null,
+                default,
                 conflictResolutionPolicy,
                 clientEncryptionPolicy,
                 analyticalStorageTtl,
                 restoreParameters,
                 createMode,
-                computedProperties?.ToList(),
-                vectorEmbeddings != null ? new VectorEmbeddingPolicy(vectorEmbeddings?.ToList(), serializedAdditionalRawData: null) : null,
+                default,
+                default,
+                default,
+                computedProperties.ToList(),
+                default,
                 fullTextPolicy,
-                serializedAdditionalRawData: null,
-                self,
+                default,
+                additionalBinaryDataProperties: null,
                 rid,
-                timestamp,
-                etag);
+                default,
+                default,
+                self);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableSqlResourceData"/>. </summary>
@@ -2369,58 +4617,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="databaseName"> The name of the database available for restore. </param>
         /// <param name="collectionNames"> The names of the collections available for restore. </param>
         /// <returns> A new <see cref="Models.RestorableSqlResourceData"/> instance for mocking. </returns>
-        public static RestorableSqlResourceData RestorableSqlResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, IEnumerable<string> collectionNames = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestorableSqlResourceData RestorableSqlResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, IEnumerable<string> collectionNames)
         {
-            collectionNames ??= new List<string>();
+            collectionNames ??= new ChangeTrackingList<string>();
 
             return new RestorableSqlResourceData(
                 id,
                 name,
-                resourceType,
-                systemData,
+                default,
                 databaseName,
-                collectionNames?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableMongoDBDatabase"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resource"> The resource of an Azure Cosmos DB MongoDB database event. </param>
-        /// <returns> A new <see cref="Models.RestorableMongoDBDatabase"/> instance for mocking. </returns>
-        public static RestorableMongoDBDatabase RestorableMongoDBDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableMongoDBDatabaseResourceInfo resource = null)
-        {
-            return new RestorableMongoDBDatabase(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableMongoDBDatabaseResourceInfo"/>. </summary>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="operationType"> The operation type of this database event. </param>
-        /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
-        /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
-        /// <param name="eventTimestamp"> The time when this database event happened. </param>
-        /// <param name="databaseName"> The name of this MongoDB database. </param>
-        /// <param name="databaseId"> The resource ID of this MongoDB database. </param>
-        /// <returns> A new <see cref="Models.ExtendedRestorableMongoDBDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableMongoDBDatabaseResourceInfo ExtendedRestorableMongoDBDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string databaseName = null, string databaseId = null)
-        {
-            return new ExtendedRestorableMongoDBDatabaseResourceInfo(
-                rid,
-                operationType,
-                canUndelete,
-                canUndeleteReason,
-                eventTimestamp,
-                databaseName,
-                databaseId,
-                serializedAdditionalRawData: null);
+                collectionNames.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableMongoDBCollection"/>. </summary>
@@ -2430,37 +4638,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="resource"> The resource of an Azure Cosmos DB MongoDB collection event. </param>
         /// <returns> A new <see cref="Models.RestorableMongoDBCollection"/> instance for mocking. </returns>
-        public static RestorableMongoDBCollection RestorableMongoDBCollection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableMongoDBCollectionResourceInfo resource = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestorableMongoDBCollection RestorableMongoDBCollection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExtendedRestorableMongoDBCollectionResourceInfo resource)
         {
-            return new RestorableMongoDBCollection(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableMongoDBCollectionResourceInfo"/>. </summary>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="operationType"> The operation type of this collection event. </param>
-        /// <param name="canUndelete"> A state of this collection to identify if this container is restorable in same account. </param>
-        /// <param name="canUndeleteReason"> The reason why this collection can not be restored in same account. </param>
-        /// <param name="eventTimestamp"> The time when this collection event happened. </param>
-        /// <param name="collectionName"> The name of this MongoDB collection. </param>
-        /// <param name="collectionId"> The resource ID of this MongoDB collection. </param>
-        /// <returns> A new <see cref="Models.ExtendedRestorableMongoDBCollectionResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableMongoDBCollectionResourceInfo ExtendedRestorableMongoDBCollectionResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string collectionName = null, string collectionId = null)
-        {
-            return new ExtendedRestorableMongoDBCollectionResourceInfo(
-                rid,
-                operationType,
-                canUndelete,
-                canUndeleteReason,
-                eventTimestamp,
-                collectionName,
-                collectionId,
-                serializedAdditionalRawData: null);
+            return new RestorableMongoDBCollection(default, id, name, default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestorableMongoDBResourceData"/>. </summary>
@@ -2471,435 +4652,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="databaseName"> The name of the database available for restore. </param>
         /// <param name="collectionNames"> The names of the collections available for restore. </param>
         /// <returns> A new <see cref="Models.RestorableMongoDBResourceData"/> instance for mocking. </returns>
-        public static RestorableMongoDBResourceData RestorableMongoDBResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, IEnumerable<string> collectionNames = null)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RestorableMongoDBResourceData RestorableMongoDBResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, IEnumerable<string> collectionNames)
         {
-            collectionNames ??= new List<string>();
+            collectionNames ??= new ChangeTrackingList<string>();
 
             return new RestorableMongoDBResourceData(
                 id,
                 name,
-                resourceType,
-                systemData,
+                default,
                 databaseName,
-                collectionNames?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableGremlinDatabase"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resource"> The resource of an Azure Cosmos DB Gremlin database event. </param>
-        /// <returns> A new <see cref="Models.RestorableGremlinDatabase"/> instance for mocking. </returns>
-        public static RestorableGremlinDatabase RestorableGremlinDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableGremlinDatabaseResourceInfo resource = null)
-        {
-            return new RestorableGremlinDatabase(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableGremlinDatabaseResourceInfo"/>. </summary>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="operationType"> The operation type of this database event. </param>
-        /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
-        /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
-        /// <param name="eventTimestamp"> The time when this database event happened. </param>
-        /// <param name="databaseName"> The name of this Gremlin database. </param>
-        /// <param name="databaseId"> The resource ID of this Gremlin database. </param>
-        /// <returns> A new <see cref="Models.ExtendedRestorableGremlinDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableGremlinDatabaseResourceInfo ExtendedRestorableGremlinDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string databaseName = null, string databaseId = null)
-        {
-            return new ExtendedRestorableGremlinDatabaseResourceInfo(
-                rid,
-                operationType,
-                canUndelete,
-                canUndeleteReason,
-                eventTimestamp,
-                databaseName,
-                databaseId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableGremlinGraph"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resource"> The resource of an Azure Cosmos DB Gremlin graph event. </param>
-        /// <returns> A new <see cref="Models.RestorableGremlinGraph"/> instance for mocking. </returns>
-        public static RestorableGremlinGraph RestorableGremlinGraph(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableGremlinGraphResourceInfo resource = null)
-        {
-            return new RestorableGremlinGraph(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableGremlinGraphResourceInfo"/>. </summary>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="operationType"> The operation type of this graph event. </param>
-        /// <param name="canUndelete"> A state of this graph to identify if this graph is restorable in same account. </param>
-        /// <param name="canUndeleteReason"> The reason why this graph can not be restored in same account. </param>
-        /// <param name="eventTimestamp"> The time when this graph event happened. </param>
-        /// <param name="graphName"> The name of this Gremlin graph. </param>
-        /// <param name="graphId"> The resource ID of this Gremlin graph. </param>
-        /// <returns> A new <see cref="Models.ExtendedRestorableGremlinGraphResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableGremlinGraphResourceInfo ExtendedRestorableGremlinGraphResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string graphName = null, string graphId = null)
-        {
-            return new ExtendedRestorableGremlinGraphResourceInfo(
-                rid,
-                operationType,
-                canUndelete,
-                canUndeleteReason,
-                eventTimestamp,
-                graphName,
-                graphId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableGremlinResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="databaseName"> The name of the gremlin database available for restore. </param>
-        /// <param name="graphNames"> The names of the graphs available for restore. </param>
-        /// <returns> A new <see cref="Models.RestorableGremlinResourceData"/> instance for mocking. </returns>
-        public static RestorableGremlinResourceData RestorableGremlinResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string databaseName = null, IEnumerable<string> graphNames = null)
-        {
-            graphNames ??= new List<string>();
-
-            return new RestorableGremlinResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                databaseName,
-                graphNames?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableTable"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="resource"> The resource of an Azure Cosmos DB Table event. </param>
-        /// <returns> A new <see cref="Models.RestorableTable"/> instance for mocking. </returns>
-        public static RestorableTable RestorableTable(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExtendedRestorableTableResourceInfo resource = null)
-        {
-            return new RestorableTable(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resource,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExtendedRestorableTableResourceInfo"/>. </summary>
-        /// <param name="rid"> A system generated property. A unique identifier. </param>
-        /// <param name="operationType"> The operation type of this table event. </param>
-        /// <param name="canUndelete"> A state of this table to identify if this table is restorable in same account. </param>
-        /// <param name="canUndeleteReason"> The reason why this table can not be restored in same account. </param>
-        /// <param name="eventTimestamp"> The time when this table event happened. </param>
-        /// <param name="tableName"> The name of this Table. </param>
-        /// <param name="tableId"> The resource ID of this Table. </param>
-        /// <returns> A new <see cref="Models.ExtendedRestorableTableResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableTableResourceInfo ExtendedRestorableTableResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string tableName = null, string tableId = null)
-        {
-            return new ExtendedRestorableTableResourceInfo(
-                rid,
-                operationType,
-                canUndelete,
-                canUndeleteReason,
-                eventTimestamp,
-                tableName,
-                tableId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RestorableTableResourceData"/>. </summary>
-        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
-        /// <param name="name"> The name of the Table. </param>
-        /// <param name="resourceType"> The type of Azure resource. </param>
-        /// <returns> A new <see cref="Models.RestorableTableResourceData"/> instance for mocking. </returns>
-        public static RestorableTableResourceData RestorableTableResourceData(string id = null, string name = null, string resourceType = null)
-        {
-            return new RestorableTableResourceData(id, name, resourceType, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Services response resource.
-        /// Please note <see cref="Models.CosmosDBServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.DataTransferServiceProperties"/>, <see cref="Models.GraphApiComputeServiceProperties"/>, <see cref="Models.MaterializedViewsBuilderServiceProperties"/> and <see cref="Models.SqlDedicatedGatewayServiceProperties"/>.
-        /// </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBServiceData"/> instance for mocking. </returns>
-        public static CosmosDBServiceData CosmosDBServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBServiceProperties properties = null)
-        {
-            return new CosmosDBServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBServiceProperties"/>. </summary>
-        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
-        /// <param name="instanceSize"> Instance type for the service. </param>
-        /// <param name="instanceCount"> Instance count for the service. </param>
-        /// <param name="serviceType"> ServiceType for the service. </param>
-        /// <param name="status"> Describes the status of a service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.CosmosDBServiceProperties"/> instance for mocking. </returns>
-        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, string serviceType = null, CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new CosmosDBServiceProperties(
-                createdOn,
-                instanceSize,
-                instanceCount,
-                serviceType == null ? default : new CosmosDBServiceType(serviceType),
-                status,
-                additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBFleetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> A provisioning state of the Fleet. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBFleetData"/> instance for mocking. </returns>
-        public static CosmosDBFleetData CosmosDBFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBStatus? provisioningState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new CosmosDBFleetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBFleetspaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> A provisioning state of the Fleetspace. </param>
-        /// <param name="fleetspaceApiKind"> The kind of API this fleetspace belongs to. Acceptable values: 'NoSQL'. </param>
-        /// <param name="serviceTier"> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </param>
-        /// <param name="dataRegions"> List of data regions assigned to the fleetspace. Eg [westus2]. </param>
-        /// <param name="throughputPoolConfiguration"> Configuration for throughput pool in the fleetspace. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBFleetspaceData"/> instance for mocking. </returns>
-        public static CosmosDBFleetspaceData CosmosDBFleetspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBStatus? provisioningState = null, CosmosDBFleetspaceApiKind? fleetspaceApiKind = null, CosmosDBFleetspaceServiceTier? serviceTier = null, IEnumerable<AzureLocation> dataRegions = null, CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration = null)
-        {
-            dataRegions ??= new List<AzureLocation>();
-
-            return new CosmosDBFleetspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                fleetspaceApiKind,
-                serviceTier,
-                dataRegions?.ToList(),
-                throughputPoolConfiguration,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBFleetspaceAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> A provisioning state of the Fleetspace Account. </param>
-        /// <param name="globalDatabaseAccountProperties"> Configuration for fleetspace Account in the fleetspace. </param>
-        /// <returns> A new <see cref="CosmosDB.CosmosDBFleetspaceAccountData"/> instance for mocking. </returns>
-        public static CosmosDBFleetspaceAccountData CosmosDBFleetspaceAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBStatus? provisioningState = null, CosmosDBFleetspaceAccountConfiguration globalDatabaseAccountProperties = null)
-        {
-            return new CosmosDBFleetspaceAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState,
-                globalDatabaseAccountProperties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataTransferServiceProperties"/>. </summary>
-        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
-        /// <param name="instanceSize"> Instance type for the service. </param>
-        /// <param name="instanceCount"> Instance count for the service. </param>
-        /// <param name="status"> Describes the status of a service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="locations"> An array that contains all of the locations for the service. </param>
-        /// <returns> A new <see cref="Models.DataTransferServiceProperties"/> instance for mocking. </returns>
-        public static DataTransferServiceProperties DataTransferServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null, IEnumerable<DataTransferRegionalService> locations = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-            locations ??= new List<DataTransferRegionalService>();
-
-            return new DataTransferServiceProperties(
-                createdOn,
-                instanceSize,
-                instanceCount,
-                CosmosDBServiceType.DataTransfer,
-                status,
-                additionalProperties,
-                locations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DataTransferRegionalService"/>. </summary>
-        /// <param name="name"> The regional service name. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="status"> Describes the status of a service. </param>
-        /// <returns> A new <see cref="Models.DataTransferRegionalService"/> instance for mocking. </returns>
-        public static DataTransferRegionalService DataTransferRegionalService(string name = null, AzureLocation? location = null, CosmosDBServiceStatus? status = null)
-        {
-            return new DataTransferRegionalService(name, location, status, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CosmosDBRegionalService"/>. </summary>
-        /// <param name="name"> The regional service name. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="status"> Describes the status of a service. </param>
-        /// <returns> A new <see cref="Models.CosmosDBRegionalService"/> instance for mocking. </returns>
-        public static CosmosDBRegionalService CosmosDBRegionalService(string name = null, AzureLocation? location = null, CosmosDBServiceStatus? status = null)
-        {
-            return new CosmosDBRegionalService(name, location, status, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlDedicatedGatewayServiceProperties"/>. </summary>
-        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
-        /// <param name="instanceSize"> Instance type for the service. </param>
-        /// <param name="instanceCount"> Instance count for the service. </param>
-        /// <param name="status"> Describes the status of a service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="sqlDedicatedGatewayEndpoint"> SqlDedicatedGateway endpoint for the service. </param>
-        /// <param name="dedicatedGatewayType"> DedicatedGatewayType for the service. </param>
-        /// <param name="locations"> An array that contains all of the locations for the service. </param>
-        /// <returns> A new <see cref="Models.SqlDedicatedGatewayServiceProperties"/> instance for mocking. </returns>
-        public static SqlDedicatedGatewayServiceProperties SqlDedicatedGatewayServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null, string sqlDedicatedGatewayEndpoint = null, DedicatedGatewayType? dedicatedGatewayType = null, IEnumerable<SqlDedicatedGatewayRegionalService> locations = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-            locations ??= new List<SqlDedicatedGatewayRegionalService>();
-
-            return new SqlDedicatedGatewayServiceProperties(
-                createdOn,
-                instanceSize,
-                instanceCount,
-                CosmosDBServiceType.SqlDedicatedGateway,
-                status,
-                additionalProperties,
-                sqlDedicatedGatewayEndpoint,
-                dedicatedGatewayType,
-                locations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SqlDedicatedGatewayRegionalService"/>. </summary>
-        /// <param name="name"> The regional service name. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="status"> Describes the status of a service. </param>
-        /// <param name="sqlDedicatedGatewayEndpoint"> The regional endpoint for SqlDedicatedGateway. </param>
-        /// <returns> A new <see cref="Models.SqlDedicatedGatewayRegionalService"/> instance for mocking. </returns>
-        public static SqlDedicatedGatewayRegionalService SqlDedicatedGatewayRegionalService(string name = null, AzureLocation? location = null, CosmosDBServiceStatus? status = null, string sqlDedicatedGatewayEndpoint = null)
-        {
-            return new SqlDedicatedGatewayRegionalService(name, location, status, serializedAdditionalRawData: null, sqlDedicatedGatewayEndpoint);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GraphApiComputeServiceProperties"/>. </summary>
-        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
-        /// <param name="instanceSize"> Instance type for the service. </param>
-        /// <param name="instanceCount"> Instance count for the service. </param>
-        /// <param name="status"> Describes the status of a service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="graphApiComputeEndpoint"> GraphAPICompute endpoint for the service. </param>
-        /// <param name="locations"> An array that contains all of the locations for the service. </param>
-        /// <returns> A new <see cref="Models.GraphApiComputeServiceProperties"/> instance for mocking. </returns>
-        public static GraphApiComputeServiceProperties GraphApiComputeServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null, string graphApiComputeEndpoint = null, IEnumerable<GraphApiComputeRegionalService> locations = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-            locations ??= new List<GraphApiComputeRegionalService>();
-
-            return new GraphApiComputeServiceProperties(
-                createdOn,
-                instanceSize,
-                instanceCount,
-                CosmosDBServiceType.GraphApiCompute,
-                status,
-                additionalProperties,
-                graphApiComputeEndpoint,
-                locations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.GraphApiComputeRegionalService"/>. </summary>
-        /// <param name="name"> The regional service name. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="status"> Describes the status of a service. </param>
-        /// <param name="graphApiComputeEndpoint"> The regional endpoint for GraphAPICompute. </param>
-        /// <returns> A new <see cref="Models.GraphApiComputeRegionalService"/> instance for mocking. </returns>
-        public static GraphApiComputeRegionalService GraphApiComputeRegionalService(string name = null, AzureLocation? location = null, CosmosDBServiceStatus? status = null, string graphApiComputeEndpoint = null)
-        {
-            return new GraphApiComputeRegionalService(name, location, status, serializedAdditionalRawData: null, graphApiComputeEndpoint);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MaterializedViewsBuilderServiceProperties"/>. </summary>
-        /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
-        /// <param name="instanceSize"> Instance type for the service. </param>
-        /// <param name="instanceCount"> Instance count for the service. </param>
-        /// <param name="status"> Describes the status of a service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="locations"> An array that contains all of the locations for the service. </param>
-        /// <returns> A new <see cref="Models.MaterializedViewsBuilderServiceProperties"/> instance for mocking. </returns>
-        public static MaterializedViewsBuilderServiceProperties MaterializedViewsBuilderServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null, IEnumerable<MaterializedViewsBuilderRegionalService> locations = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-            locations ??= new List<MaterializedViewsBuilderRegionalService>();
-
-            return new MaterializedViewsBuilderServiceProperties(
-                createdOn,
-                instanceSize,
-                instanceCount,
-                CosmosDBServiceType.MaterializedViewsBuilder,
-                status,
-                additionalProperties,
-                locations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MaterializedViewsBuilderRegionalService"/>. </summary>
-        /// <param name="name"> The regional service name. </param>
-        /// <param name="location"> The location name. </param>
-        /// <param name="status"> Describes the status of a service. </param>
-        /// <returns> A new <see cref="Models.MaterializedViewsBuilderRegionalService"/> instance for mocking. </returns>
-        public static MaterializedViewsBuilderRegionalService MaterializedViewsBuilderRegionalService(string name = null, AzureLocation? location = null, CosmosDBServiceStatus? status = null)
-        {
-            return new MaterializedViewsBuilderRegionalService(name, location, status, serializedAdditionalRawData: null);
+                collectionNames.ToList(),
+                additionalBinaryDataProperties: null);
         }
     }
 }

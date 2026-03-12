@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary>
-    /// A class representing the CosmosDBPrivateEndpointConnection data model.
-    /// A private endpoint connection
-    /// </summary>
+    /// <summary> A private endpoint connection. </summary>
     public partial class CosmosDBPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateEndpointConnectionData"/>. </summary>
         public CosmosDBPrivateEndpointConnectionData()
@@ -57,47 +25,87 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpoint"> Private endpoint which the connection belongs to. </param>
-        /// <param name="connectionState"> Connection State of the Private Endpoint Connection. </param>
-        /// <param name="groupId"> Group id of the private endpoint. </param>
-        /// <param name="provisioningState"> Provisioning state of the private endpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateEndpointProperty privateEndpoint, CosmosDBPrivateLinkServiceConnectionStateProperty connectionState, string groupId, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Resource properties. </param>
+        internal CosmosDBPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
-            PrivateEndpoint = privateEndpoint;
-            ConnectionState = connectionState;
-            GroupId = groupId;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Private endpoint which the connection belongs to. </summary>
-        internal PrivateEndpointProperty PrivateEndpoint { get; set; }
-        /// <summary> Resource id of the private endpoint. </summary>
-        [WirePath("properties.privateEndpoint.id")]
-        public ResourceIdentifier PrivateEndpointId
+        /// <summary> Resource properties. </summary>
+        internal PrivateEndpointConnectionProperties Properties { get; set; }
+
+        /// <summary> Connection State of the Private Endpoint Connection. </summary>
+        public CosmosDBPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState
         {
-            get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
             set
             {
-                if (PrivateEndpoint is null)
-                    PrivateEndpoint = new PrivateEndpointProperty();
-                PrivateEndpoint.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
             }
         }
 
-        /// <summary> Connection State of the Private Endpoint Connection. </summary>
-        [WirePath("properties.privateLinkServiceConnectionState")]
-        public CosmosDBPrivateLinkServiceConnectionStateProperty ConnectionState { get; set; }
         /// <summary> Group id of the private endpoint. </summary>
-        [WirePath("properties.groupId")]
-        public string GroupId { get; set; }
+        public string GroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.GroupId = value;
+            }
+        }
+
         /// <summary> Provisioning state of the private endpoint. </summary>
-        [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.ProvisioningState = value;
+            }
+        }
+
+        /// <summary> Resource id of the private endpoint. </summary>
+        public string PrivateEndpointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointConnectionProperties();
+                }
+                Properties.PrivateEndpointId = value;
+            }
+        }
     }
 }

@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Specific Databases to restore. </summary>
-    public partial class RestorableMongoDBResourceData : ResourceData
+    public partial class RestorableMongoDBResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestorableMongoDBResourceData"/>. </summary>
         internal RestorableMongoDBResourceData()
@@ -54,25 +24,35 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableMongoDBResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> The unique resource identifier of the ARM resource. </param>
+        /// <param name="name"> The name of the ARM resource. </param>
+        /// <param name="type"> The type of Azure resource. </param>
         /// <param name="databaseName"> The name of the database available for restore. </param>
         /// <param name="collectionNames"> The names of the collections available for restore. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorableMongoDBResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, IReadOnlyList<string> collectionNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableMongoDBResourceData(string id, string name, string @type, string databaseName, IReadOnlyList<string> collectionNames, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Id = id;
+            Name = name;
+            Type = @type;
             DatabaseName = databaseName;
             CollectionNames = collectionNames;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The unique resource identifier of the ARM resource. </summary>
+        public string Id { get; }
+
+        /// <summary> The name of the ARM resource. </summary>
+        public string Name { get; }
+
+        /// <summary> The type of Azure resource. </summary>
+        public string Type { get; }
+
         /// <summary> The name of the database available for restore. </summary>
-        [WirePath("databaseName")]
         public string DatabaseName { get; }
+
         /// <summary> The names of the collections available for restore. </summary>
-        [WirePath("collectionNames")]
         public IReadOnlyList<string> CollectionNames { get; }
     }
 }

@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraClusterDataCenterNodeItem : IUtf8JsonSerializable, IJsonModel<CassandraClusterDataCenterNodeItem>
+    /// <summary> The CassandraClusterDataCenterNodeItem. </summary>
+    public partial class CassandraClusterDataCenterNodeItem : IJsonModel<CassandraClusterDataCenterNodeItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraClusterDataCenterNodeItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CassandraClusterDataCenterNodeItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCassandraClusterDataCenterNodeItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CassandraClusterDataCenterNodeItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CassandraClusterDataCenterNodeItem IPersistableModel<CassandraClusterDataCenterNodeItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CassandraClusterDataCenterNodeItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CassandraClusterDataCenterNodeItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
@@ -65,8 +103,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("tokens"u8);
                 writer.WriteStartArray();
-                foreach (var item in Tokens)
+                foreach (string item in Tokens)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -76,10 +119,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("size"u8);
                 writer.WriteNumberValue(Size.Value);
             }
-            if (Optional.IsDefined(HostId))
+            if (Optional.IsDefined(HostID))
             {
                 writer.WritePropertyName("hostID"u8);
-                writer.WriteStringValue(HostId.Value);
+                writer.WriteStringValue(HostID);
             }
             if (Optional.IsDefined(Rack))
             {
@@ -126,15 +169,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("cpuUsage"u8);
                 writer.WriteNumberValue(CpuUsage.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(IsLatestModel))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("isLatestModel"u8);
+                writer.WriteBooleanValue(IsLatestModel.Value);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -143,22 +191,27 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        CassandraClusterDataCenterNodeItem IJsonModel<CassandraClusterDataCenterNodeItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CassandraClusterDataCenterNodeItem IJsonModel<CassandraClusterDataCenterNodeItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CassandraClusterDataCenterNodeItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCassandraClusterDataCenterNodeItem(document.RootElement, options);
         }
 
-        internal static CassandraClusterDataCenterNodeItem DeserializeCassandraClusterDataCenterNodeItem(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CassandraClusterDataCenterNodeItem DeserializeCassandraClusterDataCenterNodeItem(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -170,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string load = default;
             IReadOnlyList<string> tokens = default;
             int? size = default;
-            Guid? hostId = default;
+            string hostID = default;
             string rack = default;
             string timestamp = default;
             long? diskUsedKB = default;
@@ -180,150 +233,161 @@ namespace Azure.ResourceManager.CosmosDB.Models
             long? memoryFreeKB = default;
             long? memoryTotalKB = default;
             double? cpuUsage = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isLatestModel = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("address"u8))
+                if (prop.NameEquals("address"u8))
                 {
-                    address = property.Value.GetString();
+                    address = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new CassandraNodeState(property.Value.GetString());
+                    state = new CassandraNodeState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cassandraProcessStatus"u8))
+                if (prop.NameEquals("cassandraProcessStatus"u8))
                 {
-                    cassandraProcessStatus = property.Value.GetString();
+                    cassandraProcessStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("load"u8))
+                if (prop.NameEquals("load"u8))
                 {
-                    load = property.Value.GetString();
+                    load = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tokens"u8))
+                if (prop.NameEquals("tokens"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     tokens = array;
                     continue;
                 }
-                if (property.NameEquals("size"u8))
+                if (prop.NameEquals("size"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    size = property.Value.GetInt32();
+                    size = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("hostID"u8))
+                if (prop.NameEquals("hostID"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    hostID = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("rack"u8))
+                {
+                    rack = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("timestamp"u8))
+                {
+                    timestamp = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("diskUsedKB"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hostId = property.Value.GetGuid();
+                    diskUsedKB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rack"u8))
+                if (prop.NameEquals("diskFreeKB"u8))
                 {
-                    rack = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("timestamp"u8))
-                {
-                    timestamp = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("diskUsedKB"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskUsedKB = property.Value.GetInt64();
+                    diskFreeKB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskFreeKB"u8))
+                if (prop.NameEquals("memoryUsedKB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskFreeKB = property.Value.GetInt64();
+                    memoryUsedKB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryUsedKB"u8))
+                if (prop.NameEquals("memoryBuffersAndCachedKB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryUsedKB = property.Value.GetInt64();
+                    memoryBuffersAndCachedKB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryBuffersAndCachedKB"u8))
+                if (prop.NameEquals("memoryFreeKB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryBuffersAndCachedKB = property.Value.GetInt64();
+                    memoryFreeKB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryFreeKB"u8))
+                if (prop.NameEquals("memoryTotalKB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryFreeKB = property.Value.GetInt64();
+                    memoryTotalKB = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("memoryTotalKB"u8))
+                if (prop.NameEquals("cpuUsage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    memoryTotalKB = property.Value.GetInt64();
+                    cpuUsage = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("cpuUsage"u8))
+                if (prop.NameEquals("isLatestModel"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cpuUsage = property.Value.GetDouble();
+                    isLatestModel = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CassandraClusterDataCenterNodeItem(
                 address,
                 state,
@@ -332,7 +396,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 load,
                 tokens ?? new ChangeTrackingList<string>(),
                 size,
-                hostId,
+                hostID,
                 rack,
                 timestamp,
                 diskUsedKB,
@@ -342,379 +406,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 memoryFreeKB,
                 memoryTotalKB,
                 cpuUsage,
-                serializedAdditionalRawData);
+                isLatestModel,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  address: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Address))
-                {
-                    builder.Append("  address: ");
-                    if (Address.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Address}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Address}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("  state: ");
-                    builder.AppendLine($"'{State.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Status))
-                {
-                    builder.Append("  status: ");
-                    if (Status.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Status}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Status}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CassandraProcessStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cassandraProcessStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CassandraProcessStatus))
-                {
-                    builder.Append("  cassandraProcessStatus: ");
-                    if (CassandraProcessStatus.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CassandraProcessStatus}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CassandraProcessStatus}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Load), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  load: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Load))
-                {
-                    builder.Append("  load: ");
-                    if (Load.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Load}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Load}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tokens), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tokens: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Tokens))
-                {
-                    if (Tokens.Any())
-                    {
-                        builder.Append("  tokens: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Tokens)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Size), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  size: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Size))
-                {
-                    builder.Append("  size: ");
-                    builder.AppendLine($"{Size.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hostID: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostId))
-                {
-                    builder.Append("  hostID: ");
-                    builder.AppendLine($"'{HostId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rack), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  rack: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Rack))
-                {
-                    builder.Append("  rack: ");
-                    if (Rack.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Rack}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Rack}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  timestamp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Timestamp))
-                {
-                    builder.Append("  timestamp: ");
-                    if (Timestamp.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Timestamp}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Timestamp}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskUsedKB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  diskUsedKB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DiskUsedKB))
-                {
-                    builder.Append("  diskUsedKB: ");
-                    builder.AppendLine($"'{DiskUsedKB.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiskFreeKB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  diskFreeKB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DiskFreeKB))
-                {
-                    builder.Append("  diskFreeKB: ");
-                    builder.AppendLine($"'{DiskFreeKB.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryUsedKB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  memoryUsedKB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MemoryUsedKB))
-                {
-                    builder.Append("  memoryUsedKB: ");
-                    builder.AppendLine($"'{MemoryUsedKB.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryBuffersAndCachedKB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  memoryBuffersAndCachedKB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MemoryBuffersAndCachedKB))
-                {
-                    builder.Append("  memoryBuffersAndCachedKB: ");
-                    builder.AppendLine($"'{MemoryBuffersAndCachedKB.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryFreeKB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  memoryFreeKB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MemoryFreeKB))
-                {
-                    builder.Append("  memoryFreeKB: ");
-                    builder.AppendLine($"'{MemoryFreeKB.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryTotalKB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  memoryTotalKB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MemoryTotalKB))
-                {
-                    builder.Append("  memoryTotalKB: ");
-                    builder.AppendLine($"'{MemoryTotalKB.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuUsage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  cpuUsage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CpuUsage))
-                {
-                    builder.Append("  cpuUsage: ");
-                    builder.AppendLine($"'{CpuUsage.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CassandraClusterDataCenterNodeItem>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CassandraClusterDataCenterNodeItem IPersistableModel<CassandraClusterDataCenterNodeItem>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CassandraClusterDataCenterNodeItem>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCassandraClusterDataCenterNodeItem(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CassandraClusterDataCenterNodeItem)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CassandraClusterDataCenterNodeItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

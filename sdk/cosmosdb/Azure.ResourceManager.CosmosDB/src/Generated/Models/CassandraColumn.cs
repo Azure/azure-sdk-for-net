@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra table column. </summary>
     public partial class CassandraColumn
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CassandraColumn"/>. </summary>
         public CassandraColumn()
@@ -52,20 +23,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of <see cref="CassandraColumn"/>. </summary>
         /// <param name="name"> Name of the Cosmos DB Cassandra table column. </param>
-        /// <param name="cassandraColumnType"> Type of the Cosmos DB Cassandra table column. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraColumn(string name, string cassandraColumnType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> Type of the Cosmos DB Cassandra table column. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraColumn(string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            CassandraColumnType = cassandraColumnType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the Cosmos DB Cassandra table column. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Type of the Cosmos DB Cassandra table column. </summary>
-        [WirePath("type")]
-        public string CassandraColumnType { get; set; }
+        public string Type { get; set; }
     }
 }

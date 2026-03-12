@@ -8,56 +8,50 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableCosmosDBResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableCosmosDBResourceGroupResource for mocking. </summary>
         protected MockableCosmosDBResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableCosmosDBResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableCosmosDBResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets a collection of DatabaseAccountGetResults in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DatabaseAccountGetResults and their operations over a DatabaseAccountGetResultsResource. </returns>
+        public virtual DatabaseAccountGetResultsCollection GetAllDatabaseAccountGetResults()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of CosmosDBAccountResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CosmosDBAccountResources and their operations over a CosmosDBAccountResource. </returns>
-        public virtual CosmosDBAccountCollection GetCosmosDBAccounts()
-        {
-            return GetCachedClient(client => new CosmosDBAccountCollection(client, Id));
+            return GetCachedClient(client => new DatabaseAccountGetResultsCollection(client, Id));
         }
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB database account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,29 +60,27 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBAccountResource>> GetCosmosDBAccountAsync(string accountName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatabaseAccountGetResultsResource>> GetDatabaseAccountGetResultsAsync(string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetCosmosDBAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            return await GetAllDatabaseAccountGetResults().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB database account.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DatabaseAccounts_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DatabaseAccounts_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,36 +89,99 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CosmosDBAccountResource> GetCosmosDBAccount(string accountName, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseAccountGetResultsResource> GetDatabaseAccountGetResults(string accountName, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBAccounts().Get(accountName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+
+            return GetAllDatabaseAccountGetResults().Get(accountName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CassandraClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CassandraClusterResources and their operations over a CassandraClusterResource. </returns>
+        /// <summary> Gets a collection of GarnetClusterResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of GarnetClusterResources and their operations over a GarnetClusterResource. </returns>
+        public virtual GarnetClusterResourceCollection GetGarnetClusterResources()
+        {
+            return GetCachedClient(client => new GarnetClusterResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get the properties of a Garnet cache cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/garnetClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GarnetClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clusterName"> The name of the GarnetClusterResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GarnetClusterResource>> GetGarnetClusterResourceAsync(string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            return await GetGarnetClusterResources().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the properties of a Garnet cache cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/garnetClusters/{clusterName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GarnetClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clusterName"> The name of the GarnetClusterResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GarnetClusterResource> GetGarnetClusterResource(string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            return GetGarnetClusterResources().Get(clusterName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CassandraClusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CassandraClusters and their operations over a CassandraClusterResource. </returns>
         public virtual CassandraClusterCollection GetCassandraClusters()
         {
-            return GetCachedClient(client => new CassandraClusterCollection(client, Id));
+            return this.GetCachedClient(client => new CassandraClusterCollection(client, Id));
         }
 
         /// <summary>
         /// Get the properties of a managed Cassandra cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CassandraClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CassandraClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +192,8 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CassandraClusterResource>> GetCassandraClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return await GetCassandraClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +201,16 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// Get the properties of a managed Cassandra cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CassandraClusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ClusterResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CassandraClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,34 +221,97 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         [ForwardsClientCalls]
         public virtual Response<CassandraClusterResource> GetCassandraCluster(string clusterName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
             return GetCassandraClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CosmosDBFleetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CosmosDBFleetResources and their operations over a CosmosDBFleetResource. </returns>
-        public virtual CosmosDBFleetCollection GetCosmosDBFleets()
+        /// <summary> Gets a collection of ThroughputPoolResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ThroughputPoolResources and their operations over a ThroughputPoolResource. </returns>
+        public virtual ThroughputPoolResourceCollection GetThroughputPoolResources()
         {
-            return GetCachedClient(client => new CosmosDBFleetCollection(client, Id));
+            return GetCachedClient(client => new ThroughputPoolResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB Throughput Pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ThroughputPoolResource>> GetThroughputPoolResourceAsync(string throughputPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
+
+            return await GetThroughputPoolResources().GetAsync(throughputPoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the properties of an existing Azure Cosmos DB Throughput Pool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/throughputPools/{throughputPoolName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThroughputPoolResources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="throughputPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="throughputPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ThroughputPoolResource> GetThroughputPoolResource(string throughputPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(throughputPoolName, nameof(throughputPoolName));
+
+            return GetThroughputPoolResources().Get(throughputPoolName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of FleetResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of FleetResources and their operations over a FleetResource. </returns>
+        public virtual FleetResourceCollection GetFleetResources()
+        {
+            return GetCachedClient(client => new FleetResourceCollection(client, Id));
         }
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB fleet under a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,29 +320,27 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CosmosDBFleetResource>> GetCosmosDBFleetAsync(string fleetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FleetResource>> GetFleetResourceAsync(string fleetName, CancellationToken cancellationToken = default)
         {
-            return await GetCosmosDBFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+
+            return await GetFleetResources().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Retrieves the properties of an existing Azure Cosmos DB fleet under a subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/fleets/{fleetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> FleetResources_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CosmosDBFleetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,9 +349,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CosmosDBFleetResource> GetCosmosDBFleet(string fleetName, CancellationToken cancellationToken = default)
+        public virtual Response<FleetResource> GetFleetResource(string fleetName, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBFleets().Get(fleetName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(fleetName, nameof(fleetName));
+
+            return GetFleetResources().Get(fleetName, cancellationToken);
         }
     }
 }

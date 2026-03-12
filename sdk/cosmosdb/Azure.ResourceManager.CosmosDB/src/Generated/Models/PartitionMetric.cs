@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The metric values for a single partition. </summary>
-    public partial class PartitionMetric : CosmosDBBaseMetric
+    public partial class PartitionMetric : Metric
     {
         /// <summary> Initializes a new instance of <see cref="PartitionMetric"/>. </summary>
         internal PartitionMetric()
@@ -25,20 +25,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The metric values for the specified time window and timestep. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="partitionId"> The partition id (GUID identifier) of the metric values. </param>
         /// <param name="partitionKeyRangeId"> The partition key range id (integer identifier) of the metric values. </param>
-        internal PartitionMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? partitionId, string partitionKeyRangeId) : base(startOn, endOn, timeGrain, unit, name, metricValues, serializedAdditionalRawData)
+        internal PartitionMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues, IDictionary<string, BinaryData> additionalBinaryDataProperties, string partitionId, string partitionKeyRangeId) : base(startOn, endOn, timeGrain, unit, name, metricValues, additionalBinaryDataProperties)
         {
             PartitionId = partitionId;
             PartitionKeyRangeId = partitionKeyRangeId;
         }
 
         /// <summary> The partition id (GUID identifier) of the metric values. </summary>
-        [WirePath("partitionId")]
-        public Guid? PartitionId { get; }
+        public string PartitionId { get; }
+
         /// <summary> The partition key range id (integer identifier) of the metric values. </summary>
-        [WirePath("partitionKeyRangeId")]
         public string PartitionKeyRangeId { get; }
     }
 }

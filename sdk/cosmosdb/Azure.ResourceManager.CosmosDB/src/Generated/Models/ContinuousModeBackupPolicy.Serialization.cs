@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ContinuousModeBackupPolicy : IUtf8JsonSerializable, IJsonModel<ContinuousModeBackupPolicy>
+    /// <summary> The object representing continuous mode backup policy. </summary>
+    public partial class ContinuousModeBackupPolicy : CosmosDBAccountBackupPolicy, IJsonModel<ContinuousModeBackupPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContinuousModeBackupPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CosmosDBAccountBackupPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContinuousModeBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContinuousModeBackupPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContinuousModeBackupPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContinuousModeBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContinuousModeBackupPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContinuousModeBackupPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContinuousModeBackupPolicy IPersistableModel<ContinuousModeBackupPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContinuousModeBackupPolicy)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContinuousModeBackupPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContinuousModeBackupPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContinuousModeBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContinuousModeBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContinuousModeBackupPolicy)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ContinuousModeProperties))
             {
@@ -43,156 +82,66 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        ContinuousModeBackupPolicy IJsonModel<ContinuousModeBackupPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContinuousModeBackupPolicy IJsonModel<ContinuousModeBackupPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContinuousModeBackupPolicy)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CosmosDBAccountBackupPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContinuousModeBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContinuousModeBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContinuousModeBackupPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContinuousModeBackupPolicy(document.RootElement, options);
         }
 
-        internal static ContinuousModeBackupPolicy DeserializeContinuousModeBackupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContinuousModeBackupPolicy DeserializeContinuousModeBackupPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ContinuousModeProperties continuousModeProperties = default;
-            BackupPolicyType type = default;
+            BackupPolicyType @type = default;
             BackupPolicyMigrationState migrationState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ContinuousModeProperties continuousModeProperties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("continuousModeProperties"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    @type = new BackupPolicyType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("migrationState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    continuousModeProperties = ContinuousModeProperties.DeserializeContinuousModeProperties(property.Value, options);
+                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("continuousModeProperties"u8))
                 {
-                    type = new BackupPolicyType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("migrationState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value, options);
+                    continuousModeProperties = ContinuousModeProperties.DeserializeContinuousModeProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ContinuousModeBackupPolicy(type, migrationState, serializedAdditionalRawData, continuousModeProperties);
+            return new ContinuousModeBackupPolicy(@type, migrationState, additionalBinaryDataProperties, continuousModeProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ContinuousModeTier", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  continuousModeProperties: ");
-                builder.AppendLine("{");
-                builder.Append("    tier: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(ContinuousModeProperties))
-                {
-                    builder.Append("  continuousModeProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ContinuousModeProperties, options, 2, false, "  continuousModeProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupPolicyType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  type: ");
-                builder.AppendLine($"'{BackupPolicyType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MigrationState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  migrationState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MigrationState))
-                {
-                    builder.Append("  migrationState: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, MigrationState, options, 2, false, "  migrationState: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ContinuousModeBackupPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContinuousModeBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ContinuousModeBackupPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContinuousModeBackupPolicy IPersistableModel<ContinuousModeBackupPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContinuousModeBackupPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContinuousModeBackupPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContinuousModeBackupPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContinuousModeBackupPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

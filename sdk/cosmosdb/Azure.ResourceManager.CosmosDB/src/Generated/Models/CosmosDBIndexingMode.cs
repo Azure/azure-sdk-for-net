@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public readonly partial struct CosmosDBIndexingMode : IEquatable<CosmosDBIndexingMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBIndexingMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CosmosDBIndexingMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ConsistentValue = "consistent";
         private const string LazyValue = "lazy";
         private const string NoneValue = "none";
 
-        /// <summary> consistent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBIndexingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CosmosDBIndexingMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Consistent. </summary>
         public static CosmosDBIndexingMode Consistent { get; } = new CosmosDBIndexingMode(ConsistentValue);
-        /// <summary> lazy. </summary>
+
+        /// <summary> Gets the Lazy. </summary>
         public static CosmosDBIndexingMode Lazy { get; } = new CosmosDBIndexingMode(LazyValue);
-        /// <summary> none. </summary>
+
+        /// <summary> Gets the None. </summary>
         public static CosmosDBIndexingMode None { get; } = new CosmosDBIndexingMode(NoneValue);
+
         /// <summary> Determines if two <see cref="CosmosDBIndexingMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CosmosDBIndexingMode left, CosmosDBIndexingMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CosmosDBIndexingMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CosmosDBIndexingMode left, CosmosDBIndexingMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CosmosDBIndexingMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CosmosDBIndexingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CosmosDBIndexingMode(string value) => new CosmosDBIndexingMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CosmosDBIndexingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CosmosDBIndexingMode?(string value) => value == null ? null : new CosmosDBIndexingMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CosmosDBIndexingMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CosmosDBIndexingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     internal static partial class MongoDBRoleDefinitionTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MongoDBRoleDefinitionType value) => value switch
         {
             MongoDBRoleDefinitionType.BuiltInRole => "BuiltInRole",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MongoDBRoleDefinitionType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MongoDBRoleDefinitionType ToMongoDBRoleDefinitionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BuiltInRole")) return MongoDBRoleDefinitionType.BuiltInRole;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomRole")) return MongoDBRoleDefinitionType.CustomRole;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BuiltInRole"))
+            {
+                return MongoDBRoleDefinitionType.BuiltInRole;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CustomRole"))
+            {
+                return MongoDBRoleDefinitionType.CustomRole;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MongoDBRoleDefinitionType value.");
         }
     }
