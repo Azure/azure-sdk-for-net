@@ -1,5 +1,5 @@
 
-# Azure Storage Data Movement tests for Blobs and Share Files for .NET
+# Azure Storage Data Movement tests for Blobs and Share Files client library for .NET
 
 > ⚠️ **Non-shipping package**
 >
