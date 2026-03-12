@@ -1,0 +1,4 @@
+directory: specification/purview/resource-manager/Microsoft.Purview/Purview
+commit: b4886895a210edf0dd0418823bec51a6d03c34f9
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

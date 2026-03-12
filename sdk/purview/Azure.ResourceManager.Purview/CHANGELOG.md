@@ -4,11 +4,13 @@
 
 ### Features Added
 
+- Migrated from Swagger to TypeSpec-based generation.
+- Upgraded to API version 2024-04-01-preview.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Resource types have been renamed: `PurviewAccountResource` → `AccountResource`, `PurviewAccountCollection` → `AccountCollection`, etc.
+- `PurviewKafkaConfigurationResource` → `KafkaConfigurationResource`, `PurviewKafkaConfigurationCollection` → `KafkaConfigurationCollection`, etc.
 
 ## 1.2.0-beta.2 (2025-03-11)
 
