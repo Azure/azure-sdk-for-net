@@ -1001,5 +1001,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
             return GetMultiFlattenTests().Get(multiFlattenTestName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of SafeFlattenCtorTests in the <see cref="FooResource"/>. </summary>
+        /// <returns> An object representing collection of SafeFlattenCtorTests and their operations over a SafeFlattenCtorTestResource. </returns>
+        public virtual SafeFlattenCtorTestCollection GetSafeFlattenCtorTests()
+        {
+            return GetCachedClient(client => new SafeFlattenCtorTestCollection(client, Id));
+        }
+
+        /// <summary> Get a SafeFlattenCtorTest. </summary>
+        /// <param name="safeFlattenCtorTestName"> The name of the SafeFlattenCtorTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="safeFlattenCtorTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="safeFlattenCtorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SafeFlattenCtorTestResource>> GetSafeFlattenCtorTestAsync(string safeFlattenCtorTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(safeFlattenCtorTestName, nameof(safeFlattenCtorTestName));
+
+            return await GetSafeFlattenCtorTests().GetAsync(safeFlattenCtorTestName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a SafeFlattenCtorTest. </summary>
+        /// <param name="safeFlattenCtorTestName"> The name of the SafeFlattenCtorTest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="safeFlattenCtorTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="safeFlattenCtorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SafeFlattenCtorTestResource> GetSafeFlattenCtorTest(string safeFlattenCtorTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(safeFlattenCtorTestName, nameof(safeFlattenCtorTestName));
+
+            return GetSafeFlattenCtorTests().Get(safeFlattenCtorTestName, cancellationToken);
+        }
     }
 }

@@ -586,6 +586,23 @@ namespace Azure.Generator.Management.Visitors
         private void UpdatePublicConstructor(ModelProvider model, Dictionary<string, List<FlattenPropertyInfo>> map)
         {
             var publicConstructor = model.Constructors.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+
+            // If no public constructor was found in the (possibly filtered) Constructors list,
+            // it may have been suppressed because a custom code constructor has the same
+            // pre-flatten signature. Retrieve the original unfiltered constructor via
+            // BuildConstructors() so we can create the flattened version.
+            if (publicConstructor is null)
+            {
+                var buildCtorsMethod = typeof(TypeProvider).GetMethod(
+                    "BuildConstructors",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (buildCtorsMethod != null)
+                {
+                    var builtConstructors = buildCtorsMethod.Invoke(model, null) as ConstructorProvider[];
+                    publicConstructor = builtConstructors?.SingleOrDefault(m => m.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public));
+                }
+            }
+
             if (publicConstructor is null)
             {
                 return;

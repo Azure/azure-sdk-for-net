@@ -1464,6 +1464,34 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new SharedConfigProperties(displayName, description, provisioningState, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.SafeFlattenCtorTestData"/> instance for mocking. </returns>
+        public static SafeFlattenCtorTestData SafeFlattenCtorTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServiceLinuxProfile properties = default)
+        {
+            return new SafeFlattenCtorTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> SSH configuration for Linux-based VMs running on Azure. </summary>
+        /// <param name="publicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. </param>
+        /// <returns> A new <see cref="Models.ContainerServiceSshConfiguration"/> instance for mocking. </returns>
+        public static ContainerServiceSshConfiguration ContainerServiceSshConfiguration(IEnumerable<ContainerServiceSshPublicKey> publicKeys = default)
+        {
+            publicKeys ??= new ChangeTrackingList<ContainerServiceSshPublicKey>();
+
+            return new ContainerServiceSshConfiguration(publicKeys.ToList(), additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>
