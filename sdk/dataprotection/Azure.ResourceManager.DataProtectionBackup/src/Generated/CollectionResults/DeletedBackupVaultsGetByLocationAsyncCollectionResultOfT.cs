@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataProtectionBackup.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    internal partial class DeletedBackupVaultsGetByLocationAsyncCollectionResultOfT : AsyncPageable<DeletedBackupVaultResourceData>
+    internal partial class DeletedBackupVaultsGetByLocationAsyncCollectionResultOfT : AsyncPageable<DataProtectionDeletedBackupVaultData>
     {
         private readonly DeletedBackupVaults _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DeletedBackupVaultsGetByLocationAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DeletedBackupVaultResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DataProtectionDeletedBackupVaultData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     yield break;
                 }
                 DeletedBackupVaultResourceListResult result = DeletedBackupVaultResourceListResult.FromResponse(response);
-                yield return Page<DeletedBackupVaultResourceData>.FromValues((IReadOnlyList<DeletedBackupVaultResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DataProtectionDeletedBackupVaultData>.FromValues((IReadOnlyList<DataProtectionDeletedBackupVaultData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByLocationRequest(nextLink, _subscriptionId, _location, _context) : _client.CreateGetByLocationRequest(_subscriptionId, _location, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeletedBackupVaultResourceCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DataProtectionDeletedBackupVaultCollection.GetAll");
             scope.Start();
             try
             {

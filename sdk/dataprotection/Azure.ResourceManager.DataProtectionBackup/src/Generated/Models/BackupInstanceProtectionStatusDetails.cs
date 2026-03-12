@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupInstanceProtectionStatusDetails"/>. </summary>
-        internal BackupInstanceProtectionStatusDetails()
+        public BackupInstanceProtectionStatusDetails()
         {
         }
 
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Specifies the protection status error of the resource. </summary>
-        public UserFacingError ErrorDetails { get; }
+        public UserFacingError ErrorDetails { get; set; }
 
         /// <summary> Specifies the protection status of the resource. </summary>
-        public BackupInstanceProtectionStatus? Status { get; }
+        public BackupInstanceProtectionStatus? Status { get; set; }
     }
 }

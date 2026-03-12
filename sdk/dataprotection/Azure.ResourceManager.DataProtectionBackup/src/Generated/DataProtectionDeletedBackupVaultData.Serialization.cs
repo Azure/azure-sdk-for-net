@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary> Deleted Backup Vault Resource (available from version 2025-09-01). </summary>
-    public partial class DeletedBackupVaultResourceData : ResourceData, IJsonModel<DeletedBackupVaultResourceData>
+    public partial class DataProtectionDeletedBackupVaultData : ResourceData, IJsonModel<DataProtectionDeletedBackupVaultData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedBackupVaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionDeletedBackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDeletedBackupVaultResourceData(document.RootElement, options);
+                        return DeserializeDataProtectionDeletedBackupVaultData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeletedBackupVaultResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionDeletedBackupVaultData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedBackupVaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionDeletedBackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DeletedBackupVaultResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionDeletedBackupVaultData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DeletedBackupVaultResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataProtectionDeletedBackupVaultData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedBackupVaultResourceData IPersistableModel<DeletedBackupVaultResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DeletedBackupVaultResourceData)PersistableModelCreateCore(data, options);
+        DataProtectionDeletedBackupVaultData IPersistableModel<DataProtectionDeletedBackupVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataProtectionDeletedBackupVaultData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DeletedBackupVaultResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataProtectionDeletedBackupVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeletedBackupVaultResourceData"/> from. </param>
-        internal static DeletedBackupVaultResourceData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataProtectionDeletedBackupVaultData"/> from. </param>
+        internal static DataProtectionDeletedBackupVaultData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDeletedBackupVaultResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDataProtectionDeletedBackupVaultData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DeletedBackupVaultResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataProtectionDeletedBackupVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedBackupVaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionDeletedBackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedBackupVaultResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionDeletedBackupVaultData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DeletedBackupVaultResourceData IJsonModel<DeletedBackupVaultResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DeletedBackupVaultResourceData)JsonModelCreateCore(ref reader, options);
+        DataProtectionDeletedBackupVaultData IJsonModel<DataProtectionDeletedBackupVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataProtectionDeletedBackupVaultData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DeletedBackupVaultResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionDeletedBackupVaultData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedBackupVaultResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionDeletedBackupVaultData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeletedBackupVaultResourceData(document.RootElement, options);
+            return DeserializeDataProtectionDeletedBackupVaultData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DeletedBackupVaultResourceData DeserializeDeletedBackupVaultResourceData(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataProtectionDeletedBackupVaultData DeserializeDataProtectionDeletedBackupVaultData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DeletedBackupVault properties = default;
+            DataProtectionDeletedBackupVaultProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    properties = DeletedBackupVault.DeserializeDeletedBackupVault(prop.Value, options);
+                    properties = DataProtectionDeletedBackupVaultProperties.DeserializeDataProtectionDeletedBackupVaultProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeletedBackupVaultResourceData(
+            return new DataProtectionDeletedBackupVaultData(
                 id,
                 name,
                 resourceType,

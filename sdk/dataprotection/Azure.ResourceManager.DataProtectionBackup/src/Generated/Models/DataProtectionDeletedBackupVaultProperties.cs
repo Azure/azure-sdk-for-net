@@ -14,21 +14,21 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Deleted Backup Vault - uses composition with BackupVault and additional deletion metadata. </summary>
-    public partial class DeletedBackupVault
+    public partial class DataProtectionDeletedBackupVaultProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DeletedBackupVault"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionDeletedBackupVaultProperties"/>. </summary>
         /// <param name="storageSettings"> Storage Settings. </param>
-        internal DeletedBackupVault(IEnumerable<DataProtectionBackupStorageSetting> storageSettings)
+        internal DataProtectionDeletedBackupVaultProperties(IEnumerable<DataProtectionBackupStorageSetting> storageSettings)
         {
             StorageSettings = storageSettings.ToList();
             ResourceGuardOperationRequests = new ChangeTrackingList<string>();
             ReplicatedRegions = new ChangeTrackingList<AzureLocation>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeletedBackupVault"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionDeletedBackupVaultProperties"/>. </summary>
         /// <param name="monitoringSettings"> Monitoring Settings. </param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="originalBackupVaultResourcePath"> Resource path of the original backup vault. </param>
         /// <param name="resourceDeletionInfo"> Deletion info for the tracked resource (Backup Vault). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedBackupVault(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, string originalBackupVaultId, string originalBackupVaultName, string originalBackupVaultResourcePath, ResourceDeletionInfo resourceDeletionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionDeletedBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, string originalBackupVaultId, string originalBackupVaultName, string originalBackupVaultResourcePath, ResourceDeletionInfo resourceDeletionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;

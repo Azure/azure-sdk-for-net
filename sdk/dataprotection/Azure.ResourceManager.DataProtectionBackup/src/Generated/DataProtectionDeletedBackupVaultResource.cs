@@ -18,40 +18,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A class representing a DeletedBackupVaultResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeletedBackupVaultResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDeletedBackupVaultResources method.
+    /// A class representing a DataProtectionDeletedBackupVault along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataProtectionDeletedBackupVaultResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetDataProtectionDeletedBackupVaults method.
     /// </summary>
-    public partial class DeletedBackupVaultResource : ArmResource
+    public partial class DataProtectionDeletedBackupVaultResource : ArmResource
     {
         private readonly ClientDiagnostics _deletedBackupVaultsClientDiagnostics;
         private readonly DeletedBackupVaults _deletedBackupVaultsRestClient;
-        private readonly DeletedBackupVaultResourceData _data;
+        private readonly DataProtectionDeletedBackupVaultData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataProtection/locations/deletedVaults";
 
-        /// <summary> Initializes a new instance of DeletedBackupVaultResource for mocking. </summary>
-        protected DeletedBackupVaultResource()
+        /// <summary> Initializes a new instance of DataProtectionDeletedBackupVaultResource for mocking. </summary>
+        protected DataProtectionDeletedBackupVaultResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeletedBackupVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionDeletedBackupVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DeletedBackupVaultResource(ArmClient client, DeletedBackupVaultResourceData data) : this(client, data.Id)
+        internal DataProtectionDeletedBackupVaultResource(ArmClient client, DataProtectionDeletedBackupVaultData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeletedBackupVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionDeletedBackupVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DeletedBackupVaultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataProtectionDeletedBackupVaultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string deletedBackupVaultResourceApiVersion);
+            TryGetApiVersion(ResourceType, out string dataProtectionDeletedBackupVaultApiVersion);
             _deletedBackupVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", ResourceType.Namespace, Diagnostics);
-            _deletedBackupVaultsRestClient = new DeletedBackupVaults(_deletedBackupVaultsClientDiagnostics, Pipeline, Endpoint, deletedBackupVaultResourceApiVersion ?? "2025-09-01");
+            _deletedBackupVaultsRestClient = new DeletedBackupVaults(_deletedBackupVaultsClientDiagnostics, Pipeline, Endpoint, dataProtectionDeletedBackupVaultApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DeletedBackupVaultResourceData Data
+        public virtual DataProtectionDeletedBackupVaultData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DeletedBackupVaultResource"/>. </description>
+        /// <description> <see cref="DataProtectionDeletedBackupVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DeletedBackupVaultResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataProtectionDeletedBackupVaultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DeletedBackupVaultResource.Get");
+            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DataProtectionDeletedBackupVaultResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 };
                 HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeletedBackupVaultResourceData> response = Response.FromValue(DeletedBackupVaultResourceData.FromResponse(result), result);
+                Response<DataProtectionDeletedBackupVaultData> response = Response.FromValue(DataProtectionDeletedBackupVaultData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionDeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DeletedBackupVaultResource"/>. </description>
+        /// <description> <see cref="DataProtectionDeletedBackupVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DeletedBackupVaultResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataProtectionDeletedBackupVaultResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DeletedBackupVaultResource.Get");
+            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DataProtectionDeletedBackupVaultResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 };
                 HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeletedBackupVaultResourceData> response = Response.FromValue(DeletedBackupVaultResourceData.FromResponse(result), result);
+                Response<DataProtectionDeletedBackupVaultData> response = Response.FromValue(DataProtectionDeletedBackupVaultData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionDeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

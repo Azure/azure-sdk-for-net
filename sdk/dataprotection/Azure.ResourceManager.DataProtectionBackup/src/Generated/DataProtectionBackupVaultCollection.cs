@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,10 +24,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// Each <see cref="DataProtectionBackupVaultResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
     /// To get a <see cref="DataProtectionBackupVaultCollection"/> instance call the GetDataProtectionBackupVaults method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
-    public partial class DataProtectionBackupVaultCollection : ArmCollection
+    public partial class DataProtectionBackupVaultCollection : ArmCollection, IEnumerable<DataProtectionBackupVaultResource>, IAsyncEnumerable<DataProtectionBackupVaultResource>
     {
         private readonly ClientDiagnostics _backupVaultResourcesClientDiagnostics;
         private readonly BackupVaultResources _backupVaultResourcesRestClient;
+        private readonly ClientDiagnostics _backupVaultOperationResultsClientDiagnostics;
+        private readonly BackupVaultOperationResults _backupVaultOperationResultsRestClient;
 
         /// <summary> Initializes a new instance of DataProtectionBackupVaultCollection for mocking. </summary>
         protected DataProtectionBackupVaultCollection()
@@ -40,6 +44,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
             TryGetApiVersion(DataProtectionBackupVaultResource.ResourceType, out string dataProtectionBackupVaultApiVersion);
             _backupVaultResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupVaultResource.ResourceType.Namespace, Diagnostics);
             _backupVaultResourcesRestClient = new BackupVaultResources(_backupVaultResourcesClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupVaultApiVersion ?? "2025-09-01");
+            _backupVaultOperationResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionBackupVaultResource.ResourceType.Namespace, Diagnostics);
+            _backupVaultOperationResultsRestClient = new BackupVaultOperationResults(_backupVaultOperationResultsClientDiagnostics, Pipeline, Endpoint, dataProtectionBackupVaultApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -269,6 +275,62 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Returns resource collection belonging to a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupVaultOperationResults_GetInResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataProtectionBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataProtectionBackupVaultResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultOperationResultsGetInResourceGroupAsyncCollectionResultOfT(_backupVaultOperationResultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DataProtectionBackupVaultResource(Client, data));
+        }
+
+        /// <summary>
+        /// Returns resource collection belonging to a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BackupVaultOperationResults_GetInResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataProtectionBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProtectionBackupVaultResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DataProtectionBackupVaultData, DataProtectionBackupVaultResource>(new BackupVaultOperationResultsGetInResourceGroupCollectionResultOfT(_backupVaultOperationResultsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DataProtectionBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -505,6 +567,22 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DataProtectionBackupVaultResource> IEnumerable<DataProtectionBackupVaultResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<DataProtectionBackupVaultResource> IAsyncEnumerable<DataProtectionBackupVaultResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

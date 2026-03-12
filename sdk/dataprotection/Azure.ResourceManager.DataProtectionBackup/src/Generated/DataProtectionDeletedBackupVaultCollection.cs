@@ -20,32 +20,32 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeletedBackupVaultResource"/> and their operations.
-    /// Each <see cref="DeletedBackupVaultResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="DeletedBackupVaultResourceCollection"/> instance call the GetDeletedBackupVaultResources method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="DataProtectionDeletedBackupVaultResource"/> and their operations.
+    /// Each <see cref="DataProtectionDeletedBackupVaultResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="DataProtectionDeletedBackupVaultCollection"/> instance call the GetDataProtectionDeletedBackupVaults method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class DeletedBackupVaultResourceCollection : ArmCollection, IEnumerable<DeletedBackupVaultResource>, IAsyncEnumerable<DeletedBackupVaultResource>
+    public partial class DataProtectionDeletedBackupVaultCollection : ArmCollection, IEnumerable<DataProtectionDeletedBackupVaultResource>, IAsyncEnumerable<DataProtectionDeletedBackupVaultResource>
     {
         private readonly ClientDiagnostics _deletedBackupVaultsClientDiagnostics;
         private readonly DeletedBackupVaults _deletedBackupVaultsRestClient;
         /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of DeletedBackupVaultResourceCollection for mocking. </summary>
-        protected DeletedBackupVaultResourceCollection()
+        /// <summary> Initializes a new instance of DataProtectionDeletedBackupVaultCollection for mocking. </summary>
+        protected DataProtectionDeletedBackupVaultCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeletedBackupVaultResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionDeletedBackupVaultCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         /// <param name="location"> The location for the resource. </param>
-        internal DeletedBackupVaultResourceCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        internal DataProtectionDeletedBackupVaultCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
-            TryGetApiVersion(DeletedBackupVaultResource.ResourceType, out string deletedBackupVaultResourceApiVersion);
+            TryGetApiVersion(DataProtectionDeletedBackupVaultResource.ResourceType, out string dataProtectionDeletedBackupVaultApiVersion);
             _location = location;
-            _deletedBackupVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DeletedBackupVaultResource.ResourceType.Namespace, Diagnostics);
-            _deletedBackupVaultsRestClient = new DeletedBackupVaults(_deletedBackupVaultsClientDiagnostics, Pipeline, Endpoint, deletedBackupVaultResourceApiVersion ?? "2025-09-01");
+            _deletedBackupVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataProtectionBackup", DataProtectionDeletedBackupVaultResource.ResourceType.Namespace, Diagnostics);
+            _deletedBackupVaultsRestClient = new DeletedBackupVaults(_deletedBackupVaultsClientDiagnostics, Pipeline, Endpoint, dataProtectionDeletedBackupVaultApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DeletedBackupVaultResource>> GetAsync(string deletedVaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataProtectionDeletedBackupVaultResource>> GetAsync(string deletedVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
 
-            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DeletedBackupVaultResourceCollection.Get");
+            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DataProtectionDeletedBackupVaultCollection.Get");
             scope.Start();
             try
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 };
                 HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DeletedBackupVaultResourceData> response = Response.FromValue(DeletedBackupVaultResourceData.FromResponse(result), result);
+                Response<DataProtectionDeletedBackupVaultData> response = Response.FromValue(DataProtectionDeletedBackupVaultData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionDeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DeletedBackupVaultResource> Get(string deletedVaultName, CancellationToken cancellationToken = default)
+        public virtual Response<DataProtectionDeletedBackupVaultResource> Get(string deletedVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
 
-            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DeletedBackupVaultResourceCollection.Get");
+            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DataProtectionDeletedBackupVaultCollection.Get");
             scope.Start();
             try
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 };
                 HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DeletedBackupVaultResourceData> response = Response.FromValue(DeletedBackupVaultResourceData.FromResponse(result), result);
+                Response<DataProtectionDeletedBackupVaultData> response = Response.FromValue(DataProtectionDeletedBackupVaultData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionDeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeletedBackupVaultResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionDeletedBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataProtectionDeletedBackupVaultResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeletedBackupVaultResourceData, DeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationAsyncCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new DeletedBackupVaultResource(Client, data));
+            return new AsyncPageableWrapper<DataProtectionDeletedBackupVaultData, DataProtectionDeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationAsyncCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new DataProtectionDeletedBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -203,14 +203,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeletedBackupVaultResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataProtectionDeletedBackupVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataProtectionDeletedBackupVaultResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeletedBackupVaultResourceData, DeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new DeletedBackupVaultResource(Client, data));
+            return new PageableWrapper<DataProtectionDeletedBackupVaultData, DataProtectionDeletedBackupVaultResource>(new DeletedBackupVaultsGetByLocationCollectionResultOfT(_deletedBackupVaultsRestClient, Guid.Parse(Id.SubscriptionId), _location, context), data => new DataProtectionDeletedBackupVaultResource(Client, data));
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
 
-            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DeletedBackupVaultResourceCollection.Exists");
+            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DataProtectionDeletedBackupVaultCollection.Exists");
             scope.Start();
             try
             {
@@ -249,14 +249,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DeletedBackupVaultResourceData> response = default;
+                Response<DataProtectionDeletedBackupVaultData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeletedBackupVaultResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DataProtectionDeletedBackupVaultData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeletedBackupVaultResourceData)null, result);
+                        response = Response.FromValue((DataProtectionDeletedBackupVaultData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
 
-            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DeletedBackupVaultResourceCollection.Exists");
+            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DataProtectionDeletedBackupVaultCollection.Exists");
             scope.Start();
             try
             {
@@ -306,14 +306,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DeletedBackupVaultResourceData> response = default;
+                Response<DataProtectionDeletedBackupVaultData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeletedBackupVaultResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DataProtectionDeletedBackupVaultData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeletedBackupVaultResourceData)null, result);
+                        response = Response.FromValue((DataProtectionDeletedBackupVaultData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -348,11 +348,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DeletedBackupVaultResource>> GetIfExistsAsync(string deletedVaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DataProtectionDeletedBackupVaultResource>> GetIfExistsAsync(string deletedVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
 
-            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DeletedBackupVaultResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DataProtectionDeletedBackupVaultCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -363,23 +363,23 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DeletedBackupVaultResourceData> response = default;
+                Response<DataProtectionDeletedBackupVaultData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeletedBackupVaultResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DataProtectionDeletedBackupVaultData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeletedBackupVaultResourceData)null, result);
+                        response = Response.FromValue((DataProtectionDeletedBackupVaultData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DeletedBackupVaultResource>(response.GetRawResponse());
+                    return new NoValueResponse<DataProtectionDeletedBackupVaultResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionDeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DeletedBackupVaultResource> GetIfExists(string deletedVaultName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DataProtectionDeletedBackupVaultResource> GetIfExists(string deletedVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
 
-            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DeletedBackupVaultResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _deletedBackupVaultsClientDiagnostics.CreateScope("DataProtectionDeletedBackupVaultCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -424,23 +424,23 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 HttpMessage message = _deletedBackupVaultsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), _location, deletedVaultName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DeletedBackupVaultResourceData> response = default;
+                Response<DataProtectionDeletedBackupVaultData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DeletedBackupVaultResourceData.FromResponse(result), result);
+                        response = Response.FromValue(DataProtectionDeletedBackupVaultData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DeletedBackupVaultResourceData)null, result);
+                        response = Response.FromValue((DataProtectionDeletedBackupVaultData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DeletedBackupVaultResource>(response.GetRawResponse());
+                    return new NoValueResponse<DataProtectionDeletedBackupVaultResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataProtectionDeletedBackupVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             }
         }
 
-        IEnumerator<DeletedBackupVaultResource> IEnumerable<DeletedBackupVaultResource>.GetEnumerator()
+        IEnumerator<DataProtectionDeletedBackupVaultResource> IEnumerable<DataProtectionDeletedBackupVaultResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<DeletedBackupVaultResource> IAsyncEnumerable<DeletedBackupVaultResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DataProtectionDeletedBackupVaultResource> IAsyncEnumerable<DataProtectionDeletedBackupVaultResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

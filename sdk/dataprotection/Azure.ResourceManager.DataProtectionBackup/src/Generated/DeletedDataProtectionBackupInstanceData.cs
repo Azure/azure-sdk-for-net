@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeletedDataProtectionBackupInstanceData"/>. </summary>
-        internal DeletedDataProtectionBackupInstanceData()
+        public DeletedDataProtectionBackupInstanceData()
         {
         }
 
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary> DeletedBackupInstanceResource properties. </summary>
-        public DeletedDataProtectionBackupInstanceProperties Properties { get; }
+        public DeletedDataProtectionBackupInstanceProperties Properties { get; set; }
     }
 }

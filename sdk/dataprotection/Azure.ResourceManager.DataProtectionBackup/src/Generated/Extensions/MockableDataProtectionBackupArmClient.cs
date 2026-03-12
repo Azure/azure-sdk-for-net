@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
             return new DataProtectionBackupVaultResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DeletedBackupVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DataProtectionDeletedBackupVaultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DeletedBackupVaultResource"/> object. </returns>
-        public virtual DeletedBackupVaultResource GetDeletedBackupVaultResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataProtectionDeletedBackupVaultResource"/> object. </returns>
+        public virtual DataProtectionDeletedBackupVaultResource GetDataProtectionDeletedBackupVaultResource(ResourceIdentifier id)
         {
-            DeletedBackupVaultResource.ValidateResourceId(id);
-            return new DeletedBackupVaultResource(Client, id);
+            DataProtectionDeletedBackupVaultResource.ValidateResourceId(id);
+            return new DataProtectionDeletedBackupVaultResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="DataProtectionBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>

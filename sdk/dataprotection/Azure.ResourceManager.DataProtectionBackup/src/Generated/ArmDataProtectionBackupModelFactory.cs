@@ -158,15 +158,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new AdlsBlobBackupDataSourceSettings("BlobBackupDatasourceParameters", additionalBinaryDataProperties: null, containersList.ToList());
         }
 
-        /// <summary> Protection status details. </summary>
-        /// <param name="errorDetails"> Specifies the protection status error of the resource. </param>
-        /// <param name="status"> Specifies the protection status of the resource. </param>
-        /// <returns> A new <see cref="Models.BackupInstanceProtectionStatusDetails"/> instance for mocking. </returns>
-        public static BackupInstanceProtectionStatusDetails BackupInstanceProtectionStatusDetails(UserFacingError errorDetails = default, BackupInstanceProtectionStatus? status = default)
-        {
-            return new BackupInstanceProtectionStatusDetails(errorDetails, status, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Error object used by layers that have access to localized content, and propagate that to user. </summary>
         /// <param name="code"> Unique code for this error. </param>
         /// <param name="details"> Additional related Errors. </param>
@@ -335,10 +326,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DataProtectionBackup.DeletedBackupVaultResourceData"/> instance for mocking. </returns>
-        public static DeletedBackupVaultResourceData DeletedBackupVaultResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeletedBackupVault properties = default)
+        /// <returns> A new <see cref="DataProtectionBackup.DataProtectionDeletedBackupVaultData"/> instance for mocking. </returns>
+        public static DataProtectionDeletedBackupVaultData DataProtectionDeletedBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataProtectionDeletedBackupVaultProperties properties = default)
         {
-            return new DeletedBackupVaultResourceData(
+            return new DataProtectionDeletedBackupVaultData(
                 id,
                 name,
                 resourceType,
@@ -363,14 +354,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="originalBackupVaultName"> Resource name of the original backup vault. </param>
         /// <param name="originalBackupVaultResourcePath"> Resource path of the original backup vault. </param>
         /// <param name="resourceDeletionInfo"> Deletion info for the tracked resource (Backup Vault). </param>
-        /// <returns> A new <see cref="Models.DeletedBackupVault"/> instance for mocking. </returns>
-        public static DeletedBackupVault DeletedBackupVault(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default, string originalBackupVaultId = default, string originalBackupVaultName = default, string originalBackupVaultResourcePath = default, ResourceDeletionInfo resourceDeletionInfo = default)
+        /// <returns> A new <see cref="Models.DataProtectionDeletedBackupVaultProperties"/> instance for mocking. </returns>
+        public static DataProtectionDeletedBackupVaultProperties DataProtectionDeletedBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default, string originalBackupVaultId = default, string originalBackupVaultName = default, string originalBackupVaultResourcePath = default, ResourceDeletionInfo resourceDeletionInfo = default)
         {
             storageSettings ??= new ChangeTrackingList<DataProtectionBackupStorageSetting>();
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
             replicatedRegions ??= new ChangeTrackingList<AzureLocation>();
 
-            return new DeletedBackupVault(
+            return new DataProtectionDeletedBackupVaultProperties(
                 monitoringAlertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(monitoringAlertSettingsForAllJobFailures, null), null),
                 provisioningState,
                 resourceMoveState,

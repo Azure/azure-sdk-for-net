@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
 
         private DataProtectionOperationGroup DataProtectionOperationGroupRestClient => _dataProtectionOperationGroupRestClient ??= new DataProtectionOperationGroup(DataProtectionOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        /// <summary> Gets a collection of DeletedBackupVaultResources in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of DataProtectionDeletedBackupVaults in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of DeletedBackupVaultResources and their operations over a DeletedBackupVaultResource. </returns>
-        public virtual DeletedBackupVaultResourceCollection GetDeletedBackupVaultResources(AzureLocation location)
+        /// <returns> An object representing collection of DataProtectionDeletedBackupVaults and their operations over a DataProtectionDeletedBackupVaultResource. </returns>
+        public virtual DataProtectionDeletedBackupVaultCollection GetDataProtectionDeletedBackupVaults(AzureLocation location)
         {
-            return GetCachedClient(client => new DeletedBackupVaultResourceCollection(client, Id, location));
+            return GetCachedClient(client => new DataProtectionDeletedBackupVaultCollection(client, Id, location));
         }
 
         /// <summary>
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DeletedBackupVaultResource>> GetDeletedBackupVaultResourceAsync(AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataProtectionDeletedBackupVaultResource>> GetDataProtectionDeletedBackupVaultAsync(AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
 
-            return await GetDeletedBackupVaultResources(location).GetAsync(deletedVaultName, cancellationToken).ConfigureAwait(false);
+            return await GetDataProtectionDeletedBackupVaults(location).GetAsync(deletedVaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -113,11 +113,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="deletedVaultName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DeletedBackupVaultResource> GetDeletedBackupVaultResource(AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
+        public virtual Response<DataProtectionDeletedBackupVaultResource> GetDataProtectionDeletedBackupVault(AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(deletedVaultName, nameof(deletedVaultName));
 
-            return GetDeletedBackupVaultResources(location).Get(deletedVaultName, cancellationToken);
+            return GetDataProtectionDeletedBackupVaults(location).Get(deletedVaultName, cancellationToken);
         }
 
         /// <summary>

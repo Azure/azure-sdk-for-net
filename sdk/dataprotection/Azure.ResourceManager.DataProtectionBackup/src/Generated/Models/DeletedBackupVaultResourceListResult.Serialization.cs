@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DeletedBackupVaultResourceData item in Value)
+            foreach (DataProtectionDeletedBackupVaultData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            IList<DeletedBackupVaultResourceData> value = default;
+            IList<DataProtectionDeletedBackupVaultData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DeletedBackupVaultResourceData> array = new List<DeletedBackupVaultResourceData>();
+                    List<DataProtectionDeletedBackupVaultData> array = new List<DataProtectionDeletedBackupVaultData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeletedBackupVaultResourceData.DeserializeDeletedBackupVaultResourceData(item, options));
+                        array.Add(DataProtectionDeletedBackupVaultData.DeserializeDataProtectionDeletedBackupVaultData(item, options));
                     }
                     value = array;
                     continue;

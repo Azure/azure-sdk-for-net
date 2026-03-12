@@ -57,21 +57,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DeletedBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DataProtectionDeletedBackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDeletedBackupVaultResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionDeletedBackupVaultResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DeletedBackupVaultResource"/> object. </returns>
-        public static DeletedBackupVaultResource GetDeletedBackupVaultResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataProtectionDeletedBackupVaultResource"/> object. </returns>
+        public static DataProtectionDeletedBackupVaultResource GetDataProtectionDeletedBackupVaultResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableDataProtectionBackupArmClient(client).GetDeletedBackupVaultResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionDeletedBackupVaultResource(id);
         }
 
         /// <summary>
@@ -591,28 +591,28 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Gets a collection of DeletedBackupVaultResources in the <see cref="SubscriptionResource"/>
+        /// Gets a collection of DataProtectionDeletedBackupVaults in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.GetDeletedBackupVaultResources(AzureLocation)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.GetDataProtectionDeletedBackupVaults(AzureLocation)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The location for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An object representing collection of DeletedBackupVaultResources and their operations over a DeletedBackupVaultResource. </returns>
-        public static DeletedBackupVaultResourceCollection GetDeletedBackupVaultResources(this SubscriptionResource subscriptionResource, AzureLocation location)
+        /// <returns> An object representing collection of DataProtectionDeletedBackupVaults and their operations over a DataProtectionDeletedBackupVaultResource. </returns>
+        public static DataProtectionDeletedBackupVaultCollection GetDataProtectionDeletedBackupVaults(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetDeletedBackupVaultResources(location);
+            return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetDataProtectionDeletedBackupVaults(location);
         }
 
         /// <summary>
         /// Gets a deleted backup vault
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.GetDeletedBackupVaultResourceAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.GetDataProtectionDeletedBackupVaultAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -621,18 +621,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DeletedBackupVaultResource>> GetDeletedBackupVaultResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
+        public static async Task<Response<DataProtectionDeletedBackupVaultResource>> GetDataProtectionDeletedBackupVaultAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetDeletedBackupVaultResourceAsync(location, deletedVaultName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetDataProtectionDeletedBackupVaultAsync(location, deletedVaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets a deleted backup vault
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.GetDeletedBackupVaultResource(AzureLocation, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.GetDataProtectionDeletedBackupVault(AzureLocation, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -641,11 +641,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DeletedBackupVaultResource> GetDeletedBackupVaultResource(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
+        public static Response<DataProtectionDeletedBackupVaultResource> GetDataProtectionDeletedBackupVault(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedVaultName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetDeletedBackupVaultResource(location, deletedVaultName, cancellationToken);
+            return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetDataProtectionDeletedBackupVault(location, deletedVaultName, cancellationToken);
         }
 
         /// <summary>
