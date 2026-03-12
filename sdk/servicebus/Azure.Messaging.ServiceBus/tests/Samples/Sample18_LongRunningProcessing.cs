@@ -140,7 +140,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     if (cts.IsCancellationRequested)
                     {
                         Console.WriteLine($"Skipping completion for message {args.Message.MessageId} " +
-                                          "because the lock was lost. Message will be redelivered.");
+                                          "because processing was cancelled (lock lost or processor stopping). " +
+                                          "Message will be redelivered.");
                         return;
                     }
 
@@ -311,11 +312,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         processingCts.Cancel();
                         break;
                     }
-                    catch (ServiceBusException ex)
+                    catch (ServiceBusException ex) when (ex.IsTransient)
                     {
                         // Transient Service Bus error (throttling, network). Log and retry
                         // after a brief backoff so renewal can resume if the issue clears.
-                        Console.WriteLine($"Error renewing lock for message {message.MessageId}: {ex.Message}");
+                        Console.WriteLine($"Transient error renewing lock for message {message.MessageId}: {ex.Message}");
 
                         try
                         {
@@ -325,6 +326,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         {
                             break;
                         }
+                    }
+                    catch (ServiceBusException ex)
+                    {
+                        // Non-transient Service Bus error (auth, entity disabled). Stop renewing
+                        // and signal processing to stop so we don't continue with an unreliable lock state.
+                        Console.WriteLine($"Non-transient error renewing lock for message {message.MessageId}: {ex.Message}");
+                        processingCts.Cancel();
+                        break;
                     }
                     catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
                     {
