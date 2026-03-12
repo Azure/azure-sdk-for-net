@@ -89,6 +89,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     // Catch-all for any other ServiceBusFailureReason (GeneralError, MessageNotFound, etc.).
                     Console.WriteLine($"Service Bus error ({ex.Reason}): {ex.Message}");
                     Console.WriteLine($"Is transient: {ex.IsTransient}");
+                    throw;
                 }
                 #endregion
             }

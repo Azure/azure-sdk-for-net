@@ -74,6 +74,7 @@ catch (ServiceBusException ex)
     // Catch-all for any other ServiceBusFailureReason (GeneralError, MessageNotFound, etc.).
     Console.WriteLine($"Service Bus error ({ex.Reason}): {ex.Message}");
     Console.WriteLine($"Is transient: {ex.IsTransient}");
+    throw;
 }
 ```
 
@@ -283,9 +284,9 @@ while (attempt < maxAttempts)
 | `MessageSizeExceeded` | No | Reduce payload or upgrade to Premium tier |
 | `MessagingEntityDisabled` | No | Re-enable the entity in the portal |
 | `QuotaExceeded` | No | Free space or scale the namespace |
-| `ServiceBusy` | Yes | Back off and rethrow; see Section 4 for retry patterns |
-| `ServiceTimeout` | Yes | Log and rethrow; see Section 4 for retry patterns |
-| `ServiceCommunicationProblem` | Yes | Check network connectivity and rethrow; see Section 4 for retry patterns |
+| `ServiceBusy` | Yes | Back off and rethrow; see [Using IsTransient for retry decisions](#using-istransient-for-retry-decisions) below |
+| `ServiceTimeout` | Yes | Log and rethrow; see [Using IsTransient for retry decisions](#using-istransient-for-retry-decisions) below |
+| `ServiceCommunicationProblem` | Yes | Check network connectivity and rethrow; see [Using IsTransient for retry decisions](#using-istransient-for-retry-decisions) below |
 | `SessionCannotBeLocked` | No | Session is locked by another receiver |
 | `SessionLockLost` | No | Re-accept the session to continue |
 | `MessagingEntityAlreadyExists` | No | Entity already exists; skip creation |
