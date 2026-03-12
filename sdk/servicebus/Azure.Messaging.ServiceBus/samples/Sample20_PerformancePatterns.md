@@ -144,6 +144,7 @@ string queueName = "<queue_name>";
 
 await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 
+
 // Prefetch 50 messages. The client fetches the next batch in the
 // background while the application processes the current messages.
 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName, new ServiceBusReceiverOptions
