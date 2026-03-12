@@ -17,6 +17,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         {
             #region Snippet:ServiceBusLongRunningProcessing
 #if SNIPPET
+            // The fully qualified Service Bus namespace, which is likely to be similar to
+            // "{yournamespace}.servicebus.windows.net".
             string fullyQualifiedNamespace = "<fully_qualified_namespace>";
             string queueName = "<queue_name>";
 

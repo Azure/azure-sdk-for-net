@@ -13,6 +13,8 @@ To use the samples, a Service Bus queue or subscription configured with **PeekLo
 The simplest approach uses the `ServiceBusProcessor` with `MaxAutoLockRenewalDuration` set to cover the longest expected processing time. The client renews the lock in the background while your handler runs.
 
 ```C# Snippet:ServiceBusLongRunningProcessing
+// The fully qualified Service Bus namespace, which is likely to be similar to
+// "{yournamespace}.servicebus.windows.net".
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 
@@ -160,7 +162,7 @@ static async Task ProcessLongRunningJobAsync(ServiceBusReceivedMessage message, 
 
 ## Using the receiver instead of the processor
 
-If you need more control over the receive loop, you can use `ServiceBusReceiver` directly. Unlike the processor, the receiver does not renew locks automatically -- you must renew them yourself using a background task.
+If you need more control over the receive loop, you can use `ServiceBusReceiver` directly. Unlike the processor, the receiver does not renew locks automatically -- you must renew them yourself.  The most common approach is by using a background task.
 
 ```C# Snippet:ServiceBusLongRunningWithReceiver
 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
