@@ -48,8 +48,9 @@ namespace Azure.ResourceManager.Storage
             set { /* no-op for backward compatibility */ }
         }
 
-        // Note: The old API also had string Id (not ResourceIdentifier).
-        // Cannot safely shadow Id because generated StorageAccountMigrationResource
-        // constructor uses data.Id as ResourceIdentifier (line 41).
+        // Note: The old API had string Id (not ResourceIdentifier).
+        // Cannot safely shadow Id with `new string Id` because generated
+        // StorageAccountMigrationResource constructor uses data.Id as ResourceIdentifier.
+        // This type change is suppressed via ApiCompatBaseline.txt.
     }
 }
