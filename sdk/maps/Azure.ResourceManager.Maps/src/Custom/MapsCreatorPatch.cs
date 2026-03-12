@@ -8,7 +8,6 @@ namespace Azure.ResourceManager.Maps.Models
     // Backward compat: TypeSpec spec defines storageUnits as required (int32), but the
     // previous GA SDK (1.1.0) exposed it as nullable (int?). This preserves the nullable
     // type to avoid a breaking change for existing callers.
-    /// <summary> Parameters used to update an existing Creator resource. </summary>
     [CodeGenSuppress("StorageUnits", typeof(int))]
     public partial class MapsCreatorPatch
     {

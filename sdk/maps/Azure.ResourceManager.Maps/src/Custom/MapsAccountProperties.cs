@@ -9,7 +9,6 @@ namespace Azure.ResourceManager.Maps.Models
     // Backward compat: AutoRest-generated SDK exposed CORS rules via a flattened property
     // named CorsRulesValue (from cors.corsRules). TypeSpec renamed it to CorsRules.
     // This shim preserves the old property name for existing callers.
-    /// <summary> Additional Maps account properties. </summary>
     public partial class MapsAccountProperties
     {
         /// <summary>
