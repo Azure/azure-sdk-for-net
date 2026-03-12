@@ -32,9 +32,7 @@ namespace Azure.ResourceManager.Maps.Mocking
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = OperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-#pragma warning disable AZC0150, IL2026, IL3050 // OperationStatusResult is from Azure.ResourceManager; its context isn't available here
-                OperationStatusResult value = ModelReaderWriter.Read<OperationStatusResult>(result.Content);
-#pragma warning restore AZC0150, IL2026, IL3050
+OperationStatusResult value = ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default);
                 return Response.FromValue(value, result);
             }
             catch (Exception e)
@@ -53,9 +51,7 @@ namespace Azure.ResourceManager.Maps.Mocking
                 RequestContext context = new RequestContext { CancellationToken = cancellationToken };
                 HttpMessage message = OperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-#pragma warning disable AZC0150, IL2026, IL3050 // OperationStatusResult is from Azure.ResourceManager; its context isn't available here
-                OperationStatusResult value = ModelReaderWriter.Read<OperationStatusResult>(result.Content);
-#pragma warning restore AZC0150, IL2026, IL3050
+OperationStatusResult value = ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default);
                 return Response.FromValue(value, result);
             }
             catch (Exception e)
