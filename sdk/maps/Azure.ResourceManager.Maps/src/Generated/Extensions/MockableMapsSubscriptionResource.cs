@@ -13,8 +13,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maps;
-using System.ClientModel.Primitives;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maps.Mocking
@@ -195,104 +193,6 @@ namespace Azure.ResourceManager.Maps.Mocking
                     operation.WaitForCompletionResponse(cancellationToken);
                 }
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of a long running azure asynchronous operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maps/locations/{location}/operationStatuses/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OperationStatusOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual async Task<Response<OperationStatusResult>> GetAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = OperationStatusClientDiagnostics.CreateScope("MockableMapsSubscriptionResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = OperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                #pragma warning disable IL2026, IL3050
-                OperationStatusResult value = ModelReaderWriter.Read<OperationStatusResult>(result.Content);
-#pragma warning restore IL2026, IL3050
-                Response<OperationStatusResult> response = Response.FromValue(value, result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of a long running azure asynchronous operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maps/locations/{location}/operationStatuses/{operationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> OperationStatusOperationGroup_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal virtual Response<OperationStatusResult> Get(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = OperationStatusClientDiagnostics.CreateScope("MockableMapsSubscriptionResource.Get");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = OperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                #pragma warning disable IL2026, IL3050
-                OperationStatusResult value = ModelReaderWriter.Read<OperationStatusResult>(result.Content);
-#pragma warning restore IL2026, IL3050
-                Response<OperationStatusResult> response = Response.FromValue(value, result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
             }
             catch (Exception e)
             {

@@ -49,23 +49,6 @@ namespace Azure.ResourceManager.Maps.Models
             }
         }
 
-        /// <summary> The storage units to be allocated. Integer values from 1 to 100, inclusive. </summary>
-        public int? StorageUnits
-        {
-            get
-            {
-                return Properties is null ? default(int?) : Properties.StorageUnits;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MapsCreatorProperties();
-                }
-                Properties.StorageUnits = value ?? default;
-            }
-        }
-
         /// <summary> The total allocated storage unit size in bytes for the creator resource. </summary>
         public int? TotalStorageUnitSizeInBytes
         {

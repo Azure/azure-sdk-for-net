@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maps.Mocking;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maps
@@ -233,38 +232,6 @@ namespace Azure.ResourceManager.Maps
         internal static ArmOperation Get(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             return GetMockableMapsSubscriptionResource(subscriptionResource).Get(waitUntil, location, operationId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the status of a long running azure asynchronous operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMapsSubscriptionResource.GetAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal static async Task<Response<OperationStatusResult>> GetAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            return await GetMockableMapsSubscriptionResource(subscriptionResource).GetAsync(location, operationId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the status of a long running azure asynchronous operation.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableMapsSubscriptionResource.Get(AzureLocation, string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <param name="operationId"> The ID of an ongoing async operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        internal static Response<OperationStatusResult> Get(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            return GetMockableMapsSubscriptionResource(subscriptionResource).Get(location, operationId, cancellationToken);
         }
     }
 }
