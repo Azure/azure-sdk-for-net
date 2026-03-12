@@ -39,8 +39,7 @@
       "properties": {
         "NetworkTimeout": {
           "type": "string",
-          "description": "Timeout for network operations (TimeSpan format, e.g. '00:01:40').",
-          "pattern": "^(\\d+\\.)?(\\d{1,2}):(\\d{2}):(\\d{2})(\\.\\d+)?$"
+          "description": "Timeout for network operations (TimeSpan format, e.g. '00:01:40')."
         },
         "EnableDistributedTracing": {
           "type": "boolean",
