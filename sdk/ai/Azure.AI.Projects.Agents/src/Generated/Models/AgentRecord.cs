@@ -44,8 +44,5 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The name of the agent. </summary>
         public string Name { get; }
-
-        /// <summary> The latest version of the agent. </summary>
-        public AgentObjectVersions Versions { get; }
     }
 }

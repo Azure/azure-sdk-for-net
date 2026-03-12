@@ -8,19 +8,79 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RedisEnterprise.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
-    public partial class RedisEnterpriseDatabaseData : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseDatabaseData>
+    /// <summary> Describes a database on the Redis Enterprise cluster. </summary>
+    public partial class RedisEnterpriseDatabaseData : ResourceData, IJsonModel<RedisEnterpriseDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseDatabaseData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRedisEnterpriseDatabaseData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RedisEnterpriseDatabaseData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisEnterpriseDatabaseData IPersistableModel<RedisEnterpriseDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => (RedisEnterpriseDatabaseData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RedisEnterpriseDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="redisEnterpriseDatabaseData"> The <see cref="RedisEnterpriseDatabaseData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(RedisEnterpriseDatabaseData redisEnterpriseDatabaseData)
+        {
+            if (redisEnterpriseDatabaseData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(redisEnterpriseDatabaseData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RedisEnterpriseDatabaseData"/> from. </param>
+        internal static RedisEnterpriseDatabaseData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRedisEnterpriseDatabaseData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RedisEnterpriseDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,592 +92,105 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ClientProtocol))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("clientProtocol"u8);
-                writer.WriteStringValue(ClientProtocol.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Port))
-            {
-                writer.WritePropertyName("port"u8);
-                writer.WriteNumberValue(Port.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ResourceState))
-            {
-                writer.WritePropertyName("resourceState"u8);
-                writer.WriteStringValue(ResourceState.Value.ToString());
-            }
-            if (Optional.IsDefined(ClusteringPolicy))
-            {
-                writer.WritePropertyName("clusteringPolicy"u8);
-                writer.WriteStringValue(ClusteringPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(EvictionPolicy))
-            {
-                writer.WritePropertyName("evictionPolicy"u8);
-                writer.WriteStringValue(EvictionPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(Persistence))
-            {
-                writer.WritePropertyName("persistence"u8);
-                writer.WriteObjectValue(Persistence, options);
-            }
-            if (Optional.IsCollectionDefined(Modules))
-            {
-                writer.WritePropertyName("modules"u8);
-                writer.WriteStartArray();
-                foreach (var item in Modules)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(GeoReplication))
-            {
-                writer.WritePropertyName("geoReplication"u8);
-                writer.WriteObjectValue(GeoReplication, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(RedisVersion))
-            {
-                writer.WritePropertyName("redisVersion"u8);
-                writer.WriteStringValue(RedisVersion);
-            }
-            if (Optional.IsDefined(DeferUpgrade))
-            {
-                writer.WritePropertyName("deferUpgrade"u8);
-                writer.WriteStringValue(DeferUpgrade.Value.ToString());
-            }
-            if (Optional.IsDefined(AccessKeysAuthentication))
-            {
-                writer.WritePropertyName("accessKeysAuthentication"u8);
-                writer.WriteStringValue(AccessKeysAuthentication.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        RedisEnterpriseDatabaseData IJsonModel<RedisEnterpriseDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RedisEnterpriseDatabaseData IJsonModel<RedisEnterpriseDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RedisEnterpriseDatabaseData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRedisEnterpriseDatabaseData(document.RootElement, options);
         }
 
-        internal static RedisEnterpriseDatabaseData DeserializeRedisEnterpriseDatabaseData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RedisEnterpriseDatabaseData DeserializeRedisEnterpriseDatabaseData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            RedisEnterpriseClientProtocol? clientProtocol = default;
-            int? port = default;
-            RedisEnterpriseProvisioningStatus? provisioningState = default;
-            RedisEnterpriseClusterResourceState? resourceState = default;
-            RedisEnterpriseClusteringPolicy? clusteringPolicy = default;
-            RedisEnterpriseEvictionPolicy? evictionPolicy = default;
-            RedisPersistenceSettings persistence = default;
-            IList<RedisEnterpriseModule> modules = default;
-            RedisEnterpriseDatabaseGeoReplication geoReplication = default;
-            string redisVersion = default;
-            DeferUpgradeSetting? deferUpgrade = default;
-            AccessKeysAuthentication? accessKeysAuthentication = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DatabaseCreateProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisEnterpriseContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("clientProtocol"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clientProtocol = new RedisEnterpriseClientProtocol(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("port"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            port = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new RedisEnterpriseProvisioningStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("resourceState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceState = new RedisEnterpriseClusterResourceState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("clusteringPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusteringPolicy = new RedisEnterpriseClusteringPolicy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("evictionPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            evictionPolicy = new RedisEnterpriseEvictionPolicy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("persistence"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            persistence = RedisPersistenceSettings.DeserializeRedisPersistenceSettings(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("modules"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<RedisEnterpriseModule> array = new List<RedisEnterpriseModule>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(RedisEnterpriseModule.DeserializeRedisEnterpriseModule(item, options));
-                            }
-                            modules = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("geoReplication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("redisVersion"u8))
-                        {
-                            redisVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("deferUpgrade"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deferUpgrade = new DeferUpgradeSetting(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("accessKeysAuthentication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            accessKeysAuthentication = new AccessKeysAuthentication(property0.Value.GetString());
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRedisEnterpriseContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = DatabaseCreateProperties.DeserializeDatabaseCreateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RedisEnterpriseDatabaseData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                clientProtocol,
-                port,
-                provisioningState,
-                resourceState,
-                clusteringPolicy,
-                evictionPolicy,
-                persistence,
-                modules ?? new ChangeTrackingList<RedisEnterpriseModule>(),
-                geoReplication,
-                redisVersion,
-                deferUpgrade,
-                accessKeysAuthentication,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientProtocol), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    clientProtocol: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClientProtocol))
-                {
-                    builder.Append("    clientProtocol: ");
-                    builder.AppendLine($"'{ClientProtocol.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    port: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Port))
-                {
-                    builder.Append("    port: ");
-                    builder.AppendLine($"{Port.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceState))
-                {
-                    builder.Append("    resourceState: ");
-                    builder.AppendLine($"'{ResourceState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusteringPolicy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    clusteringPolicy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusteringPolicy))
-                {
-                    builder.Append("    clusteringPolicy: ");
-                    builder.AppendLine($"'{ClusteringPolicy.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EvictionPolicy), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    evictionPolicy: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EvictionPolicy))
-                {
-                    builder.Append("    evictionPolicy: ");
-                    builder.AppendLine($"'{EvictionPolicy.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Persistence), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    persistence: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Persistence))
-                {
-                    builder.Append("    persistence: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Persistence, options, 4, false, "    persistence: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Modules), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    modules: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Modules))
-                {
-                    if (Modules.Any())
-                    {
-                        builder.Append("    modules: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Modules)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    modules: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoReplication), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    geoReplication: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GeoReplication))
-                {
-                    builder.Append("    geoReplication: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, GeoReplication, options, 4, false, "    geoReplication: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedisVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    redisVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RedisVersion))
-                {
-                    builder.Append("    redisVersion: ");
-                    if (RedisVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RedisVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RedisVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeferUpgrade), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deferUpgrade: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeferUpgrade))
-                {
-                    builder.Append("    deferUpgrade: ");
-                    builder.AppendLine($"'{DeferUpgrade.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessKeysAuthentication), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    accessKeysAuthentication: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AccessKeysAuthentication))
-                {
-                    builder.Append("    accessKeysAuthentication: ");
-                    builder.AppendLine($"'{AccessKeysAuthentication.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RedisEnterpriseDatabaseData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RedisEnterpriseDatabaseData IPersistableModel<RedisEnterpriseDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRedisEnterpriseDatabaseData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabaseData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RedisEnterpriseDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

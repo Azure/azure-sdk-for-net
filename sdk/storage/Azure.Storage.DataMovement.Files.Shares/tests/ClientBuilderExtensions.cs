@@ -81,6 +81,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             return await DisposingShare.CreateAsync(share, metadata);
         }
 
+        public static async Task<DisposingShare> GetTestShareAzureSasCredentialAsync(
+            this SharesClientBuilder clientBuilder,
+            ShareServiceClient service = default,
+            string shareName = default,
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default,
+            CancellationToken cancellationToken = default)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+            service ??= clientBuilder.GetServiceClientFromAzureSasCredentialConfig(clientBuilder.Tenants.TestConfigDefault, options);
+            metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+            shareName ??= clientBuilder.GetNewShareName();
+            ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));
+            return await DisposingShare.CreateAsync(share, metadata);
+        }
+
         public static async Task<DisposingShare> GetTestShareSasNfsAsync(
             this SharesClientBuilder clientBuilder,
             ShareServiceClient service = default,

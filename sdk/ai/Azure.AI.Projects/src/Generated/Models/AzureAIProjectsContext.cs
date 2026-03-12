@@ -4,7 +4,6 @@
 
 using System.ClientModel.Primitives;
 using Azure.Core;
-using Azure.Core.Foundations;
 using OpenAI;
 
 namespace Azure.AI.Projects
@@ -73,7 +72,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(EvaluationScheduleTaskEvalRun))]
     [ModelReaderWriterBuildable(typeof(EvaluationTaxonomy))]
     [ModelReaderWriterBuildable(typeof(EvaluationTaxonomyInput))]
-    [ModelReaderWriterBuildable(typeof(EvaluatorCredentialRequest))]
     [ModelReaderWriterBuildable(typeof(EvaluatorDefinition))]
     [ModelReaderWriterBuildable(typeof(EvaluatorMetric))]
     [ModelReaderWriterBuildable(typeof(EvaluatorVersion))]

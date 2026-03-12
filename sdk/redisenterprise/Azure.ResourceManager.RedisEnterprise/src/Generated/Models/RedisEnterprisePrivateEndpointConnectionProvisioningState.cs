@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct RedisEnterprisePrivateEndpointConnectionProvisioningState : IEquatable<RedisEnterprisePrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Connection has been provisioned. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Connection is being created. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Connection is being deleted. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Connection provisioning has failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RedisEnterprisePrivateEndpointConnectionProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string CreatingValue = "Creating";
-        private const string DeletingValue = "Deleting";
-        private const string FailedValue = "Failed";
-
-        /// <summary> Succeeded. </summary>
+        /// <summary> Connection has been provisioned. </summary>
         public static RedisEnterprisePrivateEndpointConnectionProvisioningState Succeeded { get; } = new RedisEnterprisePrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Connection is being created. </summary>
         public static RedisEnterprisePrivateEndpointConnectionProvisioningState Creating { get; } = new RedisEnterprisePrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Connection is being deleted. </summary>
         public static RedisEnterprisePrivateEndpointConnectionProvisioningState Deleting { get; } = new RedisEnterprisePrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Connection provisioning has failed. </summary>
         public static RedisEnterprisePrivateEndpointConnectionProvisioningState Failed { get; } = new RedisEnterprisePrivateEndpointConnectionProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="RedisEnterprisePrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RedisEnterprisePrivateEndpointConnectionProvisioningState left, RedisEnterprisePrivateEndpointConnectionProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RedisEnterprisePrivateEndpointConnectionProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RedisEnterprisePrivateEndpointConnectionProvisioningState left, RedisEnterprisePrivateEndpointConnectionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RedisEnterprisePrivateEndpointConnectionProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RedisEnterprisePrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RedisEnterprisePrivateEndpointConnectionProvisioningState(string value) => new RedisEnterprisePrivateEndpointConnectionProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RedisEnterprisePrivateEndpointConnectionProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RedisEnterprisePrivateEndpointConnectionProvisioningState?(string value) => value == null ? null : new RedisEnterprisePrivateEndpointConnectionProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RedisEnterprisePrivateEndpointConnectionProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RedisEnterprisePrivateEndpointConnectionProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

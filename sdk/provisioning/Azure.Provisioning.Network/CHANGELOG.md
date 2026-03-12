@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2026-03-11)
+
+### Features Added
+
+- Added support for `NetworkSecurityPerimeter` resources:
+  - `NetworkSecurityPerimeter`
+  - `NetworkSecurityPerimeterAccessRule`
+  - `NetworkSecurityPerimeterAssociation`
+  - `NetworkSecurityPerimeterLink`
+  - `NetworkSecurityPerimeterLoggingConfiguration`
+  - `NetworkSecurityPerimeterProfile`
 
 ## 1.0.0 (2026-03-04)
 

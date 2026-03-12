@@ -73,7 +73,7 @@ AIProjectClient projectClient = new(endpoint: uriEndpoint, tokenProvider: new De
 private static  HostedAgentDefinition GetAgentDefinition(string dockerImage, string modelDeploymentName, string accountId, string applicationInsightConnectionString, string projectEndpoint)
 {
     HostedAgentDefinition agentDefinition = new(
-        containerProtocolVersions: [new ProtocolVersionRecord(AgentCommunicationMethod.ActivityProtocol, "v1")],
+        versions: [new ProtocolVersionRecord(AgentProtocol.ActivityProtocol, "v1")],
         cpu: "1",
         memory: "2Gi"
     )

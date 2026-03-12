@@ -17,7 +17,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="protocol"> The protocol type. </param>
         /// <param name="version"> The version string for the protocol, e.g. 'v0.1.1'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
-        public ProtocolVersionRecord(AgentCommunicationMethod protocol, string version)
+        public ProtocolVersionRecord(AgentProtocol protocol, string version)
         {
             Argument.AssertNotNull(version, nameof(version));
 
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="protocol"> The protocol type. </param>
         /// <param name="version"> The version string for the protocol, e.g. 'v0.1.1'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtocolVersionRecord(AgentCommunicationMethod protocol, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtocolVersionRecord(AgentProtocol protocol, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Protocol = protocol;
             Version = version;
@@ -37,7 +37,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The protocol type. </summary>
-        public AgentCommunicationMethod Protocol { get; set; }
+        public AgentProtocol Protocol { get; set; }
 
         /// <summary> The version string for the protocol, e.g. 'v0.1.1'. </summary>
         public string Version { get; set; }

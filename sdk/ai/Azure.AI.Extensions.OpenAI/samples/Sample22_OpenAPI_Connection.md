@@ -24,10 +24,10 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Sync
 string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
-OpenAPIFunctionDefinition toolDefinition = new(
+OpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
@@ -48,10 +48,10 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Async
 string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetConnectionAsync("tripadvisor");
-OpenAPIFunctionDefinition toolDefinition = new(
+OpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
     specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-    authentication:  new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+    authentication:  new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
 );
