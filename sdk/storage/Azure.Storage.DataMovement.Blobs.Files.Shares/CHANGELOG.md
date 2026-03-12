@@ -1,6 +1,6 @@
 # Release History
 
-## 12.0.0
+## 1.0.0
 
 ### Features Added
 - This directory does **not** produce a standalone, released SDK package.
