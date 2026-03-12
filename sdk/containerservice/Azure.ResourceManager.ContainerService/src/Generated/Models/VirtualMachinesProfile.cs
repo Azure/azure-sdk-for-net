@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachinesProfile"/>. </summary>
         /// <param name="scale"> Specifications on how to scale a VirtualMachines agent pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinesProfile(ScaleProfile scale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachinesProfile(AgentPoolScaleProfile scale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scale = scale;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
         [WirePath("scale")]
-        public ScaleProfile Scale { get; set; }
+        public AgentPoolScaleProfile Scale { get; set; }
     }
 }

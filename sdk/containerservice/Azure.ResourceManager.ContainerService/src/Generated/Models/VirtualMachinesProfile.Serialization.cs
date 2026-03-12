@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            ScaleProfile scale = default;
+            AgentPoolScaleProfile scale = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    scale = ScaleProfile.DeserializeScaleProfile(prop.Value, options);
+                    scale = AgentPoolScaleProfile.DeserializeAgentPoolScaleProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

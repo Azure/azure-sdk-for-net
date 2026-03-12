@@ -1014,7 +1014,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
         [WirePath("properties.virtualMachinesProfile.scale")]
-        public ScaleProfile VirtualMachinesScale
+        public AgentPoolScaleProfile VirtualMachinesScale
         {
             get
             {
