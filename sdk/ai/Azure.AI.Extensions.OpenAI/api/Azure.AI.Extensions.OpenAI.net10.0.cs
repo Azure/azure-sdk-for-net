@@ -558,7 +558,8 @@ namespace Azure.AI.Extensions.OpenAI
     }
     public partial class OAuthConsentRequestResponseItem : Azure.AI.Extensions.OpenAI.AgentResponseItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.OAuthConsentRequestResponseItem>
     {
-        public OAuthConsentRequestResponseItem(string internalConsentLink, string serverLabel) { }
+        public OAuthConsentRequestResponseItem(string consentLink, string serverLabel) { }
+        public OAuthConsentRequestResponseItem(System.Uri consentLink, string serverLabel) { }
         public System.Uri ConsentLink { get { throw null; } }
         public string ServerLabel { get { throw null; } set { } }
         protected override Azure.AI.Extensions.OpenAI.AgentResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

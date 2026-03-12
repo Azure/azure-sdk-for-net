@@ -4,6 +4,7 @@
     <AssemblyTitle>Microsoft Azure.Storage.DataMovement.Files.Shares client library tests</AssemblyTitle>
     <DefineConstants>ShareDataMovementSDK;$(DefineConstants)</DefineConstants>
     <IsPackable>false</IsPackable>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement.Files.Shares\src\Azure.Storage.DataMovement.Files.Shares.csproj">
