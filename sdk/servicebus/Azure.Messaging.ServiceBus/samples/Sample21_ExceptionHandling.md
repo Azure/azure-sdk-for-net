@@ -82,7 +82,7 @@ Note that `ServiceBusException` does not cover all failure types. Authentication
 
 ## Handling lock-related failures
 
-When processing messages with peek-lock (the default), the lock can expire if processing takes too long. The two lock-related failure reasons require different recovery strategies.
+When processing messages with peek-lock (the default), the lock can expire if processing takes too long. This example focuses on handling `MessageLockLost` for non-session receivers. For session-enabled entities, apply the same pattern to `SessionLockLost` when using `ServiceBusSessionReceiver` or a session-enabled processor.
 
 ```C# Snippet:ServiceBusLockExceptionHandling
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
