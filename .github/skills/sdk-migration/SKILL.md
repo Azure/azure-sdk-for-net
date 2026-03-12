@@ -558,9 +558,10 @@ During the iteration loop, changes fall into three categories. Identify which on
 ### Step 2 — Create Spec PR (if applicable)
 
 1. In the local spec repo (`../azure-rest-api-specs`), create a branch and commit all spec changes.
-2. Push the branch and create a PR against `Azure/azure-rest-api-specs`.
-3. Note the **final commit SHA** from the pushed branch.
-4. PR title: `Add csharp client customizations for <Service> migration`
+2. Run `tsp format "*.tsp"` in the TypeSpec project directory to ensure formatting passes CI validation.
+3. Push the branch and create a PR against `Azure/azure-rest-api-specs`.
+4. Note the **final commit SHA** from the pushed branch.
+5. PR title: `Add csharp client customizations for <Service> migration`
 
 ### Step 3 — Create Generator PR (if applicable) [MPG only]
 
