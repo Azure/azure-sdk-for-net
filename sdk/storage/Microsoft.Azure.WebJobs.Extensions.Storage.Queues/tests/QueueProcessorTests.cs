@@ -183,6 +183,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
+        public async Task BeginProcessingMessageAsync_MaxDequeueCountExceeded_NoPoisonQueue_ContinuesProcessing()
+        {
+            // When no poison queue is configured (e.g., the function targets a poison queue itself),
+            // messages should always be processed regardless of their dequeue count.
+            var queuesOptions = new QueuesOptions();
+            Mock<QueueClient> queueClientMock = new Mock<QueueClient>();
+            QueueProcessorOptions context = new QueueProcessorOptions(queueClientMock.Object, null, queuesOptions);
+            QueueProcessor localProcessor = new QueueProcessor(context);
+
+            // Create a message whose dequeue count exceeds MaxDequeueCount
+            int dequeueCount = queuesOptions.MaxDequeueCount + 1;
+            QueueMessage message = QueuesModelFactory.QueueMessage("TestId", "TestPopReceipt", "TestMessage", dequeueCount);
+
+            bool continueProcessing = await localProcessor.BeginProcessingMessageAsync(message, CancellationToken.None);
+            Assert.True(continueProcessing);
+        }
+
+        [Test]
         public async Task BeginProcessingMessageAsync_MaxDequeueCountExceeded_MovesMessageToPoisonQueue()
         {
             QueueProcessorOptions context = new QueueProcessorOptions(_queue, null, _queuesOptions, _poisonQueue);

@@ -82,10 +82,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("market"u8);
                 writer.WriteStringValue(Market);
             }
-            if (Optional.IsDefined(SetLang))
+            if (Optional.IsDefined(BingUserInterfaceLanguage))
             {
                 writer.WritePropertyName("set_lang"u8);
-                writer.WriteStringValue(SetLang);
+                writer.WriteStringValue(BingUserInterfaceLanguage);
             }
             if (Optional.IsDefined(Count))
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Projects.Agents
             }
             string projectConnectionId = default;
             string market = default;
-            string setLang = default;
+            string bingUserInterfaceLanguage = default;
             long? count = default;
             string freshness = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -159,7 +159,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("set_lang"u8))
                 {
-                    setLang = prop.Value.GetString();
+                    bingUserInterfaceLanguage = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("count"u8))
@@ -184,7 +184,7 @@ namespace Azure.AI.Projects.Agents
             return new BingGroundingSearchConfiguration(
                 projectConnectionId,
                 market,
-                setLang,
+                bingUserInterfaceLanguage,
                 count,
                 freshness,
                 additionalBinaryDataProperties);
