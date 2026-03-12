@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("recoveryPointTime"u8);
-            writer.WriteStringValue(RecoveryPointOn, "O");
+            writer.WriteStringValue(RecoverOn, "O");
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IList<string> resourceGuardOperationRequests = default;
             DataProtectionIdentityDetails identityDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset recoveryPointOn = default;
+            DateTimeOffset recoverOn = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("objectType"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("recoveryPointTime"u8))
                 {
-                    recoveryPointOn = prop.Value.GetDateTimeOffset("O");
+                    recoverOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 identityDetails,
                 additionalBinaryDataProperties,
-                recoveryPointOn);
+                recoverOn);
         }
     }
 }

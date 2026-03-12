@@ -864,9 +864,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </param>
-        /// <param name="recoveryPointOn"> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </param>
+        /// <param name="recoverOn"> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </param>
         /// <returns> A new <see cref="Models.BackupRecoveryTimeBasedRestoreContent"/> instance for mocking. </returns>
-        public static BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo = default, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = default, IEnumerable<string> resourceGuardOperationRequests = default, DataProtectionIdentityDetails identityDetails = default, DateTimeOffset recoveryPointOn = default)
+        public static BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo = default, SourceDataStoreType sourceDataStoreType = default, ResourceIdentifier sourceResourceId = default, IEnumerable<string> resourceGuardOperationRequests = default, DataProtectionIdentityDetails identityDetails = default, DateTimeOffset recoverOn = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 resourceGuardOperationRequests.ToList(),
                 identityDetails,
                 additionalBinaryDataProperties: null,
-                recoveryPointOn);
+                recoverOn);
         }
 
         /// <summary> Request body of Stop protection when MUA is Enabled. </summary>
@@ -1755,15 +1755,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, DateTimeOffset recoverOn)
         {
-            return new BackupRecoveryTimeBasedRestoreContent(
-                "AzureBackupRecoveryTimeBasedRestoreRequest",
-                restoreTargetInfo,
-                sourceDataStoreType,
-                sourceResourceId,
-                default,
-                identityDetails,
-                additionalBinaryDataProperties: null,
-                default);
+            return BackupRecoveryTimeBasedRestoreContent(restoreTargetInfo, sourceDataStoreType, sourceResourceId, resourceGuardOperationRequests: default, identityDetails, recoverOn);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupRecoveryPointBasedRestoreContent"/>. </summary>

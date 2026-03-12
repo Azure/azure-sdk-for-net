@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="BackupRecoveryTimeBasedRestoreContent"/>. </summary>
         /// <param name="restoreTargetInfo"> Gets or sets the restore target information. </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
-        /// <param name="recoveryPointOn"> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </param>
+        /// <param name="recoverOn"> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreTargetInfo"/> is null. </exception>
-        public BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, DateTimeOffset recoveryPointOn) : base("AzureBackupRecoveryTimeBasedRestoreRequest", restoreTargetInfo, sourceDataStoreType)
+        public BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, DateTimeOffset recoverOn) : base("AzureBackupRecoveryTimeBasedRestoreRequest", restoreTargetInfo, sourceDataStoreType)
         {
             Argument.AssertNotNull(restoreTargetInfo, nameof(restoreTargetInfo));
 
-            RecoveryPointOn = recoveryPointOn;
+            RecoverOn = recoverOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupRecoveryTimeBasedRestoreContent"/>. </summary>
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// If it is null, default will be considered as System Assigned.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="recoveryPointOn"> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </param>
-        internal BackupRecoveryTimeBasedRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, IList<string> resourceGuardOperationRequests, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset recoveryPointOn) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, resourceGuardOperationRequests, identityDetails, additionalBinaryDataProperties)
+        /// <param name="recoverOn"> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </param>
+        internal BackupRecoveryTimeBasedRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, IList<string> resourceGuardOperationRequests, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset recoverOn) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, resourceGuardOperationRequests, identityDetails, additionalBinaryDataProperties)
         {
-            RecoveryPointOn = recoveryPointOn;
+            RecoverOn = recoverOn;
         }
 
         /// <summary> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </summary>
-        public DateTimeOffset RecoveryPointOn { get; }
+        public DateTimeOffset RecoverOn { get; }
     }
 }

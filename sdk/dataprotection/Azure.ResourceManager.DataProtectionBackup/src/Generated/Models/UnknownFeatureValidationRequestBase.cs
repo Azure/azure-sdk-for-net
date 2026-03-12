@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class UnknownBackupFeatureValidationContentBase : BackupFeatureValidationContentBase
+    internal partial class UnknownFeatureValidationRequestBase : BackupFeatureValidationContentBase
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownBackupFeatureValidationContentBase"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFeatureValidationRequestBase"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownBackupFeatureValidationContentBase(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownFeatureValidationRequestBase(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(objectType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

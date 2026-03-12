@@ -13,10 +13,10 @@ using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class UnknownBackupFeatureValidationContentBase : BackupFeatureValidationContentBase, IJsonModel<BackupFeatureValidationContentBase>
+    internal partial class UnknownFeatureValidationRequestBase : BackupFeatureValidationContentBase, IJsonModel<BackupFeatureValidationContentBase>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownBackupFeatureValidationContentBase"/> for deserialization. </summary>
-        internal UnknownBackupFeatureValidationContentBase()
+        /// <summary> Initializes a new instance of <see cref="UnknownFeatureValidationRequestBase"/> for deserialization. </summary>
+        internal UnknownFeatureValidationRequestBase()
         {
         }
 
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownBackupFeatureValidationContentBase DeserializeUnknownBackupFeatureValidationContentBase(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownFeatureValidationRequestBase DeserializeUnknownFeatureValidationRequestBase(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownBackupFeatureValidationContentBase(objectType, additionalBinaryDataProperties);
+            return new UnknownFeatureValidationRequestBase(objectType, additionalBinaryDataProperties);
         }
     }
 }
