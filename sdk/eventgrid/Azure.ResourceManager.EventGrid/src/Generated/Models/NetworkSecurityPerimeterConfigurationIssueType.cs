@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct NetworkSecurityPerimeterConfigurationIssueType : IEquatable<NetworkSecurityPerimeterConfigurationIssueType>
     {
         private readonly string _value;
+        /// <summary> MissingPerimeterConfiguration. </summary>
+        private const string MissingPerimeterConfigurationValue = "MissingPerimeterConfiguration";
+        /// <summary> MissingIdentityConfiguration. </summary>
+        private const string MissingIdentityConfigurationValue = "MissingIdentityConfiguration";
+        /// <summary> ConfigurationPropagationFailure. </summary>
+        private const string ConfigurationPropagationFailureValue = "ConfigurationPropagationFailure";
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationIssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkSecurityPerimeterConfigurationIssueType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MissingPerimeterConfigurationValue = "MissingPerimeterConfiguration";
-        private const string MissingIdentityConfigurationValue = "MissingIdentityConfiguration";
-        private const string ConfigurationPropagationFailureValue = "ConfigurationPropagationFailure";
-        private const string OtherValue = "Other";
+            _value = value;
+        }
 
         /// <summary> MissingPerimeterConfiguration. </summary>
         public static NetworkSecurityPerimeterConfigurationIssueType MissingPerimeterConfiguration { get; } = new NetworkSecurityPerimeterConfigurationIssueType(MissingPerimeterConfigurationValue);
+
         /// <summary> MissingIdentityConfiguration. </summary>
         public static NetworkSecurityPerimeterConfigurationIssueType MissingIdentityConfiguration { get; } = new NetworkSecurityPerimeterConfigurationIssueType(MissingIdentityConfigurationValue);
+
         /// <summary> ConfigurationPropagationFailure. </summary>
         public static NetworkSecurityPerimeterConfigurationIssueType ConfigurationPropagationFailure { get; } = new NetworkSecurityPerimeterConfigurationIssueType(ConfigurationPropagationFailureValue);
+
         /// <summary> Other. </summary>
         public static NetworkSecurityPerimeterConfigurationIssueType Other { get; } = new NetworkSecurityPerimeterConfigurationIssueType(OtherValue);
+
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterConfigurationIssueType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkSecurityPerimeterConfigurationIssueType left, NetworkSecurityPerimeterConfigurationIssueType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkSecurityPerimeterConfigurationIssueType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkSecurityPerimeterConfigurationIssueType left, NetworkSecurityPerimeterConfigurationIssueType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkSecurityPerimeterConfigurationIssueType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigurationIssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkSecurityPerimeterConfigurationIssueType(string value) => new NetworkSecurityPerimeterConfigurationIssueType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkSecurityPerimeterConfigurationIssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkSecurityPerimeterConfigurationIssueType?(string value) => value == null ? null : new NetworkSecurityPerimeterConfigurationIssueType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkSecurityPerimeterConfigurationIssueType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkSecurityPerimeterConfigurationIssueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

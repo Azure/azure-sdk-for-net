@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct PartnerNamespaceChannelType : IEquatable<PartnerNamespaceChannelType>
     {
         private readonly string _value;
+        /// <summary> PartnerTopic. </summary>
+        private const string PartnerTopicValue = "PartnerTopic";
+        /// <summary> PartnerDestination. </summary>
+        private const string PartnerDestinationValue = "PartnerDestination";
 
         /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PartnerNamespaceChannelType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PartnerTopicValue = "PartnerTopic";
-        private const string PartnerDestinationValue = "PartnerDestination";
+            _value = value;
+        }
 
         /// <summary> PartnerTopic. </summary>
         public static PartnerNamespaceChannelType PartnerTopic { get; } = new PartnerNamespaceChannelType(PartnerTopicValue);
+
         /// <summary> PartnerDestination. </summary>
         public static PartnerNamespaceChannelType PartnerDestination { get; } = new PartnerNamespaceChannelType(PartnerDestinationValue);
+
         /// <summary> Determines if two <see cref="PartnerNamespaceChannelType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PartnerNamespaceChannelType left, PartnerNamespaceChannelType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PartnerNamespaceChannelType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PartnerNamespaceChannelType left, PartnerNamespaceChannelType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PartnerNamespaceChannelType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PartnerNamespaceChannelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PartnerNamespaceChannelType(string value) => new PartnerNamespaceChannelType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PartnerNamespaceChannelType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PartnerNamespaceChannelType?(string value) => value == null ? null : new PartnerNamespaceChannelType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PartnerNamespaceChannelType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PartnerNamespaceChannelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

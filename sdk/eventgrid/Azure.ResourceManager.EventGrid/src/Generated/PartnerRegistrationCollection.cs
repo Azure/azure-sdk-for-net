@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerRegistrationCollection : ArmCollection, IEnumerable<PartnerRegistrationResource>, IAsyncEnumerable<PartnerRegistrationResource>
     {
-        private readonly ClientDiagnostics _partnerRegistrationClientDiagnostics;
-        private readonly PartnerRegistrationsRestOperations _partnerRegistrationRestClient;
+        private readonly ClientDiagnostics _partnerRegistrationsClientDiagnostics;
+        private readonly PartnerRegistrations _partnerRegistrationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerRegistrationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PartnerRegistrationCollection for mocking. </summary>
         protected PartnerRegistrationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerRegistrationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerRegistrationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PartnerRegistrationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _partnerRegistrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerRegistrationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PartnerRegistrationResource.ResourceType, out string partnerRegistrationApiVersion);
-            _partnerRegistrationRestClient = new PartnerRegistrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, partnerRegistrationApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _partnerRegistrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerRegistrationResource.ResourceType.Namespace, Diagnostics);
+            _partnerRegistrationsRestClient = new PartnerRegistrations(_partnerRegistrationsClientDiagnostics, Pipeline, Endpoint, partnerRegistrationApiVersion ?? "2025-07-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates a new partner registration with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="data"> PartnerRegistration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<PartnerRegistrationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string partnerRegistrationName, PartnerRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _partnerRegistrationsClientDiagnostics.CreateScope("PartnerRegistrationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _partnerRegistrationRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<PartnerRegistrationResource>(new PartnerRegistrationOperationSource(Client), _partnerRegistrationClientDiagnostics, Pipeline, _partnerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerRegistrationName, PartnerRegistrationData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EventGridArmOperation<PartnerRegistrationResource> operation = new EventGridArmOperation<PartnerRegistrationResource>(
+                    new PartnerRegistrationOperationSource(Client),
+                    _partnerRegistrationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.EventGrid
         /// Creates a new partner registration with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="data"> PartnerRegistration information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<PartnerRegistrationResource> CreateOrUpdate(WaitUntil waitUntil, string partnerRegistrationName, PartnerRegistrationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _partnerRegistrationsClientDiagnostics.CreateScope("PartnerRegistrationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _partnerRegistrationRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data, cancellationToken);
-                var operation = new EventGridArmOperation<PartnerRegistrationResource>(new PartnerRegistrationOperationSource(Client), _partnerRegistrationClientDiagnostics, Pipeline, _partnerRegistrationRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerRegistrationName, PartnerRegistrationData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EventGridArmOperation<PartnerRegistrationResource> operation = new EventGridArmOperation<PartnerRegistrationResource>(
+                    new PartnerRegistrationOperationSource(Client),
+                    _partnerRegistrationsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Gets a partner registration with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PartnerRegistrationResource>> GetAsync(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
-            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.Get");
+            using DiagnosticScope scope = _partnerRegistrationsClientDiagnostics.CreateScope("PartnerRegistrationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _partnerRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerRegistrationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerRegistrationData> response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Gets a partner registration with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PartnerRegistrationResource> Get(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
-            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.Get");
+            using DiagnosticScope scope = _partnerRegistrationsClientDiagnostics.CreateScope("PartnerRegistrationCollection.Get");
             scope.Start();
             try
             {
-                var response = _partnerRegistrationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerRegistrationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerRegistrationData> response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,52 +273,16 @@ namespace Azure.ResourceManager.EventGrid
         /// List all the partner registrations under a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PartnerRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PartnerRegistrationResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerRegistrationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerRegistrationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), _partnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the partner registrations under a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,47 +290,105 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PartnerRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PartnerRegistrationResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PartnerRegistrationResource> GetAllAsync(string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerRegistrationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerRegistrationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerRegistrationResource(Client, PartnerRegistrationData.DeserializePartnerRegistrationData(e)), _partnerRegistrationClientDiagnostics, Pipeline, "PartnerRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PartnerRegistrationData, PartnerRegistrationResource>(new PartnerRegistrationsGetByResourceGroupAsyncCollectionResultOfT(
+                _partnerRegistrationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                top,
+                context), data => new PartnerRegistrationResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all the partner registrations under a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartnerRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PartnerRegistrationResource> GetAll(string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PartnerRegistrationData, PartnerRegistrationResource>(new PartnerRegistrationsGetByResourceGroupCollectionResultOfT(
+                _partnerRegistrationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                top,
+                context), data => new PartnerRegistrationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
-            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.Exists");
+            using DiagnosticScope scope = _partnerRegistrationsClientDiagnostics.CreateScope("PartnerRegistrationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _partnerRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerRegistrationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PartnerRegistrationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerRegistrationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +402,50 @@ namespace Azure.ResourceManager.EventGrid
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
-            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.Exists");
+            using DiagnosticScope scope = _partnerRegistrationsClientDiagnostics.CreateScope("PartnerRegistrationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _partnerRegistrationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerRegistrationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PartnerRegistrationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerRegistrationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +459,54 @@ namespace Azure.ResourceManager.EventGrid
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PartnerRegistrationResource>> GetIfExistsAsync(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
-            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetIfExists");
+            using DiagnosticScope scope = _partnerRegistrationsClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _partnerRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerRegistrationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PartnerRegistrationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerRegistrationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PartnerRegistrationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +520,54 @@ namespace Azure.ResourceManager.EventGrid
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerRegistrations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerRegistrations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerRegistrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PartnerRegistrationResource> GetIfExists(string partnerRegistrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerRegistrationName, nameof(partnerRegistrationName));
 
-            using var scope = _partnerRegistrationClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetIfExists");
+            using DiagnosticScope scope = _partnerRegistrationsClientDiagnostics.CreateScope("PartnerRegistrationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _partnerRegistrationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerRegistrationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerRegistrationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerRegistrationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PartnerRegistrationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerRegistrationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerRegistrationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PartnerRegistrationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +587,7 @@ namespace Azure.ResourceManager.EventGrid
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PartnerRegistrationResource> IAsyncEnumerable<PartnerRegistrationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

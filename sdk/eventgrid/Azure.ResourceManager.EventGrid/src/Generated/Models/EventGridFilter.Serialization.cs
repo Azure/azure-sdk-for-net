@@ -7,18 +7,67 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    [PersistableModelProxy(typeof(UnknownFilter))]
-    public partial class EventGridFilter : IUtf8JsonSerializable, IJsonModel<EventGridFilter>
+    /// <summary>
+    /// This is the base type that represents a filter. To configure a filter, do not directly instantiate an object of this class. Instead, instantiate
+    /// an object of a derived class such as BoolEqualsFilter, NumberInFilter etc depending on the type of the key based on
+    /// which you want to filter.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NumberInFilter"/>, <see cref="NumberNotInFilter"/>, <see cref="NumberLessThanFilter"/>, <see cref="NumberGreaterThanFilter"/>, <see cref="NumberLessThanOrEqualsFilter"/>, <see cref="NumberGreaterThanOrEqualsFilter"/>, <see cref="BoolEqualsFilter"/>, <see cref="StringInFilter"/>, <see cref="StringNotInFilter"/>, <see cref="StringBeginsWithFilter"/>, <see cref="StringEndsWithFilter"/>, <see cref="StringContainsFilter"/>, <see cref="NumberInRangeFilter"/>, <see cref="NumberNotInRangeFilter"/>, <see cref="StringNotBeginsWithFilter"/>, <see cref="StringNotEndsWithFilter"/>, <see cref="StringNotContainsFilter"/>, <see cref="IsNullOrUndefinedFilter"/>, and <see cref="IsNotNullFilter"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownEventGridFilter))]
+    public abstract partial class EventGridFilter : IJsonModel<EventGridFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="EventGridFilter"/> for deserialization. </summary>
+        internal EventGridFilter()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EventGridFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEventGridFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventGridFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EventGridFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EventGridFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventGridFilter IPersistableModel<EventGridFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventGridFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventGridFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +79,11 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventGridFilter)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
             if (Optional.IsDefined(Key))
@@ -43,15 +91,15 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -60,135 +108,76 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
         }
 
-        EventGridFilter IJsonModel<EventGridFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventGridFilter IJsonModel<EventGridFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EventGridFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventGridFilter)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEventGridFilter(document.RootElement, options);
         }
 
-        internal static EventGridFilter DeserializeEventGridFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EventGridFilter DeserializeEventGridFilter(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("operatorType", out JsonElement discriminator))
+            if (element.TryGetProperty("operatorType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "BoolEquals": return BoolEqualsFilter.DeserializeBoolEqualsFilter(element, options);
-                    case "IsNotNull": return IsNotNullFilter.DeserializeIsNotNullFilter(element, options);
-                    case "IsNullOrUndefined": return IsNullOrUndefinedFilter.DeserializeIsNullOrUndefinedFilter(element, options);
-                    case "NumberGreaterThan": return NumberGreaterThanFilter.DeserializeNumberGreaterThanFilter(element, options);
-                    case "NumberGreaterThanOrEquals": return NumberGreaterThanOrEqualsFilter.DeserializeNumberGreaterThanOrEqualsFilter(element, options);
-                    case "NumberIn": return NumberInFilter.DeserializeNumberInFilter(element, options);
-                    case "NumberInRange": return NumberInRangeFilter.DeserializeNumberInRangeFilter(element, options);
-                    case "NumberLessThan": return NumberLessThanFilter.DeserializeNumberLessThanFilter(element, options);
-                    case "NumberLessThanOrEquals": return NumberLessThanOrEqualsFilter.DeserializeNumberLessThanOrEqualsFilter(element, options);
-                    case "NumberNotIn": return NumberNotInFilter.DeserializeNumberNotInFilter(element, options);
-                    case "NumberNotInRange": return NumberNotInRangeFilter.DeserializeNumberNotInRangeFilter(element, options);
-                    case "StringBeginsWith": return StringBeginsWithFilter.DeserializeStringBeginsWithFilter(element, options);
-                    case "StringContains": return StringContainsFilter.DeserializeStringContainsFilter(element, options);
-                    case "StringEndsWith": return StringEndsWithFilter.DeserializeStringEndsWithFilter(element, options);
-                    case "StringIn": return StringInFilter.DeserializeStringInFilter(element, options);
-                    case "StringNotBeginsWith": return StringNotBeginsWithFilter.DeserializeStringNotBeginsWithFilter(element, options);
-                    case "StringNotContains": return StringNotContainsFilter.DeserializeStringNotContainsFilter(element, options);
-                    case "StringNotEndsWith": return StringNotEndsWithFilter.DeserializeStringNotEndsWithFilter(element, options);
-                    case "StringNotIn": return StringNotInFilter.DeserializeStringNotInFilter(element, options);
+                    case "NumberIn":
+                        return NumberInFilter.DeserializeNumberInFilter(element, options);
+                    case "NumberNotIn":
+                        return NumberNotInFilter.DeserializeNumberNotInFilter(element, options);
+                    case "NumberLessThan":
+                        return NumberLessThanFilter.DeserializeNumberLessThanFilter(element, options);
+                    case "NumberGreaterThan":
+                        return NumberGreaterThanFilter.DeserializeNumberGreaterThanFilter(element, options);
+                    case "NumberLessThanOrEquals":
+                        return NumberLessThanOrEqualsFilter.DeserializeNumberLessThanOrEqualsFilter(element, options);
+                    case "NumberGreaterThanOrEquals":
+                        return NumberGreaterThanOrEqualsFilter.DeserializeNumberGreaterThanOrEqualsFilter(element, options);
+                    case "BoolEquals":
+                        return BoolEqualsFilter.DeserializeBoolEqualsFilter(element, options);
+                    case "StringIn":
+                        return StringInFilter.DeserializeStringInFilter(element, options);
+                    case "StringNotIn":
+                        return StringNotInFilter.DeserializeStringNotInFilter(element, options);
+                    case "StringBeginsWith":
+                        return StringBeginsWithFilter.DeserializeStringBeginsWithFilter(element, options);
+                    case "StringEndsWith":
+                        return StringEndsWithFilter.DeserializeStringEndsWithFilter(element, options);
+                    case "StringContains":
+                        return StringContainsFilter.DeserializeStringContainsFilter(element, options);
+                    case "NumberInRange":
+                        return NumberInRangeFilter.DeserializeNumberInRangeFilter(element, options);
+                    case "NumberNotInRange":
+                        return NumberNotInRangeFilter.DeserializeNumberNotInRangeFilter(element, options);
+                    case "StringNotBeginsWith":
+                        return StringNotBeginsWithFilter.DeserializeStringNotBeginsWithFilter(element, options);
+                    case "StringNotEndsWith":
+                        return StringNotEndsWithFilter.DeserializeStringNotEndsWithFilter(element, options);
+                    case "StringNotContains":
+                        return StringNotContainsFilter.DeserializeStringNotContainsFilter(element, options);
+                    case "IsNullOrUndefined":
+                        return IsNullOrUndefinedFilter.DeserializeIsNullOrUndefinedFilter(element, options);
+                    case "IsNotNull":
+                        return IsNotNullFilter.DeserializeIsNotNullFilter(element, options);
                 }
             }
-            return UnknownFilter.DeserializeUnknownFilter(element, options);
+            return UnknownEventGridFilter.DeserializeUnknownEventGridFilter(element, options);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperatorType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  operatorType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  operatorType: ");
-                builder.AppendLine($"'{OperatorType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  key: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Key))
-                {
-                    builder.Append("  key: ");
-                    if (Key.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Key}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Key}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EventGridFilter>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EventGridFilter)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EventGridFilter IPersistableModel<EventGridFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventGridFilter>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEventGridFilter(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EventGridFilter)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EventGridFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

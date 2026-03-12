@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class TopicSharedAccessKeysOperationSource : IOperationSource<TopicSharedAccessKeys>
+    /// <summary></summary>
+    internal partial class TopicSharedAccessKeysOperationSource : IOperationSource<TopicSharedAccessKeys>
     {
-        TopicSharedAccessKeys IOperationSource<TopicSharedAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal TopicSharedAccessKeysOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return TopicSharedAccessKeys.DeserializeTopicSharedAccessKeys(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        TopicSharedAccessKeys IOperationSource<TopicSharedAccessKeys>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            TopicSharedAccessKeys result = TopicSharedAccessKeys.DeserializeTopicSharedAccessKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<TopicSharedAccessKeys> IOperationSource<TopicSharedAccessKeys>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return TopicSharedAccessKeys.DeserializeTopicSharedAccessKeys(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            TopicSharedAccessKeys result = TopicSharedAccessKeys.DeserializeTopicSharedAccessKeys(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

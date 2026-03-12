@@ -13,124 +13,173 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the PartnerTopic data model.
-    /// Event Grid Partner Topic.
-    /// </summary>
+    /// <summary> Event Grid Partner Topic. </summary>
     public partial class PartnerTopicData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PartnerTopicData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public PartnerTopicData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="PartnerTopicData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the Partner Topic. </param>
         /// <param name="identity"> Identity information for the Partner Topic resource. </param>
-        /// <param name="partnerRegistrationImmutableId"> The immutableId of the corresponding partner registration. </param>
-        /// <param name="source"> Source associated with this partner topic. This represents a unique partner resource. </param>
-        /// <param name="eventTypeInfo"> Event Type information from the corresponding event channel. </param>
-        /// <param name="expireOnIfNotActivated">
-        /// Expiration time of the partner topic. If this timer expires while the partner topic is still never activated,
-        /// the partner topic and corresponding event channel are deleted.
-        /// </param>
-        /// <param name="provisioningState"> Provisioning state of the partner topic. </param>
-        /// <param name="activationState"> Activation state of the partner topic. </param>
-        /// <param name="partnerTopicFriendlyDescription">
-        /// Friendly description about the topic. This can be set by the publisher/partner to show custom description for the customer partner topic.
-        /// This will be helpful to remove any ambiguity of the origin of creation of the partner topic for the customer.
-        /// </param>
-        /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process by the subscriber. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, Guid? partnerRegistrationImmutableId, string source, PartnerTopicEventTypeInfo eventTypeInfo, DateTimeOffset? expireOnIfNotActivated, PartnerTopicProvisioningState? provisioningState, PartnerTopicActivationState? activationState, string partnerTopicFriendlyDescription, string messageForActivation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PartnerTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PartnerTopicProperties properties, IdentityInfo identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
-            Source = source;
-            EventTypeInfo = eventTypeInfo;
-            ExpireOnIfNotActivated = expireOnIfNotActivated;
-            ProvisioningState = provisioningState;
-            ActivationState = activationState;
-            PartnerTopicFriendlyDescription = partnerTopicFriendlyDescription;
-            MessageForActivation = messageForActivation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PartnerTopicData"/> for deserialization. </summary>
-        internal PartnerTopicData()
-        {
-        }
+        /// <summary> Properties of the Partner Topic. </summary>
+        internal PartnerTopicProperties Properties { get; set; }
 
         /// <summary> Identity information for the Partner Topic resource. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public IdentityInfo Identity { get; set; }
+
         /// <summary> The immutableId of the corresponding partner registration. </summary>
-        [WirePath("properties.partnerRegistrationImmutableId")]
-        public Guid? PartnerRegistrationImmutableId { get; set; }
+        public string PartnerRegistrationImmutableId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerRegistrationImmutableId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerTopicProperties();
+                }
+                Properties.PartnerRegistrationImmutableId = value;
+            }
+        }
+
         /// <summary> Source associated with this partner topic. This represents a unique partner resource. </summary>
-        [WirePath("properties.source")]
-        public string Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerTopicProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> Event Type information from the corresponding event channel. </summary>
-        [WirePath("properties.eventTypeInfo")]
-        public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
+        public PartnerTopicEventTypeInfo EventTypeInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventTypeInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerTopicProperties();
+                }
+                Properties.EventTypeInfo = value;
+            }
+        }
+
         /// <summary>
         /// Expiration time of the partner topic. If this timer expires while the partner topic is still never activated,
         /// the partner topic and corresponding event channel are deleted.
         /// </summary>
-        [WirePath("properties.expirationTimeIfNotActivatedUtc")]
-        public DateTimeOffset? ExpireOnIfNotActivated { get; set; }
+        public DateTimeOffset? ExpirationTimeIfNotActivatedUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpirationTimeIfNotActivatedUtc;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerTopicProperties();
+                }
+                Properties.ExpirationTimeIfNotActivatedUtc = value.Value;
+            }
+        }
+
         /// <summary> Provisioning state of the partner topic. </summary>
-        [WirePath("properties.provisioningState")]
-        public PartnerTopicProvisioningState? ProvisioningState { get; }
+        public PartnerTopicProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Activation state of the partner topic. </summary>
-        [WirePath("properties.activationState")]
-        public PartnerTopicActivationState? ActivationState { get; set; }
+        public PartnerTopicActivationState? ActivationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActivationState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerTopicProperties();
+                }
+                Properties.ActivationState = value.Value;
+            }
+        }
+
         /// <summary>
         /// Friendly description about the topic. This can be set by the publisher/partner to show custom description for the customer partner topic.
         /// This will be helpful to remove any ambiguity of the origin of creation of the partner topic for the customer.
         /// </summary>
-        [WirePath("properties.partnerTopicFriendlyDescription")]
-        public string PartnerTopicFriendlyDescription { get; set; }
+        public string PartnerTopicFriendlyDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerTopicFriendlyDescription;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerTopicProperties();
+                }
+                Properties.PartnerTopicFriendlyDescription = value;
+            }
+        }
+
         /// <summary> Context or helpful message that can be used during the approval process by the subscriber. </summary>
-        [WirePath("properties.messageForActivation")]
-        public string MessageForActivation { get; set; }
+        public string MessageForActivation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MessageForActivation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerTopicProperties();
+                }
+                Properties.MessageForActivation = value;
+            }
+        }
     }
 }

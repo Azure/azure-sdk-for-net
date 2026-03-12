@@ -7,121 +7,165 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the Topic update. </summary>
     public partial class EventGridTopicPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventGridTopicPatch"/>. </summary>
         public EventGridTopicPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGridTopicPatch"/>. </summary>
         /// <param name="tags"> Tags of the Topic resource. </param>
         /// <param name="identity"> Topic resource identity information. </param>
+        /// <param name="properties"> Properties of the Topic resource. </param>
         /// <param name="sku"> The Sku pricing tier for the topic. </param>
-        /// <param name="publicNetworkAccess">
-        /// This determines if traffic is allowed over public network. By default it is enabled.
-        /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicUpdateParameterProperties.InboundIpRules" /&gt;
-        /// </param>
-        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
-        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
-        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </param>
-        /// <param name="dataResidencyBoundary"> The data residency boundary for the topic. </param>
-        /// <param name="eventTypeInfo"> The eventTypeInfo for the topic. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridTopicPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, ResourceSku sku, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary, PartnerTopicEventTypeInfo eventTypeInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EventGridTopicPatch(IDictionary<string, string> tags, IdentityInfo identity, TopicUpdateParameterProperties properties, ResourceSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Identity = identity;
+            Properties = properties;
             Sku = sku;
-            PublicNetworkAccess = publicNetworkAccess;
-            InboundIPRules = inboundIPRules;
-            MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
-            IsLocalAuthDisabled = isLocalAuthDisabled;
-            DataResidencyBoundary = dataResidencyBoundary;
-            EventTypeInfo = eventTypeInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Tags of the Topic resource. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Topic resource identity information. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public IdentityInfo Identity { get; set; }
+
+        /// <summary> Properties of the Topic resource. </summary>
+        internal TopicUpdateParameterProperties Properties { get; set; }
+
         /// <summary> The Sku pricing tier for the topic. </summary>
         internal ResourceSku Sku { get; set; }
-        /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
-        [WirePath("sku.name")]
-        public EventGridSku? SkuName
-        {
-            get => Sku is null ? default : Sku.Name;
-            set
-            {
-                if (Sku is null)
-                    Sku = new ResourceSku();
-                Sku.Name = value;
-            }
-        }
 
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicUpdateParameterProperties.InboundIpRules" /&gt;
         /// </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public EventGridPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicUpdateParameterProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
-        [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIPRules { get; }
+        public IList<EventGridInboundIPRule> InboundIpRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicUpdateParameterProperties();
+                }
+                return Properties.InboundIpRules;
+            }
+        }
+
         /// <summary> Minimum TLS version of the publisher allowed to publish to this domain. </summary>
-        [WirePath("properties.minimumTlsVersionAllowed")]
-        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
+        public TlsVersion? MinimumTlsVersionAllowed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersionAllowed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicUpdateParameterProperties();
+                }
+                Properties.MinimumTlsVersionAllowed = value.Value;
+            }
+        }
+
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </summary>
-        [WirePath("properties.disableLocalAuth")]
-        public bool? IsLocalAuthDisabled { get; set; }
+        public bool? DisableLocalAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableLocalAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicUpdateParameterProperties();
+                }
+                Properties.DisableLocalAuth = value.Value;
+            }
+        }
+
         /// <summary> The data residency boundary for the topic. </summary>
-        [WirePath("properties.dataResidencyBoundary")]
-        public DataResidencyBoundary? DataResidencyBoundary { get; set; }
+        public DataResidencyBoundary? DataResidencyBoundary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataResidencyBoundary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicUpdateParameterProperties();
+                }
+                Properties.DataResidencyBoundary = value.Value;
+            }
+        }
+
         /// <summary> The eventTypeInfo for the topic. </summary>
-        [WirePath("properties.eventTypeInfo")]
-        public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
+        public PartnerTopicEventTypeInfo EventTypeInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventTypeInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicUpdateParameterProperties();
+                }
+                Properties.EventTypeInfo = value;
+            }
+        }
+
+        /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
+        public EventGridSku? SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new ResourceSku();
+                }
+                Sku.Name = value;
+            }
+        }
     }
 }

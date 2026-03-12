@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct DataResidencyBoundary : IEquatable<DataResidencyBoundary>
     {
         private readonly string _value;
+        /// <summary> WithinGeopair. </summary>
+        private const string WithinGeopairValue = "WithinGeopair";
+        /// <summary> WithinRegion. </summary>
+        private const string WithinRegionValue = "WithinRegion";
 
         /// <summary> Initializes a new instance of <see cref="DataResidencyBoundary"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataResidencyBoundary(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WithinGeopairValue = "WithinGeopair";
-        private const string WithinRegionValue = "WithinRegion";
+            _value = value;
+        }
 
         /// <summary> WithinGeopair. </summary>
         public static DataResidencyBoundary WithinGeopair { get; } = new DataResidencyBoundary(WithinGeopairValue);
+
         /// <summary> WithinRegion. </summary>
         public static DataResidencyBoundary WithinRegion { get; } = new DataResidencyBoundary(WithinRegionValue);
+
         /// <summary> Determines if two <see cref="DataResidencyBoundary"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataResidencyBoundary left, DataResidencyBoundary right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataResidencyBoundary"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataResidencyBoundary left, DataResidencyBoundary right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataResidencyBoundary"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataResidencyBoundary"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataResidencyBoundary(string value) => new DataResidencyBoundary(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataResidencyBoundary"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataResidencyBoundary?(string value) => value == null ? null : new DataResidencyBoundary(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataResidencyBoundary other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataResidencyBoundary other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

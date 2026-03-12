@@ -10,185 +10,287 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the EventGridTopic data model.
-    /// EventGrid Topic
-    /// </summary>
+    /// <summary> EventGrid Topic. </summary>
     public partial class EventGridTopicData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventGridTopicData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public EventGridTopicData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<EventGridPrivateEndpointConnectionData>();
-            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGridTopicData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the topic. </param>
         /// <param name="sku"> The Sku pricing tier for the topic. </param>
         /// <param name="identity"> Identity information for the resource. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="extendedLocation"> Extended location of the resource. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="provisioningState"> Provisioning state of the topic. </param>
-        /// <param name="endpoint"> Endpoint for the topic. </param>
-        /// <param name="eventTypeInfo">
-        /// Event Type Information for the user topic. This information is provided by the publisher and can be used by the
-        /// subscriber to view different types of events that are published.
-        /// </param>
-        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this topic. </param>
-        /// <param name="inputSchema"> This determines the format that Event Grid should expect for incoming events published to the topic. </param>
-        /// <param name="inputSchemaMapping">
-        /// This enables publishing using custom event schemas. An InputSchemaMapping can be specified to map various properties of a source schema to various required properties of the EventGridEvent schema.
-        /// Please note <see cref="EventGridInputSchemaMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventGridJsonInputSchemaMapping"/>.
-        /// </param>
-        /// <param name="metricResourceId"> Metric resource id for the topic. </param>
-        /// <param name="publicNetworkAccess">
-        /// This determines if traffic is allowed over public network. By default it is enabled.
-        /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicProperties.InboundIpRules" /&gt;
-        /// </param>
-        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
-        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </param>
-        /// <param name="dataResidencyBoundary"> Data Residency Boundary of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceSku sku, ManagedServiceIdentity identity, ResourceKind? kind, ExtendedLocation extendedLocation, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, EventGridTopicProvisioningState? provisioningState, Uri endpoint, PartnerTopicEventTypeInfo eventTypeInfo, TlsVersion? minimumTlsVersionAllowed, EventGridInputSchema? inputSchema, EventGridInputSchemaMapping inputSchemaMapping, string metricResourceId, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, DataResidencyBoundary? dataResidencyBoundary, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EventGridTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, TopicProperties properties, ResourceSku sku, IdentityInfo identity, ResourceKind? kind, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Identity = identity;
             Kind = kind;
             ExtendedLocation = extendedLocation;
-            PrivateEndpointConnections = privateEndpointConnections;
-            ProvisioningState = provisioningState;
-            Endpoint = endpoint;
-            EventTypeInfo = eventTypeInfo;
-            MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
-            InputSchema = inputSchema;
-            InputSchemaMapping = inputSchemaMapping;
-            MetricResourceId = metricResourceId;
-            PublicNetworkAccess = publicNetworkAccess;
-            InboundIPRules = inboundIPRules;
-            IsLocalAuthDisabled = isLocalAuthDisabled;
-            DataResidencyBoundary = dataResidencyBoundary;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventGridTopicData"/> for deserialization. </summary>
-        internal EventGridTopicData()
-        {
-        }
+        /// <summary> Properties of the topic. </summary>
+        internal TopicProperties Properties { get; set; }
 
         /// <summary> The Sku pricing tier for the topic. </summary>
         internal ResourceSku Sku { get; set; }
-        /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
-        [WirePath("sku.name")]
-        public EventGridSku? SkuName
+
+        /// <summary> Identity information for the resource. </summary>
+        public IdentityInfo Identity { get; set; }
+
+        /// <summary> Kind of the resource. </summary>
+        public ResourceKind? Kind { get; set; }
+
+        /// <summary> Extended location of the resource. </summary>
+        public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary> List of private endpoint connections. </summary>
+        public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections
         {
-            get => Sku is null ? default : Sku.Name;
-            set
+            get
             {
-                if (Sku is null)
-                    Sku = new ResourceSku();
-                Sku.Name = value;
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                return Properties.PrivateEndpointConnections;
             }
         }
 
-        /// <summary> Identity information for the resource. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Kind of the resource. </summary>
-        [WirePath("kind")]
-        public ResourceKind? Kind { get; set; }
-        /// <summary> Extended location of the resource. </summary>
-        [WirePath("extendedLocation")]
-        public ExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> List of private endpoint connections. </summary>
-        [WirePath("properties.privateEndpointConnections")]
-        public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Provisioning state of the topic. </summary>
-        [WirePath("properties.provisioningState")]
-        public EventGridTopicProvisioningState? ProvisioningState { get; }
+        public EventGridTopicProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Endpoint for the topic. </summary>
-        [WirePath("properties.endpoint")]
-        public Uri Endpoint { get; }
+        public string Endpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Endpoint;
+            }
+        }
+
         /// <summary>
         /// Event Type Information for the user topic. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </summary>
-        [WirePath("properties.eventTypeInfo")]
-        public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
+        public PartnerTopicEventTypeInfo EventTypeInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventTypeInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                Properties.EventTypeInfo = value;
+            }
+        }
+
         /// <summary> Minimum TLS version of the publisher allowed to publish to this topic. </summary>
-        [WirePath("properties.minimumTlsVersionAllowed")]
-        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
+        public TlsVersion? MinimumTlsVersionAllowed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersionAllowed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                Properties.MinimumTlsVersionAllowed = value.Value;
+            }
+        }
+
         /// <summary> This determines the format that Event Grid should expect for incoming events published to the topic. </summary>
-        [WirePath("properties.inputSchema")]
-        public EventGridInputSchema? InputSchema { get; set; }
-        /// <summary>
-        /// This enables publishing using custom event schemas. An InputSchemaMapping can be specified to map various properties of a source schema to various required properties of the EventGridEvent schema.
-        /// Please note <see cref="EventGridInputSchemaMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventGridJsonInputSchemaMapping"/>.
-        /// </summary>
-        [WirePath("properties.inputSchemaMapping")]
-        public EventGridInputSchemaMapping InputSchemaMapping { get; set; }
+        public EventGridInputSchema? InputSchema
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InputSchema;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                Properties.InputSchema = value.Value;
+            }
+        }
+
+        /// <summary> This enables publishing using custom event schemas. An InputSchemaMapping can be specified to map various properties of a source schema to various required properties of the EventGridEvent schema. </summary>
+        public EventGridInputSchemaMapping InputSchemaMapping
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InputSchemaMapping;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                Properties.InputSchemaMapping = value;
+            }
+        }
+
         /// <summary> Metric resource id for the topic. </summary>
-        [WirePath("properties.metricResourceId")]
-        public string MetricResourceId { get; }
+        public string MetricResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetricResourceId;
+            }
+        }
+
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.TopicProperties.InboundIpRules" /&gt;
         /// </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public EventGridPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
-        [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIPRules { get; }
+        public IList<EventGridInboundIPRule> InboundIpRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                return Properties.InboundIpRules;
+            }
+        }
+
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the topic. </summary>
-        [WirePath("properties.disableLocalAuth")]
-        public bool? IsLocalAuthDisabled { get; set; }
+        public bool? DisableLocalAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableLocalAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                Properties.DisableLocalAuth = value.Value;
+            }
+        }
+
         /// <summary> Data Residency Boundary of the resource. </summary>
-        [WirePath("properties.dataResidencyBoundary")]
-        public DataResidencyBoundary? DataResidencyBoundary { get; set; }
+        public DataResidencyBoundary? DataResidencyBoundary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataResidencyBoundary;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                Properties.DataResidencyBoundary = value.Value;
+            }
+        }
+
+        /// <summary> List of all customer-managed key encryption properties for the resource. However only one key is supported at a time. </summary>
+        public IList<CustomerManagedKeyEncryption> CustomerManagedKeyEncryption
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                return Properties.CustomerManagedKeyEncryption;
+            }
+        }
+
+        /// <summary>
+        /// This property specifies the mode of the Azure Confidential Compute configuration.
+        /// Possible values are 'Disabled' or 'Enabled'.
+        /// This is an immutable property set at the time of resource creation and cannot be modified later.
+        /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
+        /// </summary>
+        public ConfidentialComputeMode? PlatformCapabilitiesConfidentialComputeMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlatformCapabilitiesConfidentialComputeMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TopicProperties();
+                }
+                Properties.PlatformCapabilitiesConfidentialComputeMode = value.Value;
+            }
+        }
+
+        /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
+        public EventGridSku? SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new ResourceSku();
+                }
+                Sku.Name = value;
+            }
+        }
     }
 }

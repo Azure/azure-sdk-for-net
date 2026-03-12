@@ -13,125 +13,125 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the EventGridNamespaceClient data model.
-    /// The Client resource.
-    /// </summary>
+    /// <summary> The Client resource. </summary>
     public partial class EventGridNamespaceClientData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientData"/>. </summary>
         public EventGridNamespaceClientData()
         {
-            Attributes = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description for the Client resource. </param>
-        /// <param name="authenticationName"> The name presented by the client for authentication. The default value is the name of the resource. </param>
-        /// <param name="clientCertificateAuthentication"> The client certificate authentication information. </param>
-        /// <param name="state"> Indicates if the client is enabled or not. Default value is Enabled. </param>
-        /// <param name="attributes">
-        /// Attributes for the client. Supported values are int, bool, string, string[].
-        /// Example:
-        /// "attributes": { "room": "345", "floor": 12, "deviceTypes": ["Fan", "Light"] }
-        /// </param>
-        /// <param name="provisioningState"> Provisioning state of the Client resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridNamespaceClientData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string authenticationName, ClientCertificateAuthentication clientCertificateAuthentication, EventGridNamespaceClientState? state, IDictionary<string, BinaryData> attributes, EventGridNamespaceClientProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of client. </param>
+        internal EventGridNamespaceClientData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ClientProperties properties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            AuthenticationName = authenticationName;
-            ClientCertificateAuthentication = clientCertificateAuthentication;
-            State = state;
-            Attributes = attributes;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties of client. </summary>
+        internal ClientProperties Properties { get; set; }
+
         /// <summary> Description for the Client resource. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClientProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The name presented by the client for authentication. The default value is the name of the resource. </summary>
-        [WirePath("properties.authenticationName")]
-        public string AuthenticationName { get; set; }
+        public string AuthenticationName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthenticationName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClientProperties();
+                }
+                Properties.AuthenticationName = value;
+            }
+        }
+
         /// <summary> The client certificate authentication information. </summary>
-        [WirePath("properties.clientCertificateAuthentication")]
-        public ClientCertificateAuthentication ClientCertificateAuthentication { get; set; }
+        public ClientCertificateAuthentication ClientCertificateAuthentication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientCertificateAuthentication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClientProperties();
+                }
+                Properties.ClientCertificateAuthentication = value;
+            }
+        }
+
         /// <summary> Indicates if the client is enabled or not. Default value is Enabled. </summary>
-        [WirePath("properties.state")]
-        public EventGridNamespaceClientState? State { get; set; }
+        public ClientState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClientProperties();
+                }
+                Properties.State = value.Value;
+            }
+        }
+
         /// <summary>
         /// Attributes for the client. Supported values are int, bool, string, string[].
         /// Example:
         /// "attributes": { "room": "345", "floor": 12, "deviceTypes": ["Fan", "Light"] }
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
         /// </summary>
-        [WirePath("properties.attributes")]
-        public IDictionary<string, BinaryData> Attributes { get; }
+        public IDictionary<string, BinaryData> Attributes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClientProperties();
+                }
+                return Properties.Attributes;
+            }
+        }
+
         /// <summary> Provisioning state of the Client resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public EventGridNamespaceClientProvisioningState? ProvisioningState { get; }
+        public ClientProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

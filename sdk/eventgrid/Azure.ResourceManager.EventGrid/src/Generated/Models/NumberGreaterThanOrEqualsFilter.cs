@@ -14,24 +14,21 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class NumberGreaterThanOrEqualsFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of <see cref="NumberGreaterThanOrEqualsFilter"/>. </summary>
-        public NumberGreaterThanOrEqualsFilter()
+        public NumberGreaterThanOrEqualsFilter() : base(FilterOperatorType.NumberGreaterThanOrEquals)
         {
-            OperatorType = FilterOperatorType.NumberGreaterThanOrEquals;
         }
 
         /// <summary> Initializes a new instance of <see cref="NumberGreaterThanOrEqualsFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The filter value. </param>
-        internal NumberGreaterThanOrEqualsFilter(FilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, double? value) : base(operatorType, key, serializedAdditionalRawData)
+        internal NumberGreaterThanOrEqualsFilter(FilterOperatorType operatorType, string key, IDictionary<string, BinaryData> additionalBinaryDataProperties, double? value) : base(operatorType, key, additionalBinaryDataProperties)
         {
             Value = value;
-            OperatorType = operatorType;
         }
 
         /// <summary> The filter value. </summary>
-        [WirePath("value")]
         public double? Value { get; set; }
     }
 }

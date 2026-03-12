@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the topic spaces configuration info of a namespace. </summary>
     public partial class UpdateTopicSpacesConfigurationInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UpdateTopicSpacesConfigurationInfo"/>. </summary>
         public UpdateTopicSpacesConfigurationInfo()
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="routingIdentityInfo"> Routing identity info for topic spaces configuration. </param>
         /// <param name="customDomains"> Custom domain info for topic spaces configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateTopicSpacesConfigurationInfo(TopicSpacesConfigurationState? state, string routeTopicResourceId, RoutingEnrichments routingEnrichments, ClientAuthenticationSettings clientAuthentication, int? maximumSessionExpiryInHours, int? maximumClientSessionsPerAuthenticationName, RoutingIdentityInfo routingIdentityInfo, IList<CustomDomainConfiguration> customDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UpdateTopicSpacesConfigurationInfo(TopicSpacesConfigurationState? state, string routeTopicResourceId, RoutingEnrichments routingEnrichments, ClientAuthenticationSettings clientAuthentication, int? maximumSessionExpiryInHours, int? maximumClientSessionsPerAuthenticationName, RoutingIdentityInfo routingIdentityInfo, IList<CustomDomainConfiguration> customDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             RouteTopicResourceId = routeTopicResourceId;
@@ -77,38 +49,37 @@ namespace Azure.ResourceManager.EventGrid.Models
             MaximumClientSessionsPerAuthenticationName = maximumClientSessionsPerAuthenticationName;
             RoutingIdentityInfo = routingIdentityInfo;
             CustomDomains = customDomains;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicate if Topic Spaces Configuration is enabled for the namespace. Default is Disabled. </summary>
-        [WirePath("state")]
         public TopicSpacesConfigurationState? State { get; set; }
+
         /// <summary> This property is used to specify custom topic to which events will be routed to from topic spaces configuration under namespace. </summary>
-        [WirePath("routeTopicResourceId")]
         public string RouteTopicResourceId { get; set; }
+
         /// <summary> Routing enrichments for topic spaces configuration. </summary>
-        [WirePath("routingEnrichments")]
         public RoutingEnrichments RoutingEnrichments { get; set; }
+
         /// <summary> Client authentication settings for topic spaces configuration. </summary>
-        [WirePath("clientAuthentication")]
         public ClientAuthenticationSettings ClientAuthentication { get; set; }
+
         /// <summary>
         /// The maximum session expiry in hours. The property default value is 1 hour.
         /// Min allowed value is 1 hour and max allowed value is 8 hours.
         /// </summary>
-        [WirePath("maximumSessionExpiryInHours")]
         public int? MaximumSessionExpiryInHours { get; set; }
+
         /// <summary>
         /// The maximum number of sessions per authentication name. The property default value is 1.
         /// Min allowed value is 1 and max allowed value is 100.
         /// </summary>
-        [WirePath("maximumClientSessionsPerAuthenticationName")]
         public int? MaximumClientSessionsPerAuthenticationName { get; set; }
+
         /// <summary> Routing identity info for topic spaces configuration. </summary>
-        [WirePath("routingIdentityInfo")]
         public RoutingIdentityInfo RoutingIdentityInfo { get; set; }
+
         /// <summary> Custom domain info for topic spaces configuration. </summary>
-        [WirePath("customDomains")]
         public IList<CustomDomainConfiguration> CustomDomains { get; }
     }
 }

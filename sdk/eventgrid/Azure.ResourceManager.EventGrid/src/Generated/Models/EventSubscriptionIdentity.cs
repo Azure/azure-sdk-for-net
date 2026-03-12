@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> The identity information with the event subscription. </summary>
     public partial class EventSubscriptionIdentity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventSubscriptionIdentity"/>. </summary>
         public EventSubscriptionIdentity()
@@ -51,34 +22,37 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EventSubscriptionIdentity"/>. </summary>
-        /// <param name="identityType"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
+        /// <param name="type"> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </param>
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
         /// <param name="federatedIdentityCredentialInfo"> The details of the Federated Identity Credential (FIC) used with the resource delivery. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventSubscriptionIdentity(EventSubscriptionIdentityType? identityType, string userAssignedIdentity, FederatedIdentityCredentialInfo federatedIdentityCredentialInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EventSubscriptionIdentity(EventSubscriptionIdentityType? @type, string userAssignedIdentity, FederatedIdentityCredentialInfo federatedIdentityCredentialInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IdentityType = identityType;
+            Type = @type;
             UserAssignedIdentity = userAssignedIdentity;
             FederatedIdentityCredentialInfo = federatedIdentityCredentialInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The type of managed identity used. Can be either 'SystemAssigned' or 'UserAssigned'. </summary>
-        [WirePath("type")]
-        public EventSubscriptionIdentityType? IdentityType { get; set; }
+        public EventSubscriptionIdentityType? Type { get; set; }
+
         /// <summary> The user identity associated with the resource. </summary>
-        [WirePath("userAssignedIdentity")]
         public string UserAssignedIdentity { get; set; }
+
         /// <summary> The details of the Federated Identity Credential (FIC) used with the resource delivery. </summary>
         internal FederatedIdentityCredentialInfo FederatedIdentityCredentialInfo { get; set; }
+
         /// <summary> The Multi-Tenant Microsoft Entra ID Application where the Federated Identity Credential (FIC) is associated with. </summary>
-        [WirePath("federatedIdentityCredentialInfo.federatedClientId")]
-        public Guid? FederatedClientId
+        public string FederatedClientId
         {
-            get => FederatedIdentityCredentialInfo is null ? default(Guid?) : FederatedIdentityCredentialInfo.FederatedClientId;
+            get
+            {
+                return FederatedIdentityCredentialInfo is null ? default : FederatedIdentityCredentialInfo.FederatedClientId;
+            }
             set
             {
-                FederatedIdentityCredentialInfo = value.HasValue ? new FederatedIdentityCredentialInfo(value.Value) : null;
+                FederatedIdentityCredentialInfo = new FederatedIdentityCredentialInfo(value);
             }
         }
     }

@@ -12,63 +12,35 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
     /// This is the base type that represents an advanced filter. To configure an advanced filter, do not directly instantiate an object of this class. Instead, instantiate an object of a derived class such as BoolEqualsAdvancedFilter, NumberInAdvancedFilter, StringEqualsAdvancedFilter etc. depending on the type of the key based on which you want to filter.
-    /// Please note <see cref="AdvancedFilter"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BoolEqualsAdvancedFilter"/>, <see cref="IsNotNullAdvancedFilter"/>, <see cref="IsNullOrUndefinedAdvancedFilter"/>, <see cref="NumberGreaterThanAdvancedFilter"/>, <see cref="NumberGreaterThanOrEqualsAdvancedFilter"/>, <see cref="NumberInAdvancedFilter"/>, <see cref="NumberInRangeAdvancedFilter"/>, <see cref="NumberLessThanAdvancedFilter"/>, <see cref="NumberLessThanOrEqualsAdvancedFilter"/>, <see cref="NumberNotInAdvancedFilter"/>, <see cref="NumberNotInRangeAdvancedFilter"/>, <see cref="StringBeginsWithAdvancedFilter"/>, <see cref="StringContainsAdvancedFilter"/>, <see cref="StringEndsWithAdvancedFilter"/>, <see cref="StringInAdvancedFilter"/>, <see cref="StringNotBeginsWithAdvancedFilter"/>, <see cref="StringNotContainsAdvancedFilter"/>, <see cref="StringNotEndsWithAdvancedFilter"/> and <see cref="StringNotInAdvancedFilter"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NumberInAdvancedFilter"/>, <see cref="NumberNotInAdvancedFilter"/>, <see cref="NumberLessThanAdvancedFilter"/>, <see cref="NumberGreaterThanAdvancedFilter"/>, <see cref="NumberLessThanOrEqualsAdvancedFilter"/>, <see cref="NumberGreaterThanOrEqualsAdvancedFilter"/>, <see cref="BoolEqualsAdvancedFilter"/>, <see cref="StringInAdvancedFilter"/>, <see cref="StringNotInAdvancedFilter"/>, <see cref="StringBeginsWithAdvancedFilter"/>, <see cref="StringEndsWithAdvancedFilter"/>, <see cref="StringContainsAdvancedFilter"/>, <see cref="NumberInRangeAdvancedFilter"/>, <see cref="NumberNotInRangeAdvancedFilter"/>, <see cref="StringNotBeginsWithAdvancedFilter"/>, <see cref="StringNotEndsWithAdvancedFilter"/>, <see cref="StringNotContainsAdvancedFilter"/>, <see cref="IsNullOrUndefinedAdvancedFilter"/>, and <see cref="IsNotNullAdvancedFilter"/>.
     /// </summary>
     public abstract partial class AdvancedFilter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AdvancedFilter"/>. </summary>
-        protected AdvancedFilter()
+        /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
+        private protected AdvancedFilter(AdvancedFilterOperatorType operatorType)
         {
+            OperatorType = operatorType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperatorType = operatorType;
             Key = key;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </summary>
         internal AdvancedFilterOperatorType OperatorType { get; set; }
+
         /// <summary> The field/property in the event based on which you want to filter. </summary>
-        [WirePath("key")]
         public string Key { get; set; }
     }
 }

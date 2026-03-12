@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,25 +15,22 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class StringInAdvancedFilter : AdvancedFilter
     {
         /// <summary> Initializes a new instance of <see cref="StringInAdvancedFilter"/>. </summary>
-        public StringInAdvancedFilter()
+        public StringInAdvancedFilter() : base(AdvancedFilterOperatorType.StringIn)
         {
             Values = new ChangeTrackingList<string>();
-            OperatorType = AdvancedFilterOperatorType.StringIn;
         }
 
         /// <summary> Initializes a new instance of <see cref="StringInAdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="values"> The set of filter values. </param>
-        internal StringInAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> values) : base(operatorType, key, serializedAdditionalRawData)
+        internal StringInAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> values) : base(operatorType, key, additionalBinaryDataProperties)
         {
             Values = values;
-            OperatorType = operatorType;
         }
 
         /// <summary> The set of filter values. </summary>
-        [WirePath("values")]
         public IList<string> Values { get; }
     }
 }

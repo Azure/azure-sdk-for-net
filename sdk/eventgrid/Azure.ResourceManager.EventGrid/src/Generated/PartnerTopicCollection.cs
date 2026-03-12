@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerTopicCollection : ArmCollection, IEnumerable<PartnerTopicResource>, IAsyncEnumerable<PartnerTopicResource>
     {
-        private readonly ClientDiagnostics _partnerTopicClientDiagnostics;
-        private readonly PartnerTopicsRestOperations _partnerTopicRestClient;
+        private readonly ClientDiagnostics _partnerTopicsClientDiagnostics;
+        private readonly PartnerTopics _partnerTopicsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerTopicCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PartnerTopicCollection for mocking. </summary>
         protected PartnerTopicCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerTopicCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerTopicCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PartnerTopicCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _partnerTopicClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerTopicResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(PartnerTopicResource.ResourceType, out string partnerTopicApiVersion);
-            _partnerTopicRestClient = new PartnerTopicsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, partnerTopicApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _partnerTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerTopicResource.ResourceType.Namespace, Diagnostics);
+            _partnerTopicsRestClient = new PartnerTopics(_partnerTopicsClientDiagnostics, Pipeline, Endpoint, partnerTopicApiVersion ?? "2025-07-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Asynchronously creates a new partner topic with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="data"> Partner Topic information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<PartnerTopicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string partnerTopicName, PartnerTopicData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _partnerTopicsClientDiagnostics.CreateScope("PartnerTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _partnerTopicRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _partnerTopicRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerTopicName, PartnerTopicData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerTopicData> response = Response.FromValue(PartnerTopicData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                EventGridArmOperation<PartnerTopicResource> operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.EventGrid
         /// Asynchronously creates a new partner topic with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="data"> Partner Topic information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<PartnerTopicResource> CreateOrUpdate(WaitUntil waitUntil, string partnerTopicName, PartnerTopicData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _partnerTopicsClientDiagnostics.CreateScope("PartnerTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _partnerTopicRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, data, cancellationToken);
-                var uri = _partnerTopicRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerTopicName, PartnerTopicData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerTopicData> response = Response.FromValue(PartnerTopicData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                EventGridArmOperation<PartnerTopicResource> operation = new EventGridArmOperation<PartnerTopicResource>(Response.FromValue(new PartnerTopicResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Get properties of a partner topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PartnerTopicResource>> GetAsync(string partnerTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
-            using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.Get");
+            using DiagnosticScope scope = _partnerTopicsClientDiagnostics.CreateScope("PartnerTopicCollection.Get");
             scope.Start();
             try
             {
-                var response = await _partnerTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerTopicName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerTopicData> response = Response.FromValue(PartnerTopicData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Get properties of a partner topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PartnerTopicResource> Get(string partnerTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
-            using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.Get");
+            using DiagnosticScope scope = _partnerTopicsClientDiagnostics.CreateScope("PartnerTopicCollection.Get");
             scope.Start();
             try
             {
-                var response = _partnerTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerTopicName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerTopicData> response = Response.FromValue(PartnerTopicData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,52 +267,16 @@ namespace Azure.ResourceManager.EventGrid
         /// List all the partner topics under a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PartnerTopicResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PartnerTopicResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), _partnerTopicClientDiagnostics, Pipeline, "PartnerTopicCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the partner topics under a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,47 +284,105 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PartnerTopicResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PartnerTopicResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PartnerTopicResource> GetAllAsync(string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerTopicResource(Client, PartnerTopicData.DeserializePartnerTopicData(e)), _partnerTopicClientDiagnostics, Pipeline, "PartnerTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicsGetByResourceGroupAsyncCollectionResultOfT(
+                _partnerTopicsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                top,
+                context), data => new PartnerTopicResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all the partner topics under a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartnerTopicResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PartnerTopicResource> GetAll(string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PartnerTopicData, PartnerTopicResource>(new PartnerTopicsGetByResourceGroupCollectionResultOfT(
+                _partnerTopicsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                top,
+                context), data => new PartnerTopicResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string partnerTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
-            using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.Exists");
+            using DiagnosticScope scope = _partnerTopicsClientDiagnostics.CreateScope("PartnerTopicCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _partnerTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerTopicName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PartnerTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -355,36 +396,50 @@ namespace Azure.ResourceManager.EventGrid
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string partnerTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
-            using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.Exists");
+            using DiagnosticScope scope = _partnerTopicsClientDiagnostics.CreateScope("PartnerTopicCollection.Exists");
             scope.Start();
             try
             {
-                var response = _partnerTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerTopicName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PartnerTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -398,38 +453,54 @@ namespace Azure.ResourceManager.EventGrid
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PartnerTopicResource>> GetIfExistsAsync(string partnerTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
-            using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.GetIfExists");
+            using DiagnosticScope scope = _partnerTopicsClientDiagnostics.CreateScope("PartnerTopicCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _partnerTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerTopicName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PartnerTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PartnerTopicResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -443,38 +514,54 @@ namespace Azure.ResourceManager.EventGrid
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerTopics/{partnerTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PartnerTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> PartnerTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="partnerTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="partnerTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PartnerTopicResource> GetIfExists(string partnerTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(partnerTopicName, nameof(partnerTopicName));
 
-            using var scope = _partnerTopicClientDiagnostics.CreateScope("PartnerTopicCollection.GetIfExists");
+            using DiagnosticScope scope = _partnerTopicsClientDiagnostics.CreateScope("PartnerTopicCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _partnerTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, partnerTopicName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _partnerTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, partnerTopicName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PartnerTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PartnerTopicResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -494,6 +581,7 @@ namespace Azure.ResourceManager.EventGrid
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PartnerTopicResource> IAsyncEnumerable<PartnerTopicResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

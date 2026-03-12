@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class WebHookEventSubscriptionDestination : IUtf8JsonSerializable, IJsonModel<WebHookEventSubscriptionDestination>
+    /// <summary> Information about the webhook destination for an event subscription. </summary>
+    public partial class WebHookEventSubscriptionDestination : EventSubscriptionDestination, IJsonModel<WebHookEventSubscriptionDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebHookEventSubscriptionDestination>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EventSubscriptionDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWebHookEventSubscriptionDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WebHookEventSubscriptionDestination>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebHookEventSubscriptionDestination IPersistableModel<WebHookEventSubscriptionDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => (WebHookEventSubscriptionDestination)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WebHookEventSubscriptionDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WebHookEventSubscriptionDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,402 +69,69 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Endpoint))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("endpointUrl"u8);
-                writer.WriteStringValue(Endpoint.AbsoluteUri);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(BaseEndpoint))
-            {
-                writer.WritePropertyName("endpointBaseUrl"u8);
-                writer.WriteStringValue(BaseEndpoint.AbsoluteUri);
-            }
-            if (Optional.IsDefined(MaxEventsPerBatch))
-            {
-                writer.WritePropertyName("maxEventsPerBatch"u8);
-                writer.WriteNumberValue(MaxEventsPerBatch.Value);
-            }
-            if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
-            {
-                writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
-                writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
-            }
-            if (Optional.IsDefined(AzureActiveDirectoryTenantId))
-            {
-                writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
-                writer.WriteStringValue(AzureActiveDirectoryTenantId.Value);
-            }
-            if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
-            {
-                writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
-                writer.WriteStringValue(UriOrAzureActiveDirectoryApplicationId);
-            }
-            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
-            {
-                writer.WritePropertyName("deliveryAttributeMappings"u8);
-                writer.WriteStartArray();
-                foreach (var item in DeliveryAttributeMappings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(MinimumTlsVersionAllowed))
-            {
-                writer.WritePropertyName("minimumTlsVersionAllowed"u8);
-                writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        WebHookEventSubscriptionDestination IJsonModel<WebHookEventSubscriptionDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WebHookEventSubscriptionDestination IJsonModel<WebHookEventSubscriptionDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WebHookEventSubscriptionDestination)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EventSubscriptionDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWebHookEventSubscriptionDestination(document.RootElement, options);
         }
 
-        internal static WebHookEventSubscriptionDestination DeserializeWebHookEventSubscriptionDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WebHookEventSubscriptionDestination DeserializeWebHookEventSubscriptionDestination(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             EndpointType endpointType = default;
-            Uri endpointUri = default;
-            Uri endpointBaseUri = default;
-            int? maxEventsPerBatch = default;
-            int? preferredBatchSizeInKilobytes = default;
-            Guid? azureActiveDirectoryTenantId = default;
-            string azureActiveDirectoryApplicationIdOrUri = default;
-            IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
-            TlsVersion? minimumTlsVersionAllowed = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            WebHookEventSubscriptionDestinationProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointType"u8))
+                if (prop.NameEquals("endpointType"u8))
                 {
-                    endpointType = new EndpointType(property.Value.GetString());
+                    endpointType = new EndpointType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("endpointUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            endpointUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("endpointBaseUrl"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            endpointBaseUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("maxEventsPerBatch"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxEventsPerBatch = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("preferredBatchSizeInKilobytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            preferredBatchSizeInKilobytes = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("azureActiveDirectoryTenantId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            azureActiveDirectoryTenantId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("azureActiveDirectoryApplicationIdOrUri"u8))
-                        {
-                            azureActiveDirectoryApplicationIdOrUri = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("deliveryAttributeMappings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item, options));
-                            }
-                            deliveryAttributeMappings = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("minimumTlsVersionAllowed"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            minimumTlsVersionAllowed = new TlsVersion(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = WebHookEventSubscriptionDestinationProperties.DeserializeWebHookEventSubscriptionDestinationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new WebHookEventSubscriptionDestination(
-                endpointType,
-                serializedAdditionalRawData,
-                endpointUri,
-                endpointBaseUri,
-                maxEventsPerBatch,
-                preferredBatchSizeInKilobytes,
-                azureActiveDirectoryTenantId,
-                azureActiveDirectoryApplicationIdOrUri,
-                deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>(),
-                minimumTlsVersionAllowed);
+            return new WebHookEventSubscriptionDestination(endpointType, additionalBinaryDataProperties, properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endpointType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  endpointType: ");
-                builder.AppendLine($"'{EndpointType.ToString()}'");
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    endpointUrl: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Endpoint))
-                {
-                    builder.Append("    endpointUrl: ");
-                    builder.AppendLine($"'{Endpoint.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseEndpoint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    endpointBaseUrl: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BaseEndpoint))
-                {
-                    builder.Append("    endpointBaseUrl: ");
-                    builder.AppendLine($"'{BaseEndpoint.AbsoluteUri}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxEventsPerBatch), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    maxEventsPerBatch: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxEventsPerBatch))
-                {
-                    builder.Append("    maxEventsPerBatch: ");
-                    builder.AppendLine($"{MaxEventsPerBatch.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredBatchSizeInKilobytes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    preferredBatchSizeInKilobytes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
-                {
-                    builder.Append("    preferredBatchSizeInKilobytes: ");
-                    builder.AppendLine($"{PreferredBatchSizeInKilobytes.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureActiveDirectoryTenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    azureActiveDirectoryTenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AzureActiveDirectoryTenantId))
-                {
-                    builder.Append("    azureActiveDirectoryTenantId: ");
-                    builder.AppendLine($"'{AzureActiveDirectoryTenantId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UriOrAzureActiveDirectoryApplicationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    azureActiveDirectoryApplicationIdOrUri: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UriOrAzureActiveDirectoryApplicationId))
-                {
-                    builder.Append("    azureActiveDirectoryApplicationIdOrUri: ");
-                    if (UriOrAzureActiveDirectoryApplicationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UriOrAzureActiveDirectoryApplicationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UriOrAzureActiveDirectoryApplicationId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeliveryAttributeMappings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deliveryAttributeMappings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
-                {
-                    if (DeliveryAttributeMappings.Any())
-                    {
-                        builder.Append("    deliveryAttributeMappings: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DeliveryAttributeMappings)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    deliveryAttributeMappings: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumTlsVersionAllowed), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    minimumTlsVersionAllowed: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MinimumTlsVersionAllowed))
-                {
-                    builder.Append("    minimumTlsVersionAllowed: ");
-                    builder.AppendLine($"'{MinimumTlsVersionAllowed.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<WebHookEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        WebHookEventSubscriptionDestination IPersistableModel<WebHookEventSubscriptionDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WebHookEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWebHookEventSubscriptionDestination(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WebHookEventSubscriptionDestination)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WebHookEventSubscriptionDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

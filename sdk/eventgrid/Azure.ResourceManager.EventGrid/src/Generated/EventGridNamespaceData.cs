@@ -13,137 +13,173 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the EventGridNamespace data model.
-    /// Namespace resource.
-    /// </summary>
+    /// <summary> Namespace resource. </summary>
     public partial class EventGridNamespaceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventGridNamespaceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public EventGridNamespaceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<EventGridPrivateEndpointConnectionData>();
-            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventGridNamespaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the Namespace resource. </param>
         /// <param name="sku"> Represents available Sku pricing tiers. </param>
         /// <param name="identity"> Identity information for the Namespace resource. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="provisioningState"> Provisioning state of the namespace resource. </param>
-        /// <param name="topicsConfiguration"> Topics configuration information for the namespace resource. </param>
-        /// <param name="topicSpacesConfiguration"> Topic spaces configuration information for the namespace resource. </param>
-        /// <param name="isZoneRedundant">
-        /// This is an optional property and it allows the user to specify if the namespace resource supports zone-redundancy capability or not. If this
-        /// property is not specified explicitly by the user, its default value depends on the following conditions:
-        ///     a. For Availability Zones enabled regions - The default property value would be true.
-        ///     b. For non-Availability Zones enabled regions - The default property value would be false.
-        /// Once specified, this property cannot be updated.
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// This determines if traffic is allowed over public network. By default it is enabled.
-        /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceProperties.InboundIpRules" /&gt;
-        /// </param>
-        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
-        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this namespace. Only TLS version 1.2 is supported. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventGridNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NamespaceSku sku, ManagedServiceIdentity identity, IList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, NamespaceProvisioningState? provisioningState, TopicsConfiguration topicsConfiguration, TopicSpacesConfiguration topicSpacesConfiguration, bool? isZoneRedundant, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, TlsVersion? minimumTlsVersionAllowed, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EventGridNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, NamespaceProperties properties, NamespaceSku sku, IdentityInfo identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Identity = identity;
-            PrivateEndpointConnections = privateEndpointConnections;
-            ProvisioningState = provisioningState;
-            TopicsConfiguration = topicsConfiguration;
-            TopicSpacesConfiguration = topicSpacesConfiguration;
-            IsZoneRedundant = isZoneRedundant;
-            PublicNetworkAccess = publicNetworkAccess;
-            InboundIPRules = inboundIPRules;
-            MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EventGridNamespaceData"/> for deserialization. </summary>
-        internal EventGridNamespaceData()
-        {
-        }
+        /// <summary> Properties of the Namespace resource. </summary>
+        internal NamespaceProperties Properties { get; set; }
 
         /// <summary> Represents available Sku pricing tiers. </summary>
-        [WirePath("sku")]
         public NamespaceSku Sku { get; set; }
+
         /// <summary> Identity information for the Namespace resource. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public IdentityInfo Identity { get; set; }
+
         /// <summary> List of private endpoint connections. </summary>
-        [WirePath("properties.privateEndpointConnections")]
-        public IList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Provisioning state of the namespace resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public NamespaceProvisioningState? ProvisioningState { get; }
+        public NamespaceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Topics configuration information for the namespace resource. </summary>
-        [WirePath("properties.topicsConfiguration")]
-        public TopicsConfiguration TopicsConfiguration { get; set; }
+        public TopicsConfiguration TopicsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TopicsConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceProperties();
+                }
+                Properties.TopicsConfiguration = value;
+            }
+        }
+
         /// <summary> Topic spaces configuration information for the namespace resource. </summary>
-        [WirePath("properties.topicSpacesConfiguration")]
-        public TopicSpacesConfiguration TopicSpacesConfiguration { get; set; }
+        public TopicSpacesConfiguration TopicSpacesConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TopicSpacesConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceProperties();
+                }
+                Properties.TopicSpacesConfiguration = value;
+            }
+        }
+
         /// <summary>
         /// This is an optional property and it allows the user to specify if the namespace resource supports zone-redundancy capability or not. If this
         /// property is not specified explicitly by the user, its default value depends on the following conditions:
-        ///     a. For Availability Zones enabled regions - The default property value would be true.
-        ///     b. For non-Availability Zones enabled regions - The default property value would be false.
+        /// a. For Availability Zones enabled regions - The default property value would be true.
+        /// b. For non-Availability Zones enabled regions - The default property value would be false.
         /// Once specified, this property cannot be updated.
         /// </summary>
-        [WirePath("properties.isZoneRedundant")]
-        public bool? IsZoneRedundant { get; set; }
+        public bool? IsZoneRedundant
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsZoneRedundant;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceProperties();
+                }
+                Properties.IsZoneRedundant = value.Value;
+            }
+        }
+
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PubSub.NamespaceProperties.InboundIpRules" /&gt;
         /// </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public EventGridPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
-        [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIPRules { get; }
+        public IList<EventGridInboundIPRule> InboundIpRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceProperties();
+                }
+                return Properties.InboundIpRules;
+            }
+        }
+
         /// <summary> Minimum TLS version of the publisher allowed to publish to this namespace. Only TLS version 1.2 is supported. </summary>
-        [WirePath("properties.minimumTlsVersionAllowed")]
-        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
+        public TlsVersion? MinimumTlsVersionAllowed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersionAllowed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceProperties();
+                }
+                Properties.MinimumTlsVersionAllowed = value.Value;
+            }
+        }
     }
 }

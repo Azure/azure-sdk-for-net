@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the CaCertificate data model.
-    /// The CA Certificate resource.
-    /// </summary>
+    /// <summary> The CA Certificate resource. </summary>
     public partial class CaCertificateData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CaCertificateData"/>. </summary>
         public CaCertificateData()
@@ -57,40 +25,80 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Initializes a new instance of <see cref="CaCertificateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="description"> Description for the CA Certificate resource. </param>
-        /// <param name="encodedCertificate"> Base64 encoded PEM (Privacy Enhanced Mail) format certificate data. </param>
-        /// <param name="issueTimeInUtc"> Certificate issue time in UTC. This is a read-only field. </param>
-        /// <param name="expiryTimeInUtc"> Certificate expiry time in UTC. This is a read-only field. </param>
-        /// <param name="provisioningState"> Provisioning state of the CA Certificate resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CaCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string encodedCertificate, DateTimeOffset? issueTimeInUtc, DateTimeOffset? expiryTimeInUtc, CaCertificateProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of CA certificate. </param>
+        internal CaCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CaCertificateProperties properties) : base(id, name, resourceType, systemData)
         {
-            Description = description;
-            EncodedCertificate = encodedCertificate;
-            IssueTimeInUtc = issueTimeInUtc;
-            ExpiryTimeInUtc = expiryTimeInUtc;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties of CA certificate. </summary>
+        internal CaCertificateProperties Properties { get; set; }
+
         /// <summary> Description for the CA Certificate resource. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CaCertificateProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Base64 encoded PEM (Privacy Enhanced Mail) format certificate data. </summary>
-        [WirePath("properties.encodedCertificate")]
-        public string EncodedCertificate { get; set; }
+        public string EncodedCertificate
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncodedCertificate;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CaCertificateProperties();
+                }
+                Properties.EncodedCertificate = value;
+            }
+        }
+
         /// <summary> Certificate issue time in UTC. This is a read-only field. </summary>
-        [WirePath("properties.issueTimeInUtc")]
-        public DateTimeOffset? IssueTimeInUtc { get; }
+        public DateTimeOffset? IssueTimeInUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IssueTimeInUtc;
+            }
+        }
+
         /// <summary> Certificate expiry time in UTC. This is a read-only field. </summary>
-        [WirePath("properties.expiryTimeInUtc")]
-        public DateTimeOffset? ExpiryTimeInUtc { get; }
+        public DateTimeOffset? ExpiryTimeInUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpiryTimeInUtc;
+            }
+        }
+
         /// <summary> Provisioning state of the CA Certificate resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public CaCertificateProvisioningState? ProvisioningState { get; }
+        public CaCertificateProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -13,92 +13,126 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the SystemTopic data model.
-    /// EventGrid System Topic.
-    /// </summary>
+    /// <summary> EventGrid System Topic. </summary>
     public partial class SystemTopicData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SystemTopicData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SystemTopicData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemTopicData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the system topic. </param>
         /// <param name="identity"> Identity information for the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the system topic. </param>
-        /// <param name="source"> Source for the system topic. </param>
-        /// <param name="topicType"> TopicType for the system topic. </param>
-        /// <param name="metricResourceId"> Metric resource id for the system topic. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SystemTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, EventGridResourceProvisioningState? provisioningState, ResourceIdentifier source, string topicType, Guid? metricResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SystemTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SystemTopicProperties properties, IdentityInfo identity) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Identity = identity;
-            ProvisioningState = provisioningState;
-            Source = source;
-            TopicType = topicType;
-            MetricResourceId = metricResourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemTopicData"/> for deserialization. </summary>
-        internal SystemTopicData()
-        {
-        }
+        /// <summary> Properties of the system topic. </summary>
+        internal SystemTopicProperties Properties { get; set; }
 
         /// <summary> Identity information for the resource. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public IdentityInfo Identity { get; set; }
+
         /// <summary> Provisioning state of the system topic. </summary>
-        [WirePath("properties.provisioningState")]
-        public EventGridResourceProvisioningState? ProvisioningState { get; }
+        public EventGridResourceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Source for the system topic. </summary>
-        [WirePath("properties.source")]
-        public ResourceIdentifier Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SystemTopicProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> TopicType for the system topic. </summary>
-        [WirePath("properties.topicType")]
-        public string TopicType { get; set; }
+        public string TopicType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TopicType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SystemTopicProperties();
+                }
+                Properties.TopicType = value;
+            }
+        }
+
         /// <summary> Metric resource id for the system topic. </summary>
-        [WirePath("properties.metricResourceId")]
-        public Guid? MetricResourceId { get; }
+        public string MetricResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetricResourceId;
+            }
+        }
+
+        /// <summary> List of all customer-managed key encryption properties for the resource. However only one key is supported at a time. </summary>
+        public IList<CustomerManagedKeyEncryption> CustomerManagedKeyEncryption
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SystemTopicProperties();
+                }
+                return Properties.CustomerManagedKeyEncryption;
+            }
+        }
+
+        /// <summary>
+        /// This property specifies the mode of the Azure Confidential Compute configuration.
+        /// Possible values are 'Disabled' or 'Enabled'.
+        /// This is an immutable property set at the time of resource creation and cannot be modified later.
+        /// Enabling this property ensures that messages are processed and stored in a Azure Confidential Compute environment.
+        /// </summary>
+        public ConfidentialComputeMode? PlatformCapabilitiesConfidentialComputeMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlatformCapabilitiesConfidentialComputeMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SystemTopicProperties();
+                }
+                Properties.PlatformCapabilitiesConfidentialComputeMode = value.Value;
+            }
+        }
     }
 }

@@ -15,28 +15,54 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class StorageBlobDeadLetterDestination : DeadLetterDestination
     {
         /// <summary> Initializes a new instance of <see cref="StorageBlobDeadLetterDestination"/>. </summary>
-        public StorageBlobDeadLetterDestination()
+        public StorageBlobDeadLetterDestination() : base(DeadLetterEndPointType.StorageBlob)
         {
-            EndpointType = DeadLetterEndPointType.StorageBlob;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageBlobDeadLetterDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the dead letter destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="resourceId"> The Azure Resource ID of the storage account that is the destination of the deadletter events. </param>
-        /// <param name="blobContainerName"> The name of the Storage blob container that is the destination of the deadletter events. </param>
-        internal StorageBlobDeadLetterDestination(DeadLetterEndPointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceId, string blobContainerName) : base(endpointType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the Storage Blob based deadletter destination. </param>
+        internal StorageBlobDeadLetterDestination(DeadLetterEndPointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageBlobDeadLetterDestinationProperties properties) : base(endpointType, additionalBinaryDataProperties)
         {
-            ResourceId = resourceId;
-            BlobContainerName = blobContainerName;
-            EndpointType = endpointType;
+            Properties = properties;
         }
 
+        /// <summary> The properties of the Storage Blob based deadletter destination. </summary>
+        internal StorageBlobDeadLetterDestinationProperties Properties { get; set; }
+
         /// <summary> The Azure Resource ID of the storage account that is the destination of the deadletter events. </summary>
-        [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageBlobDeadLetterDestinationProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
+
         /// <summary> The name of the Storage blob container that is the destination of the deadletter events. </summary>
-        [WirePath("properties.blobContainerName")]
-        public string BlobContainerName { get; set; }
+        public string BlobContainerName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BlobContainerName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageBlobDeadLetterDestinationProperties();
+                }
+                Properties.BlobContainerName = value;
+            }
+        }
     }
 }

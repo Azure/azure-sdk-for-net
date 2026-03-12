@@ -15,46 +15,73 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class MonitorAlertEventSubscriptionDestination : EventSubscriptionDestination
     {
         /// <summary> Initializes a new instance of <see cref="MonitorAlertEventSubscriptionDestination"/>. </summary>
-        public MonitorAlertEventSubscriptionDestination()
+        public MonitorAlertEventSubscriptionDestination() : base(EndpointType.MonitorAlert)
         {
-            ActionGroups = new ChangeTrackingList<ResourceIdentifier>();
-            EndpointType = EndpointType.MonitorAlert;
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorAlertEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="severity">
-        /// The severity that will be attached to every Alert fired through this event subscription.
-        /// This field must be provided.
-        /// </param>
-        /// <param name="description"> The description that will be attached to every Alert fired through this event subscription. </param>
-        /// <param name="actionGroups">
-        /// The list of ARM Ids of Action Groups that will be triggered on every Alert fired through this event subscription.
-        /// Each resource ARM Id should follow this pattern: /subscriptions/{AzureSubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Insights/actionGroups/{ActionGroupName}.
-        /// </param>
-        internal MonitorAlertEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, MonitorAlertSeverity? severity, string description, IList<ResourceIdentifier> actionGroups) : base(endpointType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Monitor Alert properties of the event subscription destination. </param>
+        internal MonitorAlertEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties, MonitorAlertEventSubscriptionDestinationProperties properties) : base(endpointType, additionalBinaryDataProperties)
         {
-            Severity = severity;
-            Description = description;
-            ActionGroups = actionGroups;
-            EndpointType = endpointType;
+            Properties = properties;
         }
+
+        /// <summary> Monitor Alert properties of the event subscription destination. </summary>
+        internal MonitorAlertEventSubscriptionDestinationProperties Properties { get; set; }
 
         /// <summary>
         /// The severity that will be attached to every Alert fired through this event subscription.
         /// This field must be provided.
         /// </summary>
-        [WirePath("properties.severity")]
-        public MonitorAlertSeverity? Severity { get; set; }
+        public MonitorAlertSeverity? Severity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Severity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorAlertEventSubscriptionDestinationProperties();
+                }
+                Properties.Severity = value.Value;
+            }
+        }
+
         /// <summary> The description that will be attached to every Alert fired through this event subscription. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorAlertEventSubscriptionDestinationProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary>
         /// The list of ARM Ids of Action Groups that will be triggered on every Alert fired through this event subscription.
         /// Each resource ARM Id should follow this pattern: /subscriptions/{AzureSubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Insights/actionGroups/{ActionGroupName}.
         /// </summary>
-        [WirePath("properties.actionGroups")]
-        public IList<ResourceIdentifier> ActionGroups { get; }
+        public IList<ResourceIdentifier> ActionGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MonitorAlertEventSubscriptionDestinationProperties();
+                }
+                return Properties.ActionGroups;
+            }
+        }
     }
 }

@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerNamespaceChannelCollection : ArmCollection, IEnumerable<PartnerNamespaceChannelResource>, IAsyncEnumerable<PartnerNamespaceChannelResource>
     {
-        private readonly ClientDiagnostics _partnerNamespaceChannelChannelsClientDiagnostics;
-        private readonly ChannelsRestOperations _partnerNamespaceChannelChannelsRestClient;
+        private readonly ClientDiagnostics _channelsClientDiagnostics;
+        private readonly Channels _channelsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceChannelCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of PartnerNamespaceChannelCollection for mocking. </summary>
         protected PartnerNamespaceChannelCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PartnerNamespaceChannelCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PartnerNamespaceChannelCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _partnerNamespaceChannelChannelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerNamespaceChannelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(PartnerNamespaceChannelResource.ResourceType, out string partnerNamespaceChannelChannelsApiVersion);
-            _partnerNamespaceChannelChannelsRestClient = new ChannelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, partnerNamespaceChannelChannelsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(PartnerNamespaceChannelResource.ResourceType, out string partnerNamespaceChannelApiVersion);
+            _channelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", PartnerNamespaceChannelResource.ResourceType.Namespace, Diagnostics);
+            _channelsRestClient = new Channels(_channelsClientDiagnostics, Pipeline, Endpoint, partnerNamespaceChannelApiVersion ?? "2025-07-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != PartnerNamespaceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PartnerNamespaceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, PartnerNamespaceResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Synchronously creates or updates a new channel with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Channels_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +75,31 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="channelName"> Name of the channel. </param>
         /// <param name="data"> Channel information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<PartnerNamespaceChannelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string channelName, PartnerNamespaceChannelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _channelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _partnerNamespaceChannelChannelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _partnerNamespaceChannelChannelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new EventGridArmOperation<PartnerNamespaceChannelResource>(Response.FromValue(new PartnerNamespaceChannelResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _channelsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, channelName, PartnerNamespaceChannelData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerNamespaceChannelData> response = Response.FromValue(PartnerNamespaceChannelData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                EventGridArmOperation<PartnerNamespaceChannelResource> operation = new EventGridArmOperation<PartnerNamespaceChannelResource>(Response.FromValue(new PartnerNamespaceChannelResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +113,16 @@ namespace Azure.ResourceManager.EventGrid
         /// Synchronously creates or updates a new channel with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Channels_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +130,31 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="channelName"> Name of the channel. </param>
         /// <param name="data"> Channel information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<PartnerNamespaceChannelResource> CreateOrUpdate(WaitUntil waitUntil, string channelName, PartnerNamespaceChannelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _channelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _partnerNamespaceChannelChannelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data, cancellationToken);
-                var uri = _partnerNamespaceChannelChannelsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new EventGridArmOperation<PartnerNamespaceChannelResource>(Response.FromValue(new PartnerNamespaceChannelResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _channelsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, channelName, PartnerNamespaceChannelData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerNamespaceChannelData> response = Response.FromValue(PartnerNamespaceChannelData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                EventGridArmOperation<PartnerNamespaceChannelResource> operation = new EventGridArmOperation<PartnerNamespaceChannelResource>(Response.FromValue(new PartnerNamespaceChannelResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +168,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Get properties of a channel.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Channels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="channelName"> Name of the channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<PartnerNamespaceChannelResource>> GetAsync(string channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
-            using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Get");
+            using DiagnosticScope scope = _channelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Get");
             scope.Start();
             try
             {
-                var response = await _partnerNamespaceChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _channelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, channelName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PartnerNamespaceChannelData> response = Response.FromValue(PartnerNamespaceChannelData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerNamespaceChannelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +217,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Get properties of a channel.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Channels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="channelName"> Name of the channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<PartnerNamespaceChannelResource> Get(string channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
-            using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Get");
+            using DiagnosticScope scope = _channelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Get");
             scope.Start();
             try
             {
-                var response = _partnerNamespaceChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _channelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, channelName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PartnerNamespaceChannelData> response = Response.FromValue(PartnerNamespaceChannelData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerNamespaceChannelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,52 +266,16 @@ namespace Azure.ResourceManager.EventGrid
         /// List all the channels in a partner namespace.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_ListByPartnerNamespace</description>
+        /// <term> Operation Id. </term>
+        /// <description> Channels_ListByPartnerNamespace. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PartnerNamespaceChannelResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PartnerNamespaceChannelResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerNamespaceChannelChannelsRestClient.CreateListByPartnerNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerNamespaceChannelChannelsRestClient.CreateListByPartnerNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceChannelResource(Client, PartnerNamespaceChannelData.DeserializePartnerNamespaceChannelData(e)), _partnerNamespaceChannelChannelsClientDiagnostics, Pipeline, "PartnerNamespaceChannelCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the channels in a partner namespace.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_ListByPartnerNamespace</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,47 +283,107 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PartnerNamespaceChannelResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PartnerNamespaceChannelResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PartnerNamespaceChannelResource> GetAllAsync(string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _partnerNamespaceChannelChannelsRestClient.CreateListByPartnerNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _partnerNamespaceChannelChannelsRestClient.CreateListByPartnerNamespaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PartnerNamespaceChannelResource(Client, PartnerNamespaceChannelData.DeserializePartnerNamespaceChannelData(e)), _partnerNamespaceChannelChannelsClientDiagnostics, Pipeline, "PartnerNamespaceChannelCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PartnerNamespaceChannelData, PartnerNamespaceChannelResource>(new ChannelsGetByPartnerNamespaceAsyncCollectionResultOfT(
+                _channelsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                top,
+                context), data => new PartnerNamespaceChannelResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all the channels in a partner namespace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Channels_ListByPartnerNamespace. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PartnerNamespaceChannelResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PartnerNamespaceChannelResource> GetAll(string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PartnerNamespaceChannelData, PartnerNamespaceChannelResource>(new ChannelsGetByPartnerNamespaceCollectionResultOfT(
+                _channelsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                top,
+                context), data => new PartnerNamespaceChannelResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Channels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="channelName"> Name of the channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
-            using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Exists");
+            using DiagnosticScope scope = _channelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _partnerNamespaceChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _channelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, channelName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PartnerNamespaceChannelData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerNamespaceChannelData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerNamespaceChannelData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -354,36 +397,50 @@ namespace Azure.ResourceManager.EventGrid
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Channels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="channelName"> Name of the channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
-            using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Exists");
+            using DiagnosticScope scope = _channelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.Exists");
             scope.Start();
             try
             {
-                var response = _partnerNamespaceChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _channelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, channelName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PartnerNamespaceChannelData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerNamespaceChannelData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerNamespaceChannelData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -397,38 +454,54 @@ namespace Azure.ResourceManager.EventGrid
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Channels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="channelName"> Name of the channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<PartnerNamespaceChannelResource>> GetIfExistsAsync(string channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
-            using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.GetIfExists");
+            using DiagnosticScope scope = _channelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _partnerNamespaceChannelChannelsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _channelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, channelName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<PartnerNamespaceChannelData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerNamespaceChannelData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerNamespaceChannelData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PartnerNamespaceChannelResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerNamespaceChannelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -442,38 +515,54 @@ namespace Azure.ResourceManager.EventGrid
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Channels_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Channels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PartnerNamespaceChannelResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="channelName"> Name of the channel. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="channelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="channelName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<PartnerNamespaceChannelResource> GetIfExists(string channelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(channelName, nameof(channelName));
 
-            using var scope = _partnerNamespaceChannelChannelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.GetIfExists");
+            using DiagnosticScope scope = _channelsClientDiagnostics.CreateScope("PartnerNamespaceChannelCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _partnerNamespaceChannelChannelsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, channelName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _channelsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, channelName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<PartnerNamespaceChannelData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(PartnerNamespaceChannelData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((PartnerNamespaceChannelData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<PartnerNamespaceChannelResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new PartnerNamespaceChannelResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -493,6 +582,7 @@ namespace Azure.ResourceManager.EventGrid
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<PartnerNamespaceChannelResource> IAsyncEnumerable<PartnerNamespaceChannelResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

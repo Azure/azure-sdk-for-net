@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class AzureFunctionEventSubscriptionDestination : IUtf8JsonSerializable, IJsonModel<AzureFunctionEventSubscriptionDestination>
+    /// <summary> Information about the azure function destination for an event subscription. </summary>
+    public partial class AzureFunctionEventSubscriptionDestination : EventSubscriptionDestination, IJsonModel<AzureFunctionEventSubscriptionDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFunctionEventSubscriptionDestination>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EventSubscriptionDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAzureFunctionEventSubscriptionDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AzureFunctionEventSubscriptionDestination>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureFunctionEventSubscriptionDestination IPersistableModel<AzureFunctionEventSubscriptionDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureFunctionEventSubscriptionDestination)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AzureFunctionEventSubscriptionDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AzureFunctionEventSubscriptionDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,274 +69,69 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(MaxEventsPerBatch))
-            {
-                writer.WritePropertyName("maxEventsPerBatch"u8);
-                writer.WriteNumberValue(MaxEventsPerBatch.Value);
-            }
-            if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
-            {
-                writer.WritePropertyName("preferredBatchSizeInKilobytes"u8);
-                writer.WriteNumberValue(PreferredBatchSizeInKilobytes.Value);
-            }
-            if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
-            {
-                writer.WritePropertyName("deliveryAttributeMappings"u8);
-                writer.WriteStartArray();
-                foreach (var item in DeliveryAttributeMappings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
         }
 
-        AzureFunctionEventSubscriptionDestination IJsonModel<AzureFunctionEventSubscriptionDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AzureFunctionEventSubscriptionDestination IJsonModel<AzureFunctionEventSubscriptionDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureFunctionEventSubscriptionDestination)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EventSubscriptionDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AzureFunctionEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureFunctionEventSubscriptionDestination(document.RootElement, options);
         }
 
-        internal static AzureFunctionEventSubscriptionDestination DeserializeAzureFunctionEventSubscriptionDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AzureFunctionEventSubscriptionDestination DeserializeAzureFunctionEventSubscriptionDestination(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             EndpointType endpointType = default;
-            ResourceIdentifier resourceId = default;
-            int? maxEventsPerBatch = default;
-            int? preferredBatchSizeInKilobytes = default;
-            IList<DeliveryAttributeMapping> deliveryAttributeMappings = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            AzureFunctionEventSubscriptionDestinationProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("endpointType"u8))
+                if (prop.NameEquals("endpointType"u8))
                 {
-                    endpointType = new EndpointType(property.Value.GetString());
+                    endpointType = new EndpointType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("resourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            resourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("maxEventsPerBatch"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            maxEventsPerBatch = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("preferredBatchSizeInKilobytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            preferredBatchSizeInKilobytes = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("deliveryAttributeMappings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item, options));
-                            }
-                            deliveryAttributeMappings = array;
-                            continue;
-                        }
-                    }
+                    properties = AzureFunctionEventSubscriptionDestinationProperties.DeserializeAzureFunctionEventSubscriptionDestinationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AzureFunctionEventSubscriptionDestination(
-                endpointType,
-                serializedAdditionalRawData,
-                resourceId,
-                maxEventsPerBatch,
-                preferredBatchSizeInKilobytes,
-                deliveryAttributeMappings ?? new ChangeTrackingList<DeliveryAttributeMapping>());
+            return new AzureFunctionEventSubscriptionDestination(endpointType, additionalBinaryDataProperties, properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  endpointType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  endpointType: ");
-                builder.AppendLine($"'{EndpointType.ToString()}'");
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    resourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceId))
-                {
-                    builder.Append("    resourceId: ");
-                    builder.AppendLine($"'{ResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxEventsPerBatch), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    maxEventsPerBatch: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxEventsPerBatch))
-                {
-                    builder.Append("    maxEventsPerBatch: ");
-                    builder.AppendLine($"{MaxEventsPerBatch.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreferredBatchSizeInKilobytes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    preferredBatchSizeInKilobytes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PreferredBatchSizeInKilobytes))
-                {
-                    builder.Append("    preferredBatchSizeInKilobytes: ");
-                    builder.AppendLine($"{PreferredBatchSizeInKilobytes.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeliveryAttributeMappings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deliveryAttributeMappings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DeliveryAttributeMappings))
-                {
-                    if (DeliveryAttributeMappings.Any())
-                    {
-                        builder.Append("    deliveryAttributeMappings: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DeliveryAttributeMappings)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    deliveryAttributeMappings: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AzureFunctionEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AzureFunctionEventSubscriptionDestination IPersistableModel<AzureFunctionEventSubscriptionDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureFunctionEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAzureFunctionEventSubscriptionDestination(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AzureFunctionEventSubscriptionDestination)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AzureFunctionEventSubscriptionDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

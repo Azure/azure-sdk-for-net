@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the Channel update. </summary>
     public partial class PartnerNamespaceChannelPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelPatch"/>. </summary>
         public PartnerNamespaceChannelPatch()
@@ -51,50 +22,68 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelPatch"/>. </summary>
-        /// <param name="expireOnIfNotActivated">
-        /// Expiration time of the channel. If this timer expires while the corresponding partner topic or partner destination is never activated,
-        /// the channel and corresponding partner topic or partner destination are deleted.
-        /// </param>
-        /// <param name="partnerDestinationInfo">
-        /// Partner destination properties which can be updated if the channel is of type PartnerDestination.
-        /// Please note <see cref="PartnerUpdateDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebhookUpdatePartnerDestinationInfo"/>.
-        /// </param>
-        /// <param name="partnerTopicInfo"> Partner topic properties which can be updated if the channel is of type PartnerTopic. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerNamespaceChannelPatch(DateTimeOffset? expireOnIfNotActivated, PartnerUpdateDestinationInfo partnerDestinationInfo, PartnerUpdateTopicInfo partnerTopicInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the channel update parameters. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerNamespaceChannelPatch(ChannelUpdateParametersProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpireOnIfNotActivated = expireOnIfNotActivated;
-            PartnerDestinationInfo = partnerDestinationInfo;
-            PartnerTopicInfo = partnerTopicInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of the channel update parameters. </summary>
+        internal ChannelUpdateParametersProperties Properties { get; set; }
 
         /// <summary>
         /// Expiration time of the channel. If this timer expires while the corresponding partner topic or partner destination is never activated,
         /// the channel and corresponding partner topic or partner destination are deleted.
         /// </summary>
-        [WirePath("properties.expirationTimeIfNotActivatedUtc")]
-        public DateTimeOffset? ExpireOnIfNotActivated { get; set; }
-        /// <summary>
-        /// Partner destination properties which can be updated if the channel is of type PartnerDestination.
-        /// Please note <see cref="PartnerUpdateDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebhookUpdatePartnerDestinationInfo"/>.
-        /// </summary>
-        [WirePath("properties.partnerDestinationInfo")]
-        public PartnerUpdateDestinationInfo PartnerDestinationInfo { get; set; }
-        /// <summary> Partner topic properties which can be updated if the channel is of type PartnerTopic. </summary>
-        internal PartnerUpdateTopicInfo PartnerTopicInfo { get; set; }
-        /// <summary> Event type info for the partner topic. </summary>
-        [WirePath("properties.partnerTopicInfo.eventTypeInfo")]
-        public PartnerTopicEventTypeInfo EventTypeInfo
+        public DateTimeOffset? ExpirationTimeIfNotActivatedUtc
         {
-            get => PartnerTopicInfo is null ? default : PartnerTopicInfo.EventTypeInfo;
+            get
+            {
+                return Properties is null ? default : Properties.ExpirationTimeIfNotActivatedUtc;
+            }
             set
             {
-                if (PartnerTopicInfo is null)
-                    PartnerTopicInfo = new PartnerUpdateTopicInfo();
-                PartnerTopicInfo.EventTypeInfo = value;
+                if (Properties is null)
+                {
+                    Properties = new ChannelUpdateParametersProperties();
+                }
+                Properties.ExpirationTimeIfNotActivatedUtc = value.Value;
+            }
+        }
+
+        /// <summary> Partner destination properties which can be updated if the channel is of type PartnerDestination. </summary>
+        public PartnerUpdateDestinationInfo PartnerDestinationInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerDestinationInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelUpdateParametersProperties();
+                }
+                Properties.PartnerDestinationInfo = value;
+            }
+        }
+
+        /// <summary> Event type info for the partner topic. </summary>
+        public PartnerTopicEventTypeInfo EventTypeInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventTypeInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelUpdateParametersProperties();
+                }
+                Properties.EventTypeInfo = value;
             }
         }
     }

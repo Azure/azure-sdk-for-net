@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct PermissionType : IEquatable<PermissionType>
     {
         private readonly string _value;
+        /// <summary> Publisher. </summary>
+        private const string PublisherValue = "Publisher";
+        /// <summary> Subscriber. </summary>
+        private const string SubscriberValue = "Subscriber";
 
         /// <summary> Initializes a new instance of <see cref="PermissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PermissionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PublisherValue = "Publisher";
-        private const string SubscriberValue = "Subscriber";
+            _value = value;
+        }
 
         /// <summary> Publisher. </summary>
         public static PermissionType Publisher { get; } = new PermissionType(PublisherValue);
+
         /// <summary> Subscriber. </summary>
         public static PermissionType Subscriber { get; } = new PermissionType(SubscriberValue);
+
         /// <summary> Determines if two <see cref="PermissionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PermissionType left, PermissionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PermissionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PermissionType left, PermissionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PermissionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PermissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PermissionType(string value) => new PermissionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PermissionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PermissionType?(string value) => value == null ? null : new PermissionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PermissionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PermissionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

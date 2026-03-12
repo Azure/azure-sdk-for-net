@@ -13,81 +13,74 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Network security perimeter configuration issues. </summary>
     public partial class NetworkSecurityPerimeterConfigurationIssues
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationIssues"/>. </summary>
-        public NetworkSecurityPerimeterConfigurationIssues()
+        internal NetworkSecurityPerimeterConfigurationIssues()
         {
-            SuggestedResourceIds = new ChangeTrackingList<string>();
-            SuggestedAccessRules = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationIssues"/>. </summary>
         /// <param name="name"> Provisioning issue name. </param>
-        /// <param name="issueType"> Provisioning issue type. </param>
-        /// <param name="severity"> Provisioning issue severity. </param>
-        /// <param name="description"> Provisioning issue description. </param>
-        /// <param name="suggestedResourceIds"> ARM IDs of resources that can be associated to the same perimeter to remediate the issue. </param>
-        /// <param name="suggestedAccessRules"> Access rules that can be added to the same profile to remediate the issue. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationIssues(string name, NetworkSecurityPerimeterConfigurationIssueType? issueType, NetworkSecurityPerimeterConfigurationIssueSeverity? severity, string description, IList<string> suggestedResourceIds, IList<string> suggestedAccessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Provisioning issue properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterConfigurationIssues(string name, NetworkSecurityPerimeterConfigurationIssuesProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            IssueType = issueType;
-            Severity = severity;
-            Description = description;
-            SuggestedResourceIds = suggestedResourceIds;
-            SuggestedAccessRules = suggestedAccessRules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Provisioning issue name. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
+        public string Name { get; }
+
+        /// <summary> Provisioning issue properties. </summary>
+        internal NetworkSecurityPerimeterConfigurationIssuesProperties Properties { get; }
+
         /// <summary> Provisioning issue type. </summary>
-        [WirePath("properties.issueType")]
-        public NetworkSecurityPerimeterConfigurationIssueType? IssueType { get; set; }
+        public NetworkSecurityPerimeterConfigurationIssueType? IssueType
+        {
+            get
+            {
+                return Properties.IssueType;
+            }
+        }
+
         /// <summary> Provisioning issue severity. </summary>
-        [WirePath("properties.severity")]
-        public NetworkSecurityPerimeterConfigurationIssueSeverity? Severity { get; set; }
+        public NetworkSecurityPerimeterConfigurationIssueSeverity? Severity
+        {
+            get
+            {
+                return Properties.Severity;
+            }
+        }
+
         /// <summary> Provisioning issue description. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> ARM IDs of resources that can be associated to the same perimeter to remediate the issue. </summary>
-        [WirePath("properties.suggestedResourceIds")]
-        public IList<string> SuggestedResourceIds { get; }
+        public IList<string> SuggestedResourceIds
+        {
+            get
+            {
+                return Properties.SuggestedResourceIds;
+            }
+        }
+
         /// <summary> Access rules that can be added to the same profile to remediate the issue. </summary>
-        [WirePath("properties.suggestedAccessRules")]
-        public IList<string> SuggestedAccessRules { get; }
+        public IList<string> SuggestedAccessRules
+        {
+            get
+            {
+                return Properties.SuggestedAccessRules;
+            }
+        }
     }
 }

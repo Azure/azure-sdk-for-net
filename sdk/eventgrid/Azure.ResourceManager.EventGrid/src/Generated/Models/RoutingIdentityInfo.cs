@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Routing identity info for topic spaces configuration. </summary>
     public partial class RoutingIdentityInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RoutingIdentityInfo"/>. </summary>
         public RoutingIdentityInfo()
@@ -51,21 +22,20 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingIdentityInfo"/>. </summary>
-        /// <param name="identityType"> Routing identity type for topic spaces configuration. </param>
+        /// <param name="type"> Routing identity type for topic spaces configuration. </param>
         /// <param name="userAssignedIdentity"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingIdentityInfo(RoutingIdentityType? identityType, string userAssignedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RoutingIdentityInfo(RoutingIdentityType? @type, string userAssignedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IdentityType = identityType;
+            Type = @type;
             UserAssignedIdentity = userAssignedIdentity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Routing identity type for topic spaces configuration. </summary>
-        [WirePath("type")]
-        public RoutingIdentityType? IdentityType { get; set; }
-        /// <summary> Gets or sets the user assigned identity. </summary>
-        [WirePath("userAssignedIdentity")]
+        public RoutingIdentityType? Type { get; set; }
+
+        /// <summary> Gets or sets the UserAssignedIdentity. </summary>
         public string UserAssignedIdentity { get; set; }
     }
 }

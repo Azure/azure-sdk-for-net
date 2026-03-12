@@ -13,89 +13,85 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the VerifiedPartner data model.
-    /// Verified partner information
-    /// </summary>
+    /// <summary> Verified partner information. </summary>
     public partial class VerifiedPartnerData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VerifiedPartnerData"/>. </summary>
-        public VerifiedPartnerData()
+        internal VerifiedPartnerData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="VerifiedPartnerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="partnerRegistrationImmutableId"> ImmutableId of the corresponding partner registration. </param>
-        /// <param name="organizationName"> Official name of the Partner. </param>
-        /// <param name="partnerDisplayName"> Display name of the verified partner. </param>
-        /// <param name="partnerTopicDetails"> Details of the partner topic scenario. </param>
-        /// <param name="partnerDestinationDetails"> Details of the partner destination scenario. </param>
-        /// <param name="provisioningState"> Provisioning state of the verified partner. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VerifiedPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? partnerRegistrationImmutableId, string organizationName, string partnerDisplayName, PartnerDetails partnerTopicDetails, PartnerDetails partnerDestinationDetails, VerifiedPartnerProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the verified partner. </param>
+        internal VerifiedPartnerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VerifiedPartnerProperties properties) : base(id, name, resourceType, systemData)
         {
-            PartnerRegistrationImmutableId = partnerRegistrationImmutableId;
-            OrganizationName = organizationName;
-            PartnerDisplayName = partnerDisplayName;
-            PartnerTopicDetails = partnerTopicDetails;
-            PartnerDestinationDetails = partnerDestinationDetails;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the verified partner. </summary>
+        internal VerifiedPartnerProperties Properties { get; }
 
         /// <summary> ImmutableId of the corresponding partner registration. </summary>
-        [WirePath("properties.partnerRegistrationImmutableId")]
-        public Guid? PartnerRegistrationImmutableId { get; set; }
+        public string PartnerRegistrationImmutableId
+        {
+            get
+            {
+                return Properties.PartnerRegistrationImmutableId;
+            }
+        }
+
         /// <summary> Official name of the Partner. </summary>
-        [WirePath("properties.organizationName")]
-        public string OrganizationName { get; set; }
+        public string OrganizationName
+        {
+            get
+            {
+                return Properties.OrganizationName;
+            }
+        }
+
         /// <summary> Display name of the verified partner. </summary>
-        [WirePath("properties.partnerDisplayName")]
-        public string PartnerDisplayName { get; set; }
+        public string PartnerDisplayName
+        {
+            get
+            {
+                return Properties.PartnerDisplayName;
+            }
+        }
+
         /// <summary> Details of the partner topic scenario. </summary>
-        [WirePath("properties.partnerTopicDetails")]
-        public PartnerDetails PartnerTopicDetails { get; set; }
+        public PartnerDetails PartnerTopicDetails
+        {
+            get
+            {
+                return Properties.PartnerTopicDetails;
+            }
+        }
+
         /// <summary> Details of the partner destination scenario. </summary>
-        [WirePath("properties.partnerDestinationDetails")]
-        public PartnerDetails PartnerDestinationDetails { get; set; }
+        public PartnerDetails PartnerDestinationDetails
+        {
+            get
+            {
+                return Properties.PartnerDestinationDetails;
+            }
+        }
+
         /// <summary> Provisioning state of the verified partner. </summary>
-        [WirePath("properties.provisioningState")]
-        public VerifiedPartnerProvisioningState? ProvisioningState { get; set; }
+        public VerifiedPartnerProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties.ProvisioningState;
+            }
+        }
     }
 }

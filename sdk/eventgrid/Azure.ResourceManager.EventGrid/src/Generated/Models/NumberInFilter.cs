@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,25 +15,22 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class NumberInFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of <see cref="NumberInFilter"/>. </summary>
-        public NumberInFilter()
+        public NumberInFilter() : base(FilterOperatorType.NumberIn)
         {
             Values = new ChangeTrackingList<double>();
-            OperatorType = FilterOperatorType.NumberIn;
         }
 
         /// <summary> Initializes a new instance of <see cref="NumberInFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="values"> The set of filter values. </param>
-        internal NumberInFilter(FilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<double> values) : base(operatorType, key, serializedAdditionalRawData)
+        internal NumberInFilter(FilterOperatorType operatorType, string key, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<double> values) : base(operatorType, key, additionalBinaryDataProperties)
         {
             Values = values;
-            OperatorType = operatorType;
         }
 
         /// <summary> The set of filter values. </summary>
-        [WirePath("values")]
         public IList<double> Values { get; }
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the destination info for event subscription supporting push. </summary>
     public partial class PushInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PushInfo"/>. </summary>
         public PushInfo()
@@ -55,20 +26,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="eventTimeToLive">
         /// Time span duration in ISO 8601 format that determines how long messages are available to the subscription from the time the message was published.
         /// This duration value is expressed using the following format: \'P(n)Y(n)M(n)DT(n)H(n)M(n)S\', where:
-        ///     - (n) is replaced by the value of each time element that follows the (n).
-        ///     - P is the duration (or Period) designator and is always placed at the beginning of the duration.
-        ///     - Y is the year designator, and it follows the value for the number of years.
-        ///     - M is the month designator, and it follows the value for the number of months.
-        ///     - W is the week designator, and it follows the value for the number of weeks.
-        ///     - D is the day designator, and it follows the value for the number of days.
-        ///     - T is the time designator, and it precedes the time components.
-        ///     - H is the hour designator, and it follows the value for the number of hours.
-        ///     - M is the minute designator, and it follows the value for the number of minutes.
-        ///     - S is the second designator, and it follows the value for the number of seconds.
+        /// <list type="bullet"><item><description>(n) is replaced by the value of each time element that follows the (n).</description></item><item><description>P is the duration (or Period) designator and is always placed at the beginning of the duration.</description></item><item><description>Y is the year designator, and it follows the value for the number of years.</description></item><item><description>M is the month designator, and it follows the value for the number of months.</description></item><item><description>W is the week designator, and it follows the value for the number of weeks.</description></item><item><description>D is the day designator, and it follows the value for the number of days.</description></item><item><description>T is the time designator, and it precedes the time components.</description></item><item><description>H is the hour designator, and it follows the value for the number of hours.</description></item><item><description>M is the minute designator, and it follows the value for the number of minutes.</description></item><item><description>S is the second designator, and it follows the value for the number of seconds.</description></item></list>
         /// This duration value cannot be set greater than the topic’s EventRetentionInDays. It is is an optional field where its minimum value is 1 minute, and its maximum is determined
         /// by topic’s EventRetentionInDays value. The followings are examples of valid values:
-        ///     - \'P0DT23H12M\' or \'PT23H12M\': for duration of 23 hours and 12 minutes.
-        ///     - \'P1D\' or \'P1DT0H0M0S\': for duration of 1 day.
+        /// <list type="bullet"><item><description>\'P0DT23H12M\' or \'PT23H12M\': for duration of 23 hours and 12 minutes.</description></item><item><description>\'P1D\' or \'P1DT0H0M0S\': for duration of 1 day.</description></item></list>
         /// </param>
         /// <param name="deadLetterDestinationWithResourceIdentity">
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
@@ -81,62 +42,47 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="destination">
         /// Information about the destination where events have to be delivered for the event subscription.
         /// Uses Azure Event Grid's identity to acquire the authentication tokens being used during delivery.
-        /// Please note <see cref="EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="WebHookEventSubscriptionDestination"/>.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PushInfo(int? maxDeliveryCount, string eventTimeToLive, DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionDestination destination, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PushInfo(int? maxDeliveryCount, string eventTimeToLive, DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity, DeliveryWithResourceIdentity deliveryWithResourceIdentity, EventSubscriptionDestination destination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxDeliveryCount = maxDeliveryCount;
             EventTimeToLive = eventTimeToLive;
             DeadLetterDestinationWithResourceIdentity = deadLetterDestinationWithResourceIdentity;
             DeliveryWithResourceIdentity = deliveryWithResourceIdentity;
             Destination = destination;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The maximum delivery count of the events. </summary>
-        [WirePath("maxDeliveryCount")]
         public int? MaxDeliveryCount { get; set; }
+
         /// <summary>
         /// Time span duration in ISO 8601 format that determines how long messages are available to the subscription from the time the message was published.
         /// This duration value is expressed using the following format: \'P(n)Y(n)M(n)DT(n)H(n)M(n)S\', where:
-        ///     - (n) is replaced by the value of each time element that follows the (n).
-        ///     - P is the duration (or Period) designator and is always placed at the beginning of the duration.
-        ///     - Y is the year designator, and it follows the value for the number of years.
-        ///     - M is the month designator, and it follows the value for the number of months.
-        ///     - W is the week designator, and it follows the value for the number of weeks.
-        ///     - D is the day designator, and it follows the value for the number of days.
-        ///     - T is the time designator, and it precedes the time components.
-        ///     - H is the hour designator, and it follows the value for the number of hours.
-        ///     - M is the minute designator, and it follows the value for the number of minutes.
-        ///     - S is the second designator, and it follows the value for the number of seconds.
+        /// <list type="bullet"><item><description>(n) is replaced by the value of each time element that follows the (n).</description></item><item><description>P is the duration (or Period) designator and is always placed at the beginning of the duration.</description></item><item><description>Y is the year designator, and it follows the value for the number of years.</description></item><item><description>M is the month designator, and it follows the value for the number of months.</description></item><item><description>W is the week designator, and it follows the value for the number of weeks.</description></item><item><description>D is the day designator, and it follows the value for the number of days.</description></item><item><description>T is the time designator, and it precedes the time components.</description></item><item><description>H is the hour designator, and it follows the value for the number of hours.</description></item><item><description>M is the minute designator, and it follows the value for the number of minutes.</description></item><item><description>S is the second designator, and it follows the value for the number of seconds.</description></item></list>
         /// This duration value cannot be set greater than the topic’s EventRetentionInDays. It is is an optional field where its minimum value is 1 minute, and its maximum is determined
         /// by topic’s EventRetentionInDays value. The followings are examples of valid values:
-        ///     - \'P0DT23H12M\' or \'PT23H12M\': for duration of 23 hours and 12 minutes.
-        ///     - \'P1D\' or \'P1DT0H0M0S\': for duration of 1 day.
+        /// <list type="bullet"><item><description>\'P0DT23H12M\' or \'PT23H12M\': for duration of 23 hours and 12 minutes.</description></item><item><description>\'P1D\' or \'P1DT0H0M0S\': for duration of 1 day.</description></item></list>
         /// </summary>
-        [WirePath("eventTimeToLive")]
         public string EventTimeToLive { get; set; }
+
         /// <summary>
         /// The dead letter destination of the event subscription. Any event that cannot be delivered to its' destination is sent to the dead letter destination.
         /// Uses the managed identity setup on the parent resource (namely, namespace) to acquire the authentication tokens being used during dead-lettering.
         /// </summary>
-        [WirePath("deadLetterDestinationWithResourceIdentity")]
         public DeadLetterWithResourceIdentity DeadLetterDestinationWithResourceIdentity { get; set; }
+
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
         /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery.
         /// </summary>
-        [WirePath("deliveryWithResourceIdentity")]
         public DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get; set; }
+
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
         /// Uses Azure Event Grid's identity to acquire the authentication tokens being used during delivery.
-        /// Please note <see cref="EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="WebHookEventSubscriptionDestination"/>.
         /// </summary>
-        [WirePath("destination")]
         public EventSubscriptionDestination Destination { get; set; }
     }
 }

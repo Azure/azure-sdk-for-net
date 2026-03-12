@@ -14,23 +14,37 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class PartnerEventSubscriptionDestination : EventSubscriptionDestination
     {
         /// <summary> Initializes a new instance of <see cref="PartnerEventSubscriptionDestination"/>. </summary>
-        public PartnerEventSubscriptionDestination()
+        public PartnerEventSubscriptionDestination() : base(EndpointType.PartnerDestination)
         {
-            EndpointType = EndpointType.PartnerDestination;
         }
 
         /// <summary> Initializes a new instance of <see cref="PartnerEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of a Partner Destination of an event subscription. </param>
-        internal PartnerEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceId) : base(endpointType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Partner Destination Properties of the event subscription destination. </param>
+        internal PartnerEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties, PartnerEventSubscriptionDestinationProperties properties) : base(endpointType, additionalBinaryDataProperties)
         {
-            ResourceId = resourceId;
-            EndpointType = endpointType;
+            Properties = properties;
         }
 
+        /// <summary> Partner Destination Properties of the event subscription destination. </summary>
+        internal PartnerEventSubscriptionDestinationProperties Properties { get; set; }
+
         /// <summary> The Azure Resource Id that represents the endpoint of a Partner Destination of an event subscription. </summary>
-        [WirePath("properties.resourceId")]
-        public string ResourceId { get; set; }
+        public string ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerEventSubscriptionDestinationProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
     }
 }

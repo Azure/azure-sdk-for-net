@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.EventGrid.Mocking
     public partial class MockableEventGridArmClient : ArmResource
     {
         private ClientDiagnostics _eventGridTopicTopicsClientDiagnostics;
-        private TopicsRestOperations _eventGridTopicTopicsRestClient;
+        private Topics _eventGridTopicTopicsRestClient;
         private ClientDiagnostics EventGridTopicTopicsClientDiagnostics => _eventGridTopicTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridTopicResource.ResourceType.Namespace, Diagnostics);
-        private TopicsRestOperations EventGridTopicTopicsRestClient => _eventGridTopicTopicsRestClient ??= new TopicsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventGridTopicResource.ResourceType));
+        private Topics EventGridTopicTopicsRestClient => _eventGridTopicTopicsRestClient ??= new Topics(EventGridTopicTopicsClientDiagnostics, Pipeline, Endpoint, GetApiVersionOrNull(EventGridTopicResource.ResourceType));
 
         /// <summary>
         /// List event types for a topic.

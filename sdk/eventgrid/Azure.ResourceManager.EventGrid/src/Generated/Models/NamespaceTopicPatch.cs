@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Properties of the namespace topic update. </summary>
     public partial class NamespaceTopicPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NamespaceTopicPatch"/>. </summary>
         public NamespaceTopicPatch()
@@ -51,22 +22,35 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NamespaceTopicPatch"/>. </summary>
-        /// <param name="eventRetentionInDays">
-        /// Event retention for the namespace topic expressed in days. The property default value is 1 day.
-        /// Min event retention duration value is 1 day and max event retention duration value is 1 day.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceTopicPatch(int? eventRetentionInDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the namespace topic resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NamespaceTopicPatch(NamespaceTopicUpdateParameterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EventRetentionInDays = eventRetentionInDays;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of the namespace topic resource. </summary>
+        internal NamespaceTopicUpdateParameterProperties Properties { get; set; }
 
         /// <summary>
         /// Event retention for the namespace topic expressed in days. The property default value is 1 day.
         /// Min event retention duration value is 1 day and max event retention duration value is 1 day.
         /// </summary>
-        [WirePath("properties.eventRetentionInDays")]
-        public int? EventRetentionInDays { get; set; }
+        public int? EventRetentionInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventRetentionInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceTopicUpdateParameterProperties();
+                }
+                Properties.EventRetentionInDays = value.Value;
+            }
+        }
     }
 }

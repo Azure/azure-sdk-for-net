@@ -7,46 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Nsp configuration with profile information. </summary>
     public partial class NetworkSecurityPerimeterConfigurationProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationProfile"/>. </summary>
-        public NetworkSecurityPerimeterConfigurationProfile()
+        internal NetworkSecurityPerimeterConfigurationProfile()
         {
             AccessRules = new ChangeTrackingList<NetworkSecurityPerimeterProfileAccessRule>();
             EnabledLogCategories = new ChangeTrackingList<string>();
@@ -58,31 +30,30 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="accessRules"> List of inbound or outbound access rule setup on the nsp profile. </param>
         /// <param name="diagnosticSettingsVersion"> Diagnostic settings version number for nsp profile. </param>
         /// <param name="enabledLogCategories"> Enabled log categories for nsp profile. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationProfile(string name, string accessRulesVersion, IList<NetworkSecurityPerimeterProfileAccessRule> accessRules, string diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkSecurityPerimeterConfigurationProfile(string name, string accessRulesVersion, IList<NetworkSecurityPerimeterProfileAccessRule> accessRules, string diagnosticSettingsVersion, IList<string> enabledLogCategories, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AccessRulesVersion = accessRulesVersion;
             AccessRules = accessRules;
             DiagnosticSettingsVersion = diagnosticSettingsVersion;
             EnabledLogCategories = enabledLogCategories;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Nsp configuration profile name. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
+        public string Name { get; }
+
         /// <summary> Access rules version number for nsp profile. </summary>
-        [WirePath("accessRulesVersion")]
-        public string AccessRulesVersion { get; set; }
+        public string AccessRulesVersion { get; }
+
         /// <summary> List of inbound or outbound access rule setup on the nsp profile. </summary>
-        [WirePath("accessRules")]
         public IList<NetworkSecurityPerimeterProfileAccessRule> AccessRules { get; }
+
         /// <summary> Diagnostic settings version number for nsp profile. </summary>
-        [WirePath("diagnosticSettingsVersion")]
-        public string DiagnosticSettingsVersion { get; set; }
+        public string DiagnosticSettingsVersion { get; }
+
         /// <summary> Enabled log categories for nsp profile. </summary>
-        [WirePath("enabledLogCategories")]
         public IList<string> EnabledLogCategories { get; }
     }
 }

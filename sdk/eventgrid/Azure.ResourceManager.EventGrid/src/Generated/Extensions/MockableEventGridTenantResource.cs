@@ -8,102 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.EventGrid;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
-    /// <summary> A class to add extension methods to TenantResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableEventGridTenantResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableEventGridTenantResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableEventGridTenantResource for mocking. </summary>
         protected MockableEventGridTenantResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableEventGridTenantResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableEventGridTenantResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableEventGridTenantResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of TopicTypeResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of TopicTypeResources and their operations over a TopicTypeResource. </returns>
-        public virtual TopicTypeCollection GetTopicTypes()
-        {
-            return GetCachedClient(client => new TopicTypeCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get information about a topic type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TopicTypes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TopicTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="topicTypeName"> Name of the topic type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<TopicTypeResource>> GetTopicTypeAsync(string topicTypeName, CancellationToken cancellationToken = default)
-        {
-            return await GetTopicTypes().GetAsync(topicTypeName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get information about a topic type.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TopicTypes_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TopicTypeResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="topicTypeName"> Name of the topic type. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<TopicTypeResource> GetTopicType(string topicTypeName, CancellationToken cancellationToken = default)
-        {
-            return GetTopicTypes().Get(topicTypeName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of VerifiedPartnerResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of VerifiedPartnerResources and their operations over a VerifiedPartnerResource. </returns>
+        /// <summary> Gets a collection of VerifiedPartners in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of VerifiedPartners and their operations over a VerifiedPartnerResource. </returns>
         public virtual VerifiedPartnerCollection GetVerifiedPartners()
         {
             return GetCachedClient(client => new VerifiedPartnerCollection(client, Id));
@@ -113,20 +42,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a verified partner.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VerifiedPartners_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VerifiedPartners_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VerifiedPartnerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,6 +62,8 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<VerifiedPartnerResource>> GetVerifiedPartnerAsync(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
+
             return await GetVerifiedPartners().GetAsync(verifiedPartnerName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -144,20 +71,16 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// Get properties of a verified partner.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VerifiedPartners_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VerifiedPartners_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VerifiedPartnerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,7 +91,74 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         [ForwardsClientCalls]
         public virtual Response<VerifiedPartnerResource> GetVerifiedPartner(string verifiedPartnerName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(verifiedPartnerName, nameof(verifiedPartnerName));
+
             return GetVerifiedPartners().Get(verifiedPartnerName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TopicTypeInfos in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of TopicTypeInfos and their operations over a TopicTypeInfoResource. </returns>
+        public virtual TopicTypeInfoCollection GetTopicTypeInfos()
+        {
+            return GetCachedClient(client => new TopicTypeInfoCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get information about a topic type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.EventGrid/topicTypes/{topicTypeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TopicTypeInfos_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicTypeName"> Name of the topic type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TopicTypeInfoResource>> GetTopicTypeInfoAsync(string topicTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+
+            return await GetTopicTypeInfos().GetAsync(topicTypeName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get information about a topic type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /providers/Microsoft.EventGrid/topicTypes/{topicTypeName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TopicTypeInfos_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicTypeName"> Name of the topic type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TopicTypeInfoResource> GetTopicTypeInfo(string topicTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicTypeName, nameof(topicTypeName));
+
+            return GetTopicTypeInfos().Get(topicTypeName, cancellationToken);
         }
     }
 }

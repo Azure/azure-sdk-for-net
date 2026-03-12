@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,39 +15,62 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct EventGridInputSchema : IEquatable<EventGridInputSchema>
     {
         private readonly string _value;
+        /// <summary> EventGridSchema. </summary>
+        private const string EventGridSchemaValue = "EventGridSchema";
+        /// <summary> CustomEventSchema. </summary>
+        private const string CustomEventSchemaValue = "CustomEventSchema";
+        /// <summary> CloudEventSchemaV1_0. </summary>
+        private const string CloudEventSchemaV10Value = "CloudEventSchemaV1_0";
 
         /// <summary> Initializes a new instance of <see cref="EventGridInputSchema"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventGridInputSchema(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EventGridSchemaValue = "EventGridSchema";
-        private const string CustomEventSchemaValue = "CustomEventSchema";
-        private const string CloudEventSchemaV1_0Value = "CloudEventSchemaV1_0";
+            _value = value;
+        }
 
         /// <summary> EventGridSchema. </summary>
         public static EventGridInputSchema EventGridSchema { get; } = new EventGridInputSchema(EventGridSchemaValue);
+
         /// <summary> CustomEventSchema. </summary>
         public static EventGridInputSchema CustomEventSchema { get; } = new EventGridInputSchema(CustomEventSchemaValue);
+
+        /// <summary> CloudEventSchemaV1_0. </summary>
+        public static EventGridInputSchema CloudEventSchemaV10 { get; } = new EventGridInputSchema(CloudEventSchemaV10Value);
+
         /// <summary> Determines if two <see cref="EventGridInputSchema"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventGridInputSchema left, EventGridInputSchema right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventGridInputSchema"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventGridInputSchema left, EventGridInputSchema right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridInputSchema"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventGridInputSchema"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventGridInputSchema(string value) => new EventGridInputSchema(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventGridInputSchema"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventGridInputSchema?(string value) => value == null ? null : new EventGridInputSchema(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventGridInputSchema other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventGridInputSchema other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

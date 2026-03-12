@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct CustomDomainValidationState : IEquatable<CustomDomainValidationState>
     {
         private readonly string _value;
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> ErrorRetrievingDnsRecord. </summary>
+        private const string ErrorRetrievingDnsRecordValue = "ErrorRetrievingDnsRecord";
 
         /// <summary> Initializes a new instance of <see cref="CustomDomainValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CustomDomainValidationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string ErrorRetrievingDnsRecordValue = "ErrorRetrievingDnsRecord";
+            _value = value;
+        }
 
         /// <summary> Pending. </summary>
         public static CustomDomainValidationState Pending { get; } = new CustomDomainValidationState(PendingValue);
+
         /// <summary> Approved. </summary>
         public static CustomDomainValidationState Approved { get; } = new CustomDomainValidationState(ApprovedValue);
+
         /// <summary> ErrorRetrievingDnsRecord. </summary>
         public static CustomDomainValidationState ErrorRetrievingDnsRecord { get; } = new CustomDomainValidationState(ErrorRetrievingDnsRecordValue);
+
         /// <summary> Determines if two <see cref="CustomDomainValidationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomDomainValidationState left, CustomDomainValidationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CustomDomainValidationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomDomainValidationState left, CustomDomainValidationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomDomainValidationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CustomDomainValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CustomDomainValidationState(string value) => new CustomDomainValidationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CustomDomainValidationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CustomDomainValidationState?(string value) => value == null ? null : new CustomDomainValidationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomDomainValidationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CustomDomainValidationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

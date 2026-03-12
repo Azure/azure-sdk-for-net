@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Additional information about every inline event. </summary>
     public partial class InlineEventProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InlineEventProperties"/>. </summary>
         public InlineEventProperties()
@@ -55,27 +26,26 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="displayName"> The displayName for the inline event. </param>
         /// <param name="documentationUri"> The documentationUrl for the inline event. </param>
         /// <param name="dataSchemaUri"> The dataSchemaUrl for the inline event. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InlineEventProperties(string description, string displayName, Uri documentationUri, Uri dataSchemaUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InlineEventProperties(string description, string displayName, string documentationUri, string dataSchemaUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             DisplayName = displayName;
             DocumentationUri = documentationUri;
             DataSchemaUri = dataSchemaUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The description for the inline event. </summary>
-        [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> The displayName for the inline event. </summary>
-        [WirePath("displayName")]
         public string DisplayName { get; set; }
+
         /// <summary> The documentationUrl for the inline event. </summary>
-        [WirePath("documentationUrl")]
-        public Uri DocumentationUri { get; set; }
+        public string DocumentationUri { get; set; }
+
         /// <summary> The dataSchemaUrl for the inline event. </summary>
-        [WirePath("dataSchemaUrl")]
-        public Uri DataSchemaUri { get; set; }
+        public string DataSchemaUri { get; set; }
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> A custom domain configuration that allows users to publish to their own domain name. </summary>
     public partial class CustomDomainConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CustomDomainConfiguration"/>. </summary>
         /// <param name="fullyQualifiedDomainName"> Fully Qualified Domain Name (FQDN) for the custom domain. </param>
@@ -69,8 +41,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// The values under this TXT record must contain the expected TXT record value.
         /// </param>
         /// <param name="expectedTxtRecordValue"> Expected DNS TXT record value. Event Grid will check for a TXT record with this value in the DNS record set of the custom domain name to prove ownership over the domain. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomDomainConfiguration(string fullyQualifiedDomainName, CustomDomainValidationState? validationState, CustomDomainIdentity identity, Uri certificateUri, string expectedTxtRecordName, string expectedTxtRecordValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CustomDomainConfiguration(string fullyQualifiedDomainName, CustomDomainValidationState? validationState, CustomDomainIdentity identity, string certificateUri, string expectedTxtRecordName, string expectedTxtRecordValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FullyQualifiedDomainName = fullyQualifiedDomainName;
             ValidationState = validationState;
@@ -78,38 +50,32 @@ namespace Azure.ResourceManager.EventGrid.Models
             CertificateUri = certificateUri;
             ExpectedTxtRecordName = expectedTxtRecordName;
             ExpectedTxtRecordValue = expectedTxtRecordValue;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CustomDomainConfiguration"/> for deserialization. </summary>
-        internal CustomDomainConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Fully Qualified Domain Name (FQDN) for the custom domain. </summary>
-        [WirePath("fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; set; }
+
         /// <summary> Validation state for the custom domain. This is a read only property and is initially set to 'Pending' and will be updated to 'Approved' by Event Grid only after ownership of the domain name has been successfully validated. </summary>
-        [WirePath("validationState")]
         public CustomDomainValidationState? ValidationState { get; set; }
+
         /// <summary> Identity info for accessing the certificate for the custom domain. This identity info must match an identity that has been set on the namespace. </summary>
-        [WirePath("identity")]
         public CustomDomainIdentity Identity { get; set; }
+
         /// <summary>
         /// The URL for the certificate that is used for publishing to the custom domain. We currently support certificates stored in Azure Key Vault only. While certificate URL can be either
         /// versioned URL of the following format https://{key-vault-name}.vault.azure.net/certificates/{certificate-name}/{version-id}, or unversioned URL of the following format (e.g.,
         /// https://contosovault.vault.azure.net/certificates/contosocert, we support unversioned certificate URL only (e.g., https://contosovault.vault.azure.net/certificates/contosocert)
         /// </summary>
-        [WirePath("certificateUrl")]
-        public Uri CertificateUri { get; set; }
+        public string CertificateUri { get; set; }
+
         /// <summary>
         /// Expected DNS TXT record name. Event Grid will check for a TXT record with this name in the DNS record set of the custom domain name to prove ownership over the domain.
         /// The values under this TXT record must contain the expected TXT record value.
         /// </summary>
-        [WirePath("expectedTxtRecordName")]
         public string ExpectedTxtRecordName { get; set; }
+
         /// <summary> Expected DNS TXT record value. Event Grid will check for a TXT record with this value in the DNS record set of the custom domain name to prove ownership over the domain. </summary>
-        [WirePath("expectedTxtRecordValue")]
         public string ExpectedTxtRecordValue { get; set; }
     }
 }

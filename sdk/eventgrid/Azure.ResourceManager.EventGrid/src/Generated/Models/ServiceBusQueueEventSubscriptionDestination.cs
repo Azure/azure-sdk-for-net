@@ -15,37 +15,50 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class ServiceBusQueueEventSubscriptionDestination : EventSubscriptionDestination
     {
         /// <summary> Initializes a new instance of <see cref="ServiceBusQueueEventSubscriptionDestination"/>. </summary>
-        public ServiceBusQueueEventSubscriptionDestination()
+        public ServiceBusQueueEventSubscriptionDestination() : base(EndpointType.ServiceBusQueue)
         {
-            DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
-            EndpointType = EndpointType.ServiceBusQueue;
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBusQueueEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="resourceId"> The Azure Resource Id that represents the endpoint of the Service Bus destination of an event subscription. </param>
-        /// <param name="deliveryAttributeMappings">
-        /// Delivery attribute details.
-        /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
-        /// </param>
-        internal ServiceBusQueueEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceId, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Service Bus Properties of the event subscription destination. </param>
+        internal ServiceBusQueueEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceBusQueueEventSubscriptionDestinationProperties properties) : base(endpointType, additionalBinaryDataProperties)
         {
-            ResourceId = resourceId;
-            DeliveryAttributeMappings = deliveryAttributeMappings;
-            EndpointType = endpointType;
+            Properties = properties;
         }
 
+        /// <summary> Service Bus Properties of the event subscription destination. </summary>
+        internal ServiceBusQueueEventSubscriptionDestinationProperties Properties { get; set; }
+
         /// <summary> The Azure Resource Id that represents the endpoint of the Service Bus destination of an event subscription. </summary>
-        [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
-        /// <summary>
-        /// Delivery attribute details.
-        /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
-        /// </summary>
-        [WirePath("properties.deliveryAttributeMappings")]
-        public IList<DeliveryAttributeMapping> DeliveryAttributeMappings { get; }
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceBusQueueEventSubscriptionDestinationProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
+
+        /// <summary> Delivery attribute details. </summary>
+        public IList<DeliveryAttributeMapping> DeliveryAttributeMappings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceBusQueueEventSubscriptionDestinationProperties();
+                }
+                return Properties.DeliveryAttributeMappings;
+            }
+        }
     }
 }

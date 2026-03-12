@@ -12,63 +12,35 @@ namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary>
     /// Delivery attribute mapping details.
-    /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StaticDeliveryAttributeMapping"/> and <see cref="DynamicDeliveryAttributeMapping"/>.
     /// </summary>
     public abstract partial class DeliveryAttributeMapping
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeliveryAttributeMapping"/>. </summary>
-        protected DeliveryAttributeMapping()
+        /// <param name="type"> Type of the delivery attribute or header name. </param>
+        private protected DeliveryAttributeMapping(DeliveryAttributeMappingType @type)
         {
+            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
-        /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="type"> Type of the delivery attribute or header name. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeliveryAttributeMapping(string name, DeliveryAttributeMappingType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            MappingType = mappingType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the delivery attribute or header. </summary>
-        [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Type of the delivery attribute or header name. </summary>
-        internal DeliveryAttributeMappingType MappingType { get; set; }
+        internal DeliveryAttributeMappingType Type { get; set; }
     }
 }

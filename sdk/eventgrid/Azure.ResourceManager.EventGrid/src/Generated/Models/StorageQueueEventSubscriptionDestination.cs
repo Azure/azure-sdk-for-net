@@ -15,33 +15,71 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class StorageQueueEventSubscriptionDestination : EventSubscriptionDestination
     {
         /// <summary> Initializes a new instance of <see cref="StorageQueueEventSubscriptionDestination"/>. </summary>
-        public StorageQueueEventSubscriptionDestination()
+        public StorageQueueEventSubscriptionDestination() : base(EndpointType.StorageQueue)
         {
-            EndpointType = EndpointType.StorageQueue;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageQueueEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="resourceId"> The Azure Resource ID of the storage account that contains the queue that is the destination of an event subscription. </param>
-        /// <param name="queueName"> The name of the Storage queue under a storage account that is the destination of an event subscription. </param>
-        /// <param name="queueMessageTimeToLiveInSeconds"> Storage queue message time to live in seconds. This value cannot be zero or negative with the exception of using -1 to indicate that the Time To Live of the message is Infinite. </param>
-        internal StorageQueueEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceId, string queueName, long? queueMessageTimeToLiveInSeconds) : base(endpointType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Storage Queue Properties of the event subscription destination. </param>
+        internal StorageQueueEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageQueueEventSubscriptionDestinationProperties properties) : base(endpointType, additionalBinaryDataProperties)
         {
-            ResourceId = resourceId;
-            QueueName = queueName;
-            QueueMessageTimeToLiveInSeconds = queueMessageTimeToLiveInSeconds;
-            EndpointType = endpointType;
+            Properties = properties;
         }
 
+        /// <summary> Storage Queue Properties of the event subscription destination. </summary>
+        internal StorageQueueEventSubscriptionDestinationProperties Properties { get; set; }
+
         /// <summary> The Azure Resource ID of the storage account that contains the queue that is the destination of an event subscription. </summary>
-        [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageQueueEventSubscriptionDestinationProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
+
         /// <summary> The name of the Storage queue under a storage account that is the destination of an event subscription. </summary>
-        [WirePath("properties.queueName")]
-        public string QueueName { get; set; }
+        public string QueueName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QueueName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageQueueEventSubscriptionDestinationProperties();
+                }
+                Properties.QueueName = value;
+            }
+        }
+
         /// <summary> Storage queue message time to live in seconds. This value cannot be zero or negative with the exception of using -1 to indicate that the Time To Live of the message is Infinite. </summary>
-        [WirePath("properties.queueMessageTimeToLiveInSeconds")]
-        public long? QueueMessageTimeToLiveInSeconds { get; set; }
+        public long? QueueMessageTimeToLiveInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QueueMessageTimeToLiveInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageQueueEventSubscriptionDestinationProperties();
+                }
+                Properties.QueueMessageTimeToLiveInSeconds = value.Value;
+            }
+        }
     }
 }

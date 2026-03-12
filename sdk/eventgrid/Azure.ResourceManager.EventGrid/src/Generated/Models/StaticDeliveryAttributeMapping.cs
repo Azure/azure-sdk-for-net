@@ -14,29 +14,55 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class StaticDeliveryAttributeMapping : DeliveryAttributeMapping
     {
         /// <summary> Initializes a new instance of <see cref="StaticDeliveryAttributeMapping"/>. </summary>
-        public StaticDeliveryAttributeMapping()
+        public StaticDeliveryAttributeMapping() : base(DeliveryAttributeMappingType.Static)
         {
-            MappingType = DeliveryAttributeMappingType.Static;
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticDeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
-        /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="value"> Value of the delivery attribute. </param>
-        /// <param name="isSecret"> Boolean flag to tell if the attribute contains sensitive information . </param>
-        internal StaticDeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType, IDictionary<string, BinaryData> serializedAdditionalRawData, string value, bool? isSecret) : base(name, mappingType, serializedAdditionalRawData)
+        /// <param name="type"> Type of the delivery attribute or header name. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of static delivery attribute mapping. </param>
+        internal StaticDeliveryAttributeMapping(string name, DeliveryAttributeMappingType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StaticDeliveryAttributeMappingProperties properties) : base(name, @type, additionalBinaryDataProperties)
         {
-            Value = value;
-            IsSecret = isSecret;
-            MappingType = mappingType;
+            Properties = properties;
         }
 
+        /// <summary> Properties of static delivery attribute mapping. </summary>
+        internal StaticDeliveryAttributeMappingProperties Properties { get; set; }
+
         /// <summary> Value of the delivery attribute. </summary>
-        [WirePath("properties.value")]
-        public string Value { get; set; }
+        public string Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticDeliveryAttributeMappingProperties();
+                }
+                Properties.Value = value;
+            }
+        }
+
         /// <summary> Boolean flag to tell if the attribute contains sensitive information . </summary>
-        [WirePath("properties.isSecret")]
-        public bool? IsSecret { get; set; }
+        public bool? IsSecret
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsSecret;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticDeliveryAttributeMappingProperties();
+                }
+                Properties.IsSecret = value.Value;
+            }
+        }
     }
 }

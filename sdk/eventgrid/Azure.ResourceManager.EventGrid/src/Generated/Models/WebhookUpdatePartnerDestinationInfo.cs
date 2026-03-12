@@ -14,41 +14,71 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class WebhookUpdatePartnerDestinationInfo : PartnerUpdateDestinationInfo
     {
         /// <summary> Initializes a new instance of <see cref="WebhookUpdatePartnerDestinationInfo"/>. </summary>
-        public WebhookUpdatePartnerDestinationInfo()
+        public WebhookUpdatePartnerDestinationInfo() : base(PartnerEndpointType.WebHook)
         {
-            EndpointType = PartnerEndpointType.WebHook;
         }
 
         /// <summary> Initializes a new instance of <see cref="WebhookUpdatePartnerDestinationInfo"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the partner destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="endpointUri"> The URL that represents the endpoint of the partner destination. </param>
-        /// <param name="endpointBaseUri"> The base URL that represents the endpoint of the partner destination. </param>
-        /// <param name="clientAuthentication">
-        /// Partner client authentication
-        /// Please note <see cref="PartnerClientAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureADPartnerClientAuthentication"/>.
-        /// </param>
-        internal WebhookUpdatePartnerDestinationInfo(PartnerEndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri endpointUri, Uri endpointBaseUri, PartnerClientAuthentication clientAuthentication) : base(endpointType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> WebHook Properties of the partner destination. </param>
+        internal WebhookUpdatePartnerDestinationInfo(PartnerEndpointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebhookPartnerDestinationProperties properties) : base(endpointType, additionalBinaryDataProperties)
         {
-            EndpointUri = endpointUri;
-            EndpointBaseUri = endpointBaseUri;
-            ClientAuthentication = clientAuthentication;
-            EndpointType = endpointType;
+            Properties = properties;
         }
 
+        /// <summary> WebHook Properties of the partner destination. </summary>
+        internal WebhookPartnerDestinationProperties Properties { get; set; }
+
         /// <summary> The URL that represents the endpoint of the partner destination. </summary>
-        [WirePath("properties.endpointUrl")]
-        public Uri EndpointUri { get; set; }
+        public Uri EndpointUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebhookPartnerDestinationProperties();
+                }
+                Properties.EndpointUri = value;
+            }
+        }
+
         /// <summary> The base URL that represents the endpoint of the partner destination. </summary>
-        [WirePath("properties.endpointBaseUrl")]
-        public Uri EndpointBaseUri { get; set; }
-        /// <summary>
-        /// Partner client authentication
-        /// Please note <see cref="PartnerClientAuthentication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureADPartnerClientAuthentication"/>.
-        /// </summary>
-        [WirePath("properties.clientAuthentication")]
-        public PartnerClientAuthentication ClientAuthentication { get; set; }
+        public Uri EndpointBaseUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointBaseUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebhookPartnerDestinationProperties();
+                }
+                Properties.EndpointBaseUri = value;
+            }
+        }
+
+        /// <summary> Partner client authentication. </summary>
+        public PartnerClientAuthentication ClientAuthentication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientAuthentication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebhookPartnerDestinationProperties();
+                }
+                Properties.ClientAuthentication = value;
+            }
+        }
     }
 }

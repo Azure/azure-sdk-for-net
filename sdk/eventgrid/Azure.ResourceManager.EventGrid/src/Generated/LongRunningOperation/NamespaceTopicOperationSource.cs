@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class NamespaceTopicOperationSource : IOperationSource<NamespaceTopicResource>
+    /// <summary></summary>
+    internal partial class NamespaceTopicOperationSource : IOperationSource<NamespaceTopicResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NamespaceTopicOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NamespaceTopicResource IOperationSource<NamespaceTopicResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NamespaceTopicData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NamespaceTopicData data = NamespaceTopicData.DeserializeNamespaceTopicData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NamespaceTopicResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NamespaceTopicResource> IOperationSource<NamespaceTopicResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NamespaceTopicData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
-            return await Task.FromResult(new NamespaceTopicResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NamespaceTopicData data = NamespaceTopicData.DeserializeNamespaceTopicData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NamespaceTopicResource(_client, data);
         }
     }
 }

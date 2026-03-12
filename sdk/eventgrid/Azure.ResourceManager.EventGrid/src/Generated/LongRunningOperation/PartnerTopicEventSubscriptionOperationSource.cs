@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    internal class PartnerTopicEventSubscriptionOperationSource : IOperationSource<PartnerTopicEventSubscriptionResource>
+    /// <summary></summary>
+    internal partial class PartnerTopicEventSubscriptionOperationSource : IOperationSource<PartnerTopicEventSubscriptionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PartnerTopicEventSubscriptionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PartnerTopicEventSubscriptionResource IOperationSource<PartnerTopicEventSubscriptionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EventGridSubscriptionData data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PartnerTopicEventSubscriptionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PartnerTopicEventSubscriptionResource> IOperationSource<PartnerTopicEventSubscriptionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridSubscriptionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
-            return await Task.FromResult(new PartnerTopicEventSubscriptionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EventGridSubscriptionData data = EventGridSubscriptionData.DeserializeEventGridSubscriptionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PartnerTopicEventSubscriptionResource(_client, data);
         }
     }
 }

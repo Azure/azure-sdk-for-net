@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,25 +15,22 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class NumberInRangeAdvancedFilter : AdvancedFilter
     {
         /// <summary> Initializes a new instance of <see cref="NumberInRangeAdvancedFilter"/>. </summary>
-        public NumberInRangeAdvancedFilter()
+        public NumberInRangeAdvancedFilter() : base(AdvancedFilterOperatorType.NumberInRange)
         {
             Values = new ChangeTrackingList<IList<double>>();
-            OperatorType = AdvancedFilterOperatorType.NumberInRange;
         }
 
         /// <summary> Initializes a new instance of <see cref="NumberInRangeAdvancedFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="values"> The set of filter values. </param>
-        internal NumberInRangeAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IList<double>> values) : base(operatorType, key, serializedAdditionalRawData)
+        internal NumberInRangeAdvancedFilter(AdvancedFilterOperatorType operatorType, string key, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<double>> values) : base(operatorType, key, additionalBinaryDataProperties)
         {
             Values = values;
-            OperatorType = operatorType;
         }
 
         /// <summary> The set of filter values. </summary>
-        [WirePath("values")]
         public IList<IList<double>> Values { get; }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct ClientCertificateValidationScheme : IEquatable<ClientCertificateValidationScheme>
     {
         private readonly string _value;
+        /// <summary> SubjectMatchesAuthenticationName. </summary>
+        private const string SubjectMatchesAuthenticationNameValue = "SubjectMatchesAuthenticationName";
+        /// <summary> DnsMatchesAuthenticationName. </summary>
+        private const string DnsMatchesAuthenticationNameValue = "DnsMatchesAuthenticationName";
+        /// <summary> UriMatchesAuthenticationName. </summary>
+        private const string UriMatchesAuthenticationNameValue = "UriMatchesAuthenticationName";
+        /// <summary> IpMatchesAuthenticationName. </summary>
+        private const string IpMatchesAuthenticationNameValue = "IpMatchesAuthenticationName";
+        /// <summary> EmailMatchesAuthenticationName. </summary>
+        private const string EmailMatchesAuthenticationNameValue = "EmailMatchesAuthenticationName";
+        /// <summary> ThumbprintMatch. </summary>
+        private const string ThumbprintMatchValue = "ThumbprintMatch";
 
         /// <summary> Initializes a new instance of <see cref="ClientCertificateValidationScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ClientCertificateValidationScheme(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SubjectMatchesAuthenticationNameValue = "SubjectMatchesAuthenticationName";
-        private const string DnsMatchesAuthenticationNameValue = "DnsMatchesAuthenticationName";
-        private const string UriMatchesAuthenticationNameValue = "UriMatchesAuthenticationName";
-        private const string IPMatchesAuthenticationNameValue = "IpMatchesAuthenticationName";
-        private const string EmailMatchesAuthenticationNameValue = "EmailMatchesAuthenticationName";
-        private const string ThumbprintMatchValue = "ThumbprintMatch";
+            _value = value;
+        }
 
         /// <summary> SubjectMatchesAuthenticationName. </summary>
         public static ClientCertificateValidationScheme SubjectMatchesAuthenticationName { get; } = new ClientCertificateValidationScheme(SubjectMatchesAuthenticationNameValue);
+
         /// <summary> DnsMatchesAuthenticationName. </summary>
         public static ClientCertificateValidationScheme DnsMatchesAuthenticationName { get; } = new ClientCertificateValidationScheme(DnsMatchesAuthenticationNameValue);
+
         /// <summary> UriMatchesAuthenticationName. </summary>
         public static ClientCertificateValidationScheme UriMatchesAuthenticationName { get; } = new ClientCertificateValidationScheme(UriMatchesAuthenticationNameValue);
+
         /// <summary> IpMatchesAuthenticationName. </summary>
-        public static ClientCertificateValidationScheme IPMatchesAuthenticationName { get; } = new ClientCertificateValidationScheme(IPMatchesAuthenticationNameValue);
+        public static ClientCertificateValidationScheme IpMatchesAuthenticationName { get; } = new ClientCertificateValidationScheme(IpMatchesAuthenticationNameValue);
+
         /// <summary> EmailMatchesAuthenticationName. </summary>
         public static ClientCertificateValidationScheme EmailMatchesAuthenticationName { get; } = new ClientCertificateValidationScheme(EmailMatchesAuthenticationNameValue);
+
         /// <summary> ThumbprintMatch. </summary>
         public static ClientCertificateValidationScheme ThumbprintMatch { get; } = new ClientCertificateValidationScheme(ThumbprintMatchValue);
+
         /// <summary> Determines if two <see cref="ClientCertificateValidationScheme"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ClientCertificateValidationScheme left, ClientCertificateValidationScheme right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ClientCertificateValidationScheme"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ClientCertificateValidationScheme left, ClientCertificateValidationScheme right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ClientCertificateValidationScheme"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ClientCertificateValidationScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ClientCertificateValidationScheme(string value) => new ClientCertificateValidationScheme(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ClientCertificateValidationScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ClientCertificateValidationScheme?(string value) => value == null ? null : new ClientCertificateValidationScheme(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ClientCertificateValidationScheme other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ClientCertificateValidationScheme other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

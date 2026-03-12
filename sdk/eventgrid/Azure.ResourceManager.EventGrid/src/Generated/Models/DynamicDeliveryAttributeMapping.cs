@@ -14,24 +14,38 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class DynamicDeliveryAttributeMapping : DeliveryAttributeMapping
     {
         /// <summary> Initializes a new instance of <see cref="DynamicDeliveryAttributeMapping"/>. </summary>
-        public DynamicDeliveryAttributeMapping()
+        public DynamicDeliveryAttributeMapping() : base(DeliveryAttributeMappingType.Dynamic)
         {
-            MappingType = DeliveryAttributeMappingType.Dynamic;
         }
 
         /// <summary> Initializes a new instance of <see cref="DynamicDeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
-        /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sourceField"> JSON path in the event which contains attribute value. </param>
-        internal DynamicDeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType, IDictionary<string, BinaryData> serializedAdditionalRawData, string sourceField) : base(name, mappingType, serializedAdditionalRawData)
+        /// <param name="type"> Type of the delivery attribute or header name. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of dynamic delivery attribute mapping. </param>
+        internal DynamicDeliveryAttributeMapping(string name, DeliveryAttributeMappingType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DynamicDeliveryAttributeMappingProperties properties) : base(name, @type, additionalBinaryDataProperties)
         {
-            SourceField = sourceField;
-            MappingType = mappingType;
+            Properties = properties;
         }
 
+        /// <summary> Properties of dynamic delivery attribute mapping. </summary>
+        internal DynamicDeliveryAttributeMappingProperties Properties { get; set; }
+
         /// <summary> JSON path in the event which contains attribute value. </summary>
-        [WirePath("properties.sourceField")]
-        public string SourceField { get; set; }
+        public string SourceField
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceField;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DynamicDeliveryAttributeMappingProperties();
+                }
+                Properties.SourceField = value;
+            }
+        }
     }
 }

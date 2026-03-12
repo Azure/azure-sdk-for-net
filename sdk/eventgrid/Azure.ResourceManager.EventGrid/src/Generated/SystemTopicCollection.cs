@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class SystemTopicCollection : ArmCollection, IEnumerable<SystemTopicResource>, IAsyncEnumerable<SystemTopicResource>
     {
-        private readonly ClientDiagnostics _systemTopicClientDiagnostics;
-        private readonly SystemTopicsRestOperations _systemTopicRestClient;
+        private readonly ClientDiagnostics _systemTopicsClientDiagnostics;
+        private readonly SystemTopics _systemTopicsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SystemTopicCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SystemTopicCollection for mocking. </summary>
         protected SystemTopicCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SystemTopicCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemTopicCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SystemTopicCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _systemTopicClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", SystemTopicResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SystemTopicResource.ResourceType, out string systemTopicApiVersion);
-            _systemTopicRestClient = new SystemTopicsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, systemTopicApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _systemTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", SystemTopicResource.ResourceType.Namespace, Diagnostics);
+            _systemTopicsRestClient = new SystemTopics(_systemTopicsClientDiagnostics, Pipeline, Endpoint, systemTopicApiVersion ?? "2025-07-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Asynchronously creates a new system topic with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="data"> System Topic information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SystemTopicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string systemTopicName, SystemTopicData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _systemTopicsClientDiagnostics.CreateScope("SystemTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _systemTopicRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<SystemTopicResource>(new SystemTopicOperationSource(Client), _systemTopicClientDiagnostics, Pipeline, _systemTopicRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, SystemTopicData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EventGridArmOperation<SystemTopicResource> operation = new EventGridArmOperation<SystemTopicResource>(
+                    new SystemTopicOperationSource(Client),
+                    _systemTopicsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.EventGrid
         /// Asynchronously creates a new system topic with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="data"> System Topic information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SystemTopicResource> CreateOrUpdate(WaitUntil waitUntil, string systemTopicName, SystemTopicData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _systemTopicsClientDiagnostics.CreateScope("SystemTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _systemTopicRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, data, cancellationToken);
-                var operation = new EventGridArmOperation<SystemTopicResource>(new SystemTopicOperationSource(Client), _systemTopicClientDiagnostics, Pipeline, _systemTopicRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, SystemTopicData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EventGridArmOperation<SystemTopicResource> operation = new EventGridArmOperation<SystemTopicResource>(
+                    new SystemTopicOperationSource(Client),
+                    _systemTopicsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Get properties of a system topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SystemTopicResource>> GetAsync(string systemTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
 
-            using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.Get");
+            using DiagnosticScope scope = _systemTopicsClientDiagnostics.CreateScope("SystemTopicCollection.Get");
             scope.Start();
             try
             {
-                var response = await _systemTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SystemTopicData> response = Response.FromValue(SystemTopicData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SystemTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Get properties of a system topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SystemTopicResource> Get(string systemTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
 
-            using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.Get");
+            using DiagnosticScope scope = _systemTopicsClientDiagnostics.CreateScope("SystemTopicCollection.Get");
             scope.Start();
             try
             {
-                var response = _systemTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SystemTopicData> response = Response.FromValue(SystemTopicData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SystemTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,52 +273,16 @@ namespace Azure.ResourceManager.EventGrid
         /// List all the system topics under a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SystemTopicResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SystemTopicResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _systemTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _systemTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), _systemTopicClientDiagnostics, Pipeline, "SystemTopicCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the system topics under a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_ListByResourceGroup</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,47 +290,105 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SystemTopicResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SystemTopicResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SystemTopicResource> GetAllAsync(string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _systemTopicRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _systemTopicRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SystemTopicResource(Client, SystemTopicData.DeserializeSystemTopicData(e)), _systemTopicClientDiagnostics, Pipeline, "SystemTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SystemTopicData, SystemTopicResource>(new SystemTopicsGetByResourceGroupAsyncCollectionResultOfT(
+                _systemTopicsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                top,
+                context), data => new SystemTopicResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all the system topics under a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SystemTopicResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SystemTopicResource> GetAll(string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SystemTopicData, SystemTopicResource>(new SystemTopicsGetByResourceGroupCollectionResultOfT(
+                _systemTopicsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                filter,
+                top,
+                context), data => new SystemTopicResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string systemTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
 
-            using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.Exists");
+            using DiagnosticScope scope = _systemTopicsClientDiagnostics.CreateScope("SystemTopicCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _systemTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SystemTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SystemTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SystemTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +402,50 @@ namespace Azure.ResourceManager.EventGrid
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string systemTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
 
-            using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.Exists");
+            using DiagnosticScope scope = _systemTopicsClientDiagnostics.CreateScope("SystemTopicCollection.Exists");
             scope.Start();
             try
             {
-                var response = _systemTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SystemTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SystemTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SystemTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +459,54 @@ namespace Azure.ResourceManager.EventGrid
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SystemTopicResource>> GetIfExistsAsync(string systemTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
 
-            using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.GetIfExists");
+            using DiagnosticScope scope = _systemTopicsClientDiagnostics.CreateScope("SystemTopicCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _systemTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SystemTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SystemTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SystemTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SystemTopicResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SystemTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +520,54 @@ namespace Azure.ResourceManager.EventGrid
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SystemTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SystemTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SystemTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="systemTopicName"> Name of the system topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="systemTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="systemTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SystemTopicResource> GetIfExists(string systemTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(systemTopicName, nameof(systemTopicName));
 
-            using var scope = _systemTopicClientDiagnostics.CreateScope("SystemTopicCollection.GetIfExists");
+            using DiagnosticScope scope = _systemTopicsClientDiagnostics.CreateScope("SystemTopicCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _systemTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, systemTopicName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _systemTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, systemTopicName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SystemTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SystemTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SystemTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SystemTopicResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SystemTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +587,7 @@ namespace Azure.ResourceManager.EventGrid
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SystemTopicResource> IAsyncEnumerable<SystemTopicResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

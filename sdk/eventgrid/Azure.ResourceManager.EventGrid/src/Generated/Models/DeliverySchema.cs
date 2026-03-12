@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct DeliverySchema : IEquatable<DeliverySchema>
     {
         private readonly string _value;
+        /// <summary> CloudEventSchemaV1_0. </summary>
+        private const string CloudEventSchemaV10Value = "CloudEventSchemaV1_0";
 
         /// <summary> Initializes a new instance of <see cref="DeliverySchema"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeliverySchema(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CloudEventSchemaV10Value = "CloudEventSchemaV1_0";
+            _value = value;
+        }
 
         /// <summary> CloudEventSchemaV1_0. </summary>
         public static DeliverySchema CloudEventSchemaV10 { get; } = new DeliverySchema(CloudEventSchemaV10Value);
+
         /// <summary> Determines if two <see cref="DeliverySchema"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeliverySchema left, DeliverySchema right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeliverySchema"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeliverySchema left, DeliverySchema right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeliverySchema"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeliverySchema"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeliverySchema(string value) => new DeliverySchema(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeliverySchema"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeliverySchema?(string value) => value == null ? null : new DeliverySchema(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeliverySchema other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeliverySchema other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

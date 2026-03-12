@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -24,71 +25,82 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class DomainTopicCollection : ArmCollection, IEnumerable<DomainTopicResource>, IAsyncEnumerable<DomainTopicResource>
     {
-        private readonly ClientDiagnostics _domainTopicClientDiagnostics;
-        private readonly DomainTopicsRestOperations _domainTopicRestClient;
+        private readonly ClientDiagnostics _domainTopicsClientDiagnostics;
+        private readonly DomainTopics _domainTopicsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DomainTopicCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DomainTopicCollection for mocking. </summary>
         protected DomainTopicCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DomainTopicCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DomainTopicCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DomainTopicCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _domainTopicClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", DomainTopicResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DomainTopicResource.ResourceType, out string domainTopicApiVersion);
-            _domainTopicRestClient = new DomainTopicsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, domainTopicApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _domainTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", DomainTopicResource.ResourceType.Namespace, Diagnostics);
+            _domainTopicsRestClient = new DomainTopics(_domainTopicsClientDiagnostics, Pipeline, Endpoint, domainTopicApiVersion ?? "2025-07-15-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != EventGridDomainResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventGridDomainResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EventGridDomainResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Asynchronously creates or updates a new domain topic with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainTopics_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DomainTopics_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="domainTopicName"> Name of the domain topic. </param>
+        /// <param name="domainTopicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<DomainTopicResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string domainTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
-            using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _domainTopicsClientDiagnostics.CreateScope("DomainTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _domainTopicRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainTopicName, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<DomainTopicResource>(new DomainTopicOperationSource(Client), _domainTopicClientDiagnostics, Pipeline, _domainTopicRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainTopicName).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _domainTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainTopicName, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EventGridArmOperation<DomainTopicResource> operation = new EventGridArmOperation<DomainTopicResource>(
+                    new DomainTopicOperationSource(Client),
+                    _domainTopicsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -102,40 +114,49 @@ namespace Azure.ResourceManager.EventGrid
         /// Asynchronously creates or updates a new domain topic with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainTopics_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DomainTopics_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="domainTopicName"> Name of the domain topic. </param>
+        /// <param name="domainTopicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<DomainTopicResource> CreateOrUpdate(WaitUntil waitUntil, string domainTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
-            using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _domainTopicsClientDiagnostics.CreateScope("DomainTopicCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _domainTopicRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainTopicName, cancellationToken);
-                var operation = new EventGridArmOperation<DomainTopicResource>(new DomainTopicOperationSource(Client), _domainTopicClientDiagnostics, Pipeline, _domainTopicRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainTopicName).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _domainTopicsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainTopicName, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EventGridArmOperation<DomainTopicResource> operation = new EventGridArmOperation<DomainTopicResource>(
+                    new DomainTopicOperationSource(Client),
+                    _domainTopicsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -149,38 +170,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Get properties of a domain topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DomainTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainTopicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DomainTopicResource>> GetAsync(string domainTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
-            using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.Get");
+            using DiagnosticScope scope = _domainTopicsClientDiagnostics.CreateScope("DomainTopicCollection.Get");
             scope.Start();
             try
             {
-                var response = await _domainTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainTopicName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _domainTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainTopicName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DomainTopicData> response = Response.FromValue(DomainTopicData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DomainTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,38 +219,42 @@ namespace Azure.ResourceManager.EventGrid
         /// Get properties of a domain topic.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DomainTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainTopicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DomainTopicResource> Get(string domainTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
-            using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.Get");
+            using DiagnosticScope scope = _domainTopicsClientDiagnostics.CreateScope("DomainTopicCollection.Get");
             scope.Start();
             try
             {
-                var response = _domainTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainTopicName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _domainTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainTopicName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DomainTopicData> response = Response.FromValue(DomainTopicData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DomainTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -239,52 +268,16 @@ namespace Azure.ResourceManager.EventGrid
         /// List all the topics in a domain.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainTopics_ListByDomain</description>
+        /// <term> Operation Id. </term>
+        /// <description> DomainTopics_ListByDomain. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainTopicResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
-        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DomainTopicResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DomainTopicResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _domainTopicRestClient.CreateListByDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _domainTopicRestClient.CreateListByDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DomainTopicResource(Client, DomainTopicData.DeserializeDomainTopicData(e)), _domainTopicClientDiagnostics, Pipeline, "DomainTopicCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the topics in a domain.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainTopics_ListByDomain</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,47 +285,107 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DomainTopicResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DomainTopicResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DomainTopicResource> GetAllAsync(string filter = default, int? top = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _domainTopicRestClient.CreateListByDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _domainTopicRestClient.CreateListByDomainNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DomainTopicResource(Client, DomainTopicData.DeserializeDomainTopicData(e)), _domainTopicClientDiagnostics, Pipeline, "DomainTopicCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DomainTopicData, DomainTopicResource>(new DomainTopicsGetByDomainAsyncCollectionResultOfT(
+                _domainTopicsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                top,
+                context), data => new DomainTopicResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all the topics in a domain.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DomainTopics_ListByDomain. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
+        /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DomainTopicResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DomainTopicResource> GetAll(string filter = default, int? top = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DomainTopicData, DomainTopicResource>(new DomainTopicsGetByDomainCollectionResultOfT(
+                _domainTopicsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                top,
+                context), data => new DomainTopicResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DomainTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainTopicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string domainTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
-            using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.Exists");
+            using DiagnosticScope scope = _domainTopicsClientDiagnostics.CreateScope("DomainTopicCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _domainTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainTopicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _domainTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainTopicName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DomainTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DomainTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DomainTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +399,50 @@ namespace Azure.ResourceManager.EventGrid
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DomainTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainTopicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string domainTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
-            using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.Exists");
+            using DiagnosticScope scope = _domainTopicsClientDiagnostics.CreateScope("DomainTopicCollection.Exists");
             scope.Start();
             try
             {
-                var response = _domainTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainTopicName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _domainTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainTopicName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DomainTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DomainTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DomainTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +456,54 @@ namespace Azure.ResourceManager.EventGrid
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DomainTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainTopicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DomainTopicResource>> GetIfExistsAsync(string domainTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
-            using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.GetIfExists");
+            using DiagnosticScope scope = _domainTopicsClientDiagnostics.CreateScope("DomainTopicCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _domainTopicRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainTopicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _domainTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainTopicName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DomainTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DomainTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DomainTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DomainTopicResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DomainTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +517,54 @@ namespace Azure.ResourceManager.EventGrid
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainTopics_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DomainTopics_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DomainTopicResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainTopicName"> Name of the topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="domainTopicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="domainTopicName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DomainTopicResource> GetIfExists(string domainTopicName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(domainTopicName, nameof(domainTopicName));
 
-            using var scope = _domainTopicClientDiagnostics.CreateScope("DomainTopicCollection.GetIfExists");
+            using DiagnosticScope scope = _domainTopicsClientDiagnostics.CreateScope("DomainTopicCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _domainTopicRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, domainTopicName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _domainTopicsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, domainTopicName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DomainTopicData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DomainTopicData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DomainTopicData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DomainTopicResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DomainTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +584,7 @@ namespace Azure.ResourceManager.EventGrid
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DomainTopicResource> IAsyncEnumerable<DomainTopicResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

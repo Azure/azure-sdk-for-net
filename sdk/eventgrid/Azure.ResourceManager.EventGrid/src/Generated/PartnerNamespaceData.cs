@@ -13,132 +13,172 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the PartnerNamespace data model.
-    /// EventGrid Partner Namespace.
-    /// </summary>
+    /// <summary> EventGrid Partner Namespace. </summary>
     public partial class PartnerNamespaceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PartnerNamespaceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public PartnerNamespaceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<EventGridPrivateEndpointConnectionData>();
-            InboundIPRules = new ChangeTrackingList<EventGridInboundIPRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PartnerNamespaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="provisioningState"> Provisioning state of the partner namespace. </param>
-        /// <param name="partnerRegistrationFullyQualifiedId">
-        /// The fully qualified ARM Id of the partner registration that should be associated with this partner namespace. This takes the following format:
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.
-        /// </param>
-        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this partner namespace. </param>
-        /// <param name="endpoint"> Endpoint for the partner namespace. </param>
-        /// <param name="publicNetworkAccess">
-        /// This determines if traffic is allowed over public network. By default it is enabled.
-        /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PartnerNamespaceProperties.InboundIpRules" /&gt;
-        /// </param>
-        /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
-        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the partner namespace. </param>
-        /// <param name="partnerTopicRoutingMode">
-        /// This determines if events published to this partner namespace should use the source attribute in the event payload
-        /// or use the channel name in the header when matching to the partner topic. If none is specified, source attribute routing will be used to match the partner topic.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<EventGridPrivateEndpointConnectionData> privateEndpointConnections, PartnerNamespaceProvisioningState? provisioningState, ResourceIdentifier partnerRegistrationFullyQualifiedId, TlsVersion? minimumTlsVersionAllowed, Uri endpoint, EventGridPublicNetworkAccess? publicNetworkAccess, IList<EventGridInboundIPRule> inboundIPRules, bool? isLocalAuthDisabled, PartnerTopicRoutingMode? partnerTopicRoutingMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the Partner Namespace. </param>
+        internal PartnerNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, PartnerNamespaceProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            PrivateEndpointConnections = privateEndpointConnections;
-            ProvisioningState = provisioningState;
-            PartnerRegistrationFullyQualifiedId = partnerRegistrationFullyQualifiedId;
-            MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
-            Endpoint = endpoint;
-            PublicNetworkAccess = publicNetworkAccess;
-            InboundIPRules = inboundIPRules;
-            IsLocalAuthDisabled = isLocalAuthDisabled;
-            PartnerTopicRoutingMode = partnerTopicRoutingMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceData"/> for deserialization. </summary>
-        internal PartnerNamespaceData()
-        {
-        }
+        /// <summary> Properties of the Partner Namespace. </summary>
+        internal PartnerNamespaceProperties Properties { get; set; }
 
         /// <summary> List of private endpoint connections. </summary>
-        [WirePath("properties.privateEndpointConnections")]
-        public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerNamespaceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Provisioning state of the partner namespace. </summary>
-        [WirePath("properties.provisioningState")]
-        public PartnerNamespaceProvisioningState? ProvisioningState { get; }
+        public PartnerNamespaceProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary>
         /// The fully qualified ARM Id of the partner registration that should be associated with this partner namespace. This takes the following format:
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerRegistrations/{partnerRegistrationName}.
         /// </summary>
-        [WirePath("properties.partnerRegistrationFullyQualifiedId")]
-        public ResourceIdentifier PartnerRegistrationFullyQualifiedId { get; set; }
+        public string PartnerRegistrationFullyQualifiedId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerRegistrationFullyQualifiedId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerNamespaceProperties();
+                }
+                Properties.PartnerRegistrationFullyQualifiedId = value;
+            }
+        }
+
         /// <summary> Minimum TLS version of the publisher allowed to publish to this partner namespace. </summary>
-        [WirePath("properties.minimumTlsVersionAllowed")]
-        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
+        public TlsVersion? MinimumTlsVersionAllowed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersionAllowed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerNamespaceProperties();
+                }
+                Properties.MinimumTlsVersionAllowed = value.Value;
+            }
+        }
+
         /// <summary> Endpoint for the partner namespace. </summary>
-        [WirePath("properties.endpoint")]
-        public Uri Endpoint { get; }
+        public string Endpoint
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Endpoint;
+            }
+        }
+
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.PartnerNamespaceProperties.InboundIpRules" /&gt;
         /// </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public EventGridPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerNamespaceProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
-        [WirePath("properties.inboundIpRules")]
-        public IList<EventGridInboundIPRule> InboundIPRules { get; }
+        public IList<EventGridInboundIPRule> InboundIpRules
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerNamespaceProperties();
+                }
+                return Properties.InboundIpRules;
+            }
+        }
+
         /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the partner namespace. </summary>
-        [WirePath("properties.disableLocalAuth")]
-        public bool? IsLocalAuthDisabled { get; set; }
+        public bool? DisableLocalAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableLocalAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerNamespaceProperties();
+                }
+                Properties.DisableLocalAuth = value.Value;
+            }
+        }
+
         /// <summary>
         /// This determines if events published to this partner namespace should use the source attribute in the event payload
         /// or use the channel name in the header when matching to the partner topic. If none is specified, source attribute routing will be used to match the partner topic.
         /// </summary>
-        [WirePath("properties.partnerTopicRoutingMode")]
-        public PartnerTopicRoutingMode? PartnerTopicRoutingMode { get; set; }
+        public PartnerTopicRoutingMode? PartnerTopicRoutingMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerTopicRoutingMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PartnerNamespaceProperties();
+                }
+                Properties.PartnerTopicRoutingMode = value.Value;
+            }
+        }
     }
 }

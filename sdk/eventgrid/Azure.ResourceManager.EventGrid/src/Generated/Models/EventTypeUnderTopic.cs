@@ -15,73 +15,64 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Event Type for a subject under a topic. </summary>
     public partial class EventTypeUnderTopic : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventTypeUnderTopic"/>. </summary>
-        public EventTypeUnderTopic()
+        internal EventTypeUnderTopic()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="EventTypeUnderTopic"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Display name of the event type. </param>
-        /// <param name="description"> Description of the event type. </param>
-        /// <param name="schemaUri"> URL of the schema for this event type. </param>
-        /// <param name="isInDefaultSet"> IsInDefaultSet flag of the event type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventTypeUnderTopic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, Uri schemaUri, bool? isInDefaultSet, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the event type. </param>
+        internal EventTypeUnderTopic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EventTypeProperties properties) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            Description = description;
-            SchemaUri = schemaUri;
-            IsInDefaultSet = isInDefaultSet;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Properties of the event type. </summary>
+        internal EventTypeProperties Properties { get; }
 
         /// <summary> Display name of the event type. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties.DisplayName;
+            }
+        }
+
         /// <summary> Description of the event type. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
+            }
+        }
+
         /// <summary> URL of the schema for this event type. </summary>
-        [WirePath("properties.schemaUrl")]
-        public Uri SchemaUri { get; set; }
+        public string SchemaUri
+        {
+            get
+            {
+                return Properties.SchemaUri;
+            }
+        }
+
         /// <summary> IsInDefaultSet flag of the event type. </summary>
-        [WirePath("properties.isInDefaultSet")]
-        public bool? IsInDefaultSet { get; set; }
+        public bool? IsInDefaultSet
+        {
+            get
+            {
+                return Properties.IsInDefaultSet;
+            }
+        }
     }
 }

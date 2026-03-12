@@ -14,67 +14,144 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class WebHookEventSubscriptionDestination : EventSubscriptionDestination
     {
         /// <summary> Initializes a new instance of <see cref="WebHookEventSubscriptionDestination"/>. </summary>
-        public WebHookEventSubscriptionDestination()
+        public WebHookEventSubscriptionDestination() : base(EndpointType.WebHook)
         {
-            DeliveryAttributeMappings = new ChangeTrackingList<DeliveryAttributeMapping>();
-            EndpointType = EndpointType.WebHook;
         }
 
         /// <summary> Initializes a new instance of <see cref="WebHookEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="endpoint"> The URL that represents the endpoint of the destination of an event subscription. </param>
-        /// <param name="baseEndpoint"> The base URL that represents the endpoint of the destination of an event subscription. </param>
-        /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>
-        /// <param name="preferredBatchSizeInKilobytes"> Preferred batch size in Kilobytes. </param>
-        /// <param name="azureActiveDirectoryTenantId"> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
-        /// <param name="uriOrAzureActiveDirectoryApplicationId"> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
-        /// <param name="deliveryAttributeMappings">
-        /// Delivery attribute details.
-        /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
-        /// </param>
-        /// <param name="minimumTlsVersionAllowed"> Minimum TLS version that should be supported by webhook endpoint. </param>
-        internal WebHookEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri endpoint, Uri baseEndpoint, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, Guid? azureActiveDirectoryTenantId, string uriOrAzureActiveDirectoryApplicationId, IList<DeliveryAttributeMapping> deliveryAttributeMappings, TlsVersion? minimumTlsVersionAllowed) : base(endpointType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> WebHook Properties of the event subscription destination. </param>
+        internal WebHookEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebHookEventSubscriptionDestinationProperties properties) : base(endpointType, additionalBinaryDataProperties)
         {
-            Endpoint = endpoint;
-            BaseEndpoint = baseEndpoint;
-            MaxEventsPerBatch = maxEventsPerBatch;
-            PreferredBatchSizeInKilobytes = preferredBatchSizeInKilobytes;
-            AzureActiveDirectoryTenantId = azureActiveDirectoryTenantId;
-            UriOrAzureActiveDirectoryApplicationId = uriOrAzureActiveDirectoryApplicationId;
-            DeliveryAttributeMappings = deliveryAttributeMappings;
-            MinimumTlsVersionAllowed = minimumTlsVersionAllowed;
-            EndpointType = endpointType;
+            Properties = properties;
         }
 
+        /// <summary> WebHook Properties of the event subscription destination. </summary>
+        internal WebHookEventSubscriptionDestinationProperties Properties { get; set; }
+
         /// <summary> The URL that represents the endpoint of the destination of an event subscription. </summary>
-        [WirePath("properties.endpointUrl")]
-        public Uri Endpoint { get; set; }
+        public string EndpointUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebHookEventSubscriptionDestinationProperties();
+                }
+                Properties.EndpointUri = value;
+            }
+        }
+
         /// <summary> The base URL that represents the endpoint of the destination of an event subscription. </summary>
-        [WirePath("properties.endpointBaseUrl")]
-        public Uri BaseEndpoint { get; }
+        public string EndpointBaseUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointBaseUri;
+            }
+        }
+
         /// <summary> Maximum number of events per batch. </summary>
-        [WirePath("properties.maxEventsPerBatch")]
-        public int? MaxEventsPerBatch { get; set; }
+        public int? MaxEventsPerBatch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxEventsPerBatch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebHookEventSubscriptionDestinationProperties();
+                }
+                Properties.MaxEventsPerBatch = value.Value;
+            }
+        }
+
         /// <summary> Preferred batch size in Kilobytes. </summary>
-        [WirePath("properties.preferredBatchSizeInKilobytes")]
-        public int? PreferredBatchSizeInKilobytes { get; set; }
+        public int? PreferredBatchSizeInKilobytes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PreferredBatchSizeInKilobytes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebHookEventSubscriptionDestinationProperties();
+                }
+                Properties.PreferredBatchSizeInKilobytes = value.Value;
+            }
+        }
+
         /// <summary> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
-        [WirePath("properties.azureActiveDirectoryTenantId")]
-        public Guid? AzureActiveDirectoryTenantId { get; set; }
+        public string AzureActiveDirectoryTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureActiveDirectoryTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebHookEventSubscriptionDestinationProperties();
+                }
+                Properties.AzureActiveDirectoryTenantId = value;
+            }
+        }
+
         /// <summary> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
-        [WirePath("properties.azureActiveDirectoryApplicationIdOrUri")]
-        public string UriOrAzureActiveDirectoryApplicationId { get; set; }
-        /// <summary>
-        /// Delivery attribute details.
-        /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
-        /// </summary>
-        [WirePath("properties.deliveryAttributeMappings")]
-        public IList<DeliveryAttributeMapping> DeliveryAttributeMappings { get; }
+        public string AzureActiveDirectoryApplicationIdOrUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureActiveDirectoryApplicationIdOrUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebHookEventSubscriptionDestinationProperties();
+                }
+                Properties.AzureActiveDirectoryApplicationIdOrUri = value;
+            }
+        }
+
+        /// <summary> Delivery attribute details. </summary>
+        public IList<DeliveryAttributeMapping> DeliveryAttributeMappings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebHookEventSubscriptionDestinationProperties();
+                }
+                return Properties.DeliveryAttributeMappings;
+            }
+        }
+
         /// <summary> Minimum TLS version that should be supported by webhook endpoint. </summary>
-        [WirePath("properties.minimumTlsVersionAllowed")]
-        public TlsVersion? MinimumTlsVersionAllowed { get; set; }
+        public TlsVersion? MinimumTlsVersionAllowed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MinimumTlsVersionAllowed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebHookEventSubscriptionDestinationProperties();
+                }
+                Properties.MinimumTlsVersionAllowed = value.Value;
+            }
+        }
     }
 }

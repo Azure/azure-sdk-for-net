@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary>
-    /// A class representing the PartnerNamespaceChannel data model.
-    /// Channel info.
-    /// </summary>
+    /// <summary> Channel info. </summary>
     public partial class PartnerNamespaceChannelData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelData"/>. </summary>
         public PartnerNamespaceChannelData()
@@ -57,64 +25,141 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="channelType"> The type of the event channel which represents the direction flow of events. </param>
-        /// <param name="partnerTopicInfo"> This property should be populated when channelType is PartnerTopic and represents information about the partner topic resource corresponding to the channel. </param>
-        /// <param name="partnerDestinationInfo">
-        /// This property should be populated when channelType is PartnerDestination and represents information about the partner destination resource corresponding to the channel.
-        /// Please note <see cref="Models.PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebhookPartnerDestinationInfo"/>.
-        /// </param>
-        /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process by the subscriber. </param>
-        /// <param name="provisioningState"> Provisioning state of the channel. </param>
-        /// <param name="readinessState"> The readiness state of the corresponding partner topic. </param>
-        /// <param name="expireOnIfNotActivated">
-        /// Expiration time of the channel. If this timer expires while the corresponding partner topic is never activated,
-        /// the channel and corresponding partner topic are deleted.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PartnerNamespaceChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PartnerNamespaceChannelType? channelType, PartnerTopicInfo partnerTopicInfo, PartnerDestinationInfo partnerDestinationInfo, string messageForActivation, PartnerNamespaceChannelProvisioningState? provisioningState, PartnerTopicReadinessState? readinessState, DateTimeOffset? expireOnIfNotActivated, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the Channel. </param>
+        internal PartnerNamespaceChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChannelProperties properties) : base(id, name, resourceType, systemData)
         {
-            ChannelType = channelType;
-            PartnerTopicInfo = partnerTopicInfo;
-            PartnerDestinationInfo = partnerDestinationInfo;
-            MessageForActivation = messageForActivation;
-            ProvisioningState = provisioningState;
-            ReadinessState = readinessState;
-            ExpireOnIfNotActivated = expireOnIfNotActivated;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> Properties of the Channel. </summary>
+        internal ChannelProperties Properties { get; set; }
+
         /// <summary> The type of the event channel which represents the direction flow of events. </summary>
-        [WirePath("properties.channelType")]
-        public PartnerNamespaceChannelType? ChannelType { get; set; }
+        public PartnerNamespaceChannelType? ChannelType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ChannelType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelProperties();
+                }
+                Properties.ChannelType = value.Value;
+            }
+        }
+
         /// <summary> This property should be populated when channelType is PartnerTopic and represents information about the partner topic resource corresponding to the channel. </summary>
-        [WirePath("properties.partnerTopicInfo")]
-        public PartnerTopicInfo PartnerTopicInfo { get; set; }
-        /// <summary>
-        /// This property should be populated when channelType is PartnerDestination and represents information about the partner destination resource corresponding to the channel.
-        /// Please note <see cref="Models.PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="WebhookPartnerDestinationInfo"/>.
-        /// </summary>
-        [WirePath("properties.partnerDestinationInfo")]
-        public PartnerDestinationInfo PartnerDestinationInfo { get; set; }
+        public PartnerTopicInfo PartnerTopicInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerTopicInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelProperties();
+                }
+                Properties.PartnerTopicInfo = value;
+            }
+        }
+
+        /// <summary> This property should be populated when channelType is PartnerDestination and represents information about the partner destination resource corresponding to the channel. </summary>
+        public PartnerDestinationInfo PartnerDestinationInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerDestinationInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelProperties();
+                }
+                Properties.PartnerDestinationInfo = value;
+            }
+        }
+
         /// <summary> Context or helpful message that can be used during the approval process by the subscriber. </summary>
-        [WirePath("properties.messageForActivation")]
-        public string MessageForActivation { get; set; }
+        public string MessageForActivation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MessageForActivation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelProperties();
+                }
+                Properties.MessageForActivation = value;
+            }
+        }
+
         /// <summary> Provisioning state of the channel. </summary>
-        [WirePath("properties.provisioningState")]
-        public PartnerNamespaceChannelProvisioningState? ProvisioningState { get; set; }
+        public PartnerNamespaceChannelProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelProperties();
+                }
+                Properties.ProvisioningState = value.Value;
+            }
+        }
+
         /// <summary> The readiness state of the corresponding partner topic. </summary>
-        [WirePath("properties.readinessState")]
-        public PartnerTopicReadinessState? ReadinessState { get; set; }
+        public PartnerTopicReadinessState? ReadinessState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReadinessState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelProperties();
+                }
+                Properties.ReadinessState = value.Value;
+            }
+        }
+
         /// <summary>
         /// Expiration time of the channel. If this timer expires while the corresponding partner topic is never activated,
         /// the channel and corresponding partner topic are deleted.
         /// </summary>
-        [WirePath("properties.expirationTimeIfNotActivatedUtc")]
-        public DateTimeOffset? ExpireOnIfNotActivated { get; set; }
+        public DateTimeOffset? ExpirationTimeIfNotActivatedUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpirationTimeIfNotActivatedUtc;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelProperties();
+                }
+                Properties.ExpirationTimeIfNotActivatedUtc = value.Value;
+            }
+        }
     }
 }

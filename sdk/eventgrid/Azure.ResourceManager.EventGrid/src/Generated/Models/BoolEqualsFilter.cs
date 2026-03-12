@@ -14,24 +14,21 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class BoolEqualsFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of <see cref="BoolEqualsFilter"/>. </summary>
-        public BoolEqualsFilter()
+        public BoolEqualsFilter() : base(FilterOperatorType.BoolEquals)
         {
-            OperatorType = FilterOperatorType.BoolEquals;
         }
 
         /// <summary> Initializes a new instance of <see cref="BoolEqualsFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The boolean filter value. </param>
-        internal BoolEqualsFilter(FilterOperatorType operatorType, string key, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? value) : base(operatorType, key, serializedAdditionalRawData)
+        internal BoolEqualsFilter(FilterOperatorType operatorType, string key, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? value) : base(operatorType, key, additionalBinaryDataProperties)
         {
             Value = value;
-            OperatorType = operatorType;
         }
 
         /// <summary> The boolean filter value. </summary>
-        [WirePath("value")]
         public bool? Value { get; set; }
     }
 }

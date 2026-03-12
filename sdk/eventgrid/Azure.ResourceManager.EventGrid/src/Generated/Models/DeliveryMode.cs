@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct DeliveryMode : IEquatable<DeliveryMode>
     {
         private readonly string _value;
+        /// <summary> Queue. </summary>
+        private const string QueueValue = "Queue";
+        /// <summary> Push. </summary>
+        private const string PushValue = "Push";
 
         /// <summary> Initializes a new instance of <see cref="DeliveryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeliveryMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string QueueValue = "Queue";
-        private const string PushValue = "Push";
+            _value = value;
+        }
 
         /// <summary> Queue. </summary>
         public static DeliveryMode Queue { get; } = new DeliveryMode(QueueValue);
+
         /// <summary> Push. </summary>
         public static DeliveryMode Push { get; } = new DeliveryMode(PushValue);
+
         /// <summary> Determines if two <see cref="DeliveryMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeliveryMode left, DeliveryMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeliveryMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeliveryMode left, DeliveryMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeliveryMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeliveryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeliveryMode(string value) => new DeliveryMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeliveryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeliveryMode?(string value) => value == null ? null : new DeliveryMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeliveryMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeliveryMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

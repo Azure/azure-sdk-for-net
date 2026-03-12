@@ -15,31 +15,41 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class NamespaceTopicEventSubscriptionDestination : EventSubscriptionDestination
     {
         /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionDestination"/>. </summary>
-        public NamespaceTopicEventSubscriptionDestination()
+        public NamespaceTopicEventSubscriptionDestination() : base(EndpointType.NamespaceTopic)
         {
-            EndpointType = EndpointType.NamespaceTopic;
         }
 
         /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionDestination"/>. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="resourceId">
-        /// The Azure resource Id that represents the endpoint of the Event Grid Namespace Topic destination of an event subscription.
-        /// This field is required and the Namespace Topic resource listed must already exist.
-        /// The resource ARM Id should follow this pattern: /subscriptions/{AzureSubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.EventGrid/namespaces/{NamespaceName}/topics/{TopicName}.
-        /// </param>
-        internal NamespaceTopicEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceId) : base(endpointType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Namespace Topic properties of the event subscription destination. </param>
+        internal NamespaceTopicEventSubscriptionDestination(EndpointType endpointType, IDictionary<string, BinaryData> additionalBinaryDataProperties, NamespaceTopicEventSubscriptionDestinationProperties properties) : base(endpointType, additionalBinaryDataProperties)
         {
-            ResourceId = resourceId;
-            EndpointType = endpointType;
+            Properties = properties;
         }
+
+        /// <summary> Namespace Topic properties of the event subscription destination. </summary>
+        internal NamespaceTopicEventSubscriptionDestinationProperties Properties { get; set; }
 
         /// <summary>
         /// The Azure resource Id that represents the endpoint of the Event Grid Namespace Topic destination of an event subscription.
         /// This field is required and the Namespace Topic resource listed must already exist.
         /// The resource ARM Id should follow this pattern: /subscriptions/{AzureSubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.EventGrid/namespaces/{NamespaceName}/topics/{TopicName}.
         /// </summary>
-        [WirePath("properties.resourceId")]
-        public ResourceIdentifier ResourceId { get; set; }
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NamespaceTopicEventSubscriptionDestinationProperties();
+                }
+                Properties.ResourceId = value;
+            }
+        }
     }
 }

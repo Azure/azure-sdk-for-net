@@ -14,28 +14,54 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class AzureADPartnerClientAuthentication : PartnerClientAuthentication
     {
         /// <summary> Initializes a new instance of <see cref="AzureADPartnerClientAuthentication"/>. </summary>
-        public AzureADPartnerClientAuthentication()
+        public AzureADPartnerClientAuthentication() : base(PartnerClientAuthenticationType.AzureAD)
         {
-            ClientAuthenticationType = PartnerClientAuthenticationType.AzureAD;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureADPartnerClientAuthentication"/>. </summary>
         /// <param name="clientAuthenticationType"> Type of client authentication. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="azureActiveDirectoryTenantId"> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
-        /// <param name="azureActiveDirectoryApplicationIdOrUri"> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>
-        internal AzureADPartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string azureActiveDirectoryTenantId, Uri azureActiveDirectoryApplicationIdOrUri) : base(clientAuthenticationType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Microsoft Entra ID ClientAuthentication Properties. </param>
+        internal AzureADPartnerClientAuthentication(PartnerClientAuthenticationType clientAuthenticationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureADPartnerClientAuthenticationProperties properties) : base(clientAuthenticationType, additionalBinaryDataProperties)
         {
-            AzureActiveDirectoryTenantId = azureActiveDirectoryTenantId;
-            AzureActiveDirectoryApplicationIdOrUri = azureActiveDirectoryApplicationIdOrUri;
-            ClientAuthenticationType = clientAuthenticationType;
+            Properties = properties;
         }
 
+        /// <summary> Microsoft Entra ID ClientAuthentication Properties. </summary>
+        internal AzureADPartnerClientAuthenticationProperties Properties { get; set; }
+
         /// <summary> The Microsoft Entra ID Tenant ID to get the access token that will be included as the bearer token in delivery requests. </summary>
-        [WirePath("properties.azureActiveDirectoryTenantId")]
-        public string AzureActiveDirectoryTenantId { get; set; }
+        public string AzureActiveDirectoryTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureActiveDirectoryTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureADPartnerClientAuthenticationProperties();
+                }
+                Properties.AzureActiveDirectoryTenantId = value;
+            }
+        }
+
         /// <summary> The Microsoft Entra ID Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </summary>
-        [WirePath("properties.azureActiveDirectoryApplicationIdOrUri")]
-        public Uri AzureActiveDirectoryApplicationIdOrUri { get; set; }
+        public string AzureActiveDirectoryApplicationIdOrUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureActiveDirectoryApplicationIdOrUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureADPartnerClientAuthenticationProperties();
+                }
+                Properties.AzureActiveDirectoryApplicationIdOrUri = value;
+            }
+        }
     }
 }
