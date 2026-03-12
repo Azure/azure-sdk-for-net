@@ -32,8 +32,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="imageIntegrity"> Image integrity is a feature that works with Azure Policy to verify image integrity by signature. This will not have any effect unless Azure Policy is applied to enforce image signatures. See https://aka.ms/aks/image-integrity for how to use this feature via policy. </param>
         /// <param name="nodeRestriction"> [Node Restriction](https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/#noderestriction) settings for the security profile. </param>
         /// <param name="customCATrustCertificates"> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </param>
+        /// <param name="serviceAccountImagePullProfile"> Defines service account based image pull settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, KubernetesResourceObjectEncryptionProfile kubernetesResourceObjectEncryptionProfile, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, ManagedClusterSecurityProfileImageIntegrity imageIntegrity, ManagedClusterSecurityProfileNodeRestriction nodeRestriction, IList<byte[]> customCATrustCertificates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterSecurityProfile(ManagedClusterSecurityProfileDefender defender, ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms, KubernetesResourceObjectEncryptionProfile kubernetesResourceObjectEncryptionProfile, ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity, ManagedClusterSecurityProfileImageCleaner imageCleaner, ManagedClusterSecurityProfileImageIntegrity imageIntegrity, ManagedClusterSecurityProfileNodeRestriction nodeRestriction, IList<byte[]> customCATrustCertificates, ServiceAccountImagePullProfile serviceAccountImagePullProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Defender = defender;
             AzureKeyVaultKms = azureKeyVaultKms;
@@ -43,6 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ImageIntegrity = imageIntegrity;
             NodeRestriction = nodeRestriction;
             CustomCATrustCertificates = customCATrustCertificates;
+            ServiceAccountImagePullProfile = serviceAccountImagePullProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -77,6 +79,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> A list of up to 10 base64 encoded CAs that will be added to the trust store on all nodes in the cluster. For more information see [Custom CA Trust Certificates](https://learn.microsoft.com/en-us/azure/aks/custom-certificate-authority). </summary>
         [WirePath("customCATrustCertificates")]
         public IList<byte[]> CustomCATrustCertificates { get; }
+
+        /// <summary> Defines service account based image pull settings. </summary>
+        [WirePath("serviceAccountImagePullProfile")]
+        public ServiceAccountImagePullProfile ServiceAccountImagePullProfile { get; set; }
 
         /// <summary> Whether to enable encryption at rest of Kubernetes resource objects using service-managed keys. More information on this can be found under https://aka.ms/aks/kubernetesResourceObjectEncryption. </summary>
         [WirePath("kubernetesResourceObjectEncryptionProfile.infrastructureEncryption")]

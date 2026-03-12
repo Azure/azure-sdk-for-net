@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         private readonly string _value;
         /// <summary> Enable WireGuard encryption. Refer to https://docs.cilium.io/en/latest/security/network/encryption-wireguard/ on use cases and implementation details. </summary>
         private const string WireGuardValue = "WireGuard";
+        /// <summary> Enables mTLS authentication and encryption for pod-to-pod traffic within the cluster. Refer to https://aka.ms/acnsciliummtls for relevant documentation. </summary>
+        private const string ClientCertificateAuthenticationValue = "mTLS";
         /// <summary> Disable Transit encryption. </summary>
         private const string NoneValue = "None";
 
@@ -32,6 +34,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Enable WireGuard encryption. Refer to https://docs.cilium.io/en/latest/security/network/encryption-wireguard/ on use cases and implementation details. </summary>
         public static TransitEncryptionType WireGuard { get; } = new TransitEncryptionType(WireGuardValue);
+
+        /// <summary> Enables mTLS authentication and encryption for pod-to-pod traffic within the cluster. Refer to https://aka.ms/acnsciliummtls for relevant documentation. </summary>
+        public static TransitEncryptionType ClientCertificateAuthentication { get; } = new TransitEncryptionType(ClientCertificateAuthenticationValue);
 
         /// <summary> Disable Transit encryption. </summary>
         public static TransitEncryptionType None { get; } = new TransitEncryptionType(NoneValue);

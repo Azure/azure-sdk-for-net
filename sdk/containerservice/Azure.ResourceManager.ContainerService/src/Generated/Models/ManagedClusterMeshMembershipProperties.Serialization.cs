@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
+            if (Optional.IsDefined(PrivateConnectProfile))
+            {
+                writer.WritePropertyName("privateConnectProfile"u8);
+                writer.WriteObjectValue(PrivateConnectProfile, options);
+            }
             writer.WritePropertyName("managedMeshID"u8);
             writer.WriteStringValue(ManagedMeshId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -130,6 +135,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             MeshMembershipProvisioningState? provisioningState = default;
+            MeshMembershipPrivateConnectProfile privateConnectProfile = default;
             ResourceIdentifier managedMeshId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,6 +149,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     provisioningState = new MeshMembershipProvisioningState(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("privateConnectProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateConnectProfile = MeshMembershipPrivateConnectProfile.DeserializeMeshMembershipPrivateConnectProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("managedMeshID"u8))
                 {
                     managedMeshId = new ResourceIdentifier(prop.Value.GetString());
@@ -153,7 +168,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterMeshMembershipProperties(provisioningState, managedMeshId, additionalBinaryDataProperties);
+            return new ManagedClusterMeshMembershipProperties(provisioningState, privateConnectProfile, managedMeshId, additionalBinaryDataProperties);
         }
     }
 }

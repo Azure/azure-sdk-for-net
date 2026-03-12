@@ -29,14 +29,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="syslogPort"> The syslog host port. If not specified, the default port is 28330. </param>
         /// <param name="isCustomMetricsDisabled"> Indicates whether custom metrics collection has to be disabled or not. If not specified the default is false. No custom metrics will be emitted if this field is false but the container insights enabled field is false. </param>
         /// <param name="isPrometheusMetricsScrapingDisabled"> Indicates whether prometheus metrics scraping is disabled or not. If not specified the default is false. No prometheus metrics will be emitted if this field is false but the container insights enabled field is false. </param>
+        /// <param name="containerNetworkLogs"> Configures container network logs ingestion with Azure Monitor. Which network logs to ingest is controlled by the CRD found in the following links. No network logs are ingested by default. More information on container network logs can be found at https://aka.ms/ContainerNetworkLogsDoc. More information on configuring container network log can be found at https://aka.ms/acns/howtoenablecnl. If not specified, the default is Disabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterAzureMonitorProfileContainerInsights(bool? isContainerInsightsEnabled, ResourceIdentifier logAnalyticsWorkspaceResourceId, long? syslogPort, bool? isCustomMetricsDisabled, bool? isPrometheusMetricsScrapingDisabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterAzureMonitorProfileContainerInsights(bool? isContainerInsightsEnabled, ResourceIdentifier logAnalyticsWorkspaceResourceId, long? syslogPort, bool? isCustomMetricsDisabled, bool? isPrometheusMetricsScrapingDisabled, ContainerNetworkLogs? containerNetworkLogs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsContainerInsightsEnabled = isContainerInsightsEnabled;
             LogAnalyticsWorkspaceResourceId = logAnalyticsWorkspaceResourceId;
             SyslogPort = syslogPort;
             IsCustomMetricsDisabled = isCustomMetricsDisabled;
             IsPrometheusMetricsScrapingDisabled = isPrometheusMetricsScrapingDisabled;
+            ContainerNetworkLogs = containerNetworkLogs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,5 +61,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Indicates whether prometheus metrics scraping is disabled or not. If not specified the default is false. No prometheus metrics will be emitted if this field is false but the container insights enabled field is false. </summary>
         [WirePath("disablePrometheusMetricsScraping")]
         public bool? IsPrometheusMetricsScrapingDisabled { get; set; }
+
+        /// <summary> Configures container network logs ingestion with Azure Monitor. Which network logs to ingest is controlled by the CRD found in the following links. No network logs are ingested by default. More information on container network logs can be found at https://aka.ms/ContainerNetworkLogsDoc. More information on configuring container network log can be found at https://aka.ms/acns/howtoenablecnl. If not specified, the default is Disabled. </summary>
+        [WirePath("containerNetworkLogs")]
+        public ContainerNetworkLogs? ContainerNetworkLogs { get; set; }
     }
 }

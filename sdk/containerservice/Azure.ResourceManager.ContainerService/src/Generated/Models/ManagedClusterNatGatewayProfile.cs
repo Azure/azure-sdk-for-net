@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ContainerService;
 using Azure.ResourceManager.Resources.Models;
 
@@ -27,39 +28,61 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNatGatewayProfile"/>. </summary>
         /// <param name="managedOutboundIPProfile"> Profile of the managed outbound IP resources of the cluster NAT gateway. </param>
         /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster NAT gateway. </param>
+        /// <param name="outboundIPPrefixes"> Desired outbound IP Prefix resources for the managed NAT Gateway. Only compatible with NAT Gateway V2. </param>
+        /// <param name="outboundIPs"> Desired outbound IP resources for the managed NAT Gateway. </param>
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IList<WritableSubResource> effectiveOutboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IList<WritableSubResource> effectiveOutboundIPs, ManagedClusterNATGatewayProfileOutboundIpPrefixes outboundIPPrefixes, ManagedClusterNATGatewayProfileOutboundIPs outboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedOutboundIPProfile = managedOutboundIPProfile;
             EffectiveOutboundIPs = effectiveOutboundIPs;
+            OutboundIPPrefixes = outboundIPPrefixes;
+            OutboundIPs = outboundIPs;
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Profile of the managed outbound IP resources of the cluster NAT gateway. </summary>
         [WirePath("managedOutboundIPProfile")]
-        internal ManagedClusterManagedOutboundIPProfile ManagedOutboundIPProfile { get; set; }
+        public ManagedClusterManagedOutboundIPProfile ManagedOutboundIPProfile { get; set; }
+
+        /// <summary> Desired outbound IP Prefix resources for the managed NAT Gateway. Only compatible with NAT Gateway V2. </summary>
+        [WirePath("outboundIPPrefixes")]
+        internal ManagedClusterNATGatewayProfileOutboundIpPrefixes OutboundIPPrefixes { get; set; }
+
+        /// <summary> Desired outbound IP resources for the managed NAT Gateway. </summary>
+        [WirePath("outboundIPs")]
+        internal ManagedClusterNATGatewayProfileOutboundIPs OutboundIPs { get; set; }
 
         /// <summary> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </summary>
         [WirePath("idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
 
-        /// <summary> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </summary>
-        [WirePath("managedOutboundIPProfile.count")]
-        public int? ManagedOutboundIPCount
+        /// <summary> A list of public IP prefix resources. </summary>
+        [WirePath("outboundIPPrefixes.publicIPPrefixes")]
+        public IList<ResourceIdentifier> OutboundPublicIPPrefixes
         {
             get
             {
-                return ManagedOutboundIPProfile is null ? default : ManagedOutboundIPProfile.Count;
-            }
-            set
-            {
-                if (ManagedOutboundIPProfile is null)
+                if (OutboundIPPrefixes is null)
                 {
-                    ManagedOutboundIPProfile = new ManagedClusterManagedOutboundIPProfile();
+                    OutboundIPPrefixes = new ManagedClusterNATGatewayProfileOutboundIpPrefixes();
                 }
-                ManagedOutboundIPProfile.Count = value;
+                return OutboundIPPrefixes.PublicIPPrefixes;
+            }
+        }
+
+        /// <summary> A list of public IP resources. </summary>
+        [WirePath("outboundIPs.publicIPs")]
+        public IList<ResourceIdentifier> OutboundPublicIPs
+        {
+            get
+            {
+                if (OutboundIPs is null)
+                {
+                    OutboundIPs = new ManagedClusterNATGatewayProfileOutboundIPs();
+                }
+                return OutboundIPs.PublicIPs;
             }
         }
     }

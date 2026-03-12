@@ -450,6 +450,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Whether to enable the full-cache ephemeral OS disk feature. When this feature is enabled, the entire operating system will be locally cached on the ephemeral OS disk, preventing E17 events caused by network failures. </summary>
+        [WirePath("properties.enableOSDiskFullCaching")]
+        public bool? IsOSDiskFullCachingEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsOSDiskFullCachingEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterAgentPoolProfileProperties();
+                }
+                Properties.IsOSDiskFullCachingEnabled = value.Value;
+            }
+        }
+
         /// <summary> Settings for upgrading the agentpool. </summary>
         [WirePath("properties.upgradeSettings")]
         public AgentPoolUpgradeSettings UpgradeSettings

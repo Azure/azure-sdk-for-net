@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("driverType"u8);
                 writer.WriteStringValue(DriverType.Value.ToString());
             }
+            if (Optional.IsDefined(Nvidia))
+            {
+                writer.WritePropertyName("nvidia"u8);
+                writer.WriteObjectValue(Nvidia, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             AgentPoolGpuDriver? driver = default;
             AgentPoolGpuDriverType? driverType = default;
+            AgentPoolNvidiaGpuProfile nvidia = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,12 +155,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                     driverType = new AgentPoolGpuDriverType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("nvidia"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nvidia = AgentPoolNvidiaGpuProfile.DeserializeAgentPoolNvidiaGpuProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolGpuProfile(driver, driverType, additionalBinaryDataProperties);
+            return new AgentPoolGpuProfile(driver, driverType, nvidia, additionalBinaryDataProperties);
         }
     }
 }

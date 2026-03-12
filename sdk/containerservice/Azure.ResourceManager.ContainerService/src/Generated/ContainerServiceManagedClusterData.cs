@@ -724,6 +724,24 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
+        /// <summary> Health monitor profile for the managed cluster. </summary>
+        [WirePath("properties.healthMonitorProfile")]
+        public ManagedClusterHealthMonitorProfile HealthMonitorProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HealthMonitorProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.HealthMonitorProfile = value;
+            }
+        }
+
         /// <summary> Tells whether the cluster is Running or Stopped. </summary>
         [WirePath("properties.powerState.code")]
         public ContainerServiceStateCode? PowerStateCode

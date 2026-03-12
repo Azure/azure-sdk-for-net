@@ -938,5 +938,45 @@ namespace Azure.ResourceManager.ContainerService
 
             return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetNodeImageVersions(location, cancellationToken);
         }
+
+        /// <summary>
+        /// Gets the list of VM SKUs accepted by AKS when creating node pools in a specified location. AKS will perform a best effort approach to provision the requested VM SKUs, but availability is not guaranteed.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetVmSkusAsync(AzureLocation, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceVmSku"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerServiceVmSku> GetVmSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, bool? includeExtendedLocations = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetVmSkusAsync(location, includeExtendedLocations, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of VM SKUs accepted by AKS when creating node pools in a specified location. AKS will perform a best effort approach to provision the requested VM SKUs, but availability is not guaranteed.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetVmSkus(AzureLocation, bool?, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="includeExtendedLocations"> To Include Extended Locations information or not in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ContainerServiceVmSku"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerServiceVmSku> GetVmSkus(this SubscriptionResource subscriptionResource, AzureLocation location, bool? includeExtendedLocations = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetVmSkus(location, includeExtendedLocations, cancellationToken);
+        }
     }
 }

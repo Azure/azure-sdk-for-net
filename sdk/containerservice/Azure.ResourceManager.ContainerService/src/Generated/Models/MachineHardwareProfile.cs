@@ -26,12 +26,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="vmSize"> The size of the VM. VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </param>
         /// <param name="gpuInstanceProfile"> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </param>
         /// <param name="gpuProfile"> The GPU settings of the machine. </param>
+        /// <param name="isUltraSsdEnabled"> Whether to enable UltraSSD. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineHardwareProfile(string vmSize, GpuInstanceProfile? gpuInstanceProfile, AgentPoolGpuProfile gpuProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineHardwareProfile(string vmSize, GpuInstanceProfile? gpuInstanceProfile, AgentPoolGpuProfile gpuProfile, bool? isUltraSsdEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             GpuInstanceProfile = gpuInstanceProfile;
             GpuProfile = gpuProfile;
+            IsUltraSsdEnabled = isUltraSsdEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,5 +48,9 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The GPU settings of the machine. </summary>
         [WirePath("gpuProfile")]
         public AgentPoolGpuProfile GpuProfile { get; set; }
+
+        /// <summary> Whether to enable UltraSSD. </summary>
+        [WirePath("ultraSsdEnabled")]
+        public bool? IsUltraSsdEnabled { get; set; }
     }
 }

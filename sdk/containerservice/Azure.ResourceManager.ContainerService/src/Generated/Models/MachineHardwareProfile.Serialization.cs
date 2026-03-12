@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("gpuProfile"u8);
                 writer.WriteObjectValue(GpuProfile, options);
             }
+            if (Optional.IsDefined(IsUltraSsdEnabled))
+            {
+                writer.WritePropertyName("ultraSsdEnabled"u8);
+                writer.WriteBooleanValue(IsUltraSsdEnabled.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string vmSize = default;
             GpuInstanceProfile? gpuInstanceProfile = default;
             AgentPoolGpuProfile gpuProfile = default;
+            bool? isUltraSsdEnabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,12 +166,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                     gpuProfile = AgentPoolGpuProfile.DeserializeAgentPoolGpuProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("ultraSsdEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isUltraSsdEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MachineHardwareProfile(vmSize, gpuInstanceProfile, gpuProfile, additionalBinaryDataProperties);
+            return new MachineHardwareProfile(vmSize, gpuInstanceProfile, gpuProfile, isUltraSsdEnabled, additionalBinaryDataProperties);
         }
     }
 }

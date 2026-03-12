@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("customCATrustCertificates"u8);
                 SerializeCustomCATrustCertificates(writer, options);
             }
+            if (Optional.IsDefined(ServiceAccountImagePullProfile))
+            {
+                writer.WritePropertyName("serviceAccountImagePullProfile"u8);
+                writer.WriteObjectValue(ServiceAccountImagePullProfile, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -164,6 +169,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterSecurityProfileImageIntegrity imageIntegrity = default;
             ManagedClusterSecurityProfileNodeRestriction nodeRestriction = default;
             IList<byte[]> customCATrustCertificates = default;
+            ServiceAccountImagePullProfile serviceAccountImagePullProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -235,6 +241,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     DeserializeCustomCATrustCertificates(prop, ref customCATrustCertificates);
                     continue;
                 }
+                if (prop.NameEquals("serviceAccountImagePullProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceAccountImagePullProfile = ServiceAccountImagePullProfile.DeserializeServiceAccountImagePullProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -249,6 +264,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 imageIntegrity,
                 nodeRestriction,
                 customCATrustCertificates ?? new ChangeTrackingList<byte[]>(),
+                serviceAccountImagePullProfile,
                 additionalBinaryDataProperties);
         }
     }

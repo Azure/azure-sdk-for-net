@@ -116,6 +116,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority.Value.ToString());
             }
+            if (Optional.IsDefined(EvictionPolicy))
+            {
+                writer.WritePropertyName("evictionPolicy"u8);
+                writer.WriteStringValue(EvictionPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(Billing))
+            {
+                writer.WritePropertyName("billing"u8);
+                writer.WriteObjectValue(Billing, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(NodeImageVersion))
             {
                 writer.WritePropertyName("nodeImageVersion"u8);
@@ -151,6 +161,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);
+            }
+            if (Optional.IsDefined(LocalDnsProfile))
+            {
+                writer.WritePropertyName("localDNSProfile"u8);
+                writer.WriteObjectValue(LocalDnsProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -202,11 +217,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             AgentPoolMode? mode = default;
             MachineSecurityProfile security = default;
             ScaleSetPriority? priority = default;
+            ScaleSetEvictionPolicy? evictionPolicy = default;
+            MachineBillingProfile billing = default;
             string nodeImageVersion = default;
             string provisioningState = default;
             IDictionary<string, string> tags = default;
             ETag? eTag = default;
             MachineStatus status = default;
+            LocalDnsProfile localDnsProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -282,6 +300,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                     priority = new ScaleSetPriority(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("evictionPolicy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    evictionPolicy = new ScaleSetEvictionPolicy(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("billing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billing = MachineBillingProfile.DeserializeMachineBillingProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("nodeImageVersion"u8))
                 {
                     nodeImageVersion = prop.Value.GetString();
@@ -331,6 +367,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     status = MachineStatus.DeserializeMachineStatus(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("localDNSProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    localDnsProfile = LocalDnsProfile.DeserializeLocalDnsProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -345,11 +390,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 mode,
                 security,
                 priority,
+                evictionPolicy,
+                billing,
                 nodeImageVersion,
                 provisioningState,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 eTag,
                 status,
+                localDnsProfile,
                 additionalBinaryDataProperties);
         }
     }

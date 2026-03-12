@@ -337,6 +337,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("hostedSystemProfile"u8);
                 writer.WriteObjectValue(HostedSystemProfile, options);
             }
+            if (Optional.IsDefined(HealthMonitorProfile))
+            {
+                writer.WritePropertyName("healthMonitorProfile"u8);
+                writer.WriteObjectValue(HealthMonitorProfile, options);
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -432,6 +437,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterAIToolchainOperatorProfile aiToolchainOperatorProfile = default;
             SchedulerProfile schedulerProfile = default;
             ManagedClusterHostedSystemProfile hostedSystemProfile = default;
+            ManagedClusterHealthMonitorProfile healthMonitorProfile = default;
             ManagedClusterStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -852,6 +858,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     hostedSystemProfile = ManagedClusterHostedSystemProfile.DeserializeManagedClusterHostedSystemProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("healthMonitorProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    healthMonitorProfile = ManagedClusterHealthMonitorProfile.DeserializeManagedClusterHealthMonitorProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -915,6 +930,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 aiToolchainOperatorProfile,
                 schedulerProfile,
                 hostedSystemProfile,
+                healthMonitorProfile,
                 status,
                 additionalBinaryDataProperties);
         }

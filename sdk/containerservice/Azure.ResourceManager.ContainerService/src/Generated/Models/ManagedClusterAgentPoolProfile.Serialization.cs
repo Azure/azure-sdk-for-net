@@ -135,6 +135,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string currentOrchestratorVersion = default;
             string nodeImageVersion = default;
             AgentPoolUpgradeStrategy? upgradeStrategy = default;
+            bool? isOSDiskFullCachingEnabled = default;
             AgentPoolUpgradeSettings upgradeSettings = default;
             AgentPoolBlueGreenUpgradeSettings upgradeSettingsBlueGreen = default;
             string provisioningState = default;
@@ -368,6 +369,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     upgradeStrategy = new AgentPoolUpgradeStrategy(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("enableOSDiskFullCaching"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isOSDiskFullCachingEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("upgradeSettings"u8))
@@ -781,6 +791,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 currentOrchestratorVersion,
                 nodeImageVersion,
                 upgradeStrategy,
+                isOSDiskFullCachingEnabled,
                 upgradeSettings,
                 upgradeSettingsBlueGreen,
                 provisioningState,

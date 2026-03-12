@@ -34,13 +34,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="mode"> Machine only allows 'System' and 'User' mode. </param>
         /// <param name="security"> The security settings of the machine. </param>
         /// <param name="priority"> The priority for the machine. If not specified, the default is 'Regular'. </param>
+        /// <param name="evictionPolicy"> The eviction policy for machine. This cannot be specified unless the priority is 'Spot'. If not specified, the default is 'Delete'. </param>
+        /// <param name="billing"> The properties having to do with machine billing. </param>
         /// <param name="nodeImageVersion"> The version of node image. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state. </param>
         /// <param name="tags"> The tags to be persisted on the machine. </param>
         /// <param name="eTag"> Unique read-only string used to implement optimistic concurrency. The eTag value will change when the resource is updated. Specify an if-match or if-none-match header with the eTag value for a subsequent request to enable optimistic concurrency per the normal eTag convention. </param>
         /// <param name="status"> Contains read-only information about the machine. </param>
+        /// <param name="localDnsProfile"> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceMachineProperties(MachineNetworkProperties network, ResourceIdentifier resourceId, MachineHardwareProfile hardware, MachineOSProfile operatingSystem, MachineKubernetesProfile kubernetes, AgentPoolMode? mode, MachineSecurityProfile security, ScaleSetPriority? priority, string nodeImageVersion, string provisioningState, IDictionary<string, string> tags, ETag? eTag, MachineStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceMachineProperties(MachineNetworkProperties network, ResourceIdentifier resourceId, MachineHardwareProfile hardware, MachineOSProfile operatingSystem, MachineKubernetesProfile kubernetes, AgentPoolMode? mode, MachineSecurityProfile security, ScaleSetPriority? priority, ScaleSetEvictionPolicy? evictionPolicy, MachineBillingProfile billing, string nodeImageVersion, string provisioningState, IDictionary<string, string> tags, ETag? eTag, MachineStatus status, LocalDnsProfile localDnsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Network = network;
             ResourceId = resourceId;
@@ -50,11 +53,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             Mode = mode;
             Security = security;
             Priority = priority;
+            EvictionPolicy = evictionPolicy;
+            Billing = billing;
             NodeImageVersion = nodeImageVersion;
             ProvisioningState = provisioningState;
             Tags = tags;
             ETag = eTag;
             Status = status;
+            LocalDnsProfile = localDnsProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -90,6 +96,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("priority")]
         public ScaleSetPriority? Priority { get; set; }
 
+        /// <summary> The eviction policy for machine. This cannot be specified unless the priority is 'Spot'. If not specified, the default is 'Delete'. </summary>
+        [WirePath("evictionPolicy")]
+        public ScaleSetEvictionPolicy? EvictionPolicy { get; set; }
+
+        /// <summary> The properties having to do with machine billing. </summary>
+        [WirePath("billing")]
+        internal MachineBillingProfile Billing { get; set; }
+
         /// <summary> The version of node image. </summary>
         [WirePath("nodeImageVersion")]
         public string NodeImageVersion { get; }
@@ -109,5 +123,27 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Contains read-only information about the machine. </summary>
         [WirePath("status")]
         public MachineStatus Status { get; }
+
+        /// <summary> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </summary>
+        [WirePath("localDNSProfile")]
+        public LocalDnsProfile LocalDnsProfile { get; set; }
+
+        /// <summary> The max price (in US Dollars) you are willing to pay for spot instances. Possible values are any decimal value greater than zero or -1 which indicates default price to be up-to on-demand. For more details on spot pricing, see [spot VMs pricing](https://docs.microsoft.com/azure/virtual-machines/spot-vms#pricing). </summary>
+        [WirePath("billing.spotMaxPrice")]
+        public float? BillingSpotMaxPrice
+        {
+            get
+            {
+                return Billing is null ? default : Billing.SpotMaxPrice;
+            }
+            set
+            {
+                if (Billing is null)
+                {
+                    Billing = new MachineBillingProfile();
+                }
+                Billing.SpotMaxPrice = value;
+            }
+        }
     }
 }

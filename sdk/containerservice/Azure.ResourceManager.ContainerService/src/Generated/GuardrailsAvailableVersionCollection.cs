@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService
             TryGetApiVersion(GuardrailsAvailableVersionResource.ResourceType, out string guardrailsAvailableVersionApiVersion);
             _location = location;
             _guardrailsAvailableVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", GuardrailsAvailableVersionResource.ResourceType.Namespace, Diagnostics);
-            _guardrailsAvailableVersionsRestClient = new GuardrailsAvailableVersions(_guardrailsAvailableVersionsClientDiagnostics, Pipeline, Endpoint, guardrailsAvailableVersionApiVersion ?? "2025-10-02-preview");
+            _guardrailsAvailableVersionsRestClient = new GuardrailsAvailableVersions(_guardrailsAvailableVersionsClientDiagnostics, Pipeline, Endpoint, guardrailsAvailableVersionApiVersion ?? "2026-01-02-preview");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-01-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

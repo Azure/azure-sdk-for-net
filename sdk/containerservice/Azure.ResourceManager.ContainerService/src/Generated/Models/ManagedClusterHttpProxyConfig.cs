@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="noProxy"> The endpoints that should not go through proxy. </param>
         /// <param name="effectiveNoProxy"> A read-only list of all endpoints for which traffic should not be sent to the proxy. This list is a superset of noProxy and values injected by AKS. </param>
         /// <param name="trustedCA"> Alternative CA cert to use for connecting to proxy servers. </param>
-        /// <param name="isHttpProxyEnabled"> Whether to enable HTTP proxy. When disabled, the specified proxy configuration will be not be set on pods and nodes. </param>
+        /// <param name="isHttpProxyEnabled"> Whether to enable HTTP proxy. If disabled, the specified proxy configuration will be not be set on pods and nodes. If not specified, the default is true. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterHttpProxyConfig(string httpProxy, string httpsProxy, IList<string> noProxy, IReadOnlyList<string> effectiveNoProxy, string trustedCA, bool? isHttpProxyEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("trustedCa")]
         public string TrustedCA { get; set; }
 
-        /// <summary> Whether to enable HTTP proxy. When disabled, the specified proxy configuration will be not be set on pods and nodes. </summary>
+        /// <summary> Whether to enable HTTP proxy. If disabled, the specified proxy configuration will be not be set on pods and nodes. If not specified, the default is true. </summary>
         [WirePath("enabled")]
         public bool? IsHttpProxyEnabled { get; set; }
     }

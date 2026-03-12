@@ -30,11 +30,13 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterMeshMembershipProperties"/>. </summary>
         /// <param name="provisioningState"> The current provisioning state of the Mesh Membership. </param>
+        /// <param name="privateConnectProfile"> Profile for configuring private connectivity between the mesh control plane and member clusters. When configured, communication between the mesh control plane and this member cluster occurs over private network instead of public networks. Visit https://aka.ms/applink for more information. </param>
         /// <param name="managedMeshId"> The ARM resource id for the managed mesh member. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppLink/applinks/{appLinkName}/appLinkMembers/{appLinkMemberName}'. Visit https://aka.ms/applink for more information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterMeshMembershipProperties(MeshMembershipProvisioningState? provisioningState, ResourceIdentifier managedMeshId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterMeshMembershipProperties(MeshMembershipProvisioningState? provisioningState, MeshMembershipPrivateConnectProfile privateConnectProfile, ResourceIdentifier managedMeshId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
+            PrivateConnectProfile = privateConnectProfile;
             ManagedMeshId = managedMeshId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -42,6 +44,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The current provisioning state of the Mesh Membership. </summary>
         [WirePath("provisioningState")]
         public MeshMembershipProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Profile for configuring private connectivity between the mesh control plane and member clusters. When configured, communication between the mesh control plane and this member cluster occurs over private network instead of public networks. Visit https://aka.ms/applink for more information. </summary>
+        [WirePath("privateConnectProfile")]
+        public MeshMembershipPrivateConnectProfile PrivateConnectProfile { get; set; }
 
         /// <summary> The ARM resource id for the managed mesh member. This is of the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppLink/applinks/{appLinkName}/appLinkMembers/{appLinkMemberName}'. Visit https://aka.ms/applink for more information. </summary>
         [WirePath("managedMeshID")]

@@ -100,6 +100,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("disablePrometheusMetricsScraping"u8);
                 writer.WriteBooleanValue(IsPrometheusMetricsScrapingDisabled.Value);
             }
+            if (Optional.IsDefined(ContainerNetworkLogs))
+            {
+                writer.WritePropertyName("containerNetworkLogs"u8);
+                writer.WriteStringValue(ContainerNetworkLogs.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -147,6 +152,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             long? syslogPort = default;
             bool? isCustomMetricsDisabled = default;
             bool? isPrometheusMetricsScrapingDisabled = default;
+            ContainerNetworkLogs? containerNetworkLogs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -195,6 +201,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     isPrometheusMetricsScrapingDisabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("containerNetworkLogs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    containerNetworkLogs = new ContainerNetworkLogs(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -206,6 +221,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 syslogPort,
                 isCustomMetricsDisabled,
                 isPrometheusMetricsScrapingDisabled,
+                containerNetworkLogs,
                 additionalBinaryDataProperties);
         }
     }
