@@ -11,7 +11,7 @@ The review is split into sequential phases:
 1. **Phase 1: Versioning Review** (gate) — from base skill
 2. **Phase 2: API Review** — from base skill
 3. **Phase 3: Breaking Change Detection** — from base skill
-4. **Phase 4: Migration Customization Review** — migration-specific
+4. **Phase 4: Migration Customization Review** — migration-specific (includes blocking rule 4.9: no manual edits to generated files)
 5. **Phase 5: TypeSpec Decorator Preference Review** — migration-specific
 
 ## When to Use This Skill
@@ -195,6 +195,36 @@ If a generated constructor has the wrong signature (e.g., missing flattened prop
 ### 4.8 Using Statement Cleanup
 
 Customization files should not have unnecessary `using` statements. If a customization file shows up in the diff only because of added/removed using statements with no other changes, flag it — the file should be cleaned up or not included in the PR.
+
+### 4.9 No Manual Edits to Generated Files — MUST FIX (Blocking)
+
+Files under `src/Generated/` must never be manually edited. All code in that directory must come exclusively from the generator. If the PR diff shows manual modifications to any file under `src/Generated/` (e.g., changing a property type, adding `#pragma` suppressions, fixing deserialization calls), this is a **blocking issue** that must be fixed before merge.
+
+**How to detect**: Check `src/Generated/` files in the PR diff. If a generated file has changes that don't match what the generator would produce (e.g., hand-written code, pragmas, type changes), it's a manual edit.
+
+**How to fix**: Use the correct customization mechanism:
+- **`[CodeGenSuppress]`** in a `src/Custom/` partial class to suppress the broken generated member, then provide a corrected replacement in the same custom file.
+- **TypeSpec decorators** (`@@clientName`, `@@alternateType`, `@@access`) in `client.tsp` to fix the root cause.
+- **Generator bug fix** if no decorator or customization can resolve it.
+
+Note: `[CodeGenSuppress]` only takes effect when the custom file exists **before** regeneration. After adding custom files, regenerate so the generator reads and honors the suppression.
+
+**Bad** — manual edit to generated file:
+```csharp
+// In src/Generated/Models/SomeModel.cs (FORBIDDEN)
+public int? StorageUnits  // was: public int StorageUnits
+```
+
+**Good** — proper suppression in custom code:
+```csharp
+// In src/Custom/SomeModel.cs
+/// <summary> Backward compat: TypeSpec has int but old SDK had int?. </summary>
+[CodeGenSuppress("StorageUnits", typeof(int))]
+public partial class SomeModel
+{
+    public int? StorageUnits { get => ...; set => ...; }
+}
+```
 
 ## Phase 5: TypeSpec Decorator Preference Review
 
