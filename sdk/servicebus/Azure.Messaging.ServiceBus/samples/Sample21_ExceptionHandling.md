@@ -137,6 +137,14 @@ string queueName = "<queue_name>";
 
 await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 
+// Seed the queue with messages so the processor has something to work with.
+ServiceBusSender sender = client.CreateSender(queueName);
+await sender.SendMessagesAsync(new ServiceBusMessage[]
+{
+    new ServiceBusMessage("First"),
+    new ServiceBusMessage("Second")
+});
+
 await using ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
 {
     MaxConcurrentCalls = 5,
