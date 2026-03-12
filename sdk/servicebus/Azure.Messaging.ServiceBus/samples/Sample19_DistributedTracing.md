@@ -22,6 +22,8 @@ using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
     .AddConsoleExporter()
     .Build();
 
+// The fully qualified Service Bus namespace. This is likely to be similar to
+// {yournamespace}.servicebus.windows.net.
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 DefaultAzureCredential credential = new();
 await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
@@ -41,6 +43,8 @@ using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
     .AddConsoleExporter()
     .Build();
 
+// The fully qualified Service Bus namespace. This is likely to be similar to
+// {yournamespace}.servicebus.windows.net.
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 DefaultAzureCredential credential = new();
 await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
@@ -104,7 +108,7 @@ async Task ProcessAsync(ProcessMessageEventArgs args)
     if (message.ApplicationProperties.TryGetValue("Diagnostic-Id", out var objectId)
         && objectId is string diagnosticId)
     {
-        var activity = new Activity("ServiceBusProcessor.ProcessMessage");
+        var activity = new Activity("MyApp.ProcessMessage");
         activity.SetParentId(diagnosticId);
 
         using var operation = telemetryClient.StartOperation<RequestTelemetry>(activity);
@@ -130,10 +134,12 @@ If you do not use OpenTelemetry or Application Insights, you can subscribe to Se
 
 The Service Bus client emits events on the `Azure.Messaging.ServiceBus` diagnostic source. Each operation produces a `Start` and `Stop` event, and `Activity.Current` carries the trace context. The `Subscribe` methods require an `IObserver<T>` implementation — the following helper adapts a callback:
 
-```csharp
-sealed class CallbackObserver<T>(Action<T> onNext) : IObserver<T>
+```C# Snippet:ServiceBusCallbackObserverHelper
+private sealed class CallbackObserver<T> : IObserver<T>
 {
-    public void OnNext(T value) => onNext(value);
+    private readonly Action<T> _onNext;
+    public CallbackObserver(Action<T> onNext) => _onNext = onNext;
+    public void OnNext(T value) => _onNext(value);
     public void OnCompleted() { }
     public void OnError(Exception error) { }
 }
@@ -162,17 +168,23 @@ IDisposable outerSubscription = DiagnosticListener.AllListeners.Subscribe(
         }
     }));
 
-// Use the Service Bus client as normal — diagnostic events are emitted automatically.
-string fullyQualifiedNamespace = "<fully_qualified_namespace>";
-DefaultAzureCredential credential = new();
-await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
+try
+{
+    // Use the Service Bus client as normal — diagnostic events are emitted automatically.
+    // The fully qualified Service Bus namespace. This is likely to be similar to
+    // {yournamespace}.servicebus.windows.net.
+    string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+    DefaultAzureCredential credential = new();
+    await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
-ServiceBusSender sender = client.CreateSender("<queue-name>");
-await sender.SendMessageAsync(new ServiceBusMessage("Traced message"));
-
-// Clean up the subscriptions when done.
-innerSubscription?.Dispose();
-outerSubscription?.Dispose();
+    ServiceBusSender sender = client.CreateSender("<queue-name>");
+    await sender.SendMessageAsync(new ServiceBusMessage("Traced message"));
+}
+finally
+{
+    innerSubscription?.Dispose();
+    outerSubscription?.Dispose();
+}
 ```
 
 ## Filtering diagnostic events

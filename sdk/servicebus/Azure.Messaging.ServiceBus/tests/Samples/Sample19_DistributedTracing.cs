@@ -37,6 +37,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 .AddConsoleExporter()
                 .Build();
 
+            // The fully qualified Service Bus namespace. This is likely to be similar to
+            // {yournamespace}.servicebus.windows.net.
             string fullyQualifiedNamespace = "<fully_qualified_namespace>";
             DefaultAzureCredential credential = new();
             await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
@@ -62,6 +64,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 .AddConsoleExporter()
                 .Build();
 
+            // The fully qualified Service Bus namespace. This is likely to be similar to
+            // {yournamespace}.servicebus.windows.net.
             string fullyQualifiedNamespace = "<fully_qualified_namespace>";
             DefaultAzureCredential credential = new();
             await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
@@ -136,7 +140,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 if (message.ApplicationProperties.TryGetValue("Diagnostic-Id", out var objectId)
                     && objectId is string diagnosticId)
                 {
-                    var activity = new Activity("ServiceBusProcessor.ProcessMessage");
+                    var activity = new Activity("MyApp.ProcessMessage");
                     activity.SetParentId(diagnosticId);
 
                     using var operation = telemetryClient.StartOperation<RequestTelemetry>(activity);
@@ -187,17 +191,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     }
                 }));
 
-            // Use the Service Bus client as normal — diagnostic events are emitted automatically.
-            string fullyQualifiedNamespace = "<fully_qualified_namespace>";
-            DefaultAzureCredential credential = new();
-            await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
+            try
+            {
+                // Use the Service Bus client as normal — diagnostic events are emitted automatically.
+                // The fully qualified Service Bus namespace. This is likely to be similar to
+                // {yournamespace}.servicebus.windows.net.
+                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+                DefaultAzureCredential credential = new();
+                await using ServiceBusClient client = new(fullyQualifiedNamespace, credential);
 
-            ServiceBusSender sender = client.CreateSender("<queue-name>");
-            await sender.SendMessageAsync(new ServiceBusMessage("Traced message"));
-
-            // Clean up the subscriptions when done.
-            innerSubscription?.Dispose();
-            outerSubscription?.Dispose();
+                ServiceBusSender sender = client.CreateSender("<queue-name>");
+                await sender.SendMessageAsync(new ServiceBusMessage("Traced message"));
+            }
+            finally
+            {
+                innerSubscription?.Dispose();
+                outerSubscription?.Dispose();
+            }
 #endif
             #endregion
             await Task.CompletedTask;
@@ -239,6 +249,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         /// for use with <see cref="DiagnosticListener.AllListeners"/> and
         /// <see cref="DiagnosticListener.Subscribe(IObserver{KeyValuePair{string, object?}})"/>.
         /// </summary>
+        #region Snippet:ServiceBusCallbackObserverHelper
         private sealed class CallbackObserver<T> : IObserver<T>
         {
             private readonly Action<T> _onNext;
@@ -247,5 +258,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             public void OnCompleted() { }
             public void OnError(Exception error) { }
         }
+        #endregion
     }
 }
