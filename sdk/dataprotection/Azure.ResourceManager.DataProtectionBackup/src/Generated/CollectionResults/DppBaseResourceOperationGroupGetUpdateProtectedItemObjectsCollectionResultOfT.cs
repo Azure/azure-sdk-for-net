@@ -14,21 +14,21 @@ using Azure.ResourceManager.DataProtectionBackup.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    internal partial class ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT : Pageable<ResourceGuardProtectedObjectData>
+    internal partial class DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsCollectionResultOfT : Pageable<ResourceGuardProtectedObjectData>
     {
-        private readonly ResourceGuards _client;
+        private readonly DppBaseResourceOperationGroup _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _resourceGuardsName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ResourceGuards client used to send requests. </param>
+        /// <summary> Initializes a new instance of DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The DppBaseResourceOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT(ResourceGuards client, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsCollectionResultOfT(DppBaseResourceOperationGroup client, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             _context = context;
         }
 
-        /// <summary> Gets the pages of ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ResourceGuardProtectedObjectData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -66,8 +66,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetDeleteResourceGuardProxyRequestsObjectsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceGuardsName, _context) : _client.CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(_subscriptionId, _resourceGroupName, _resourceGuardsName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceGuardResource.GetDeleteResourceGuardProxyRequestsObjects");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetUpdateProtectedItemObjectsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceGuardsName, _context) : _client.CreateGetUpdateProtectedItemObjectsRequest(_subscriptionId, _resourceGroupName, _resourceGuardsName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceGuardResource.GetUpdateProtectedItemObjects");
             scope.Start();
             try
             {

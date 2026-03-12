@@ -426,13 +426,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinObjectsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DppBaseResourceOperationGroupGetBackupSecurityPinObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -458,13 +458,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjects(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinObjects(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DppBaseResourceOperationGroupGetBackupSecurityPinObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -492,11 +492,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultBackupSecurityPinRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultBackupSecurityPinObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultBackupSecurityPinRequestsObject");
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultBackupSecurityPinObject");
             scope.Start();
             try
             {
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultBackupSecurityPinRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultBackupSecurityPinObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -545,11 +545,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultBackupSecurityPinRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultBackupSecurityPinObject(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultBackupSecurityPinRequestsObject");
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultBackupSecurityPinObject");
             scope.Start();
             try
             {
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultBackupSecurityPinRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultBackupSecurityPinObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -598,11 +598,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteProtectedItemRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteProtectedItemObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteProtectedItemRequestsObject");
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteProtectedItemObject");
             scope.Start();
             try
             {
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDeleteProtectedItemObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -651,11 +651,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDeleteProtectedItemRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDeleteProtectedItemObject(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteProtectedItemRequestsObject");
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteProtectedItemObject");
             scope.Start();
             try
             {
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDeleteProtectedItemObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -704,11 +704,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDisableSoftDeleteRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDisableSoftDeleteObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDisableSoftDeleteRequestsObject");
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDisableSoftDeleteObject");
             scope.Start();
             try
             {
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDisableSoftDeleteObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -757,11 +757,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDisableSoftDeleteRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDisableSoftDeleteObject(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDisableSoftDeleteRequestsObject");
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDisableSoftDeleteObject");
             scope.Start();
             try
             {
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultDisableSoftDeleteObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -810,11 +810,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectedItemRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectedItemObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectedItemRequestsObject");
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectedItemObject");
             scope.Start();
             try
             {
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectedItemObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -863,11 +863,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectedItemRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectedItemObject(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectedItemRequestsObject");
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectedItemObject");
             scope.Start();
             try
             {
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectedItemObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -916,11 +916,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectionPolicyRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultUpdateProtectionPolicyObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectionPolicyRequestsObject");
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectionPolicyObject");
             scope.Start();
             try
             {
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectionPolicyObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -969,11 +969,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectionPolicyRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultUpdateProtectionPolicyObject(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectionPolicyRequestsObject");
+            using DiagnosticScope scope = _dppBaseResourceOperationGroupClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultUpdateProtectionPolicyObject");
             scope.Start();
             try
             {
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _dppBaseResourceOperationGroupRestClient.CreateGetDefaultUpdateProtectionPolicyObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -1020,13 +1020,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemObjectsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetDeleteProtectedItemRequestsObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DppBaseResourceOperationGroupGetDeleteProtectedItemObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1052,13 +1052,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemRequestsObjects(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetDeleteProtectedItemObjects(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetDeleteProtectedItemRequestsObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DppBaseResourceOperationGroupGetDeleteProtectedItemObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1084,13 +1084,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteObjectsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetDisableSoftDeleteRequestsObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DppBaseResourceOperationGroupGetDisableSoftDeleteObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1116,13 +1116,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteRequestsObjects(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetDisableSoftDeleteObjects(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetDisableSoftDeleteRequestsObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DppBaseResourceOperationGroupGetDisableSoftDeleteObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1148,13 +1148,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemObjectsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetUpdateProtectedItemRequestsObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1180,13 +1180,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemRequestsObjects(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectedItemObjects(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetUpdateProtectedItemRequestsObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DppBaseResourceOperationGroupGetUpdateProtectedItemObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1212,13 +1212,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyObjectsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetUpdateProtectionPolicyRequestsObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DppBaseResourceOperationGroupGetUpdateProtectionPolicyObjectsAsyncCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1244,13 +1244,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyRequestsObjects(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetUpdateProtectionPolicyObjects(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DppBaseResourceOperationGroupGetUpdateProtectionPolicyRequestsObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new DppBaseResourceOperationGroupGetUpdateProtectionPolicyObjectsCollectionResultOfT(_dppBaseResourceOperationGroupRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1278,11 +1278,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteResourceGuardProxyRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultDeleteResourceGuardProxyObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _resourceGuardsClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteResourceGuardProxyRequestsObject");
+            using DiagnosticScope scope = _resourceGuardsClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteResourceGuardProxyObject");
             scope.Start();
             try
             {
@@ -1290,7 +1290,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardsRestClient.CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _resourceGuardsRestClient.CreateGetDefaultDeleteResourceGuardProxyObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -1331,11 +1331,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDeleteResourceGuardProxyRequestsObject(string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultDeleteResourceGuardProxyObject(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using DiagnosticScope scope = _resourceGuardsClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteResourceGuardProxyRequestsObject");
+            using DiagnosticScope scope = _resourceGuardsClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultDeleteResourceGuardProxyObject");
             scope.Start();
             try
             {
@@ -1343,7 +1343,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _resourceGuardsRestClient.CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
+                HttpMessage message = _resourceGuardsRestClient.CreateGetDefaultDeleteResourceGuardProxyObjectRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, requestName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceGuardProtectedObjectData> response = Response.FromValue(ResourceGuardProtectedObjectData.FromResponse(result), result);
                 if (response.Value == null)
@@ -1382,13 +1382,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyRequestsObjectsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyObjectsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsAsyncCollectionResultOfT(_resourceGuardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ResourceGuardsGetDeleteResourceGuardProxyObjectsAsyncCollectionResultOfT(_resourceGuardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -1414,13 +1414,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyRequestsObjects(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetDeleteResourceGuardProxyObjects(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceGuardsGetDeleteResourceGuardProxyRequestsObjectsCollectionResultOfT(_resourceGuardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ResourceGuardsGetDeleteResourceGuardProxyObjectsCollectionResultOfT(_resourceGuardsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>

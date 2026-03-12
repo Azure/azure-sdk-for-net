@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataProtectionBackup.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    internal partial class DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsAsyncCollectionResultOfT : AsyncPageable<ResourceGuardProtectedObjectData>
+    internal partial class DppBaseResourceOperationGroupGetUpdateProtectionPolicyObjectsAsyncCollectionResultOfT : AsyncPageable<ResourceGuardProtectedObjectData>
     {
         private readonly DppBaseResourceOperationGroup _client;
         private readonly Guid _subscriptionId;
@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly string _resourceGuardsName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DppBaseResourceOperationGroupGetUpdateProtectionPolicyObjectsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DppBaseResourceOperationGroup client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceGuardsName"> The name of the ResourceGuardResource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsAsyncCollectionResultOfT(DppBaseResourceOperationGroup client, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DppBaseResourceOperationGroupGetUpdateProtectionPolicyObjectsAsyncCollectionResultOfT(DppBaseResourceOperationGroup client, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
             _context = context;
         }
 
-        /// <summary> Gets the pages of DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DppBaseResourceOperationGroupGetUpdateProtectionPolicyObjectsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DppBaseResourceOperationGroupGetBackupSecurityPinRequestsObjectsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of DppBaseResourceOperationGroupGetUpdateProtectionPolicyObjectsAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ResourceGuardProtectedObjectData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBackupSecurityPinRequestsObjectsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceGuardsName, _context) : _client.CreateGetBackupSecurityPinRequestsObjectsRequest(_subscriptionId, _resourceGroupName, _resourceGuardsName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceGuardResource.GetBackupSecurityPinRequestsObjects");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetUpdateProtectionPolicyObjectsRequest(nextLink, _subscriptionId, _resourceGroupName, _resourceGuardsName, _context) : _client.CreateGetUpdateProtectionPolicyObjectsRequest(_subscriptionId, _resourceGroupName, _resourceGuardsName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ResourceGuardResource.GetUpdateProtectionPolicyObjects");
             scope.Start();
             try
             {

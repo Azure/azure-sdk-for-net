@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetDefaultDisableSoftDeleteRequestsObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetDefaultDisableSoftDeleteObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDisableSoftDeleteRequestsObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateGetDisableSoftDeleteObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateNextGetDisableSoftDeleteRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateNextGetDisableSoftDeleteObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultUpdateProtectedItemRequestsObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetDefaultUpdateProtectedItemObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetUpdateProtectedItemRequestsObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateGetUpdateProtectedItemObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateNextGetUpdateProtectedItemRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateNextGetUpdateProtectedItemObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultUpdateProtectionPolicyRequestsObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetDefaultUpdateProtectionPolicyObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetUpdateProtectionPolicyRequestsObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateGetUpdateProtectionPolicyObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateNextGetUpdateProtectionPolicyRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateNextGetUpdateProtectionPolicyObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultDeleteProtectedItemRequestsObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetDefaultDeleteProtectedItemObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDeleteProtectedItemRequestsObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateGetDeleteProtectedItemObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeleteProtectedItemRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateNextGetDeleteProtectedItemObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDefaultBackupSecurityPinRequestsObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetDefaultBackupSecurityPinObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetBackupSecurityPinRequestsObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateGetBackupSecurityPinObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateNextGetBackupSecurityPinRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateNextGetBackupSecurityPinObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

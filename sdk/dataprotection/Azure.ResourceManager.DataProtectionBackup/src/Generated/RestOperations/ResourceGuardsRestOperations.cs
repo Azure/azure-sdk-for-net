@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetDefaultDeleteResourceGuardProxyRequestsObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
+        internal HttpMessage CreateGetDefaultDeleteResourceGuardProxyObjectRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, string requestName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateGetDeleteResourceGuardProxyObjectsRequest(Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             return message;
         }
 
-        internal HttpMessage CreateNextGetDeleteResourceGuardProxyRequestsObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
+        internal HttpMessage CreateNextGetDeleteResourceGuardProxyObjectsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string resourceGuardsName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
