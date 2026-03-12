@@ -8,75 +8,108 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.NetworkFunction;
 
 namespace Azure.ResourceManager.NetworkFunction.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmNetworkFunctionModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="NetworkFunction.AzureTrafficCollectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="collectorPolicies"> Collector Policies for Azure Traffic Collector. </param>
-        /// <param name="virtualHubId"> The virtualHub to which the Azure Traffic Collector belongs. </param>
         /// <param name="provisioningState"> The provisioning state of the application rule collection resource. </param>
+        /// <param name="virtualHubId"> Resource ID. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="NetworkFunction.AzureTrafficCollectorData"/> instance for mocking. </returns>
-        public static AzureTrafficCollectorData AzureTrafficCollectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IEnumerable<SubResource> collectorPolicies = null, ResourceIdentifier virtualHubId = null, CollectorProvisioningState? provisioningState = null)
+        public static AzureTrafficCollectorData AzureTrafficCollectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ResourceReference> collectorPolicies = default, CollectorProvisioningState? provisioningState = default, string virtualHubId = default, string etag = default)
         {
-            tags ??= new Dictionary<string, string>();
-            collectorPolicies ??= new List<SubResource>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AzureTrafficCollectorData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                etag,
-                collectorPolicies?.ToList(),
-                virtualHubId != null ? ResourceManagerModelFactory.SubResource(virtualHubId) : null,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                collectorPolicies is null && provisioningState is null && virtualHubId is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<ResourceReference>()).ToList(), new ResourceReference(virtualHubId, null), provisioningState, null),
+                etag);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkFunction.CollectorPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <summary> Resource reference properties. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.ResourceReference"/> instance for mocking. </returns>
+        public static ResourceReference ResourceReference(string id = default)
+        {
+            return new ResourceReference(id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Tags object for patch operations. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.TagsObject"/> instance for mocking. </returns>
+        public static TagsObject TagsObject(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TagsObject(tags, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="ingestionPolicy"> Ingestion policies. </param>
         /// <param name="emissionPolicies"> Emission policies. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="NetworkFunction.CollectorPolicyData"/> instance for mocking. </returns>
-        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, IngestionPolicyPropertiesFormat ingestionPolicy = null, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = null, CollectorProvisioningState? provisioningState = null)
+        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IngestionPolicyPropertiesFormat ingestionPolicy = default, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = default, CollectorProvisioningState? provisioningState = default, string etag = default)
         {
-            tags ??= new Dictionary<string, string>();
-            emissionPolicies ??= new List<EmissionPoliciesPropertiesFormat>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CollectorPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                etag,
-                ingestionPolicy,
-                emissionPolicies?.ToList(),
-                provisioningState,
-                serializedAdditionalRawData: null);
+                ingestionPolicy is null && emissionPolicies is null && provisioningState is null ? default : new CollectorPolicyPropertiesFormat(ingestionPolicy, (emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>()).ToList(), provisioningState, null),
+                etag);
+        }
+
+        /// <summary> Ingestion Policy properties. </summary>
+        /// <param name="ingestionType"> The ingestion type. </param>
+        /// <param name="ingestionSources"> Ingestion Sources. </param>
+        /// <returns> A new <see cref="Models.IngestionPolicyPropertiesFormat"/> instance for mocking. </returns>
+        public static IngestionPolicyPropertiesFormat IngestionPolicyPropertiesFormat(IngestionType? ingestionType = default, IEnumerable<IngestionSourcesPropertiesFormat> ingestionSources = default)
+        {
+            ingestionSources ??= new ChangeTrackingList<IngestionSourcesPropertiesFormat>();
+
+            return new IngestionPolicyPropertiesFormat(ingestionType, ingestionSources.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emission policy properties. </summary>
+        /// <param name="emissionType"> Emission format type. </param>
+        /// <param name="emissionDestinations"> Emission policy destinations. </param>
+        /// <returns> A new <see cref="Models.EmissionPoliciesPropertiesFormat"/> instance for mocking. </returns>
+        public static EmissionPoliciesPropertiesFormat EmissionPoliciesPropertiesFormat(EmissionType? emissionType = default, IEnumerable<EmissionPolicyDestination> emissionDestinations = default)
+        {
+            emissionDestinations ??= new ChangeTrackingList<EmissionPolicyDestination>();
+
+            return new EmissionPoliciesPropertiesFormat(emissionType, emissionDestinations.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

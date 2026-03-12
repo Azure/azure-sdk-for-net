@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
             {
                 IngestionPolicy = new IngestionPolicyPropertiesFormat()
                 {
-                    IngestionType = IngestionType.Ipfix,
+                    IngestionType = IngestionType.IPFIX,
                     IngestionSources =
                     {
                         new IngestionSourcesPropertiesFormat()
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
                 {
                     new EmissionPoliciesPropertiesFormat()
                     {
-                        EmissionType = EmissionType.Ipfix,
+                        EmissionType = EmissionType.IPFIX,
                         EmissionDestinations =
                         {
                             new EmissionPolicyDestination()

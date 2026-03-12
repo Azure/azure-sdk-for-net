@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.NetworkFunction.Tests
                 {
                     new EmissionPoliciesPropertiesFormat()
                     {
-                        EmissionType = EmissionType.Ipfix,
+                        EmissionType = EmissionType.IPFIX,
                         EmissionDestinations =
                         {
                             new EmissionPolicyDestination()

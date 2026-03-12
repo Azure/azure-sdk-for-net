@@ -1,0 +1,4 @@
+directory: specification/networkfunction/NetworkFunction.Management
+commit: 7f9b5be7613b1019c9431994bf5b19fa486b7ffd
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
