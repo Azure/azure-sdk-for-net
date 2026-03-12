@@ -22,22 +22,26 @@ catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.Servic
     // Transient: the service is temporarily overloaded. Back off and let the caller decide whether to retry.
     Console.WriteLine("Service is busy, backing off for 10 seconds...");
     await Task.Delay(TimeSpan.FromSeconds(10));
+    throw;
 }
 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
 {
     // Transient: the operation timed out. Retry with a longer timeout or backoff.
     Console.WriteLine($"Operation timed out: {ex.Message}");
+    throw;
 }
 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.ServiceCommunicationProblem)
 {
     // Transient: network-level failure. Check connectivity and retry.
     Console.WriteLine($"Communication problem: {ex.Message}");
+    throw;
 }
 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.QuotaExceeded)
 {
     // Capacity: the namespace or entity has hit its size or throughput limit.
     // Do not retry immediately — either wait for space to free up or scale the namespace.
     Console.WriteLine($"Quota exceeded: {ex.Message}");
+    throw;
 }
 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageSizeExceeded)
 {
@@ -279,9 +283,9 @@ while (attempt < maxAttempts)
 | `MessageSizeExceeded` | No | Reduce payload or upgrade to Premium tier |
 | `MessagingEntityDisabled` | No | Re-enable the entity in the portal |
 | `QuotaExceeded` | No | Free space or scale the namespace |
-| `ServiceBusy` | Yes | Back off and retry |
-| `ServiceTimeout` | Yes | Retry; consider increasing operation timeout |
-| `ServiceCommunicationProblem` | Yes | Check network connectivity and retry |
+| `ServiceBusy` | Yes | Back off and rethrow; see Section 4 for retry patterns |
+| `ServiceTimeout` | Yes | Log and rethrow; see Section 4 for retry patterns |
+| `ServiceCommunicationProblem` | Yes | Check network connectivity and rethrow; see Section 4 for retry patterns |
 | `SessionCannotBeLocked` | No | Session is locked by another receiver |
 | `SessionLockLost` | No | Re-accept the session to continue |
 | `MessagingEntityAlreadyExists` | No | Entity already exists; skip creation |

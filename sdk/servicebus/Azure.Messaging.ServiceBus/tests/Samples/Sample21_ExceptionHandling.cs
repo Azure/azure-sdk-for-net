@@ -37,22 +37,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                     // Transient: the service is temporarily overloaded. Back off and let the caller decide whether to retry.
                     Console.WriteLine("Service is busy, backing off for 10 seconds...");
                     await Task.Delay(TimeSpan.FromSeconds(10));
+                    throw;
                 }
                 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
                 {
                     // Transient: the operation timed out. Retry with a longer timeout or backoff.
                     Console.WriteLine($"Operation timed out: {ex.Message}");
+                    throw;
                 }
                 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.ServiceCommunicationProblem)
                 {
                     // Transient: network-level failure. Check connectivity and retry.
                     Console.WriteLine($"Communication problem: {ex.Message}");
+                    throw;
                 }
                 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.QuotaExceeded)
                 {
                     // Capacity: the namespace or entity has hit its size or throughput limit.
                     // Do not retry immediately — either wait for space to free up or scale the namespace.
                     Console.WriteLine($"Quota exceeded: {ex.Message}");
+                    throw;
                 }
                 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageSizeExceeded)
                 {
