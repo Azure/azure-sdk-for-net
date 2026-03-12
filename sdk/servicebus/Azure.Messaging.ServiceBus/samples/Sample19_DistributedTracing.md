@@ -128,28 +128,39 @@ async Task ProcessAsync(ProcessMessageEventArgs args)
 
 If you do not use OpenTelemetry or Application Insights, you can subscribe to Service Bus diagnostic events directly using `DiagnosticListener`. This gives you full control over which events to capture and how to record them.
 
-The Service Bus client emits events on the `Azure.Messaging.ServiceBus` diagnostic source. Each operation produces a `Start` and `Stop` event, and `Activity.Current` carries the trace context.
+The Service Bus client emits events on the `Azure.Messaging.ServiceBus` diagnostic source. Each operation produces a `Start` and `Stop` event, and `Activity.Current` carries the trace context. The `Subscribe` methods require an `IObserver<T>` implementation — the following helper adapts a callback:
+
+```csharp
+sealed class CallbackObserver<T>(Action<T> onNext) : IObserver<T>
+{
+    public void OnNext(T value) => onNext(value);
+    public void OnCompleted() { }
+    public void OnError(Exception error) { }
+}
+```
 
 ```C# Snippet:ServiceBusDiagnosticListener
 IDisposable innerSubscription = null;
-IDisposable outerSubscription = DiagnosticListener.AllListeners.Subscribe(listener =>
-{
-    if (listener.Name == "Azure.Messaging.ServiceBus")
+IDisposable outerSubscription = DiagnosticListener.AllListeners.Subscribe(
+    new CallbackObserver<DiagnosticListener>(listener =>
     {
-        innerSubscription = listener.Subscribe(evnt =>
+        if (listener.Name == "Azure.Messaging.ServiceBus")
         {
-            // Log the operation when it completes.
-            if (evnt.Key.EndsWith("Stop"))
-            {
-                Activity currentActivity = Activity.Current;
-                Console.WriteLine(
-                    $"Operation {currentActivity.OperationName} completed " +
-                    $"in {currentActivity.Duration.TotalMilliseconds:F1}ms " +
-                    $"[Id={currentActivity.Id}]");
-            }
-        });
-    }
-});
+            innerSubscription = listener.Subscribe(
+                new CallbackObserver<KeyValuePair<string, object>>(evnt =>
+                {
+                    // Log the operation when it completes.
+                    if (evnt.Key.EndsWith("Stop"))
+                    {
+                        Activity currentActivity = Activity.Current;
+                        Console.WriteLine(
+                            $"Operation {currentActivity.OperationName} completed " +
+                            $"in {currentActivity.Duration.TotalMilliseconds:F1}ms " +
+                            $"[Id={currentActivity.Id}]");
+                    }
+                }));
+        }
+    }));
 
 // Use the Service Bus client as normal — diagnostic events are emitted automatically.
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
@@ -166,11 +177,11 @@ outerSubscription?.Dispose();
 
 ## Filtering diagnostic events
 
-You can reduce overhead by subscribing only to the operations you care about. Use the `IsEnabled` callback to filter by operation name or entity.
+You can reduce overhead by subscribing only to the operations you care about. Use the `isEnabled` callback to filter by operation name or entity. This prevents `Activity` creation for non-matching operations.
 
 ```C# Snippet:ServiceBusDiagnosticFiltering
 innerSubscription = listener.Subscribe(
-    observer: evnt =>
+    new CallbackObserver<KeyValuePair<string, object>>(evnt =>
     {
         if (evnt.Key.EndsWith("Stop"))
         {
@@ -178,8 +189,8 @@ innerSubscription = listener.Subscribe(
             Console.WriteLine(
                 $"{currentActivity.OperationName}: {currentActivity.Duration.TotalMilliseconds:F1}ms");
         }
-    },
-    isEnabled: (eventName, _, _) =>
+    }),
+    (eventName, _, _) =>
     {
         // Only listen to send and process operations.
         return eventName.StartsWith("ServiceBusSender.Send")

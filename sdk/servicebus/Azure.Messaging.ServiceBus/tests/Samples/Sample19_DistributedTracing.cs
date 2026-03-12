@@ -2,9 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using NUnit.Framework;
+
+#if SNIPPET
+using Azure.Identity;
+using Azure.Monitor.OpenTelemetry.Exporter;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.DataContracts;
+using OpenTelemetry;
+using OpenTelemetry.Trace;
+#endif
+
+#pragma warning disable CS8321 // Local function is declared but never used
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
 {
@@ -113,6 +125,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Ignore("Only verifying that the code builds")]
         public async Task AppInsightsManualProcessing()
         {
+#if SNIPPET
+            TelemetryClient telemetryClient = null!;
+#endif
             #region Snippet:ServiceBusAppInsightsManualProcessing
 #if SNIPPET
             async Task ProcessAsync(ProcessMessageEventArgs args)
@@ -151,24 +166,26 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             #region Snippet:ServiceBusDiagnosticListener
 #if SNIPPET
             IDisposable innerSubscription = null;
-            IDisposable outerSubscription = DiagnosticListener.AllListeners.Subscribe(listener =>
-            {
-                if (listener.Name == "Azure.Messaging.ServiceBus")
+            IDisposable outerSubscription = DiagnosticListener.AllListeners.Subscribe(
+                new CallbackObserver<DiagnosticListener>(listener =>
                 {
-                    innerSubscription = listener.Subscribe(evnt =>
+                    if (listener.Name == "Azure.Messaging.ServiceBus")
                     {
-                        // Log the operation when it completes.
-                        if (evnt.Key.EndsWith("Stop"))
-                        {
-                            Activity currentActivity = Activity.Current;
-                            Console.WriteLine(
-                                $"Operation {currentActivity.OperationName} completed " +
-                                $"in {currentActivity.Duration.TotalMilliseconds:F1}ms " +
-                                $"[Id={currentActivity.Id}]");
-                        }
-                    });
-                }
-            });
+                        innerSubscription = listener.Subscribe(
+                            new CallbackObserver<KeyValuePair<string, object>>(evnt =>
+                            {
+                                // Log the operation when it completes.
+                                if (evnt.Key.EndsWith("Stop"))
+                                {
+                                    Activity currentActivity = Activity.Current;
+                                    Console.WriteLine(
+                                        $"Operation {currentActivity.OperationName} completed " +
+                                        $"in {currentActivity.Duration.TotalMilliseconds:F1}ms " +
+                                        $"[Id={currentActivity.Id}]");
+                                }
+                            }));
+                    }
+                }));
 
             // Use the Service Bus client as normal — diagnostic events are emitted automatically.
             string fullyQualifiedNamespace = "<fully_qualified_namespace>";
@@ -190,10 +207,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
         [Ignore("Only verifying that the code builds")]
         public async Task FilterDiagnosticEvents()
         {
+#if SNIPPET
+            IDisposable innerSubscription = null;
+            DiagnosticListener listener = null!;
+#endif
             #region Snippet:ServiceBusDiagnosticFiltering
 #if SNIPPET
             innerSubscription = listener.Subscribe(
-                observer: evnt =>
+                new CallbackObserver<KeyValuePair<string, object>>(evnt =>
                 {
                     if (evnt.Key.EndsWith("Stop"))
                     {
@@ -201,8 +222,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                         Console.WriteLine(
                             $"{currentActivity.OperationName}: {currentActivity.Duration.TotalMilliseconds:F1}ms");
                     }
-                },
-                isEnabled: (eventName, _, _) =>
+                }),
+                (eventName, _, _) =>
                 {
                     // Only listen to send and process operations.
                     return eventName.StartsWith("ServiceBusSender.Send")
@@ -211,6 +232,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 #endif
             #endregion
             await Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Adapts an <see cref="Action{T}"/> callback to <see cref="IObserver{T}"/>
+        /// for use with <see cref="DiagnosticListener.AllListeners"/> and
+        /// <see cref="DiagnosticListener.Subscribe(IObserver{KeyValuePair{string, object?}})"/>.
+        /// </summary>
+        private sealed class CallbackObserver<T> : IObserver<T>
+        {
+            private readonly Action<T> _onNext;
+            public CallbackObserver(Action<T> onNext) => _onNext = onNext;
+            public void OnNext(T value) => _onNext(value);
+            public void OnCompleted() { }
+            public void OnError(Exception error) { }
         }
     }
 }
