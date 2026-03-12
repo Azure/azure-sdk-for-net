@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.Storage.Tests
             VerifyAccountProperties(account, false);
             Assert.NotNull(account.Data.PrimaryEndpoints.Web);
             Assert.AreEqual(StorageKind.StorageV2, account.Data.Kind);
-            Assert.AreEqual(StorageExtendedLocationTypes.EdgeZone, account.Data.ExtendedLocation.Type);
+            Assert.AreEqual(ExtendedLocationType.EdgeZone, account.Data.ExtendedLocation.ExtendedLocationType);
             Assert.AreEqual("microsoftrrdclab1", account.Data.ExtendedLocation.Name);
         }
 
@@ -1796,12 +1796,12 @@ namespace Azure.ResourceManager.Storage.Tests
                     {
                         new StorageAccountResourceAccessRule()
                         {
-                            TenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                            TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
                             ResourceId = new ResourceIdentifier("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount1")
                         },
                         new StorageAccountResourceAccessRule()
                         {
-                            TenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                            TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
                             ResourceId = new ResourceIdentifier("/subscriptions/subID/resourceGroups/RGName/providers/Microsoft.Storage/storageAccounts/testaccount2")
                         },
                     }
@@ -2483,7 +2483,7 @@ namespace Azure.ResourceManager.Storage.Tests
             var domainId = "aebfc118-1111-1111-1111-d98e41a77cd5";
             var data = new FilesIdentityBasedAuthentication(DirectoryServiceOption.AADKERB)
             {
-                ActiveDirectoryProperties = new StorageActiveDirectoryProperties() { DomainName = domainName, ActiveDirectoryDomainGuid = domainId }
+                ActiveDirectoryProperties = new StorageActiveDirectoryProperties() { DomainName = domainName, ActiveDirectoryDomainGuid = Guid.Parse(domainId) }
             };
             var parameters = new StorageAccountCreateOrUpdateContent(
                 new StorageSku(StorageSkuName.StandardLRS),

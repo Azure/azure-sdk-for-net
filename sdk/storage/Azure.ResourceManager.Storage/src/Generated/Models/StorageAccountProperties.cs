@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="allowSharedKeyAccessForServices"> Indicate shared key access properties at service level. </param>
         /// <param name="dataCollaborationPolicyProperties"> Data Collaboration policy for the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountProperties(StorageAccountProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, string primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, string secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? enableExtendedGroups, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? failoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? enableNfsV3, bool? allowCrossTenantReplication, bool? defaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? accountMigrationInProgress, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountProperties(StorageAccountProvisioningState? provisioningState, StorageAccountEndpoints primaryEndpoints, AzureLocation? primaryLocation, StorageAccountStatus? statusOfPrimary, DateTimeOffset? lastGeoFailoverOn, AzureLocation? secondaryLocation, StorageAccountStatus? statusOfSecondary, DateTimeOffset? createdOn, StorageCustomDomain customDomain, StorageAccountSasPolicy sasPolicy, KeyPolicy keyPolicy, StorageAccountKeyCreationTime keyCreationTime, StorageAccountEndpoints secondaryEndpoints, StorageAccountEncryption encryption, StorageAccountAccessTier? accessTier, FilesIdentityBasedAuthentication azureFilesIdentityBasedAuthentication, bool? enableHttpsTrafficOnly, StorageAccountNetworkRuleSet networkRuleSet, bool? isSftpEnabled, bool? isLocalUserEnabled, bool? enableExtendedGroups, bool? isHnsEnabled, GeoReplicationStatistics geoReplicationStats, bool? failoverInProgress, LargeFileSharesState? largeFileSharesState, IReadOnlyList<StoragePrivateEndpointConnectionData> privateEndpointConnections, StorageRoutingPreference routingPreference, DualStackEndpointPreference dualStackEndpointPreference, BlobRestoreStatus blobRestoreStatus, bool? allowBlobPublicAccess, StorageMinimumTlsVersion? minimumTlsVersion, bool? allowSharedKeyAccess, bool? enableNfsV3, bool? allowCrossTenantReplication, bool? defaultToOAuthAuthentication, StoragePublicNetworkAccess? publicNetworkAccess, ImmutableStorageAccount immutableStorageWithVersioning, AllowedCopyScope? allowedCopyScope, StorageAccountSkuConversionStatus storageAccountSkuConversionStatus, StorageDnsEndpointType? dnsEndpointType, bool? isSkuConversionBlocked, bool? accountMigrationInProgress, GeoPriorityReplicationStatus geoPriorityReplicationStatus, StorageAccountSharedKeyAccessProperties allowSharedKeyAccessForServices, StorageDataCollaborationPolicyProperties dataCollaborationPolicyProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             PrimaryEndpoints = primaryEndpoints;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Gets the location of the primary data center for the storage account. </summary>
         [WirePath("primaryLocation")]
-        public string PrimaryLocation { get; }
+        public AzureLocation? PrimaryLocation { get; }
 
         /// <summary> Gets the status indicating whether the primary location of the storage account is available or unavailable. </summary>
         [WirePath("statusOfPrimary")]
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Gets the location of the geo-replicated secondary for the storage account. Only available if the accountType is Standard_GRS or Standard_RAGRS. </summary>
         [WirePath("secondaryLocation")]
-        public string SecondaryLocation { get; }
+        public AzureLocation? SecondaryLocation { get; }
 
         /// <summary> Gets the status indicating whether the secondary location of the storage account is available or unavailable. Only available if the SKU name is Standard_GRS or Standard_RAGRS. </summary>
         [WirePath("statusOfSecondary")]

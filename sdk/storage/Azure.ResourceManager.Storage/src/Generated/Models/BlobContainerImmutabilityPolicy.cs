@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="eTag"> ImmutabilityPolicy Etag. </param>
         /// <param name="updateHistory"> The ImmutabilityPolicy update history of the blob container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobContainerImmutabilityPolicy(ImmutabilityPolicyProperty properties, string eTag, IReadOnlyList<UpdateHistoryEntry> updateHistory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobContainerImmutabilityPolicy(ImmutabilityPolicyProperty properties, ETag? eTag, IReadOnlyList<UpdateHistoryEntry> updateHistory, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             ETag = eTag;
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> ImmutabilityPolicy Etag. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The ImmutabilityPolicy update history of the blob container. </summary>
         [WirePath("updateHistory")]

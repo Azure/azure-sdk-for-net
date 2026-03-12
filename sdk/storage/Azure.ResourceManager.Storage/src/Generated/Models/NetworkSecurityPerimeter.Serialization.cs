@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -82,12 +83,12 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(PerimeterGuid))
             {
                 writer.WritePropertyName("perimeterGuid"u8);
-                writer.WriteStringValue(PerimeterGuid);
+                writer.WriteStringValue(PerimeterGuid.Value);
             }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location);
+                writer.WriteStringValue(Location.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +133,8 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             string id = default;
-            string perimeterGuid = default;
-            string location = default;
+            Guid? perimeterGuid = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,12 +145,20 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("perimeterGuid"u8))
                 {
-                    perimeterGuid = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    perimeterGuid = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

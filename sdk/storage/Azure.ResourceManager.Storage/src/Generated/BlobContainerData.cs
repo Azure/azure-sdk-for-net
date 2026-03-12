@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="containerProperties"> Properties of the blob container. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerProperties containerProperties, string eTag) : base(id, name, resourceType, systemData)
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ContainerProperties containerProperties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             ContainerProperties = containerProperties;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The version of the deleted blob container. </summary>
         [WirePath("properties.version")]

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             Timestamp = timestamp;
             ObjectIdentifier = objectIdentifier;
-            TenantId = tenantId?.ToString();
+            TenantId = tenantId;
             Upn = upn;
             AllowProtectedAppendWrites = allowProtectedAppendWrites;
             AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;

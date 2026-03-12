@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="placement"> Optional. Gets or sets the zonal placement details for the storage account. </param>
-        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageAccountProperties properties, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, StorageExtendedLocation extendedLocation, IList<string> zones, Placement placement) : base(id, name, resourceType, systemData, tags, location)
+        internal StorageAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, StorageAccountProperties properties, StorageSku sku, StorageKind? kind, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, IList<string> zones, Placement placement) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> The extendedLocation of the resource. </summary>
         [WirePath("extendedLocation")]
-        public StorageExtendedLocation ExtendedLocation { get; }
+        public ExtendedLocation ExtendedLocation { get; }
 
         /// <summary> The availability zones. </summary>
         [WirePath("zones")]
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets the location of the primary data center for the storage account. </summary>
         [WirePath("properties.primaryLocation")]
-        public string PrimaryLocation
+        public AzureLocation? PrimaryLocation
         {
             get
             {
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Gets the location of the geo-replicated secondary for the storage account. Only available if the accountType is Standard_GRS or Standard_RAGRS. </summary>
         [WirePath("properties.secondaryLocation")]
-        public string SecondaryLocation
+        public AzureLocation? SecondaryLocation
         {
             get
             {

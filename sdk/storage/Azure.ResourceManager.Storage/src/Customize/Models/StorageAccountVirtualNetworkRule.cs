@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible constructor. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId) : this(virtualNetworkResourceId?.ToString())
+        public StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId) : this(virtualNetworkResourceId, default, default, default)
         {
         }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -19,20 +20,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountVirtualNetworkRule"/>. </summary>
         /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkResourceId"/> is null. </exception>
-        public StorageAccountVirtualNetworkRule(string virtualNetworkResourceId)
-        {
-            Argument.AssertNotNull(virtualNetworkResourceId, nameof(virtualNetworkResourceId));
-
-            VirtualNetworkResourceId = virtualNetworkResourceId;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountVirtualNetworkRule"/>. </summary>
-        /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <param name="state"> Gets the state of virtual network rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountVirtualNetworkRule(string virtualNetworkResourceId, StorageAccountVirtualNetworkRuleAction? action, StorageAccountNetworkRuleState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId, StorageAccountVirtualNetworkRuleAction? action, StorageAccountNetworkRuleState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworkResourceId = virtualNetworkResourceId;
             Action = action;
@@ -42,7 +33,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </summary>
         [WirePath("id")]
-        public string VirtualNetworkResourceId { get; set; }
+        public ResourceIdentifier VirtualNetworkResourceId { get; set; }
 
         /// <summary> The action of virtual network rule. </summary>
         [WirePath("action")]

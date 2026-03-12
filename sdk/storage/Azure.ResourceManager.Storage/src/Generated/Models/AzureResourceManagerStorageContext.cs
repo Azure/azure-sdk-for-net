@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -66,6 +67,7 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(ExecutionTriggerParameters))]
     [ModelReaderWriterBuildable(typeof(ExecutionTriggerParametersUpdate))]
     [ModelReaderWriterBuildable(typeof(ExecutionTriggerUpdate))]
+    [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(FileServiceAccountLimits))]
     [ModelReaderWriterBuildable(typeof(FileServiceAccountUsage))]
     [ModelReaderWriterBuildable(typeof(FileServiceAccountUsageElements))]
@@ -213,7 +215,6 @@ namespace Azure.ResourceManager.Storage
     [ModelReaderWriterBuildable(typeof(StorageDataShareAsset))]
     [ModelReaderWriterBuildable(typeof(StorageDataShareProperties))]
     [ModelReaderWriterBuildable(typeof(StorageEncryptionService))]
-    [ModelReaderWriterBuildable(typeof(StorageExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(StoragePermissionScope))]
     [ModelReaderWriterBuildable(typeof(StoragePrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(StoragePrivateEndpointConnectionListResult))]

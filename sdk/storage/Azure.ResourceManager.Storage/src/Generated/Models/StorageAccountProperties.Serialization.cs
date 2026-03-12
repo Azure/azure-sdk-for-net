@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(PrimaryLocation))
             {
                 writer.WritePropertyName("primaryLocation"u8);
-                writer.WriteStringValue(PrimaryLocation);
+                writer.WriteStringValue(PrimaryLocation.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(StatusOfPrimary))
             {
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(SecondaryLocation))
             {
                 writer.WritePropertyName("secondaryLocation"u8);
-                writer.WriteStringValue(SecondaryLocation);
+                writer.WriteStringValue(SecondaryLocation.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(StatusOfSecondary))
             {
@@ -348,10 +349,10 @@ namespace Azure.ResourceManager.Storage.Models
             }
             StorageAccountProvisioningState? provisioningState = default;
             StorageAccountEndpoints primaryEndpoints = default;
-            string primaryLocation = default;
+            AzureLocation? primaryLocation = default;
             StorageAccountStatus? statusOfPrimary = default;
             DateTimeOffset? lastGeoFailoverOn = default;
-            string secondaryLocation = default;
+            AzureLocation? secondaryLocation = default;
             StorageAccountStatus? statusOfSecondary = default;
             DateTimeOffset? createdOn = default;
             StorageCustomDomain customDomain = default;
@@ -414,7 +415,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("primaryLocation"u8))
                 {
-                    primaryLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("statusOfPrimary"u8))
@@ -437,7 +442,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("secondaryLocation"u8))
                 {
-                    secondaryLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secondaryLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("statusOfSecondary"u8))

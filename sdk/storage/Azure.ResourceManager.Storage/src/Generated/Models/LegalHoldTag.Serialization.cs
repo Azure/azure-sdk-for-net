@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Upn))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Storage.Models
             string tag = default;
             DateTimeOffset? timestamp = default;
             string objectIdentifier = default;
-            string tenantId = default;
+            Guid? tenantId = default;
             string upn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +170,11 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("upn"u8))

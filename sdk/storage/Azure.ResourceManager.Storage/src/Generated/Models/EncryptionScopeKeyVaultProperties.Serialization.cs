@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(KeyUri))
             {
                 writer.WritePropertyName("keyUri"u8);
-                writer.WriteStringValue(KeyUri);
+                writer.WriteStringValue(KeyUri.AbsoluteUri);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentVersionedKeyIdentifier))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            string keyUri = default;
+            Uri keyUri = default;
             string currentVersionedKeyIdentifier = default;
             DateTimeOffset? lastKeyRotationTimestamp = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,7 +139,11 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (prop.NameEquals("keyUri"u8))
                 {
-                    keyUri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("currentVersionedKeyIdentifier"u8))

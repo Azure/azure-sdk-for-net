@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             return new BlobContainerData(id, name, resourceType, systemData, additionalBinaryDataProperties: null,
                 new ContainerProperties(version, isDeleted, deletedOn, remainingRetentionDays, defaultEncryptionScope, preventEncryptionScopeOverride, publicAccess, lastModifiedOn, leaseStatus, leaseState, leaseDuration, metadata is null ? null : new ChangeTrackingDictionary<string, string>(metadata), immutabilityPolicy, legalHold, hasLegalHold, hasImmutabilityPolicy, immutableStorageWithVersioning, enableNfsV3RootSquash, enableNfsV3AllSquash, null),
-                etag?.ToString());
+                etag);
         }
 
         /// <summary> Initializes a new instance of FileShareData for mocking. </summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Storage.Models
         {
             return new FileShareData(id, name, resourceType, systemData, additionalBinaryDataProperties: null,
                 new FileShareProperties(lastModifiedOn, metadata is null ? null : new ChangeTrackingDictionary<string, string>(metadata), shareQuota, provisionedIops, provisionedBandwidthMibps, includedBurstIops, maxBurstCreditsForIops, nextAllowedQuotaDowngradeOn, nextAllowedProvisionedIopsDowngradeOn, nextAllowedProvisionedBandwidthDowngradeOn, enabledProtocol, rootSquash, version, isDeleted, deletedOn, remainingRetentionDays, accessTier, accessTierChangeOn, accessTierStatus, shareUsageBytes, leaseStatus, leaseState, leaseDuration, signedIdentifiers?.ToList(), snapshotOn, fileSharePaidBursting, null),
-                etag?.ToString());
+                etag);
         }
 
         /// <summary> Initializes a new instance of ImmutabilityPolicyData for mocking. </summary>
@@ -219,14 +219,14 @@ namespace Azure.ResourceManager.Storage.Models
         {
             return new ImmutabilityPolicyData(id, name, resourceType, systemData, additionalBinaryDataProperties: null,
                 new ImmutabilityPolicyProperty(immutabilityPeriodSinceCreationInDays, state, allowProtectedAppendWrites, allowProtectedAppendWritesAll, null),
-                etag?.ToString());
+                etag);
         }
 
         /// <summary> Initializes a new instance of NetworkSecurityPerimeter for mocking. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkSecurityPerimeter NetworkSecurityPerimeter(string id, Guid? perimeterGuid, AzureLocation? location)
         {
-            return new NetworkSecurityPerimeter(id, perimeterGuid?.ToString(), location?.Name, additionalBinaryDataProperties: null);
+            return new NetworkSecurityPerimeter(id, perimeterGuid, location, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of StorageTaskReportProperties for mocking. </summary>
@@ -240,35 +240,12 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UpdateHistoryEntry UpdateHistoryEntry(ImmutabilityPolicyUpdateType? updateType, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll)
         {
-            return new UpdateHistoryEntry(updateType, immutabilityPeriodSinceCreationInDays, timestamp, objectIdentifier, tenantId?.ToString(), upn, allowProtectedAppendWrites, allowProtectedAppendWritesAll, additionalBinaryDataProperties: null);
+            return new UpdateHistoryEntry(updateType, immutabilityPeriodSinceCreationInDays, timestamp, objectIdentifier, tenantId, upn, allowProtectedAppendWrites, allowProtectedAppendWritesAll, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of EncryptionScopeKeyVaultProperties for mocking. Backward-compatible overload accepting Uri. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EncryptionScopeKeyVaultProperties EncryptionScopeKeyVaultProperties(Uri keyUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp)
-        {
-            return EncryptionScopeKeyVaultProperties(keyUri?.AbsoluteUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp);
-        }
-
-        /// <summary> Initializes a new instance of LegalHoldTag for mocking. Backward-compatible overload accepting Guid?. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static LegalHoldTag LegalHoldTag(string tag, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn)
-        {
-            return LegalHoldTag(tag, timestamp, objectIdentifier, tenantId?.ToString(), upn);
-        }
-
-        /// <summary> Initializes a new instance of StorageAccountKeyVaultProperties for mocking. Backward-compatible overload accepting Uri. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageAccountKeyVaultProperties StorageAccountKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp, DateTimeOffset? currentVersionedKeyExpirationTimestamp)
-        {
-            return StorageAccountKeyVaultProperties(keyName, keyVersion, keyVaultUri?.AbsoluteUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp, currentVersionedKeyExpirationTimestamp);
-        }
-
-        /// <summary> Initializes a new instance of StorageSkuLocationInfo for mocking. Backward-compatible overload accepting AzureLocation?. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageSkuLocationInfo StorageSkuLocationInfo(AzureLocation? location, IEnumerable<string> zones)
-        {
-            return StorageSkuLocationInfo(location?.Name, zones);
-        }
+        // Backward-compat overloads for EncryptionScopeKeyVaultProperties, LegalHoldTag,
+        // StorageAccountKeyVaultProperties, and StorageSkuLocationInfo removed:
+        // The generated types now use the proper types (Uri, Guid?, AzureLocation?) directly,
+        // making the conversion overloads redundant.
     }
 }

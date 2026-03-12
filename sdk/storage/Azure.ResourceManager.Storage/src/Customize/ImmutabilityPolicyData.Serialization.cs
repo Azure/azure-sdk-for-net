@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Storage
                 systemData,
                 additionalBinaryDataProperties,
                 properties,
-                eTag);
+                eTag != null ? new ETag(eTag) : default(ETag?));
         }
     }
 }

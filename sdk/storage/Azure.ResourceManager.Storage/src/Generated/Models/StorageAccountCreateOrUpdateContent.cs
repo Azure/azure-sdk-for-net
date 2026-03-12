@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -22,23 +24,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="sku"> Required. Gets or sets the SKU name. </param>
         /// <param name="kind"> Required. Indicates the type of storage account. </param>
         /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="location"/> is null. </exception>
-        public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, string location)
-        {
-            Argument.AssertNotNull(sku, nameof(sku));
-            Argument.AssertNotNull(location, nameof(location));
-
-            Sku = sku;
-            Kind = kind;
-            Location = location;
-            Zones = new ChangeTrackingList<string>();
-            Tags = new ChangeTrackingDictionary<string, string>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StorageAccountCreateOrUpdateContent"/>. </summary>
-        /// <param name="sku"> Required. Gets or sets the SKU name. </param>
-        /// <param name="kind"> Required. Indicates the type of storage account. </param>
-        /// <param name="location"> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </param>
         /// <param name="extendedLocation"> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </param>
         /// <param name="zones"> Optional. Gets or sets the pinned logical availability zone for the storage account. </param>
         /// <param name="placement"> Optional. Gets or sets the zonal placement details for the storage account. </param>
@@ -46,7 +31,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="properties"> The parameters used to create the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, string location, StorageExtendedLocation extendedLocation, IList<string> zones, Placement placement, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageAccountPropertiesCreateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location, ExtendedLocation extendedLocation, IList<string> zones, Placement placement, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageAccountPropertiesCreateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Kind = kind;
@@ -70,11 +55,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation Location { get; }
 
         /// <summary> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </summary>
         [WirePath("extendedLocation")]
-        public StorageExtendedLocation ExtendedLocation { get; set; }
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> Optional. Gets or sets the pinned logical availability zone for the storage account. </summary>
         [WirePath("zones")]

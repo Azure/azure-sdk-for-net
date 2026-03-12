@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -26,7 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="tenantId"> Tenant Id. </param>
         /// <param name="resourceId"> Resource Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountResourceAccessRule(string tenantId, string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountResourceAccessRule(Guid? tenantId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             ResourceId = resourceId;
@@ -35,10 +36,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Tenant Id. </summary>
         [WirePath("tenantId")]
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
 
         /// <summary> Resource Id. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

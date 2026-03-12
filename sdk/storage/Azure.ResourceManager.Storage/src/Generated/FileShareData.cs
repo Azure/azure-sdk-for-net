@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fileShareProperties"> Properties of the file share. </param>
         /// <param name="eTag"> Resource Etag. </param>
-        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileShareProperties fileShareProperties, string eTag) : base(id, name, resourceType, systemData)
+        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileShareProperties fileShareProperties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             FileShareProperties = fileShareProperties;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> Returns the date and time the share was last modified. </summary>
         [WirePath("properties.lastModifiedTime")]

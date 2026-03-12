@@ -13,6 +13,7 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -114,7 +115,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation, options);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -174,7 +175,7 @@ namespace Azure.ResourceManager.Storage
             StorageSku sku = default;
             StorageKind? kind = default;
             ManagedServiceIdentity identity = default;
-            StorageExtendedLocation extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             IList<string> zones = default;
             Placement placement = default;
             foreach (var prop in element.EnumerateObject())
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    extendedLocation = StorageExtendedLocation.DeserializeStorageExtendedLocation(prop.Value, options);
+                    extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("zones"u8))
