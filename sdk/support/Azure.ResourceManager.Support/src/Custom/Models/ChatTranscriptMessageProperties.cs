@@ -7,11 +7,11 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    /// <summary> Backward-compatible ContentType property returning TranscriptContentType. </summary>
+    // Backward-compatible ContentType property returning TranscriptContentType, needed for ApiCompat with old API surface
     public partial class ChatTranscriptMessageProperties
     {
         /// <summary> Content type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public TranscriptContentType? ContentType => ContentTypeValue != null ? new TranscriptContentType(ContentTypeValue) : null;
+        public TranscriptContentType? ContentType => TranscriptContentType != null ? new TranscriptContentType(TranscriptContentType) : null;
     }
 }

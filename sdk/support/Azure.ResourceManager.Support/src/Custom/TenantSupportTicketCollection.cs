@@ -13,7 +13,27 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Support
 {
-    // Suppress the generated ValidateResourceId to accept both TenantResource and SubscriptionResource
+    /*
+     * Custom code reason:
+     *
+     * 1. ValidateResourceId override (dual-scope support):
+     *    In the TypeSpec spec (SupportTicketDetails.tsp), SupportTicketDetails is marked @subscriptionResource,
+     *    so the generator places it under SubscriptionResource scope and the generated ValidateResourceId
+     *    only accepts SubscriptionResource.ResourceType. However, the spec also defines a separate operation
+     *    interface SupportTicketsNoSubscriptionOps (without SubscriptionIdParameter) for tenant-level access.
+     *    In the old Swagger API, TenantSupportTicketCollection was accessible from BOTH SubscriptionResource
+     *    and TenantResource via GetTenantSupportTickets() extension methods. To maintain backward compatibility,
+     *    the custom MockableSupportTenantResource.GetTenantSupportTickets() passes TenantResource.Id to this
+     *    collection, which would fail the generated validation. The custom ValidateResourceId accepts both
+     *    SubscriptionResource.ResourceType and TenantResource.ResourceType.
+     *
+     * 2. GetAll/GetAllAsync methods and IEnumerable/IAsyncEnumerable interfaces:
+     *    In the old Swagger API, TenantSupportTicketCollection had GetAll(int?, string, CancellationToken)
+     *    and GetAllAsync methods, and implemented IEnumerable<TenantSupportTicketResource>. The new TypeSpec
+     *    generator moved listing operations to MockableSupportTenantResource.GetTenantSupportTickets(int?,
+     *    string, CancellationToken) returning Pageable directly, removing them from the collection class.
+     *    These methods are restored here for ApiCompat with the 1.1.1 GA release.
+     */
     [CodeGenSuppress("ValidateResourceId", typeof(Core.ResourceIdentifier))]
     public partial class TenantSupportTicketCollection : IEnumerable<TenantSupportTicketResource>, IAsyncEnumerable<TenantSupportTicketResource>
     {

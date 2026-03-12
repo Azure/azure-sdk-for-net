@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Support
 {
-    /// <summary> Backward-compatible extension methods for TenantResource access. </summary>
+    // Backward-compatible extension methods for TenantResource access, needed for ApiCompat
     public static partial class SupportExtensions
     {
         /// <summary> Gets a collection of TenantSupportTicketResources in the TenantResource. </summary>

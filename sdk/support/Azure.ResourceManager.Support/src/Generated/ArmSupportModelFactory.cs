@@ -392,16 +392,16 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Describes the properties of a Message Details resource. </summary>
-        /// <param name="contentTypeValue"> Content type. </param>
+        /// <param name="transcriptContentType"> Content type. </param>
         /// <param name="communicationDirection"> Direction of communication. </param>
         /// <param name="sender"> Name of the sender. </param>
         /// <param name="body"> Body of the communication. </param>
         /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
         /// <returns> A new <see cref="Models.ChatTranscriptMessageProperties"/> instance for mocking. </returns>
-        public static ChatTranscriptMessageProperties ChatTranscriptMessageProperties(string contentTypeValue = default, SupportTicketCommunicationDirection? communicationDirection = default, string sender = default, string body = default, DateTimeOffset? createdOn = default)
+        public static ChatTranscriptMessageProperties ChatTranscriptMessageProperties(string transcriptContentType = default, SupportTicketCommunicationDirection? communicationDirection = default, string sender = default, string body = default, DateTimeOffset? createdOn = default)
         {
             return new ChatTranscriptMessageProperties(
-                contentTypeValue,
+                transcriptContentType,
                 communicationDirection,
                 sender,
                 body,

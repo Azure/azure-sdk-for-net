@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Mocking
 {
-    /// <summary> Backward-compatible methods for TenantResource access. </summary>
+    // Backward-compatible methods for TenantResource access, needed for ApiCompat
     public partial class MockableSupportTenantResource
     {
         /// <summary> Gets a collection of TenantSupportTicketResources in the TenantResource. </summary>

@@ -8,7 +8,18 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Support
 {
-    // Suppress the generated ValidateResourceId to accept both TenantResource and SubscriptionResource
+    /*
+     * Custom code reason:
+     *
+     * ValidateResourceId override (dual-scope support):
+     * In the TypeSpec spec (FileWorkspaceDetails.tsp), FileWorkspaceDetails is marked @subscriptionResource,
+     * so the generator places it under SubscriptionResource scope and the generated ValidateResourceId only
+     * accepts SubscriptionResource.ResourceType. However, in the old Swagger API, TenantFileWorkspaceCollection
+     * was accessible from BOTH SubscriptionResource and TenantResource via GetTenantFileWorkspaces() extension
+     * methods. To maintain backward compatibility, the custom MockableSupportTenantResource.GetTenantFileWorkspaces()
+     * passes TenantResource.Id to this collection, which would fail the generated validation. The custom
+     * ValidateResourceId accepts both SubscriptionResource.ResourceType and TenantResource.ResourceType.
+     */
     [CodeGenSuppress("ValidateResourceId", typeof(Core.ResourceIdentifier))]
     public partial class TenantFileWorkspaceCollection
     {
