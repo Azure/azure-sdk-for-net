@@ -1,16 +1,16 @@
 # Exception Handling
 
-This sample covers patterns for handling `ServiceBusException` and its `Reason` property to build resilient applications. The `ServiceBusFailureReason` enum tells you exactly what went wrong, so your code can take the right recovery action instead of applying a generic retry to every error.
+This sample covers patterns for handling `ServiceBusException` and its `Reason` property to build resilient applications. The `ServiceBusFailureReason` enum identifies well-known failure categories, so your code can take the right recovery action instead of applying a generic retry to every error.
 
 ## Structured handling with ServiceBusFailureReason
 
-Every `ServiceBusException` includes a `Reason` property of type `ServiceBusFailureReason`. Switching on this value lets you separate transient failures (retry) from permanent failures (fail fast) from lock-related failures (reprocess).
+Every `ServiceBusException` includes a `Reason` property of type `ServiceBusFailureReason`. Switching on this value lets you separate transient failures (retry) from permanent failures (fail fast) from lock-related failures (let the message be redelivered).
 
 ```C# Snippet:ServiceBusStructuredExceptionHandling
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 
-await using var client = new ServiceBusClient(connectionString);
+await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ServiceBusSender sender = client.CreateSender(queueName);
 
 try
@@ -69,15 +69,17 @@ catch (ServiceBusException ex)
 }
 ```
 
+Note that `ServiceBusException` does not cover all failure types. Authentication and authorization errors surface as `UnauthorizedAccessException`, and cancellation (e.g., from shutdown tokens) surfaces as `OperationCanceledException`. Add separate catch clauses for these when appropriate.
+
 ## Handling lock-related failures
 
 When processing messages with peek-lock (the default), the lock can expire if processing takes too long. The two lock-related failure reasons require different recovery strategies.
 
 ```C# Snippet:ServiceBusLockExceptionHandling
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 
-await using var client = new ServiceBusClient(connectionString);
+await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
 ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
@@ -85,7 +87,13 @@ ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
 try
 {
     // Simulate slow processing that might exceed the lock duration.
+    // ProcessMessageAsync represents your application logic (defined elsewhere).
     await ProcessMessageAsync(message);
+
+    // Ensure processing is idempotent — if the lock expires before settlement,
+    // the message will be redelivered and processed again. Common strategies
+    // include deduplication checks and upsert semantics.
+    // See https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement
     await receiver.CompleteMessageAsync(message);
 }
 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageLockLost)
@@ -101,6 +109,10 @@ catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.Sessio
     // The lock on the entire session has expired. All messages received
     // under this session lock are now invalid. Close the session receiver
     // and re-accept the session to continue processing.
+    //
+    // Note: SessionLockLost only applies when using session-enabled receivers
+    // (via AcceptNextSessionAsync). It is shown here alongside MessageLockLost
+    // for completeness.
     Console.WriteLine($"Session lock lost for SessionId={message.SessionId}. " +
         "Re-accept the session to continue.");
 }
@@ -108,18 +120,18 @@ catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.Sessio
 
 To avoid lock expiration in the first place:
 - **Use the processor**: `ServiceBusProcessor` automatically renews message locks via `MaxAutoLockRenewalDuration`.
-- **Keep processing fast**: if processing takes longer than the lock duration (default 30 seconds for queues), either increase the lock duration on the entity or use auto-lock renewal.
-- **Use `MaxAutoLockRenewalDuration`**: set this on `ServiceBusProcessorOptions` or call receiver-level lock renewal for long-running work.
+- **Keep processing fast**: if processing takes longer than the lock duration (default 60 seconds for queues), either increase the lock duration on the entity or use auto-lock renewal.
+- **Use `MaxAutoLockRenewalDuration`**: set this to at least the longest expected processing time (including retries or delays in your handler), plus ~25% margin. Set this on `ServiceBusProcessorOptions` or call receiver-level lock renewal for long-running work.
 
 ## Error handling in the processor
 
-The `ServiceBusProcessor` invokes `ProcessErrorAsync` for infrastructure-level errors (connection failures, authorization issues) that are not tied to a specific message. Message-level errors should be handled inside `ProcessMessageAsync`.
+The `ServiceBusProcessor` invokes `ProcessErrorAsync` for errors that occur outside your message handler — including connection failures, authorization issues, auto-lock-renewal failures, and auto-complete/abandon failures. Check `args.ErrorSource` to distinguish the origin. Message-level errors from your own processing logic should be handled inside `ProcessMessageAsync`.
 
 ```C# Snippet:ServiceBusProcessorErrorHandler
-string connectionString = "<connection_string>";
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
 string queueName = "<queue_name>";
 
-await using var client = new ServiceBusClient(connectionString);
+await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 
 ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
 {
@@ -127,29 +139,57 @@ ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBus
     AutoCompleteMessages = false
 });
 
-processor.ProcessMessageAsync += async args =>
+// configure the message and error handler to use
+processor.ProcessMessageAsync += MessageHandler;
+processor.ProcessErrorAsync += ErrorHandler;
+
+async Task MessageHandler(ProcessMessageEventArgs args)
 {
     try
     {
         await ProcessMessageAsync(args.Message);
+    }
+    catch (Exception ex)
+    {
+        // Application-level processing failure. Abandon the message so it
+        // can be retried (up to the entity's MaxDeliveryCount).
+        Console.WriteLine($"Processing failed: {ex.Message}");
+
+        try
+        {
+            await args.AbandonMessageAsync(args.Message);
+        }
+        catch (ServiceBusException abandonEx)
+        {
+            Console.WriteLine($"Abandon failed for {args.Message.MessageId}: {abandonEx.Message}");
+        }
+
+        return;
+    }
+
+    // Processing succeeded — settle the message.
+    // Because lock loss causes redelivery, ensure your processing logic is
+    // idempotent — it should produce the same result if a message is processed
+    // more than once. Common strategies include deduplication checks and upsert
+    // semantics.
+    // See https://learn.microsoft.com/azure/service-bus-messaging/message-transfers-locks-settlement
+    try
+    {
         await args.CompleteMessageAsync(args.Message);
     }
     catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessageLockLost)
     {
-        // Lock expired during processing. The message will be redelivered.
-        // Log and move on — do not try to complete or abandon.
+        // Lock expired before settlement. The message will be redelivered.
         Console.WriteLine($"Lock lost for {args.Message.MessageId}, will be redelivered.");
     }
-    catch (Exception ex)
+    catch (ServiceBusException ex)
     {
-        // Application-level failure. Abandon the message so it can be retried
-        // (up to the entity's MaxDeliveryCount).
-        Console.WriteLine($"Processing failed: {ex.Message}");
-        await args.AbandonMessageAsync(args.Message);
+        // Settlement failed for another reason — log for diagnostics.
+        Console.WriteLine($"Settlement failed for {args.Message.MessageId} ({ex.Reason}): {ex.Message}");
     }
-};
+}
 
-processor.ProcessErrorAsync += args =>
+Task ErrorHandler(ProcessErrorEventArgs args)
 {
     // Infrastructure-level errors: connection drops, auth failures, etc.
     Console.WriteLine($"Error source: {args.ErrorSource}");
@@ -172,7 +212,7 @@ processor.ProcessErrorAsync += args =>
     }
 
     return Task.CompletedTask;
-};
+}
 
 await processor.StartProcessingAsync();
 
@@ -183,9 +223,15 @@ await processor.StopProcessingAsync();
 
 ## Using IsTransient for retry decisions
 
-The `ServiceBusException.IsTransient` property indicates whether the error is expected to resolve on its own. Use it as a quick check when you don't need reason-specific logic.
+The `ServiceBusClient` retries transient errors automatically (default: 3 retries with exponential backoff, configurable via `ServiceBusClientOptions.RetryOptions`). The following manual retry loop is only needed for application-level patterns the built-in retry cannot handle — for example, recreating senders after a connection reset or implementing circuit-breaker logic.
 
 ```C# Snippet:ServiceBusRetryWithIsTransient
+string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+string queueName = "<queue_name>";
+
+await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
+ServiceBusSender sender = client.CreateSender(queueName);
+
 int maxRetries = 3;
 int attempt = 0;
 
@@ -200,6 +246,13 @@ while (attempt < maxRetries)
     {
         attempt++;
         Console.WriteLine($"Transient error (attempt {attempt}/{maxRetries}): {ex.Message}");
+
+        if (attempt == maxRetries)
+        {
+            Console.WriteLine("Max retries reached. Giving up.");
+            throw;
+        }
+
         await Task.Delay(TimeSpan.FromSeconds(Math.Pow(2, attempt))); // Exponential backoff.
     }
     catch (ServiceBusException ex)
@@ -210,8 +263,6 @@ while (attempt < maxRetries)
     }
 }
 ```
-
-Note that the `ServiceBusClient` already has built-in retry logic (configurable via `ServiceBusClientOptions.RetryOptions`). Manual retry loops are only needed when you want application-level retry behavior beyond what the client provides — for example, recreating senders after a connection reset or implementing circuit-breaker patterns.
 
 ## ServiceBusFailureReason reference
 
