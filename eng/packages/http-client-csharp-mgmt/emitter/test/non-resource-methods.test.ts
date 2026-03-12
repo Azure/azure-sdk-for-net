@@ -14,11 +14,13 @@ import { ok, strictEqual, deepStrictEqual } from "assert";
 import {
   ResourceScope,
   ResourceOperationKind,
-  assignNonResourceMethodsToResources
+  assignNonResourceMethodsToResources,
+  postProcessArmResources
 } from "../src/resource-metadata.js";
 import type {
   ArmResourceSchema,
-  NonResourceMethod
+  NonResourceMethod,
+  ParentResourceLookupContext
 } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
@@ -990,10 +992,12 @@ interface ChildResources {
 
     const resources: ArmResourceSchema[] = [
       {
-        resourceModelId: "Microsoft.GuestConfiguration.GuestConfigurationAssignment",
+        resourceModelId:
+          "Microsoft.GuestConfiguration.GuestConfigurationAssignment",
         metadata: {
           resourceName: "GuestConfigurationVmAssignment",
-          resourceType: "Microsoft.GuestConfiguration/guestConfigurationAssignments",
+          resourceType:
+            "Microsoft.GuestConfiguration/guestConfigurationAssignments",
           resourceIdPattern:
             "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}",
           resourceScope: ResourceScope.ResourceGroup,
@@ -1126,6 +1130,129 @@ interface ChildResources {
       listMethods.length,
       0,
       "DeletedVault resource should have no List methods"
+    );
+  });
+
+  it("should not produce duplicate methods when merging incomplete resources with same operationPath into sibling", () => {
+    // Reproduces the Maintenance SDK duplicate GetConfigurationAssignments bug.
+    // Multiple TypeSpec interfaces (ConfigurationAssignments, ConfigurationAssignmentsForResourceGroup)
+    // expose list operations with the same REST path but different crossLanguageDefinitionIds.
+    // During processMethod, each interface's List operation may land in a DIFFERENT incomplete
+    // resource entry (different metadataKey) when the prefix-match logic resolves to different
+    // paths. In postProcessArmResources Step 3, all incomplete entries for the same model get
+    // merged into the valid sibling — without deduplication on kind+operationPath, the sibling
+    // ends up with duplicate List methods that generate identical C# method signatures (CS0111).
+
+    // Valid resource: established by a Read (CRUD) operation in the first pass
+    const validResource: ArmResourceSchema = {
+      resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
+      metadata: {
+        resourceName: "ConfigurationAssignment",
+        resourceType: "Microsoft.Maintenance/configurationAssignments",
+        resourceIdPattern:
+          "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+        resourceScope: ResourceScope.Extension,
+        singletonResourceName: undefined,
+        parentResourceId: undefined,
+        parentResourceModelId: undefined,
+        methods: [
+          {
+            methodId: "Microsoft.Maintenance.ConfigurationAssignment.get",
+            kind: ResourceOperationKind.Read,
+            operationPath:
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}",
+            operationScope: ResourceScope.ResourceGroup,
+            resourceScope:
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}"
+          }
+        ]
+      }
+    };
+
+    // Two incomplete resources: created when list operations from different interfaces
+    // (same model, same REST path) resolve to different metadataKeys via the prefix-match
+    // logic in processMethod, each creating a separate incomplete resource entry.
+    const incompleteResource1: ArmResourceSchema = {
+      resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
+      metadata: {
+        resourceName: "ConfigurationAssignment",
+        resourceType: "Microsoft.Maintenance/configurationAssignments",
+        resourceIdPattern: "", // incomplete — no CRUD operation
+        resourceScope: ResourceScope.ResourceGroup,
+        singletonResourceName: undefined,
+        parentResourceId: undefined,
+        parentResourceModelId: undefined,
+        methods: [
+          {
+            methodId:
+              "Microsoft.Maintenance.ConfigurationAssignmentForResourceGroupOperationGroup.list",
+            kind: ResourceOperationKind.List,
+            operationPath:
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
+            operationScope: ResourceScope.ResourceGroup,
+            resourceScope: undefined
+          }
+        ]
+      }
+    };
+
+    const incompleteResource2: ArmResourceSchema = {
+      resourceModelId: "Microsoft.Maintenance.ConfigurationAssignment",
+      metadata: {
+        resourceName: "ConfigurationAssignment",
+        resourceType: "Microsoft.Maintenance/configurationAssignments",
+        resourceIdPattern: "", // incomplete — no CRUD operation
+        resourceScope: ResourceScope.ResourceGroup,
+        singletonResourceName: undefined,
+        parentResourceId: undefined,
+        parentResourceModelId: undefined,
+        methods: [
+          {
+            // Different interface, SAME operationPath and kind
+            methodId:
+              "Microsoft.Maintenance.ConfigurationAssignments.listParent",
+            kind: ResourceOperationKind.List,
+            operationPath:
+              "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments",
+            operationScope: ResourceScope.ResourceGroup,
+            resourceScope: undefined
+          }
+        ]
+      }
+    };
+
+    const allResources = [
+      validResource,
+      incompleteResource1,
+      incompleteResource2
+    ];
+    const nonResourceMethods: NonResourceMethod[] = [];
+    const noopParentLookup: ParentResourceLookupContext = {
+      getParentResource: () => undefined
+    };
+
+    const result = postProcessArmResources(
+      allResources,
+      nonResourceMethods,
+      noopParentLookup
+    );
+
+    // The valid resource should have exactly 1 List method (deduplicated),
+    // not 2 from the two incomplete resources
+    const listMethods = result[0].metadata.methods.filter(
+      (m) => m.kind === ResourceOperationKind.List
+    );
+    strictEqual(
+      listMethods.length,
+      1,
+      "ConfigurationAssignment resource should have exactly 1 List method (no duplicates from merging)"
+    );
+
+    // No methods should have leaked to nonResourceMethods
+    strictEqual(
+      nonResourceMethods.length,
+      0,
+      "All methods should be merged into the valid resource, none should be non-resource"
     );
   });
 });

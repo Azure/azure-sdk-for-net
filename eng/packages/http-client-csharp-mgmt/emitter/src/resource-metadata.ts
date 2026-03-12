@@ -302,7 +302,7 @@ export function postProcessArmResources(
         (r) => r.resourceModelId === metadata.parentResourceModelId
       );
       if (parent) {
-        parent.metadata.methods.push(...metadata.methods);
+        mergeMethodsWithoutDuplicates(parent, metadata.methods);
         merged = true;
       }
     }
@@ -313,7 +313,7 @@ export function postProcessArmResources(
         (r) => r.resourceModelId === resource.resourceModelId
       );
       if (sibling) {
-        sibling.metadata.methods.push(...metadata.methods);
+        mergeMethodsWithoutDuplicates(sibling, metadata.methods);
         merged = true;
       }
     }
@@ -442,6 +442,31 @@ export function postProcessArmResources(
   }
 
   return filteredResources;
+}
+
+/**
+ * Merges methods from an incomplete resource into a target resource, skipping
+ * methods whose combination of kind and operationPath already exists in the
+ * target. This prevents duplicate methods (in particular duplicate List methods)
+ * when multiple TypeSpec interfaces expose operations with the same REST path
+ * (e.g., ConfigurationAssignments and ConfigurationAssignmentsForResourceGroup
+ * both listing at the same endpoint), while still allowing different kinds at
+ * the same path to coexist.
+ */
+function mergeMethodsWithoutDuplicates(
+  target: ArmResourceSchema,
+  methods: ResourceMethod[]
+): void {
+  const makeKey = (m: ResourceMethod): string =>
+    `${m.kind ?? ""}|${m.operationPath}`;
+  const existingKeys = new Set(target.metadata.methods.map((m) => makeKey(m)));
+  for (const method of methods) {
+    const key = makeKey(method);
+    if (!existingKeys.has(key)) {
+      target.metadata.methods.push(method);
+      existingKeys.add(key);
+    }
+  }
 }
 
 /**
