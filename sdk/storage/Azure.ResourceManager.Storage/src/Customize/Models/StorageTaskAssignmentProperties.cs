@@ -23,6 +23,14 @@ namespace Azure.ResourceManager.Storage.Models
         public StorageTaskAssignmentProvisioningState? StorageTaskAssignmentProvisioningState =>
             ProvisioningState.HasValue ? new StorageTaskAssignmentProvisioningState(ProvisioningState.Value.ToString()) : null;
 
+        /// <summary> Backward-compatible alias for Enabled. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool IsEnabled
+        {
+            get => Enabled;
+            set => Enabled = value;
+        }
+
         /// <summary> Initializes a new instance of <see cref="StorageTaskAssignmentProperties"/>. Backward-compatible constructor. </summary>
         /// <param name="taskId"> Id of the corresponding storage task. </param>
         /// <param name="isEnabled"> Whether the storage task assignment is enabled or not. </param>
