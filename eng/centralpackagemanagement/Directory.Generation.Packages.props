@@ -2,11 +2,13 @@
   <PropertyGroup>
     <UnbrandedGeneratorVersion>1.0.0-alpha.20260310.1</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20260303.3</AzureGeneratorVersion>
+    <AzureManagementGeneratorVersion>1.0.0-alpha.20260308.1</AzureManagementGeneratorVersion>
   </PropertyGroup>
 
   <!-- Packages used by the TypeSpec generators -->
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
     <PackageVersion Include="Azure.Generator" Version="[$(AzureGeneratorVersion)]" />
+    <PackageVersion Include="Azure.Generator.Management" Version="[$(AzureManagementGeneratorVersion)]" />
     <PackageVersion Include="Humanizer.Core" Version="3.0.1" />
     <PackageVersion Include="Microsoft.TypeSpec.Generator.ClientModel" Version="[$(UnbrandedGeneratorVersion)]" />
     <PackageVersion Include="Microsoft.TypeSpec.Generator.Input" Version="[$(UnbrandedGeneratorVersion)]" />
