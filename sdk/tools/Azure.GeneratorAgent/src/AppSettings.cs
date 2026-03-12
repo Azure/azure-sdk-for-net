@@ -43,4 +43,13 @@ public class AppSettings(IConfiguration configuration)
     /// Gets the GitHub API base URL.
     /// </summary>
     public string GitHubApiUrl { get; } = configuration["GitHub:ApiUrl"] ?? "https://api.github.com";
+
+    /// <summary>
+    /// Gets the overall workflow/command timeout.
+    /// </summary>
+    public TimeSpan WorkflowTimeout { get; } = configuration["Workflow:TimeoutMinutes"] switch
+    {
+        string config when int.TryParse(config, out var minutes) => TimeSpan.FromMinutes(minutes),
+        _ => TimeSpan.FromMinutes(35)
+    };
 }

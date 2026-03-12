@@ -68,9 +68,7 @@ namespace Azure.Communication.ProgrammableConnectivity
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(simSwapRetrievalContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(simSwapRetrievalContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

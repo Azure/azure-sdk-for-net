@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-04-05"
+  "apiVersions": {
+    "Microsoft.GuestConfiguration": "2024-04-05"
+  }
 }

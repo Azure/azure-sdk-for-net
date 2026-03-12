@@ -6,9 +6,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects", "src\Az
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.Tests", "tests\Azure.AI.Projects.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.OpenAI", "..\Azure.AI.Projects.OpenAI\src\Azure.AI.Projects.OpenAI.csproj", "{455D4CEC-1BB6-92B9-BB23-F52A9E409337}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ClientModel.TestFramework", "..\..\core\Microsoft.ClientModel.TestFramework\src\Microsoft.ClientModel.TestFramework.csproj", "{6A42DACC-53A7-1858-0305-78A1860C7499}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.Agents", "..\Azure.AI.Projects.Agents\src\Azure.AI.Projects.Agents.csproj", "{652A5183-4C77-E044-063F-9023ECA9E046}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Extensions.OpenAI", "..\Azure.AI.Extensions.OpenAI\src\Azure.AI.Extensions.OpenAI.csproj", "{49B2EF62-3816-2538-A8C3-6D539F7B61C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,14 +26,18 @@ Global
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6A42DACC-53A7-1858-0305-78A1860C7499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6A42DACC-53A7-1858-0305-78A1860C7499}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A42DACC-53A7-1858-0305-78A1860C7499}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A42DACC-53A7-1858-0305-78A1860C7499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{652A5183-4C77-E044-063F-9023ECA9E046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{652A5183-4C77-E044-063F-9023ECA9E046}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{652A5183-4C77-E044-063F-9023ECA9E046}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{652A5183-4C77-E044-063F-9023ECA9E046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49B2EF62-3816-2538-A8C3-6D539F7B61C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49B2EF62-3816-2538-A8C3-6D539F7B61C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49B2EF62-3816-2538-A8C3-6D539F7B61C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49B2EF62-3816-2538-A8C3-6D539F7B61C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-10-22-preview"
+  "apiVersions": {
+    "Pinecone.VectorDb": "2024-10-22-preview"
+  }
 }

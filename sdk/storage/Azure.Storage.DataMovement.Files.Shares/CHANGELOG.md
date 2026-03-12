@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed known issue where passing a `AzureSasCredential` to authenticate the source resource will not properly pass the credential for share file copy operations.
 
 ### Other Changes
 

@@ -11,7 +11,7 @@ namespace Azure.AI.Language.Text
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AbstractiveSummarizationActionContent))]
     [ModelReaderWriterBuildable(typeof(AbstractiveSummarizationOperationAction))]
@@ -26,11 +26,11 @@ namespace Azure.AI.Language.Text
     [ModelReaderWriterBuildable(typeof(AnalyzeTextEntityLinkingResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextError))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextInput))]
+    [ModelReaderWriterBuildable(typeof(AnalyzeTextJobState))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextKeyPhraseResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextLanguageDetectionResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextOperationAction))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextOperationResult))]
-    [ModelReaderWriterBuildable(typeof(AnalyzeTextOperationState))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextPiiResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextResult))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextSentimentResult))]
@@ -89,7 +89,6 @@ namespace Azure.AI.Language.Text
     [ModelReaderWriterBuildable(typeof(ExtractiveSummarizationOperationResult))]
     [ModelReaderWriterBuildable(typeof(ExtractiveSummarizationResult))]
     [ModelReaderWriterBuildable(typeof(FhirBundle))]
-    [ModelReaderWriterBuildable(typeof(HealthcareActionContent))]
     [ModelReaderWriterBuildable(typeof(HealthcareActionResult))]
     [ModelReaderWriterBuildable(typeof(HealthcareAssertion))]
     [ModelReaderWriterBuildable(typeof(HealthcareEntity))]
@@ -99,6 +98,7 @@ namespace Azure.AI.Language.Text
     [ModelReaderWriterBuildable(typeof(HealthcareRelation))]
     [ModelReaderWriterBuildable(typeof(HealthcareRelationEntity))]
     [ModelReaderWriterBuildable(typeof(HealthcareResult))]
+    [ModelReaderWriterBuildable(typeof(HealthcareTaskParameters))]
     [ModelReaderWriterBuildable(typeof(InformationMetadata))]
     [ModelReaderWriterBuildable(typeof(InnerErrorModel))]
     [ModelReaderWriterBuildable(typeof(KeyPhraseActionContent))]
@@ -123,11 +123,11 @@ namespace Azure.AI.Language.Text
     [ModelReaderWriterBuildable(typeof(NumericRangeMetadata))]
     [ModelReaderWriterBuildable(typeof(OrdinalMetadata))]
     [ModelReaderWriterBuildable(typeof(PiiActionContent))]
-    [ModelReaderWriterBuildable(typeof(PiiActionResult))]
     [ModelReaderWriterBuildable(typeof(PiiEntity))]
     [ModelReaderWriterBuildable(typeof(PiiEntityRecognitionOperationResult))]
     [ModelReaderWriterBuildable(typeof(PiiOperationAction))]
     [ModelReaderWriterBuildable(typeof(PiiResult))]
+    [ModelReaderWriterBuildable(typeof(PiiResultWithDetectedLanguage))]
     [ModelReaderWriterBuildable(typeof(RequestStatistics))]
     [ModelReaderWriterBuildable(typeof(SentenceAssessment))]
     [ModelReaderWriterBuildable(typeof(SentenceSentiment))]
@@ -136,7 +136,7 @@ namespace Azure.AI.Language.Text
     [ModelReaderWriterBuildable(typeof(SentimentAnalysisActionContent))]
     [ModelReaderWriterBuildable(typeof(SentimentAnalysisOperationAction))]
     [ModelReaderWriterBuildable(typeof(SentimentConfidenceScores))]
-    [ModelReaderWriterBuildable(typeof(SentimentLROResult))]
+    [ModelReaderWriterBuildable(typeof(SentimentOperationResult))]
     [ModelReaderWriterBuildable(typeof(SentimentResult))]
     [ModelReaderWriterBuildable(typeof(SpeedMetadata))]
     [ModelReaderWriterBuildable(typeof(SummaryContext))]

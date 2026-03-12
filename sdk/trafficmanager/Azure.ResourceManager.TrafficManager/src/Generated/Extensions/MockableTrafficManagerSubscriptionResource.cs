@@ -8,178 +8,128 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.TrafficManager;
 using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableTrafficManagerSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _trafficManagerProfileProfilesClientDiagnostics;
-        private ProfilesRestOperations _trafficManagerProfileProfilesRestClient;
+        private ClientDiagnostics _profilesClientDiagnostics;
+        private Profiles _profilesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableTrafficManagerSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableTrafficManagerSubscriptionResource for mocking. </summary>
         protected MockableTrafficManagerSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableTrafficManagerSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableTrafficManagerSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableTrafficManagerSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics TrafficManagerProfileProfilesClientDiagnostics => _trafficManagerProfileProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager", TrafficManagerProfileResource.ResourceType.Namespace, Diagnostics);
-        private ProfilesRestOperations TrafficManagerProfileProfilesRestClient => _trafficManagerProfileProfilesRestClient ??= new ProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TrafficManagerProfileResource.ResourceType));
+        private ClientDiagnostics ProfilesClientDiagnostics => _profilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.TrafficManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets an object representing a TrafficManagerUserMetricsResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource"/> object. </returns>
-        public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics()
-        {
-            return new TrafficManagerUserMetricsResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerUserMetricsKeys", "default"));
-        }
+        private Profiles ProfilesRestClient => _profilesRestClient ??= new Profiles(ProfilesClientDiagnostics, Pipeline, Endpoint, "2022-04-01");
 
         /// <summary>
-        /// Checks the availability of a Traffic Manager Relative DNS name.
+        /// Get the subscription-level key used for Real User Metrics collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/checkTrafficManagerNameAvailabilityV2</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserMetricsModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TrafficManagerUserMetricsResource>> GetTrafficManagerUserMetricAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.CheckTrafficManagerNameAvailabilityV2");
-            scope.Start();
-            try
-            {
-                var response = await TrafficManagerProfileProfilesRestClient.CheckTrafficManagerNameAvailabilityV2Async(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetTrafficManagerUserMetrics().GetAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Checks the availability of a Traffic Manager Relative DNS name.
+        /// Get the subscription-level key used for Real User Metrics collection.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/checkTrafficManagerNameAvailabilityV2</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserMetricsModels_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public virtual Response<TrafficManagerUserMetricsResource> GetTrafficManagerUserMetric(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = TrafficManagerProfileProfilesClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.CheckTrafficManagerNameAvailabilityV2");
-            scope.Start();
-            try
-            {
-                var response = TrafficManagerProfileProfilesRestClient.CheckTrafficManagerNameAvailabilityV2(Id.SubscriptionId, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetTrafficManagerUserMetrics().Get(cancellationToken);
         }
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionAsyncCollectionResultOfT(ProfilesRestClient, Id.SubscriptionId, context), data => new TrafficManagerProfileResource(Client, data));
         }
 
         /// <summary>
         /// Lists all Traffic Manager profiles within a subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficmanagerprofiles. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Profiles_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Profiles_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,8 +137,107 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <returns> A collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new TrafficManagerProfileResource(Client, TrafficManagerProfileData.DeserializeTrafficManagerProfileData(e)), TrafficManagerProfileProfilesClientDiagnostics, Pipeline, "MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles", "value", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<TrafficManagerProfileData, TrafficManagerProfileResource>(new ProfilesGetBySubscriptionCollectionResultOfT(ProfilesRestClient, Id.SubscriptionId, context), data => new TrafficManagerProfileResource(Client, data));
+        }
+
+        /// <summary>
+        /// Checks the availability of a Traffic Manager Relative DNS name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/checkTrafficManagerNameAvailabilityV2. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProfilesOperationGroup_CheckTrafficManagerNameAvailabilityV2. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.CheckTrafficManagerNameAvailabilityV2");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Id.SubscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<TrafficManagerNameAvailabilityResult> response = Response.FromValue(TrafficManagerNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Checks the availability of a Traffic Manager Relative DNS name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/checkTrafficManagerNameAvailabilityV2. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProfilesOperationGroup_CheckTrafficManagerNameAvailabilityV2. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = ProfilesClientDiagnostics.CreateScope("MockableTrafficManagerSubscriptionResource.CheckTrafficManagerNameAvailabilityV2");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ProfilesRestClient.CreateCheckTrafficManagerNameAvailabilityV2Request(Id.SubscriptionId, TrafficManagerRelativeDnsNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<TrafficManagerNameAvailabilityResult> response = Response.FromValue(TrafficManagerNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

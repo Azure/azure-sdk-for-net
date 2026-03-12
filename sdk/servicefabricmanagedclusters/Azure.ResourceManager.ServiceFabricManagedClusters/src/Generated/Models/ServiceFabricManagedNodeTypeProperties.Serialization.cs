@@ -416,6 +416,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("isOutboundOnly"u8);
                 writer.WriteBooleanValue(IsOutboundOnly.Value);
             }
+            if (Optional.IsDefined(EnableResilientEphemeralOsDisk))
+            {
+                writer.WritePropertyName("enableResilientEphemeralOsDisk"u8);
+                writer.WriteBooleanValue(EnableResilientEphemeralOsDisk.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -511,6 +516,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             IList<ServiceFabricManagedVmApplication> vmApplications = default;
             bool? isZoneBalanceEnabled = default;
             bool? isOutboundOnly = default;
+            bool? enableResilientEphemeralOsDisk = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -1028,6 +1034,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     isOutboundOnly = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("enableResilientEphemeralOsDisk"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableResilientEphemeralOsDisk = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -1087,6 +1102,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 vmApplications ?? new ChangeTrackingList<ServiceFabricManagedVmApplication>(),
                 isZoneBalanceEnabled,
                 isOutboundOnly,
+                enableResilientEphemeralOsDisk,
                 additionalBinaryDataProperties);
         }
     }

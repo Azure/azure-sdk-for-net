@@ -692,12 +692,17 @@ namespace Azure.Generator.Management.Visitors
                                 }
                             }
 
-                            // we should only construct the flattened properties in the public constructor when assigning to the internal property
+                            // Construct the nested flattened property model and assign it to the internal property.
+                            // When the nested model has a public constructor, use its parameters to match
+                            // flattened properties by name; otherwise fall back to FullConstructor for
+                            // Output-only models that only have internal constructors.
                             if (currentInternalProperty is not null)
                             {
                                 var properties = value.Where(x => flattenedProperties.Contains(x.FlattenedProperty)).ToList();
-                                var conditionExpression = BuildConditionExpression(properties, publicConstructor: true);
-                                var instanceExpression = New.Instance(variable.Type, BuildConstructorParameters(variable.Type, properties, publicConstructor: true));
+                                var nestedModelType = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[variable.Type] as ModelProvider;
+                                bool nestedHasPublicCtor = nestedModelType?.Constructors.Any(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)) == true;
+                                var conditionExpression = BuildConditionExpression(properties, publicConstructor: nestedHasPublicCtor);
+                                var instanceExpression = New.Instance(variable.Type, BuildConstructorParameters(variable.Type, properties, publicConstructor: nestedHasPublicCtor));
                                 var assignmentExpression =
                                     conditionExpression is null
                                     ? instanceExpression

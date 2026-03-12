@@ -53,6 +53,16 @@ export function getSharedSegmentCount(left: string, right: string): number {
 }
 
 /**
+ * Counts the number of "providers" segments in a path.
+ * Direct resources have 1, extension resources have 2+.
+ * E.g., ".../providers/Microsoft.Compute/.../providers/Microsoft.GuestConfiguration/..." returns 2.
+ */
+export function countProviderSegments(path: string): number {
+  const segments = path.split("/").filter((s) => s !== "");
+  return segments.filter((s) => s === "providers").length;
+}
+
+/**
  * Finds the candidate whose path is the longest prefix match against the target path.
  * @param targetPath the path to match against
  * @param candidates the list of candidates to search

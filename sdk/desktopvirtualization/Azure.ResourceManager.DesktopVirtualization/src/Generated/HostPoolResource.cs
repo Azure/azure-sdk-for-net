@@ -7,58 +7,49 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A Class representing a HostPool along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HostPoolResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetHostPoolResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHostPool method.
+    /// A class representing a HostPool along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HostPoolResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetHostPools method.
     /// </summary>
     public partial class HostPoolResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="HostPoolResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="hostPoolName"> The hostPoolName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostPoolName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _hostPoolClientDiagnostics;
-        private readonly HostPoolsRestOperations _hostPoolRestClient;
-        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
-        private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
-        private readonly ClientDiagnostics _scalingPlanClientDiagnostics;
-        private readonly ScalingPlansRestOperations _scalingPlanRestClient;
-        private readonly ClientDiagnostics _userSessionClientDiagnostics;
-        private readonly UserSessionsRestOperations _userSessionRestClient;
+        private readonly ClientDiagnostics _hostPoolsClientDiagnostics;
+        private readonly HostPools _hostPoolsRestClient;
+        private readonly ClientDiagnostics _activeSessionHostConfigurationsClientDiagnostics;
+        private readonly ActiveSessionHostConfigurations _activeSessionHostConfigurationsRestClient;
         private readonly ClientDiagnostics _appAttachPackageInfoClientDiagnostics;
-        private readonly AppAttachPackageInfoRestOperations _appAttachPackageInfoRestClient;
+        private readonly AppAttachPackageInfo _appAttachPackageInfoRestClient;
         private readonly ClientDiagnostics _msixImagesClientDiagnostics;
-        private readonly MsixImagesRestOperations _msixImagesRestClient;
+        private readonly MSIXImages _msixImagesRestClient;
+        private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
+        private readonly PrivateLinkResources _privateLinkResourcesRestClient;
+        private readonly ClientDiagnostics _scalingPlansClientDiagnostics;
+        private readonly ScalingPlans _scalingPlansRestClient;
+        private readonly ClientDiagnostics _userSessionsClientDiagnostics;
+        private readonly UserSessions _userSessionsRestClient;
         private readonly HostPoolData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/hostPools";
 
-        /// <summary> Initializes a new instance of the <see cref="HostPoolResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of HostPoolResource for mocking. </summary>
         protected HostPoolResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HostPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal HostPoolResource(ArmClient client, HostPoolData data) : this(client, data.Id)
@@ -67,290 +58,104 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="HostPoolResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="HostPoolResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal HostPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _hostPoolClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string hostPoolApiVersion);
-            _hostPoolRestClient = new HostPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hostPoolApiVersion);
-            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _scalingPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ScalingPlanResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ScalingPlanResource.ResourceType, out string scalingPlanApiVersion);
-            _scalingPlanRestClient = new ScalingPlansRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, scalingPlanApiVersion);
-            _userSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", UserSessionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(UserSessionResource.ResourceType, out string userSessionApiVersion);
-            _userSessionRestClient = new UserSessionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, userSessionApiVersion);
-            _appAttachPackageInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _appAttachPackageInfoRestClient = new AppAttachPackageInfoRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _msixImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _msixImagesRestClient = new MsixImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _hostPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _hostPoolsRestClient = new HostPools(_hostPoolsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            _activeSessionHostConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _activeSessionHostConfigurationsRestClient = new ActiveSessionHostConfigurations(_activeSessionHostConfigurationsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            _appAttachPackageInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _appAttachPackageInfoRestClient = new AppAttachPackageInfo(_appAttachPackageInfoClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            _msixImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _msixImagesRestClient = new MSIXImages(_msixImagesClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            _scalingPlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _scalingPlansRestClient = new ScalingPlans(_scalingPlansClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            _userSessionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", ResourceType.Namespace, Diagnostics);
+            _userSessionsRestClient = new UserSessions(_userSessionsClientDiagnostics, Pipeline, Endpoint, hostPoolApiVersion ?? "2026-01-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual HostPoolData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hostPoolName"> The hostPoolName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostPoolName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of HostPoolPrivateEndpointConnectionResources in the HostPool. </summary>
-        /// <returns> An object representing collection of HostPoolPrivateEndpointConnectionResources and their operations over a HostPoolPrivateEndpointConnectionResource. </returns>
-        public virtual HostPoolPrivateEndpointConnectionCollection GetHostPoolPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new HostPoolPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a private endpoint connection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_GetByHostPool</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HostPoolPrivateEndpointConnectionResource>> GetHostPoolPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetHostPoolPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a private endpoint connection.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnections_GetByHostPool</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HostPoolPrivateEndpointConnectionResource> GetHostPoolPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetHostPoolPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SessionHostResources in the HostPool. </summary>
-        /// <returns> An object representing collection of SessionHostResources and their operations over a SessionHostResource. </returns>
-        public virtual SessionHostCollection GetSessionHosts()
-        {
-            return GetCachedClient(client => new SessionHostCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a session host.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SessionHostResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SessionHostResource>> GetSessionHostAsync(string sessionHostName, CancellationToken cancellationToken = default)
-        {
-            return await GetSessionHosts().GetAsync(sessionHostName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a session host.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SessionHosts_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SessionHostResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SessionHostResource> GetSessionHost(string sessionHostName, CancellationToken cancellationToken = default)
-        {
-            return GetSessionHosts().Get(sessionHostName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of MsixPackageResources in the HostPool. </summary>
-        /// <returns> An object representing collection of MsixPackageResources and their operations over a MsixPackageResource. </returns>
-        public virtual MsixPackageCollection GetMsixPackages()
-        {
-            return GetCachedClient(client => new MsixPackageCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a msixpackage.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MSIXPackages_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MsixPackageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MsixPackageResource>> GetMsixPackageAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
-        {
-            return await GetMsixPackages().GetAsync(msixPackageFullName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a msixpackage.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MSIXPackages_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MsixPackageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<MsixPackageResource> GetMsixPackage(string msixPackageFullName, CancellationToken cancellationToken = default)
-        {
-            return GetMsixPackages().Get(msixPackageFullName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a host pool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HostPools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<HostPoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.Get");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.Get");
             scope.Start();
             try
             {
-                var response = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -364,33 +169,139 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Get a host pool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> HostPools_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<HostPoolResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.Get");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.Get");
             scope.Start();
             try
             {
-                var response = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a host pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HostPools_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> The properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<HostPoolResource>> UpdateAsync(HostPoolPatch patch = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hostPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostPoolPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a host pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HostPools_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> The properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<HostPoolResource> Update(HostPoolPatch patch = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hostPoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HostPoolPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -404,38 +315,45 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Remove a host pool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> HostPools_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Force flag to delete sessionHost. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.Delete");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.Delete");
             scope.Start();
             try
             {
-                var response = await _hostPoolRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var uri = _hostPoolRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DesktopVirtualizationArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hostPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DesktopVirtualizationArmOperation operation = new DesktopVirtualizationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -449,38 +367,45 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// Remove a host pool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> HostPools_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Force flag to delete sessionHost. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.Delete");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.Delete");
             scope.Start();
             try
             {
-                var response = _hostPoolRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force, cancellationToken);
-                var uri = _hostPoolRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, force);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DesktopVirtualizationArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hostPoolsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, force, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DesktopVirtualizationArmOperation operation = new DesktopVirtualizationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -491,39 +416,257 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Update a host pool.
+        /// Operation to list the ActiveSessionHostConfigurations associated with the HostPool
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> ActiveSessionHostConfigurations_ListByHostPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Object containing HostPool definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<HostPoolResource>> UpdateAsync(HostPoolPatch patch, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ActiveSessionHostConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ActiveSessionHostConfigurationResource> GetByHostPoolAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolAsyncCollectionResultOfT(_activeSessionHostConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ActiveSessionHostConfigurationResource(Client, data));
+        }
 
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.Update");
+        /// <summary>
+        /// Operation to list the ActiveSessionHostConfigurations associated with the HostPool
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ActiveSessionHostConfigurations_ListByHostPool. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ActiveSessionHostConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ActiveSessionHostConfigurationResource> GetByHostPool(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ActiveSessionHostConfigurationData, ActiveSessionHostConfigurationResource>(new ActiveSessionHostConfigurationsGetByHostPoolCollectionResultOfT(_activeSessionHostConfigurationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ActiveSessionHostConfigurationResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets information from a package given the path to the package.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/importAppAttachPackageInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AppAttachPackageInfo_Import. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Information to import app attach package. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppAttachPackageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppAttachPackageResource> ImportAppAttachPackageInfosAsync(ImportPackageInfoContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageInfoImportAppAttachPackageInfosAsyncCollectionResultOfT(
+                _appAttachPackageInfoRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                ImportPackageInfoContent.ToRequestContent(content),
+                context), data => new AppAttachPackageResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets information from a package given the path to the package.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/importAppAttachPackageInfo. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AppAttachPackageInfo_Import. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Information to import app attach package. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="AppAttachPackageResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppAttachPackageResource> ImportAppAttachPackageInfos(ImportPackageInfoContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AppAttachPackageData, AppAttachPackageResource>(new AppAttachPackageInfoImportAppAttachPackageInfosCollectionResultOfT(
+                _appAttachPackageInfoRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                ImportPackageInfoContent.ToRequestContent(content),
+                context), data => new AppAttachPackageResource(Client, data));
+        }
+
+        /// <summary>
+        /// Operation to list the RegistrationTokens associated with the HostPool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/listRegistrationTokens. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HostPools_ListRegistrationTokens. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DesktopVirtualizationRegistrationTokenMinimal"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DesktopVirtualizationRegistrationTokenMinimal> GetRegistrationTokensAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new HostPoolsGetRegistrationTokensAsyncCollectionResultOfT(_hostPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Operation to list the RegistrationTokens associated with the HostPool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/listRegistrationTokens. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HostPools_ListRegistrationTokens. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DesktopVirtualizationRegistrationTokenMinimal"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DesktopVirtualizationRegistrationTokenMinimal> GetRegistrationTokens(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new HostPoolsGetRegistrationTokensCollectionResultOfT(_hostPoolsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+        }
+
+        /// <summary>
+        /// Registration token of the host pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/retrieveRegistrationToken. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HostPools_RetrieveRegistrationToken. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<HostPoolRegistrationInfo>> RetrieveRegistrationTokenAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.RetrieveRegistrationToken");
             scope.Start();
             try
             {
-                var response = await _hostPoolRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hostPoolsRestClient.CreateRetrieveRegistrationTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HostPoolRegistrationInfo> response = Response.FromValue(HostPoolRegistrationInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -533,39 +676,45 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// Update a host pool.
+        /// Registration token of the host pool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/retrieveRegistrationToken. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> HostPools_RetrieveRegistrationToken. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> Object containing HostPool definitions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<HostPoolResource> Update(HostPoolPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<HostPoolRegistrationInfo> RetrieveRegistrationToken(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.Update");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.RetrieveRegistrationToken");
             scope.Start();
             try
             {
-                var response = _hostPoolRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _hostPoolsRestClient.CreateRetrieveRegistrationTokenRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HostPoolRegistrationInfo> response = Response.FromValue(HostPoolRegistrationInfo.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
             }
             catch (Exception e)
             {
@@ -575,48 +724,109 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
-        /// List the private link resources available for this hostpool.
+        /// Expands and Lists MSIX packages in an Image, given the Image Path.
+        /// This action uses incorrect Msix casing intentionally to match the previous APIs.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/expandMsixImage. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByHostPool</description>
+        /// <term> Operation Id. </term>
+        /// <description> MSIXImages_Expand. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="pageSize"> Number of items per page. </param>
-        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
-        /// <param name="initialSkip"> Initial number of items to skip. </param>
+        /// <param name="msixImageUri"> Represents URI referring to MSIX Image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DesktopVirtualizationPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResourcesAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="msixImageUri"/> is null. </exception>
+        /// <returns> A collection of <see cref="ExpandMsixImage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateLinkResourcesRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DesktopVirtualizationPrivateLinkResourceData.DeserializeDesktopVirtualizationPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "HostPoolResource.GetPrivateLinkResources", "value", "nextLink", cancellationToken);
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MSIXImagesExpandMsixImagesAsyncCollectionResultOfT(
+                _msixImagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                MsixImageUri.ToRequestContent(msixImageUri),
+                context);
+        }
+
+        /// <summary>
+        /// Expands and Lists MSIX packages in an Image, given the Image Path.
+        /// This action uses incorrect Msix casing intentionally to match the previous APIs.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/expandMsixImage. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MSIXImages_Expand. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="msixImageUri"> Represents URI referring to MSIX Image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="msixImageUri"/> is null. </exception>
+        /// <returns> A collection of <see cref="ExpandMsixImage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new MSIXImagesExpandMsixImagesCollectionResultOfT(
+                _msixImagesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                MsixImageUri.ToRequestContent(msixImageUri),
+                context);
         }
 
         /// <summary>
         /// List the private link resources available for this hostpool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResources_ListByHostPool</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_ListByHostPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -625,31 +835,41 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResources(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResourcesAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _privateLinkResourcesRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DesktopVirtualizationPrivateLinkResourceData.DeserializeDesktopVirtualizationPrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "HostPoolResource.GetPrivateLinkResources", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PrivateLinkResourcesGetPrivateLinkResourcesAsyncCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                pageSize,
+                isDescending,
+                initialSkip,
+                context);
         }
 
         /// <summary>
-        /// List scaling plan associated with hostpool.
+        /// List the private link resources available for this hostpool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/scalingPlans</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/privateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScalingPlans_ListByHostPool</description>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinkResources_ListByHostPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScalingPlanResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -657,32 +877,42 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DesktopVirtualizationPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DesktopVirtualizationPrivateLinkResourceData> GetPrivateLinkResources(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), _scalingPlanClientDiagnostics, Pipeline, "HostPoolResource.GetScalingPlans", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PrivateLinkResourcesGetPrivateLinkResourcesCollectionResultOfT(
+                _privateLinkResourcesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                pageSize,
+                isDescending,
+                initialSkip,
+                context);
         }
 
         /// <summary>
         /// List scaling plan associated with hostpool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/scalingPlans</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/scalingPlans. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScalingPlans_ListByHostPool</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScalingPlans_ListByHostPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScalingPlanResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -691,141 +921,84 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScalingPlanResource> GetScalingPlans(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _scalingPlanRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scalingPlanRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), _scalingPlanClientDiagnostics, Pipeline, "HostPoolResource.GetScalingPlans", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetScalingPlansAsyncCollectionResultOfT(
+                _scalingPlansRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                pageSize,
+                isDescending,
+                initialSkip,
+                context), data => new ScalingPlanResource(Client, data));
         }
 
         /// <summary>
-        /// Registration token of the host pool.
+        /// List scaling plan associated with hostpool.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/retrieveRegistrationToken</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/scalingPlans. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_RetrieveRegistrationToken</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScalingPlans_ListByHostPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HostPoolRegistrationInfo>> RetrieveRegistrationTokenAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.RetrieveRegistrationToken");
-            scope.Start();
-            try
-            {
-                var response = await _hostPoolRestClient.RetrieveRegistrationTokenAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Registration token of the host pool.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/retrieveRegistrationToken</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_RetrieveRegistrationToken</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HostPoolRegistrationInfo> RetrieveRegistrationToken(CancellationToken cancellationToken = default)
-        {
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.RetrieveRegistrationToken");
-            scope.Start();
-            try
-            {
-                var response = _hostPoolRestClient.RetrieveRegistrationToken(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List userSessions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/userSessions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserSessions_ListByHostPool</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="UserSessionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> OData filter expression. Valid properties for filtering are userprincipalname and sessionstate. </param>
         /// <param name="pageSize"> Number of items per page. </param>
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UserSessionResource> GetUserSessionsAsync(string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScalingPlanResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScalingPlanResource> GetScalingPlans(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _userSessionRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userSessionRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new UserSessionResource(Client, UserSessionData.DeserializeUserSessionData(e)), _userSessionClientDiagnostics, Pipeline, "HostPoolResource.GetUserSessions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScalingPlanData, ScalingPlanResource>(new ScalingPlansGetScalingPlansCollectionResultOfT(
+                _scalingPlansRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                pageSize,
+                isDescending,
+                initialSkip,
+                context), data => new ScalingPlanResource(Client, data));
         }
 
         /// <summary>
-        /// List userSessions.
+        /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/userSessions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/userSessions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>UserSessions_ListByHostPool</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserSessions_ListByHostPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="UserSessionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -835,154 +1008,70 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UserSessionResource> GetUserSessions(string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<UserSessionResource> GetUserSessionsAsync(string filter = default, int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _userSessionRestClient.CreateListByHostPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, pageSizeHint, isDescending, initialSkip);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _userSessionRestClient.CreateListByHostPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, pageSizeHint, isDescending, initialSkip);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new UserSessionResource(Client, UserSessionData.DeserializeUserSessionData(e)), _userSessionClientDiagnostics, Pipeline, "HostPoolResource.GetUserSessions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetUserSessionsAsyncCollectionResultOfT(
+                _userSessionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                pageSize,
+                isDescending,
+                initialSkip,
+                context), data => new UserSessionResource(Client, data));
         }
 
         /// <summary>
-        /// Gets information from a package given the path to the package.
+        /// A synchronous resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/importAppAttachPackageInfo</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/userSessions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppAttachPackageInfo_Import</description>
+        /// <term> Operation Id. </term>
+        /// <description> UserSessions_ListByHostPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="HostPoolResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Object containing URI to package image and other optional properties. </param>
+        /// <param name="filter"> OData filter expression. Valid properties for filtering are userprincipalname and sessionstate. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="AppAttachPackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AppAttachPackageResource> ImportAppAttachPackageInfosAsync(ImportPackageInfoContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="UserSessionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<UserSessionResource> GetUserSessions(string filter = default, int? pageSize = default, bool? isDescending = default, int? initialSkip = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appAttachPackageInfoRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appAttachPackageInfoRestClient.CreateImportNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppAttachPackageResource(Client, AppAttachPackageData.DeserializeAppAttachPackageData(e)), _appAttachPackageInfoClientDiagnostics, Pipeline, "HostPoolResource.ImportAppAttachPackageInfos", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<UserSessionData, UserSessionResource>(new UserSessionsGetUserSessionsCollectionResultOfT(
+                _userSessionsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                filter,
+                pageSize,
+                isDescending,
+                initialSkip,
+                context), data => new UserSessionResource(Client, data));
         }
 
-        /// <summary>
-        /// Gets information from a package given the path to the package.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/importAppAttachPackageInfo</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AppAttachPackageInfo_Import</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> Object containing URI to package image and other optional properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="AppAttachPackageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AppAttachPackageResource> ImportAppAttachPackageInfos(ImportPackageInfoContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _appAttachPackageInfoRestClient.CreateImportRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appAttachPackageInfoRestClient.CreateImportNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppAttachPackageResource(Client, AppAttachPackageData.DeserializeAppAttachPackageData(e)), _appAttachPackageInfoClientDiagnostics, Pipeline, "HostPoolResource.ImportAppAttachPackageInfos", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Expands and Lists MSIX packages in an Image, given the Image Path.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/expandMsixImage</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MsixImages_Expand</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="msixImageUri"> Object containing URI to MSIX Image. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixImageUri"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ExpandMsixImage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpandMsixImage> ExpandMsixImagesAsync(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixImagesRestClient.CreateExpandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixImagesRestClient.CreateExpandNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ExpandMsixImage.DeserializeExpandMsixImage(e), _msixImagesClientDiagnostics, Pipeline, "HostPoolResource.ExpandMsixImages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Expands and Lists MSIX packages in an Image, given the Image Path.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/expandMsixImage</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MsixImages_Expand</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="msixImageUri"> Object containing URI to MSIX Image. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="msixImageUri"/> is null. </exception>
-        /// <returns> A collection of <see cref="ExpandMsixImage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpandMsixImage> ExpandMsixImages(MsixImageUri msixImageUri, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(msixImageUri, nameof(msixImageUri));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixImagesRestClient.CreateExpandRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixImagesRestClient.CreateExpandNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixImageUri);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ExpandMsixImage.DeserializeExpandMsixImage(e), _msixImagesClientDiagnostics, Pipeline, "HostPoolResource.ExpandMsixImages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -992,29 +1081,35 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.AddTag");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HostPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
+                    return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HostPoolPatch();
-                    foreach (var tag in current.Tags)
+                    HostPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    HostPoolPatch patch = new HostPoolPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<HostPoolResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1024,27 +1119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1054,29 +1129,35 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.AddTag");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new HostPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
+                    return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HostPoolPatch();
-                    foreach (var tag in current.Tags)
+                    HostPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    HostPoolPatch patch = new HostPoolPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<HostPoolResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1086,54 +1167,40 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<HostPoolResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.SetTags");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HostPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
+                    return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HostPoolPatch();
+                    HostPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    HostPoolPatch patch = new HostPoolPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<HostPoolResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1143,54 +1210,40 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<HostPoolResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.SetTags");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new HostPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
+                    return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HostPoolPatch();
+                    HostPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    HostPoolPatch patch = new HostPoolPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<HostPoolResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1200,27 +1253,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1228,29 +1261,35 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.RemoveTag");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _hostPoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new HostPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
+                    return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new HostPoolPatch();
-                    foreach (var tag in current.Tags)
+                    HostPoolData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    HostPoolPatch patch = new HostPoolPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<HostPoolResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1260,27 +1299,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HostPools_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-04-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HostPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -1288,29 +1307,35 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolResource.RemoveTag");
+            using DiagnosticScope scope = _hostPoolsClientDiagnostics.CreateScope("HostPoolResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _hostPoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                    return Response.FromValue(new HostPoolResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _hostPoolsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<HostPoolData> response = Response.FromValue(HostPoolData.FromResponse(result), result);
+                    return Response.FromValue(new HostPoolResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new HostPoolPatch();
-                    foreach (var tag in current.Tags)
+                    HostPoolData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    HostPoolPatch patch = new HostPoolPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<HostPoolResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1318,6 +1343,126 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of HostPoolPrivateEndpointConnections in the <see cref="HostPoolResource"/>. </summary>
+        /// <returns> An object representing collection of HostPoolPrivateEndpointConnections and their operations over a HostPoolPrivateEndpointConnectionResource. </returns>
+        public virtual HostPoolPrivateEndpointConnectionCollection GetHostPoolPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new HostPoolPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Get a PrivateEndpointConnectionWithSystemData. </summary>
+        /// <param name="privateEndpointConnectionName"> The name parameter for private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HostPoolPrivateEndpointConnectionResource>> GetHostPoolPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetHostPoolPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a PrivateEndpointConnectionWithSystemData. </summary>
+        /// <param name="privateEndpointConnectionName"> The name parameter for private endpoint. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HostPoolPrivateEndpointConnectionResource> GetHostPoolPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetHostPoolPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SessionHosts in the <see cref="HostPoolResource"/>. </summary>
+        /// <returns> An object representing collection of SessionHosts and their operations over a SessionHostResource. </returns>
+        public virtual SessionHostCollection GetSessionHosts()
+        {
+            return GetCachedClient(client => new SessionHostCollection(client, Id));
+        }
+
+        /// <summary> Get a session host. </summary>
+        /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SessionHostResource>> GetSessionHostAsync(string sessionHostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+
+            return await GetSessionHosts().GetAsync(sessionHostName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a session host. </summary>
+        /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SessionHostResource> GetSessionHost(string sessionHostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+
+            return GetSessionHosts().Get(sessionHostName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of MsixPackages in the <see cref="HostPoolResource"/>. </summary>
+        /// <returns> An object representing collection of MsixPackages and their operations over a MsixPackageResource. </returns>
+        public virtual MsixPackageCollection GetMsixPackages()
+        {
+            return GetCachedClient(client => new MsixPackageCollection(client, Id));
+        }
+
+        /// <summary> Get a msixpackage. </summary>
+        /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MsixPackageResource>> GetMsixPackageAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
+
+            return await GetMsixPackages().GetAsync(msixPackageFullName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a msixpackage. </summary>
+        /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MsixPackageResource> GetMsixPackage(string msixPackageFullName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
+
+            return GetMsixPackages().Get(msixPackageFullName, cancellationToken);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ActiveSessionHostConfigurationResource"/> along with the instance operations that can be performed on it in the <see cref="HostPoolResource"/>. </summary>
+        /// <returns> Returns a <see cref="ActiveSessionHostConfigurationResource"/> object. </returns>
+        public virtual ActiveSessionHostConfigurationResource GetActiveSessionHostConfiguration()
+        {
+            return new ActiveSessionHostConfigurationResource(Client, Id.AppendChildResource("activeSessionHostConfigurations", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="SessionHostManagementResource"/> along with the instance operations that can be performed on it in the <see cref="HostPoolResource"/>. </summary>
+        /// <returns> Returns a <see cref="SessionHostManagementResource"/> object. </returns>
+        public virtual SessionHostManagementResource GetSessionHostManagement()
+        {
+            return new SessionHostManagementResource(Client, Id.AppendChildResource("sessionHostManagements", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="SessionHostConfigurationResource"/> along with the instance operations that can be performed on it in the <see cref="HostPoolResource"/>. </summary>
+        /// <returns> Returns a <see cref="SessionHostConfigurationResource"/> object. </returns>
+        public virtual SessionHostConfigurationResource GetSessionHostConfiguration()
+        {
+            return new SessionHostConfigurationResource(Client, Id.AppendChildResource("sessionHostConfigurations", "default"));
         }
     }
 }
