@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
@@ -126,5 +127,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const int Tags_AiCloudRole_MaxLength = 256;
         public const int Tags_AiCloudRoleInstance_MaxLength = 256;
         public const int Tags_AiInternalSdkVersion_MaxLength = 64;
+
+        /// <summary>
+        /// GenAI semantic convention property keys that are exempt from value truncation.
+        /// These properties may carry large payloads (e.g. full prompt/completion content)
+        /// and must not be truncated.
+        /// </summary>
+        public static readonly HashSet<string> TruncationExemptProperties = new HashSet<string>(StringComparer.Ordinal)
+        {
+            "gen_ai.input.messages",
+            "gen_ai.output.messages",
+            "gen_ai.system_instructions",
+            "gen_ai.tool.definitions",
+            "gen_ai.tool.call.arguments",
+            "gen_ai.tool.call.result",
+            "gen_ai.evaluation.explanation",
+        };
     }
 }

@@ -89,7 +89,11 @@ function Get-GeneratorType {
                 # Continue
             }
         }
-        return "Provisioning (Reflection)"
+        # Check if the library actually has a Generated folder (reflection-based provisioning uses it)
+        if (Test-Path (Join-Path $Path "src\Generated")) {
+            return "Provisioning (Reflection)"
+        }
+        return "Provisioning (No Generator)"
     }
 
     # Special case for Azure.AI.OpenAI which uses TypeSpec with new generator via special handling
@@ -221,7 +225,7 @@ function New-MarkdownReport {
     # Generate a markdown report from the library inventory.
 
     # Define exclusion list for generator types that are not TypeSpec new emitters
-    $excludedGenerators = @("Swagger", "TSP-Old", "No Generator", "Provisioning (Reflection)", "Provisioning (TypeSpec)")
+    $excludedGenerators = @("Swagger", "TSP-Old", "No Generator", "Provisioning (Reflection)", "Provisioning (TypeSpec)", "Provisioning (No Generator)")
 
     # Group by type and generator
     $mgmtLibraries = $Libraries | Where-Object { $_.type -eq "Management" }
@@ -283,8 +287,10 @@ function New-MarkdownReport {
     $report += "- Provisioning: $($provisioningLibraries.Count)"
     $provReflection = ($provisioningLibraries | Where-Object { $_.generator -eq "Provisioning (Reflection)" }).Count
     $provTypeSpec = ($provisioningLibraries | Where-Object { $_.generator -eq "Provisioning (TypeSpec)" }).Count
+    $provNoGenerator = ($provisioningLibraries | Where-Object { $_.generator -eq "Provisioning (No Generator)" }).Count
     $report += "  - Reflection-based generator: $provReflection"
     $report += "  - TypeSpec-based generator: $provTypeSpec"
+    $report += "  - No generator: $provNoGenerator"
     $report += "- No generator: $($noGenerator.Count)"
     $report += "`n"
 
@@ -358,7 +364,11 @@ function New-MarkdownReport {
         $report += "| ------- | ------- | ----------------- | --------- |"
         $sortedProvisioning = $provisioningLibraries | Sort-Object service, library
         foreach ($lib in $sortedProvisioning) {
-            $generatorLabel = if ($lib.generator -eq "Provisioning (TypeSpec)") { "TypeSpec ✅" } else { "Reflection" }
+            $generatorLabel = switch ($lib.generator) {
+                "Provisioning (TypeSpec)" { "TypeSpec ✅" }
+                "Provisioning (No Generator)" { "None" }
+                default { "Reflection" }
+            }
             # Format each mgmt dependency with ✅ if it uses the new TypeSpec emitter
             $depsFormatted = ($lib.mgmtPeerLibrary | ForEach-Object {
                 if ($mgmtNewEmitterSet.ContainsKey($_)) { "$_ ✅" } else { $_ }

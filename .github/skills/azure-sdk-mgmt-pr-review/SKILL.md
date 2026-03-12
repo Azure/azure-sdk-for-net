@@ -88,6 +88,17 @@ To determine the review scope:
 - **Good examples:** `StorageAccountPublicNetworkAccess`, `CosmosDBEncryptionStatus`, `KeyVaultPrivateEndpointConnection` — these names include the service or resource context.
 - Exception: If the type is scoped within a clearly named parent model or the namespace already provides unambiguous context (e.g., a property type used exclusively by one resource), a shorter name may be acceptable.
 
+#### Naming Fix Recommendations
+
+When flagging a naming issue, the recommended fix depends on whether the type is explicitly defined in the service's TypeSpec.
+
+1. **Type is defined in the service's TypeSpec**: Recommend adding a `@@clientName` decorator in `client.tsp`.
+   - Example: `@@clientName(PublicNetworkAccess, "DurableTaskPublicNetworkAccess", "csharp");`
+2. **Type is NOT defined in the service's TypeSpec**: `@@clientName` cannot be used. Instead, recommend **SDK-side custom code** — create a customization file (e.g., `src/Customize/Models/<NewName>.cs`) using `[CodeGenType("OriginalGeneratedName")]` to rename the type.
+   - Example: `[CodeGenType("OptionalPropertiesUpdateableProperties")]` on a class named `DurableTaskPrivateEndpointConnectionPatchProperties`.
+
+To determine whether a type is defined in the service's TypeSpec, search all `.tsp` files under the spec folder for a `model`, `union`, or `enum` declaration with the same name.
+
 #### Enums
 - Use singular type name (not plural) unless bit flags
 - Numeric version enums should use underscore: `Tls1_0`, `Ver5_6`

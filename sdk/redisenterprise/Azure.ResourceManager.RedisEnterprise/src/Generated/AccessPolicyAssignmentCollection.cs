@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
     /// <summary>
     /// A class representing a collection of <see cref="AccessPolicyAssignmentResource"/> and their operations.
     /// Each <see cref="AccessPolicyAssignmentResource"/> in the collection will belong to the same instance of <see cref="RedisEnterpriseDatabaseResource"/>.
-    /// To get an <see cref="AccessPolicyAssignmentCollection"/> instance call the GetAccessPolicyAssignments method from an instance of <see cref="RedisEnterpriseDatabaseResource"/>.
+    /// To get a <see cref="AccessPolicyAssignmentCollection"/> instance call the GetAccessPolicyAssignments method from an instance of <see cref="RedisEnterpriseDatabaseResource"/>.
     /// </summary>
     public partial class AccessPolicyAssignmentCollection : ArmCollection, IEnumerable<AccessPolicyAssignmentResource>, IAsyncEnumerable<AccessPolicyAssignmentResource>
     {
         private readonly ClientDiagnostics _accessPolicyAssignmentClientDiagnostics;
-        private readonly AccessPolicyAssignmentRestOperations _accessPolicyAssignmentRestClient;
+        private readonly AccessPolicyAssignment _accessPolicyAssignmentRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AccessPolicyAssignmentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of AccessPolicyAssignmentCollection for mocking. </summary>
         protected AccessPolicyAssignmentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AccessPolicyAssignmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccessPolicyAssignmentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AccessPolicyAssignmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _accessPolicyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", AccessPolicyAssignmentResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(AccessPolicyAssignmentResource.ResourceType, out string accessPolicyAssignmentApiVersion);
-            _accessPolicyAssignmentRestClient = new AccessPolicyAssignmentRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, accessPolicyAssignmentApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _accessPolicyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", AccessPolicyAssignmentResource.ResourceType.Namespace, Diagnostics);
+            _accessPolicyAssignmentRestClient = new AccessPolicyAssignment(_accessPolicyAssignmentClientDiagnostics, Pipeline, Endpoint, accessPolicyAssignmentApiVersion ?? "2025-08-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != RedisEnterpriseDatabaseResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RedisEnterpriseDatabaseResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RedisEnterpriseDatabaseResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates/Updates a particular access policy assignment for a database
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_CreateUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessPolicyAssignments_CreateUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AccessPolicyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="accessPolicyAssignmentName"> The name of the Redis Enterprise database access policy assignment. </param>
         /// <param name="data"> Parameters supplied to the create access policy assignment for database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<AccessPolicyAssignmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string accessPolicyAssignmentName, AccessPolicyAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPolicyAssignmentName, nameof(accessPolicyAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _accessPolicyAssignmentRestClient.CreateUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new RedisEnterpriseArmOperation<AccessPolicyAssignmentResource>(new AccessPolicyAssignmentOperationSource(Client), _accessPolicyAssignmentClientDiagnostics, Pipeline, _accessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, AccessPolicyAssignmentData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RedisEnterpriseArmOperation<AccessPolicyAssignmentResource> operation = new RedisEnterpriseArmOperation<AccessPolicyAssignmentResource>(
+                    new AccessPolicyAssignmentOperationSource(Client),
+                    _accessPolicyAssignmentClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Creates/Updates a particular access policy assignment for a database
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_CreateUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessPolicyAssignments_CreateUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AccessPolicyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="accessPolicyAssignmentName"> The name of the Redis Enterprise database access policy assignment. </param>
         /// <param name="data"> Parameters supplied to the create access policy assignment for database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<AccessPolicyAssignmentResource> CreateOrUpdate(WaitUntil waitUntil, string accessPolicyAssignmentName, AccessPolicyAssignmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPolicyAssignmentName, nameof(accessPolicyAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _accessPolicyAssignmentRestClient.CreateUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, data, cancellationToken);
-                var operation = new RedisEnterpriseArmOperation<AccessPolicyAssignmentResource>(new AccessPolicyAssignmentOperationSource(Client), _accessPolicyAssignmentClientDiagnostics, Pipeline, _accessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, data).Request, response, OperationFinalStateVia.OriginalUri);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, AccessPolicyAssignmentData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RedisEnterpriseArmOperation<AccessPolicyAssignmentResource> operation = new RedisEnterpriseArmOperation<AccessPolicyAssignmentResource>(
+                    new AccessPolicyAssignmentOperationSource(Client),
+                    _accessPolicyAssignmentClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Gets information about access policy assignment for database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessPolicyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AccessPolicyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessPolicyAssignmentName"> The name of the Redis Enterprise database access policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<AccessPolicyAssignmentResource>> GetAsync(string accessPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPolicyAssignmentName, nameof(accessPolicyAssignmentName));
 
-            using var scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.Get");
+            using DiagnosticScope scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _accessPolicyAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accessPolicyAssignmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<AccessPolicyAssignmentData> response = Response.FromValue(AccessPolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AccessPolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Gets information about access policy assignment for database.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessPolicyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AccessPolicyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessPolicyAssignmentName"> The name of the Redis Enterprise database access policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<AccessPolicyAssignmentResource> Get(string accessPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPolicyAssignmentName, nameof(accessPolicyAssignmentName));
 
-            using var scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.Get");
+            using DiagnosticScope scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.Get");
             scope.Start();
             try
             {
-                var response = _accessPolicyAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accessPolicyAssignmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<AccessPolicyAssignmentData> response = Response.FromValue(AccessPolicyAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new AccessPolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Gets all access policy assignments..
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessPolicyAssignments_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AccessPolicyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccessPolicyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AccessPolicyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AccessPolicyAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _accessPolicyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _accessPolicyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AccessPolicyAssignmentResource(Client, AccessPolicyAssignmentData.DeserializeAccessPolicyAssignmentData(e)), _accessPolicyAssignmentClientDiagnostics, Pipeline, "AccessPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<AccessPolicyAssignmentData, AccessPolicyAssignmentResource>(new AccessPolicyAssignmentGetAllAsyncCollectionResultOfT(
+                _accessPolicyAssignmentRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new AccessPolicyAssignmentResource(Client, data));
         }
 
         /// <summary>
         /// Gets all access policy assignments..
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessPolicyAssignments_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AccessPolicyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <returns> A collection of <see cref="AccessPolicyAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AccessPolicyAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _accessPolicyAssignmentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _accessPolicyAssignmentRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AccessPolicyAssignmentResource(Client, AccessPolicyAssignmentData.DeserializeAccessPolicyAssignmentData(e)), _accessPolicyAssignmentClientDiagnostics, Pipeline, "AccessPolicyAssignmentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<AccessPolicyAssignmentData, AccessPolicyAssignmentResource>(new AccessPolicyAssignmentGetAllCollectionResultOfT(
+                _accessPolicyAssignmentRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new AccessPolicyAssignmentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessPolicyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AccessPolicyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessPolicyAssignmentName"> The name of the Redis Enterprise database access policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string accessPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPolicyAssignmentName, nameof(accessPolicyAssignmentName));
 
-            using var scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.Exists");
+            using DiagnosticScope scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _accessPolicyAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accessPolicyAssignmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AccessPolicyAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AccessPolicyAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AccessPolicyAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessPolicyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AccessPolicyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessPolicyAssignmentName"> The name of the Redis Enterprise database access policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string accessPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPolicyAssignmentName, nameof(accessPolicyAssignmentName));
 
-            using var scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.Exists");
+            using DiagnosticScope scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _accessPolicyAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accessPolicyAssignmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AccessPolicyAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AccessPolicyAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AccessPolicyAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessPolicyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AccessPolicyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessPolicyAssignmentName"> The name of the Redis Enterprise database access policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<AccessPolicyAssignmentResource>> GetIfExistsAsync(string accessPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPolicyAssignmentName, nameof(accessPolicyAssignmentName));
 
-            using var scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _accessPolicyAssignmentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accessPolicyAssignmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<AccessPolicyAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AccessPolicyAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AccessPolicyAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AccessPolicyAssignmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AccessPolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/databases/{databaseName}/accessPolicyAssignments/{accessPolicyAssignmentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AccessPolicyAssignment_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AccessPolicyAssignments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AccessPolicyAssignmentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessPolicyAssignmentName"> The name of the Redis Enterprise database access policy assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="accessPolicyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<AccessPolicyAssignmentResource> GetIfExists(string accessPolicyAssignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(accessPolicyAssignmentName, nameof(accessPolicyAssignmentName));
 
-            using var scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.GetIfExists");
+            using DiagnosticScope scope = _accessPolicyAssignmentClientDiagnostics.CreateScope("AccessPolicyAssignmentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _accessPolicyAssignmentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _accessPolicyAssignmentRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, accessPolicyAssignmentName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<AccessPolicyAssignmentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(AccessPolicyAssignmentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((AccessPolicyAssignmentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<AccessPolicyAssignmentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new AccessPolicyAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<AccessPolicyAssignmentResource> IAsyncEnumerable<AccessPolicyAssignmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
