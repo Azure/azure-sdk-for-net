@@ -25,7 +25,7 @@ namespace Azure.Provisioning.KeyVault
         private BicepValue<ETag> _eTag;
         private BicepValue<ResourceIdentifier> _id;
         private SystemData _systemData;
-        private ResourceReference<KeyVault> _parent;
+        private ResourceReference<KeyVaultService> _parent;
 
         /// <summary> Creates a new KeyVaultPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.KeyVault
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public KeyVault Parent
+        public KeyVaultService Parent
         {
             get
             {
@@ -190,7 +190,7 @@ namespace Azure.Provisioning.KeyVault
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _parent = DefineResource<KeyVault>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<KeyVaultService>("Parent", new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

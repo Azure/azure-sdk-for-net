@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.KeyVault
 {
     /// <summary> Resource information with extended details. </summary>
-    public partial class KeyVault : ProvisionableResource
+    public partial class KeyVaultService : ProvisionableResource
     {
         private KeyVaultProperties _properties;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.KeyVault
         private BicepValue<ResourceIdentifier> _id;
         private SystemData _systemData;
 
-        /// <summary> Creates a new KeyVault. </summary>
+        /// <summary> Creates a new KeyVaultService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public KeyVault(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.KeyVault/vaults", resourceVersion ?? "2025-05-01")
+        public KeyVaultService(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.KeyVault/vaults", resourceVersion ?? "2025-05-01")
         {
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.KeyVault
             }
         }
 
-        /// <summary> Define all the provisionable properties for KeyVault. </summary>
+        /// <summary> Define all the provisionable properties for KeyVaultService. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -122,17 +122,17 @@ namespace Azure.Provisioning.KeyVault
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing KeyVault. </summary>
+        /// <summary> Creates a reference to an existing KeyVaultService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static KeyVault FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static KeyVaultService FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            KeyVault result = new KeyVault(bicepIdentifier, resourceVersion);
+            KeyVaultService result = new KeyVaultService(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for KeyVault that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for KeyVaultService that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>
