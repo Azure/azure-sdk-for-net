@@ -41,6 +41,7 @@ class AzureEngSemanticVersion : IComparable {
 
   # Python PEP 440 post-release extension: SEMVER_REGEX + optional post-release suffix.
   # Handles all PEP 440 alternate formats: .postN, -postN, _postN, postN, .post.N (case-insensitive)
+  # Validation: https://regex101.com/r/rAdOg0/1
   static [string] $PYTHON_SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:(?<presep>-?)(?<prelabel>[a-zA-Z]+)(?:(?<prenumsep>\.?)(?<prenumber>[0-9]{1,8})(?:(?<buildnumsep>\.?)(?<buildnumber>\d{1,3}))?)?)?(?:(?<postsep>[.\-_]?)(?i:post)\.?(?<postnum>\d+))?"
 
   static [AzureEngSemanticVersion] ParseVersionString([string] $versionString)
