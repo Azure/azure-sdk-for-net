@@ -34,7 +34,9 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
     private readonly IReadOnlyDictionary<string, ParameterContextMapping> _parameters;
     public ParameterContextRegistry(IReadOnlyList<ParameterContextMapping> parameters)
     {
-        _parameters = parameters.ToDictionary(p => p.ParameterName);
+        _parameters = parameters
+            .GroupBy(p => p.ParameterName)
+            .ToDictionary(g => g.Key, g => g.Last());
     }
 
     public ParameterContextMapping this[string key] => _parameters[key];
@@ -95,7 +97,16 @@ internal class ParameterContextRegistry : IReadOnlyDictionary<string, ParameterC
                 var bodyParameter = methodParameters.SingleOrDefault(p => p.Location == ParameterLocation.Body);
                 if (bodyParameter is not null)
                 {
-                    arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));
+                    // For model types that have ToRequestContent, use the static method
+                    // For primitive/collection types (e.g., IDictionary, IEnumerable<string>), serialize via BinaryData
+                    if (bodyParameter.Type.IsFrameworkType || bodyParameter.Type.IsCollection)
+                    {
+                        arguments.Add(Static(typeof(RequestContent)).Invoke("Create", [Static(typeof(BinaryData)).Invoke(nameof(BinaryData.FromObjectAsJson), [bodyParameter])]));
+                    }
+                    else
+                    {
+                        arguments.Add(Static(bodyParameter.Type).Invoke(SerializationVisitor.ToRequestContentMethodName, [bodyParameter]));
+                    }
                 }
                 else
                 {
