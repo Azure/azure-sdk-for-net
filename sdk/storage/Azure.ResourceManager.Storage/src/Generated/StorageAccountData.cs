@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal StorageAccountData(AzureLocation location) : base(location)
+        public StorageAccountData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The extendedLocation of the resource. </summary>
         [WirePath("extendedLocation")]
-        public ExtendedLocation ExtendedLocation { get; }
+        public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The availability zones. </summary>
         [WirePath("zones")]
@@ -220,6 +220,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.AzureFilesIdentityBasedAuthentication;
             }
+            set { }
         }
 
         /// <summary> Allows https traffic only to storage service if sets to true. </summary>
@@ -230,6 +231,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.EnableHttpsTrafficOnly;
             }
+            set { }
         }
 
         /// <summary> Network rule set. </summary>
@@ -250,6 +252,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.IsSftpEnabled;
             }
+            set { }
         }
 
         /// <summary> Enables local users feature, if set to true. </summary>
@@ -260,6 +263,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.IsLocalUserEnabled;
             }
+            set { }
         }
 
         /// <summary> Enables extended group support with local users feature, if set to true. </summary>
@@ -280,6 +284,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.IsHnsEnabled;
             }
+            set { }
         }
 
         /// <summary> Geo Replication Stats. </summary>
@@ -310,6 +315,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.LargeFileSharesState;
             }
+            set { }
         }
 
         /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
@@ -330,6 +336,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.RoutingPreference;
             }
+            set { }
         }
 
         /// <summary> Blob restore status. </summary>
@@ -350,6 +357,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.AllowBlobPublicAccess;
             }
+            set { }
         }
 
         /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
@@ -360,6 +368,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.MinimumTlsVersion;
             }
+            set { }
         }
 
         /// <summary> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </summary>
@@ -370,6 +379,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.AllowSharedKeyAccess;
             }
+            set { }
         }
 
         /// <summary> NFS 3.0 protocol support enabled if set to true. </summary>
@@ -390,6 +400,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.AllowCrossTenantReplication;
             }
+            set { }
         }
 
         /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
@@ -410,6 +421,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.PublicNetworkAccess;
             }
+            set { }
         }
 
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </summary>
@@ -420,6 +432,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.ImmutableStorageWithVersioning;
             }
+            set { }
         }
 
         /// <summary> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </summary>
@@ -430,6 +443,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.AllowedCopyScope;
             }
+            set { }
         }
 
         /// <summary> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </summary>
@@ -440,6 +454,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.StorageAccountSkuConversionStatus;
             }
+            set { }
         }
 
         /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
@@ -450,6 +465,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.DnsEndpointType;
             }
+            set { }
         }
 
         /// <summary> This property will be set to true or false on an event of ongoing migration. Default value is null. </summary>
@@ -520,6 +536,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Properties.IsBlobEnabled;
             }
+            set { }
         }
 
         /// <summary> The availability zone pinning policy for the storage account. </summary>
@@ -530,6 +547,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return Placement.ZonePlacementPolicy;
             }
+            set { }
         }
     }
 }
