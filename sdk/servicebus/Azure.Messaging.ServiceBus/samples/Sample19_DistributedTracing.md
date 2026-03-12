@@ -197,7 +197,7 @@ The following operations emit diagnostic activities:
 | `ServiceBusSender.Schedule` | `ScheduleMessageAsync`, `ScheduleMessagesAsync` |
 | `ServiceBusSender.Cancel` | `CancelScheduledMessageAsync`, `CancelScheduledMessagesAsync` |
 | `ServiceBusReceiver.Receive` | `ReceiveMessageAsync`, `ReceiveMessagesAsync` |
-| `ServiceBusReceiver.ReceiveDeferred` | `ReceiveDeferredMessagesAsync` |
+| `ServiceBusReceiver.ReceiveDeferred` | `ReceiveDeferredMessageAsync`, `ReceiveDeferredMessagesAsync` |
 | `ServiceBusReceiver.Peek` | `PeekMessageAsync`, `PeekMessagesAsync` |
 | `ServiceBusReceiver.Abandon` | `AbandonMessageAsync` |
 | `ServiceBusReceiver.Complete` | `CompleteMessageAsync` |
