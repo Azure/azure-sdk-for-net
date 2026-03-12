@@ -12,7 +12,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class DataProtectionBackupVaultProperties
     {
         /// <summary> Is vault protected by resource guard. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool? IsVaultProtectedByResourceGuard { get; set; }
+
+        /// <summary> Gets or sets the alert settings for all job failures. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AzureMonitorAlertsState? AlertSettingsForAllJobFailures
+        {
+            get
+            {
+                return MonitoringSettings is null ? default : MonitoringSettings.AlertSettingsForAllJobFailures;
+            }
+            set
+            {
+                if (MonitoringSettings is null)
+                {
+                    MonitoringSettings = new MonitoringSettings();
+                }
+                MonitoringSettings.AlertSettingsForAllJobFailures = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the cross subscription restore state.
