@@ -1,4 +1,4 @@
-# Azure.Provisioning.Cdn client library for .NET
+# Azure Provisioning Cdn client library for .NET
 
 Azure.Provisioning.Cdn simplifies declarative resource provisioning for Azure CDN in .NET.
 
