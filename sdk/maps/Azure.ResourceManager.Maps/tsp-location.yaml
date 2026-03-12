@@ -1,4 +1,4 @@
 directory: specification/maps/resource-manager/Microsoft.Maps/Maps
-commit: 3bf18cff67ddd1bd1cb23efbec27d0d630cc02e7
-repo: Azure/azure-rest-api-specs
+commit: 9f60134c84facfba6b6b0153bd2be4e31db0259e
+repo: live1206/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
