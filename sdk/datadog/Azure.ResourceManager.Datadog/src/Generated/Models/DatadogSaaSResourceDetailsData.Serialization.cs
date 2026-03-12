@@ -18,58 +18,58 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Marketplace SaaS resource details. </summary>
-    public partial class DatadogSaaSResourceDetailsResult : ResourceData, IJsonModel<DatadogSaaSResourceDetailsResult>
+    public partial class DatadogSaaSResourceDetailsData : ResourceData, IJsonModel<DatadogSaaSResourceDetailsData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogSaaSResourceDetailsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDatadogSaaSResourceDetailsResult(document.RootElement, options);
+                        return DeserializeDatadogSaaSResourceDetailsData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogSaaSResourceDetailsResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogSaaSResourceDetailsData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogSaaSResourceDetailsData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogSaaSResourceDetailsResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogSaaSResourceDetailsData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatadogSaaSResourceDetailsResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DatadogSaaSResourceDetailsData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatadogSaaSResourceDetailsResult IPersistableModel<DatadogSaaSResourceDetailsResult>.Create(BinaryData data, ModelReaderWriterOptions options) => (DatadogSaaSResourceDetailsResult)PersistableModelCreateCore(data, options);
+        DatadogSaaSResourceDetailsData IPersistableModel<DatadogSaaSResourceDetailsData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DatadogSaaSResourceDetailsData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatadogSaaSResourceDetailsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatadogSaaSResourceDetailsData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatadogSaaSResourceDetailsResult"/> from. </param>
-        internal static DatadogSaaSResourceDetailsResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatadogSaaSResourceDetailsData"/> from. </param>
+        internal static DatadogSaaSResourceDetailsData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDatadogSaaSResourceDetailsResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDatadogSaaSResourceDetailsData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DatadogSaaSResourceDetailsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatadogSaaSResourceDetailsData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogSaaSResourceDetailsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogSaaSResourceDetailsResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogSaaSResourceDetailsData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(SaaSId))
@@ -95,24 +95,24 @@ namespace Azure.ResourceManager.Datadog.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatadogSaaSResourceDetailsResult IJsonModel<DatadogSaaSResourceDetailsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DatadogSaaSResourceDetailsResult)JsonModelCreateCore(ref reader, options);
+        DatadogSaaSResourceDetailsData IJsonModel<DatadogSaaSResourceDetailsData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DatadogSaaSResourceDetailsData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatadogSaaSResourceDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatadogSaaSResourceDetailsData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogSaaSResourceDetailsResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogSaaSResourceDetailsData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatadogSaaSResourceDetailsResult(document.RootElement, options);
+            return DeserializeDatadogSaaSResourceDetailsData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatadogSaaSResourceDetailsResult DeserializeDatadogSaaSResourceDetailsResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static DatadogSaaSResourceDetailsData DeserializeDatadogSaaSResourceDetailsData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatadogSaaSResourceDetailsResult(
+            return new DatadogSaaSResourceDetailsData(
                 id,
                 name,
                 resourceType,

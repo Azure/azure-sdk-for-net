@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Marketplace SaaS resource details. </summary>
-    public partial class DatadogSaaSResourceDetailsResult : ResourceData
+    public partial class DatadogSaaSResourceDetailsData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatadogSaaSResourceDetailsResult"/>. </summary>
-        internal DatadogSaaSResourceDetailsResult()
+        /// <summary> Initializes a new instance of <see cref="DatadogSaaSResourceDetailsData"/>. </summary>
+        internal DatadogSaaSResourceDetailsData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatadogSaaSResourceDetailsResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogSaaSResourceDetailsData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="saaSId"> Id of the Marketplace SaaS Resource. </param>
-        internal DatadogSaaSResourceDetailsResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string saaSId) : base(id, name, resourceType, systemData)
+        internal DatadogSaaSResourceDetailsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string saaSId) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             SaaSId = saaSId;

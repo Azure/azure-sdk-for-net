@@ -4,6 +4,8 @@
 
 ### Features Added
 
+Updated to api version 2025-12-26-preview.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -14,7 +16,7 @@
 
 ### Features Added
 
-Updated to api version 2025-12-26-preview.
+Updated to api version 2025-06-11.
 
 ## 1.0.0-beta.6 (2025-08-04)
 

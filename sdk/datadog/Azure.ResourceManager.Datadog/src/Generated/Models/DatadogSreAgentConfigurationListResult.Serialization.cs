@@ -15,7 +15,7 @@ using Azure.ResourceManager.Datadog;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> Response of a list operation. </summary>
-    public partial class DatadogSreAgentConfigurationListResult : IJsonModel<DatadogSreAgentConfigurationListResult>
+    internal partial class DatadogSreAgentConfigurationListResult : IJsonModel<DatadogSreAgentConfigurationListResult>
     {
         /// <summary> Initializes a new instance of <see cref="DatadogSreAgentConfigurationListResult"/> for deserialization. </summary>
         internal DatadogSreAgentConfigurationListResult()

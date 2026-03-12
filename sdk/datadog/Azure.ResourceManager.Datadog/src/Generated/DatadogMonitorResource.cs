@@ -1193,32 +1193,22 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DatadogSreAgentConfigurationListResult>> ManageSreAgentConnectorsAsync(DatadogSreAgentConnectorContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatadogSreAgentConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DatadogSreAgentConfiguration> ManageSreAgentConnectorsAsync(DatadogSreAgentConnectorContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _monitorsClientDiagnostics.CreateScope("DatadogMonitorResource.ManageSreAgentConnectors");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _monitorsRestClient.CreateManageSreAgentConnectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DatadogSreAgentConnectorContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DatadogSreAgentConfigurationListResult> response = Response.FromValue(DatadogSreAgentConfigurationListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new MonitorsManageSreAgentConnectorsAsyncCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                DatadogSreAgentConnectorContent.ToRequestContent(content),
+                context);
         }
 
         /// <summary>
@@ -1245,32 +1235,22 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DatadogSreAgentConfigurationListResult> ManageSreAgentConnectors(DatadogSreAgentConnectorContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DatadogSreAgentConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DatadogSreAgentConfiguration> ManageSreAgentConnectors(DatadogSreAgentConnectorContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _monitorsClientDiagnostics.CreateScope("DatadogMonitorResource.ManageSreAgentConnectors");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _monitorsRestClient.CreateManageSreAgentConnectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DatadogSreAgentConnectorContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<DatadogSreAgentConfigurationListResult> response = Response.FromValue(DatadogSreAgentConfigurationListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new MonitorsManageSreAgentConnectorsCollectionResultOfT(
+                _monitorsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                DatadogSreAgentConnectorContent.ToRequestContent(content),
+                context);
         }
 
         /// <summary>

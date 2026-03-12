@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Datadog
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CreateResourceSupportedResponseList))]
-    [ModelReaderWriterBuildable(typeof(DatadogActivateSaaSParameterContent))]
+    [ModelReaderWriterBuildable(typeof(DatadogActivateSaaSContent))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreement))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreementProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogAgreementResourceListResponse))]
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Datadog
     [ModelReaderWriterBuildable(typeof(DatadogMonitorResourcePatchProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogOrganizationProperties))]
     [ModelReaderWriterBuildable(typeof(DatadogSaaSInfo))]
-    [ModelReaderWriterBuildable(typeof(DatadogSaaSResourceDetailsResult))]
+    [ModelReaderWriterBuildable(typeof(DatadogSaaSResourceDetailsData))]
     [ModelReaderWriterBuildable(typeof(DatadogSetPasswordLink))]
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnData))]
     [ModelReaderWriterBuildable(typeof(DatadogSingleSignOnProperties))]

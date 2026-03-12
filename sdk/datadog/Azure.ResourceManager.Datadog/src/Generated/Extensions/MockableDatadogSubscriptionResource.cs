@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<DatadogSaaSResourceDetailsResult>> ActivateResourceAsync(DatadogActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatadogSaaSResourceDetailsData>> ActivateResourceAsync(DatadogActivateSaaSContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Datadog.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Id.SubscriptionId, DatadogActivateSaaSParameterContent.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Id.SubscriptionId, DatadogActivateSaaSContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DatadogSaaSResourceDetailsResult> response = Response.FromValue(DatadogSaaSResourceDetailsResult.FromResponse(result), result);
+                Response<DatadogSaaSResourceDetailsData> response = Response.FromValue(DatadogSaaSResourceDetailsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<DatadogSaaSResourceDetailsResult> ActivateResource(DatadogActivateSaaSParameterContent content, CancellationToken cancellationToken = default)
+        public virtual Response<DatadogSaaSResourceDetailsData> ActivateResource(DatadogActivateSaaSContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.Datadog.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Id.SubscriptionId, DatadogActivateSaaSParameterContent.ToRequestContent(content), context);
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Id.SubscriptionId, DatadogActivateSaaSContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DatadogSaaSResourceDetailsResult> response = Response.FromValue(DatadogSaaSResourceDetailsResult.FromResponse(result), result);
+                Response<DatadogSaaSResourceDetailsData> response = Response.FromValue(DatadogSaaSResourceDetailsData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

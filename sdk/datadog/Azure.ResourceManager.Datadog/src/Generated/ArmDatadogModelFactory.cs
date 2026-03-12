@@ -183,10 +183,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="saaSGuid"> SaaS guid of marketplace saas subscription to be activated. </param>
         /// <param name="userInfo"> User information of the person activating the SaaS resource. </param>
         /// <param name="datadogOrganizationProperties"> Datadog organization properties to link the Saas resource to. </param>
-        /// <returns> A new <see cref="Models.DatadogActivateSaaSParameterContent"/> instance for mocking. </returns>
-        public static DatadogActivateSaaSParameterContent DatadogActivateSaaSParameterContent(Guid saaSGuid = default, DatadogUserInfo userInfo = default, DatadogOrganizationProperties datadogOrganizationProperties = default)
+        /// <returns> A new <see cref="Models.DatadogActivateSaaSContent"/> instance for mocking. </returns>
+        public static DatadogActivateSaaSContent DatadogActivateSaaSContent(Guid saaSGuid = default, DatadogUserInfo userInfo = default, DatadogOrganizationProperties datadogOrganizationProperties = default)
         {
-            return new DatadogActivateSaaSParameterContent(saaSGuid, userInfo, datadogOrganizationProperties, additionalBinaryDataProperties: null);
+            return new DatadogActivateSaaSContent(saaSGuid, userInfo, datadogOrganizationProperties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Marketplace SaaS resource details. </summary>
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="saaSId"> Id of the Marketplace SaaS Resource. </param>
-        /// <returns> A new <see cref="Models.DatadogSaaSResourceDetailsResult"/> instance for mocking. </returns>
-        public static DatadogSaaSResourceDetailsResult DatadogSaaSResourceDetailsResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saaSId = default)
+        /// <returns> A new <see cref="Models.DatadogSaaSResourceDetailsData"/> instance for mocking. </returns>
+        public static DatadogSaaSResourceDetailsData DatadogSaaSResourceDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saaSId = default)
         {
-            return new DatadogSaaSResourceDetailsResult(
+            return new DatadogSaaSResourceDetailsData(
                 id,
                 name,
                 resourceType,
@@ -227,17 +227,6 @@ namespace Azure.ResourceManager.Datadog.Models
             mcpConnectorResourceIdList ??= new ChangeTrackingList<DatadogSreAgentConfiguration>();
 
             return new DatadogSreAgentConnectorContent(mcpConnectorResourceIdList.ToList(), action, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Response of a list operation. </summary>
-        /// <param name="value"> The SreAgentConfiguration items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.DatadogSreAgentConfigurationListResult"/> instance for mocking. </returns>
-        public static DatadogSreAgentConfigurationListResult DatadogSreAgentConfigurationListResult(IEnumerable<DatadogSreAgentConfiguration> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<DatadogSreAgentConfiguration>();
-
-            return new DatadogSreAgentConfigurationListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a Datadog Application key and its associated properties. </summary>
@@ -386,7 +375,11 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUri, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The DatadogAgreement. </summary>
+        /// <summary>
+        /// Alternate model for DatadogAgreementResource used in C# SDK generation.
+        /// This model inherits from ARM CommonTypes.Resource so that the generated C# class
+        /// has a proper ARM Resource base type (with strongly-typed id, name, type, systemData).
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

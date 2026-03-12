@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
-    public partial class DatadogActivateSaaSParameterContent
+    public partial class DatadogActivateSaaSContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatadogActivateSaaSParameterContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogActivateSaaSContent"/>. </summary>
         /// <param name="saaSGuid"> SaaS guid of marketplace saas subscription to be activated. </param>
-        public DatadogActivateSaaSParameterContent(Guid saaSGuid)
+        public DatadogActivateSaaSContent(Guid saaSGuid)
         {
             SaaSGuid = saaSGuid;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatadogActivateSaaSParameterContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogActivateSaaSContent"/>. </summary>
         /// <param name="saaSGuid"> SaaS guid of marketplace saas subscription to be activated. </param>
         /// <param name="userInfo"> User information of the person activating the SaaS resource. </param>
         /// <param name="datadogOrganizationProperties"> Datadog organization properties to link the Saas resource to. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatadogActivateSaaSParameterContent(Guid saaSGuid, DatadogUserInfo userInfo, DatadogOrganizationProperties datadogOrganizationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatadogActivateSaaSContent(Guid saaSGuid, DatadogUserInfo userInfo, DatadogOrganizationProperties datadogOrganizationProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSGuid = saaSGuid;
             UserInfo = userInfo;
