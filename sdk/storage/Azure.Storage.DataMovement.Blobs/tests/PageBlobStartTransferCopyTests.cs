@@ -62,11 +62,25 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         protected override async Task<bool> DestinationExistsAsync(PageBlobClient objectClient)
             => await objectClient.ExistsAsync();
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await SourceClientBuilder.GetTestContainerAsync(service, containerName);
 
-        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(BlobServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetSourceSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await SourceClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
             => await DestinationClientBuilder.GetTestContainerAsync(service, containerName);
+
+        protected override async Task<IDisposingContainer<BlobContainerClient>> GetDestinationSasDisposingContainerAsync(
+            BlobServiceClient service = null,
+            string containerName = null)
+            => await DestinationClientBuilder.GetAzureSasCredentialTestContainerAsync(service, containerName);
 
         private async Task<PageBlobClient> GetPageBlobClientAsync(
             BlobContainerClient container,
@@ -75,7 +89,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
-            bool premium = false)
+            bool premium = false,
+            bool useContainerCredentials = false,
+            CancellationToken cancellationToken = default)
         {
             objectName ??= GetNewObjectName();
             PageBlobClient blobClient = container.GetPageBlobClient(objectName);
@@ -89,14 +105,26 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
                 if (contents != default)
                 {
-                    await UploadPagesAsync(blobClient, contents, premium: premium);
+                    await UploadPagesAsync(
+                        blobClient,
+                        contents,
+                        premium: premium,
+                        cancellationToken: cancellationToken);
                 }
                 else
                 {
                     var data = GetRandomBuffer(objectLength.Value);
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
-                    await UploadPagesAsync(blobClient, originalStream, premium: premium);
+                    await UploadPagesAsync(
+                        blobClient,
+                        originalStream,
+                        premium: premium,
+                        cancellationToken: cancellationToken);
                 }
+            }
+            if (useContainerCredentials)
+            {
+                return blobClient;
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new PageBlobClient(sourceUri, GetOptions()));
@@ -105,7 +133,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private async Task UploadPagesAsync(
             PageBlobClient blobClient,
             Stream contents,
-            bool premium = false)
+            bool premium = false,
+            CancellationToken cancellationToken = default)
         {
             long size = contents.Length;
             Assert.IsTrue(size % (KB / 2) == 0, "Cannot create page blob that's not a multiple of 512");
@@ -124,13 +153,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options.PremiumPageBlobAccessTier = _defaultPremiumAccessTier;
             }
-            await blobClient.CreateIfNotExistsAsync(size, options);
+            await blobClient.CreateIfNotExistsAsync(size, options, cancellationToken);
             long offset = 0;
             long blockSize = Math.Min(DefaultBufferSize, size);
             while (offset < size)
             {
                 Stream partStream = WindowStream.GetWindow(contents, blockSize);
-                await blobClient.UploadPagesAsync(partStream, offset);
+                await blobClient.UploadPagesAsync(partStream, offset, cancellationToken:cancellationToken);
                 offset += blockSize;
             }
         }
@@ -143,6 +172,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobClientOptions options = null,
             Stream contents = default,
             TransferPropertiesTestType propertiesTestType = default,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => GetPageBlobClientAsync(
                 container,
@@ -150,7 +180,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 createResource,
                 objectName,
                 options,
-                contents);
+                contents,
+                default,
+                useContainerCredentials,
+                cancellationToken);
 
         protected override StorageResourceItem GetSourceStorageResourceItem(PageBlobClient objectClient)
             => new PageBlobStorageResource(objectClient);
@@ -165,6 +198,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string objectName = null,
             BlobClientOptions options = null,
             Stream contents = null,
+            bool useContainerCredentials = false,
             CancellationToken cancellationToken = default)
             => GetPageBlobClientAsync(
                 container,
@@ -172,7 +206,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 createResource,
                 objectName,
                 options,
-                contents);
+                contents,
+                default,
+                useContainerCredentials,
+                cancellationToken);
 
         private StorageResourceItem GetDestinationStorageResourceItemInternal(
             PageBlobClient objectClient,

@@ -78,7 +78,7 @@ namespace Azure.AI.Projects.Agents
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("browser_automation_preview"u8);
-            writer.WriteObjectValue(BrowserAutomationPreview, options);
+            writer.WriteObjectValue(ToolParameters, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            BrowserAutomationToolParameters browserAutomationPreview = default;
+            BrowserAutomationToolOptions toolParameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("browser_automation_preview"u8))
                 {
-                    browserAutomationPreview = BrowserAutomationToolParameters.DeserializeBrowserAutomationToolParameters(prop.Value, options);
+                    toolParameters = BrowserAutomationToolOptions.DeserializeBrowserAutomationToolOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,7 +126,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BrowserAutomationPreviewTool(@type, additionalBinaryDataProperties, browserAutomationPreview);
+            return new BrowserAutomationPreviewTool(@type, additionalBinaryDataProperties, toolParameters);
         }
     }
 }
