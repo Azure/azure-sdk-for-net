@@ -430,7 +430,21 @@ namespace Azure.Generator.Management.Providers
             // add method to get the child resource collection from the current resource.
             methods.AddRange(BuildGetChildResourceMethods());
 
-            return [.. methods];
+            // Deduplicate methods by signature (name + parameter types) to avoid CS0111 errors
+            // when multiple operations produce methods with identical signatures (e.g., purge + remove → Delete).
+            var seenSignatures = new HashSet<string>();
+            var dedupedMethods = new List<MethodProvider>(methods.Count);
+            foreach (var method in methods)
+            {
+                var paramSignature = string.Join(",", method.Signature.Parameters.Select(p => p.Type.ToString()));
+                var key = $"{method.Signature.Name}({paramSignature})";
+                if (seenSignatures.Add(key))
+                {
+                    dedupedMethods.Add(method);
+                }
+            }
+
+            return [.. dedupedMethods];
         }
 
         private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string? methodName, bool isFakeLro)
