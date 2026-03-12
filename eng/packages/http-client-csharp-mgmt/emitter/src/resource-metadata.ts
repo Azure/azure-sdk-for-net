@@ -250,7 +250,7 @@ export function postProcessArmResources(
   // Build a map for efficient parent lookup
   const validResourceMap = new Map<string, ArmResourceSchema>();
   for (const resource of validResources) {
-    validResourceMap.set(resource.metadata.resourceIdPattern, resource);
+    validResourceMap.set(resource.metadata.resourceIdPattern.path, resource);
   }
 
   for (const resource of resources) {
@@ -264,10 +264,10 @@ export function postProcessArmResources(
     const parentResource = parentLookup.getParentResource(resource);
     if (
       parentResource &&
-      validResourceMap.has(parentResource.metadata.resourceIdPattern)
+      validResourceMap.has(parentResource.metadata.resourceIdPattern.path)
     ) {
       const parent = validResourceMap.get(
-        parentResource.metadata.resourceIdPattern
+        parentResource.metadata.resourceIdPattern.path
       );
       if (parent) {
         resource.metadata.parentResourceId = parent.metadata.resourceIdPattern;
