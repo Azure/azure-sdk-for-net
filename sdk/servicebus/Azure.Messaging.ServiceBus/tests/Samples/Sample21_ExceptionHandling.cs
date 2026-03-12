@@ -115,8 +115,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
 
-                if (message == null)
+                if (message is null)
                 {
+                    Console.WriteLine("No message available.");
                     return;
                 }
 
