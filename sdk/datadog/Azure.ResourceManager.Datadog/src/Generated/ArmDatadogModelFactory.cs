@@ -375,11 +375,7 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUri, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// Alternate model for DatadogAgreementResource used in C# SDK generation.
-        /// This model inherits from ARM CommonTypes.Resource so that the generated C# class
-        /// has a proper ARM Resource base type (with strongly-typed id, name, type, systemData).
-        /// </summary>
+        /// <summary> The DatadogAgreement. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

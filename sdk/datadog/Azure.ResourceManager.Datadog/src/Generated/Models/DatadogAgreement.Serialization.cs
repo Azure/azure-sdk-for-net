@@ -17,11 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    /// <summary>
-    /// Alternate model for DatadogAgreementResource used in C# SDK generation.
-    /// This model inherits from ARM CommonTypes.Resource so that the generated C# class
-    /// has a proper ARM Resource base type (with strongly-typed id, name, type, systemData).
-    /// </summary>
+    /// <summary> The DatadogAgreement. </summary>
     public partial class DatadogAgreement : ResourceData, IJsonModel<DatadogAgreement>
     {
         /// <param name="data"> The data to parse. </param>

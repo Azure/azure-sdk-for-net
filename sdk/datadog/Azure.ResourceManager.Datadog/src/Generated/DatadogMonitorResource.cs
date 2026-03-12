@@ -721,9 +721,9 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatadogLatestLinkedSaaSResult>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatadogLatestLinkedSaaSResult>> GetLatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _datadogMonitorResourcesClientDiagnostics.CreateScope("DatadogMonitorResource.LatestLinkedSaaS");
+            using DiagnosticScope scope = _datadogMonitorResourcesClientDiagnostics.CreateScope("DatadogMonitorResource.GetLatestLinkedSaaS");
             scope.Start();
             try
             {
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _datadogMonitorResourcesRestClient.CreateLatestLinkedSaaSRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _datadogMonitorResourcesRestClient.CreateGetLatestLinkedSaaSRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DatadogLatestLinkedSaaSResult> response = Response.FromValue(DatadogLatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -769,9 +769,9 @@ namespace Azure.ResourceManager.Datadog
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatadogLatestLinkedSaaSResult> LatestLinkedSaaS(CancellationToken cancellationToken = default)
+        public virtual Response<DatadogLatestLinkedSaaSResult> GetLatestLinkedSaaS(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _datadogMonitorResourcesClientDiagnostics.CreateScope("DatadogMonitorResource.LatestLinkedSaaS");
+            using DiagnosticScope scope = _datadogMonitorResourcesClientDiagnostics.CreateScope("DatadogMonitorResource.GetLatestLinkedSaaS");
             scope.Start();
             try
             {
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Datadog
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _datadogMonitorResourcesRestClient.CreateLatestLinkedSaaSRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _datadogMonitorResourcesRestClient.CreateGetLatestLinkedSaaSRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DatadogLatestLinkedSaaSResult> response = Response.FromValue(DatadogLatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)

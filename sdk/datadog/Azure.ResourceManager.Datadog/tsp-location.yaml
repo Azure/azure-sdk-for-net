@@ -1,4 +1,4 @@
 directory: specification/datadog/Datadog.Management
-commit: 346424c527cc9ce8e9a4f8fcb73a60c5cd39261d
+commit: 0dd044f2538465cf296eec0994e404d8621b1f04
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

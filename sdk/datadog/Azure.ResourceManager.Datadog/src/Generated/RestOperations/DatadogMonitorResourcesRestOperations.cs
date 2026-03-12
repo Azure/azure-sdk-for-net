@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Datadog
             return message;
         }
 
-        internal HttpMessage CreateLatestLinkedSaaSRequest(string subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
+        internal HttpMessage CreateGetLatestLinkedSaaSRequest(string subscriptionId, string resourceGroupName, string monitorName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
