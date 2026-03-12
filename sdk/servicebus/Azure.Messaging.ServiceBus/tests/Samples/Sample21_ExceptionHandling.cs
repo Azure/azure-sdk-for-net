@@ -115,6 +115,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 ServiceBusReceivedMessage message = await receiver.ReceiveMessageAsync();
 
+                if (message == null)
+                {
+                    return;
+                }
+
                 try
                 {
                     // Process the message — if handling takes longer than the lock duration,
@@ -215,7 +220,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
 
                 Task ErrorHandler(ProcessErrorEventArgs args)
                 {
-                    // Infrastructure-level errors: connection drops, auth failures, etc.
+                    // Errors from message processing, settlement, lock renewal, and service communication.
                     Console.WriteLine($"Error source: {args.ErrorSource}");
                     Console.WriteLine($"Entity path: {args.EntityPath}");
                     Console.WriteLine($"Namespace: {args.FullyQualifiedNamespace}");
