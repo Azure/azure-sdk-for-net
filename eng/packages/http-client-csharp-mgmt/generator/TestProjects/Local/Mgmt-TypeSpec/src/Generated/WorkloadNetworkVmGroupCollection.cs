@@ -27,9 +27,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class WorkloadNetworkVmGroupCollection : ArmCollection, IEnumerable<WorkloadNetworkVmGroupResource>, IAsyncEnumerable<WorkloadNetworkVmGroupResource>
     {
         private readonly ClientDiagnostics _workloadNetworkVmGroupsClientDiagnostics;
-        private readonly WorkloadNetworkVmGroups _workloadNetworkVmGroupsRestClient;
+        private readonly WorkloadNetworkVmGroupsRestOperations _workloadNetworkVmGroupsRestClient;
         private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
-        private readonly WorkloadNetworks _workloadNetworksRestClient;
+        private readonly WorkloadNetworksRestOperations _workloadNetworksRestClient;
 
         /// <summary> Initializes a new instance of WorkloadNetworkVmGroupCollection for mocking. </summary>
         protected WorkloadNetworkVmGroupCollection()
@@ -43,9 +43,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(WorkloadNetworkVmGroupResource.ResourceType, out string workloadNetworkVmGroupApiVersion);
             _workloadNetworkVmGroupsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworkVmGroupsRestClient = new WorkloadNetworkVmGroups(_workloadNetworkVmGroupsClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
+            _workloadNetworkVmGroupsRestClient = new WorkloadNetworkVmGroupsRestOperations(_workloadNetworkVmGroupsClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkVmGroupResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
+            _workloadNetworksRestClient = new WorkloadNetworksRestOperations(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

@@ -20,7 +20,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class FooResourceGetDependenciesAsyncCollectionResultOfT : AsyncPageable<FooDependency>
     {
-        private readonly Foos _client;
+        private readonly FoosRestOperations _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _fooName;
@@ -32,7 +32,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FooResourceGetDependenciesAsyncCollectionResultOfT(Foos client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        public FooResourceGetDependenciesAsyncCollectionResultOfT(FoosRestOperations client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
             _client = client;
             _subscriptionId = subscriptionId;

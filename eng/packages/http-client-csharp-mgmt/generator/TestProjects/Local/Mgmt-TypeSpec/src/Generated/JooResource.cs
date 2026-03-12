@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class JooResource : ArmResource
     {
         private readonly ClientDiagnostics _joosClientDiagnostics;
-        private readonly Joos _joosRestClient;
+        private readonly JoosRestOperations _joosRestClient;
         private readonly JooData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/joos";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string jooApiVersion);
             _joosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _joosRestClient = new Joos(_joosClientDiagnostics, Pipeline, Endpoint, jooApiVersion ?? "2024-05-01");
+            _joosRestClient = new JoosRestOperations(_joosClientDiagnostics, Pipeline, Endpoint, jooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

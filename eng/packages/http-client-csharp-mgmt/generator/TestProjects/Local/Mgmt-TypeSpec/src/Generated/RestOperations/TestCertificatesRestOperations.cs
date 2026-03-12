@@ -12,27 +12,27 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class TestCertificates
+    /// <summary> The TestCertificatesRestOperations sub-client. </summary>
+    internal partial class TestCertificatesRestOperations
     {
-        private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly Uri _endpoint;
 
-        /// <summary> Initializes a new instance of TestCertificates for mocking. </summary>
-        protected TestCertificates()
-        {
-        }
-
-        /// <summary> Initializes a new instance of TestCertificates. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal TestCertificates(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"> The API version to use for this client. </param>
+        internal TestCertificatesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+        }
+
+        /// <summary> Initializes a new instance of TestCertificatesRestOperations for mocking. </summary>
+        protected TestCertificatesRestOperations()
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

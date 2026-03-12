@@ -23,7 +23,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class SelfHelpResourceCollection : ArmCollection
     {
         private readonly ClientDiagnostics _solutionResourcesClientDiagnostics;
-        private readonly SolutionResources _solutionResourcesRestClient;
+        private readonly SolutionResourcesRestOperations _solutionResourcesRestClient;
 
         /// <summary> Initializes a new instance of SelfHelpResourceCollection for mocking. </summary>
         protected SelfHelpResourceCollection()
@@ -37,7 +37,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(SelfHelpResource.ResourceType, out string selfHelpResourceApiVersion);
             _solutionResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", SelfHelpResource.ResourceType.Namespace, Diagnostics);
-            _solutionResourcesRestClient = new SolutionResources(_solutionResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpResourceApiVersion ?? "2024-05-01");
+            _solutionResourcesRestClient = new SolutionResourcesRestOperations(_solutionResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpResourceApiVersion ?? "2024-05-01");
         }
 
         /// <summary>

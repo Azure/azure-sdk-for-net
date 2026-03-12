@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class SampleDataCollection : ArmCollection, IEnumerable<SampleDataResource>, IAsyncEnumerable<SampleDataResource>
     {
         private readonly ClientDiagnostics _sampleDatasClientDiagnostics;
-        private readonly SampleDatas _sampleDatasRestClient;
+        private readonly SampleDatasRestOperations _sampleDatasRestClient;
 
         /// <summary> Initializes a new instance of SampleDataCollection for mocking. </summary>
         protected SampleDataCollection()
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(SampleDataResource.ResourceType, out string sampleDataApiVersion);
             _sampleDatasClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", SampleDataResource.ResourceType.Namespace, Diagnostics);
-            _sampleDatasRestClient = new SampleDatas(_sampleDatasClientDiagnostics, Pipeline, Endpoint, sampleDataApiVersion ?? "2024-05-01");
+            _sampleDatasRestClient = new SampleDatasRestOperations(_sampleDatasClientDiagnostics, Pipeline, Endpoint, sampleDataApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

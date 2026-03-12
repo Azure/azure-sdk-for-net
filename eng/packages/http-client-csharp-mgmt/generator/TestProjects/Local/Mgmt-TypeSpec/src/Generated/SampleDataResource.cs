@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class SampleDataResource : ArmResource
     {
         private readonly ClientDiagnostics _sampleDatasClientDiagnostics;
-        private readonly SampleDatas _sampleDatasRestClient;
+        private readonly SampleDatasRestOperations _sampleDatasRestClient;
         private readonly SampleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/sampleDatas";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string sampleDataApiVersion);
             _sampleDatasClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _sampleDatasRestClient = new SampleDatas(_sampleDatasClientDiagnostics, Pipeline, Endpoint, sampleDataApiVersion ?? "2024-05-01");
+            _sampleDatasRestClient = new SampleDatasRestOperations(_sampleDatasClientDiagnostics, Pipeline, Endpoint, sampleDataApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

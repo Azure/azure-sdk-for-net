@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class SharedConfigResource : ArmResource
     {
         private readonly ClientDiagnostics _sharedConfigsClientDiagnostics;
-        private readonly SharedConfigs _sharedConfigsRestClient;
+        private readonly SharedConfigsRestOperations _sharedConfigsRestClient;
         private readonly SharedConfigData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/sharedConfigs";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string sharedConfigApiVersion);
             _sharedConfigsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _sharedConfigsRestClient = new SharedConfigs(_sharedConfigsClientDiagnostics, Pipeline, Endpoint, sharedConfigApiVersion ?? "2024-05-01");
+            _sharedConfigsRestClient = new SharedConfigsRestOperations(_sharedConfigsClientDiagnostics, Pipeline, Endpoint, sharedConfigApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

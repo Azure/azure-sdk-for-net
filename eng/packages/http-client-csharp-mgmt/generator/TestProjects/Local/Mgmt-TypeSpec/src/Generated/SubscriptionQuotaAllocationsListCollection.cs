@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class SubscriptionQuotaAllocationsListCollection : ArmCollection
     {
         private readonly ClientDiagnostics _subscriptionQuotaAllocationsListsClientDiagnostics;
-        private readonly SubscriptionQuotaAllocationsLists _subscriptionQuotaAllocationsListsRestClient;
+        private readonly SubscriptionQuotaAllocationsListsRestOperations _subscriptionQuotaAllocationsListsRestClient;
 
         /// <summary> Initializes a new instance of SubscriptionQuotaAllocationsListCollection for mocking. </summary>
         protected SubscriptionQuotaAllocationsListCollection()
@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(SubscriptionQuotaAllocationsListResource.ResourceType, out string subscriptionQuotaAllocationsListApiVersion);
             _subscriptionQuotaAllocationsListsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", SubscriptionQuotaAllocationsListResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionQuotaAllocationsListsRestClient = new SubscriptionQuotaAllocationsLists(_subscriptionQuotaAllocationsListsClientDiagnostics, Pipeline, Endpoint, subscriptionQuotaAllocationsListApiVersion ?? "2024-05-01");
+            _subscriptionQuotaAllocationsListsRestClient = new SubscriptionQuotaAllocationsListsRestOperations(_subscriptionQuotaAllocationsListsClientDiagnostics, Pipeline, Endpoint, subscriptionQuotaAllocationsListApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

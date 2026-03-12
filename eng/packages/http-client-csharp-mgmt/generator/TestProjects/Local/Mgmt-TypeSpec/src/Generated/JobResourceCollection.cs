@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class JobResourceCollection : ArmCollection
     {
         private readonly ClientDiagnostics _jobResourcesClientDiagnostics;
-        private readonly JobResources _jobResourcesRestClient;
+        private readonly JobResourcesRestOperations _jobResourcesRestClient;
 
         /// <summary> Initializes a new instance of JobResourceCollection for mocking. </summary>
         protected JobResourceCollection()
@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(JobResource.ResourceType, out string jobResourceApiVersion);
             _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", JobResource.ResourceType.Namespace, Diagnostics);
-            _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Endpoint, jobResourceApiVersion ?? "2024-05-01");
+            _jobResourcesRestClient = new JobResourcesRestOperations(_jobResourcesClientDiagnostics, Pipeline, Endpoint, jobResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

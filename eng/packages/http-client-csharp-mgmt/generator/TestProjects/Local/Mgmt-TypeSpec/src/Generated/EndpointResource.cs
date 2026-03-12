@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class EndpointResource : ArmResource
     {
         private readonly ClientDiagnostics _endpointResourcesClientDiagnostics;
-        private readonly EndpointResources _endpointResourcesRestClient;
+        private readonly EndpointResourcesRestOperations _endpointResourcesRestClient;
         private readonly EndpointResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/endpoints";
@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string endpointResourceApiVersion);
             _endpointResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _endpointResourcesRestClient = new EndpointResources(_endpointResourcesClientDiagnostics, Pipeline, Endpoint, endpointResourceApiVersion ?? "2024-05-01");
+            _endpointResourcesRestClient = new EndpointResourcesRestOperations(_endpointResourcesClientDiagnostics, Pipeline, Endpoint, endpointResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

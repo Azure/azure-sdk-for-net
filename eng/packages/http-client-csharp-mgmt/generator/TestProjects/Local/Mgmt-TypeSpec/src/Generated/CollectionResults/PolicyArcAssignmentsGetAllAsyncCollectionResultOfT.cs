@@ -17,7 +17,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class PolicyArcAssignmentsGetAllAsyncCollectionResultOfT : AsyncPageable<PolicyAssignmentData>
     {
-        private readonly PolicyArcAssignments _client;
+        private readonly PolicyArcAssignmentsRestOperations _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _machineName;
@@ -29,7 +29,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="machineName"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PolicyArcAssignmentsGetAllAsyncCollectionResultOfT(PolicyArcAssignments client, Guid subscriptionId, string resourceGroupName, string machineName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PolicyArcAssignmentsGetAllAsyncCollectionResultOfT(PolicyArcAssignmentsRestOperations client, Guid subscriptionId, string resourceGroupName, string machineName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -12,27 +12,27 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class StorageSyncServices
+    /// <summary> The StorageSyncServicesRestOperations sub-client. </summary>
+    internal partial class StorageSyncServicesRestOperations
     {
-        private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly Uri _endpoint;
 
-        /// <summary> Initializes a new instance of StorageSyncServices for mocking. </summary>
-        protected StorageSyncServices()
-        {
-        }
-
-        /// <summary> Initializes a new instance of StorageSyncServices. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal StorageSyncServices(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"> The API version to use for this client. </param>
+        internal StorageSyncServicesRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+        }
+
+        /// <summary> Initializes a new instance of StorageSyncServicesRestOperations for mocking. </summary>
+        protected StorageSyncServicesRestOperations()
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class PublicSharedConfigCollection : ArmCollection, IEnumerable<PublicSharedConfigResource>, IAsyncEnumerable<PublicSharedConfigResource>
     {
         private readonly ClientDiagnostics _publicSharedConfigsClientDiagnostics;
-        private readonly PublicSharedConfigs _publicSharedConfigsRestClient;
+        private readonly PublicSharedConfigsRestOperations _publicSharedConfigsRestClient;
 
         /// <summary> Initializes a new instance of PublicSharedConfigCollection for mocking. </summary>
         protected PublicSharedConfigCollection()
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(PublicSharedConfigResource.ResourceType, out string publicSharedConfigApiVersion);
             _publicSharedConfigsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PublicSharedConfigResource.ResourceType.Namespace, Diagnostics);
-            _publicSharedConfigsRestClient = new PublicSharedConfigs(_publicSharedConfigsClientDiagnostics, Pipeline, Endpoint, publicSharedConfigApiVersion ?? "2024-05-01");
+            _publicSharedConfigsRestClient = new PublicSharedConfigsRestOperations(_publicSharedConfigsClientDiagnostics, Pipeline, Endpoint, publicSharedConfigApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

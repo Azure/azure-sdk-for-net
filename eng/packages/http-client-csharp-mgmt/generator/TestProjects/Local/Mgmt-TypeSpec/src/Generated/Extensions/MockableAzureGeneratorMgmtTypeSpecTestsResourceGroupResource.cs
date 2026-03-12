@@ -22,7 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     public partial class MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource : ArmResource
     {
         private ClientDiagnostics _privateLinksClientDiagnostics;
-        private PrivateLinks _privateLinksRestClient;
+        private PrivateLinksRestOperations _privateLinksRestClient;
 
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource()
@@ -38,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private PrivateLinksRestOperations PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinksRestOperations(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of StorageSyncServices in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of StorageSyncServices and their operations over a StorageSyncServiceResource. </returns>

@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class TargetCollection : ArmCollection, IEnumerable<TargetResource>, IAsyncEnumerable<TargetResource>
     {
         private readonly ClientDiagnostics _targetsClientDiagnostics;
-        private readonly Targets _targetsRestClient;
+        private readonly TargetsRestOperations _targetsRestClient;
         /// <summary> The parentProviderNamespace. </summary>
         private readonly string _parentProviderNamespace;
         /// <summary> The parentResourceType. </summary>
@@ -53,7 +53,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _parentResourceType = parentResourceType;
             _parentResourceName = parentResourceName;
             _targetsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", TargetResource.ResourceType.Namespace, Diagnostics);
-            _targetsRestClient = new Targets(_targetsClientDiagnostics, Pipeline, Endpoint, targetApiVersion ?? "2024-05-01");
+            _targetsRestClient = new TargetsRestOperations(_targetsClientDiagnostics, Pipeline, Endpoint, targetApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

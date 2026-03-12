@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class GroupQuotaSubscriptionRequestStatusResource : ArmResource
     {
         private readonly ClientDiagnostics _groupQuotaSubscriptionRequestStatusesClientDiagnostics;
-        private readonly GroupQuotaSubscriptionRequestStatuses _groupQuotaSubscriptionRequestStatusesRestClient;
+        private readonly GroupQuotaSubscriptionRequestStatusesRestOperations _groupQuotaSubscriptionRequestStatusesRestClient;
         private readonly GroupQuotaSubscriptionRequestStatusData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/quotas";
@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string groupQuotaSubscriptionRequestStatusApiVersion);
             _groupQuotaSubscriptionRequestStatusesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _groupQuotaSubscriptionRequestStatusesRestClient = new GroupQuotaSubscriptionRequestStatuses(_groupQuotaSubscriptionRequestStatusesClientDiagnostics, Pipeline, Endpoint, groupQuotaSubscriptionRequestStatusApiVersion ?? "2024-05-01");
+            _groupQuotaSubscriptionRequestStatusesRestClient = new GroupQuotaSubscriptionRequestStatusesRestOperations(_groupQuotaSubscriptionRequestStatusesClientDiagnostics, Pipeline, Endpoint, groupQuotaSubscriptionRequestStatusApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

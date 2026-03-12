@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class JobResource : ArmResource
     {
         private readonly ClientDiagnostics _jobResourcesClientDiagnostics;
-        private readonly JobResources _jobResourcesRestClient;
+        private readonly JobResourcesRestOperations _jobResourcesRestClient;
         private readonly JobResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/jobs";
@@ -53,7 +53,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string jobResourceApiVersion);
             _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Endpoint, jobResourceApiVersion ?? "2024-05-01");
+            _jobResourcesRestClient = new JobResourcesRestOperations(_jobResourcesClientDiagnostics, Pipeline, Endpoint, jobResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

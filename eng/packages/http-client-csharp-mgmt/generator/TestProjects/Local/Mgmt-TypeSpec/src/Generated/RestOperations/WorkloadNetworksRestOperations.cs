@@ -12,27 +12,27 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class WorkloadNetworks
+    /// <summary> The WorkloadNetworksRestOperations sub-client. </summary>
+    internal partial class WorkloadNetworksRestOperations
     {
-        private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly Uri _endpoint;
 
-        /// <summary> Initializes a new instance of WorkloadNetworks for mocking. </summary>
-        protected WorkloadNetworks()
-        {
-        }
-
-        /// <summary> Initializes a new instance of WorkloadNetworks. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"></param>
-        internal WorkloadNetworks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"> The API version to use for this client. </param>
+        internal WorkloadNetworksRestOperations(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
+        }
+
+        /// <summary> Initializes a new instance of WorkloadNetworksRestOperations for mocking. </summary>
+        protected WorkloadNetworksRestOperations()
+        {
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>

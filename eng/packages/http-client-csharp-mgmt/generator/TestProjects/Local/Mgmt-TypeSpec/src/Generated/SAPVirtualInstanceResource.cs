@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class SAPVirtualInstanceResource : ArmResource
     {
         private readonly ClientDiagnostics _sapVirtualInstancesClientDiagnostics;
-        private readonly SAPVirtualInstances _sapVirtualInstancesRestClient;
+        private readonly SAPVirtualInstancesRestOperations _sapVirtualInstancesRestClient;
         private readonly SAPVirtualInstanceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/sapVirtualInstances";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string sapVirtualInstanceApiVersion);
             _sapVirtualInstancesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _sapVirtualInstancesRestClient = new SAPVirtualInstances(_sapVirtualInstancesClientDiagnostics, Pipeline, Endpoint, sapVirtualInstanceApiVersion ?? "2024-05-01");
+            _sapVirtualInstancesRestClient = new SAPVirtualInstancesRestOperations(_sapVirtualInstancesClientDiagnostics, Pipeline, Endpoint, sapVirtualInstanceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

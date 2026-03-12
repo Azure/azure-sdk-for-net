@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class BarQuotaResourceCollection : ArmCollection
     {
         private readonly ClientDiagnostics _barQuotaOperationsClientDiagnostics;
-        private readonly BarQuotaOperations _barQuotaOperationsRestClient;
+        private readonly BarQuotaOperationsRestOperations _barQuotaOperationsRestClient;
 
         /// <summary> Initializes a new instance of BarQuotaResourceCollection for mocking. </summary>
         protected BarQuotaResourceCollection()
@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(BarQuotaResource.ResourceType, out string barQuotaResourceApiVersion);
             _barQuotaOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarQuotaResource.ResourceType.Namespace, Diagnostics);
-            _barQuotaOperationsRestClient = new BarQuotaOperations(_barQuotaOperationsClientDiagnostics, Pipeline, Endpoint, barQuotaResourceApiVersion ?? "2024-05-01");
+            _barQuotaOperationsRestClient = new BarQuotaOperationsRestOperations(_barQuotaOperationsClientDiagnostics, Pipeline, Endpoint, barQuotaResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

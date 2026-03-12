@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class PolicyArcAssignmentCollection : ArmCollection, IEnumerable<PolicyArcAssignmentResource>, IAsyncEnumerable<PolicyArcAssignmentResource>
     {
         private readonly ClientDiagnostics _policyArcAssignmentsClientDiagnostics;
-        private readonly PolicyArcAssignments _policyArcAssignmentsRestClient;
+        private readonly PolicyArcAssignmentsRestOperations _policyArcAssignmentsRestClient;
         /// <summary> The machineName. </summary>
         private readonly string _machineName;
 
@@ -45,7 +45,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(PolicyArcAssignmentResource.ResourceType, out string policyArcAssignmentApiVersion);
             _machineName = machineName;
             _policyArcAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PolicyArcAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _policyArcAssignmentsRestClient = new PolicyArcAssignments(_policyArcAssignmentsClientDiagnostics, Pipeline, Endpoint, policyArcAssignmentApiVersion ?? "2024-05-01");
+            _policyArcAssignmentsRestClient = new PolicyArcAssignmentsRestOperations(_policyArcAssignmentsClientDiagnostics, Pipeline, Endpoint, policyArcAssignmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

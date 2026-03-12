@@ -16,7 +16,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class ZoosGetBySubscriptionCollectionResultOfT : Pageable<ZooData>
     {
-        private readonly Zoos _client;
+        private readonly ZoosRestOperations _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="client"> The Zoos client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ZoosGetBySubscriptionCollectionResultOfT(Zoos client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ZoosGetBySubscriptionCollectionResultOfT(ZoosRestOperations client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

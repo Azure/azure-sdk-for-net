@@ -17,7 +17,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class ServiceGroupSitesGetByServiceGroupAsyncCollectionResultOfT : AsyncPageable<ServiceGroupSiteData>
     {
-        private readonly ServiceGroupSites _client;
+        private readonly ServiceGroupSitesRestOperations _client;
         private readonly string _servicegroupName;
         private readonly RequestContext _context;
 
@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="client"> The ServiceGroupSites client used to send requests. </param>
         /// <param name="servicegroupName"> The name of the service group. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ServiceGroupSitesGetByServiceGroupAsyncCollectionResultOfT(ServiceGroupSites client, string servicegroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ServiceGroupSitesGetByServiceGroupAsyncCollectionResultOfT(ServiceGroupSitesRestOperations client, string servicegroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _servicegroupName = servicegroupName;

@@ -28,7 +28,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class PlaywrightQuotaCollection : ArmCollection, IEnumerable<PlaywrightQuotaResource>, IAsyncEnumerable<PlaywrightQuotaResource>
     {
         private readonly ClientDiagnostics _playwrightQuotasClientDiagnostics;
-        private readonly PlaywrightQuotas _playwrightQuotasRestClient;
+        private readonly PlaywrightQuotasRestOperations _playwrightQuotasRestClient;
         /// <summary> The location. </summary>
         private readonly AzureLocation _location;
 
@@ -46,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             TryGetApiVersion(PlaywrightQuotaResource.ResourceType, out string playwrightQuotaApiVersion);
             _location = location;
             _playwrightQuotasClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PlaywrightQuotaResource.ResourceType.Namespace, Diagnostics);
-            _playwrightQuotasRestClient = new PlaywrightQuotas(_playwrightQuotasClientDiagnostics, Pipeline, Endpoint, playwrightQuotaApiVersion ?? "2024-05-01");
+            _playwrightQuotasRestClient = new PlaywrightQuotasRestOperations(_playwrightQuotasClientDiagnostics, Pipeline, Endpoint, playwrightQuotaApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

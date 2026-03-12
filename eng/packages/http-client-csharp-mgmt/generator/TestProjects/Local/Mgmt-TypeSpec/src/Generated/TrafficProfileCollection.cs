@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class TrafficProfileCollection : ArmCollection, IEnumerable<TrafficProfileResource>, IAsyncEnumerable<TrafficProfileResource>
     {
         private readonly ClientDiagnostics _trafficProfilesClientDiagnostics;
-        private readonly TrafficProfiles _trafficProfilesRestClient;
+        private readonly TrafficProfilesRestOperations _trafficProfilesRestClient;
 
         /// <summary> Initializes a new instance of TrafficProfileCollection for mocking. </summary>
         protected TrafficProfileCollection()
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(TrafficProfileResource.ResourceType, out string trafficProfileApiVersion);
             _trafficProfilesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", TrafficProfileResource.ResourceType.Namespace, Diagnostics);
-            _trafficProfilesRestClient = new TrafficProfiles(_trafficProfilesClientDiagnostics, Pipeline, Endpoint, trafficProfileApiVersion ?? "2024-05-01");
+            _trafficProfilesRestClient = new TrafficProfilesRestOperations(_trafficProfilesClientDiagnostics, Pipeline, Endpoint, trafficProfileApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

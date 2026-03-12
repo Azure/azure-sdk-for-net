@@ -232,7 +232,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(ZooListResult))]
     [ModelReaderWriterBuildable(typeof(ZooPatch))]
     [ModelReaderWriterBuildable(typeof(ZooProperties))]
-    [ModelReaderWriterBuildable(typeof(Models.ZooRecommendation))]
+    [ModelReaderWriterBuildable(typeof(ZooRecommendation))]
     [ModelReaderWriterBuildable(typeof(ZooResource))]
     [ModelReaderWriterBuildable(typeof(ZooUpdateProperties))]
     public partial class AzureGeneratorMgmtTypeSpecTestsContext : ModelReaderWriterContext

@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class WorkloadNetworksResource : ArmResource
     {
         private readonly ClientDiagnostics _workloadNetworksOpsClientDiagnostics;
-        private readonly WorkloadNetworksOps _workloadNetworksOpsRestClient;
+        private readonly WorkloadNetworksOpsRestOperations _workloadNetworksOpsRestClient;
         private readonly WorkloadNetworksData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/workloadNetworks";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string workloadNetworksApiVersion);
             _workloadNetworksOpsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _workloadNetworksOpsRestClient = new WorkloadNetworksOps(_workloadNetworksOpsClientDiagnostics, Pipeline, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
+            _workloadNetworksOpsRestClient = new WorkloadNetworksOpsRestOperations(_workloadNetworksOpsClientDiagnostics, Pipeline, Endpoint, workloadNetworksApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

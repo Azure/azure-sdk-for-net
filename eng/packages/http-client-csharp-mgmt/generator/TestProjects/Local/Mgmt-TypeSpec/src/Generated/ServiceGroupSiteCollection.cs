@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class ServiceGroupSiteCollection : ArmCollection, IEnumerable<ServiceGroupSiteResource>, IAsyncEnumerable<ServiceGroupSiteResource>
     {
         private readonly ClientDiagnostics _serviceGroupSitesClientDiagnostics;
-        private readonly ServiceGroupSites _serviceGroupSitesRestClient;
+        private readonly ServiceGroupSitesRestOperations _serviceGroupSitesRestClient;
 
         /// <summary> Initializes a new instance of ServiceGroupSiteCollection for mocking. </summary>
         protected ServiceGroupSiteCollection()
@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ServiceGroupSiteResource.ResourceType, out string serviceGroupSiteApiVersion);
             _serviceGroupSitesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ServiceGroupSiteResource.ResourceType.Namespace, Diagnostics);
-            _serviceGroupSitesRestClient = new ServiceGroupSites(_serviceGroupSitesClientDiagnostics, Pipeline, Endpoint, serviceGroupSiteApiVersion ?? "2024-05-01");
+            _serviceGroupSitesRestClient = new ServiceGroupSitesRestOperations(_serviceGroupSitesClientDiagnostics, Pipeline, Endpoint, serviceGroupSiteApiVersion ?? "2024-05-01");
         }
 
         /// <summary>

@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class TrafficProfileResource : ArmResource
     {
         private readonly ClientDiagnostics _trafficProfilesClientDiagnostics;
-        private readonly TrafficProfiles _trafficProfilesRestClient;
+        private readonly TrafficProfilesRestOperations _trafficProfilesRestClient;
         private readonly TrafficProfileData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/trafficProfiles";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string trafficProfileApiVersion);
             _trafficProfilesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _trafficProfilesRestClient = new TrafficProfiles(_trafficProfilesClientDiagnostics, Pipeline, Endpoint, trafficProfileApiVersion ?? "2024-05-01");
+            _trafficProfilesRestClient = new TrafficProfilesRestOperations(_trafficProfilesClientDiagnostics, Pipeline, Endpoint, trafficProfileApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

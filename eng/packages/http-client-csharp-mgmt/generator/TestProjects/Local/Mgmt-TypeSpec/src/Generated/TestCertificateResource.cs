@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class TestCertificateResource : ArmResource
     {
         private readonly ClientDiagnostics _testCertificatesClientDiagnostics;
-        private readonly TestCertificates _testCertificatesRestClient;
+        private readonly TestCertificatesRestOperations _testCertificatesRestClient;
         private readonly TestCertificateData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/certificates";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string testCertificateApiVersion);
             _testCertificatesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _testCertificatesRestClient = new TestCertificates(_testCertificatesClientDiagnostics, Pipeline, Endpoint, testCertificateApiVersion ?? "2024-05-01");
+            _testCertificatesRestClient = new TestCertificatesRestOperations(_testCertificatesClientDiagnostics, Pipeline, Endpoint, testCertificateApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

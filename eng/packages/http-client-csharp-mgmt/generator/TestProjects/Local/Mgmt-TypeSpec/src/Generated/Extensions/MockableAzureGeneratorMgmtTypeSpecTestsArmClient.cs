@@ -21,9 +21,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     public partial class MockableAzureGeneratorMgmtTypeSpecTestsArmClient : ArmResource
     {
         private ClientDiagnostics _checkNameAvailabilityOperationGroupClientDiagnostics;
-        private CheckNameAvailabilityOperationGroup _checkNameAvailabilityOperationGroupRestClient;
+        private CheckNameAvailabilityOperationGroupRestOperations _checkNameAvailabilityOperationGroupRestClient;
         private ClientDiagnostics _scheduledActionExtensionClientDiagnostics;
-        private ScheduledActionExtension _scheduledActionExtensionRestClient;
+        private ScheduledActionExtensionRestOperations _scheduledActionExtensionRestClient;
 
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsArmClient for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsArmClient()
@@ -39,11 +39,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private ClientDiagnostics CheckNameAvailabilityOperationGroupClientDiagnostics => _checkNameAvailabilityOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckNameAvailabilityOperationGroup CheckNameAvailabilityOperationGroupRestClient => _checkNameAvailabilityOperationGroupRestClient ??= new CheckNameAvailabilityOperationGroup(CheckNameAvailabilityOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private CheckNameAvailabilityOperationGroupRestOperations CheckNameAvailabilityOperationGroupRestClient => _checkNameAvailabilityOperationGroupRestClient ??= new CheckNameAvailabilityOperationGroupRestOperations(CheckNameAvailabilityOperationGroupClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private ScheduledActionExtensionRestOperations ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtensionRestOperations(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>

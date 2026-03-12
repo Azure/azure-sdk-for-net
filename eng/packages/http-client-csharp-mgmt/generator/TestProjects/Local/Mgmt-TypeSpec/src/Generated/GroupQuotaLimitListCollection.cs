@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class GroupQuotaLimitListCollection : ArmCollection
     {
         private readonly ClientDiagnostics _groupQuotaLimitListsClientDiagnostics;
-        private readonly GroupQuotaLimitLists _groupQuotaLimitListsRestClient;
+        private readonly GroupQuotaLimitListsRestOperations _groupQuotaLimitListsRestClient;
 
         /// <summary> Initializes a new instance of GroupQuotaLimitListCollection for mocking. </summary>
         protected GroupQuotaLimitListCollection()
@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(GroupQuotaLimitListResource.ResourceType, out string groupQuotaLimitListApiVersion);
             _groupQuotaLimitListsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", GroupQuotaLimitListResource.ResourceType.Namespace, Diagnostics);
-            _groupQuotaLimitListsRestClient = new GroupQuotaLimitLists(_groupQuotaLimitListsClientDiagnostics, Pipeline, Endpoint, groupQuotaLimitListApiVersion ?? "2024-05-01");
+            _groupQuotaLimitListsRestClient = new GroupQuotaLimitListsRestOperations(_groupQuotaLimitListsClientDiagnostics, Pipeline, Endpoint, groupQuotaLimitListApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

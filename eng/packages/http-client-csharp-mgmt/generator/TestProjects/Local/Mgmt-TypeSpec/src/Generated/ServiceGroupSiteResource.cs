@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class ServiceGroupSiteResource : ArmResource
     {
         private readonly ClientDiagnostics _serviceGroupSitesClientDiagnostics;
-        private readonly ServiceGroupSites _serviceGroupSitesRestClient;
+        private readonly ServiceGroupSitesRestOperations _serviceGroupSitesRestClient;
         private readonly ServiceGroupSiteData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/sites";
@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string serviceGroupSiteApiVersion);
             _serviceGroupSitesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _serviceGroupSitesRestClient = new ServiceGroupSites(_serviceGroupSitesClientDiagnostics, Pipeline, Endpoint, serviceGroupSiteApiVersion ?? "2024-05-01");
+            _serviceGroupSitesRestClient = new ServiceGroupSitesRestOperations(_serviceGroupSitesClientDiagnostics, Pipeline, Endpoint, serviceGroupSiteApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

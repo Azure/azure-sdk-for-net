@@ -16,7 +16,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class EmployeesGetEmployeesCollectionResultOfT : Pageable<Employee>
     {
-        private readonly Employees _client;
+        private readonly EmployeesRestOperations _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _fooName;
@@ -30,7 +30,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="barName"> The name of the Bar. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EmployeesGetEmployeesCollectionResultOfT(Employees client, Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public EmployeesGetEmployeesCollectionResultOfT(EmployeesRestOperations client, Guid subscriptionId, string resourceGroupName, string fooName, string barName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

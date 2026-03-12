@@ -16,7 +16,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class TargetsGetAllCollectionResultOfT : Pageable<TargetData>
     {
-        private readonly Targets _client;
+        private readonly TargetsRestOperations _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _parentProviderNamespace;
@@ -34,7 +34,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="parentResourceName"> The parent resource name. </param>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public TargetsGetAllCollectionResultOfT(Targets client, Guid subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        public TargetsGetAllCollectionResultOfT(TargetsRestOperations client, Guid subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

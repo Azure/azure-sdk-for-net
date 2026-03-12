@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class ClusterCollection : ArmCollection, IEnumerable<ClusterResource>, IAsyncEnumerable<ClusterResource>
     {
         private readonly ClientDiagnostics _clustersClientDiagnostics;
-        private readonly Clusters _clustersRestClient;
+        private readonly ClustersRestOperations _clustersRestClient;
 
         /// <summary> Initializes a new instance of ClusterCollection for mocking. </summary>
         protected ClusterCollection()
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ClusterResource.ResourceType, out string clusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ClusterResource.ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, clusterApiVersion ?? "2024-05-01");
+            _clustersRestClient = new ClustersRestOperations(_clustersClientDiagnostics, Pipeline, Endpoint, clusterApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

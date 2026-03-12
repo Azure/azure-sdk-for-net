@@ -26,11 +26,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class BarCollection : ArmCollection, IEnumerable<BarResource>, IAsyncEnumerable<BarResource>
     {
         private readonly ClientDiagnostics _barsClientDiagnostics;
-        private readonly Bars _barsRestClient;
+        private readonly BarsRestOperations _barsRestClient;
         private readonly ClientDiagnostics _barClientDiagnostics;
-        private readonly Bar _barRestClient;
+        private readonly BarRestOperations _barRestClient;
         private readonly ClientDiagnostics _employeesClientDiagnostics;
-        private readonly Employees _employeesRestClient;
+        private readonly EmployeesRestOperations _employeesRestClient;
 
         /// <summary> Initializes a new instance of BarCollection for mocking. </summary>
         protected BarCollection()
@@ -44,11 +44,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(BarResource.ResourceType, out string barApiVersion);
             _barsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
-            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
+            _barsRestClient = new BarsRestOperations(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             _barClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
-            _barRestClient = new Bar(_barClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
+            _barRestClient = new BarRestOperations(_barClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             _employeesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarResource.ResourceType.Namespace, Diagnostics);
-            _employeesRestClient = new Employees(_employeesClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
+            _employeesRestClient = new EmployeesRestOperations(_employeesClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class StorageSyncServiceResource : ArmResource
     {
         private readonly ClientDiagnostics _storageSyncServicesClientDiagnostics;
-        private readonly StorageSyncServices _storageSyncServicesRestClient;
+        private readonly StorageSyncServicesRestOperations _storageSyncServicesRestClient;
         private readonly StorageSyncServiceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/storageSyncServices";
@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string storageSyncServiceApiVersion);
             _storageSyncServicesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _storageSyncServicesRestClient = new StorageSyncServices(_storageSyncServicesClientDiagnostics, Pipeline, Endpoint, storageSyncServiceApiVersion ?? "2024-05-01");
+            _storageSyncServicesRestClient = new StorageSyncServicesRestOperations(_storageSyncServicesClientDiagnostics, Pipeline, Endpoint, storageSyncServiceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

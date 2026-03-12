@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class BestPracticeResource : ArmResource
     {
         private readonly ClientDiagnostics _bestPracticesClientDiagnostics;
-        private readonly BestPractices _bestPracticesRestClient;
+        private readonly BestPracticesRestOperations _bestPracticesRestClient;
         private readonly BestPracticeData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/bestPractices";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string bestPracticeApiVersion);
             _bestPracticesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _bestPracticesRestClient = new BestPractices(_bestPracticesClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
+            _bestPracticesRestClient = new BestPracticesRestOperations(_bestPracticesClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

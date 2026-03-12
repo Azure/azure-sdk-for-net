@@ -26,9 +26,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class WorkloadNetworkVmGroupResource : ArmResource
     {
         private readonly ClientDiagnostics _workloadNetworkVmGroupsClientDiagnostics;
-        private readonly WorkloadNetworkVmGroups _workloadNetworkVmGroupsRestClient;
+        private readonly WorkloadNetworkVmGroupsRestOperations _workloadNetworkVmGroupsRestClient;
         private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
-        private readonly WorkloadNetworks _workloadNetworksRestClient;
+        private readonly WorkloadNetworksRestOperations _workloadNetworksRestClient;
         private readonly WorkloadNetworkVmGroupData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/vmGroups";
@@ -54,9 +54,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string workloadNetworkVmGroupApiVersion);
             _workloadNetworkVmGroupsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _workloadNetworkVmGroupsRestClient = new WorkloadNetworkVmGroups(_workloadNetworkVmGroupsClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
+            _workloadNetworkVmGroupsRestClient = new WorkloadNetworkVmGroupsRestOperations(_workloadNetworkVmGroupsClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
+            _workloadNetworksRestClient = new WorkloadNetworksRestOperations(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkVmGroupApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

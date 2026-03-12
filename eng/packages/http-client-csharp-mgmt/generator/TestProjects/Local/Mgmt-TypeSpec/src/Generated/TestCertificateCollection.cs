@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class TestCertificateCollection : ArmCollection
     {
         private readonly ClientDiagnostics _testCertificatesClientDiagnostics;
-        private readonly TestCertificates _testCertificatesRestClient;
+        private readonly TestCertificatesRestOperations _testCertificatesRestClient;
 
         /// <summary> Initializes a new instance of TestCertificateCollection for mocking. </summary>
         protected TestCertificateCollection()
@@ -40,7 +40,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(TestCertificateResource.ResourceType, out string testCertificateApiVersion);
             _testCertificatesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", TestCertificateResource.ResourceType.Namespace, Diagnostics);
-            _testCertificatesRestClient = new TestCertificates(_testCertificatesClientDiagnostics, Pipeline, Endpoint, testCertificateApiVersion ?? "2024-05-01");
+            _testCertificatesRestClient = new TestCertificatesRestOperations(_testCertificatesClientDiagnostics, Pipeline, Endpoint, testCertificateApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

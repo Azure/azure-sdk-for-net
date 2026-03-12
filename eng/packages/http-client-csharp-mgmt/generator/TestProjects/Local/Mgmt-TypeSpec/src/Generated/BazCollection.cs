@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class BazCollection : ArmCollection, IEnumerable<BazResource>, IAsyncEnumerable<BazResource>
     {
         private readonly ClientDiagnostics _bazsClientDiagnostics;
-        private readonly Bazs _bazsRestClient;
+        private readonly BazsRestOperations _bazsRestClient;
 
         /// <summary> Initializes a new instance of BazCollection for mocking. </summary>
         protected BazCollection()
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(BazResource.ResourceType, out string bazApiVersion);
             _bazsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BazResource.ResourceType.Namespace, Diagnostics);
-            _bazsRestClient = new Bazs(_bazsClientDiagnostics, Pipeline, Endpoint, bazApiVersion ?? "2024-05-01");
+            _bazsRestClient = new BazsRestOperations(_bazsClientDiagnostics, Pipeline, Endpoint, bazApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

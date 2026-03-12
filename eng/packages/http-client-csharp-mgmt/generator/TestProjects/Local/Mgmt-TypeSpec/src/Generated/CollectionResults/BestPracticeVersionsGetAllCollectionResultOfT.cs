@@ -16,7 +16,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class BestPracticeVersionsGetAllCollectionResultOfT : Pageable<BestPracticeData>
     {
-        private readonly BestPracticeVersions _client;
+        private readonly BestPracticeVersionsRestOperations _client;
         private readonly string _bestPracticeName;
         private readonly RequestContext _context;
 
@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="client"> The BestPracticeVersions client used to send requests. </param>
         /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BestPracticeVersionsGetAllCollectionResultOfT(BestPracticeVersions client, string bestPracticeName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BestPracticeVersionsGetAllCollectionResultOfT(BestPracticeVersionsRestOperations client, string bestPracticeName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _bestPracticeName = bestPracticeName;

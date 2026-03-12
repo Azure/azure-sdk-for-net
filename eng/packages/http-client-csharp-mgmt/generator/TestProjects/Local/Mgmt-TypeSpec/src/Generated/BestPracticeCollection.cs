@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class BestPracticeCollection : ArmCollection, IEnumerable<BestPracticeResource>, IAsyncEnumerable<BestPracticeResource>
     {
         private readonly ClientDiagnostics _bestPracticesClientDiagnostics;
-        private readonly BestPractices _bestPracticesRestClient;
+        private readonly BestPracticesRestOperations _bestPracticesRestClient;
 
         /// <summary> Initializes a new instance of BestPracticeCollection for mocking. </summary>
         protected BestPracticeCollection()
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(BestPracticeResource.ResourceType, out string bestPracticeApiVersion);
             _bestPracticesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BestPracticeResource.ResourceType.Namespace, Diagnostics);
-            _bestPracticesRestClient = new BestPractices(_bestPracticesClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
+            _bestPracticesRestClient = new BestPracticesRestOperations(_bestPracticesClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

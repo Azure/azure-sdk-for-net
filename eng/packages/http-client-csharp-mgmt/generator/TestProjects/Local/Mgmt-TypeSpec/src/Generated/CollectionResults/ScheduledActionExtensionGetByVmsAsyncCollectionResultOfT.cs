@@ -17,7 +17,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT : AsyncPageable<ScheduledActionResources>
     {
-        private readonly ScheduledActionExtension _client;
+        private readonly ScheduledActionExtensionRestOperations _client;
         private readonly string _resourceUri;
         private readonly RequestContext _context;
 
@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="client"> The ScheduledActionExtension client used to send requests. </param>
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtension client, string resourceUri, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestOperations client, string resourceUri, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _resourceUri = resourceUri;

@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class HciVmInstanceResource : ArmResource
     {
         private readonly ClientDiagnostics _hciVmInstancesClientDiagnostics;
-        private readonly HciVmInstances _hciVmInstancesRestClient;
+        private readonly HciVmInstancesRestOperations _hciVmInstancesRestClient;
         private readonly HciVmInstanceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/virtualMachineInstances";
@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string hciVmInstanceApiVersion);
             _hciVmInstancesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _hciVmInstancesRestClient = new HciVmInstances(_hciVmInstancesClientDiagnostics, Pipeline, Endpoint, hciVmInstanceApiVersion ?? "2024-05-01");
+            _hciVmInstancesRestClient = new HciVmInstancesRestOperations(_hciVmInstancesClientDiagnostics, Pipeline, Endpoint, hciVmInstanceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

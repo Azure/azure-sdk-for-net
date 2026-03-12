@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class ClusterResource : ArmResource
     {
         private readonly ClientDiagnostics _clustersClientDiagnostics;
-        private readonly Clusters _clustersRestClient;
+        private readonly ClustersRestOperations _clustersRestClient;
         private readonly ClusterData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/clusters";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string clusterApiVersion);
             _clustersClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _clustersRestClient = new Clusters(_clustersClientDiagnostics, Pipeline, Endpoint, clusterApiVersion ?? "2024-05-01");
+            _clustersRestClient = new ClustersRestOperations(_clustersClientDiagnostics, Pipeline, Endpoint, clusterApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class FooSettingsResource : ArmResource
     {
         private readonly ClientDiagnostics _fooSettingsOperationsClientDiagnostics;
-        private readonly FooSettingsOperations _fooSettingsOperationsRestClient;
+        private readonly FooSettingsOperationsRestOperations _fooSettingsOperationsRestClient;
         private readonly FooSettingsData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/FooSettings";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string fooSettingsApiVersion);
             _fooSettingsOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _fooSettingsOperationsRestClient = new FooSettingsOperations(_fooSettingsOperationsClientDiagnostics, Pipeline, Endpoint, fooSettingsApiVersion ?? "2024-05-01");
+            _fooSettingsOperationsRestClient = new FooSettingsOperationsRestOperations(_fooSettingsOperationsClientDiagnostics, Pipeline, Endpoint, fooSettingsApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

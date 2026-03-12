@@ -27,9 +27,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class WorkloadNetworkSegmentCollection : ArmCollection, IEnumerable<WorkloadNetworkSegmentResource>, IAsyncEnumerable<WorkloadNetworkSegmentResource>
     {
         private readonly ClientDiagnostics _workloadNetworkSegmentsClientDiagnostics;
-        private readonly WorkloadNetworkSegments _workloadNetworkSegmentsRestClient;
+        private readonly WorkloadNetworkSegmentsRestOperations _workloadNetworkSegmentsRestClient;
         private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
-        private readonly WorkloadNetworks _workloadNetworksRestClient;
+        private readonly WorkloadNetworksRestOperations _workloadNetworksRestClient;
 
         /// <summary> Initializes a new instance of WorkloadNetworkSegmentCollection for mocking. </summary>
         protected WorkloadNetworkSegmentCollection()
@@ -43,9 +43,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(WorkloadNetworkSegmentResource.ResourceType, out string workloadNetworkSegmentApiVersion);
             _workloadNetworkSegmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkSegmentResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworkSegmentsRestClient = new WorkloadNetworkSegments(_workloadNetworkSegmentsClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
+            _workloadNetworkSegmentsRestClient = new WorkloadNetworkSegmentsRestOperations(_workloadNetworkSegmentsClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", WorkloadNetworkSegmentResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
+            _workloadNetworksRestClient = new WorkloadNetworksRestOperations(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

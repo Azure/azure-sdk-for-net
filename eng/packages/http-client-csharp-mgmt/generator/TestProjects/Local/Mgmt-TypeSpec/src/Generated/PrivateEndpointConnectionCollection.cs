@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class PrivateEndpointConnectionCollection : ArmCollection
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
-        private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
+        private readonly PrivateEndpointConnectionsRestOperations _privateEndpointConnectionsRestClient;
 
         /// <summary> Initializes a new instance of PrivateEndpointConnectionCollection for mocking. </summary>
         protected PrivateEndpointConnectionCollection()
@@ -38,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(PrivateEndpointConnectionResource.ResourceType, out string privateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2024-05-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnectionsRestOperations(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, privateEndpointConnectionApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

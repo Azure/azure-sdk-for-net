@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class PolicyVmAssignmentResource : ArmResource
     {
         private readonly ClientDiagnostics _policyVmAssignmentsClientDiagnostics;
-        private readonly PolicyVmAssignments _policyVmAssignmentsRestClient;
+        private readonly PolicyVmAssignmentsRestOperations _policyVmAssignmentsRestClient;
         private readonly PolicyAssignmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/policyAssignments";
@@ -51,7 +51,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string policyVmAssignmentApiVersion);
             _policyVmAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _policyVmAssignmentsRestClient = new PolicyVmAssignments(_policyVmAssignmentsClientDiagnostics, Pipeline, Endpoint, policyVmAssignmentApiVersion ?? "2024-05-01");
+            _policyVmAssignmentsRestClient = new PolicyVmAssignmentsRestOperations(_policyVmAssignmentsClientDiagnostics, Pipeline, Endpoint, policyVmAssignmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

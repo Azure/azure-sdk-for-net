@@ -25,7 +25,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class JooCollection : ArmCollection
     {
         private readonly ClientDiagnostics _joosClientDiagnostics;
-        private readonly Joos _joosRestClient;
+        private readonly JoosRestOperations _joosRestClient;
 
         /// <summary> Initializes a new instance of JooCollection for mocking. </summary>
         protected JooCollection()
@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(JooResource.ResourceType, out string jooApiVersion);
             _joosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", JooResource.ResourceType.Namespace, Diagnostics);
-            _joosRestClient = new Joos(_joosClientDiagnostics, Pipeline, Endpoint, jooApiVersion ?? "2024-05-01");
+            _joosRestClient = new JoosRestOperations(_joosClientDiagnostics, Pipeline, Endpoint, jooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

@@ -22,17 +22,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     public partial class MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _foosClientDiagnostics;
-        private Foos _foosRestClient;
+        private FoosRestOperations _foosRestClient;
         private ClientDiagnostics _bazsClientDiagnostics;
-        private Bazs _bazsRestClient;
+        private BazsRestOperations _bazsRestClient;
         private ClientDiagnostics _zoosClientDiagnostics;
-        private Zoos _zoosRestClient;
+        private ZoosRestOperations _zoosRestClient;
         private ClientDiagnostics _clustersClientDiagnostics;
-        private Clusters _clustersRestClient;
+        private ClustersRestOperations _clustersRestClient;
         private ClientDiagnostics _mgmtTypeSpecClientClientDiagnostics;
         private MgmtTypeSpecClient _mgmtTypeSpecClientRestClient;
         private ClientDiagnostics _sapVirtualInstancesClientDiagnostics;
-        private SAPVirtualInstances _sapVirtualInstancesRestClient;
+        private SAPVirtualInstancesRestOperations _sapVirtualInstancesRestClient;
 
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource()
@@ -48,19 +48,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private ClientDiagnostics FoosClientDiagnostics => _foosClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Foos FoosRestClient => _foosRestClient ??= new Foos(FoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private FoosRestOperations FoosRestClient => _foosRestClient ??= new FoosRestOperations(FoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics BazsClientDiagnostics => _bazsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Bazs BazsRestClient => _bazsRestClient ??= new Bazs(BazsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private BazsRestOperations BazsRestClient => _bazsRestClient ??= new BazsRestOperations(BazsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics ZoosClientDiagnostics => _zoosClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Zoos ZoosRestClient => _zoosRestClient ??= new Zoos(ZoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private ZoosRestOperations ZoosRestClient => _zoosRestClient ??= new ZoosRestOperations(ZoosClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private ClustersRestOperations ClustersRestClient => _clustersRestClient ??= new ClustersRestOperations(ClustersClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         private ClientDiagnostics MgmtTypeSpecClientClientDiagnostics => _mgmtTypeSpecClientClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -68,7 +68,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private ClientDiagnostics SAPVirtualInstancesClientDiagnostics => _sapVirtualInstancesClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SAPVirtualInstances SAPVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SAPVirtualInstances(SAPVirtualInstancesClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+        private SAPVirtualInstancesRestOperations SAPVirtualInstancesRestClient => _sapVirtualInstancesRestClient ??= new SAPVirtualInstancesRestOperations(SAPVirtualInstancesClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets a collection of PlaywrightQuota in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>

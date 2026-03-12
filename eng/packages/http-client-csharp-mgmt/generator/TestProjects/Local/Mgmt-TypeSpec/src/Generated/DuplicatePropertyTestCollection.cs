@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class DuplicatePropertyTestCollection : ArmCollection, IEnumerable<DuplicatePropertyTestResource>, IAsyncEnumerable<DuplicatePropertyTestResource>
     {
         private readonly ClientDiagnostics _duplicatePropertyTestsClientDiagnostics;
-        private readonly DuplicatePropertyTests _duplicatePropertyTestsRestClient;
+        private readonly DuplicatePropertyTestsRestOperations _duplicatePropertyTestsRestClient;
 
         /// <summary> Initializes a new instance of DuplicatePropertyTestCollection for mocking. </summary>
         protected DuplicatePropertyTestCollection()
@@ -41,7 +41,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(DuplicatePropertyTestResource.ResourceType, out string duplicatePropertyTestApiVersion);
             _duplicatePropertyTestsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", DuplicatePropertyTestResource.ResourceType.Namespace, Diagnostics);
-            _duplicatePropertyTestsRestClient = new DuplicatePropertyTests(_duplicatePropertyTestsClientDiagnostics, Pipeline, Endpoint, duplicatePropertyTestApiVersion ?? "2024-05-01");
+            _duplicatePropertyTestsRestClient = new DuplicatePropertyTestsRestOperations(_duplicatePropertyTestsClientDiagnostics, Pipeline, Endpoint, duplicatePropertyTestApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

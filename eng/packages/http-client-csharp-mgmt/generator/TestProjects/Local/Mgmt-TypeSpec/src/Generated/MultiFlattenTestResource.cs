@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class MultiFlattenTestResource : ArmResource
     {
         private readonly ClientDiagnostics _multiFlattenOpsClientDiagnostics;
-        private readonly MultiFlattenOps _multiFlattenOpsRestClient;
+        private readonly MultiFlattenOpsRestOperations _multiFlattenOpsRestClient;
         private readonly MultiFlattenTestData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos/multiFlatten";
@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string multiFlattenTestApiVersion);
             _multiFlattenOpsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _multiFlattenOpsRestClient = new MultiFlattenOps(_multiFlattenOpsClientDiagnostics, Pipeline, Endpoint, multiFlattenTestApiVersion ?? "2024-05-01");
+            _multiFlattenOpsRestClient = new MultiFlattenOpsRestOperations(_multiFlattenOpsClientDiagnostics, Pipeline, Endpoint, multiFlattenTestApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

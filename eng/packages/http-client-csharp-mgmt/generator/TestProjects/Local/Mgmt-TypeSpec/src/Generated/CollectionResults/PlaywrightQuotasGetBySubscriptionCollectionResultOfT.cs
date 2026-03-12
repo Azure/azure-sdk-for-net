@@ -16,7 +16,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class PlaywrightQuotasGetBySubscriptionCollectionResultOfT : Pageable<PlaywrightQuotaData>
     {
-        private readonly PlaywrightQuotas _client;
+        private readonly PlaywrightQuotasRestOperations _client;
         private readonly Guid _subscriptionId;
         private readonly AzureLocation _location;
         private readonly RequestContext _context;
@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public PlaywrightQuotasGetBySubscriptionCollectionResultOfT(PlaywrightQuotas client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PlaywrightQuotasGetBySubscriptionCollectionResultOfT(PlaywrightQuotasRestOperations client, Guid subscriptionId, AzureLocation location, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

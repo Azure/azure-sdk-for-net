@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class GroupQuotaLimitListResource : ArmResource
     {
         private readonly ClientDiagnostics _groupQuotaLimitListsClientDiagnostics;
-        private readonly GroupQuotaLimitLists _groupQuotaLimitListsRestClient;
+        private readonly GroupQuotaLimitListsRestOperations _groupQuotaLimitListsRestClient;
         private readonly GroupQuotaLimitListData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Management/managementGroups/groupQuotas/resourceProviders/groupQuotaLimits";
@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string groupQuotaLimitListApiVersion);
             _groupQuotaLimitListsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _groupQuotaLimitListsRestClient = new GroupQuotaLimitLists(_groupQuotaLimitListsClientDiagnostics, Pipeline, Endpoint, groupQuotaLimitListApiVersion ?? "2024-05-01");
+            _groupQuotaLimitListsRestClient = new GroupQuotaLimitListsRestOperations(_groupQuotaLimitListsClientDiagnostics, Pipeline, Endpoint, groupQuotaLimitListApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

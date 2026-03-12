@@ -17,13 +17,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class BestPracticesGetAllAsyncCollectionResultOfT : AsyncPageable<BestPracticeData>
     {
-        private readonly BestPractices _client;
+        private readonly BestPracticesRestOperations _client;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of BestPracticesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BestPractices client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BestPracticesGetAllAsyncCollectionResultOfT(BestPractices client, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BestPracticesGetAllAsyncCollectionResultOfT(BestPracticesRestOperations client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;

@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class TrafficEndpointResource : ArmResource
     {
         private readonly ClientDiagnostics _trafficEndpointsClientDiagnostics;
-        private readonly TrafficEndpoints _trafficEndpointsRestClient;
+        private readonly TrafficEndpointsRestOperations _trafficEndpointsRestClient;
         private readonly TrafficEndpointData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/trafficProfiles/endpoints";
@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string trafficEndpointApiVersion);
             _trafficEndpointsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _trafficEndpointsRestClient = new TrafficEndpoints(_trafficEndpointsClientDiagnostics, Pipeline, Endpoint, trafficEndpointApiVersion ?? "2024-05-01");
+            _trafficEndpointsRestClient = new TrafficEndpointsRestOperations(_trafficEndpointsClientDiagnostics, Pipeline, Endpoint, trafficEndpointApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

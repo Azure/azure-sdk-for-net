@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class SelfHelpResource : ArmResource
     {
         private readonly ClientDiagnostics _solutionResourcesClientDiagnostics;
-        private readonly SolutionResources _solutionResourcesRestClient;
+        private readonly SolutionResourcesRestOperations _solutionResourcesRestClient;
         private readonly SelfHelpResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/selfHelps";
@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string selfHelpResourceApiVersion);
             _solutionResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _solutionResourcesRestClient = new SolutionResources(_solutionResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpResourceApiVersion ?? "2024-05-01");
+            _solutionResourcesRestClient = new SolutionResourcesRestOperations(_solutionResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

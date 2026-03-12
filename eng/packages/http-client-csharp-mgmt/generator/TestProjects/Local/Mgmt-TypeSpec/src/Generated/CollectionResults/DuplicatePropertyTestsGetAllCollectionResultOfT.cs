@@ -16,7 +16,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class DuplicatePropertyTestsGetAllCollectionResultOfT : Pageable<DuplicatePropertyTestData>
     {
-        private readonly DuplicatePropertyTests _client;
+        private readonly DuplicatePropertyTestsRestOperations _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DuplicatePropertyTestsGetAllCollectionResultOfT(DuplicatePropertyTests client, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DuplicatePropertyTestsGetAllCollectionResultOfT(DuplicatePropertyTestsRestOperations client, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

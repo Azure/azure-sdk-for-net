@@ -27,9 +27,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class ZooResource : ArmResource
     {
         private readonly ClientDiagnostics _zoosClientDiagnostics;
-        private readonly Zoos _zoosRestClient;
+        private readonly ZoosRestOperations _zoosRestClient;
         private readonly ClientDiagnostics _zooRecommendationClientDiagnostics;
-        private readonly ZooRecommendation _zooRecommendationRestClient;
+        private readonly ZooRecommendationRestOperations _zooRecommendationRestClient;
         private readonly ZooData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/zoos";
@@ -55,9 +55,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string zooApiVersion);
             _zoosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
+            _zoosRestClient = new ZoosRestOperations(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
             _zooRecommendationClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
+            _zooRecommendationRestClient = new ZooRecommendationRestOperations(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -431,7 +431,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Models.ZooRecommendation>> RecommendAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ZooRecommendation>> RecommendAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _zooRecommendationClientDiagnostics.CreateScope("ZooResource.Recommend");
             scope.Start();
@@ -443,7 +443,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _zooRecommendationRestClient.CreateRecommendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<Models.ZooRecommendation> response = Response.FromValue(Models.ZooRecommendation.FromResponse(result), result);
+                Response<ZooRecommendation> response = Response.FromValue(ZooRecommendation.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -479,7 +479,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Models.ZooRecommendation> Recommend(CancellationToken cancellationToken = default)
+        public virtual Response<ZooRecommendation> Recommend(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _zooRecommendationClientDiagnostics.CreateScope("ZooResource.Recommend");
             scope.Start();
@@ -491,7 +491,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _zooRecommendationRestClient.CreateRecommendRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<Models.ZooRecommendation> response = Response.FromValue(Models.ZooRecommendation.FromResponse(result), result);
+                Response<ZooRecommendation> response = Response.FromValue(ZooRecommendation.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

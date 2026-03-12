@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class BarSettingsResource : ArmResource
     {
         private readonly ClientDiagnostics _barSettingsOperationsClientDiagnostics;
-        private readonly BarSettingsOperations _barSettingsOperationsRestClient;
+        private readonly BarSettingsOperationsRestOperations _barSettingsOperationsRestClient;
         private readonly BarSettingsResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/foos/bars/settings";
@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string barSettingsResourceApiVersion);
             _barSettingsOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _barSettingsOperationsRestClient = new BarSettingsOperations(_barSettingsOperationsClientDiagnostics, Pipeline, Endpoint, barSettingsResourceApiVersion ?? "2024-05-01");
+            _barSettingsOperationsRestClient = new BarSettingsOperationsRestOperations(_barSettingsOperationsClientDiagnostics, Pipeline, Endpoint, barSettingsResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

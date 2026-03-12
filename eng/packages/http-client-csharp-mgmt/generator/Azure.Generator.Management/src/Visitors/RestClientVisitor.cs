@@ -31,7 +31,7 @@ internal class RestClientVisitor : ScmLibraryVisitor
             {
                 // omit methods for ClientProvider, MPG will implement its own client methods
                 // put create request methods to client directly
-                type.Update(methods: [.. client.RestClient.Methods], modifiers: TransformPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
+                UpdateNonRootClient(client);
             }
         }
 
@@ -42,6 +42,59 @@ internal class RestClientVisitor : ScmLibraryVisitor
         }
 
         return type;
+    }
+
+    private void UpdateNonRootClient(ClientProvider client)
+    {
+        // fields
+        var apiVersionField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(string), "_apiVersion", client);
+        var endpointField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(Uri), "_endpoint", client);
+
+        // properties
+        var pipelineProperty = new PropertyProvider(
+            description: $"The HTTP pipeline for sending and receiving REST requests and responses.",
+            modifiers: MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+            type: typeof(HttpPipeline),
+            name: "Pipeline",
+            body: new AutoPropertyBody(false),
+            enclosingType: client);
+        var clientDiagnosticsProperty = new PropertyProvider(
+            description: $"The ClientDiagnostics is used to provide tracing support for the client library.",
+            modifiers: MethodSignatureModifiers.Internal,
+            type: typeof(ClientDiagnostics),
+            name: "ClientDiagnostics",
+            body: new AutoPropertyBody(false),
+            enclosingType: client);
+
+        // constructor
+        var clientDiagnosticsParam = new ParameterProvider("clientDiagnostics", $"The ClientDiagnostics is used to provide tracing support for the client library.", typeof(ClientDiagnostics));
+        var pipelineParam = new ParameterProvider("pipeline", $"The HTTP pipeline for sending and receiving REST requests and responses.", typeof(HttpPipeline));
+        var endpointParam = new ParameterProvider("endpoint", $"Service endpoint.", typeof(Uri), null);
+        var apiVersionParam = new ParameterProvider("apiVersion", $"The API version to use for this client.", typeof(string));
+        var ctorBody = new MethodBodyStatement[]
+        {
+            clientDiagnosticsProperty.Assign(clientDiagnosticsParam).Terminate(),
+            endpointField.Assign(endpointParam).Terminate(),
+            pipelineProperty.Assign(pipelineParam).Terminate(),
+            apiVersionField.Assign(apiVersionParam).Terminate(),
+        };
+
+        // First update: rename, set fields/methods/modifiers/file path
+        var filePath = TransformRelativeFilePathForClient(client);
+        client.Update(
+            name: client.Name + "RestOperations",
+            fields: [apiVersionField, endpointField],
+            methods: [.. client.RestClient.Methods],
+            modifiers: TransformPublicModifiersToInternal(client),
+            relativeFilePath: filePath,
+            properties: [pipelineProperty, clientDiagnosticsProperty]);
+
+        // Second update: set constructors after the name has been updated
+        var ctor = new ConstructorProvider(
+            new ConstructorSignature(client.Type, null, MethodSignatureModifiers.Internal, [clientDiagnosticsParam, pipelineParam, endpointParam, apiVersionParam]),
+            ctorBody,
+            client);
+        client.Update(constructors: [ctor, ConstructorProviderHelpers.BuildMockingConstructor(client)]);
     }
 
     private void UpdateRootClient(ClientProvider rootClient)

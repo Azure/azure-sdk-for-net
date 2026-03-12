@@ -26,9 +26,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class WorkloadNetworkSegmentResource : ArmResource
     {
         private readonly ClientDiagnostics _workloadNetworkSegmentsClientDiagnostics;
-        private readonly WorkloadNetworkSegments _workloadNetworkSegmentsRestClient;
+        private readonly WorkloadNetworkSegmentsRestOperations _workloadNetworkSegmentsRestClient;
         private readonly ClientDiagnostics _workloadNetworksClientDiagnostics;
-        private readonly WorkloadNetworks _workloadNetworksRestClient;
+        private readonly WorkloadNetworksRestOperations _workloadNetworksRestClient;
         private readonly WorkloadNetworkSegmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/segments";
@@ -54,9 +54,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string workloadNetworkSegmentApiVersion);
             _workloadNetworkSegmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _workloadNetworkSegmentsRestClient = new WorkloadNetworkSegments(_workloadNetworkSegmentsClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
+            _workloadNetworkSegmentsRestClient = new WorkloadNetworkSegmentsRestOperations(_workloadNetworkSegmentsClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
+            _workloadNetworksRestClient = new WorkloadNetworksRestOperations(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkSegmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

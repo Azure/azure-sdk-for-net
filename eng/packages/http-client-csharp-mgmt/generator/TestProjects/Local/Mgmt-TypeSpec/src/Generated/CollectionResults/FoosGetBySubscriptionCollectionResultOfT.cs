@@ -16,7 +16,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class FoosGetBySubscriptionCollectionResultOfT : Pageable<FooData>
     {
-        private readonly Foos _client;
+        private readonly FoosRestOperations _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="client"> The Foos client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FoosGetBySubscriptionCollectionResultOfT(Foos client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public FoosGetBySubscriptionCollectionResultOfT(FoosRestOperations client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

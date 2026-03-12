@@ -24,7 +24,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     public partial class HcrpConfigurationAssignmentResource : ArmResource
     {
         private readonly ClientDiagnostics _hcrpConfigurationAssignmentsClientDiagnostics;
-        private readonly HcrpConfigurationAssignments _hcrpConfigurationAssignmentsRestClient;
+        private readonly HcrpConfigurationAssignmentsRestOperations _hcrpConfigurationAssignmentsRestClient;
         private readonly HcrpConfigurationAssignmentData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/hcrpConfigurationAssignments";
@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string hcrpConfigurationAssignmentApiVersion);
             _hcrpConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _hcrpConfigurationAssignmentsRestClient = new HcrpConfigurationAssignments(_hcrpConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, hcrpConfigurationAssignmentApiVersion ?? "2024-05-01");
+            _hcrpConfigurationAssignmentsRestClient = new HcrpConfigurationAssignmentsRestOperations(_hcrpConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, hcrpConfigurationAssignmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

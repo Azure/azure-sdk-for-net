@@ -17,7 +17,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     internal partial class BazsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<BazData>
     {
-        private readonly Bazs _client;
+        private readonly BazsRestOperations _client;
         private readonly Guid _subscriptionId;
         private readonly int? _top;
         private readonly RequestContext _context;
@@ -27,7 +27,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="top"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BazsGetBySubscriptionAsyncCollectionResultOfT(Bazs client, Guid subscriptionId, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BazsGetBySubscriptionAsyncCollectionResultOfT(BazsRestOperations client, Guid subscriptionId, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
