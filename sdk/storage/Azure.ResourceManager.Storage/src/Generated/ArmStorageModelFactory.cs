@@ -33,6 +33,24 @@ namespace Azure.ResourceManager.Storage.Models
             return new LegalHoldProperties(hasLegalHold, tags.ToList(), protectedAppendWritesHistory, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A tag of the LegalHold of a blob container. </summary>
+        /// <param name="tag"> The tag value. </param>
+        /// <param name="timestamp"> Returns the date and time the tag was added. </param>
+        /// <param name="objectIdentifier"> Returns the Object ID of the user who added the tag. </param>
+        /// <param name="tenantId"> Returns the Tenant ID that issued the token for the user who added the tag. </param>
+        /// <param name="upn"> Returns the User Principal Name of the user who added the tag. </param>
+        /// <returns> A new <see cref="Models.LegalHoldTag"/> instance for mocking. </returns>
+        public static LegalHoldTag LegalHoldTag(string tag = default, DateTimeOffset? timestamp = default, string objectIdentifier = default, Guid? tenantId = default, string upn = default)
+        {
+            return new LegalHoldTag(
+                tag,
+                timestamp,
+                objectIdentifier,
+                tenantId,
+                upn,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Protected append writes history setting for the blob container with Legal holds. </summary>
         /// <param name="allowProtectedAppendWritesAll"> When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining legal hold protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </param>
         /// <param name="timestamp"> Returns the date and time the tag was added. </param>
@@ -494,6 +512,26 @@ namespace Azure.ResourceManager.Storage.Models
         public static StorageEncryptionService StorageEncryptionService(bool? enabled = default, DateTimeOffset? lastEnabledOn = default, StorageEncryptionKeyType? keyType = default)
         {
             return new StorageEncryptionService(enabled, lastEnabledOn, keyType, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Properties of key vault. </summary>
+        /// <param name="keyName"> The name of KeyVault key. </param>
+        /// <param name="keyVersion"> The version of KeyVault key. </param>
+        /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
+        /// <param name="currentVersionedKeyIdentifier"> The object identifier of the current versioned Key Vault Key in use. </param>
+        /// <param name="lastKeyRotationTimestamp"> Timestamp of last rotation of the Key Vault Key. </param>
+        /// <param name="currentVersionedKeyExpirationTimestamp"> This is a read only property that represents the expiration time of the current version of the customer managed key used for encryption. </param>
+        /// <returns> A new <see cref="Models.StorageAccountKeyVaultProperties"/> instance for mocking. </returns>
+        public static StorageAccountKeyVaultProperties StorageAccountKeyVaultProperties(string keyName = default, string keyVersion = default, Uri keyVaultUri = default, string currentVersionedKeyIdentifier = default, DateTimeOffset? lastKeyRotationTimestamp = default, DateTimeOffset? currentVersionedKeyExpirationTimestamp = default)
+        {
+            return new StorageAccountKeyVaultProperties(
+                keyName,
+                keyVersion,
+                keyVaultUri,
+                currentVersionedKeyIdentifier,
+                lastKeyRotationTimestamp,
+                currentVersionedKeyExpirationTimestamp,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Network rule set. </summary>
@@ -1191,6 +1229,16 @@ namespace Azure.ResourceManager.Storage.Models
                     null));
         }
 
+        /// <summary> The key vault properties for the encryption scope. This is a required field if encryption scope 'source' attribute is set to 'Microsoft.KeyVault'. </summary>
+        /// <param name="keyUri"> The object identifier for a key vault key object. When applied, the encryption scope will use the key referenced by the identifier to enable customer-managed key support on this encryption scope. </param>
+        /// <param name="currentVersionedKeyIdentifier"> The object identifier of the current versioned Key Vault Key in use. </param>
+        /// <param name="lastKeyRotationTimestamp"> Timestamp of last rotation of the Key Vault Key. </param>
+        /// <returns> A new <see cref="Models.EncryptionScopeKeyVaultProperties"/> instance for mocking. </returns>
+        public static EncryptionScopeKeyVaultProperties EncryptionScopeKeyVaultProperties(Uri keyUri = default, string currentVersionedKeyIdentifier = default, DateTimeOffset? lastKeyRotationTimestamp = default)
+        {
+            return new EncryptionScopeKeyVaultProperties(keyUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp, additionalBinaryDataProperties: null);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1322,7 +1370,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="properties"> Properties of the storage task assignment. </param>
         /// <returns> A new <see cref="Storage.StorageTaskAssignmentData"/> instance for mocking. </returns>
-        public static StorageTaskAssignmentData StorageTaskAssignmentData(string id = default, string name = default, string @type = default, StorageTaskAssignmentProperties properties = default)
+        public static StorageTaskAssignmentData StorageTaskAssignmentData(ResourceIdentifier id = default, string name = default, string @type = default, StorageTaskAssignmentProperties properties = default)
         {
             return new StorageTaskAssignmentData(id, name, @type, additionalBinaryDataProperties: null, properties);
         }
@@ -1380,7 +1428,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
-        public static Resource Resource(string id = default, string name = default, string @type = default)
+        public static Resource Resource(ResourceIdentifier id = default, string name = default, string @type = default)
         {
             return new Resource(id, name, @type, additionalBinaryDataProperties: null);
         }
@@ -1708,6 +1756,17 @@ namespace Azure.ResourceManager.Storage.Models
                 capabilities.ToList(),
                 restrictions.ToList(),
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The StorageSkuLocationInfo. </summary>
+        /// <param name="location"> Describes the location for the product where storage account resource can be created. </param>
+        /// <param name="zones"> Describes the available zones for the product where storage account resource can be created. </param>
+        /// <returns> A new <see cref="Models.StorageSkuLocationInfo"/> instance for mocking. </returns>
+        public static StorageSkuLocationInfo StorageSkuLocationInfo(AzureLocation? location = default, IEnumerable<string> zones = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+
+            return new StorageSkuLocationInfo(location, zones.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The capability information in the specified SKU, including file encryption, network ACLs, change notification, etc. </summary>
