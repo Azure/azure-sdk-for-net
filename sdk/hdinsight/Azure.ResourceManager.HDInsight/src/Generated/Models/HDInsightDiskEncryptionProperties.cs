@@ -7,44 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The disk encryption properties. </summary>
     public partial class HDInsightDiskEncryptionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightDiskEncryptionProperties"/>. </summary>
         public HDInsightDiskEncryptionProperties()
@@ -57,30 +27,35 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="keyVersion"> Specific key version that is used for enabling disk encryption. </param>
         /// <param name="encryptionAlgorithm"> Algorithm identifier for encryption, default RSA-OAEP. </param>
         /// <param name="msiResourceId"> Resource ID of Managed Identity that is used to access the key vault. </param>
-        /// <param name="isEncryptionAtHostEnabled"> Indicates whether or not resource disk encryption is enabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightDiskEncryptionProperties(Uri vaultUri, string keyName, string keyVersion, JsonWebKeyEncryptionAlgorithm? encryptionAlgorithm, ResourceIdentifier msiResourceId, bool? isEncryptionAtHostEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="encryptionAtHost"> Indicates whether or not resource disk encryption is enabled. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightDiskEncryptionProperties(string vaultUri, string keyName, string keyVersion, JsonWebKeyEncryptionAlgorithm? encryptionAlgorithm, string msiResourceId, bool? encryptionAtHost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VaultUri = vaultUri;
             KeyName = keyName;
             KeyVersion = keyVersion;
             EncryptionAlgorithm = encryptionAlgorithm;
             MsiResourceId = msiResourceId;
-            IsEncryptionAtHostEnabled = isEncryptionAtHostEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            EncryptionAtHost = encryptionAtHost;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net. </summary>
-        public Uri VaultUri { get; set; }
+        public string VaultUri { get; set; }
+
         /// <summary> Key name that is used for enabling disk encryption. </summary>
         public string KeyName { get; set; }
+
         /// <summary> Specific key version that is used for enabling disk encryption. </summary>
         public string KeyVersion { get; set; }
+
         /// <summary> Algorithm identifier for encryption, default RSA-OAEP. </summary>
         public JsonWebKeyEncryptionAlgorithm? EncryptionAlgorithm { get; set; }
+
         /// <summary> Resource ID of Managed Identity that is used to access the key vault. </summary>
-        public ResourceIdentifier MsiResourceId { get; set; }
+        public string MsiResourceId { get; set; }
+
         /// <summary> Indicates whether or not resource disk encryption is enabled. </summary>
-        public bool? IsEncryptionAtHostEnabled { get; set; }
+        public bool? EncryptionAtHost { get; set; }
     }
 }

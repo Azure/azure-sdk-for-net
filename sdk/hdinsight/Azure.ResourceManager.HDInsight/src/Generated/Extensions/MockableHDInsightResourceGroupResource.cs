@@ -8,56 +8,50 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HDInsight;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HDInsight.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableHDInsightResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHDInsightResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHDInsightResourceGroupResource for mocking. </summary>
         protected MockableHDInsightResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHDInsightResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHDInsightResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHDInsightResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Gets a collection of Clusters in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Clusters and their operations over a ClusterResource. </returns>
+        public virtual ClusterCollection GetClusters()
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of HDInsightClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of HDInsightClusterResources and their operations over a HDInsightClusterResource. </returns>
-        public virtual HDInsightClusterCollection GetHDInsightClusters()
-        {
-            return GetCachedClient(client => new HDInsightClusterCollection(client, Id));
+            return GetCachedClient(client => new ClusterCollection(client, Id));
         }
 
         /// <summary>
         /// Gets the specified cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,29 +60,27 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<HDInsightClusterResource>> GetHDInsightClusterAsync(string clusterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClusterResource>> GetClusterAsync(string clusterName, CancellationToken cancellationToken = default)
         {
-            return await GetHDInsightClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            return await GetClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified cluster.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Clusters_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Clusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HDInsightClusterResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +89,11 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<HDInsightClusterResource> GetHDInsightCluster(string clusterName, CancellationToken cancellationToken = default)
+        public virtual Response<ClusterResource> GetCluster(string clusterName, CancellationToken cancellationToken = default)
         {
-            return GetHDInsightClusters().Get(clusterName, cancellationToken);
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            return GetClusters().Get(clusterName, cancellationToken);
         }
     }
 }

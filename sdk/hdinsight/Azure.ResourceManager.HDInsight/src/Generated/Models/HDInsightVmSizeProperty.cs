@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The vm size property. </summary>
     public partial class HDInsightVmSizeProperty
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightVmSizeProperty"/>. </summary>
         internal HDInsightVmSizeProperty()
@@ -56,46 +27,55 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="dataDiskStorageTier"> The data disk storage tier of the vm size. </param>
         /// <param name="label"> The label of the vm size. </param>
         /// <param name="maxDataDiskCount"> The max data disk count of the vm size. </param>
-        /// <param name="memoryInMB"> The memory whose unit is MB of the vm size. </param>
-        /// <param name="isSupportedByVirtualMachines"> This indicates this vm size is supported by virtual machines or not. </param>
-        /// <param name="isSupportedByWebWorkerRoles"> The indicates this vm size is supported by web worker roles or not. </param>
-        /// <param name="virtualMachineResourceDiskSizeInMB"> The virtual machine resource disk size whose unit is MB of the vm size. </param>
-        /// <param name="webWorkerResourceDiskSizeInMB"> The web worker resource disk size whose unit is MB of the vm size. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightVmSizeProperty(string name, int? cores, string dataDiskStorageTier, string label, long? maxDataDiskCount, long? memoryInMB, bool? isSupportedByVirtualMachines, bool? isSupportedByWebWorkerRoles, long? virtualMachineResourceDiskSizeInMB, long? webWorkerResourceDiskSizeInMB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="memoryInMb"> The memory whose unit is MB of the vm size. </param>
+        /// <param name="supportedByVirtualMachines"> This indicates this vm size is supported by virtual machines or not. </param>
+        /// <param name="supportedByWebWorkerRoles"> The indicates this vm size is supported by web worker roles or not. </param>
+        /// <param name="virtualMachineResourceDiskSizeInMb"> The virtual machine resource disk size whose unit is MB of the vm size. </param>
+        /// <param name="webWorkerResourceDiskSizeInMb"> The web worker resource disk size whose unit is MB of the vm size. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightVmSizeProperty(string name, int? cores, string dataDiskStorageTier, string label, long? maxDataDiskCount, long? memoryInMb, bool? supportedByVirtualMachines, bool? supportedByWebWorkerRoles, long? virtualMachineResourceDiskSizeInMb, long? webWorkerResourceDiskSizeInMb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Cores = cores;
             DataDiskStorageTier = dataDiskStorageTier;
             Label = label;
             MaxDataDiskCount = maxDataDiskCount;
-            MemoryInMB = memoryInMB;
-            IsSupportedByVirtualMachines = isSupportedByVirtualMachines;
-            IsSupportedByWebWorkerRoles = isSupportedByWebWorkerRoles;
-            VirtualMachineResourceDiskSizeInMB = virtualMachineResourceDiskSizeInMB;
-            WebWorkerResourceDiskSizeInMB = webWorkerResourceDiskSizeInMB;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            MemoryInMb = memoryInMb;
+            SupportedByVirtualMachines = supportedByVirtualMachines;
+            SupportedByWebWorkerRoles = supportedByWebWorkerRoles;
+            VirtualMachineResourceDiskSizeInMb = virtualMachineResourceDiskSizeInMb;
+            WebWorkerResourceDiskSizeInMb = webWorkerResourceDiskSizeInMb;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The vm size name. </summary>
         public string Name { get; }
+
         /// <summary> The number of cores that the vm size has. </summary>
         public int? Cores { get; }
+
         /// <summary> The data disk storage tier of the vm size. </summary>
         public string DataDiskStorageTier { get; }
+
         /// <summary> The label of the vm size. </summary>
         public string Label { get; }
+
         /// <summary> The max data disk count of the vm size. </summary>
         public long? MaxDataDiskCount { get; }
+
         /// <summary> The memory whose unit is MB of the vm size. </summary>
-        public long? MemoryInMB { get; }
+        public long? MemoryInMb { get; }
+
         /// <summary> This indicates this vm size is supported by virtual machines or not. </summary>
-        public bool? IsSupportedByVirtualMachines { get; }
+        public bool? SupportedByVirtualMachines { get; }
+
         /// <summary> The indicates this vm size is supported by web worker roles or not. </summary>
-        public bool? IsSupportedByWebWorkerRoles { get; }
+        public bool? SupportedByWebWorkerRoles { get; }
+
         /// <summary> The virtual machine resource disk size whose unit is MB of the vm size. </summary>
-        public long? VirtualMachineResourceDiskSizeInMB { get; }
+        public long? VirtualMachineResourceDiskSizeInMb { get; }
+
         /// <summary> The web worker resource disk size whose unit is MB of the vm size. </summary>
-        public long? WebWorkerResourceDiskSizeInMB { get; }
+        public long? WebWorkerResourceDiskSizeInMb { get; }
     }
 }

@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableHDInsightArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableHDInsightArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableHDInsightArmClient for mocking. </summary>
         protected MockableHDInsightArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableHDInsightArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableHDInsightArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableHDInsightArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableHDInsightArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="HDInsightApplicationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightApplicationResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightApplicationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="HDInsightApplicationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="HDInsightApplicationResource"/> object. </returns>
         public virtual HDInsightApplicationResource GetHDInsightApplicationResource(ResourceIdentifier id)
@@ -46,40 +35,58 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             return new HDInsightApplicationResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HDInsightClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightClusterResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HDInsightClusterResource"/> object. </returns>
-        public virtual HDInsightClusterResource GetHDInsightClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
+        public virtual ClusterResource GetClusterResource(ResourceIdentifier id)
         {
-            HDInsightClusterResource.ValidateResourceId(id);
-            return new HDInsightClusterResource(Client, id);
+            ClusterResource.ValidateResourceId(id);
+            return new ClusterResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HDInsightPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HDInsightPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual HDInsightPrivateEndpointConnectionResource GetHDInsightPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            HDInsightPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new HDInsightPrivateEndpointConnectionResource(Client, id);
+            PrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PrivateEndpointConnectionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="HDInsightPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HDInsightPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HDInsightPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HDInsightPrivateLinkResource"/> object. </returns>
-        public virtual HDInsightPrivateLinkResource GetHDInsightPrivateLinkResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateLinkResource"/> object. </returns>
+        public virtual PrivateLinkResource GetPrivateLinkResource(ResourceIdentifier id)
         {
-            HDInsightPrivateLinkResource.ValidateResourceId(id);
-            return new HDInsightPrivateLinkResource(Client, id);
+            PrivateLinkResource.ValidateResourceId(id);
+            return new PrivateLinkResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConfigurationResource"/> object. </returns>
+        public virtual ConfigurationResource GetConfigurationResource(ResourceIdentifier id)
+        {
+            ConfigurationResource.ValidateResourceId(id);
+            return new ConfigurationResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExtensionResource"/> object. </returns>
+        public virtual ExtensionResource GetExtensionResource(ResourceIdentifier id)
+        {
+            ExtensionResource.ValidateResourceId(id);
+            return new ExtensionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ScriptActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScriptActionResource"/> object. </returns>
+        public virtual ScriptActionResource GetScriptActionResource(ResourceIdentifier id)
+        {
+            ScriptActionResource.ValidateResourceId(id);
+            return new ScriptActionResource(Client, id);
         }
     }
 }
