@@ -594,6 +594,7 @@ namespace Azure.Generator.Management.Tests.Common
         /// <param name="path"></param>
         /// <param name="decorators"></param>
         /// <param name="ns"></param>
+        /// <param name="httpMethod"></param>
         /// <returns></returns>
         public static InputOperation Operation(
             string name,
@@ -603,7 +604,8 @@ namespace Azure.Generator.Management.Tests.Common
             IEnumerable<string>? requestMediaTypes = null,
             string? path = null,
             IReadOnlyList<InputDecoratorInfo>? decorators = null,
-            string? ns = null)
+            string? ns = null,
+            string httpMethod = "GET")
         {
             var operation = new InputOperation(
                 name,
@@ -614,7 +616,7 @@ namespace Azure.Generator.Management.Tests.Common
                 access,
                 parameters is null ? [] : [.. parameters],
                 responses is null ? [OperationResponse()] : [.. responses],
-                "GET",
+                httpMethod,
                 string.Empty,
                 path ?? string.Empty,
                 null,

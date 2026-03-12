@@ -202,5 +202,41 @@ namespace Azure.Generator.Management.Tests.Providers
             var expected = Helpers.GetExpectedFromFile();
             Assert.AreEqual(expected, bodyStatements);
         }
+
+        [TestCase]
+        public void Verify_PutBodyParameterIsRequiredEvenWhenOptionalInSpec()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceOptionalBody();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceCollectionClientProvider) as ResourceCollectionClientProvider;
+            Assert.NotNull(resourceProvider);
+
+            var createOrUpdate = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "CreateOrUpdate");
+            Assert.NotNull(createOrUpdate);
+            var signature = createOrUpdate!.Signature;
+
+            // Body parameter (Data) should be required even though it's optional in the spec
+            var dataParam = signature.Parameters.FirstOrDefault(p => p.Type.Name.EndsWith("Data"));
+            Assert.NotNull(dataParam, "Body parameter should exist");
+            Assert.IsNull(dataParam!.DefaultValue, "PUT body parameter should be required (no default value) even when optional in spec");
+        }
+
+        [TestCase]
+        public void Verify_PatchBodyParameterIsRequiredEvenWhenOptionalInSpec()
+        {
+            var (client, models) = InputResourceData.ClientWithResourceOptionalBody();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p is ResourceClientProvider) as ResourceClientProvider;
+            Assert.NotNull(resourceProvider);
+
+            var update = resourceProvider!.Methods.FirstOrDefault(m => m.Signature.Name == "Update");
+            Assert.NotNull(update);
+            var signature = update!.Signature;
+
+            // Body parameter should be required even though it's optional in the spec
+            var bodyParam = signature.Parameters.FirstOrDefault(p => p.Location == ParameterLocation.Body);
+            Assert.NotNull(bodyParam, "Body parameter should exist");
+            Assert.IsNull(bodyParam!.DefaultValue, "PATCH body parameter should be required (no default value) even when optional in spec");
+        }
     }
 }
