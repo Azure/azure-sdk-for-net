@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("scheduledPurgeTime"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DeleteActivityID))
+            if (options.Format != "W" && Optional.IsDefined(DeleteActivityId))
             {
                 writer.WritePropertyName("deleteActivityID"u8);
-                writer.WriteStringValue(DeleteActivityID);
+                writer.WriteStringValue(DeleteActivityId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DateTimeOffset? deletedOn = default;
             DateTimeOffset? billingEndOn = default;
             DateTimeOffset? scheduledPurgeOn = default;
-            string deleteActivityID = default;
+            string deleteActivityId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("deleteActivityID"u8))
                 {
-                    deleteActivityID = prop.Value.GetString();
+                    deleteActivityId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupInstanceDeletionInfo(deletedOn, billingEndOn, scheduledPurgeOn, deleteActivityID, additionalBinaryDataProperties);
+            return new BackupInstanceDeletionInfo(deletedOn, billingEndOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties);
         }
     }
 }

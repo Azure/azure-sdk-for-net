@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     public partial class BackupFindRestorableTimeRangeResult : DppResource
     {
         /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResult"/>. </summary>
-        internal BackupFindRestorableTimeRangeResult()
+        public BackupFindRestorableTimeRangeResult()
         {
         }
 
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> AzureBackupFindRestorableTimeRangesResponseResource properties. </summary>
-        public BackupFindRestorableTimeRangeResultProperties Properties { get; }
+        public BackupFindRestorableTimeRangeResultProperties Properties { get; set; }
     }
 }

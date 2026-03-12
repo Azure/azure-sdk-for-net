@@ -948,16 +948,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new BackupFindRestorableTimeRangeResultProperties(restorableTimeRanges.ToList(), objectType, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The RestorableTimeRange. </summary>
-        /// <param name="startOn"> Start time for the available restore range. </param>
-        /// <param name="endOn"> End time for the available restore range. </param>
-        /// <param name="objectType"></param>
-        /// <returns> A new <see cref="Models.RestorableTimeRange"/> instance for mocking. </returns>
-        public static RestorableTimeRange RestorableTimeRange(DateTimeOffset startOn = default, DateTimeOffset endOn = default, string objectType = default)
-        {
-            return new RestorableTimeRange(startOn, endOn, objectType, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Resource class. </summary>
         /// <param name="id"> Resource Id represents the complete path to the resource. </param>
         /// <param name="name"> Resource name associated with the resource. </param>
@@ -1247,11 +1237,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="deletedOn"> Specifies time of deletion. </param>
         /// <param name="billingEndOn"> Specifies billing end date. </param>
         /// <param name="scheduledPurgeOn"> Specifies purge time. </param>
-        /// <param name="deleteActivityID"> Delete activity ID for troubleshooting purpose. </param>
+        /// <param name="deleteActivityId"> Delete activity ID for troubleshooting purpose. </param>
         /// <returns> A new <see cref="Models.BackupInstanceDeletionInfo"/> instance for mocking. </returns>
-        public static BackupInstanceDeletionInfo BackupInstanceDeletionInfo(DateTimeOffset? deletedOn = default, DateTimeOffset? billingEndOn = default, DateTimeOffset? scheduledPurgeOn = default, string deleteActivityID = default)
+        public static BackupInstanceDeletionInfo BackupInstanceDeletionInfo(DateTimeOffset? deletedOn = default, DateTimeOffset? billingEndOn = default, DateTimeOffset? scheduledPurgeOn = default, string deleteActivityId = default)
         {
-            return new BackupInstanceDeletionInfo(deletedOn, billingEndOn, scheduledPurgeOn, deleteActivityID, additionalBinaryDataProperties: null);
+            return new BackupInstanceDeletionInfo(deletedOn, billingEndOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Base resource under Microsoft.DataProtection provider namespace. </summary>

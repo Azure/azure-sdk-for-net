@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownBackupDataSourceSettings))]
     public abstract partial class BackupDataSourceSettings : IJsonModel<BackupDataSourceSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupDataSourceSettings"/> for deserialization. </summary>
-        internal BackupDataSourceSettings()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BackupDataSourceSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

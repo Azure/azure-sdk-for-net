@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResult BackupFindRestorableTimeRangeResult(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResultProperties properties) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResult BackupFindRestorableTimeRangeResult(string id = null, string name = null, string type = null, Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResultProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResultProperties BackupFindRestorableTimeRangeResultProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.RestorableTimeRange> restorableTimeRanges = null, string objectType = null) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceDeletionInfo BackupInstanceDeletionInfo(System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), string deleteActivityID = null) { throw null; }
+        public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceDeletionInfo BackupInstanceDeletionInfo(System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? billingEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), string deleteActivityId = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicyInfo BackupInstancePolicyInfo(Azure.Core.ResourceIdentifier policyId = null, string policyVersion = null, Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicySettings policyParameters = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.BackupInstancePolicySettings BackupInstancePolicySettings(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.DataStoreSettings> dataStoreParametersList = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings> backupDataSourceParametersList = null) { throw null; }
         [System.ObsoleteAttribute("This method is deprecated and will be removed in a future release. Please use the constructor of the model class instead.")]
@@ -810,7 +810,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProtectedObjectData ResourceGuardProtectedObjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProxyBase ResourceGuardProxyBase(string resourceGuardResourceId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardOperationDetail> resourceGuardOperationDetails = null, string lastUpdatedTime = null, string description = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.ResourceGuardProxyBaseResourceData ResourceGuardProxyBaseResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DataProtectionBackup.Models.ResourceGuardProxyBase properties = null) { throw null; }
-        public static Azure.ResourceManager.DataProtectionBackup.Models.RestorableTimeRange RestorableTimeRange(System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset endOn = default(System.DateTimeOffset), string objectType = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreFilesTargetDetails RestoreFilesTargetDetails(string filePrefix = null, Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetLocationType restoreTargetLocationType = default(Azure.ResourceManager.DataProtectionBackup.Models.RestoreTargetLocationType), string uri = null, Azure.Core.ResourceIdentifier targetResourceArmId = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreFilesTargetInfo RestoreFilesTargetInfo(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting recoverySetting = default(Azure.ResourceManager.DataProtectionBackup.Models.RecoverySetting), Azure.Core.AzureLocation? restoreLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.DataProtectionBackup.Models.RestoreFilesTargetDetails targetDetails = null) { throw null; }
         public static Azure.ResourceManager.DataProtectionBackup.Models.RestoreJobRecoveryPointDetails RestoreJobRecoveryPointDetails(string recoveryPointId, System.DateTimeOffset? recoverOn) { throw null; }
@@ -866,7 +865,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public abstract partial class BackupDataSourceSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings>
     {
-        internal BackupDataSourceSettings() { }
+        protected BackupDataSourceSettings() { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupDataSourceSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -894,7 +893,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public abstract partial class BackupFeatureValidationContentBase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationContentBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationContentBase>
     {
-        internal BackupFeatureValidationContentBase() { }
+        protected BackupFeatureValidationContentBase() { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationContentBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationContentBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -922,7 +921,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public abstract partial class BackupFeatureValidationResultBase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationResultBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationResultBase>
     {
-        internal BackupFeatureValidationResultBase() { }
+        protected BackupFeatureValidationResultBase() { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationResultBase JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupFeatureValidationResultBase PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -951,8 +950,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class BackupFindRestorableTimeRangeResult : Azure.ResourceManager.DataProtectionBackup.Models.DppResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResult>
     {
-        internal BackupFindRestorableTimeRangeResult() { }
-        public Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResultProperties Properties { get { throw null; } }
+        public BackupFindRestorableTimeRangeResult() { }
+        public Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResultProperties Properties { get { throw null; } set { } }
         protected override Azure.ResourceManager.DataProtectionBackup.Models.DppResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.DataProtectionBackup.Models.DppResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -965,8 +964,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class BackupFindRestorableTimeRangeResultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResultProperties>
     {
-        internal BackupFindRestorableTimeRangeResultProperties() { }
-        public string ObjectType { get { throw null; } }
+        public BackupFindRestorableTimeRangeResultProperties() { }
+        public string ObjectType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataProtectionBackup.Models.RestorableTimeRange> RestorableTimeRanges { get { throw null; } }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupFindRestorableTimeRangeResultProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -982,7 +981,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         public BackupInstanceDeletionInfo() { }
         public System.DateTimeOffset? BillingEndOn { get { throw null; } }
-        public string DeleteActivityID { get { throw null; } }
+        public string DeleteActivityId { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public System.DateTimeOffset? ScheduledPurgeOn { get { throw null; } }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.BackupInstanceDeletionInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2519,7 +2518,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class DppResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.DppResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.DppResource>
     {
-        internal DppResource() { }
+        public DppResource() { }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Models.SystemData SystemData { get { throw null; } }
@@ -2994,10 +2993,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     }
     public partial class RestorableTimeRange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataProtectionBackup.Models.RestorableTimeRange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataProtectionBackup.Models.RestorableTimeRange>
     {
-        internal RestorableTimeRange() { }
-        public System.DateTimeOffset EndOn { get { throw null; } }
-        public string ObjectType { get { throw null; } }
-        public System.DateTimeOffset StartOn { get { throw null; } }
+        public RestorableTimeRange(System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
+        public System.DateTimeOffset EndOn { get { throw null; } set { } }
+        public string ObjectType { get { throw null; } set { } }
+        public System.DateTimeOffset StartOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.RestorableTimeRange JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.RestorableTimeRange PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3187,7 +3186,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         public SecretStoreResourceInfo(Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreType secretStoreType) { }
         public Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreType SecretStoreType { get { throw null; } set { } }
-        public string Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DataProtectionBackup.Models.SecretStoreResourceInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

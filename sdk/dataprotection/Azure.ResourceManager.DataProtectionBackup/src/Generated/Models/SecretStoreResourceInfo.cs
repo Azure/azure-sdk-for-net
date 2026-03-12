@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="secretStoreType"> Gets or sets the type of secret store. </param>
         /// <param name="value"> Gets or sets value stored in secret store resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecretStoreResourceInfo(string uri, SecretStoreType secretStoreType, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecretStoreResourceInfo(Uri uri, SecretStoreType secretStoreType, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             SecretStoreType = secretStoreType;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Uri to get to the resource. </summary>
-        public string Uri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary> Gets or sets the type of secret store. </summary>
         public SecretStoreType SecretStoreType { get; set; }

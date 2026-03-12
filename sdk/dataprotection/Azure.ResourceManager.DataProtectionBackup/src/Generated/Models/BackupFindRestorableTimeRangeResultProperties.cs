@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResultProperties"/>. </summary>
-        internal BackupFindRestorableTimeRangeResultProperties()
+        public BackupFindRestorableTimeRangeResultProperties()
         {
             RestorableTimeRanges = new ChangeTrackingList<RestorableTimeRange>();
         }
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Returns the Restore Ranges available on the Backup Instance. </summary>
         public IList<RestorableTimeRange> RestorableTimeRanges { get; }
 
-        /// <summary> Gets the ObjectType. </summary>
-        public string ObjectType { get; }
+        /// <summary> Gets or sets the ObjectType. </summary>
+        public string ObjectType { get; set; }
     }
 }

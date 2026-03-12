@@ -20,11 +20,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     [PersistableModelProxy(typeof(UnknownBackupFeatureValidationResultBase))]
     public abstract partial class BackupFeatureValidationResultBase : IJsonModel<BackupFeatureValidationResultBase>
     {
-        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationResultBase"/> for deserialization. </summary>
-        internal BackupFeatureValidationResultBase()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BackupFeatureValidationResultBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
