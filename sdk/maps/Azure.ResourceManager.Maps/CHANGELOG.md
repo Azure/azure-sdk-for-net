@@ -7,13 +7,16 @@
 - Upgraded API version to `2025-10-01-preview`.
 - Added support for `PrivateEndpointConnection` and `PrivateLinkResource` resource types.
 - Added support for operation status and operation result queries.
+- Added `CorsRules` property on `MapsAccountProperties` and `MapsAccountPatch` as the preferred way to access CORS rules.
 
 ### Breaking Changes
 
-- Migrated from AutoRest to TypeSpec-based code generation.
-- Renamed property `CorsRulesValue` to `CorsRules` on `MapsAccountProperties` and `MapsAccountPatch`. The old `CorsRulesValue` property is still available but marked as `[EditorBrowsable(EditorBrowsableState.Never)]`.
+### Bugs Fixed
 
 ### Other Changes
+
+- Migrated from AutoRest to TypeSpec-based code generation.
+- Deprecated `CorsRulesValue` property on `MapsAccountProperties` and `MapsAccountPatch` in favor of `CorsRules`.
 
 ## 1.1.0 (2024-11-27)
 
