@@ -52,7 +52,7 @@ namespace Azure.AI.Projects
         /// <summary> Transforms text into Leetspeak, a form of encoding that replaces letters with similar-looking numbers or symbols. </summary>
         private const string LeetspeakValue = "leetspeak";
         /// <summary> Applies the ROT13 cipher, a simple substitution cipher that shifts characters by 13 positions. </summary>
-        private const string ROT13Value = "rot13";
+        private const string Rot13Value = "rot13";
         /// <summary> Encodes text into Morse code, using dots and dashes to represent characters. </summary>
         private const string MorseValue = "morse";
         /// <summary> Encodes text into URL format. </summary>
@@ -139,7 +139,7 @@ namespace Azure.AI.Projects
         public static AttackStrategy Leetspeak { get; } = new AttackStrategy(LeetspeakValue);
 
         /// <summary> Applies the ROT13 cipher, a simple substitution cipher that shifts characters by 13 positions. </summary>
-        public static AttackStrategy ROT13 { get; } = new AttackStrategy(ROT13Value);
+        public static AttackStrategy Rot13 { get; } = new AttackStrategy(Rot13Value);
 
         /// <summary> Encodes text into Morse code, using dots and dashes to represent characters. </summary>
         public static AttackStrategy Morse { get; } = new AttackStrategy(MorseValue);
