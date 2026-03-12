@@ -12,25 +12,25 @@ using Azure.ResourceManager.Maps;
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> Data processing location. </summary>
-    public partial class LocationsItem
+    public partial class MapsLocationItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LocationsItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsLocationItem"/>. </summary>
         /// <param name="locationName"> The location name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        public LocationsItem(string locationName)
+        public MapsLocationItem(string locationName)
         {
             Argument.AssertNotNull(locationName, nameof(locationName));
 
             LocationName = locationName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LocationsItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsLocationItem"/>. </summary>
         /// <param name="locationName"> The location name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LocationsItem(string locationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MapsLocationItem(string locationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LocationName = locationName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

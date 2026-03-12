@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Maps Account. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the Maps Account will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. </param>
         /// <returns> A new <see cref="Models.MapsAccountProperties"/> instance for mocking. </returns>
-        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = default, bool? disableLocalAuth = default, string provisioningState = default, IEnumerable<MapsLinkedResource> linkedResources = default, IEnumerable<MapsCorsRule> corsRules = default, MapsEncryption encryption = default, IEnumerable<LocationsItem> locations = default, IEnumerable<MapsPrivateEndpointConnectionData> privateEndpointConnections = default, PublicNetworkAccess? publicNetworkAccess = default)
+        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = default, bool? disableLocalAuth = default, string provisioningState = default, IEnumerable<MapsLinkedResource> linkedResources = default, IEnumerable<MapsCorsRule> corsRules = default, MapsEncryption encryption = default, IEnumerable<MapsLocationItem> locations = default, IEnumerable<MapsPrivateEndpointConnectionData> privateEndpointConnections = default, MapsPublicNetworkAccess? publicNetworkAccess = default)
         {
             linkedResources ??= new ChangeTrackingList<MapsLinkedResource>();
-            locations ??= new ChangeTrackingList<LocationsItem>();
+            locations ??= new ChangeTrackingList<MapsLocationItem>();
             privateEndpointConnections ??= new ChangeTrackingList<MapsPrivateEndpointConnectionData>();
 
             return new MapsAccountProperties(
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="corsRules"> The list of CORS rules. You can include up to five CorsRule elements in the request. </param>
         /// <param name="corsRulesValue"> Gets the CorsRulesValue. </param>
         /// <returns> A new <see cref="Models.MapsAccountPatch"/> instance for mocking. </returns>
-        public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags = default, MapsAccountKind? kind = default, MapsSku sku = default, ManagedServiceIdentity identity = default, Guid? uniqueId = default, bool? disableLocalAuth = default, string provisioningState = default, IEnumerable<MapsLinkedResource> linkedResources = default, MapsEncryption encryption = default, IEnumerable<LocationsItem> locations = default, IEnumerable<MapsPrivateEndpointConnectionData> privateEndpointConnections = default, PublicNetworkAccess? publicNetworkAccess = default, IEnumerable<MapsCorsRule> corsRules = default, IEnumerable<MapsCorsRule> corsRulesValue = default)
+        public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags = default, MapsAccountKind? kind = default, MapsSku sku = default, ManagedServiceIdentity identity = default, Guid? uniqueId = default, bool? disableLocalAuth = default, string provisioningState = default, IEnumerable<MapsLinkedResource> linkedResources = default, MapsEncryption encryption = default, IEnumerable<MapsLocationItem> locations = default, IEnumerable<MapsPrivateEndpointConnectionData> privateEndpointConnections = default, MapsPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<MapsCorsRule> corsRules = default, IEnumerable<MapsCorsRule> corsRulesValue = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Maps.Models
                     (linkedResources ?? new ChangeTrackingList<MapsLinkedResource>()).ToList(),
                     new MapsCorsRules((corsRules ?? new ChangeTrackingList<MapsCorsRule>()).ToList(), null),
                     encryption,
-                    (locations ?? new ChangeTrackingList<LocationsItem>()).ToList(),
+                    (locations ?? new ChangeTrackingList<MapsLocationItem>()).ToList(),
                     (privateEndpointConnections ?? new ChangeTrackingList<MapsPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
                     null),
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Maps.Models
                 linkedResources.ToList(),
                 default,
                 encryption,
-                new ChangeTrackingList<LocationsItem>(),
+                new ChangeTrackingList<MapsLocationItem>(),
                 new ChangeTrackingList<MapsPrivateEndpointConnectionData>(),
                 default,
                 additionalBinaryDataProperties: null);

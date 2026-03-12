@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Maps.Models
         public MapsAccountProperties()
         {
             LinkedResources = new ChangeTrackingList<MapsLinkedResource>();
-            Locations = new ChangeTrackingList<LocationsItem>();
+            Locations = new ChangeTrackingList<MapsLocationItem>();
             PrivateEndpointConnections = new ChangeTrackingList<MapsPrivateEndpointConnectionData>();
         }
 
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Maps Account. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the Maps Account will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, MapsCorsRules cors, MapsEncryption encryption, IList<LocationsItem> locations, IReadOnlyList<MapsPrivateEndpointConnectionData> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IList<MapsLinkedResource> linkedResources, MapsCorsRules cors, MapsEncryption encryption, IList<MapsLocationItem> locations, IReadOnlyList<MapsPrivateEndpointConnectionData> privateEndpointConnections, MapsPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueId = uniqueId;
             DisableLocalAuth = disableLocalAuth;
@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.Maps.Models
         public MapsEncryption Encryption { get; set; }
 
         /// <summary> List of additional data processing regions for the Maps Account, which may result in requests being processed in another geography. Some features or results may be restricted to specific regions. By default, Maps REST APIs process requests according to the account location or the [geographic scope](https://learn.microsoft.com/azure/azure-maps/geographic-scope). </summary>
-        public IList<LocationsItem> Locations { get; } = new ChangeTrackingList<LocationsItem>();
+        public IList<MapsLocationItem> Locations { get; } = new ChangeTrackingList<MapsLocationItem>();
 
         /// <summary> List of private endpoint connections associated with the Maps Account. </summary>
         public IReadOnlyList<MapsPrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<MapsPrivateEndpointConnectionData>();
 
         /// <summary> Property to specify whether the Maps Account will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public MapsPublicNetworkAccess? PublicNetworkAccess { get; set; }
 
         /// <summary> The list of CORS rules. You can include up to five CorsRule elements in the request. </summary>
         public IList<MapsCorsRule> CorsRules

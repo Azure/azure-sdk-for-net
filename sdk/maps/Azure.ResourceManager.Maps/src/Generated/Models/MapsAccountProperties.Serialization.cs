@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
-                foreach (LocationsItem item in Locations)
+                foreach (MapsLocationItem item in Locations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -182,9 +182,9 @@ namespace Azure.ResourceManager.Maps.Models
             IList<MapsLinkedResource> linkedResources = default;
             MapsCorsRules cors = default;
             MapsEncryption encryption = default;
-            IList<LocationsItem> locations = default;
+            IList<MapsLocationItem> locations = default;
             IReadOnlyList<MapsPrivateEndpointConnectionData> privateEndpointConnections = default;
-            PublicNetworkAccess? publicNetworkAccess = default;
+            MapsPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -249,10 +249,10 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    List<LocationsItem> array = new List<LocationsItem>();
+                    List<MapsLocationItem> array = new List<MapsLocationItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LocationsItem.DeserializeLocationsItem(item, options));
+                        array.Add(MapsLocationItem.DeserializeMapsLocationItem(item, options));
                     }
                     locations = array;
                     continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Maps.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccess(prop.Value.GetString());
+                    publicNetworkAccess = new MapsPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.Maps.Models
                 linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
                 cors,
                 encryption,
-                locations ?? new ChangeTrackingList<LocationsItem>(),
+                locations ?? new ChangeTrackingList<MapsLocationItem>(),
                 privateEndpointConnections ?? new ChangeTrackingList<MapsPrivateEndpointConnectionData>(),
                 publicNetworkAccess,
                 additionalBinaryDataProperties);

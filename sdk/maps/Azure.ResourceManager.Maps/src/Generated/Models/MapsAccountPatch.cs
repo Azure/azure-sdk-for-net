@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> List of additional data processing regions for the Maps Account, which may result in requests being processed in another geography. Some features or results may be restricted to specific regions. By default, Maps REST APIs process requests according to the account location or the [geographic scope](https://learn.microsoft.com/azure/azure-maps/geographic-scope). </summary>
-        public IList<LocationsItem> Locations
+        public IList<MapsLocationItem> Locations
         {
             get
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Maps.Models
         }
 
         /// <summary> Property to specify whether the Maps Account will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess
+        public MapsPublicNetworkAccess? PublicNetworkAccess
         {
             get
             {

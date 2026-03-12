@@ -14,56 +14,56 @@ using Azure.ResourceManager.Maps;
 namespace Azure.ResourceManager.Maps.Models
 {
     /// <summary> Data processing location. </summary>
-    public partial class LocationsItem : IJsonModel<LocationsItem>
+    public partial class MapsLocationItem : IJsonModel<MapsLocationItem>
     {
-        /// <summary> Initializes a new instance of <see cref="LocationsItem"/> for deserialization. </summary>
-        internal LocationsItem()
+        /// <summary> Initializes a new instance of <see cref="MapsLocationItem"/> for deserialization. </summary>
+        internal MapsLocationItem()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LocationsItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MapsLocationItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocationsItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MapsLocationItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLocationsItem(document.RootElement, options);
+                        return DeserializeMapsLocationItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LocationsItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsLocationItem)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocationsItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MapsLocationItem>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMapsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LocationsItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapsLocationItem)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LocationsItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MapsLocationItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LocationsItem IPersistableModel<LocationsItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MapsLocationItem IPersistableModel<MapsLocationItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LocationsItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MapsLocationItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LocationsItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MapsLocationItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocationsItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MapsLocationItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocationsItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsLocationItem)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("locationName"u8);
             writer.WriteStringValue(LocationName);
@@ -100,24 +100,24 @@ namespace Azure.ResourceManager.Maps.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LocationsItem IJsonModel<LocationsItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MapsLocationItem IJsonModel<MapsLocationItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LocationsItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MapsLocationItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LocationsItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MapsLocationItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocationsItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MapsLocationItem)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLocationsItem(document.RootElement, options);
+            return DeserializeMapsLocationItem(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LocationsItem DeserializeLocationsItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static MapsLocationItem DeserializeMapsLocationItem(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Maps.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LocationsItem(locationName, additionalBinaryDataProperties);
+            return new MapsLocationItem(locationName, additionalBinaryDataProperties);
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Maps
 {
     /// <summary></summary>
-    public partial class PrivateEndpointConnectionResource : IJsonModel<MapsPrivateEndpointConnectionData>
+    public partial class MapsPrivateEndpointConnectionResource : IJsonModel<MapsPrivateEndpointConnectionData>
     {
         private static IJsonModel<MapsPrivateEndpointConnectionData> s_dataDeserializationInstance;
 

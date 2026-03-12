@@ -1010,11 +1010,11 @@ namespace Azure.ResourceManager.Maps
             return GetMapsCreators().Get(creatorName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateLinkResources in the <see cref="MapsAccountResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
+        /// <summary> Gets a collection of MapsPrivateLinkResources in the <see cref="MapsAccountResource"/>. </summary>
+        /// <returns> An object representing collection of MapsPrivateLinkResources and their operations over a MapsPrivateLinkResource. </returns>
+        public virtual MapsPrivateLinkResourceCollection GetMapsPrivateLinkResources()
         {
-            return GetCachedClient(client => new PrivateLinkResourceCollection(client, Id));
+            return GetCachedClient(client => new MapsPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary> Gets a private link resource by name which can be used for the Maps Account. </summary>
@@ -1023,11 +1023,11 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MapsPrivateLinkResource>> GetMapsPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            return await GetPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMapsPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a private link resource by name which can be used for the Maps Account. </summary>
@@ -1036,31 +1036,18 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public virtual Response<MapsPrivateLinkResource> GetMapsPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
 
-            return GetPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+            return GetMapsPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="MapsAccountResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        /// <summary> Gets a collection of MapsPrivateEndpointConnections in the <see cref="MapsAccountResource"/>. </summary>
+        /// <returns> An object representing collection of MapsPrivateEndpointConnections and their operations over a MapsPrivateEndpointConnectionResource. </returns>
+        public virtual MapsPrivateEndpointConnectionCollection GetMapsPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new PrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary> Gets the specified private endpoint connection associated with the Maps Account. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new MapsPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Gets the specified private endpoint connection associated with the Maps Account. </summary>
@@ -1069,11 +1056,24 @@ namespace Azure.ResourceManager.Maps
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MapsPrivateEndpointConnectionResource>> GetMapsPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return await GetMapsPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified private endpoint connection associated with the Maps Account. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MapsPrivateEndpointConnectionResource> GetMapsPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetMapsPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
     }
 }
