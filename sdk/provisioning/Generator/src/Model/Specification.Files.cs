@@ -191,17 +191,6 @@ public abstract partial class Specification : ModelBase
 
                 </Project>
                 """);
-        Directory.CreateDirectory(Path.Combine(path, "src", "Properties"));
-        File.WriteAllText(Path.Combine(path, "src", "Properties", "AssemblyInfo.cs"),
-            """
-                // Copyright (c) Microsoft Corporation. All rights reserved.
-                // Licensed under the MIT License.
-
-                using System.Diagnostics.CodeAnalysis;
-
-                [assembly: Experimental("AZPROVISION001")]
-                """);
-
         // Generate the tests
         Directory.CreateDirectory(Path.Combine(path, "tests"));
         File.WriteAllText(Path.Combine(path, "tests", $"{Namespace}.Tests.csproj"),
