@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of <see cref="StorageAccountMigrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal StorageAccountMigrationResource(ArmClient client, StorageAccountMigrationData data) : this(client, data.Id)
+        internal StorageAccountMigrationResource(ArmClient client, StorageAccountMigrationData data) : this(client, ((Azure.ResourceManager.Models.ResourceData)data).Id)
         {
             HasData = true;
             _data = data;
