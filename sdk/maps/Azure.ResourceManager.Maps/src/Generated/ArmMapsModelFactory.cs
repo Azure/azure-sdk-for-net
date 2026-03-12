@@ -100,8 +100,9 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Maps Account. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the Maps Account will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. </param>
         /// <param name="corsRules"> The list of CORS rules. You can include up to five CorsRule elements in the request. </param>
+        /// <param name="corsRulesValue"> Gets the CorsRulesValue. </param>
         /// <returns> A new <see cref="Models.MapsAccountPatch"/> instance for mocking. </returns>
-        public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags = default, MapsAccountKind? kind = default, MapsSku sku = default, ManagedServiceIdentity identity = default, Guid? uniqueId = default, bool? disableLocalAuth = default, string provisioningState = default, IEnumerable<MapsLinkedResource> linkedResources = default, MapsEncryption encryption = default, IEnumerable<LocationsItem> locations = default, IEnumerable<MapsPrivateEndpointConnectionData> privateEndpointConnections = default, PublicNetworkAccess? publicNetworkAccess = default, IEnumerable<MapsCorsRule> corsRules = default)
+        public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags = default, MapsAccountKind? kind = default, MapsSku sku = default, ManagedServiceIdentity identity = default, Guid? uniqueId = default, bool? disableLocalAuth = default, string provisioningState = default, IEnumerable<MapsLinkedResource> linkedResources = default, MapsEncryption encryption = default, IEnumerable<LocationsItem> locations = default, IEnumerable<MapsPrivateEndpointConnectionData> privateEndpointConnections = default, PublicNetworkAccess? publicNetworkAccess = default, IEnumerable<MapsCorsRule> corsRules = default, IEnumerable<MapsCorsRule> corsRulesValue = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -110,7 +111,7 @@ namespace Azure.ResourceManager.Maps.Models
                 kind,
                 sku,
                 identity,
-                uniqueId is null && disableLocalAuth is null && provisioningState is null && linkedResources is null && encryption is null && locations is null && privateEndpointConnections is null && publicNetworkAccess is null && corsRules is null ? default : new MapsAccountProperties(
+                uniqueId is null && disableLocalAuth is null && provisioningState is null && linkedResources is null && encryption is null && locations is null && privateEndpointConnections is null && publicNetworkAccess is null && corsRules is null && corsRulesValue is null ? default : new MapsAccountProperties(
                     uniqueId,
                     disableLocalAuth,
                     provisioningState,
@@ -312,17 +313,7 @@ namespace Azure.ResourceManager.Maps.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags, MapsAccountKind? kind, MapsSku sku, ManagedServiceIdentity identity, Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IEnumerable<MapsLinkedResource> linkedResources, IEnumerable<MapsCorsRule> corsRulesValue, MapsEncryption encryption)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            linkedResources ??= new ChangeTrackingList<MapsLinkedResource>();
-            corsRulesValue ??= new ChangeTrackingList<MapsCorsRule>();
-
-            return new MapsAccountPatch(
-                tags,
-                kind,
-                sku,
-                identity,
-                default,
-                additionalBinaryDataProperties: null);
+            return MapsAccountPatch(tags, kind, sku, identity, uniqueId, disableLocalAuth, provisioningState, linkedResources, encryption, locations: default, privateEndpointConnections: default, publicNetworkAccess: default, corsRules: default, corsRulesValue);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MapsCreatorProperties"/>. </summary>
