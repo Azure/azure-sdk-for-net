@@ -1,0 +1,5 @@
+emit:
+  - "@azure-typespec/http-client-csharp-provisioning"
+options:
+  "@azure-typespec/http-client-csharp-provisioning":
+    namespace: "Azure.Provisioning.ProvisioningTypeSpec"
