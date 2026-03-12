@@ -30,10 +30,18 @@ class AzureEngSemanticVersion : IComparable {
   [bool] $IsSemVerFormat
   [string] $DefaultPrereleaseLabel
   [string] $DefaultAlphaReleaseLabel
+  # For Python PEP440 post-release support only
+  [bool] $IsPostRelease
+  [int] $PostReleaseNumber
+  [string] $PostReleaseSeparator
 
   # Regex inspired but simplified from https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
   # Validation: https://regex101.com/r/vkijKf/426
-  static [string] $SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:(?<presep>-?)(?<prelabel>[a-zA-Z]+)(?:(?<prenumsep>\.?)(?<prenumber>[0-9]{1,8})(?:(?<buildnumsep>\.?)(?<buildnumber>\d{1,3}))?)?)?"
+  static [string] $SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:(?<presep>-?)(?<prelabel>[a-zA-Z]+)(?:(?<prenumsep>\.?)(?<prenumber>[0-9]{1,8})(?:(?<buildnumsep>\.?)(?<buildnumber>\d{1,3}))?)?)?"  
+
+  # Python PEP 440 post-release extension: SEMVER_REGEX + optional post-release suffix.
+  # Handles all PEP 440 alternate formats: .postN, -postN, _postN, postN, .post.N (case-insensitive)
+  static [string] $PYTHON_SEMVER_REGEX = "(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:(?<presep>-?)(?<prelabel>[a-zA-Z]+)(?:(?<prenumsep>\.?)(?<prenumber>[0-9]{1,8})(?:(?<buildnumsep>\.?)(?<buildnumber>\d{1,3}))?)?)?(?:(?<postsep>[.\-_]?)(?i:post)\.?(?<postnum>\d+))?"
 
   static [AzureEngSemanticVersion] ParseVersionString([string] $versionString)
   {
@@ -47,19 +55,34 @@ class AzureEngSemanticVersion : IComparable {
 
   static [AzureEngSemanticVersion] ParsePythonVersionString([string] $versionString)
   {
-    $version = [AzureEngSemanticVersion]::ParseVersionString($versionString)
-
-    if (!$version) {
-      return $null
+    $previousLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
+    $global:Language = "python"
+    $version = $null
+    try {
+      $version = [AzureEngSemanticVersion]::new($versionString)
+    }
+    finally {
+      $global:Language = $previousLanguage
     }
 
-    $version.SetupPythonConventions()
+    if (!$version.IsSemVerFormat) {
+      return $null
+    }
     return $version
   }
   
   AzureEngSemanticVersion([string] $versionString)
   {
-    if ($versionString -match "^$([AzureEngSemanticVersion]::SEMVER_REGEX)$")
+    $parseLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
+
+    if ($parseLanguage -eq "python") {
+      $parseRegex = [AzureEngSemanticVersion]::PYTHON_SEMVER_REGEX
+    }
+    else {
+      $parseRegex = [AzureEngSemanticVersion]::SEMVER_REGEX
+    }
+
+    if ($versionString -match "^${parseRegex}$")
     {
       $this.IsSemVerFormat = $true
       $this.RawVersion = $versionString
@@ -67,16 +90,28 @@ class AzureEngSemanticVersion : IComparable {
       $this.Minor = [int]$matches.Minor
       $this.Patch = [int]$matches.Patch
 
-      # If Language exists and is set to python setup the python conventions.
-      $parseLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
+      $skipPrelabel = $false
       if ($parseLanguage -eq "python") {
         $this.SetupPythonConventions()
+        if ($matches['postnum']) {
+          $this.IsPostRelease = $true
+          $this.PostReleaseNumber = [int]$matches['postnum']
+          $this.PostReleaseSeparator = ".post"
+        }
+        elseif ($matches['prelabel'] -and $matches['prelabel'] -ieq 'post') {
+          # Alternate PEP 440 forms like "1.0.0-post1" or "1.0.0post1" where the regex
+          # matched "post" as a prerelease label — reinterpret as post-release.
+          $this.IsPostRelease = $true
+          $this.PostReleaseNumber = [int]$matches['prenumber']
+          $this.PostReleaseSeparator = ".post"
+          $skipPrelabel = $true
+        }
       }
       else {
         $this.SetupDefaultConventions()
       }
 
-      if ($null -eq $matches['prelabel'])
+      if ($skipPrelabel -or $null -eq $matches['prelabel'])
       {
         $this.IsPrerelease = $false
         $this.VersionType = "GA"
@@ -141,6 +176,9 @@ class AzureEngSemanticVersion : IComparable {
           $versionString += $this.BuildNumberSeparator + $this.BuildNumber
       }
     }
+    if ($this.IsPostRelease) {
+      $versionString += $this.PostReleaseSeparator + $this.PostReleaseNumber
+    }
     return $versionString;
   }
 
@@ -148,6 +186,13 @@ class AzureEngSemanticVersion : IComparable {
     if ($this.BuildNumber)
     {
       throw "Cannot increment releases tagged with azure pipelines build numbers"
+    }
+
+    # Clear post-release state before incrementing
+    if ($this.IsPostRelease) {
+      $this.IsPostRelease = $false
+      $this.PostReleaseNumber = 0
+      $this.PostReleaseSeparator = ""
     }
 
     if ($this.PrereleaseLabel)
@@ -239,12 +284,27 @@ class AzureEngSemanticVersion : IComparable {
     $ret = $thisPrereleaseNumber.CompareTo($otherPrereleaseNumber)
     if ($ret) { return $ret }
 
-    return ([int] $this.BuildNumber).CompareTo([int] $other.BuildNumber)
+    $ret = ([int] $this.BuildNumber).CompareTo([int] $other.BuildNumber)
+    if ($ret) { return $ret }
+
+    # Post-release versions sort after their base version
+    $thisPost = if ($this.IsPostRelease) { 1 } else { 0 }
+    $otherPost = if ($other.IsPostRelease) { 1 } else { 0 }
+    $ret = $thisPost.CompareTo($otherPost)
+    if ($ret) { return $ret }
+
+    return $this.PostReleaseNumber.CompareTo($other.PostReleaseNumber)
   }
 
   static [string[]] SortVersionStrings([string[]] $versionStrings)
   {
-    $versions = $versionStrings | ForEach-Object { [AzureEngSemanticVersion]::ParseVersionString($_) }
+    $parseLanguage = (Get-Variable -Name "Language" -ValueOnly -ErrorAction "Ignore")
+    if ($parseLanguage -eq "python") {
+      $versions = $versionStrings | ForEach-Object { [AzureEngSemanticVersion]::ParsePythonVersionString($_) }
+    }
+    else {
+      $versions = $versionStrings | ForEach-Object { [AzureEngSemanticVersion]::ParseVersionString($_) }
+    }
     $sortedVersions = [AzureEngSemanticVersion]::SortVersions($versions)
     return ($sortedVersions | ForEach-Object { $_.RawVersion })
   }

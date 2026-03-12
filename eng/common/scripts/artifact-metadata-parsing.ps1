@@ -1,6 +1,6 @@
 . (Join-Path $EngCommonScriptsDir SemVer.ps1)
 
-$SDIST_PACKAGE_REGEX = "^(?<package>.*)\-(?<versionstring>$([AzureEngSemanticVersion]::SEMVER_REGEX))"
+$SDIST_PACKAGE_REGEX = "^(?<package>.*)\-(?<versionstring>$([AzureEngSemanticVersion]::PYTHON_SEMVER_REGEX))"
 
 # Posts a github release for each item of the pkgList variable. Silently continue
 function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
