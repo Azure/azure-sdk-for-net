@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Confluent.Models
             Status = status;
         }
 
-        /// <summary> Type of cluster. </summary>
+        /// <summary> Id of the cluster. </summary>
         public string Id { get; }
 
         /// <summary> Type of cluster. </summary>
