@@ -272,6 +272,10 @@ stages:
                           - /sdk
                           - '!**/*.cs'
                           - '/sdk/${{ parameters.ServiceDirectory }}/**/*.cs'
+                          # Shared sources compiled by SDKs outside their own service directory
+                          - '/sdk/core/Azure.Core/src/Shared/**/*.cs'
+                          - '/sdk/core/Azure.Core.Amqp/src/Shared/**/*.cs'
+                          - '/sdk/resourcemanager/Azure.ResourceManager/src/Shared/**/*.cs'
 
                     - template: /eng/pipelines/templates/steps/install-dotnet.yml
                       parameters:
