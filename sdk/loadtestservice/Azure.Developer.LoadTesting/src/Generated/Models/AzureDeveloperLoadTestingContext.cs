@@ -68,6 +68,7 @@ namespace Azure.Developer.LoadTesting
     [ModelReaderWriterBuildable(typeof(TestCertificate))]
     [ModelReaderWriterBuildable(typeof(TestFileInfo))]
     [ModelReaderWriterBuildable(typeof(TestInputArtifacts))]
+    [ModelReaderWriterBuildable(typeof(TestPreferences))]
     [ModelReaderWriterBuildable(typeof(TestProfile))]
     [ModelReaderWriterBuildable(typeof(TestProfileRun))]
     [ModelReaderWriterBuildable(typeof(TestProfileRunRecommendation))]

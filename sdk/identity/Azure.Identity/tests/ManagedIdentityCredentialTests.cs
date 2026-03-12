@@ -166,6 +166,12 @@ namespace Azure.Identity.Tests
 
         #endregion
 
+        [SetUp]
+        public void Setup()
+        {
+            ApplicationBase.ResetStateForTest();
+        }
+
         [NonParallelizable]
         [Test]
         public async Task VerifyImdsRequestWithClientIdMock()
@@ -606,7 +612,9 @@ namespace Azure.Identity.Tests
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", "https://mock.podid.endpoint/" } });
 
             var response = CreateSuccessResponse(ExpectedToken);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = new MockTransport(req => {
+                return response;
+            });
             var credential = CreateCredentialForImdsWithResourceId(mockTransport, new ResourceIdentifier(_expectedResourceId));
 
             AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
@@ -615,7 +623,7 @@ namespace Azure.Identity.Tests
 
             MockRequest request = mockTransport.SingleRequest;
 
-            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint" + ImdsManagedIdentityProbeSource.imddsTokenPath));
+            Assert.IsTrue(request.Uri.ToString().StartsWith("https://mock.podid.endpoint" + ImdsManagedIdentityProbeSource.imddsTokenPath), $"Unexpected Uri: {request.Uri}");
 
             string query = request.Uri.Query;
 

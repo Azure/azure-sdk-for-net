@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 
@@ -27,6 +28,7 @@ public abstract class ClientSettings
     /// <summary>
     /// Binds the values from the <see cref="IConfigurationSection"/> to the properties of the <see cref="ClientSettings"/>.
     /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public void Bind(IConfigurationSection section)
     {
         if (section is null)

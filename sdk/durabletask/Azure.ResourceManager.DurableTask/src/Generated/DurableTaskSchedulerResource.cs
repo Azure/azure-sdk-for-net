@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DurableTask
         {
             TryGetApiVersion(ResourceType, out string durableTaskSchedulerApiVersion);
             _schedulersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DurableTask", ResourceType.Namespace, Diagnostics);
-            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, durableTaskSchedulerApiVersion ?? "2025-11-01");
+            _schedulersRestClient = new Schedulers(_schedulersClientDiagnostics, Pipeline, Endpoint, durableTaskSchedulerApiVersion ?? "2026-02-01");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DurableTask
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-02-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -677,6 +677,72 @@ namespace Azure.ResourceManager.DurableTask
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of SchedulerPrivateLinkResources in the <see cref="DurableTaskSchedulerResource"/>. </summary>
+        /// <returns> An object representing collection of SchedulerPrivateLinkResources and their operations over a DurableTaskSchedulerPrivateLinkResource. </returns>
+        public virtual DurableTaskSchedulerPrivateLinkResourceCollection GetSchedulerPrivateLinkResources()
+        {
+            return GetCachedClient(client => new DurableTaskSchedulerPrivateLinkResourceCollection(client, Id));
+        }
+
+        /// <summary> Get a private link resource for the durable task scheduler. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DurableTaskSchedulerPrivateLinkResource>> GetSchedulerPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return await GetSchedulerPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a private link resource for the durable task scheduler. </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DurableTaskSchedulerPrivateLinkResource> GetSchedulerPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            return GetSchedulerPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="DurableTaskSchedulerResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a DurableTaskPrivateEndpointConnectionResource. </returns>
+        public virtual DurableTaskPrivateEndpointConnectionCollection GetPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new DurableTaskPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Get a private endpoint connection for the durable task scheduler. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DurableTaskPrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a private endpoint connection for the durable task scheduler. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DurableTaskPrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DurableTaskHubs in the <see cref="DurableTaskSchedulerResource"/>. </summary>
