@@ -646,6 +646,12 @@ Report: error messages, generated code snippet, repro steps. Do NOT manually fix
 4. **Never add entries to `ApiCompatBaseline.txt`** without explicit user approval.
 5. **Never bump the major version** of an Azure SDK package.
 6. **Preserve git history** — prefer renames over delete+create.
+7. **Never manually edit files under `src/Generated/`** — this is strictly forbidden. All generated code must come from the generator. If generated code has a bug (e.g., references a non-existent method, wrong type), fix it through:
+   - **TypeSpec decorators** (`@@clientName`, `@@alternateType`, `@@access`) in `client.tsp`
+   - **Custom partial classes** with `[CodeGenSuppress]` in `src/Custom/` to suppress the broken member and provide a corrected replacement
+   - **Generator bug fix** if no decorator or customization can resolve it
+   
+   Note: `[CodeGenSuppress]` only takes effect when the custom files exist **before** code generation. After adding custom files, regenerate with `dotnet build /t:GenerateCode` so the generator reads them and honors the suppression.
 
 ### Autonomous Mode (Default)
 
