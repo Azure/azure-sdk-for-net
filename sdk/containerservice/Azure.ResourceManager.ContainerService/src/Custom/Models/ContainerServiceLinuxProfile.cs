@@ -31,6 +31,19 @@ namespace Azure.ResourceManager.ContainerService.Models
             Ssh = ssh;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceLinuxProfile"/>. </summary>
+        /// <param name="adminUsername"> The administrator username to use for Linux VMs. </param>
+        /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="adminUsername"/> or <paramref name="sshPublicKeys"/> is null. </exception>
+        public ContainerServiceLinuxProfile(string adminUsername, IList<ContainerServiceSshPublicKey> sshPublicKeys)
+        {
+            Argument.AssertNotNull(adminUsername, nameof(adminUsername));
+            Argument.AssertNotNull(sshPublicKeys, nameof(sshPublicKeys));
+
+            AdminUsername = adminUsername;
+            Ssh = new ContainerServiceSshConfiguration(sshPublicKeys);
+        }
+
         /// <summary> The list of SSH public keys used to authenticate with Linux-based VMs. A maximum of 1 key may be specified. </summary>
         [WirePath("ssh.publicKeys")]
         public IList<ContainerServiceSshPublicKey> SshPublicKeys    // Add setter for SshPublicKeys for backward compatibility.

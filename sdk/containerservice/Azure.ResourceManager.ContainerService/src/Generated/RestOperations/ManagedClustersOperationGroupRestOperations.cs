@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetKubernetesVersionsRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateGetManagedClusterKubernetesVersionsRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

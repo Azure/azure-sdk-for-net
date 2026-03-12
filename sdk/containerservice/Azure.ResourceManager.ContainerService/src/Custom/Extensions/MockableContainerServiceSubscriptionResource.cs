@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<KubernetesVersionListResult>> GetKubernetesVersionsManagedClusterAsync(AzureLocation location, CancellationToken cancellationToken = default)
-            => await GetKubernetesVersionsAsync(location, cancellationToken).ConfigureAwait(false);
+            => await GetManagedClusterKubernetesVersionsAsync(location, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Contains extra metadata on the version, including supported patch versions, capabilities, available upgrades, and details on preview status of the version
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<KubernetesVersionListResult> GetKubernetesVersionsManagedCluster(AzureLocation location, CancellationToken cancellationToken = default)
-            => GetKubernetesVersions(location, cancellationToken);
+            => GetManagedClusterKubernetesVersions(location, cancellationToken);
     }
 }

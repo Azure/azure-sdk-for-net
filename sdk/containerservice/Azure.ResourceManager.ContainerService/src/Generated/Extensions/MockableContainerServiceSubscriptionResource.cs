@@ -467,9 +467,9 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<KubernetesVersionListResult>> GetKubernetesVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KubernetesVersionListResult>> GetManagedClusterKubernetesVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ManagedClustersOperationGroupClientDiagnostics.CreateScope("MockableContainerServiceSubscriptionResource.GetKubernetesVersions");
+            using DiagnosticScope scope = ManagedClustersOperationGroupClientDiagnostics.CreateScope("MockableContainerServiceSubscriptionResource.GetManagedClusterKubernetesVersions");
             scope.Start();
             try
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedClustersOperationGroupRestClient.CreateGetKubernetesVersionsRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                HttpMessage message = ManagedClustersOperationGroupRestClient.CreateGetManagedClusterKubernetesVersionsRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<KubernetesVersionListResult> response = Response.FromValue(KubernetesVersionListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -512,9 +512,9 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<KubernetesVersionListResult> GetKubernetesVersions(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<KubernetesVersionListResult> GetManagedClusterKubernetesVersions(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = ManagedClustersOperationGroupClientDiagnostics.CreateScope("MockableContainerServiceSubscriptionResource.GetKubernetesVersions");
+            using DiagnosticScope scope = ManagedClustersOperationGroupClientDiagnostics.CreateScope("MockableContainerServiceSubscriptionResource.GetManagedClusterKubernetesVersions");
             scope.Start();
             try
             {
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedClustersOperationGroupRestClient.CreateGetKubernetesVersionsRequest(Guid.Parse(Id.SubscriptionId), location, context);
+                HttpMessage message = ManagedClustersOperationGroupRestClient.CreateGetManagedClusterKubernetesVersionsRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<KubernetesVersionListResult> response = Response.FromValue(KubernetesVersionListResult.FromResponse(result), result);
                 if (response.Value == null)

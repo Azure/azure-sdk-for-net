@@ -831,36 +831,36 @@ namespace Azure.ResourceManager.ContainerService
         /// Contains extra metadata on the version, including supported patch versions, capabilities, available upgrades, and details on preview status of the version
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetKubernetesVersionsAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetManagedClusterKubernetesVersionsAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<KubernetesVersionListResult>> GetKubernetesVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static async Task<Response<KubernetesVersionListResult>> GetManagedClusterKubernetesVersionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetKubernetesVersionsAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetManagedClusterKubernetesVersionsAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Contains extra metadata on the version, including supported patch versions, capabilities, available upgrades, and details on preview status of the version
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetKubernetesVersions(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetManagedClusterKubernetesVersions(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<KubernetesVersionListResult> GetKubernetesVersions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        public static Response<KubernetesVersionListResult> GetManagedClusterKubernetesVersions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetKubernetesVersions(location, cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetManagedClusterKubernetesVersions(location, cancellationToken);
         }
 
         /// <summary>
