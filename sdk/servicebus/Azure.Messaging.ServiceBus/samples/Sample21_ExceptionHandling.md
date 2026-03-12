@@ -44,22 +44,26 @@ catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.Messag
     // Permanent: the message payload is too large for the tier. This will never succeed
     // without reducing the message size or upgrading to Premium.
     Console.WriteLine($"Message too large ({ex.Message}). Reduce payload size.");
+    throw;
 }
 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityNotFound)
 {
     // Permanent: the queue, topic, or subscription does not exist. Check the entity name
     // and ensure it has been provisioned.
     Console.WriteLine($"Entity not found: {ex.Message}");
+    throw;
 }
 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityDisabled)
 {
     // Permanent: the entity is disabled in the portal or via management API.
     Console.WriteLine($"Entity is disabled: {ex.Message}");
+    throw;
 }
 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.MessagingEntityAlreadyExists)
 {
     // Permanent: attempted to create an entity that already exists.
     Console.WriteLine($"Entity already exists: {ex.Message}");
+    throw;
 }
 catch (ServiceBusException ex)
 {
