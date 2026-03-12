@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 
@@ -15,7 +16,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceGuardProxyProperties()
         {
-            ResourceGuardOperationDetails = new ChangeTrackingList<ResourceGuardOperationDetail>();
         }
     }
 }

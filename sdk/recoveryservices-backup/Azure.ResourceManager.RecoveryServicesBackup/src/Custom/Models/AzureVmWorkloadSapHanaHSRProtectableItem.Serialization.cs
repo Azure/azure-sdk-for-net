@@ -49,20 +49,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isAutoProtected"u8);
                 writer.WriteBooleanValue(IsAutoProtected.Value);
             }
-            if (Optional.IsDefined(SubInquiredItemCount))
+            if (Optional.IsDefined(Subinquireditemcount))
             {
                 writer.WritePropertyName("subinquireditemcount"u8);
-                writer.WriteNumberValue(SubInquiredItemCount.Value);
+                writer.WriteNumberValue(Subinquireditemcount.Value);
             }
-            if (Optional.IsDefined(SubProtectableItemCount))
+            if (Optional.IsDefined(Subprotectableitemcount))
             {
                 writer.WritePropertyName("subprotectableitemcount"u8);
-                writer.WriteNumberValue(SubProtectableItemCount.Value);
+                writer.WriteNumberValue(Subprotectableitemcount.Value);
             }
-            if (Optional.IsDefined(PreBackupValidation))
+            if (Optional.IsDefined(Prebackupvalidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue(PreBackupValidation);
+                writer.WriteObjectValue(Prebackupvalidation);
             }
             if (Optional.IsDefined(IsProtectable))
             {
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value);
+                    prebackupvalidation = PreBackupValidation.DeserializePreBackupValidation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isProtectable"u8))

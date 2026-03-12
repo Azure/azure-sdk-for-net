@@ -11,22 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Simple policy retention. </summary>
-    public partial class SimpleRetentionPolicy : BackupRetentionPolicy
+    public partial class SimpleRetentionPolicy : RetentionPolicy
     {
         /// <summary> Initializes a new instance of <see cref="SimpleRetentionPolicy"/>. </summary>
-        public SimpleRetentionPolicy()
+        public SimpleRetentionPolicy() : base("SimpleRetentionPolicy")
         {
-            RetentionPolicyType = "SimpleRetentionPolicy";
         }
 
         /// <summary> Initializes a new instance of <see cref="SimpleRetentionPolicy"/>. </summary>
         /// <param name="retentionPolicyType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="retentionDuration"> Retention duration of the protection policy. </param>
-        internal SimpleRetentionPolicy(string retentionPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData, RetentionDuration retentionDuration) : base(retentionPolicyType, serializedAdditionalRawData)
+        internal SimpleRetentionPolicy(string retentionPolicyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, RetentionDuration retentionDuration) : base(retentionPolicyType, additionalBinaryDataProperties)
         {
             RetentionDuration = retentionDuration;
-            RetentionPolicyType = retentionPolicyType ?? "SimpleRetentionPolicy";
         }
 
         /// <summary> Retention duration of the protection policy. </summary>

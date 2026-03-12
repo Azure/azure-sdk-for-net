@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,56 +15,79 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct WorkloadItemType : IEquatable<WorkloadItemType>
     {
         private readonly string _value;
+        private const string InvalidValue = "Invalid";
+        private const string SQLInstanceValue = "SQLInstance";
+        private const string SQLDataBaseValue = "SQLDataBase";
+        private const string SAPHanaSystemValue = "SAPHanaSystem";
+        private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
+        private const string SAPAseSystemValue = "SAPAseSystem";
+        private const string SAPAseDatabaseValue = "SAPAseDatabase";
+        private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
 
         /// <summary> Initializes a new instance of <see cref="WorkloadItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WorkloadItemType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InvalidValue = "Invalid";
-        private const string SqlInstanceValue = "SQLInstance";
-        private const string SqlDatabaseValue = "SQLDataBase";
-        private const string SapHanaSystemValue = "SAPHanaSystem";
-        private const string SapHanaDatabaseValue = "SAPHanaDatabase";
-        private const string SapAseSystemValue = "SAPAseSystem";
-        private const string SapAseDatabaseValue = "SAPAseDatabase";
-        private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
-
-        /// <summary> Invalid. </summary>
+        /// <summary> Gets the Invalid. </summary>
         public static WorkloadItemType Invalid { get; } = new WorkloadItemType(InvalidValue);
-        /// <summary> SQLInstance. </summary>
-        public static WorkloadItemType SqlInstance { get; } = new WorkloadItemType(SqlInstanceValue);
-        /// <summary> SQLDataBase. </summary>
-        public static WorkloadItemType SqlDatabase { get; } = new WorkloadItemType(SqlDatabaseValue);
-        /// <summary> SAPHanaSystem. </summary>
-        public static WorkloadItemType SapHanaSystem { get; } = new WorkloadItemType(SapHanaSystemValue);
-        /// <summary> SAPHanaDatabase. </summary>
-        public static WorkloadItemType SapHanaDatabase { get; } = new WorkloadItemType(SapHanaDatabaseValue);
-        /// <summary> SAPAseSystem. </summary>
-        public static WorkloadItemType SapAseSystem { get; } = new WorkloadItemType(SapAseSystemValue);
-        /// <summary> SAPAseDatabase. </summary>
-        public static WorkloadItemType SapAseDatabase { get; } = new WorkloadItemType(SapAseDatabaseValue);
-        /// <summary> SAPHanaDBInstance. </summary>
-        public static WorkloadItemType SapHanaDBInstance { get; } = new WorkloadItemType(SapHanaDBInstanceValue);
+
+        /// <summary> Gets the SQLInstance. </summary>
+        public static WorkloadItemType SQLInstance { get; } = new WorkloadItemType(SQLInstanceValue);
+
+        /// <summary> Gets the SQLDataBase. </summary>
+        public static WorkloadItemType SQLDataBase { get; } = new WorkloadItemType(SQLDataBaseValue);
+
+        /// <summary> Gets the SAPHanaSystem. </summary>
+        public static WorkloadItemType SAPHanaSystem { get; } = new WorkloadItemType(SAPHanaSystemValue);
+
+        /// <summary> Gets the SAPHanaDatabase. </summary>
+        public static WorkloadItemType SAPHanaDatabase { get; } = new WorkloadItemType(SAPHanaDatabaseValue);
+
+        /// <summary> Gets the SAPAseSystem. </summary>
+        public static WorkloadItemType SAPAseSystem { get; } = new WorkloadItemType(SAPAseSystemValue);
+
+        /// <summary> Gets the SAPAseDatabase. </summary>
+        public static WorkloadItemType SAPAseDatabase { get; } = new WorkloadItemType(SAPAseDatabaseValue);
+
+        /// <summary> Gets the SAPHanaDBInstance. </summary>
+        public static WorkloadItemType SAPHanaDBInstance { get; } = new WorkloadItemType(SAPHanaDBInstanceValue);
+
         /// <summary> Determines if two <see cref="WorkloadItemType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkloadItemType left, WorkloadItemType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkloadItemType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkloadItemType left, WorkloadItemType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadItemType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkloadItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkloadItemType(string value) => new WorkloadItemType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkloadItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkloadItemType?(string value) => value == null ? null : new WorkloadItemType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkloadItemType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkloadItemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

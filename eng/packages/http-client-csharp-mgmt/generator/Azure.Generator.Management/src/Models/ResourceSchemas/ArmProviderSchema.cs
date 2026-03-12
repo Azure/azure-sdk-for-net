@@ -64,16 +64,16 @@ public class ArmProviderSchema
                 var children = new List<string>();
                 var metadata = ResourceMetadata.DeserializeResourceMetadata(item, model, children);
                 resourceMetadata.Add(metadata);
-                resourceChildren.Add(metadata.ResourceIdPattern, children);
+                resourceChildren.TryAdd(metadata.ResourceIdPattern, children);
             }
         }
 
         // Second pass to fulfill the children list
         foreach (var resource in resourceMetadata)
         {
-            if (resource.ParentResourceId is not null)
+            if (resource.ParentResourceId is not null && resourceChildren.TryGetValue(resource.ParentResourceId, out var parentChildren))
             {
-                resourceChildren[resource.ParentResourceId].Add(resource.ResourceIdPattern);
+                parentChildren.Add(resource.ResourceIdPattern);
             }
         }
 

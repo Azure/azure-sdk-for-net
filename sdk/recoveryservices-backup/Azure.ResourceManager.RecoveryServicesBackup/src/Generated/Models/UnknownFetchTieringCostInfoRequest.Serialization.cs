@@ -9,15 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class UnknownFetchTieringCostInfoRequest : IUtf8JsonSerializable, IJsonModel<FetchTieringCostInfoContent>
+    internal partial class UnknownFetchTieringCostInfoRequest : FetchTieringCostInfoRequest, IJsonModel<FetchTieringCostInfoRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FetchTieringCostInfoContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="UnknownFetchTieringCostInfoRequest"/> for deserialization. </summary>
+        internal UnknownFetchTieringCostInfoRequest()
+        {
+        }
 
-        void IJsonModel<FetchTieringCostInfoContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FetchTieringCostInfoRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFetchTieringCostInfoRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FetchTieringCostInfoRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FetchTieringCostInfoRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FetchTieringCostInfoRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FetchTieringCostInfoRequest IPersistableModel<FetchTieringCostInfoRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FetchTieringCostInfoRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<FetchTieringCostInfoRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,95 +73,66 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FetchTieringCostInfoContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FetchTieringCostInfoRequest)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        FetchTieringCostInfoContent IJsonModel<FetchTieringCostInfoContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FetchTieringCostInfoRequest IJsonModel<FetchTieringCostInfoRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FetchTieringCostInfoRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FetchTieringCostInfoContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FetchTieringCostInfoRequest)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFetchTieringCostInfoContent(document.RootElement, options);
+            return DeserializeFetchTieringCostInfoRequest(document.RootElement, options);
         }
 
-        internal static UnknownFetchTieringCostInfoRequest DeserializeUnknownFetchTieringCostInfoRequest(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UnknownFetchTieringCostInfoRequest DeserializeUnknownFetchTieringCostInfoRequest(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             RecoveryPointTierType sourceTierType = default;
             RecoveryPointTierType targetTierType = default;
-            string objectType = "Unknown";
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string objectType = "unknown";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceTierType"u8))
+                if (prop.NameEquals("sourceTierType"u8))
                 {
-                    sourceTierType = property.Value.GetString().ToRecoveryPointTierType();
+                    sourceTierType = prop.Value.GetString().ToRecoveryPointTierType();
                     continue;
                 }
-                if (property.NameEquals("targetTierType"u8))
+                if (prop.NameEquals("targetTierType"u8))
                 {
-                    targetTierType = property.Value.GetString().ToRecoveryPointTierType();
+                    targetTierType = prop.Value.GetString().ToRecoveryPointTierType();
                     continue;
                 }
-                if (property.NameEquals("objectType"u8))
+                if (prop.NameEquals("objectType"u8))
                 {
-                    objectType = property.Value.GetString();
+                    objectType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownFetchTieringCostInfoRequest(sourceTierType, targetTierType, objectType, serializedAdditionalRawData);
+            return new UnknownFetchTieringCostInfoRequest(sourceTierType, targetTierType, objectType, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<FetchTieringCostInfoContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FetchTieringCostInfoContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FetchTieringCostInfoContent IPersistableModel<FetchTieringCostInfoContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FetchTieringCostInfoContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFetchTieringCostInfoContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FetchTieringCostInfoContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FetchTieringCostInfoContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

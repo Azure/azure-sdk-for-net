@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public partial class RecoveryPointTierInformationV2 : RecoveryPointTierInformation
     {
         /// <summary> Initializes a new instance of <see cref="RecoveryPointTierInformationV2"/>. </summary>
-        public RecoveryPointTierInformationV2()
+        internal RecoveryPointTierInformationV2()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPointTierInformationV2"/>. </summary>
-        /// <param name="tierType"> Recovery point tier type. </param>
+        /// <param name="type"> Recovery point tier type. </param>
         /// <param name="status"> Recovery point tier status. </param>
         /// <param name="extendedInfo"> Recovery point tier status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPointTierInformationV2(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tierType, status, extendedInfo, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointTierInformationV2(RecoveryPointTierType? @type, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, status, extendedInfo, additionalBinaryDataProperties)
         {
         }
     }

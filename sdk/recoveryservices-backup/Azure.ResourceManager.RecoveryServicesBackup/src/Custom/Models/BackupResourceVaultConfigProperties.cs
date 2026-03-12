@@ -16,16 +16,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         /// <summary>
         /// SoftDelete Retention Period
-        /// Serialized Name: SecuritySettings.immutabilitySettings
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public int? SoftDeleteRetentionPeriod
-        {
-            get => SoftDeleteRetentionPeriodInDays;
-            set
-            {
-                SoftDeleteRetentionPeriodInDays = value;
-            }
-        }
+        public int? SoftDeleteRetentionPeriod { get; set; }
     }
 }

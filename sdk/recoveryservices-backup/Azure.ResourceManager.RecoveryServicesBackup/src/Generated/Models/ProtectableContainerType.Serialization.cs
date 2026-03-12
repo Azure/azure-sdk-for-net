@@ -11,21 +11,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     internal static partial class ProtectableContainerTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ProtectableContainerType value) => value switch
         {
-            ProtectableContainerType.Unknown => "Unknown",
             ProtectableContainerType.Invalid => "Invalid",
-            ProtectableContainerType.IaasVmContainer => "IaasVMContainer",
-            ProtectableContainerType.IaasVmServiceContainer => "IaasVMServiceContainer",
-            ProtectableContainerType.DpmContainer => "DPMContainer",
+            ProtectableContainerType.Unknown => "Unknown",
+            ProtectableContainerType.IaasVMContainer => "IaasVMContainer",
+            ProtectableContainerType.IaasVMServiceContainer => "IaasVMServiceContainer",
+            ProtectableContainerType.DPMContainer => "DPMContainer",
             ProtectableContainerType.AzureBackupServerContainer => "AzureBackupServerContainer",
-            ProtectableContainerType.MabContainer => "MABContainer",
+            ProtectableContainerType.MABContainer => "MABContainer",
             ProtectableContainerType.Cluster => "Cluster",
             ProtectableContainerType.AzureSqlContainer => "AzureSqlContainer",
             ProtectableContainerType.Windows => "Windows",
             ProtectableContainerType.VCenter => "VCenter",
-            ProtectableContainerType.VmAppContainer => "VMAppContainer",
-            ProtectableContainerType.SqlAvailabilityGroupWorkLoadContainer => "SQLAGWorkLoadContainer",
+            ProtectableContainerType.VMAppContainer => "VMAppContainer",
+            ProtectableContainerType.SQLAGWorkLoadContainer => "SQLAGWorkLoadContainer",
             ProtectableContainerType.StorageContainer => "StorageContainer",
             ProtectableContainerType.GenericContainer => "GenericContainer",
             ProtectableContainerType.MicrosoftClassicComputeVirtualMachines => "Microsoft.ClassicCompute/virtualMachines",
@@ -34,26 +35,81 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProtectableContainerType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ProtectableContainerType ToProtectableContainerType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return ProtectableContainerType.Unknown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return ProtectableContainerType.Invalid;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IaasVMContainer")) return ProtectableContainerType.IaasVmContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IaasVMServiceContainer")) return ProtectableContainerType.IaasVmServiceContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DPMContainer")) return ProtectableContainerType.DpmContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureBackupServerContainer")) return ProtectableContainerType.AzureBackupServerContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MABContainer")) return ProtectableContainerType.MabContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cluster")) return ProtectableContainerType.Cluster;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureSqlContainer")) return ProtectableContainerType.AzureSqlContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows")) return ProtectableContainerType.Windows;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "VCenter")) return ProtectableContainerType.VCenter;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "VMAppContainer")) return ProtectableContainerType.VmAppContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLAGWorkLoadContainer")) return ProtectableContainerType.SqlAvailabilityGroupWorkLoadContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageContainer")) return ProtectableContainerType.StorageContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GenericContainer")) return ProtectableContainerType.GenericContainer;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.ClassicCompute/virtualMachines")) return ProtectableContainerType.MicrosoftClassicComputeVirtualMachines;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Compute/virtualMachines")) return ProtectableContainerType.MicrosoftComputeVirtualMachines;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureWorkloadContainer")) return ProtectableContainerType.AzureWorkloadContainer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid"))
+            {
+                return ProtectableContainerType.Invalid;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown"))
+            {
+                return ProtectableContainerType.Unknown;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IaasVMContainer"))
+            {
+                return ProtectableContainerType.IaasVMContainer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IaasVMServiceContainer"))
+            {
+                return ProtectableContainerType.IaasVMServiceContainer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DPMContainer"))
+            {
+                return ProtectableContainerType.DPMContainer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureBackupServerContainer"))
+            {
+                return ProtectableContainerType.AzureBackupServerContainer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MABContainer"))
+            {
+                return ProtectableContainerType.MABContainer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cluster"))
+            {
+                return ProtectableContainerType.Cluster;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureSqlContainer"))
+            {
+                return ProtectableContainerType.AzureSqlContainer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Windows"))
+            {
+                return ProtectableContainerType.Windows;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "VCenter"))
+            {
+                return ProtectableContainerType.VCenter;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "VMAppContainer"))
+            {
+                return ProtectableContainerType.VMAppContainer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLAGWorkLoadContainer"))
+            {
+                return ProtectableContainerType.SQLAGWorkLoadContainer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageContainer"))
+            {
+                return ProtectableContainerType.StorageContainer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GenericContainer"))
+            {
+                return ProtectableContainerType.GenericContainer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.ClassicCompute/virtualMachines"))
+            {
+                return ProtectableContainerType.MicrosoftClassicComputeVirtualMachines;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Compute/virtualMachines"))
+            {
+                return ProtectableContainerType.MicrosoftComputeVirtualMachines;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureWorkloadContainer"))
+            {
+                return ProtectableContainerType.AzureWorkloadContainer;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProtectableContainerType value.");
         }
     }

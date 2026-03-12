@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    [PersistableModelProxy(typeof(UnknownRestoreRequest))]
-    public partial class RestoreContent : IUtf8JsonSerializable, IJsonModel<RestoreContent>
+    /// <summary>
+    /// Base class for restore request. Workload-specific restore requests are derived from this class.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureFileShareRestoreRequest"/>, <see cref="AzureWorkloadPointInTimeRestoreRequest"/>, <see cref="AzureWorkloadRestoreRequest"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRestoreRequest"/>, <see cref="AzureWorkloadSAPHanaRestoreRequest"/>, <see cref="AzureWorkloadSAPAsePointInTimeRestoreRequest"/>, <see cref="AzureWorkloadSAPAseRestoreRequest"/>, <see cref="AzureWorkloadSQLPointInTimeRestoreRequest"/>, <see cref="AzureWorkloadSQLRestoreRequest"/>, <see cref="IaasVMRestoreRequest"/>, <see cref="AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest"/>, <see cref="AzureWorkloadSAPHanaRestoreWithRehydrateRequest"/>, <see cref="AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest"/>, <see cref="AzureWorkloadSQLRestoreWithRehydrateRequest"/>, and <see cref="IaasVMRestoreWithRehydrationRequest"/>.
+    /// </summary>
+    [PersistableModelProxy(typeof(UnknownRestoreContent))]
+    public abstract partial class RestoreContent : IJsonModel<RestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RestoreContent"/> for deserialization. </summary>
+        internal RestoreContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestoreContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRestoreContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RestoreContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RestoreContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RestoreContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestoreContent IPersistableModel<RestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,33 +77,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestoreContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResourceGuardOperationRequests)
+                foreach (string item in ResourceGuardOperationRequests)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,79 +116,68 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
         }
 
-        RestoreContent IJsonModel<RestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestoreContent IJsonModel<RestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestoreContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestoreContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRestoreContent(document.RootElement, options);
         }
 
-        internal static RestoreContent DeserializeRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RestoreContent DeserializeRestoreContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("objectType", out JsonElement discriminator))
+            if (element.TryGetProperty("objectType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureFileShareRestoreRequest": return FileShareRestoreContent.DeserializeFileShareRestoreContent(element, options);
-                    case "AzureWorkloadPointInTimeRestoreRequest": return WorkloadPointInTimeRestoreContent.DeserializeWorkloadPointInTimeRestoreContent(element, options);
-                    case "AzureWorkloadRestoreRequest": return WorkloadRestoreContent.DeserializeWorkloadRestoreContent(element, options);
-                    case "AzureWorkloadSAPAsePointInTimeRestoreRequest": return WorkloadSapAsePointInTimeRestoreContent.DeserializeWorkloadSapAsePointInTimeRestoreContent(element, options);
-                    case "AzureWorkloadSAPAseRestoreRequest": return WorkloadSapAseRestoreContent.DeserializeWorkloadSapAseRestoreContent(element, options);
-                    case "AzureWorkloadSAPHanaPointInTimeRestoreRequest": return WorkloadSapHanaPointInTimeRestoreContent.DeserializeWorkloadSapHanaPointInTimeRestoreContent(element, options);
-                    case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest": return WorkloadSapHanaPointInTimeRestoreWithRehydrateContent.DeserializeWorkloadSapHanaPointInTimeRestoreWithRehydrateContent(element, options);
-                    case "AzureWorkloadSAPHanaRestoreRequest": return WorkloadSapHanaRestoreContent.DeserializeWorkloadSapHanaRestoreContent(element, options);
-                    case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest": return WorkloadSapHanaRestoreWithRehydrateContent.DeserializeWorkloadSapHanaRestoreWithRehydrateContent(element, options);
-                    case "AzureWorkloadSQLPointInTimeRestoreRequest": return WorkloadSqlPointInTimeRestoreContent.DeserializeWorkloadSqlPointInTimeRestoreContent(element, options);
-                    case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest": return WorkloadSqlPointInTimeRestoreWithRehydrateContent.DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateContent(element, options);
-                    case "AzureWorkloadSQLRestoreRequest": return WorkloadSqlRestoreContent.DeserializeWorkloadSqlRestoreContent(element, options);
-                    case "AzureWorkloadSQLRestoreWithRehydrateRequest": return WorkloadSqlRestoreWithRehydrateContent.DeserializeWorkloadSqlRestoreWithRehydrateContent(element, options);
-                    case "IaasVMRestoreRequest": return IaasVmRestoreContent.DeserializeIaasVmRestoreContent(element, options);
-                    case "IaasVMRestoreWithRehydrationRequest": return IaasVmRestoreWithRehydrationContent.DeserializeIaasVmRestoreWithRehydrationContent(element, options);
+                    case "AzureFileShareRestoreRequest":
+                        return AzureFileShareRestoreRequest.DeserializeAzureFileShareRestoreRequest(element, options);
+                    case "AzureWorkloadPointInTimeRestoreRequest":
+                        return AzureWorkloadPointInTimeRestoreRequest.DeserializeAzureWorkloadPointInTimeRestoreRequest(element, options);
+                    case "AzureWorkloadRestoreRequest":
+                        return AzureWorkloadRestoreRequest.DeserializeAzureWorkloadRestoreRequest(element, options);
+                    case "AzureWorkloadSAPHanaPointInTimeRestoreRequest":
+                        return AzureWorkloadSAPHanaPointInTimeRestoreRequest.DeserializeAzureWorkloadSAPHanaPointInTimeRestoreRequest(element, options);
+                    case "AzureWorkloadSAPHanaRestoreRequest":
+                        return AzureWorkloadSAPHanaRestoreRequest.DeserializeAzureWorkloadSAPHanaRestoreRequest(element, options);
+                    case "AzureWorkloadSAPAsePointInTimeRestoreRequest":
+                        return AzureWorkloadSAPAsePointInTimeRestoreRequest.DeserializeAzureWorkloadSAPAsePointInTimeRestoreRequest(element, options);
+                    case "AzureWorkloadSAPAseRestoreRequest":
+                        return AzureWorkloadSAPAseRestoreRequest.DeserializeAzureWorkloadSAPAseRestoreRequest(element, options);
+                    case "AzureWorkloadSQLPointInTimeRestoreRequest":
+                        return AzureWorkloadSQLPointInTimeRestoreRequest.DeserializeAzureWorkloadSQLPointInTimeRestoreRequest(element, options);
+                    case "AzureWorkloadSQLRestoreRequest":
+                        return AzureWorkloadSQLRestoreRequest.DeserializeAzureWorkloadSQLRestoreRequest(element, options);
+                    case "IaasVMRestoreRequest":
+                        return IaasVMRestoreRequest.DeserializeIaasVMRestoreRequest(element, options);
+                    case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest":
+                        return AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest.DeserializeAzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest(element, options);
+                    case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest":
+                        return AzureWorkloadSAPHanaRestoreWithRehydrateRequest.DeserializeAzureWorkloadSAPHanaRestoreWithRehydrateRequest(element, options);
+                    case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest":
+                        return AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest.DeserializeAzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest(element, options);
+                    case "AzureWorkloadSQLRestoreWithRehydrateRequest":
+                        return AzureWorkloadSQLRestoreWithRehydrateRequest.DeserializeAzureWorkloadSQLRestoreWithRehydrateRequest(element, options);
+                    case "IaasVMRestoreWithRehydrationRequest":
+                        return IaasVMRestoreWithRehydrationRequest.DeserializeIaasVMRestoreWithRehydrationRequest(element, options);
                 }
             }
-            return UnknownRestoreRequest.DeserializeUnknownRestoreRequest(element, options);
+            return UnknownRestoreContent.DeserializeUnknownRestoreContent(element, options);
         }
-
-        BinaryData IPersistableModel<RestoreContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RestoreContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RestoreContent IPersistableModel<RestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RestoreContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRestoreContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RestoreContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

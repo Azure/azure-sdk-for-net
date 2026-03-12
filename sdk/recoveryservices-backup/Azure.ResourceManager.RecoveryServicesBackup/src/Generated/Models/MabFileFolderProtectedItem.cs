@@ -7,17 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> MAB workload-specific backup item. </summary>
-    public partial class MabFileFolderProtectedItem : BackupGenericProtectedItem
+    public partial class MabFileFolderProtectedItem : ProtectedItem
     {
         /// <summary> Initializes a new instance of <see cref="MabFileFolderProtectedItem"/>. </summary>
-        public MabFileFolderProtectedItem()
+        public MabFileFolderProtectedItem() : base("MabFileFolderProtectedItem")
         {
-            ProtectedItemType = "MabFileFolderProtectedItem";
         }
 
         /// <summary> Initializes a new instance of <see cref="MabFileFolderProtectedItem"/>. </summary>
@@ -27,10 +25,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="containerName"> Unique name of container. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
-        /// <param name="lastRecoverOn"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
+        /// <param name="lastRecoveryPoint"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
         /// <param name="backupSetName"> Name of the backup set the backup item belongs to. </param>
         /// <param name="createMode"> Create mode to indicate recovery of existing soft deleted data source or creation of new data source. </param>
-        /// <param name="deferredDeletedOn"> Time for deferred deletion in UTC. </param>
+        /// <param name="deferredDeleteTimeInUTC"> Time for deferred deletion in UTC. </param>
         /// <param name="isScheduledForDeferredDelete"> Flag to identify whether the DS is scheduled for deferred delete. </param>
         /// <param name="deferredDeleteTimeRemaining"> Time remaining before the DS marked for deferred delete is permanently deleted. </param>
         /// <param name="isDeferredDeleteScheduleUpcoming"> Flag to identify whether the deferred deleted DS is to be purged soon. </param>
@@ -40,7 +38,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
         /// <param name="vaultId"> ID of the vault which protects this item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sourceSideScanInfo"> Source side threat information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="friendlyName"> Friendly name of this backup item. </param>
         /// <param name="computerName"> Name of the computer associated with this backup item. </param>
         /// <param name="lastBackupStatus"> Status of last backup operation. </param>
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectionState"> Protected, ProtectionStopped, IRPending or ProtectionError. </param>
         /// <param name="deferredDeleteSyncTimeInUTC"> Sync time for deferred deletion in UTC. </param>
         /// <param name="extendedInfo"> Additional information with this backup item. </param>
-        internal MabFileFolderProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, IDictionary<string, BinaryData> serializedAdditionalRawData, string friendlyName, string computerName, string lastBackupStatus, DateTimeOffset? lastBackupOn, string protectionState, long? deferredDeleteSyncTimeInUTC, MabFileFolderProtectedItemExtendedInfo extendedInfo) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData)
+        internal MabFileFolderProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, SourceSideScanInfo sourceSideScanInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, string computerName, string lastBackupStatus, DateTimeOffset? lastBackupOn, string protectionState, long? deferredDeleteSyncTimeInUTC, MabFileFolderProtectedItemExtendedInfo extendedInfo) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, sourceSideScanInfo, additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             ComputerName = computerName;
@@ -57,21 +56,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectionState = protectionState;
             DeferredDeleteSyncTimeInUTC = deferredDeleteSyncTimeInUTC;
             ExtendedInfo = extendedInfo;
-            ProtectedItemType = protectedItemType ?? "MabFileFolderProtectedItem";
         }
 
         /// <summary> Friendly name of this backup item. </summary>
         public string FriendlyName { get; set; }
+
         /// <summary> Name of the computer associated with this backup item. </summary>
         public string ComputerName { get; set; }
+
         /// <summary> Status of last backup operation. </summary>
         public string LastBackupStatus { get; set; }
+
         /// <summary> Timestamp of the last backup operation on this backup item. </summary>
         public DateTimeOffset? LastBackupOn { get; set; }
+
         /// <summary> Protected, ProtectionStopped, IRPending or ProtectionError. </summary>
         public string ProtectionState { get; set; }
+
         /// <summary> Sync time for deferred deletion in UTC. </summary>
         public long? DeferredDeleteSyncTimeInUTC { get; set; }
+
         /// <summary> Additional information with this backup item. </summary>
         public MabFileFolderProtectedItemExtendedInfo ExtendedInfo { get; set; }
     }

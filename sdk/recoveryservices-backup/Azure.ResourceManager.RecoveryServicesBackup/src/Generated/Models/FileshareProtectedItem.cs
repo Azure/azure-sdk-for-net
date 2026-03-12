@@ -7,18 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure File Share workload-specific backup item. </summary>
-    public partial class FileshareProtectedItem : BackupGenericProtectedItem
+    public partial class FileshareProtectedItem : ProtectedItem
     {
         /// <summary> Initializes a new instance of <see cref="FileshareProtectedItem"/>. </summary>
-        public FileshareProtectedItem()
+        public FileshareProtectedItem() : base("AzureFileShareProtectedItem")
         {
             KpisHealths = new ChangeTrackingDictionary<string, KpiResourceHealthDetails>();
-            ProtectedItemType = "AzureFileShareProtectedItem";
         }
 
         /// <summary> Initializes a new instance of <see cref="FileshareProtectedItem"/>. </summary>
@@ -28,10 +27,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="containerName"> Unique name of container. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
-        /// <param name="lastRecoverOn"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
+        /// <param name="lastRecoveryPoint"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
         /// <param name="backupSetName"> Name of the backup set the backup item belongs to. </param>
         /// <param name="createMode"> Create mode to indicate recovery of existing soft deleted data source or creation of new data source. </param>
-        /// <param name="deferredDeletedOn"> Time for deferred deletion in UTC. </param>
+        /// <param name="deferredDeleteTimeInUTC"> Time for deferred deletion in UTC. </param>
         /// <param name="isScheduledForDeferredDelete"> Flag to identify whether the DS is scheduled for deferred delete. </param>
         /// <param name="deferredDeleteTimeRemaining"> Time remaining before the DS marked for deferred delete is permanently deleted. </param>
         /// <param name="isDeferredDeleteScheduleUpcoming"> Flag to identify whether the deferred deleted DS is to be purged soon. </param>
@@ -41,7 +40,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
         /// <param name="vaultId"> ID of the vault which protects this item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sourceSideScanInfo"> Source side threat information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="friendlyName"> Friendly name of the fileshare represented by this backup item. </param>
         /// <param name="protectionStatus"> Backup status of this backup item. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="lastBackupOn"> Timestamp of the last backup operation on this backup item. </param>
         /// <param name="kpisHealths"> Health details of different KPIs. </param>
         /// <param name="extendedInfo"> Additional information with this backup item. </param>
-        internal FileshareProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, IDictionary<string, BinaryData> serializedAdditionalRawData, string friendlyName, string protectionStatus, BackupProtectionState? protectionState, string lastBackupStatus, DateTimeOffset? lastBackupOn, IDictionary<string, KpiResourceHealthDetails> kpisHealths, FileshareProtectedItemExtendedInfo extendedInfo) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, serializedAdditionalRawData)
+        internal FileshareProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, SourceSideScanInfo sourceSideScanInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, string protectionStatus, BackupProtectionState? protectionState, string lastBackupStatus, DateTimeOffset? lastBackupOn, IDictionary<string, KpiResourceHealthDetails> kpisHealths, FileshareProtectedItemExtendedInfo extendedInfo) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays, vaultId, sourceSideScanInfo, additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             ProtectionStatus = protectionStatus;
@@ -58,21 +58,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             LastBackupOn = lastBackupOn;
             KpisHealths = kpisHealths;
             ExtendedInfo = extendedInfo;
-            ProtectedItemType = protectedItemType ?? "AzureFileShareProtectedItem";
         }
 
         /// <summary> Friendly name of the fileshare represented by this backup item. </summary>
         public string FriendlyName { get; set; }
+
         /// <summary> Backup status of this backup item. </summary>
         public string ProtectionStatus { get; set; }
+
         /// <summary> Backup state of this backup item. </summary>
         public BackupProtectionState? ProtectionState { get; set; }
+
         /// <summary> Last backup operation status. Possible values: Healthy, Unhealthy. </summary>
         public string LastBackupStatus { get; set; }
+
         /// <summary> Timestamp of the last backup operation on this backup item. </summary>
         public DateTimeOffset? LastBackupOn { get; set; }
+
         /// <summary> Health details of different KPIs. </summary>
         public IDictionary<string, KpiResourceHealthDetails> KpisHealths { get; }
+
         /// <summary> Additional information with this backup item. </summary>
         public FileshareProtectedItemExtendedInfo ExtendedInfo { get; set; }
     }

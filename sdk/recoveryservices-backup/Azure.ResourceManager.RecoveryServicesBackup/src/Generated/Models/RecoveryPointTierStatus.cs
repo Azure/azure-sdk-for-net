@@ -5,20 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Recovery point tier status. </summary>
-    public enum RecoveryPointTierStatus
+    public readonly partial struct RecoveryPointTierStatus : IEquatable<RecoveryPointTierStatus>
     {
-        /// <summary> Invalid. </summary>
-        Invalid,
-        /// <summary> Valid. </summary>
-        Valid,
-        /// <summary> Disabled. </summary>
-        Disabled,
-        /// <summary> Deleted. </summary>
-        Deleted,
-        /// <summary> Rehydrated. </summary>
-        Rehydrated
+        private readonly string _value;
+        private const string InvalidValue = "Invalid";
+        private const string ValidValue = "Valid";
+        private const string DisabledValue = "Disabled";
+        private const string DeletedValue = "Deleted";
+        private const string RehydratedValue = "Rehydrated";
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPointTierStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RecoveryPointTierStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
+        public static RecoveryPointTierStatus Invalid { get; } = new RecoveryPointTierStatus(InvalidValue);
+
+        /// <summary> Gets the Valid. </summary>
+        public static RecoveryPointTierStatus Valid { get; } = new RecoveryPointTierStatus(ValidValue);
+
+        /// <summary> Gets the Disabled. </summary>
+        public static RecoveryPointTierStatus Disabled { get; } = new RecoveryPointTierStatus(DisabledValue);
+
+        /// <summary> Gets the Deleted. </summary>
+        public static RecoveryPointTierStatus Deleted { get; } = new RecoveryPointTierStatus(DeletedValue);
+
+        /// <summary> Gets the Rehydrated. </summary>
+        public static RecoveryPointTierStatus Rehydrated { get; } = new RecoveryPointTierStatus(RehydratedValue);
+
+        /// <summary> Determines if two <see cref="RecoveryPointTierStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(RecoveryPointTierStatus left, RecoveryPointTierStatus right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="RecoveryPointTierStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(RecoveryPointTierStatus left, RecoveryPointTierStatus right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="RecoveryPointTierStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryPointTierStatus(string value) => new RecoveryPointTierStatus(value);
+
+        /// <summary> Converts a string to a <see cref="RecoveryPointTierStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryPointTierStatus?(string value) => value == null ? null : new RecoveryPointTierStatus(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is RecoveryPointTierStatus other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(RecoveryPointTierStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

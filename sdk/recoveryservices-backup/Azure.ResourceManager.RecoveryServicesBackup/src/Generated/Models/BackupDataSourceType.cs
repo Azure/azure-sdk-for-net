@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,80 +15,111 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupDataSourceType : IEquatable<BackupDataSourceType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupDataSourceType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupDataSourceType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
-        private const string VmValue = "VM";
+        private const string VMValue = "VM";
         private const string FileFolderValue = "FileFolder";
-        private const string AzureSqlDBValue = "AzureSqlDb";
-        private const string SqlDBValue = "SQLDB";
+        private const string AzureSqlDbValue = "AzureSqlDb";
+        private const string SQLDBValue = "SQLDB";
         private const string ExchangeValue = "Exchange";
         private const string SharepointValue = "Sharepoint";
-        private const string VMwareVmValue = "VMwareVM";
+        private const string VMwareVMValue = "VMwareVM";
         private const string SystemStateValue = "SystemState";
         private const string ClientValue = "Client";
         private const string GenericDataSourceValue = "GenericDataSource";
-        private const string SqlDatabaseValue = "SQLDataBase";
+        private const string SQLDataBaseValue = "SQLDataBase";
         private const string AzureFileShareValue = "AzureFileShare";
-        private const string SapHanaDatabaseValue = "SAPHanaDatabase";
-        private const string SapAseDatabaseValue = "SAPAseDatabase";
-        private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
+        private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
+        private const string SAPAseDatabaseValue = "SAPAseDatabase";
+        private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupDataSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupDataSourceType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupDataSourceType Invalid { get; } = new BackupDataSourceType(InvalidValue);
-        /// <summary> VM. </summary>
-        public static BackupDataSourceType Vm { get; } = new BackupDataSourceType(VmValue);
-        /// <summary> FileFolder. </summary>
+
+        /// <summary> Gets the VM. </summary>
+        public static BackupDataSourceType VM { get; } = new BackupDataSourceType(VMValue);
+
+        /// <summary> Gets the FileFolder. </summary>
         public static BackupDataSourceType FileFolder { get; } = new BackupDataSourceType(FileFolderValue);
-        /// <summary> AzureSqlDb. </summary>
-        public static BackupDataSourceType AzureSqlDB { get; } = new BackupDataSourceType(AzureSqlDBValue);
-        /// <summary> SQLDB. </summary>
-        public static BackupDataSourceType SqlDB { get; } = new BackupDataSourceType(SqlDBValue);
-        /// <summary> Exchange. </summary>
+
+        /// <summary> Gets the AzureSqlDb. </summary>
+        public static BackupDataSourceType AzureSqlDb { get; } = new BackupDataSourceType(AzureSqlDbValue);
+
+        /// <summary> Gets the SQLDB. </summary>
+        public static BackupDataSourceType SQLDB { get; } = new BackupDataSourceType(SQLDBValue);
+
+        /// <summary> Gets the Exchange. </summary>
         public static BackupDataSourceType Exchange { get; } = new BackupDataSourceType(ExchangeValue);
-        /// <summary> Sharepoint. </summary>
+
+        /// <summary> Gets the Sharepoint. </summary>
         public static BackupDataSourceType Sharepoint { get; } = new BackupDataSourceType(SharepointValue);
-        /// <summary> VMwareVM. </summary>
-        public static BackupDataSourceType VMwareVm { get; } = new BackupDataSourceType(VMwareVmValue);
-        /// <summary> SystemState. </summary>
+
+        /// <summary> Gets the VMwareVM. </summary>
+        public static BackupDataSourceType VMwareVM { get; } = new BackupDataSourceType(VMwareVMValue);
+
+        /// <summary> Gets the SystemState. </summary>
         public static BackupDataSourceType SystemState { get; } = new BackupDataSourceType(SystemStateValue);
-        /// <summary> Client. </summary>
+
+        /// <summary> Gets the Client. </summary>
         public static BackupDataSourceType Client { get; } = new BackupDataSourceType(ClientValue);
-        /// <summary> GenericDataSource. </summary>
+
+        /// <summary> Gets the GenericDataSource. </summary>
         public static BackupDataSourceType GenericDataSource { get; } = new BackupDataSourceType(GenericDataSourceValue);
-        /// <summary> SQLDataBase. </summary>
-        public static BackupDataSourceType SqlDatabase { get; } = new BackupDataSourceType(SqlDatabaseValue);
-        /// <summary> AzureFileShare. </summary>
+
+        /// <summary> Gets the SQLDataBase. </summary>
+        public static BackupDataSourceType SQLDataBase { get; } = new BackupDataSourceType(SQLDataBaseValue);
+
+        /// <summary> Gets the AzureFileShare. </summary>
         public static BackupDataSourceType AzureFileShare { get; } = new BackupDataSourceType(AzureFileShareValue);
-        /// <summary> SAPHanaDatabase. </summary>
-        public static BackupDataSourceType SapHanaDatabase { get; } = new BackupDataSourceType(SapHanaDatabaseValue);
-        /// <summary> SAPAseDatabase. </summary>
-        public static BackupDataSourceType SapAseDatabase { get; } = new BackupDataSourceType(SapAseDatabaseValue);
-        /// <summary> SAPHanaDBInstance. </summary>
-        public static BackupDataSourceType SapHanaDBInstance { get; } = new BackupDataSourceType(SapHanaDBInstanceValue);
+
+        /// <summary> Gets the SAPHanaDatabase. </summary>
+        public static BackupDataSourceType SAPHanaDatabase { get; } = new BackupDataSourceType(SAPHanaDatabaseValue);
+
+        /// <summary> Gets the SAPAseDatabase. </summary>
+        public static BackupDataSourceType SAPAseDatabase { get; } = new BackupDataSourceType(SAPAseDatabaseValue);
+
+        /// <summary> Gets the SAPHanaDBInstance. </summary>
+        public static BackupDataSourceType SAPHanaDBInstance { get; } = new BackupDataSourceType(SAPHanaDBInstanceValue);
+
         /// <summary> Determines if two <see cref="BackupDataSourceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupDataSourceType left, BackupDataSourceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupDataSourceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupDataSourceType left, BackupDataSourceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupDataSourceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupDataSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupDataSourceType(string value) => new BackupDataSourceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupDataSourceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupDataSourceType?(string value) => value == null ? null : new BackupDataSourceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupDataSourceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupDataSourceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

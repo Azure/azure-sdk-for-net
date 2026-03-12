@@ -7,30 +7,31 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload specific backup copy. </summary>
-    public partial class IaasVmRecoveryPoint : BackupGenericRecoveryPoint
+    public partial class IaasVMRecoveryPoint : RecoveryPoint
     {
-        /// <summary> Initializes a new instance of <see cref="IaasVmRecoveryPoint"/>. </summary>
-        public IaasVmRecoveryPoint()
+        /// <summary> Initializes a new instance of <see cref="IaasVMRecoveryPoint"/>. </summary>
+        internal IaasVMRecoveryPoint() : base("IaasVMRecoveryPoint")
         {
             RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformationV2>();
             Zones = new ChangeTrackingList<string>();
             RecoveryPointMoveReadinessInfo = new ChangeTrackingDictionary<string, RecoveryPointMoveReadinessInfo>();
-            ObjectType = "IaasVMRecoveryPoint";
         }
 
-        /// <summary> Initializes a new instance of <see cref="IaasVmRecoveryPoint"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IaasVMRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="threatStatus"> Threat status of the recovery point. </param>
+        /// <param name="threatInfo"> Recovery point threat information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointType"> Type of the backup copy. </param>
         /// <param name="recoveryPointOn"> Time at which this backup copy was created. </param>
         /// <param name="recoveryPointAdditionalInfo"> Additional information associated with this backup copy. </param>
-        /// <param name="sourceVmStorageType"> Storage type of the VM whose backup copy is created. </param>
-        /// <param name="isSourceVmEncrypted"> Identifies whether the VM was encrypted when the backup copy is created. </param>
+        /// <param name="sourceVMStorageType"> Storage type of the VM whose backup copy is created. </param>
+        /// <param name="isSourceVMEncrypted"> Identifies whether the VM was encrypted when the backup copy is created. </param>
         /// <param name="keyAndSecret"> Required details for recovering an encrypted VM. Applicable only when IsSourceVMEncrypted is true. </param>
         /// <param name="isInstantIlrSessionActive"> Is the session to recover items from this backup copy still active. </param>
         /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
@@ -48,20 +49,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Extended location of the VM recovery point,
         /// should be null if VM is in public cloud
         /// </param>
-        internal IaasVmRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVmStorageType, bool? isSourceVmEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk, ExtendedLocation extendedLocation) : base(objectType, serializedAdditionalRawData)
+        internal IaasVMRecoveryPoint(string objectType, ThreatStatus? threatStatus, IList<ThreatInfo> threatInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryPointType, DateTimeOffset? recoveryPointOn, string recoveryPointAdditionalInfo, string sourceVMStorageType, bool? isSourceVMEncrypted, KeyAndSecretDetails keyAndSecret, bool? isInstantIlrSessionActive, IList<RecoveryPointTierInformationV2> recoveryPointTierDetails, bool? isManagedVirtualMachine, string virtualMachineSize, bool? originalStorageAccountOption, string osType, RecoveryPointDiskConfiguration recoveryPointDiskConfiguration, IList<string> zones, IDictionary<string, RecoveryPointMoveReadinessInfo> recoveryPointMoveReadinessInfo, string securityType, RecoveryPointProperties recoveryPointProperties, bool? isPrivateAccessEnabledOnAnyDisk, ExtendedLocation extendedLocation) : base(objectType, threatStatus, threatInfo, additionalBinaryDataProperties)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
             RecoveryPointAdditionalInfo = recoveryPointAdditionalInfo;
-            SourceVmStorageType = sourceVmStorageType;
-            IsSourceVmEncrypted = isSourceVmEncrypted;
+            SourceVMStorageType = sourceVMStorageType;
+            IsSourceVMEncrypted = isSourceVMEncrypted;
             KeyAndSecret = keyAndSecret;
             IsInstantIlrSessionActive = isInstantIlrSessionActive;
             RecoveryPointTierDetails = recoveryPointTierDetails;
             IsManagedVirtualMachine = isManagedVirtualMachine;
             VirtualMachineSize = virtualMachineSize;
             OriginalStorageAccountOption = originalStorageAccountOption;
-            OSType = osType;
+            OsType = osType;
             RecoveryPointDiskConfiguration = recoveryPointDiskConfiguration;
             Zones = zones;
             RecoveryPointMoveReadinessInfo = recoveryPointMoveReadinessInfo;
@@ -69,49 +70,66 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointProperties = recoveryPointProperties;
             IsPrivateAccessEnabledOnAnyDisk = isPrivateAccessEnabledOnAnyDisk;
             ExtendedLocation = extendedLocation;
-            ObjectType = objectType ?? "IaasVMRecoveryPoint";
         }
 
         /// <summary> Type of the backup copy. </summary>
-        public string RecoveryPointType { get; set; }
+        public string RecoveryPointType { get; }
+
         /// <summary> Time at which this backup copy was created. </summary>
-        public DateTimeOffset? RecoveryPointOn { get; set; }
+        public DateTimeOffset? RecoveryPointOn { get; }
+
         /// <summary> Additional information associated with this backup copy. </summary>
-        public string RecoveryPointAdditionalInfo { get; set; }
+        public string RecoveryPointAdditionalInfo { get; }
+
         /// <summary> Storage type of the VM whose backup copy is created. </summary>
-        public string SourceVmStorageType { get; set; }
+        public string SourceVMStorageType { get; }
+
         /// <summary> Identifies whether the VM was encrypted when the backup copy is created. </summary>
-        public bool? IsSourceVmEncrypted { get; set; }
+        public bool? IsSourceVMEncrypted { get; }
+
         /// <summary> Required details for recovering an encrypted VM. Applicable only when IsSourceVMEncrypted is true. </summary>
-        public KeyAndSecretDetails KeyAndSecret { get; set; }
+        public KeyAndSecretDetails KeyAndSecret { get; }
+
         /// <summary> Is the session to recover items from this backup copy still active. </summary>
-        public bool? IsInstantIlrSessionActive { get; set; }
+        public bool? IsInstantIlrSessionActive { get; }
+
         /// <summary> Recovery point tier information. </summary>
         public IList<RecoveryPointTierInformationV2> RecoveryPointTierDetails { get; }
+
         /// <summary> Whether VM is with Managed Disks. </summary>
-        public bool? IsManagedVirtualMachine { get; set; }
+        public bool? IsManagedVirtualMachine { get; }
+
         /// <summary> Virtual Machine Size. </summary>
-        public string VirtualMachineSize { get; set; }
+        public string VirtualMachineSize { get; }
+
         /// <summary> Original Storage Account Option. </summary>
-        public bool? OriginalStorageAccountOption { get; set; }
+        public bool? OriginalStorageAccountOption { get; }
+
         /// <summary> OS type. </summary>
-        public string OSType { get; set; }
+        public string OsType { get; }
+
         /// <summary> Disk configuration. </summary>
-        public RecoveryPointDiskConfiguration RecoveryPointDiskConfiguration { get; set; }
+        public RecoveryPointDiskConfiguration RecoveryPointDiskConfiguration { get; }
+
         /// <summary> Identifies the zone of the VM at the time of backup. Applicable only for zone-pinned Vms. </summary>
         public IList<string> Zones { get; }
+
         /// <summary> Eligibility of RP to be moved to another tier. </summary>
         public IDictionary<string, RecoveryPointMoveReadinessInfo> RecoveryPointMoveReadinessInfo { get; }
+
         /// <summary> Security Type of the Disk. </summary>
-        public string SecurityType { get; set; }
+        public string SecurityType { get; }
+
         /// <summary> Properties of Recovery Point. </summary>
-        public RecoveryPointProperties RecoveryPointProperties { get; set; }
+        public RecoveryPointProperties RecoveryPointProperties { get; }
+
         /// <summary> This flag denotes if any of the disks in the VM are using Private access network setting. </summary>
-        public bool? IsPrivateAccessEnabledOnAnyDisk { get; set; }
+        public bool? IsPrivateAccessEnabledOnAnyDisk { get; }
+
         /// <summary>
         /// Extended location of the VM recovery point,
         /// should be null if VM is in public cloud
         /// </summary>
-        public ExtendedLocation ExtendedLocation { get; set; }
+        public ExtendedLocation ExtendedLocation { get; }
     }
 }

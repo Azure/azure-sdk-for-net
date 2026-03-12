@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<BackupResourceVaultConfigResource>> UpdateAsync(BackupResourceVaultConfigData data, CancellationToken cancellationToken)
+        public virtual Task<Response<BackupResourceVaultConfigResource>> UpdateAsync(BackupResourceVaultConfigResourceData data, CancellationToken cancellationToken)
         {
             return UpdateAsync(data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Response<BackupResourceVaultConfigResource> Update(BackupResourceVaultConfigData data, CancellationToken cancellationToken)
+        public virtual Response<BackupResourceVaultConfigResource> Update(BackupResourceVaultConfigResourceData data, CancellationToken cancellationToken)
         {
             return Update(data, xMsAuthorizationAuxiliary: null, cancellationToken: cancellationToken);
         }

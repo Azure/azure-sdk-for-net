@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Type of data directory mapping. </summary>
-    public readonly partial struct SqlDataDirectoryType : IEquatable<SqlDataDirectoryType>
+    public readonly partial struct SQLDataDirectoryType : IEquatable<SQLDataDirectoryType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="SqlDataDirectoryType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SqlDataDirectoryType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
         private const string DataValue = "Data";
         private const string LogValue = "Log";
 
-        /// <summary> Invalid. </summary>
-        public static SqlDataDirectoryType Invalid { get; } = new SqlDataDirectoryType(InvalidValue);
-        /// <summary> Data. </summary>
-        public static SqlDataDirectoryType Data { get; } = new SqlDataDirectoryType(DataValue);
-        /// <summary> Log. </summary>
-        public static SqlDataDirectoryType Log { get; } = new SqlDataDirectoryType(LogValue);
-        /// <summary> Determines if two <see cref="SqlDataDirectoryType"/> values are the same. </summary>
-        public static bool operator ==(SqlDataDirectoryType left, SqlDataDirectoryType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="SqlDataDirectoryType"/> values are not the same. </summary>
-        public static bool operator !=(SqlDataDirectoryType left, SqlDataDirectoryType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlDataDirectoryType"/>. </summary>
-        public static implicit operator SqlDataDirectoryType(string value) => new SqlDataDirectoryType(value);
+        /// <summary> Initializes a new instance of <see cref="SQLDataDirectoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SQLDataDirectoryType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        /// <inheritdoc />
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
+        public static SQLDataDirectoryType Invalid { get; } = new SQLDataDirectoryType(InvalidValue);
+
+        /// <summary> Gets the Data. </summary>
+        public static SQLDataDirectoryType Data { get; } = new SQLDataDirectoryType(DataValue);
+
+        /// <summary> Gets the Log. </summary>
+        public static SQLDataDirectoryType Log { get; } = new SQLDataDirectoryType(LogValue);
+
+        /// <summary> Determines if two <see cref="SQLDataDirectoryType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(SQLDataDirectoryType left, SQLDataDirectoryType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="SQLDataDirectoryType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(SQLDataDirectoryType left, SQLDataDirectoryType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="SQLDataDirectoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SQLDataDirectoryType(string value) => new SQLDataDirectoryType(value);
+
+        /// <summary> Converts a string to a <see cref="SQLDataDirectoryType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SQLDataDirectoryType?(string value) => value == null ? null : new SQLDataDirectoryType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SqlDataDirectoryType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(SqlDataDirectoryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is SQLDataDirectoryType other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(SQLDataDirectoryType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

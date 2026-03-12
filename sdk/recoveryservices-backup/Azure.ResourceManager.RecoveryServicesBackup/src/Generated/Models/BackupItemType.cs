@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -14,80 +15,111 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     public readonly partial struct BackupItemType : IEquatable<BackupItemType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupItemType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupItemType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string InvalidValue = "Invalid";
-        private const string VmValue = "VM";
+        private const string VMValue = "VM";
         private const string FileFolderValue = "FileFolder";
-        private const string AzureSqlDBValue = "AzureSqlDb";
-        private const string SqlDBValue = "SQLDB";
+        private const string AzureSqlDbValue = "AzureSqlDb";
+        private const string SQLDBValue = "SQLDB";
         private const string ExchangeValue = "Exchange";
         private const string SharepointValue = "Sharepoint";
-        private const string VMwareVmValue = "VMwareVM";
+        private const string VMwareVMValue = "VMwareVM";
         private const string SystemStateValue = "SystemState";
         private const string ClientValue = "Client";
         private const string GenericDataSourceValue = "GenericDataSource";
-        private const string SqlDatabaseValue = "SQLDataBase";
+        private const string SQLDataBaseValue = "SQLDataBase";
         private const string AzureFileShareValue = "AzureFileShare";
-        private const string SapHanaDatabaseValue = "SAPHanaDatabase";
-        private const string SapAseDatabaseValue = "SAPAseDatabase";
-        private const string SapHanaDBInstanceValue = "SAPHanaDBInstance";
+        private const string SAPHanaDatabaseValue = "SAPHanaDatabase";
+        private const string SAPAseDatabaseValue = "SAPAseDatabase";
+        private const string SAPHanaDBInstanceValue = "SAPHanaDBInstance";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupItemType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Invalid. </summary>
         public static BackupItemType Invalid { get; } = new BackupItemType(InvalidValue);
-        /// <summary> VM. </summary>
-        public static BackupItemType Vm { get; } = new BackupItemType(VmValue);
-        /// <summary> FileFolder. </summary>
+
+        /// <summary> Gets the VM. </summary>
+        public static BackupItemType VM { get; } = new BackupItemType(VMValue);
+
+        /// <summary> Gets the FileFolder. </summary>
         public static BackupItemType FileFolder { get; } = new BackupItemType(FileFolderValue);
-        /// <summary> AzureSqlDb. </summary>
-        public static BackupItemType AzureSqlDB { get; } = new BackupItemType(AzureSqlDBValue);
-        /// <summary> SQLDB. </summary>
-        public static BackupItemType SqlDB { get; } = new BackupItemType(SqlDBValue);
-        /// <summary> Exchange. </summary>
+
+        /// <summary> Gets the AzureSqlDb. </summary>
+        public static BackupItemType AzureSqlDb { get; } = new BackupItemType(AzureSqlDbValue);
+
+        /// <summary> Gets the SQLDB. </summary>
+        public static BackupItemType SQLDB { get; } = new BackupItemType(SQLDBValue);
+
+        /// <summary> Gets the Exchange. </summary>
         public static BackupItemType Exchange { get; } = new BackupItemType(ExchangeValue);
-        /// <summary> Sharepoint. </summary>
+
+        /// <summary> Gets the Sharepoint. </summary>
         public static BackupItemType Sharepoint { get; } = new BackupItemType(SharepointValue);
-        /// <summary> VMwareVM. </summary>
-        public static BackupItemType VMwareVm { get; } = new BackupItemType(VMwareVmValue);
-        /// <summary> SystemState. </summary>
+
+        /// <summary> Gets the VMwareVM. </summary>
+        public static BackupItemType VMwareVM { get; } = new BackupItemType(VMwareVMValue);
+
+        /// <summary> Gets the SystemState. </summary>
         public static BackupItemType SystemState { get; } = new BackupItemType(SystemStateValue);
-        /// <summary> Client. </summary>
+
+        /// <summary> Gets the Client. </summary>
         public static BackupItemType Client { get; } = new BackupItemType(ClientValue);
-        /// <summary> GenericDataSource. </summary>
+
+        /// <summary> Gets the GenericDataSource. </summary>
         public static BackupItemType GenericDataSource { get; } = new BackupItemType(GenericDataSourceValue);
-        /// <summary> SQLDataBase. </summary>
-        public static BackupItemType SqlDatabase { get; } = new BackupItemType(SqlDatabaseValue);
-        /// <summary> AzureFileShare. </summary>
+
+        /// <summary> Gets the SQLDataBase. </summary>
+        public static BackupItemType SQLDataBase { get; } = new BackupItemType(SQLDataBaseValue);
+
+        /// <summary> Gets the AzureFileShare. </summary>
         public static BackupItemType AzureFileShare { get; } = new BackupItemType(AzureFileShareValue);
-        /// <summary> SAPHanaDatabase. </summary>
-        public static BackupItemType SapHanaDatabase { get; } = new BackupItemType(SapHanaDatabaseValue);
-        /// <summary> SAPAseDatabase. </summary>
-        public static BackupItemType SapAseDatabase { get; } = new BackupItemType(SapAseDatabaseValue);
-        /// <summary> SAPHanaDBInstance. </summary>
-        public static BackupItemType SapHanaDBInstance { get; } = new BackupItemType(SapHanaDBInstanceValue);
+
+        /// <summary> Gets the SAPHanaDatabase. </summary>
+        public static BackupItemType SAPHanaDatabase { get; } = new BackupItemType(SAPHanaDatabaseValue);
+
+        /// <summary> Gets the SAPAseDatabase. </summary>
+        public static BackupItemType SAPAseDatabase { get; } = new BackupItemType(SAPAseDatabaseValue);
+
+        /// <summary> Gets the SAPHanaDBInstance. </summary>
+        public static BackupItemType SAPHanaDBInstance { get; } = new BackupItemType(SAPHanaDBInstanceValue);
+
         /// <summary> Determines if two <see cref="BackupItemType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupItemType left, BackupItemType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupItemType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupItemType left, BackupItemType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupItemType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupItemType(string value) => new BackupItemType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupItemType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupItemType?(string value) => value == null ? null : new BackupItemType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupItemType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupItemType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

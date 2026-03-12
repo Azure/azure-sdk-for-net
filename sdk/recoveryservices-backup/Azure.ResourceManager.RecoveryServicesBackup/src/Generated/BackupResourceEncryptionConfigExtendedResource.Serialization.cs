@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup
 {
-    public partial class BackupResourceEncryptionConfigExtendedResource : IJsonModel<BackupResourceEncryptionConfigExtendedData>
+    /// <summary></summary>
+    public partial class BackupResourceEncryptionConfigExtendedResource : IJsonModel<BackupResourceEncryptionConfigExtendedResourceData>
     {
-        private static BackupResourceEncryptionConfigExtendedData s_dataDeserializationInstance;
-        private static BackupResourceEncryptionConfigExtendedData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BackupResourceEncryptionConfigExtendedResourceData> s_dataDeserializationInstance;
 
-        void IJsonModel<BackupResourceEncryptionConfigExtendedData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceEncryptionConfigExtendedData>)Data).Write(writer, options);
+        private static IJsonModel<BackupResourceEncryptionConfigExtendedResourceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BackupResourceEncryptionConfigExtendedResourceData();
 
-        BackupResourceEncryptionConfigExtendedData IJsonModel<BackupResourceEncryptionConfigExtendedData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceEncryptionConfigExtendedData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<BackupResourceEncryptionConfigExtendedResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackupResourceEncryptionConfigExtendedResourceData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<BackupResourceEncryptionConfigExtendedData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupResourceEncryptionConfigExtendedData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupResourceEncryptionConfigExtendedResourceData IJsonModel<BackupResourceEncryptionConfigExtendedResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BackupResourceEncryptionConfigExtendedData IPersistableModel<BackupResourceEncryptionConfigExtendedData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupResourceEncryptionConfigExtendedData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BackupResourceEncryptionConfigExtendedResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackupResourceEncryptionConfigExtendedResourceData>(Data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
 
-        string IPersistableModel<BackupResourceEncryptionConfigExtendedData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackupResourceEncryptionConfigExtendedData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackupResourceEncryptionConfigExtendedResourceData IPersistableModel<BackupResourceEncryptionConfigExtendedResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackupResourceEncryptionConfigExtendedResourceData>(data, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackupResourceEncryptionConfigExtendedResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

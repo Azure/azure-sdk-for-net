@@ -9,25 +9,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Type of the container. The value of this property for
-    /// 1. Compute Azure VM is Microsoft.Compute/virtualMachines
-    /// 2. Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines
+    /// <list type="number"><item><description>Compute Azure VM is Microsoft.Compute/virtualMachines</description></item><item><description>Classic Compute Azure VM is Microsoft.ClassicCompute/virtualMachines</description></item></list>
     /// </summary>
     internal enum ProtectableContainerType
     {
-        /// <summary> Unknown. </summary>
-        Unknown,
         /// <summary> Invalid. </summary>
         Invalid,
+        /// <summary> Unknown. </summary>
+        Unknown,
         /// <summary> IaasVMContainer. </summary>
-        IaasVmContainer,
+        IaasVMContainer,
         /// <summary> IaasVMServiceContainer. </summary>
-        IaasVmServiceContainer,
+        IaasVMServiceContainer,
         /// <summary> DPMContainer. </summary>
-        DpmContainer,
+        DPMContainer,
         /// <summary> AzureBackupServerContainer. </summary>
         AzureBackupServerContainer,
         /// <summary> MABContainer. </summary>
-        MabContainer,
+        MABContainer,
         /// <summary> Cluster. </summary>
         Cluster,
         /// <summary> AzureSqlContainer. </summary>
@@ -37,16 +36,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> VCenter. </summary>
         VCenter,
         /// <summary> VMAppContainer. </summary>
-        VmAppContainer,
+        VMAppContainer,
         /// <summary> SQLAGWorkLoadContainer. </summary>
-        SqlAvailabilityGroupWorkLoadContainer,
+        SQLAGWorkLoadContainer,
         /// <summary> StorageContainer. </summary>
         StorageContainer,
         /// <summary> GenericContainer. </summary>
         GenericContainer,
-        /// <summary> Microsoft.ClassicCompute/virtualMachines. </summary>
+        /// <summary> MicrosoftClassicComputeVirtualMachines. </summary>
         MicrosoftClassicComputeVirtualMachines,
-        /// <summary> Microsoft.Compute/virtualMachines. </summary>
+        /// <summary> MicrosoftComputeVirtualMachines. </summary>
         MicrosoftComputeVirtualMachines,
         /// <summary> AzureWorkloadContainer. </summary>
         AzureWorkloadContainer
