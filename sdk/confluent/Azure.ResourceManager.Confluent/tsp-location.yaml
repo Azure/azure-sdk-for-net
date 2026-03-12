@@ -1,5 +1,5 @@
 directory: specification/confluent/Confluent.Management
-commit: 1205dee6fec9a776c4ff5a40bb83d662e51d4da8
+commit: 8fb4de49c7ed3947af5ad9d2a42d00f90389392d
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
