@@ -232,10 +232,10 @@ string queueName = "<queue_name>";
 await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 ServiceBusSender sender = client.CreateSender(queueName);
 
-int maxRetries = 3;
+int maxAttempts = 3;
 int attempt = 0;
 
-while (attempt < maxRetries)
+while (attempt < maxAttempts)
 {
     try
     {
@@ -245,11 +245,11 @@ while (attempt < maxRetries)
     catch (ServiceBusException ex) when (ex.IsTransient)
     {
         attempt++;
-        Console.WriteLine($"Transient error (attempt {attempt}/{maxRetries}): {ex.Message}");
+        Console.WriteLine($"Transient error (attempt {attempt}/{maxAttempts}): {ex.Message}");
 
-        if (attempt == maxRetries)
+        if (attempt == maxAttempts)
         {
-            Console.WriteLine("Max retries reached. Giving up.");
+            Console.WriteLine("Max attempts reached. Giving up.");
             throw;
         }
 
