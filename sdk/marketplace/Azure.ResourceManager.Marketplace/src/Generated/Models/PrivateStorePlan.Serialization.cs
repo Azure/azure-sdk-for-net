@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStorePlan : IUtf8JsonSerializable, IJsonModel<PrivateStorePlan>
+    /// <summary> The PrivateStorePlan. </summary>
+    public partial class PrivateStorePlan : IJsonModel<PrivateStorePlan>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStorePlan>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PrivateStorePlan PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePrivateStorePlan(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PrivateStorePlan>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PrivateStorePlan IPersistableModel<PrivateStorePlan>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PrivateStorePlan>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PrivateStorePlan>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(SkuId))
             {
                 writer.WritePropertyName("skuId"u8);
@@ -64,15 +104,20 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WritePropertyName("stackType"u8);
                 writer.WriteStringValue(StackType);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && Optional.IsDefined(IsStopSell))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("isStopSell"u8);
+                writer.WriteBooleanValue(IsStopSell.Value);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +126,27 @@ namespace Azure.ResourceManager.Marketplace.Models
             }
         }
 
-        PrivateStorePlan IJsonModel<PrivateStorePlan>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PrivateStorePlan IJsonModel<PrivateStorePlan>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PrivateStorePlan JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePrivateStorePlan(document.RootElement, options);
         }
 
-        internal static PrivateStorePlan DeserializePrivateStorePlan(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PrivateStorePlan DeserializePrivateStorePlan(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,50 +157,58 @@ namespace Azure.ResourceManager.Marketplace.Models
             PrivateStorePlanAccessibility? accessibility = default;
             string altStackReference = default;
             string stackType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isStopSell = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("skuId"u8))
+                if (prop.NameEquals("skuId"u8))
                 {
-                    skuId = property.Value.GetString();
+                    skuId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planId"u8))
+                if (prop.NameEquals("planId"u8))
                 {
-                    planId = property.Value.GetString();
+                    planId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("planDisplayName"u8))
+                if (prop.NameEquals("planDisplayName"u8))
                 {
-                    planDisplayName = property.Value.GetString();
+                    planDisplayName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("accessibility"u8))
+                if (prop.NameEquals("accessibility"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    accessibility = new PrivateStorePlanAccessibility(property.Value.GetString());
+                    accessibility = new PrivateStorePlanAccessibility(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("altStackReference"u8))
+                if (prop.NameEquals("altStackReference"u8))
                 {
-                    altStackReference = property.Value.GetString();
+                    altStackReference = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stackType"u8))
+                if (prop.NameEquals("stackType"u8))
                 {
-                    stackType = property.Value.GetString();
+                    stackType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isStopSell"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isStopSell = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PrivateStorePlan(
                 skuId,
                 planId,
@@ -158,38 +216,8 @@ namespace Azure.ResourceManager.Marketplace.Models
                 accessibility,
                 altStackReference,
                 stackType,
-                serializedAdditionalRawData);
+                isStopSell,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<PrivateStorePlan>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMarketplaceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PrivateStorePlan IPersistableModel<PrivateStorePlan>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePrivateStorePlan(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PrivateStorePlan>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

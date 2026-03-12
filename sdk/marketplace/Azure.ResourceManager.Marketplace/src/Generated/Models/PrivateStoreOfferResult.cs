@@ -7,46 +7,18 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
     /// <summary> The PrivateStoreOfferResult. </summary>
     public partial class PrivateStoreOfferResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PrivateStoreOfferResult"/>. </summary>
-        internal PrivateStoreOfferResult()
+        public PrivateStoreOfferResult()
         {
             SpecificPlanIdsLimitation = new ChangeTrackingList<string>();
             IconFileUris = new ChangeTrackingDictionary<string, Uri>();
@@ -59,50 +31,65 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
         /// <param name="eTag"> Identifier for purposes of race condition. </param>
         /// <param name="privateStoreId"> Private store unique id. </param>
-        /// <param name="createdOn"> Private store offer creation date. </param>
-        /// <param name="modifiedOn"> Private store offer modification date. </param>
+        /// <param name="createdAt"> Private store offer creation date. </param>
+        /// <param name="modifiedAt"> Private store offer modification date. </param>
         /// <param name="specificPlanIdsLimitation"> Plan ids limitation for this offer. </param>
-        /// <param name="isUpdateSuppressedDueToIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
+        /// <param name="updateSuppressedDueIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
         /// <param name="iconFileUris"> Icon File Uris. </param>
+        /// <param name="isStopSell"> Indicating whether the offer is stop sell or not. </param>
         /// <param name="plans"> Offer plans. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueToIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<PrivateStorePlan> plans, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, string eTag, string privateStoreId, string createdAt, string modifiedAt, IReadOnlyList<string> specificPlanIdsLimitation, bool? updateSuppressedDueIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, bool? isStopSell, IReadOnlyList<PrivateStorePlan> plans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
             PublisherDisplayName = publisherDisplayName;
             ETag = eTag;
             PrivateStoreId = privateStoreId;
-            CreatedOn = createdOn;
-            ModifiedOn = modifiedOn;
+            CreatedAt = createdAt;
+            ModifiedAt = modifiedAt;
             SpecificPlanIdsLimitation = specificPlanIdsLimitation;
-            IsUpdateSuppressedDueToIdempotence = isUpdateSuppressedDueToIdempotence;
+            UpdateSuppressedDueIdempotence = updateSuppressedDueIdempotence;
             IconFileUris = iconFileUris;
+            IsStopSell = isStopSell;
             Plans = plans;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Offers unique id. </summary>
         public string UniqueOfferId { get; }
+
         /// <summary> It will be displayed prominently in the marketplace. </summary>
         public string OfferDisplayName { get; }
+
         /// <summary> Publisher name that will be displayed prominently in the marketplace. </summary>
         public string PublisherDisplayName { get; }
+
         /// <summary> Identifier for purposes of race condition. </summary>
-        public ETag? ETag { get; }
+        public string ETag { get; set; }
+
         /// <summary> Private store unique id. </summary>
-        public Guid? PrivateStoreId { get; }
+        public string PrivateStoreId { get; }
+
         /// <summary> Private store offer creation date. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public string CreatedAt { get; }
+
         /// <summary> Private store offer modification date. </summary>
-        public DateTimeOffset? ModifiedOn { get; }
+        public string ModifiedAt { get; }
+
         /// <summary> Plan ids limitation for this offer. </summary>
-        public IReadOnlyList<string> SpecificPlanIdsLimitation { get; }
+        public IReadOnlyList<string> SpecificPlanIdsLimitation { get; } = new ChangeTrackingList<string>();
+
         /// <summary> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </summary>
-        public bool? IsUpdateSuppressedDueToIdempotence { get; }
+        public bool? UpdateSuppressedDueIdempotence { get; set; }
+
         /// <summary> Icon File Uris. </summary>
-        public IReadOnlyDictionary<string, Uri> IconFileUris { get; }
+        public IReadOnlyDictionary<string, Uri> IconFileUris { get; } = new ChangeTrackingDictionary<string, Uri>();
+
+        /// <summary> Indicating whether the offer is stop sell or not. </summary>
+        public bool? IsStopSell { get; }
+
         /// <summary> Offer plans. </summary>
-        public IReadOnlyList<PrivateStorePlan> Plans { get; }
+        public IReadOnlyList<PrivateStorePlan> Plans { get; } = new ChangeTrackingList<PrivateStorePlan>();
     }
 }
