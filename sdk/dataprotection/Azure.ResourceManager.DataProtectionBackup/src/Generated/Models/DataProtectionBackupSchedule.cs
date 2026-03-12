@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSchedule"/>. </summary>
         /// <param name="repeatingTimeIntervals">
-        /// Repeating time interval which supports the ISO 8601 format and unsupported or partially supported formats.
-        /// Supported ISO 8601 Time Formats
-        /// The following time formats were verified to be successfully parsed and supported:
-        /// <list type="bullet"><item><description>T14:30:45.123 → Thh:mm:ss.sss (with milliseconds)</description></item><item><description>T14:30:45 → Thh:mm:ss (standard time format)</description></item><item><description>T14:30 → Thh:mm (hour and minute only)</description></item></list>
-        /// All of the above may include time zone indicators like 'Z', '+05:30', '-08:00'.
-        /// Examples of supported timestamps:
-        /// <list type="bullet"><item><description>2023-10-15T14:30:45Z</description></item><item><description>2023-10-15T14:30:45.123+05:30</description></item><item><description>2023-10-15T14:30Z</description></item></list>
-        /// Unsupported or partially supported formats:
-        /// <list type="bullet"><item><description>T143045.123 or T143045 (no colons)</description></item><item><description>T14.500 (decimal hours)</description></item><item><description>T14 (hour only)</description></item><item><description>T14:30.500 (minute fractions)</description></item><item><description>T24:00:00 (invalid)</description></item><item><description>T23:59:60 (leap second)</description></item></list>
+        /// Repeating time intervals that define the backup schedule.
+        /// Each value must follow the format: `R/YYYY-MM-DDThh:mm:ss[.fff][Z|(+/-)hh:mm]/Duration`
+        /// Only the exact formats listed below are supported. Other ISO 8601 variations are not accepted.
+        /// Supported time formats:
+        /// <list type="bullet"><item><description>`Thh:mm:ss.fff` (with milliseconds)</description></item><item><description>`Thh:mm:ss` (with seconds)</description></item><item><description>`Thh:mm` (hours and minutes only)</description></item></list>
+        /// A timezone indicator (`Z`, `+hh:mm`, or `-hh:mm`) may be appended to any of the above.
+        /// Unsupported formats include compact notation such as `T1430`, `T143045`, or `T14.5`.
+        /// Examples:
+        /// <list type="bullet"><item><description>`R/2023-10-15T14:30:00Z/P1W`</description></item><item><description>`R/2023-10-15T14:30:45.123+05:30/P1D`</description></item><item><description>`R/2023-10-15T14:30Z/P1D`</description></item></list>
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="repeatingTimeIntervals"/> is null. </exception>
         public DataProtectionBackupSchedule(IEnumerable<string> repeatingTimeIntervals)
@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupSchedule"/>. </summary>
         /// <param name="repeatingTimeIntervals">
-        /// Repeating time interval which supports the ISO 8601 format and unsupported or partially supported formats.
-        /// Supported ISO 8601 Time Formats
-        /// The following time formats were verified to be successfully parsed and supported:
-        /// <list type="bullet"><item><description>T14:30:45.123 → Thh:mm:ss.sss (with milliseconds)</description></item><item><description>T14:30:45 → Thh:mm:ss (standard time format)</description></item><item><description>T14:30 → Thh:mm (hour and minute only)</description></item></list>
-        /// All of the above may include time zone indicators like 'Z', '+05:30', '-08:00'.
-        /// Examples of supported timestamps:
-        /// <list type="bullet"><item><description>2023-10-15T14:30:45Z</description></item><item><description>2023-10-15T14:30:45.123+05:30</description></item><item><description>2023-10-15T14:30Z</description></item></list>
-        /// Unsupported or partially supported formats:
-        /// <list type="bullet"><item><description>T143045.123 or T143045 (no colons)</description></item><item><description>T14.500 (decimal hours)</description></item><item><description>T14 (hour only)</description></item><item><description>T14:30.500 (minute fractions)</description></item><item><description>T24:00:00 (invalid)</description></item><item><description>T23:59:60 (leap second)</description></item></list>
+        /// Repeating time intervals that define the backup schedule.
+        /// Each value must follow the format: `R/YYYY-MM-DDThh:mm:ss[.fff][Z|(+/-)hh:mm]/Duration`
+        /// Only the exact formats listed below are supported. Other ISO 8601 variations are not accepted.
+        /// Supported time formats:
+        /// <list type="bullet"><item><description>`Thh:mm:ss.fff` (with milliseconds)</description></item><item><description>`Thh:mm:ss` (with seconds)</description></item><item><description>`Thh:mm` (hours and minutes only)</description></item></list>
+        /// A timezone indicator (`Z`, `+hh:mm`, or `-hh:mm`) may be appended to any of the above.
+        /// Unsupported formats include compact notation such as `T1430`, `T143045`, or `T14.5`.
+        /// Examples:
+        /// <list type="bullet"><item><description>`R/2023-10-15T14:30:00Z/P1W`</description></item><item><description>`R/2023-10-15T14:30:45.123+05:30/P1D`</description></item><item><description>`R/2023-10-15T14:30Z/P1D`</description></item></list>
         /// </param>
         /// <param name="timeZone">
         /// Time Zone for a schedule.
@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary>
-        /// Repeating time interval which supports the ISO 8601 format and unsupported or partially supported formats.
-        /// Supported ISO 8601 Time Formats
-        /// The following time formats were verified to be successfully parsed and supported:
-        /// <list type="bullet"><item><description>T14:30:45.123 → Thh:mm:ss.sss (with milliseconds)</description></item><item><description>T14:30:45 → Thh:mm:ss (standard time format)</description></item><item><description>T14:30 → Thh:mm (hour and minute only)</description></item></list>
-        /// All of the above may include time zone indicators like 'Z', '+05:30', '-08:00'.
-        /// Examples of supported timestamps:
-        /// <list type="bullet"><item><description>2023-10-15T14:30:45Z</description></item><item><description>2023-10-15T14:30:45.123+05:30</description></item><item><description>2023-10-15T14:30Z</description></item></list>
-        /// Unsupported or partially supported formats:
-        /// <list type="bullet"><item><description>T143045.123 or T143045 (no colons)</description></item><item><description>T14.500 (decimal hours)</description></item><item><description>T14 (hour only)</description></item><item><description>T14:30.500 (minute fractions)</description></item><item><description>T24:00:00 (invalid)</description></item><item><description>T23:59:60 (leap second)</description></item></list>
+        /// Repeating time intervals that define the backup schedule.
+        /// Each value must follow the format: `R/YYYY-MM-DDThh:mm:ss[.fff][Z|(+/-)hh:mm]/Duration`
+        /// Only the exact formats listed below are supported. Other ISO 8601 variations are not accepted.
+        /// Supported time formats:
+        /// <list type="bullet"><item><description>`Thh:mm:ss.fff` (with milliseconds)</description></item><item><description>`Thh:mm:ss` (with seconds)</description></item><item><description>`Thh:mm` (hours and minutes only)</description></item></list>
+        /// A timezone indicator (`Z`, `+hh:mm`, or `-hh:mm`) may be appended to any of the above.
+        /// Unsupported formats include compact notation such as `T1430`, `T143045`, or `T14.5`.
+        /// Examples:
+        /// <list type="bullet"><item><description>`R/2023-10-15T14:30:00Z/P1W`</description></item><item><description>`R/2023-10-15T14:30:45.123+05:30/P1D`</description></item><item><description>`R/2023-10-15T14:30Z/P1D`</description></item></list>
         /// </summary>
         public IList<string> RepeatingTimeIntervals { get; }
 
