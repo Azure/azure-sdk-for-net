@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Storage.Tests
             IgnoreNetworkDependencyVersions();
         }
 
-        public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, StorageIdentity identity = null)
+        public static StorageAccountCreateOrUpdateContent GetDefaultStorageAccountParameters(StorageSku sku = null, StorageKind? kind = null, string location = null, ManagedServiceIdentity identity = null)
         {
             StorageSku skuParameters = sku ?? DefaultSkuNameStandardGRS;
             StorageKind kindParameters = kind ?? DefaultKindStorage;

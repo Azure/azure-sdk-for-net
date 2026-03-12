@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="identity"> The identity of the resource. </param>
         /// <param name="properties"> The parameters used to create the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, string location, StorageExtendedLocation extendedLocation, IList<string> zones, Placement placement, IDictionary<string, string> tags, StorageIdentity identity, StorageAccountPropertiesCreateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, string location, StorageExtendedLocation extendedLocation, IList<string> zones, Placement placement, IDictionary<string, string> tags, ManagedServiceIdentity identity, StorageAccountPropertiesCreateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Kind = kind;
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
-        public StorageIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The parameters used to create the storage account. </summary>
         [WirePath("properties")]

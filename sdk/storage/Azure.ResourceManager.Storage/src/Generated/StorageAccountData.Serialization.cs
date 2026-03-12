@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Storage
             StorageAccountProperties properties = default;
             StorageSku sku = default;
             StorageKind? kind = default;
-            StorageIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             StorageExtendedLocation extendedLocation = default;
             IList<string> zones = default;
             Placement placement = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Storage
                     {
                         continue;
                     }
-                    identity = StorageIdentity.DeserializeStorageIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerStorageContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("extendedLocation"u8))

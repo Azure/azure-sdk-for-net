@@ -5,15 +5,10 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Storage;
-
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The parameters used to check the availability of the storage account name. </summary>
     public partial class StorageAccountNameAvailabilityContent
     {
-        /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
-        [WirePath("type")]
-        internal string Type { get; } = "Microsoft.Storage/storageAccounts";
     }
 }
