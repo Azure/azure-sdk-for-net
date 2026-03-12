@@ -7,9 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight;
@@ -29,7 +27,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="etag"> The ETag for the application. </param>
         /// <param name="tags"> The tags for the application. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightApplicationData"/> instance for mocking. </returns>
-        public static HDInsightApplicationData HDInsightApplicationData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HDInsightApplicationProperties properties = default, string etag = default, IDictionary<string, string> tags = default)
+        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HDInsightApplicationProperties properties = default, string etag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -57,13 +55,13 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="marketplaceIdentifier"> The marketplace identifier. </param>
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <returns> A new <see cref="Models.HDInsightApplicationProperties"/> instance for mocking. </returns>
-        public static HDInsightApplicationProperties HDInsightApplicationProperties(IEnumerable<HDInsightClusterRole> computeRoles = default, IEnumerable<RuntimeScriptAction> installScriptActions = default, IEnumerable<RuntimeScriptAction> uninstallScriptActions = default, IEnumerable<HDInsightApplicationHttpsEndpoint> httpsEndpoints = default, IEnumerable<HDInsightApplicationEndpoint> sshEndpoints = default, string provisioningState = default, string applicationType = default, string applicationState = default, IEnumerable<ResponseError> errors = default, string createdDate = default, string marketplaceIdentifier = default, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default)
+        public static HDInsightApplicationProperties HDInsightApplicationProperties(IEnumerable<HDInsightClusterRole> computeRoles = default, IEnumerable<RuntimeScriptAction> installScriptActions = default, IEnumerable<RuntimeScriptAction> uninstallScriptActions = default, IEnumerable<HDInsightApplicationHttpsEndpoint> httpsEndpoints = default, IEnumerable<HDInsightApplicationEndpoint> sshEndpoints = default, string provisioningState = default, string applicationType = default, string applicationState = default, IEnumerable<Errors> errors = default, string createdDate = default, string marketplaceIdentifier = default, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default)
         {
             installScriptActions ??= new ChangeTrackingList<RuntimeScriptAction>();
             uninstallScriptActions ??= new ChangeTrackingList<RuntimeScriptAction>();
             httpsEndpoints ??= new ChangeTrackingList<HDInsightApplicationHttpsEndpoint>();
             sshEndpoints ??= new ChangeTrackingList<HDInsightApplicationEndpoint>();
-            errors ??= new ChangeTrackingList<ResponseError>();
+            errors ??= new ChangeTrackingList<Errors>();
             privateLinkConfigurations ??= new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
 
             return new HDInsightApplicationProperties(
@@ -233,7 +231,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightClusterData"/> instance for mocking. </returns>
-        public static HDInsightClusterData HDInsightClusterData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HDInsightClusterProperties properties = default, string etag = default, IEnumerable<string> zones = default, ClusterIdentity identity = default)
+        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HDInsightClusterProperties properties = default, string etag = default, IEnumerable<string> zones = default, ClusterIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -277,9 +275,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections. </param>
         /// <returns> A new <see cref="Models.HDInsightClusterProperties"/> instance for mocking. </returns>
-        public static HDInsightClusterProperties HDInsightClusterProperties(string clusterVersion = default, string clusterHdpVersion = default, HDInsightOSType? osType = default, HDInsightTier? tier = default, string clusterId = default, HDInsightClusterDefinition clusterDefinition = default, KafkaRestProperties kafkaRestProperties = default, HDInsightSecurityProfile securityProfile = default, IEnumerable<HDInsightClusterRole> computeRoles = default, HDInsightClusterProvisioningState? provisioningState = default, string createdDate = default, string clusterState = default, int? quotaInfoCoresUsed = default, IEnumerable<ResponseError> errors = default, IEnumerable<ConnectivityEndpoint> connectivityEndpoints = default, HDInsightDiskEncryptionProperties diskEncryptionProperties = default, bool? isEncryptionInTransitEnabled = default, IEnumerable<HDInsightStorageAccountInfo> storageStorageaccounts = default, string minSupportedTlsVersion = default, ExcludedServicesConfig excludedServicesConfig = default, HDInsightClusterNetworkProperties networkProperties = default, HDInsightComputeIsolationProperties computeIsolationProperties = default, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default, IEnumerable<HDInsightPrivateEndpointConnectionData> privateEndpointConnections = default)
+        public static HDInsightClusterProperties HDInsightClusterProperties(string clusterVersion = default, string clusterHdpVersion = default, HDInsightOSType? osType = default, HDInsightTier? tier = default, string clusterId = default, HDInsightClusterDefinition clusterDefinition = default, KafkaRestProperties kafkaRestProperties = default, HDInsightSecurityProfile securityProfile = default, IEnumerable<HDInsightClusterRole> computeRoles = default, HDInsightClusterProvisioningState? provisioningState = default, string createdDate = default, string clusterState = default, int? quotaInfoCoresUsed = default, IEnumerable<Errors> errors = default, IEnumerable<ConnectivityEndpoint> connectivityEndpoints = default, HDInsightDiskEncryptionProperties diskEncryptionProperties = default, bool? isEncryptionInTransitEnabled = default, IEnumerable<HDInsightStorageAccountInfo> storageStorageaccounts = default, string minSupportedTlsVersion = default, ExcludedServicesConfig excludedServicesConfig = default, HDInsightClusterNetworkProperties networkProperties = default, HDInsightComputeIsolationProperties computeIsolationProperties = default, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default, IEnumerable<HDInsightPrivateEndpointConnectionData> privateEndpointConnections = default)
         {
-            errors ??= new ChangeTrackingList<ResponseError>();
+            errors ??= new ChangeTrackingList<Errors>();
             connectivityEndpoints ??= new ChangeTrackingList<ConnectivityEndpoint>();
             privateLinkConfigurations ??= new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
             privateEndpointConnections ??= new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
@@ -401,7 +399,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="privateEndpointId"> The private endpoint id. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HDInsightPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, string linkIdentifier = default, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HDInsightPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, string linkIdentifier = default, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
         {
             return new HDInsightPrivateEndpointConnectionData(
                 id,
@@ -538,7 +536,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static HDInsightPrivateLinkResourceData HDInsightPrivateLinkResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        public static HDInsightPrivateLinkResourceData HDInsightPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
             return new HDInsightPrivateLinkResourceData(
                 id,
@@ -549,20 +547,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                 groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new HDInsightPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
         }
 
-        /// <summary> A list of private link resources. </summary>
-        /// <param name="value"> Array of private link resources. </param>
-        /// <returns> A new <see cref="Models.HDInsightPrivateLinkResourceListResult"/> instance for mocking. </returns>
-        public static HDInsightPrivateLinkResourceListResult HDInsightPrivateLinkResourceListResult(IEnumerable<HDInsightPrivateLinkResourceData> value = default)
-        {
-            value ??= new ChangeTrackingList<HDInsightPrivateLinkResourceData>();
-
-            return new HDInsightPrivateLinkResourceListResult(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The configuration object for the specified cluster. </summary>
         /// <param name="configurations"> The configuration object for the specified configuration for the specified cluster. </param>
         /// <returns> A new <see cref="Models.HDInsightClusterConfigurations"/> instance for mocking. </returns>
-        public static HDInsightClusterConfigurations HDInsightClusterConfigurations(IReadOnlyDictionary<string, IDictionary<string, string>> configurations = default)
+        public static HDInsightClusterConfigurations HDInsightClusterConfigurations(IDictionary<string, IDictionary<string, string>> configurations = default)
         {
             configurations ??= new ChangeTrackingDictionary<string, IDictionary<string, string>>();
 
@@ -661,7 +649,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="features"> The capability features. </param>
         /// <param name="quota"> The quota capability. </param>
         /// <returns> A new <see cref="Models.HDInsightCapabilitiesResult"/> instance for mocking. </returns>
-        public static HDInsightCapabilitiesResult HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = default, IReadOnlyDictionary<string, RegionsCapability> regions = default, IEnumerable<string> features = default, QuotaCapability quota = default)
+        public static HDInsightCapabilitiesResult HDInsightCapabilitiesResult(IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = default, IDictionary<string, RegionsCapability> regions = default, IEnumerable<string> features = default, QuotaCapability quota = default)
         {
             versions ??= new ChangeTrackingDictionary<string, HDInsightVersionsCapability>();
             regions ??= new ChangeTrackingDictionary<string, RegionsCapability>();
@@ -686,7 +674,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="isDefault"> Whether or not the version is the default version. </param>
         /// <param name="componentVersions"> The component version property. </param>
         /// <returns> A new <see cref="Models.HDInsightVersionSpec"/> instance for mocking. </returns>
-        public static HDInsightVersionSpec HDInsightVersionSpec(string friendlyName = default, string displayName = default, bool? isDefault = default, IReadOnlyDictionary<string, string> componentVersions = default)
+        public static HDInsightVersionSpec HDInsightVersionSpec(string friendlyName = default, string displayName = default, bool? isDefault = default, IDictionary<string, string> componentVersions = default)
         {
             componentVersions ??= new ChangeTrackingDictionary<string, string>();
 
@@ -960,292 +948,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 subnetId,
                 tenantId,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightPrivateLinkConfiguration. </summary>
-        /// <param name="id"> The private link configuration id. </param>
-        /// <param name="name"> The name of private link configuration. </param>
-        /// <param name="resourceType"> The type of the private link configuration. </param>
-        /// <param name="groupId"> The HDInsight private linkable sub-resource name to apply the private link configuration to. For example, 'headnode', 'gateway', 'edgenode'. </param>
-        /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
-        /// <param name="ipConfigurations"> The IP configurations for the private link service. </param>
-        /// <returns> A new <see cref="Models.HDInsightPrivateLinkConfiguration"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightPrivateLinkConfiguration HDInsightPrivateLinkConfiguration(string id, string name, ResourceType? resourceType, string groupId, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, IEnumerable<HDInsightIPConfiguration> ipConfigurations)
-        {
-            ipConfigurations ??= new ChangeTrackingList<HDInsightIPConfiguration>();
-
-            return new HDInsightPrivateLinkConfiguration(id, name, default, default, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightIPConfiguration. </summary>
-        /// <param name="id"> The private link IP configuration id. </param>
-        /// <param name="name"> The name of private link IP configuration. </param>
-        /// <param name="resourceType"> The type of the private link IP configuration. </param>
-        /// <param name="provisioningState"> The private link configuration provisioning state, which only appears in the response. </param>
-        /// <param name="isPrimary"> Indicates whether this IP configuration is primary for the corresponding NIC. </param>
-        /// <param name="privateIPAddress"> The IP address. </param>
-        /// <param name="privateIPAllocationMethod"> The method that private IP address is allocated. </param>
-        /// <param name="subnetId"> The subnet resource id. </param>
-        /// <returns> A new <see cref="Models.HDInsightIPConfiguration"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightIPConfiguration HDInsightIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, HDInsightPrivateLinkConfigurationProvisioningState? provisioningState, bool? isPrimary, IPAddress privateIPAddress, HDInsightPrivateIPAllocationMethod? privateIPAllocationMethod, ResourceIdentifier subnetId)
-        {
-            return new HDInsightIPConfiguration(id, name, default, default, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightClusterData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> The ETag for the resource. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <param name="properties"> The properties of the cluster. </param>
-        /// <param name="identity"> The identity of the cluster, if configured. </param>
-        /// <returns> A new <see cref="HDInsight.HDInsightClusterData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, IEnumerable<string> zones, HDInsightClusterProperties properties, ManagedServiceIdentity identity)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new HDInsightClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                properties,
-                default,
-                zones.ToList(),
-                identity);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightClusterProperties. </summary>
-        /// <param name="clusterVersion"> The version of the cluster. </param>
-        /// <param name="clusterHdpVersion"> The hdp version of the cluster. </param>
-        /// <param name="osType"> The type of operating system. </param>
-        /// <param name="tier"> The cluster tier. </param>
-        /// <param name="clusterId"> The cluster id. </param>
-        /// <param name="clusterDefinition"> The cluster definition. </param>
-        /// <param name="kafkaRestProperties"> The cluster kafka rest proxy configuration. </param>
-        /// <param name="securityProfile"> The security profile. </param>
-        /// <param name="computeRoles"> The compute profile. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="createdOn"> The date on which the cluster was created. </param>
-        /// <param name="clusterState"> The state of the cluster. </param>
-        /// <param name="quotaInfoCoresUsed"> The quota information. </param>
-        /// <param name="errors"> The list of errors. </param>
-        /// <param name="connectivityEndpoints"> The list of connectivity endpoints. </param>
-        /// <param name="diskEncryptionProperties"> The disk encryption properties. </param>
-        /// <param name="isEncryptionInTransitEnabled"> The encryption-in-transit properties. </param>
-        /// <param name="storageAccounts"> The storage profile. </param>
-        /// <param name="minSupportedTlsVersion"> The minimal supported tls version. </param>
-        /// <param name="excludedServicesConfig"> The excluded services config. </param>
-        /// <param name="networkProperties"> The network properties. </param>
-        /// <param name="computeIsolationProperties"> The compute isolation properties. </param>
-        /// <param name="privateLinkConfigurations"> The private link configurations. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections. </param>
-        /// <returns> A new <see cref="Models.HDInsightClusterProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightClusterProperties HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, HDInsightOSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, IEnumerable<HDInsightClusterRole> computeRoles, HDInsightClusterProvisioningState? provisioningState, DateTimeOffset? createdOn, string clusterState, int? quotaInfoCoresUsed, IEnumerable<ResponseError> errors, IEnumerable<ConnectivityEndpoint> connectivityEndpoints, HDInsightDiskEncryptionProperties diskEncryptionProperties, bool? isEncryptionInTransitEnabled, IEnumerable<HDInsightStorageAccountInfo> storageAccounts, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IEnumerable<HDInsightPrivateEndpointConnectionData> privateEndpointConnections)
-        {
-            computeRoles ??= new ChangeTrackingList<HDInsightClusterRole>();
-            errors ??= new ChangeTrackingList<ResponseError>();
-            connectivityEndpoints ??= new ChangeTrackingList<ConnectivityEndpoint>();
-            storageAccounts ??= new ChangeTrackingList<HDInsightStorageAccountInfo>();
-            privateLinkConfigurations ??= new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
-            privateEndpointConnections ??= new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
-
-            return new HDInsightClusterProperties(
-                clusterVersion,
-                clusterHdpVersion,
-                osType,
-                tier,
-                clusterId,
-                clusterDefinition,
-                kafkaRestProperties,
-                securityProfile,
-                default,
-                provisioningState,
-                default,
-                clusterState,
-                default,
-                errors.ToList(),
-                connectivityEndpoints.ToList(),
-                diskEncryptionProperties,
-                default,
-                default,
-                minSupportedTlsVersion,
-                excludedServicesConfig,
-                networkProperties,
-                computeIsolationProperties,
-                privateLinkConfigurations.ToList(),
-                privateEndpointConnections.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointId"> The private endpoint of the private endpoint connection. </param>
-        /// <param name="connectionState"> The private link service connection state. </param>
-        /// <param name="linkIdentifier"> The link identifier. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <returns> A new <see cref="HDInsight.HDInsightPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, HDInsightPrivateLinkServiceConnectionState connectionState, string linkIdentifier, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState)
-        {
-            return new HDInsightPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                default);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightApplicationData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> The ETag for the application. </param>
-        /// <param name="tags"> The tags for the application. </param>
-        /// <param name="properties"> The properties of the application. </param>
-        /// <returns> A new <see cref="HDInsight.HDInsightApplicationData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> tags, HDInsightApplicationProperties properties)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HDInsightApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties,
-                default,
-                tags);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightApplicationProperties. </summary>
-        /// <param name="computeRoles"> The list of roles in the cluster. </param>
-        /// <param name="installScriptActions"> The list of install script actions. </param>
-        /// <param name="uninstallScriptActions"> The list of uninstall script actions. </param>
-        /// <param name="httpsEndpoints"> The list of application HTTPS endpoints. </param>
-        /// <param name="sshEndpoints"> The list of application SSH endpoints. </param>
-        /// <param name="provisioningState"> The provisioning state of the application. </param>
-        /// <param name="applicationType"> The application type. </param>
-        /// <param name="applicationState"> The application state. </param>
-        /// <param name="errors"> The list of errors. </param>
-        /// <param name="createdOn"> The application create date time. </param>
-        /// <param name="marketplaceIdentifier"> The marketplace identifier. </param>
-        /// <param name="privateLinkConfigurations"> The private link configurations. </param>
-        /// <returns> A new <see cref="Models.HDInsightApplicationProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightApplicationProperties HDInsightApplicationProperties(IEnumerable<HDInsightClusterRole> computeRoles, IEnumerable<RuntimeScriptAction> installScriptActions, IEnumerable<RuntimeScriptAction> uninstallScriptActions, IEnumerable<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IEnumerable<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IEnumerable<ResponseError> errors, DateTimeOffset? createdOn, string marketplaceIdentifier, IEnumerable<HDInsightPrivateLinkConfiguration> privateLinkConfigurations)
-        {
-            computeRoles ??= new ChangeTrackingList<HDInsightClusterRole>();
-            installScriptActions ??= new ChangeTrackingList<RuntimeScriptAction>();
-            uninstallScriptActions ??= new ChangeTrackingList<RuntimeScriptAction>();
-            httpsEndpoints ??= new ChangeTrackingList<HDInsightApplicationHttpsEndpoint>();
-            sshEndpoints ??= new ChangeTrackingList<HDInsightApplicationEndpoint>();
-            errors ??= new ChangeTrackingList<ResponseError>();
-            privateLinkConfigurations ??= new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
-
-            return new HDInsightApplicationProperties(
-                default,
-                installScriptActions.ToList(),
-                uninstallScriptActions.ToList(),
-                httpsEndpoints.ToList(),
-                sshEndpoints.ToList(),
-                provisioningState,
-                applicationType,
-                applicationState,
-                errors.ToList(),
-                default,
-                marketplaceIdentifier,
-                privateLinkConfigurations.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of RegionalQuotaCapability. </summary>
-        /// <param name="region"> The region name. </param>
-        /// <param name="coresUsed"> The number of cores used in the region. </param>
-        /// <param name="coresAvailable"> The number of cores available in the region. </param>
-        /// <returns> A new <see cref="Models.RegionalQuotaCapability"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RegionalQuotaCapability RegionalQuotaCapability(AzureLocation? region, long? coresUsed, long? coresAvailable)
-        {
-            return new RegionalQuotaCapability(default, coresUsed, coresAvailable, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of HDInsightClusterAaddsDetail. </summary>
-        /// <param name="domainName"> The Azure active directory domain service name. </param>
-        /// <param name="isInitialSyncComplete"> This indicates whether initial sync complete or not. </param>
-        /// <param name="isLdapsEnabled"> This indicates whether enable ldaps or not. </param>
-        /// <param name="ldapsPublicCertificateInBase64"> The base 64 format string of public ldap certificate. </param>
-        /// <param name="resourceId"> The resource id of azure active directory domain service. </param>
-        /// <param name="subnetId"> The subnet resource id. </param>
-        /// <param name="tenantId"> The tenant id of azure active directory domain service . </param>
-        /// <returns> A new <see cref="Models.HDInsightClusterAaddsDetail"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static HDInsightClusterAaddsDetail HDInsightClusterAaddsDetail(string domainName, bool? isInitialSyncComplete, bool? isLdapsEnabled, string ldapsPublicCertificateInBase64, ResourceIdentifier resourceId, ResourceIdentifier subnetId, Guid? tenantId)
-        {
-            return new HDInsightClusterAaddsDetail(
-                domainName,
-                default,
-                default,
-                ldapsPublicCertificateInBase64,
-                resourceId,
-                subnetId,
-                tenantId,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of RuntimeScriptActionDetail. </summary>
-        /// <param name="name"> The name of the script action. </param>
-        /// <param name="uri"> The URI to the script. </param>
-        /// <param name="parameters"> The parameters for the script. </param>
-        /// <param name="roles"> The list of roles where script will be executed. </param>
-        /// <param name="applicationName"> The application name of the script action, if any. </param>
-        /// <param name="scriptExecutionId"> The execution id of the script action. </param>
-        /// <param name="startOn"> The start time of script action execution. </param>
-        /// <param name="endOn"> The end time of script action execution. </param>
-        /// <param name="status"> The current execution status of the script action. </param>
-        /// <param name="operation"> The reason why the script action was executed. </param>
-        /// <param name="executionSummary"> The summary of script action execution result. </param>
-        /// <param name="debugInformation"> The script action execution debug information. </param>
-        /// <returns> A new <see cref="Models.RuntimeScriptActionDetail"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RuntimeScriptActionDetail RuntimeScriptActionDetail(string name, Uri uri, string parameters, IEnumerable<string> roles, string applicationName, long? scriptExecutionId, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, string operation, IEnumerable<ScriptActionExecutionSummary> executionSummary, string debugInformation)
-        {
-            roles ??= new ChangeTrackingList<string>();
-            executionSummary ??= new ChangeTrackingList<ScriptActionExecutionSummary>();
-
-            return new RuntimeScriptActionDetail(
-                name,
-                uri,
-                parameters,
-                roles.ToList(),
-                applicationName,
-                additionalBinaryDataProperties: null,
-                scriptExecutionId,
-                default,
-                default,
-                status,
-                operation,
-                executionSummary.ToList(),
-                debugInformation);
         }
     }
 }

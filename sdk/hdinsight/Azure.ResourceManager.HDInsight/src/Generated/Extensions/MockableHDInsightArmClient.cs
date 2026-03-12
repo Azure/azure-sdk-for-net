@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.HDInsight.Mocking
             return new HDInsightApplicationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HDInsightClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
-        public virtual ClusterResource GetClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HDInsightClusterResource"/> object. </returns>
+        public virtual HDInsightClusterResource GetHDInsightClusterResource(ResourceIdentifier id)
         {
-            ClusterResource.ValidateResourceId(id);
-            return new ClusterResource(Client, id);
+            HDInsightClusterResource.ValidateResourceId(id);
+            return new HDInsightClusterResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -60,33 +60,6 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         {
             PrivateLinkResource.ValidateResourceId(id);
             return new PrivateLinkResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationResource"/> object. </returns>
-        public virtual ConfigurationResource GetConfigurationResource(ResourceIdentifier id)
-        {
-            ConfigurationResource.ValidateResourceId(id);
-            return new ConfigurationResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ExtensionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExtensionResource"/> object. </returns>
-        public virtual ExtensionResource GetExtensionResource(ResourceIdentifier id)
-        {
-            ExtensionResource.ValidateResourceId(id);
-            return new ExtensionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ScriptActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScriptActionResource"/> object. </returns>
-        public virtual ScriptActionResource GetScriptActionResource(ResourceIdentifier id)
-        {
-            ScriptActionResource.ValidateResourceId(id);
-            return new ScriptActionResource(Client, id);
         }
     }
 }

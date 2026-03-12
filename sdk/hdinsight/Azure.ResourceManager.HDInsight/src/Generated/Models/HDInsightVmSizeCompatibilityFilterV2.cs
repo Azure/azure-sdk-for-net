@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="espApplied"> Whether apply for ESP cluster. 'true' means only for ESP, 'false' means only for non-ESP, null or empty string or others mean for both. </param>
         /// <param name="computeIsolationSupported"> Whether support compute isolation. 'true' means only for ComputeIsolationEnabled, 'false' means only for regular cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode, IReadOnlyList<string> regions, IReadOnlyList<string> clusterFlavors, IReadOnlyList<string> nodeTypes, IReadOnlyList<string> clusterVersions, IList<HDInsightOSType> osType, IReadOnlyList<string> vmSizes, string espApplied, string computeIsolationSupported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode, IList<string> regions, IList<string> clusterFlavors, IList<string> nodeTypes, IList<string> clusterVersions, IList<HDInsightOSType> osType, IList<string> vmSizes, string espApplied, string computeIsolationSupported, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FilterMode = filterMode;
             Regions = regions;
@@ -57,22 +57,22 @@ namespace Azure.ResourceManager.HDInsight.Models
         public HDInsightFilterMode? FilterMode { get; }
 
         /// <summary> The list of regions under the effect of the filter. </summary>
-        public IReadOnlyList<string> Regions { get; }
+        public IList<string> Regions { get; }
 
         /// <summary> The list of cluster flavors under the effect of the filter. </summary>
-        public IReadOnlyList<string> ClusterFlavors { get; }
+        public IList<string> ClusterFlavors { get; }
 
         /// <summary> The list of node types affected by the filter. </summary>
-        public IReadOnlyList<string> NodeTypes { get; }
+        public IList<string> NodeTypes { get; }
 
         /// <summary> The list of cluster versions affected in Major.Minor format. </summary>
-        public IReadOnlyList<string> ClusterVersions { get; }
+        public IList<string> ClusterVersions { get; }
 
         /// <summary> The OSType affected, Windows or Linux. </summary>
         public IList<HDInsightOSType> OsType { get; }
 
         /// <summary> The list of virtual machine sizes to include or exclude. </summary>
-        public IReadOnlyList<string> VmSizes { get; }
+        public IList<string> VmSizes { get; }
 
         /// <summary> Whether apply for ESP cluster. 'true' means only for ESP, 'false' means only for non-ESP, null or empty string or others mean for both. </summary>
         public string EspApplied { get; }

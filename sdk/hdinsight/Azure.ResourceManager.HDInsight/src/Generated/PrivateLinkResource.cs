@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight
     /// <summary>
     /// A class representing a PrivateLinkResource along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateLinkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ClusterResource"/> using the GetPrivateLinkResources method.
+    /// Otherwise you can get one from its parent resource <see cref="HDInsightClusterResource"/> using the GetPrivateLinkResources method.
     /// </summary>
     public partial class PrivateLinkResource : ArmResource
     {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightPrivateLinkResourceData> response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightPrivateLinkResourceData> response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)

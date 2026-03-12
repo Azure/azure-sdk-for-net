@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -38,6 +39,12 @@ namespace Azure.ResourceManager.HDInsight
             return subscriptionResource.GetCachedClient(client => new MockableHDInsightSubscriptionResource(client, subscriptionResource.Id));
         }
 
+        /// <param name="tenantResource"></param>
+        private static MockableHDInsightTenantResource GetMockableHDInsightTenantResource(TenantResource tenantResource)
+        {
+            return tenantResource.GetCachedClient(client => new MockableHDInsightTenantResource(client, tenantResource.Id));
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HDInsightApplicationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -57,21 +64,21 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HDInsightClusterResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightArmClient.GetClusterResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightArmClient.GetHDInsightClusterResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ClusterResource"/> object. </returns>
-        public static ClusterResource GetClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HDInsightClusterResource"/> object. </returns>
+        public static HDInsightClusterResource GetHDInsightClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHDInsightArmClient(client).GetClusterResource(id);
+            return GetMockableHDInsightArmClient(client).GetHDInsightClusterResource(id);
         }
 
         /// <summary>
@@ -111,81 +118,27 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets a collection of HDInsightClusters in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightArmClient.GetConfigurationResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConfigurationResource"/> object. </returns>
-        public static ConfigurationResource GetConfigurationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableHDInsightArmClient(client).GetConfigurationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ExtensionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightArmClient.GetExtensionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExtensionResource"/> object. </returns>
-        public static ExtensionResource GetExtensionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableHDInsightArmClient(client).GetExtensionResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ScriptActionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightArmClient.GetScriptActionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ScriptActionResource"/> object. </returns>
-        public static ScriptActionResource GetScriptActionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableHDInsightArmClient(client).GetScriptActionResource(id);
-        }
-
-        /// <summary>
-        /// Gets a collection of Clusters in the <see cref="ResourceGroupResource"/>
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightResourceGroupResource.GetClusters()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightResourceGroupResource.GetHDInsightClusters()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Clusters and their operations over a ClusterResource. </returns>
-        public static ClusterCollection GetClusters(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HDInsightClusters and their operations over a HDInsightClusterResource. </returns>
+        public static HDInsightClusterCollection GetHDInsightClusters(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHDInsightResourceGroupResource(resourceGroupResource).GetClusters();
+            return GetMockableHDInsightResourceGroupResource(resourceGroupResource).GetHDInsightClusters();
         }
 
         /// <summary>
         /// Gets the specified cluster.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightResourceGroupResource.GetClusterAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightResourceGroupResource.GetHDInsightClusterAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -193,18 +146,18 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ClusterResource>> GetClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HDInsightClusterResource>> GetHDInsightClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableHDInsightResourceGroupResource(resourceGroupResource).GetClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHDInsightResourceGroupResource(resourceGroupResource).GetHDInsightClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the specified cluster.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightResourceGroupResource.GetCluster(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightResourceGroupResource.GetHDInsightCluster(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -212,47 +165,47 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<ClusterResource> GetCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
+        public static Response<HDInsightClusterResource> GetHDInsightCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHDInsightResourceGroupResource(resourceGroupResource).GetCluster(clusterName, cancellationToken);
+            return GetMockableHDInsightResourceGroupResource(resourceGroupResource).GetHDInsightCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
         /// Lists all the HDInsight clusters under the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetClustersAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetHDInsightClustersAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ClusterResource> GetClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HDInsightClusterResource> GetHDInsightClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetClustersAsync(cancellationToken);
+            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetHDInsightClustersAsync(cancellationToken);
         }
 
         /// <summary>
         /// Lists all the HDInsight clusters under the subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetClusters(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightSubscriptionResource.GetHDInsightClusters(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ClusterResource> GetClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HDInsightClusterResource> GetHDInsightClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetClusters(cancellationToken);
+            return GetMockableHDInsightSubscriptionResource(subscriptionResource).GetHDInsightClusters(cancellationToken);
         }
 
         /// <summary>
@@ -437,6 +390,256 @@ namespace Azure.ResourceManager.HDInsight
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHDInsightSubscriptionResource(subscriptionResource).ValidateClusterCreateRequest(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Configures the HTTP settings on the specified cluster. This API is deprecated, please use UpdateGatewaySettings in cluster endpoint instead.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.UpdateAsync(WaitUntil, string, string, Guid, IDictionary, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="parameters"> The cluster configurations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<ArmOperation> UpdateAsync(this TenantResource tenantResource, WaitUntil waitUntil, string resourceGroupName, string configurationName, Guid subscriptionId, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableHDInsightTenantResource(tenantResource).UpdateAsync(waitUntil, resourceGroupName, configurationName, subscriptionId, parameters, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Configures the HTTP settings on the specified cluster. This API is deprecated, please use UpdateGatewaySettings in cluster endpoint instead.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.Update(WaitUntil, string, string, Guid, IDictionary, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="parameters"> The cluster configurations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static ArmOperation Update(this TenantResource tenantResource, WaitUntil waitUntil, string resourceGroupName, string configurationName, Guid subscriptionId, IDictionary<string, string> parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableHDInsightTenantResource(tenantResource).Update(waitUntil, resourceGroupName, configurationName, subscriptionId, parameters, cancellationToken);
+        }
+
+        /// <summary>
+        /// The configuration object for the specified cluster. This API is not recommended and might be removed in the future. Please consider using List configurations API instead.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.GetConfigurationAsync(string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<IDictionary<string, string>>> GetConfigurationAsync(this TenantResource tenantResource, string resourceGroupName, string configurationName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableHDInsightTenantResource(tenantResource).GetConfigurationAsync(resourceGroupName, configurationName, subscriptionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The configuration object for the specified cluster. This API is not recommended and might be removed in the future. Please consider using List configurations API instead.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.GetConfiguration(string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="configurationName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<IDictionary<string, string>> GetConfiguration(this TenantResource tenantResource, string resourceGroupName, string configurationName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableHDInsightTenantResource(tenantResource).GetConfiguration(resourceGroupName, configurationName, subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates an HDInsight cluster extension.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.CreateAsync(WaitUntil, string, string, Guid, HDInsightClusterCreateExtensionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="extensionName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="content"> The cluster extensions create request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<ArmOperation> CreateAsync(this TenantResource tenantResource, WaitUntil waitUntil, string resourceGroupName, string extensionName, Guid subscriptionId, HDInsightClusterCreateExtensionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableHDInsightTenantResource(tenantResource).CreateAsync(waitUntil, resourceGroupName, extensionName, subscriptionId, content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Creates an HDInsight cluster extension.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.Create(WaitUntil, string, string, Guid, HDInsightClusterCreateExtensionContent, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="extensionName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="content"> The cluster extensions create request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static ArmOperation Create(this TenantResource tenantResource, WaitUntil waitUntil, string resourceGroupName, string extensionName, Guid subscriptionId, HDInsightClusterCreateExtensionContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableHDInsightTenantResource(tenantResource).Create(waitUntil, resourceGroupName, extensionName, subscriptionId, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the extension properties for the specified HDInsight cluster extension.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.GetExtensionAsync(string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="extensionName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<HDInsightClusterExtensionStatus>> GetExtensionAsync(this TenantResource tenantResource, string resourceGroupName, string extensionName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableHDInsightTenantResource(tenantResource).GetExtensionAsync(resourceGroupName, extensionName, subscriptionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the extension properties for the specified HDInsight cluster extension.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.GetExtension(string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="extensionName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<HDInsightClusterExtensionStatus> GetExtension(this TenantResource tenantResource, string resourceGroupName, string extensionName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableHDInsightTenantResource(tenantResource).GetExtension(resourceGroupName, extensionName, subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Deletes the specified extension for HDInsight cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.DeleteAsync(WaitUntil, string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="extensionName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<ArmOperation> DeleteAsync(this TenantResource tenantResource, WaitUntil waitUntil, string resourceGroupName, string extensionName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableHDInsightTenantResource(tenantResource).DeleteAsync(waitUntil, resourceGroupName, extensionName, subscriptionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes the specified extension for HDInsight cluster.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.Delete(WaitUntil, string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="extensionName"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static ArmOperation Delete(this TenantResource tenantResource, WaitUntil waitUntil, string resourceGroupName, string extensionName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableHDInsightTenantResource(tenantResource).Delete(waitUntil, resourceGroupName, extensionName, subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the script execution detail for the given script execution ID.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.GetExecutionDetailAsync(string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="scriptExecutionId"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static async Task<Response<RuntimeScriptActionDetail>> GetExecutionDetailAsync(this TenantResource tenantResource, string resourceGroupName, string scriptExecutionId, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableHDInsightTenantResource(tenantResource).GetExecutionDetailAsync(resourceGroupName, scriptExecutionId, subscriptionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the script execution detail for the given script execution ID.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHDInsightTenantResource.GetExecutionDetail(string, string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="scriptExecutionId"></param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        public static Response<RuntimeScriptActionDetail> GetExecutionDetail(this TenantResource tenantResource, string resourceGroupName, string scriptExecutionId, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableHDInsightTenantResource(tenantResource).GetExecutionDetail(resourceGroupName, scriptExecutionId, subscriptionId, cancellationToken);
         }
     }
 }

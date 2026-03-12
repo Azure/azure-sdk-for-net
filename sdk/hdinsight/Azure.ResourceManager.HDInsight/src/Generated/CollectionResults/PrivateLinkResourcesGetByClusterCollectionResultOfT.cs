@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -15,21 +14,21 @@ using Azure.ResourceManager.HDInsight.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
-    internal partial class ScriptExecutionHistoryGetByClusterAsyncCollectionResultOfT : AsyncPageable<RuntimeScriptActionDetail>
+    internal partial class PrivateLinkResourcesGetByClusterCollectionResultOfT : Pageable<HDInsightPrivateLinkResourceData>
     {
-        private readonly ScriptExecutionHistory _client;
-        private readonly string _subscriptionId;
+        private readonly PrivateLinkResources _client;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _clusterName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ScriptExecutionHistoryGetByClusterAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ScriptExecutionHistory client used to send requests. </param>
+        /// <summary> Initializes a new instance of PrivateLinkResourcesGetByClusterCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The PrivateLinkResources client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ScriptExecutionHistoryGetByClusterAsyncCollectionResultOfT(ScriptExecutionHistory client, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public PrivateLinkResourcesGetByClusterCollectionResultOfT(PrivateLinkResources client, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -38,22 +37,22 @@ namespace Azure.ResourceManager.HDInsight
             _context = context;
         }
 
-        /// <summary> Gets the pages of ScriptExecutionHistoryGetByClusterAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of PrivateLinkResourcesGetByClusterCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ScriptExecutionHistoryGetByClusterAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<RuntimeScriptActionDetail>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of PrivateLinkResourcesGetByClusterCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<HDInsightPrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
                 }
-                ScriptActionExecutionHistoryList result = ScriptActionExecutionHistoryList.FromResponse(response);
-                yield return Page<RuntimeScriptActionDetail>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                HDInsightPrivateLinkResourceListResult result = HDInsightPrivateLinkResourceListResult.FromResponse(response);
+                yield return Page<HDInsightPrivateLinkResourceData>.FromValues((IReadOnlyList<HDInsightPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -65,14 +64,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
+        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByClusterRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetByClusterRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ScriptActionResource.GetByCluster");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
             scope.Start();
             try
             {
-                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
+                return _client.Pipeline.ProcessMessage(message, _context);
             }
             catch (Exception e)
             {

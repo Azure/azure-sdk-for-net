@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary></summary>
-    public partial class ExtensionResource : IJsonModel<HDInsightClusterData>
+    public partial class HDInsightClusterResource : IJsonModel<HDInsightClusterData>
     {
         private static IJsonModel<HDInsightClusterData> s_dataDeserializationInstance;
 

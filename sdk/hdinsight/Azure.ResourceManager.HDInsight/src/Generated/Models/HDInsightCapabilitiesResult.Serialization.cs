@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             IReadOnlyDictionary<string, HDInsightVersionsCapability> versions = default;
-            IReadOnlyDictionary<string, RegionsCapability> regions = default;
-            IReadOnlyList<string> features = default;
+            IDictionary<string, RegionsCapability> regions = default;
+            IList<string> features = default;
             QuotaCapability quota = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

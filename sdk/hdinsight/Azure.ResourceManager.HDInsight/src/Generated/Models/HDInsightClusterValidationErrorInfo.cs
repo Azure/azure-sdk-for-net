@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="errorResource"> The error resource. </param>
         /// <param name="messageArguments"> The message arguments. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterValidationErrorInfo(string code, string message, string errorResource, IReadOnlyList<string> messageArguments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterValidationErrorInfo(string code, string message, string errorResource, IList<string> messageArguments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -48,6 +48,6 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string ErrorResource { get; }
 
         /// <summary> The message arguments. </summary>
-        public IReadOnlyList<string> MessageArguments { get; }
+        public IList<string> MessageArguments { get; }
     }
 }

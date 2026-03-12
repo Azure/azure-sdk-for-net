@@ -13,52 +13,52 @@ using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> The regions capability. </summary>
-    public partial class RegionsCapability : IJsonModel<RegionsCapability>
+    /// <summary> The error message associated with the cluster creation. </summary>
+    public partial class Errors : IJsonModel<Errors>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegionsCapability PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual Errors PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionsCapability>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Errors>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRegionsCapability(document.RootElement, options);
+                        return DeserializeErrors(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegionsCapability)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Errors)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionsCapability>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Errors>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RegionsCapability)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Errors)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RegionsCapability>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<Errors>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegionsCapability IPersistableModel<RegionsCapability>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        Errors IPersistableModel<Errors>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RegionsCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<Errors>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RegionsCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<Errors>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,25 +69,20 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionsCapability>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Errors>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionsCapability)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(Errors)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Available))
+            if (Optional.IsDefined(Code))
             {
-                writer.WritePropertyName("available"u8);
-                writer.WriteStartArray();
-                foreach (string item in Available)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -108,52 +103,42 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RegionsCapability IJsonModel<RegionsCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        Errors IJsonModel<Errors>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RegionsCapability JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual Errors JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RegionsCapability>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<Errors>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionsCapability)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(Errors)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRegionsCapability(document.RootElement, options);
+            return DeserializeErrors(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RegionsCapability DeserializeRegionsCapability(JsonElement element, ModelReaderWriterOptions options)
+        internal static Errors DeserializeErrors(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> available = default;
+            string code = default;
+            string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("available"u8))
+                if (prop.NameEquals("code"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    available = array;
+                    code = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("message"u8))
+                {
+                    message = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +146,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RegionsCapability(available ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new Errors(code, message, additionalBinaryDataProperties);
         }
     }
 }

@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetHostsRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateGetHostsRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateRestartHostsRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateRestartHostsRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);

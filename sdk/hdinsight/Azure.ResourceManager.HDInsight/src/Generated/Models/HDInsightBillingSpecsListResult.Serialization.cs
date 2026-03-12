@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 return null;
             }
-            IReadOnlyList<string> vmSizes = default;
-            IReadOnlyList<string> vmSizesWithEncryptionAtHost = default;
-            IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters = default;
+            IList<string> vmSizes = default;
+            IList<string> vmSizesWithEncryptionAtHost = default;
+            IList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters = default;
             IReadOnlyList<HDInsightVmSizeProperty> vmSizeProperties = default;
-            IReadOnlyList<HDInsightBillingResources> billingResources = default;
+            IList<HDInsightBillingResources> billingResources = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

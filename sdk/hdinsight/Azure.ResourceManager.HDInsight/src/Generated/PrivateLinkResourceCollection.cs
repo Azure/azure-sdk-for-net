@@ -15,14 +15,13 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.HDInsight.Models;
 
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
     /// A class representing a collection of <see cref="PrivateLinkResource"/> and their operations.
-    /// Each <see cref="PrivateLinkResource"/> in the collection will belong to the same instance of <see cref="ClusterResource"/>.
-    /// To get a <see cref="PrivateLinkResourceCollection"/> instance call the GetPrivateLinkResources method from an instance of <see cref="ClusterResource"/>.
+    /// Each <see cref="PrivateLinkResource"/> in the collection will belong to the same instance of <see cref="HDInsightClusterResource"/>.
+    /// To get a <see cref="PrivateLinkResourceCollection"/> instance call the GetPrivateLinkResources method from an instance of <see cref="HDInsightClusterResource"/>.
     /// </summary>
     public partial class PrivateLinkResourceCollection : ArmCollection, IEnumerable<PrivateLinkResource>, IAsyncEnumerable<PrivateLinkResource>
     {
@@ -49,9 +48,9 @@ namespace Azure.ResourceManager.HDInsight
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ClusterResource.ResourceType)
+            if (id.ResourceType != HDInsightClusterResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ClusterResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, HDInsightClusterResource.ResourceType), id);
             }
         }
 
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightPrivateLinkResourceData> response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightPrivateLinkResourceData> response = Response.FromValue(HDInsightPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -171,30 +170,14 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<HDInsightPrivateLinkResourceListResult>> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HDInsightPrivateLinkResourceListResult> response = Response.FromValue(HDInsightPrivateLinkResourceListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<HDInsightPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinkResourcesGetByClusterAsyncCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -215,30 +198,14 @@ namespace Azure.ResourceManager.HDInsight
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<HDInsightPrivateLinkResourceListResult> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkResourceCollection.GetAll");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<HDInsightPrivateLinkResourceListResult> response = Response.FromValue(HDInsightPrivateLinkResourceListResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<HDInsightPrivateLinkResourceData, PrivateLinkResource>(new PrivateLinkResourcesGetByClusterCollectionResultOfT(_privateLinkResourcesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new PrivateLinkResource(Client, data));
         }
 
         /// <summary>
@@ -274,7 +241,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HDInsightPrivateLinkResourceData> response = default;
@@ -331,7 +298,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HDInsightPrivateLinkResourceData> response = default;
@@ -388,7 +355,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<HDInsightPrivateLinkResourceData> response = default;
@@ -449,7 +416,7 @@ namespace Azure.ResourceManager.HDInsight
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
+                HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateLinkResourceName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<HDInsightPrivateLinkResourceData> response = default;

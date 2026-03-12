@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight
     internal partial class ClustersGetByResourceGroupCollectionResultOfT : Pageable<HDInsightClusterData>
     {
         private readonly Clusters _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly RequestContext _context;
 
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ClustersGetByResourceGroupCollectionResultOfT(Clusters client, string subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ClustersGetByResourceGroupCollectionResultOfT(Clusters client, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ClusterCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HDInsightClusterCollection.GetAll");
             scope.Start();
             try
             {

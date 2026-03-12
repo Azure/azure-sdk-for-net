@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string clusterName, string configurationName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string configurationName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            uri.AppendPath("/configurations/", false);
+            uri.AppendPath(configurationName, true);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/configurations/", false);
+            uri.AppendPath("/", false);
             uri.AppendPath(configurationName, true);
             if (_apiVersion != null)
             {
@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string configurationName, RequestContext context)
+        internal HttpMessage CreateGetConfigurationRequest(Guid subscriptionId, string resourceGroupName, string configurationName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            uri.AppendPath("/configurations/", false);
+            uri.AppendPath(configurationName, true);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HDInsight/clusters/", false);
-            uri.AppendPath(clusterName, true);
-            uri.AppendPath("/configurations/", false);
+            uri.AppendPath("/", false);
             uri.AppendPath(configurationName, true);
             if (_apiVersion != null)
             {

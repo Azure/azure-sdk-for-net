@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal HDInsightClusterProperties(HDInsightClusterDefinition clusterDefinition)
         {
             ClusterDefinition = clusterDefinition;
-            Errors = new ChangeTrackingList<ResponseError>();
+            Errors = new ChangeTrackingList<Errors>();
             ConnectivityEndpoints = new ChangeTrackingList<ConnectivityEndpoint>();
             PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
             PrivateEndpointConnections = new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
@@ -55,7 +54,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <param name="privateEndpointConnections"> The list of private endpoint connections. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, HDInsightOSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, HDInsightClusterProvisioningState? provisioningState, string createdDate, string clusterState, QuotaInfo quotaInfo, IList<ResponseError> errors, IList<ConnectivityEndpoint> connectivityEndpoints, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, StorageProfile storageProfile, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterProperties(string clusterVersion, string clusterHdpVersion, HDInsightOSType? osType, HDInsightTier? tier, string clusterId, HDInsightClusterDefinition clusterDefinition, KafkaRestProperties kafkaRestProperties, HDInsightSecurityProfile securityProfile, ComputeProfile computeProfile, HDInsightClusterProvisioningState? provisioningState, string createdDate, string clusterState, QuotaInfo quotaInfo, IList<Errors> errors, IList<ConnectivityEndpoint> connectivityEndpoints, HDInsightDiskEncryptionProperties diskEncryptionProperties, EncryptionInTransitProperties encryptionInTransitProperties, StorageProfile storageProfile, string minSupportedTlsVersion, ExcludedServicesConfig excludedServicesConfig, HDInsightClusterNetworkProperties networkProperties, HDInsightComputeIsolationProperties computeIsolationProperties, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IReadOnlyList<HDInsightPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterVersion = clusterVersion;
             ClusterHdpVersion = clusterHdpVersion;
@@ -124,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         internal QuotaInfo QuotaInfo { get; }
 
         /// <summary> The list of errors. </summary>
-        public IList<ResponseError> Errors { get; }
+        public IList<Errors> Errors { get; }
 
         /// <summary> The list of connectivity endpoints. </summary>
         public IList<ConnectivityEndpoint> ConnectivityEndpoints { get; }

@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string friendlyName = default;
             string displayName = default;
             bool? isDefault = default;
-            IReadOnlyDictionary<string, string> componentVersions = default;
+            IDictionary<string, string> componentVersions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

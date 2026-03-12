@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.HDInsight
     internal partial class ClustersGetAllAsyncCollectionResultOfT : AsyncPageable<HDInsightClusterData>
     {
         private readonly Clusters _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of ClustersGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Clusters client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ClustersGetAllAsyncCollectionResultOfT(Clusters client, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ClustersGetAllAsyncCollectionResultOfT(Clusters client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetClusters");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableHDInsightSubscriptionResource.GetHDInsightClusters");
             scope.Start();
             try
             {

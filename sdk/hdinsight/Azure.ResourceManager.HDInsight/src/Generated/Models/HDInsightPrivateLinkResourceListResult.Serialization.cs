@@ -14,9 +14,14 @@ using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary> A list of private link resources. </summary>
-    public partial class HDInsightPrivateLinkResourceListResult : IJsonModel<HDInsightPrivateLinkResourceListResult>
+    /// <summary> The response of a PrivateLinkResource list operation. </summary>
+    internal partial class HDInsightPrivateLinkResourceListResult : IJsonModel<HDInsightPrivateLinkResourceListResult>
     {
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateLinkResourceListResult"/> for deserialization. </summary>
+        internal HDInsightPrivateLinkResourceListResult()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual HDInsightPrivateLinkResourceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -82,15 +87,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 throw new FormatException($"The model {nameof(HDInsightPrivateLinkResourceListResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (HDInsightPrivateLinkResourceData item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (HDInsightPrivateLinkResourceData item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,15 +142,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             IList<HDInsightPrivateLinkResourceData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<HDInsightPrivateLinkResourceData> array = new List<HDInsightPrivateLinkResourceData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -152,12 +156,21 @@ namespace Azure.ResourceManager.HDInsight.Models
                     value = array;
                     continue;
                 }
+                if (prop.NameEquals("nextLink"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HDInsightPrivateLinkResourceListResult(value ?? new ChangeTrackingList<HDInsightPrivateLinkResourceData>(), additionalBinaryDataProperties);
+            return new HDInsightPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

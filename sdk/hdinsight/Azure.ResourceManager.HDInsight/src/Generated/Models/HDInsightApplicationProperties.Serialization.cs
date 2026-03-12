@@ -8,9 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -140,14 +138,9 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (ResponseError item in Errors)
+                foreach (Errors item in Errors)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<ResponseError>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -221,7 +214,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             string provisioningState = default;
             string applicationType = default;
             string applicationState = default;
-            IList<ResponseError> errors = default;
+            IList<Errors> errors = default;
             string createdDate = default;
             string marketplaceIdentifier = default;
             IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations = default;
@@ -314,17 +307,10 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    List<ResponseError> array = new List<ResponseError>();
+                    List<Errors> array = new List<Errors>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHDInsightContext.Default));
-                        }
+                        array.Add(Models.Errors.DeserializeErrors(item, options));
                     }
                     errors = array;
                     continue;
@@ -367,7 +353,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 provisioningState,
                 applicationType,
                 applicationState,
-                errors ?? new ChangeTrackingList<ResponseError>(),
+                errors ?? new ChangeTrackingList<Errors>(),
                 createdDate,
                 marketplaceIdentifier,
                 privateLinkConfigurations ?? new ChangeTrackingList<HDInsightPrivateLinkConfiguration>(),

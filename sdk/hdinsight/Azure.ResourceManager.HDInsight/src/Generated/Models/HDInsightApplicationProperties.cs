@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             UninstallScriptActions = new ChangeTrackingList<RuntimeScriptAction>();
             HttpsEndpoints = new ChangeTrackingList<HDInsightApplicationHttpsEndpoint>();
             SshEndpoints = new ChangeTrackingList<HDInsightApplicationEndpoint>();
-            Errors = new ChangeTrackingList<ResponseError>();
+            Errors = new ChangeTrackingList<Errors>();
             PrivateLinkConfigurations = new ChangeTrackingList<HDInsightPrivateLinkConfiguration>();
         }
 
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="marketplaceIdentifier"> The marketplace identifier. </param>
         /// <param name="privateLinkConfigurations"> The private link configurations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<ResponseError> errors, string createdDate, string marketplaceIdentifier, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightApplicationProperties(ComputeProfile computeProfile, IList<RuntimeScriptAction> installScriptActions, IList<RuntimeScriptAction> uninstallScriptActions, IList<HDInsightApplicationHttpsEndpoint> httpsEndpoints, IList<HDInsightApplicationEndpoint> sshEndpoints, string provisioningState, string applicationType, string applicationState, IList<Errors> errors, string createdDate, string marketplaceIdentifier, IList<HDInsightPrivateLinkConfiguration> privateLinkConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComputeProfile = computeProfile;
             InstallScriptActions = installScriptActions;
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string ApplicationState { get; }
 
         /// <summary> The list of errors. </summary>
-        public IList<ResponseError> Errors { get; }
+        public IList<Errors> Errors { get; }
 
         /// <summary> The application create date time. </summary>
         public string CreatedDate { get; }

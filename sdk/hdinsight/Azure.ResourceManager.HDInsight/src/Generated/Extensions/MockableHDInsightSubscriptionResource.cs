@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ClusterResource> GetClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HDInsightClusterResource> GetHDInsightClustersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HDInsightClusterData, ClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context), data => new ClusterResource(Client, data));
+            return new AsyncPageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new ClustersGetAllAsyncCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HDInsightClusterResource(Client, data));
         }
 
         /// <summary>
@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ClusterResource> GetClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HDInsightClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HDInsightClusterResource> GetHDInsightClusters(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HDInsightClusterData, ClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Id.SubscriptionId, context), data => new ClusterResource(Client, data));
+            return new PageableWrapper<HDInsightClusterData, HDInsightClusterResource>(new ClustersGetAllCollectionResultOfT(ClustersRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HDInsightClusterResource(Client, data));
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateGetCapabilitiesRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = LocationsRestClient.CreateGetCapabilitiesRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightCapabilitiesResult> response = Response.FromValue(HDInsightCapabilitiesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateGetCapabilitiesRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = LocationsRestClient.CreateGetCapabilitiesRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightCapabilitiesResult> response = Response.FromValue(HDInsightCapabilitiesResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = LocationsRestClient.CreateGetUsagesRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<UsagesListResult> response = Response.FromValue(UsagesListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateGetUsagesRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = LocationsRestClient.CreateGetUsagesRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<UsagesListResult> response = Response.FromValue(UsagesListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateGetBillingSpecsRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = LocationsRestClient.CreateGetBillingSpecsRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightBillingSpecsListResult> response = Response.FromValue(HDInsightBillingSpecsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateGetBillingSpecsRequest(Id.SubscriptionId, location, context);
+                HttpMessage message = LocationsRestClient.CreateGetBillingSpecsRequest(Guid.Parse(Id.SubscriptionId), location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightBillingSpecsListResult> response = Response.FromValue(HDInsightBillingSpecsListResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateCheckNameAvailabilityRequest(Id.SubscriptionId, location, HDInsightNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = LocationsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, HDInsightNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightNameAvailabilityResult> response = Response.FromValue(HDInsightNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateCheckNameAvailabilityRequest(Id.SubscriptionId, location, HDInsightNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = LocationsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), location, HDInsightNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightNameAvailabilityResult> response = Response.FromValue(HDInsightNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateValidateClusterCreateRequestRequest(Id.SubscriptionId, location, HDInsightClusterCreationValidateContent.ToRequestContent(content), context);
+                HttpMessage message = LocationsRestClient.CreateValidateClusterCreateRequestRequest(Guid.Parse(Id.SubscriptionId), location, HDInsightClusterCreationValidateContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HDInsightClusterCreationValidateResult> response = Response.FromValue(HDInsightClusterCreationValidateResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = LocationsRestClient.CreateValidateClusterCreateRequestRequest(Id.SubscriptionId, location, HDInsightClusterCreationValidateContent.ToRequestContent(content), context);
+                HttpMessage message = LocationsRestClient.CreateValidateClusterCreateRequestRequest(Guid.Parse(Id.SubscriptionId), location, HDInsightClusterCreationValidateContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HDInsightClusterCreationValidateResult> response = Response.FromValue(HDInsightClusterCreationValidateResult.FromResponse(result), result);
                 if (response.Value == null)

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HDInsight
     internal partial class ScriptActionsGetByClusterCollectionResultOfT : Pageable<RuntimeScriptActionDetail>
     {
         private readonly ScriptActions _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _clusterName;
         private readonly RequestContext _context;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the cluster. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public ScriptActionsGetByClusterCollectionResultOfT(ScriptActions client, string subscriptionId, string resourceGroupName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ScriptActionsGetByClusterCollectionResultOfT(ScriptActions client, Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.HDInsight
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByClusterRequest(nextLink, _subscriptionId, _resourceGroupName, _clusterName, _context) : _client.CreateGetByClusterRequest(_subscriptionId, _resourceGroupName, _clusterName, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ClusterResource.GetByCluster");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("HDInsightClusterResource.GetByCluster");
             scope.Start();
             try
             {

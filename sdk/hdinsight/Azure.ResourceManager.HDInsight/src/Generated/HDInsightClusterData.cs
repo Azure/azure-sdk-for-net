@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="eTag"> The ETag for the resource. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
-        internal HDInsightClusterData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, HDInsightClusterProperties properties, string eTag, IList<string> zones, ClusterIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, HDInsightClusterProperties properties, string eTag, IList<string> zones, ClusterIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

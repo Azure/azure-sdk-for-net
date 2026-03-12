@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetCapabilitiesRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetCapabilitiesRequest(Guid subscriptionId, string location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/capabilities", false);
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateGetUsagesRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetUsagesRequest(Guid subscriptionId, string location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/usages", false);
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateGetBillingSpecsRequest(string subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetBillingSpecsRequest(Guid subscriptionId, string location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/billingSpecs", false);
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/checkNameAvailability", false);
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.HDInsight
             return message;
         }
 
-        internal HttpMessage CreateValidateClusterCreateRequestRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateValidateClusterCreateRequestRequest(Guid subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
             uri.AppendPath(location, true);
             uri.AppendPath("/validateCreateRequest", false);

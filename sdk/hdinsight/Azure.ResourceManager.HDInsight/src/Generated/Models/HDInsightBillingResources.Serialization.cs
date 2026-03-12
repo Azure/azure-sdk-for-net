@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                 return null;
             }
             string region = default;
-            IReadOnlyList<HDInsightBillingMeters> billingMeters = default;
-            IReadOnlyList<HDInsightDiskBillingMeters> diskBillingMeters = default;
+            IList<HDInsightBillingMeters> billingMeters = default;
+            IList<HDInsightDiskBillingMeters> diskBillingMeters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

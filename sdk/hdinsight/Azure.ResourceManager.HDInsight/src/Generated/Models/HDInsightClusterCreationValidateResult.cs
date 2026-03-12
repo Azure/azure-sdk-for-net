@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="estimatedCreationDuration"> The estimated creation duration. </param>
         /// <param name="aaddsResourcesDetails"> The Azure active directory domain service resource details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterCreationValidateResult(IReadOnlyList<HDInsightClusterValidationErrorInfo> validationErrors, IReadOnlyList<HDInsightClusterValidationErrorInfo> validationWarnings, TimeSpan? estimatedCreationDuration, IReadOnlyList<HDInsightClusterAaddsDetail> aaddsResourcesDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HDInsightClusterCreationValidateResult(IList<HDInsightClusterValidationErrorInfo> validationErrors, IList<HDInsightClusterValidationErrorInfo> validationWarnings, TimeSpan? estimatedCreationDuration, IList<HDInsightClusterAaddsDetail> aaddsResourcesDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ValidationErrors = validationErrors;
             ValidationWarnings = validationWarnings;
@@ -41,15 +41,15 @@ namespace Azure.ResourceManager.HDInsight.Models
         }
 
         /// <summary> The validation errors. </summary>
-        public IReadOnlyList<HDInsightClusterValidationErrorInfo> ValidationErrors { get; }
+        public IList<HDInsightClusterValidationErrorInfo> ValidationErrors { get; }
 
         /// <summary> The validation warnings. </summary>
-        public IReadOnlyList<HDInsightClusterValidationErrorInfo> ValidationWarnings { get; }
+        public IList<HDInsightClusterValidationErrorInfo> ValidationWarnings { get; }
 
         /// <summary> The estimated creation duration. </summary>
         public TimeSpan? EstimatedCreationDuration { get; }
 
         /// <summary> The Azure active directory domain service resource details. </summary>
-        public IReadOnlyList<HDInsightClusterAaddsDetail> AaddsResourcesDetails { get; }
+        public IList<HDInsightClusterAaddsDetail> AaddsResourcesDetails { get; }
     }
 }
