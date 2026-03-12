@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for MaxProvisionedIOPS. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("maxProvisionedIOPS")]
         public int? MaxProvisionedIops => MaxProvisionedIOPS;
     }
 }

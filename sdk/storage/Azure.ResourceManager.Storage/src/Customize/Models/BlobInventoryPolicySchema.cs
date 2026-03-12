@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for Enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("enabled")]
         public bool IsEnabled
         {
             get => Enabled;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Backward-compatible alias for Type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("type")]
         public BlobInventoryRuleType RuleType
         {
             get => Type;

@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for ExpiryOn. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("expiryTime")]
         public DateTimeOffset? ExpireOn
         {
             get => ExpiryOn;

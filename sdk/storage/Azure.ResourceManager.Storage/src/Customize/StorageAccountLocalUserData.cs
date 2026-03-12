@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage
     {
         /// <summary> Backward-compatible alias for AllowAclAuthorization. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.allowAclAuthorization")]
         public bool? IsAclAuthorizationAllowed
         {
             get => AllowAclAuthorization;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Backward-compatible alias for IsNFSv3Enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.isNFSv3Enabled")]
         public bool? IsNfsV3Enabled
         {
             get => IsNFSv3Enabled;

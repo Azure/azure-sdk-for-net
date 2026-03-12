@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for NameAvailable. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("nameAvailable")]
         public bool? IsNameAvailable => NameAvailable;
     }
 }

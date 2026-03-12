@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage
     {
         /// <summary> Backward-compatible alias for AutomaticSnapshotPolicyEnabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.automaticSnapshotPolicyEnabled")]
         public bool? IsAutomaticSnapshotPolicyEnabled
         {
             get => AutomaticSnapshotPolicyEnabled;

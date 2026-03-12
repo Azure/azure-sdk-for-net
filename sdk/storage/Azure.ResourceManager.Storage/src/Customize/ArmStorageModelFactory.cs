@@ -242,5 +242,33 @@ namespace Azure.ResourceManager.Storage.Models
         {
             return new UpdateHistoryEntry(updateType, immutabilityPeriodSinceCreationInDays, timestamp, objectIdentifier, tenantId?.ToString(), upn, allowProtectedAppendWrites, allowProtectedAppendWritesAll, additionalBinaryDataProperties: null);
         }
+
+        /// <summary> Initializes a new instance of EncryptionScopeKeyVaultProperties for mocking. Backward-compatible overload accepting Uri. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EncryptionScopeKeyVaultProperties EncryptionScopeKeyVaultProperties(Uri keyUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp)
+        {
+            return EncryptionScopeKeyVaultProperties(keyUri?.AbsoluteUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp);
+        }
+
+        /// <summary> Initializes a new instance of LegalHoldTag for mocking. Backward-compatible overload accepting Guid?. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LegalHoldTag LegalHoldTag(string tag, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn)
+        {
+            return LegalHoldTag(tag, timestamp, objectIdentifier, tenantId?.ToString(), upn);
+        }
+
+        /// <summary> Initializes a new instance of StorageAccountKeyVaultProperties for mocking. Backward-compatible overload accepting Uri. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageAccountKeyVaultProperties StorageAccountKeyVaultProperties(string keyName, string keyVersion, Uri keyVaultUri, string currentVersionedKeyIdentifier, DateTimeOffset? lastKeyRotationTimestamp, DateTimeOffset? currentVersionedKeyExpirationTimestamp)
+        {
+            return StorageAccountKeyVaultProperties(keyName, keyVersion, keyVaultUri?.AbsoluteUri, currentVersionedKeyIdentifier, lastKeyRotationTimestamp, currentVersionedKeyExpirationTimestamp);
+        }
+
+        /// <summary> Initializes a new instance of StorageSkuLocationInfo for mocking. Backward-compatible overload accepting AzureLocation?. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static StorageSkuLocationInfo StorageSkuLocationInfo(AzureLocation? location, IEnumerable<string> zones)
+        {
+            return StorageSkuLocationInfo(location?.Name, zones);
+        }
     }
 }

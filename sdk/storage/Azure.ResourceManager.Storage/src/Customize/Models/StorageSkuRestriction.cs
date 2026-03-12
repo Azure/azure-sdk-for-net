@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for Type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("type")]
         public string RestrictionType => Type;
     }
 }

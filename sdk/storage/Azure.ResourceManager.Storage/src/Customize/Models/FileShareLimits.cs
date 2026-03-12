@@ -11,10 +11,12 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for MaxProvisionedIOPS. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("maxProvisionedIOPS")]
         public int? MaxProvisionedIops => MaxProvisionedIOPS;
 
         /// <summary> Backward-compatible alias for MinProvisionedIOPS. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("minProvisionedIOPS")]
         public int? MinProvisionedIops => MinProvisionedIOPS;
     }
 }

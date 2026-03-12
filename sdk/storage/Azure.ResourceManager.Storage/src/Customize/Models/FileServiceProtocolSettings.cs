@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for Required. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("nfs.encryptionInTransit.required")]
         public bool? IsRequired
         {
             get => Required;

@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Backward-compat: The ImmutabilityPolicy update type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("update")]
         public ImmutabilityPolicyUpdateType? UpdateType => Update;
     }
 }

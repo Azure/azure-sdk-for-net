@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage
     {
         /// <summary> Backward-compatible alias for MetricsEnabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.metrics.enabled")]
         public bool? IsMetricsEnabled
         {
             get => MetricsEnabled;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Backward-compatible alias for PriorityReplicationEnabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.priorityReplication.enabled")]
         public bool? IsPriorityReplicationEnabled
         {
             get => PriorityReplicationEnabled;

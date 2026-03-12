@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for PrefixMatch. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("prefixMatch")]
         public IList<string> IncludePrefix => PrefixMatch;
     }
 }

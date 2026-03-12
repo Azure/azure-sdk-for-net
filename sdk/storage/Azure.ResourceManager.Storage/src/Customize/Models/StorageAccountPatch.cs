@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for DefaultToOAuthAuthentication. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.defaultToOAuthAuthentication")]
         public bool? IsDefaultToOAuthAuthentication
         {
             get => DefaultToOAuthAuthentication;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Backward-compatible alias for EnableExtendedGroups. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.enableExtendedGroups")]
         public bool? IsExtendedGroupEnabled
         {
             get => EnableExtendedGroups;
@@ -27,6 +29,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Backward-compatible alias for PublishIpv6Endpoint. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
         public bool? IsIPv6EndpointToBePublished
         {
             get => PublishIpv6Endpoint;

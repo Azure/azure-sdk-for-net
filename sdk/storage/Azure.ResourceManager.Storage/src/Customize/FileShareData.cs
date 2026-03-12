@@ -12,10 +12,12 @@ namespace Azure.ResourceManager.Storage
     {
         /// <summary> Backward-compatible alias for Deleted. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.deleted")]
         public bool? IsDeleted => Deleted;
 
         /// <summary> Backward-compatible alias for EnabledProtocols. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.enabledProtocols")]
         public FileShareEnabledProtocol? EnabledProtocol
         {
             get => EnabledProtocols;

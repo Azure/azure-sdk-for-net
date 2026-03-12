@@ -12,10 +12,12 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for IpRules. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("ipRules")]
         public IList<StorageAccountIPRule> IPRules => IpRules;
 
         /// <summary> Backward-compatible alias for Ipv6Rules. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("ipv6Rules")]
         public IList<StorageAccountIPRule> IPv6Rules => Ipv6Rules;
     }
 }

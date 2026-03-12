@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for PublishInternetEndpoints. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("publishInternetEndpoints")]
         public bool? IsInternetEndpointsPublished
         {
             get => PublishInternetEndpoints;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Backward-compatible alias for PublishMicrosoftEndpoints. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("publishMicrosoftEndpoints")]
         public bool? IsMicrosoftEndpointsPublished
         {
             get => PublishMicrosoftEndpoints;

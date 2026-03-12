@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for Op. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("op")]
         public string Operator
         {
             get => Op;

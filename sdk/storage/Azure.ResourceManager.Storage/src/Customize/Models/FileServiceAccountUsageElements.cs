@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for ProvisionedIOPS. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("provisionedIOPS")]
         public int? ProvisionedIops => ProvisionedIOPS;
     }
 }

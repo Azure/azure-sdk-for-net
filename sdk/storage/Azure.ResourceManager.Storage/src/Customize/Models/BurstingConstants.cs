@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for BurstFloorIOPS. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("burstFloorIOPS")]
         public int? BurstFloorIops => BurstFloorIOPS;
     }
 }

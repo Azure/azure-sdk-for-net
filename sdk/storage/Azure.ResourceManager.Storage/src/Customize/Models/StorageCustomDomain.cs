@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for UseSubDomainName. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("useSubDomainName")]
         public bool? IsUseSubDomainNameEnabled
         {
             get => UseSubDomainName;

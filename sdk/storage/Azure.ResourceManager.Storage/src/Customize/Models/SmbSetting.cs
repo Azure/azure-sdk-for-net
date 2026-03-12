@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for MultichannelEnabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("multichannel.enabled")]
         public bool? IsMultiChannelEnabled
         {
             get => MultichannelEnabled;
@@ -19,6 +20,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Backward-compatible alias for Required. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("encryptionInTransit.required")]
         public bool? IsRequired
         {
             get => Required;

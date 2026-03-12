@@ -12,10 +12,12 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for FinishTime. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("finishTime")]
         public DateTimeOffset? FinishedOn => DateTimeOffset.TryParse(FinishTime, out var result) ? result : null;
 
         /// <summary> Backward-compatible alias for StartTime. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("startTime")]
         public DateTimeOffset? StartedOn => DateTimeOffset.TryParse(StartTime, out var result) ? result : null;
     }
 }

@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         // Backward-compat: prior GA exposed ResourceType as public Azure.Core.ResourceType.
         /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType => new ResourceType(_type);
     }
 }

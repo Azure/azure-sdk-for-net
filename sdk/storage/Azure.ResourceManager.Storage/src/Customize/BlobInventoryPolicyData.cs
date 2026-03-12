@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.Storage
     {
         /// <summary> Backward-compatible alias for Policy. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("properties.policy")]
         public BlobInventoryPolicySchema PolicySchema
         {
             get => Policy;

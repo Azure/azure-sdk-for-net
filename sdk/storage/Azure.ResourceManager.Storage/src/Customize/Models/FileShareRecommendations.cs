@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for BaseIOPS. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("baseIOPS")]
         public int? BaseIops => BaseIOPS;
     }
 }

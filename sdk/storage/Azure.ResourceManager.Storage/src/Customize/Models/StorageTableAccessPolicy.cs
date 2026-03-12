@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Expiry time of the access policy. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("expiryTime")]
         public DateTimeOffset? ExpireOn
         {
             get => ExpiryOn;

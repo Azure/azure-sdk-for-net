@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for SharedAccessExpiryOn. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("signedExpiry")]
         public DateTimeOffset SharedAccessExpireOn
         {
             get => SharedAccessExpiryOn;

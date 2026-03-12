@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> Backward-compatible alias for Enable. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("enable")]
         public bool IsEnabled
         {
             get => Enable;
