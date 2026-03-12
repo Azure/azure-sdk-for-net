@@ -1,16 +1,21 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.3.0-beta.1 (2026-03-15)
 
 ### Features Added
 
-- Regenerated with V2025_03_01_Preview
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Updated the client library to use API Version `2025-11-01-preview`. This adds all the capabilities that were introduced until this API version.
+- This release adds models and enums for all the APIs supported by Azure Load Testing.
+- Support for Notification Rules
+    - Added methods `CreateOrUpdateNotificationRule`, `CreateOrUpdateNotificationRuleAsync`, `GetNotificationRule`, `GetNotificationRuleAsync`, `DeleteNotificationRule`, `DeleteNotificationRuleAsync`, `GetNotificationRules`, and `GetNotificationRulesAsync` in `LoadTestAdministrationClient` to work with notification rules.
+- Support for Triggers
+    - Added methods `CreateOrUpdateTrigger`, `CreateOrUpdateTriggerAsync`, `GetTrigger`, `GetTriggerAsync`, `DeleteTrigger`, `DeleteTriggerAsync`, `GetTriggers`, and `GetTriggersAsync` in `LoadTestAdministrationClient` to work with scheduling test triggers.
+- Support for Actionable Insights
+    - Added methods `GenerateTestRunInsights`, `GenerateTestRunInsightsAsync`, `UpdateLatestTestRunInsights`, `UpdateLatestTestRunInsightsAsync`, `GetLatestTestRunInsights`, and `GetLatestTestRunInsightsAsync` in `LoadTestRunClient` to work with actionable insights.
+- Support for generating test plan recommendations
+    - Added methods `GenerateTestPlanRecommendations` and `GenerateTestPlanRecommendationsAsync` in `LoadTestAdministrationClient` which generates AI recommendations to author a load test plan using an uploaded browser recording file.
+- Support for Cloning load test
+    - Added methods `CloneTest` and `CloneTestAsync` in `LoadTestAdministrationClient` to clone a load test.
 
 ## 1.2.0-beta.1 (2025-04-15)
 
