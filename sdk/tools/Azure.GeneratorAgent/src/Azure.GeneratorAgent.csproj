@@ -35,4 +35,22 @@
     </None>
   </ItemGroup>
 
+  <!--
+    Override the three Copilot CLI download/copy targets from GitHub.Copilot.SDK.
+    The SDK package tries to download the CLI binary from npm at build time, which
+    fails in restricted CI environments (no npm registry access, missing secrets on forks).
+    The CLI is resolved at runtime via PATH, so these targets are unnecessary.
+  -->
+  <Target Name="_DownloadCopilotCli" BeforeTargets="BeforeBuild">
+    <Message Importance="high" Text="Skipping Copilot CLI download (overridden in Azure.GeneratorAgent.csproj)" />
+  </Target>
+
+  <Target Name="_CopyCopilotCliToOutput" AfterTargets="Build">
+    <Message Importance="high" Text="Skipping Copilot CLI copy to output (overridden in Azure.GeneratorAgent.csproj)" />
+  </Target>
+
+  <Target Name="_RegisterCopilotCliForCopy" BeforeTargets="GetCopyToOutputDirectoryItems">
+    <Message Importance="high" Text="Skipping Copilot CLI registration for copy (overridden in Azure.GeneratorAgent.csproj)" />
+  </Target>
+
 </Project>
