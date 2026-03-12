@@ -77,6 +77,8 @@ The `ServiceBusProcessor` processes messages concurrently up to the value of `Ma
 
 > **Thread pool contention**: A large number of concurrent tasks — whether I/O-bound or CPU-bound — can cause thread pool contention where some tasks stall unpredictably because the scheduler does not guarantee fairness. This is one of the most common sources of issues customers encounter with the processor.
 
+This example assumes the queue already contains messages. For sending messages, see [Sample01_SendReceive](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_SendReceive.md).
+
 ```C# Snippet:ServiceBusProcessorMaxConcurrentCalls
 // The fully qualified Service Bus namespace, which is likely to be similar to
 // "{yournamespace}.servicebus.windows.net".
@@ -136,6 +138,8 @@ Prefetching allows the client to fetch messages in the background before the app
 
 > **Lock expiration risk**: Thread pool contention tends to hit harder with prefetch enabled. Messages sit in the local buffer while waiting for a processing slot, and if contention causes unpredictable stalls, message locks can expire before your code even sees the message. The message is then redelivered, wasting the processing attempt. Keep `MaxConcurrentCalls` aligned with your processor count and test thoroughly to avoid this.
 
+This example assumes the queue already contains messages. For sending messages, see [Sample01_SendReceive](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample01_SendReceive.md).
+
 ```C# Snippet:ServiceBusPrefetchCount
 // The fully qualified Service Bus namespace, which is likely to be similar to
 // "{yournamespace}.servicebus.windows.net".
@@ -171,7 +175,7 @@ for (int i = 0; i < 200; i++)
 }
 ```
 
-Prefetching also works with the processor. When combining prefetch with the processor, keep `MaxConcurrentCalls` aligned with the processor count to reduce the risk of thread pool contention and lock expiration:
+Prefetching also works with the processor. When combining prefetch with the processor, keep `MaxConcurrentCalls` aligned with the processor count to reduce the risk of thread pool contention and lock expiration. This example assumes the queue already contains messages.
 
 ```C# Snippet:ServiceBusProcessorPrefetchCount
 // The fully qualified Service Bus namespace, which is likely to be similar to
@@ -231,7 +235,7 @@ For high-throughput or latency-sensitive workloads, Premium tier with multiple M
 
 ## Combining patterns for high throughput
 
-Concurrent processing and prefetching can be combined, but the right values depend entirely on your specific workload, message sizes, host resources, and what else is running on the machine. The following example is a starting point — not a recommendation. Test and tune thoroughly in your environment before using these values in production.
+Concurrent processing and prefetching can be combined, but the right values depend entirely on your specific workload, message sizes, host resources, and what else is running on the machine. The following example is a starting point — not a recommendation. Test and tune thoroughly in your environment before using these values in production. This example assumes the queue already contains messages.
 
 ```C# Snippet:ServiceBusHighThroughputProcessor
 // The fully qualified Service Bus namespace, which is likely to be similar to
