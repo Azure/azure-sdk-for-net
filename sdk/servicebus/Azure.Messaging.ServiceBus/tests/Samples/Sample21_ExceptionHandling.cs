@@ -34,8 +34,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 }
                 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.ServiceBusy)
                 {
-                    // Transient: the service is temporarily overloaded. Back off and retry.
-                    Console.WriteLine("Service is busy, retrying after delay...");
+                    // Transient: the service is temporarily overloaded. Back off and let the caller decide whether to retry.
+                    Console.WriteLine("Service is busy, backing off for 10 seconds...");
                     await Task.Delay(TimeSpan.FromSeconds(10));
                 }
                 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
@@ -159,7 +159,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
                 await using var client = CreateClient();
 #endif
 
-                ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
+                await using ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
                 {
                     MaxConcurrentCalls = 5,
                     AutoCompleteMessages = false

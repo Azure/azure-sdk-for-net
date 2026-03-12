@@ -19,8 +19,8 @@ try
 }
 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.ServiceBusy)
 {
-    // Transient: the service is temporarily overloaded. Back off and retry.
-    Console.WriteLine("Service is busy, retrying after delay...");
+    // Transient: the service is temporarily overloaded. Back off and let the caller decide whether to retry.
+    Console.WriteLine("Service is busy, backing off for 10 seconds...");
     await Task.Delay(TimeSpan.FromSeconds(10));
 }
 catch (ServiceBusException ex) when (ex.Reason == ServiceBusFailureReason.ServiceTimeout)
@@ -133,7 +133,7 @@ string queueName = "<queue_name>";
 
 await using var client = new ServiceBusClient(fullyQualifiedNamespace, new DefaultAzureCredential());
 
-ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
+await using ServiceBusProcessor processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions
 {
     MaxConcurrentCalls = 5,
     AutoCompleteMessages = false
