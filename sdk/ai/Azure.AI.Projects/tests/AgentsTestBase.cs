@@ -33,6 +33,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         ComputerUse,
         ImageGeneration,
         WebSearch,
+        WebSearchCustom,
         AzureAISearch,
         Memory,
         AzureFunction,
@@ -59,6 +60,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.ComputerUse, "I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete." },
         {ToolType.ImageGeneration, "Generate an image of Microsoft logo."},
         {ToolType.WebSearch, "Use web search to describe what is special about this place?"},
+        {ToolType.WebSearchCustom, "How many medals did the USA win in the 2024 summer olympics?"},
         {ToolType.Memory, "What is user's favorite animal?"},
         {ToolType.BingGrounding, "How does wikipedia explain Euler's Identity?" },
         {ToolType.BingGroundingCustom, "How many medals did the USA win in the 2024 summer olympics?"},
@@ -96,6 +98,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.BingGroundingCustom, "You are helpful agent."},
         {ToolType.ImageGeneration, "Generate images based on user prompts"},
         {ToolType.WebSearch, "You are a helpful assistant that can search the web"},
+        {ToolType.WebSearchCustom, "You are helpful agent."},
         {ToolType.Memory, "You are a prompt agent capable to access memorized conversation."},
         {ToolType.FunctionCall, "You are helpful agent. Use the provided functions to help answer questions."},
         {ToolType.ComputerUse, "You are a computer automation assistant.\n\n" +
@@ -136,6 +139,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.AzureAISearch, "product_info_7.md"},
         {ToolType.BingGrounding, "Wikipedia"},
         {ToolType.BingGroundingCustom, "Wikipedia"},
+        {ToolType.WebSearchCustom, "Wikipedia"},
         {ToolType.Sharepoint, "sharepoint"},
         {ToolType.MicrosoftFabric, "Fabric Response for" },
     };
@@ -156,6 +160,8 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.AzureAISearch, typeof(UriCitationMessageAnnotation) },
         {ToolType.BingGrounding, typeof(UriCitationMessageAnnotation) },
         {ToolType.BingGroundingCustom, typeof(UriCitationMessageAnnotation) },
+        {ToolType.WebSearch, typeof(UriCitationMessageAnnotation) },
+        {ToolType.WebSearchCustom, typeof(UriCitationMessageAnnotation) },
         {ToolType.MicrosoftFabric, typeof(UriCitationMessageAnnotation) },
         {ToolType.CodeInterpreterGen, typeof(ContainerFileCitationMessageAnnotation)},
     };
@@ -164,8 +170,10 @@ public class AgentsTestBase : ProjectsClientTestBase
     {
         {ToolType.FileSearch, "file_search_call" },
         {ToolType.WebSearch, "web_search_call" },
+        {ToolType.WebSearchCustom, "web_search_call" },
         {ToolType.ImageGeneration, "image_generation_call"},
         {ToolType.CodeInterpreter, "code_interpreter_call"},
+        {ToolType.CodeInterpreterGen, "code_interpreter_call"},
         {ToolType.OpenAPI, "openapi_call"},
         {ToolType.OpenAPIConnection, "openapi_call"},
         {ToolType.BrowserAutomation, "browser_automation_preview_call"},
@@ -407,6 +415,15 @@ public class AgentsTestBase : ProjectsClientTestBase
             );
     }
 
+    private WebSearchTool GetCustomWebSearch()
+    {
+        WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
+        webSearchTool.CustomSearchConfiguration = new(
+            TestEnvironment.CUSTOM_BING_CONNECTION_ID,
+            TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME);
+        return webSearchTool;
+    }
+
     /// <summary>
     /// Get the AgentDefinition, containing tool of a certain type.
     /// </summary>
@@ -469,6 +486,7 @@ public class AgentsTestBase : ProjectsClientTestBase
                 size: ImageGenerationToolSize.W1024xH1024
             ),
             ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
+            ToolType.WebSearchCustom => GetCustomWebSearch(),
             ToolType.Memory => new MemorySearchPreviewTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
             ToolType.AzureAISearch => new AzureAISearchTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
             ToolType.BingGrounding => new BingGroundingTool(new BingGroundingSearchToolOptions(

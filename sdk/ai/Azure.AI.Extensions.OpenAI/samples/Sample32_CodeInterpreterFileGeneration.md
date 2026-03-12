@@ -111,7 +111,7 @@ File.WriteAllBytes(
     path: "./results.pdf",
     bytes: fileData.ToArray()
 );
-Console.WriteLine($"Image downloaded and saved to: {Path.GetFullPath("results.pdf")}");
+Console.WriteLine($"PDF downloaded and saved to: {Path.GetFullPath("results.pdf")}");
 ```
 
 Asynchronous sample:
@@ -122,7 +122,7 @@ File.WriteAllBytes(
     path: "./results.pdf",
     bytes: fileData.ToArray()
 );
-Console.WriteLine($"Image downloaded and saved to: {Path.GetFullPath("results.pdf")}");
+Console.WriteLine($"PDF downloaded and saved to: {Path.GetFullPath("results.pdf")}");
 ```
 
 6. Clean up resources by deleting generated file and the Agent.

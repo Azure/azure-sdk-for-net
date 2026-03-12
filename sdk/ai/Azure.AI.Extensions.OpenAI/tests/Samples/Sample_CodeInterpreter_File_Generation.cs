@@ -88,7 +88,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
             path: "./results.pdf",
             bytes: fileData.ToArray()
         );
-        Console.WriteLine($"Image downloaded and saved to: {Path.GetFullPath("results.pdf")}");
+        Console.WriteLine($"PDF downloaded and saved to: {Path.GetFullPath("results.pdf")}");
         #endregion
         #region Snippet:Sample_Cleanup_CodeInterpreter_File_Generation_Async
         await containerClient.DeleteContainerFileAsync(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
@@ -164,7 +164,7 @@ public class Sample_CodeInterpreter_File_Generation : ProjectsOpenAITestBase
             path: "./results.pdf",
             bytes: fileData.ToArray()
         );
-        Console.WriteLine($"Image downloaded and saved to: {Path.GetFullPath("results.pdf")}");
+        Console.WriteLine($"PDF downloaded and saved to: {Path.GetFullPath("results.pdf")}");
         #endregion
         #region Snippet:Sample_Cleanup_CodeInterpreter_File_Generation_Sync
         containerClient.DeleteContainerFile(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
