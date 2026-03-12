@@ -347,6 +347,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("enableOutboundOnlyNodeTypes"u8);
                 writer.WriteBooleanValue(EnableOutboundOnlyNodeTypes.Value);
             }
+            if (Optional.IsDefined(SkipManagedNsgAssignment))
+            {
+                writer.WritePropertyName("skipManagedNsgAssignment"u8);
+                writer.WriteBooleanValue(SkipManagedNsgAssignment.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -432,6 +437,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             int? allocatedOutboundPorts = default;
             string vmImage = default;
             bool? enableOutboundOnlyNodeTypes = default;
+            bool? skipManagedNsgAssignment = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -846,6 +852,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     enableOutboundOnlyNodeTypes = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("skipManagedNsgAssignment"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    skipManagedNsgAssignment = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -895,6 +910,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 allocatedOutboundPorts,
                 vmImage,
                 enableOutboundOnlyNodeTypes,
+                skipManagedNsgAssignment,
                 additionalBinaryDataProperties);
         }
     }

@@ -92,10 +92,15 @@ namespace Azure.Generator.Management.Utilities
                     scopeParameterTransformed = true;
                 }
 
-                // Determine if required based on whether parameter has a default value
-                bool isRequired = outputParameter.DefaultValue == null;
+                // For PUT/PATCH operations, the body parameter is always required.
+                // Clear DefaultValue so that "= default" is not written in the output.
+                if (convenienceParam.Location == ParameterLocation.Body &&
+                    (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "PATCH"))
+                {
+                    outputParameter.DefaultValue = null;
+                }
 
-                if (isRequired)
+                if (outputParameter.DefaultValue == null)
                 {
                     requiredParameters.Add(outputParameter);
                 }
