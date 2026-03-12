@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> managed cluster properties for snapshot, these properties are read only. </summary>
-    public partial class ManagedClusterPropertiesForSnapshot
+    public partial class ManagedClusterSnapshotInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterPropertiesForSnapshot"/>. </summary>
-        internal ManagedClusterPropertiesForSnapshot()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSnapshotInfo"/>. </summary>
+        internal ManagedClusterSnapshotInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedClusterPropertiesForSnapshot"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSnapshotInfo"/>. </summary>
         /// <param name="kubernetesVersion"> The current kubernetes version. </param>
         /// <param name="sku"> The current managed cluster sku. </param>
         /// <param name="isRbacEnabled"> Whether the cluster has enabled Kubernetes Role-Based Access Control or not. </param>
         /// <param name="networkProfile"> The current network profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterPropertiesForSnapshot(string kubernetesVersion, ManagedClusterSku sku, bool? isRbacEnabled, NetworkProfileForSnapshot networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterSnapshotInfo(string kubernetesVersion, ManagedClusterSku sku, bool? isRbacEnabled, ManagedClusterSnapshotNetworkProfile networkProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KubernetesVersion = kubernetesVersion;
             Sku = sku;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The current network profile. </summary>
         [WirePath("networkProfile")]
-        public NetworkProfileForSnapshot NetworkProfile { get; }
+        public ManagedClusterSnapshotNetworkProfile NetworkProfile { get; }
     }
 }

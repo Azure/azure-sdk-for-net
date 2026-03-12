@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             IList<ManualScaleProfile> manual = default;
-            AutoScaleProfile autoscale = default;
+            AgentPoolAutoScaleProfile autoscale = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    autoscale = AutoScaleProfile.DeserializeAutoScaleProfile(prop.Value, options);
+                    autoscale = AgentPoolAutoScaleProfile.DeserializeAgentPoolAutoScaleProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

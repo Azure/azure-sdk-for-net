@@ -12,22 +12,22 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Specifications on auto-scaling. </summary>
-    public partial class AutoScaleProfile
+    public partial class AgentPoolAutoScaleProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutoScaleProfile"/>. </summary>
-        public AutoScaleProfile()
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAutoScaleProfile"/>. </summary>
+        public AgentPoolAutoScaleProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoScaleProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolAutoScaleProfile"/>. </summary>
         /// <param name="size"> VM size that AKS will use when creating and scaling e.g. 'Standard_E4s_v3', 'Standard_E16s_v3' or 'Standard_D16s_v5'. </param>
         /// <param name="minCount"> The minimum number of nodes of the specified sizes. </param>
         /// <param name="maxCount"> The maximum number of nodes of the specified sizes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoScaleProfile(string size, int? minCount, int? maxCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolAutoScaleProfile(string size, int? minCount, int? maxCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Size = size;
             MinCount = minCount;

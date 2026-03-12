@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="snapshotType"> The type of a snapshot. The default is NodePool. </param>
         /// <param name="managedClusterPropertiesReadOnly"> What the properties will be showed when getting managed cluster snapshot. Those properties are read-only. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterSnapshotProperties(ContainerServiceCreationData creationData, SnapshotType? snapshotType, ManagedClusterPropertiesForSnapshot managedClusterPropertiesReadOnly, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterSnapshotProperties(ContainerServiceCreationData creationData, SnapshotType? snapshotType, ManagedClusterSnapshotInfo managedClusterPropertiesReadOnly, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreationData = creationData;
             SnapshotType = snapshotType;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> What the properties will be showed when getting managed cluster snapshot. Those properties are read-only. </summary>
         [WirePath("managedClusterPropertiesReadOnly")]
-        public ManagedClusterPropertiesForSnapshot ManagedClusterPropertiesReadOnly { get; }
+        public ManagedClusterSnapshotInfo ManagedClusterPropertiesReadOnly { get; }
 
         /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
         [WirePath("creationData.sourceResourceId")]

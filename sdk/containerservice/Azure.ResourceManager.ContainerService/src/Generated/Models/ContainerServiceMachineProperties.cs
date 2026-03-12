@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="status"> Contains read-only information about the machine. </param>
         /// <param name="localDnsProfile"> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceMachineProperties(MachineNetworkProperties network, ResourceIdentifier resourceId, MachineHardwareProfile hardware, MachineOSProfile operatingSystem, MachineKubernetesProfile kubernetes, AgentPoolMode? mode, MachineSecurityProfile security, ScaleSetPriority? priority, ScaleSetEvictionPolicy? evictionPolicy, MachineBillingProfile billing, string nodeImageVersion, string provisioningState, IDictionary<string, string> tags, ETag? eTag, MachineStatus status, LocalDnsProfile localDnsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceMachineProperties(ContainerServiceMachineNetworkProperties network, ResourceIdentifier resourceId, ContainerServiceMachineHardwareProfile hardware, ContainerServiceMachineOSProfile operatingSystem, ContainerServiceMachineKubernetesProfile kubernetes, AgentPoolMode? mode, ContainerServiceMachineSecurityProfile security, ScaleSetPriority? priority, ScaleSetEvictionPolicy? evictionPolicy, MachineBillingProfile billing, string nodeImageVersion, string provisioningState, IDictionary<string, string> tags, ETag? eTag, ContainerServiceMachineStatus status, LocalDnsProfile localDnsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Network = network;
             ResourceId = resourceId;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> network properties of the machine. </summary>
         [WirePath("network")]
-        public MachineNetworkProperties Network { get; }
+        public ContainerServiceMachineNetworkProperties Network { get; }
 
         /// <summary> Azure resource id of the machine. It can be used to GET underlying VM Instance. </summary>
         [WirePath("resourceId")]
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The hardware and GPU settings of the machine. </summary>
         [WirePath("hardware")]
-        public MachineHardwareProfile Hardware { get; set; }
+        public ContainerServiceMachineHardwareProfile Hardware { get; set; }
 
         /// <summary> The operating system and disk used by the machine. </summary>
         [WirePath("operatingSystem")]
-        public MachineOSProfile OperatingSystem { get; set; }
+        public ContainerServiceMachineOSProfile OperatingSystem { get; set; }
 
         /// <summary> The Kubernetes configurations used by the machine. </summary>
         [WirePath("kubernetes")]
-        public MachineKubernetesProfile Kubernetes { get; set; }
+        public ContainerServiceMachineKubernetesProfile Kubernetes { get; set; }
 
         /// <summary> Machine only allows 'System' and 'User' mode. </summary>
         [WirePath("mode")]
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The security settings of the machine. </summary>
         [WirePath("security")]
-        public MachineSecurityProfile Security { get; set; }
+        public ContainerServiceMachineSecurityProfile Security { get; set; }
 
         /// <summary> The priority for the machine. If not specified, the default is 'Regular'. </summary>
         [WirePath("priority")]
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Contains read-only information about the machine. </summary>
         [WirePath("status")]
-        public MachineStatus Status { get; }
+        public ContainerServiceMachineStatus Status { get; }
 
         /// <summary> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </summary>
         [WirePath("localDNSProfile")]

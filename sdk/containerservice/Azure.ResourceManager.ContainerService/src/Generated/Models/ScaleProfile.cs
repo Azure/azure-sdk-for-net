@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="manual"> Specifications on how to scale the VirtualMachines agent pool to a fixed size. </param>
         /// <param name="autoscale"> Specifications on how to auto-scale the VirtualMachines agent pool within a predefined size range. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScaleProfile(IList<ManualScaleProfile> manual, AutoScaleProfile autoscale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScaleProfile(IList<ManualScaleProfile> manual, AgentPoolAutoScaleProfile autoscale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Manual = manual;
             Autoscale = autoscale;
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Specifications on how to auto-scale the VirtualMachines agent pool within a predefined size range. </summary>
         [WirePath("autoscale")]
-        public AutoScaleProfile Autoscale { get; set; }
+        public AgentPoolAutoScaleProfile Autoscale { get; set; }
     }
 }

@@ -12,17 +12,17 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The operating system and disk used by the machine. </summary>
-    public partial class MachineOSProfile
+    public partial class ContainerServiceMachineOSProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineOSProfile"/>. </summary>
-        public MachineOSProfile()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineOSProfile"/>. </summary>
+        public ContainerServiceMachineOSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineOSProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineOSProfile"/>. </summary>
         /// <param name="osType"> The operating system type. The default is Linux. </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. If not specified, the default is Ubuntu if OSType=Linux or Windows2019 if OSType=Windows. And the default Windows OSSKU will be changed to Windows2022 after Windows2019 is deprecated. </param>
         /// <param name="osDiskSizeInGB"> OS Disk Size in GB to be used to specify the disk size for every machine in the master/agent pool. If you specify 0, it will apply the default osDisk size according to the vmSize specified. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="linuxProfile"> The Linux machine's specific profile. </param>
         /// <param name="windowsProfile"> The Windows machine's specific profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineOSProfile(ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, bool? isFipsEnabled, MachineOSProfileLinuxProfile linuxProfile, AgentPoolWindowsProfile windowsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceMachineOSProfile(ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, int? osDiskSizeInGB, ContainerServiceOSDiskType? osDiskType, bool? isFipsEnabled, ContainerServiceMachineLinuxProfile linuxProfile, AgentPoolWindowsProfile windowsProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OSType = osType;
             OSSku = osSku;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The Linux machine's specific profile. </summary>
         [WirePath("linuxProfile")]
-        public MachineOSProfileLinuxProfile LinuxProfile { get; set; }
+        public ContainerServiceMachineLinuxProfile LinuxProfile { get; set; }
 
         /// <summary> The Windows machine's specific profile. </summary>
         [WirePath("windowsProfile")]

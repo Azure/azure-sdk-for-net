@@ -209,13 +209,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            MachineNetworkProperties network = default;
+            ContainerServiceMachineNetworkProperties network = default;
             ResourceIdentifier resourceId = default;
-            MachineHardwareProfile hardware = default;
-            MachineOSProfile operatingSystem = default;
-            MachineKubernetesProfile kubernetes = default;
+            ContainerServiceMachineHardwareProfile hardware = default;
+            ContainerServiceMachineOSProfile operatingSystem = default;
+            ContainerServiceMachineKubernetesProfile kubernetes = default;
             AgentPoolMode? mode = default;
-            MachineSecurityProfile security = default;
+            ContainerServiceMachineSecurityProfile security = default;
             ScaleSetPriority? priority = default;
             ScaleSetEvictionPolicy? evictionPolicy = default;
             MachineBillingProfile billing = default;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             string provisioningState = default;
             IDictionary<string, string> tags = default;
             ETag? eTag = default;
-            MachineStatus status = default;
+            ContainerServiceMachineStatus status = default;
             LocalDnsProfile localDnsProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    network = MachineNetworkProperties.DeserializeMachineNetworkProperties(prop.Value, options);
+                    network = ContainerServiceMachineNetworkProperties.DeserializeContainerServiceMachineNetworkProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    hardware = MachineHardwareProfile.DeserializeMachineHardwareProfile(prop.Value, options);
+                    hardware = ContainerServiceMachineHardwareProfile.DeserializeContainerServiceMachineHardwareProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("operatingSystem"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    operatingSystem = MachineOSProfile.DeserializeMachineOSProfile(prop.Value, options);
+                    operatingSystem = ContainerServiceMachineOSProfile.DeserializeContainerServiceMachineOSProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kubernetes"u8))
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    kubernetes = MachineKubernetesProfile.DeserializeMachineKubernetesProfile(prop.Value, options);
+                    kubernetes = ContainerServiceMachineKubernetesProfile.DeserializeContainerServiceMachineKubernetesProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("mode"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    security = MachineSecurityProfile.DeserializeMachineSecurityProfile(prop.Value, options);
+                    security = ContainerServiceMachineSecurityProfile.DeserializeContainerServiceMachineSecurityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("priority"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    status = MachineStatus.DeserializeMachineStatus(prop.Value, options);
+                    status = ContainerServiceMachineStatus.DeserializeContainerServiceMachineStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("localDNSProfile"u8))

@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The hardware and GPU settings of the machine. </summary>
-    public partial class MachineHardwareProfile
+    public partial class ContainerServiceMachineHardwareProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineHardwareProfile"/>. </summary>
-        public MachineHardwareProfile()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineHardwareProfile"/>. </summary>
+        public ContainerServiceMachineHardwareProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineHardwareProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineHardwareProfile"/>. </summary>
         /// <param name="vmSize"> The size of the VM. VM size availability varies by region. If a node contains insufficient compute resources (memory, cpu, etc) pods might fail to run correctly. For more details on restricted VM sizes, see: https://docs.microsoft.com/azure/aks/quotas-skus-regions. </param>
         /// <param name="gpuInstanceProfile"> GPUInstanceProfile to be used to specify GPU MIG instance profile for supported GPU VM SKU. </param>
         /// <param name="gpuProfile"> The GPU settings of the machine. </param>
         /// <param name="isUltraSsdEnabled"> Whether to enable UltraSSD. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineHardwareProfile(string vmSize, GpuInstanceProfile? gpuInstanceProfile, AgentPoolGpuProfile gpuProfile, bool? isUltraSsdEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceMachineHardwareProfile(string vmSize, GpuInstanceProfile? gpuInstanceProfile, AgentPoolGpuProfile gpuProfile, bool? isUltraSsdEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             GpuInstanceProfile = gpuInstanceProfile;

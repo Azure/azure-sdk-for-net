@@ -13,52 +13,52 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The security settings of the machine. </summary>
-    public partial class MachineSecurityProfile : IJsonModel<MachineSecurityProfile>
+    /// <summary> managed cluster properties for snapshot, these properties are read only. </summary>
+    public partial class ManagedClusterSnapshotInfo : IJsonModel<ManagedClusterSnapshotInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MachineSecurityProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterSnapshotInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MachineSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSnapshotInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMachineSecurityProfile(document.RootElement, options);
+                        return DeserializeManagedClusterSnapshotInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineSecurityProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSnapshotInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MachineSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSnapshotInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MachineSecurityProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSnapshotInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MachineSecurityProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedClusterSnapshotInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MachineSecurityProfile IPersistableModel<MachineSecurityProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedClusterSnapshotInfo IPersistableModel<ManagedClusterSnapshotInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MachineSecurityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterSnapshotInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MachineSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterSnapshotInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,30 +69,30 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MachineSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSnapshotInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineSecurityProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSnapshotInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IsVtpmEnabled))
+            if (Optional.IsDefined(KubernetesVersion))
             {
-                writer.WritePropertyName("enableVTPM"u8);
-                writer.WriteBooleanValue(IsVtpmEnabled.Value);
+                writer.WritePropertyName("kubernetesVersion"u8);
+                writer.WriteStringValue(KubernetesVersion);
             }
-            if (Optional.IsDefined(IsSecureBootEnabled))
+            if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("enableSecureBoot"u8);
-                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
             }
-            if (Optional.IsDefined(SshAccess))
+            if (Optional.IsDefined(IsRbacEnabled))
             {
-                writer.WritePropertyName("sshAccess"u8);
-                writer.WriteStringValue(SshAccess.Value.ToString());
+                writer.WritePropertyName("enableRbac"u8);
+                writer.WriteBooleanValue(IsRbacEnabled.Value);
             }
-            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
+            if (options.Format != "W" && Optional.IsDefined(NetworkProfile))
             {
-                writer.WritePropertyName("enableEncryptionAtHost"u8);
-                writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
+                writer.WritePropertyName("networkProfile"u8);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -113,70 +113,66 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MachineSecurityProfile IJsonModel<MachineSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedClusterSnapshotInfo IJsonModel<ManagedClusterSnapshotInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MachineSecurityProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedClusterSnapshotInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MachineSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSnapshotInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineSecurityProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSnapshotInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMachineSecurityProfile(document.RootElement, options);
+            return DeserializeManagedClusterSnapshotInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MachineSecurityProfile DeserializeMachineSecurityProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedClusterSnapshotInfo DeserializeManagedClusterSnapshotInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            bool? isVtpmEnabled = default;
-            bool? isSecureBootEnabled = default;
-            AgentPoolSshAccess? sshAccess = default;
-            bool? isEncryptionAtHostEnabled = default;
+            string kubernetesVersion = default;
+            ManagedClusterSku sku = default;
+            bool? isRbacEnabled = default;
+            ManagedClusterSnapshotNetworkProfile networkProfile = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("enableVTPM"u8))
+                if (prop.NameEquals("kubernetesVersion"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isVtpmEnabled = prop.Value.GetBoolean();
+                    kubernetesVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("enableSecureBoot"u8))
+                if (prop.NameEquals("sku"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isSecureBootEnabled = prop.Value.GetBoolean();
+                    sku = ManagedClusterSku.DeserializeManagedClusterSku(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("sshAccess"u8))
+                if (prop.NameEquals("enableRbac"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sshAccess = new AgentPoolSshAccess(prop.Value.GetString());
+                    isRbacEnabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("enableEncryptionAtHost"u8))
+                if (prop.NameEquals("networkProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isEncryptionAtHostEnabled = prop.Value.GetBoolean();
+                    networkProfile = ManagedClusterSnapshotNetworkProfile.DeserializeManagedClusterSnapshotNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +180,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MachineSecurityProfile(isVtpmEnabled, isSecureBootEnabled, sshAccess, isEncryptionAtHostEnabled, additionalBinaryDataProperties);
+            return new ManagedClusterSnapshotInfo(kubernetesVersion, sku, isRbacEnabled, networkProfile, additionalBinaryDataProperties);
         }
     }
 }

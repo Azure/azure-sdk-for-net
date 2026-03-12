@@ -13,19 +13,19 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> network properties of the machine. </summary>
-    public partial class MachineNetworkProperties
+    public partial class ContainerServiceMachineNetworkProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineNetworkProperties"/>. </summary>
-        internal MachineNetworkProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineNetworkProperties"/>. </summary>
+        internal ContainerServiceMachineNetworkProperties()
         {
             IPAddresses = new ChangeTrackingList<ContainerServiceMachineIPAddress>();
             NodePublicIPTags = new ChangeTrackingList<ContainerServiceIPTag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineNetworkProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineNetworkProperties"/>. </summary>
         /// <param name="ipAddresses"> IPv4, IPv6 addresses of the machine. </param>
         /// <param name="vnetSubnetId"> The ID of the subnet which node and optionally pods will join on startup. If this is not specified, a VNET and subnet will be generated and used. If no podSubnetID is specified, this applies to nodes and pods, otherwise it applies to just nodes. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
         /// <param name="podSubnetId"> The ID of the subnet which pods will join when launched. If omitted, pod IPs are statically assigned on the node subnet (see vnetSubnetID for more details). This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodePublicIpPrefixId"> The public IP prefix ID which VM node should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </param>
         /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineNetworkProperties(IReadOnlyList<ContainerServiceMachineIPAddress> ipAddresses, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIpPrefixId, IList<ContainerServiceIPTag> nodePublicIPTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceMachineNetworkProperties(IReadOnlyList<ContainerServiceMachineIPAddress> ipAddresses, ResourceIdentifier vnetSubnetId, ResourceIdentifier podSubnetId, bool? isNodePublicIpEnabled, ResourceIdentifier nodePublicIpPrefixId, IList<ContainerServiceIPTag> nodePublicIPTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPAddresses = ipAddresses;
             VnetSubnetId = vnetSubnetId;

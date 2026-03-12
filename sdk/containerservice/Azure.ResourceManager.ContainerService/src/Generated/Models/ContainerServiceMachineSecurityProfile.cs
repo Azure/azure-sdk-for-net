@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The security settings of the machine. </summary>
-    public partial class MachineSecurityProfile
+    public partial class ContainerServiceMachineSecurityProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineSecurityProfile"/>. </summary>
-        public MachineSecurityProfile()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineSecurityProfile"/>. </summary>
+        public ContainerServiceMachineSecurityProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineSecurityProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineSecurityProfile"/>. </summary>
         /// <param name="isVtpmEnabled"> vTPM is a Trusted Launch feature for configuring a dedicated secure vault for keys and measurements held locally on the node. For more details, see aka.ms/aks/trustedlaunch. If not specified, the default is false. </param>
         /// <param name="isSecureBootEnabled"> Secure Boot is a feature of Trusted Launch which ensures that only signed operating systems and drivers can boot. For more details, see aka.ms/aks/trustedlaunch.  If not specified, the default is false. </param>
         /// <param name="sshAccess"> SSH access method of an agent pool. </param>
         /// <param name="isEncryptionAtHostEnabled"> Whether to enable host based OS and data drive encryption. This is only supported on certain VM sizes and in certain Azure regions. For more information, see: https://docs.microsoft.com/azure/aks/enable-host-encryption. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineSecurityProfile(bool? isVtpmEnabled, bool? isSecureBootEnabled, AgentPoolSshAccess? sshAccess, bool? isEncryptionAtHostEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceMachineSecurityProfile(bool? isVtpmEnabled, bool? isSecureBootEnabled, AgentPoolSshAccess? sshAccess, bool? isEncryptionAtHostEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsVtpmEnabled = isVtpmEnabled;
             IsSecureBootEnabled = isSecureBootEnabled;

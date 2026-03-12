@@ -12,24 +12,24 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> network profile for managed cluster snapshot, these properties are read only. </summary>
-    public partial class NetworkProfileForSnapshot
+    public partial class ManagedClusterSnapshotNetworkProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkProfileForSnapshot"/>. </summary>
-        internal NetworkProfileForSnapshot()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSnapshotNetworkProfile"/>. </summary>
+        internal ManagedClusterSnapshotNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkProfileForSnapshot"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSnapshotNetworkProfile"/>. </summary>
         /// <param name="networkPlugin"> networkPlugin for managed cluster snapshot. </param>
         /// <param name="networkPluginMode"> NetworkPluginMode for managed cluster snapshot. </param>
         /// <param name="networkPolicy"> networkPolicy for managed cluster snapshot. </param>
         /// <param name="networkMode"> networkMode for managed cluster snapshot. </param>
         /// <param name="loadBalancerSku"> loadBalancerSku for managed cluster snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkProfileForSnapshot(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, ContainerServiceLoadBalancerSku? loadBalancerSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterSnapshotNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin, ContainerServiceNetworkPluginMode? networkPluginMode, ContainerServiceNetworkPolicy? networkPolicy, ContainerServiceNetworkMode? networkMode, ContainerServiceLoadBalancerSku? loadBalancerSku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NetworkPlugin = networkPlugin;
             NetworkPluginMode = networkPluginMode;

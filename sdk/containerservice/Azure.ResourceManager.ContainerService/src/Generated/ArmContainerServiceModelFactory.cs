@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="manual"> Specifications on how to scale the VirtualMachines agent pool to a fixed size. </param>
         /// <param name="autoscale"> Specifications on how to auto-scale the VirtualMachines agent pool within a predefined size range. </param>
         /// <returns> A new <see cref="Models.ScaleProfile"/> instance for mocking. </returns>
-        public static ScaleProfile ScaleProfile(IEnumerable<ManualScaleProfile> manual = default, AutoScaleProfile autoscale = default)
+        public static ScaleProfile ScaleProfile(IEnumerable<ManualScaleProfile> manual = default, AgentPoolAutoScaleProfile autoscale = default)
         {
             manual ??= new ChangeTrackingList<ManualScaleProfile>();
 
@@ -1482,7 +1482,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="status"> Contains read-only information about the machine. </param>
         /// <param name="localDnsProfile"> Configures the per-node local DNS, with VnetDNS and KubeDNS overrides. LocalDNS helps improve performance and reliability of DNS resolution in an AKS cluster. For more details see aka.ms/aks/localdns. </param>
         /// <returns> A new <see cref="Models.ContainerServiceMachineProperties"/> instance for mocking. </returns>
-        public static ContainerServiceMachineProperties ContainerServiceMachineProperties(MachineNetworkProperties network = default, ResourceIdentifier resourceId = default, MachineHardwareProfile hardware = default, MachineOSProfile operatingSystem = default, MachineKubernetesProfile kubernetes = default, AgentPoolMode? mode = default, MachineSecurityProfile security = default, ScaleSetPriority? priority = default, ScaleSetEvictionPolicy? evictionPolicy = default, float? billingSpotMaxPrice = default, string nodeImageVersion = default, string provisioningState = default, IDictionary<string, string> tags = default, ETag? etag = default, MachineStatus status = default, LocalDnsProfile localDnsProfile = default)
+        public static ContainerServiceMachineProperties ContainerServiceMachineProperties(ContainerServiceMachineNetworkProperties network = default, ResourceIdentifier resourceId = default, ContainerServiceMachineHardwareProfile hardware = default, ContainerServiceMachineOSProfile operatingSystem = default, ContainerServiceMachineKubernetesProfile kubernetes = default, AgentPoolMode? mode = default, ContainerServiceMachineSecurityProfile security = default, ScaleSetPriority? priority = default, ScaleSetEvictionPolicy? evictionPolicy = default, float? billingSpotMaxPrice = default, string nodeImageVersion = default, string provisioningState = default, IDictionary<string, string> tags = default, ETag? etag = default, ContainerServiceMachineStatus status = default, LocalDnsProfile localDnsProfile = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1513,13 +1513,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="isNodePublicIpEnabled"> Whether the machine is allocated its own public IP. Some scenarios may require the machine to receive their own dedicated public IP addresses. A common scenario is for gaming workloads, where a console needs to make a direct connection to a cloud virtual machine to minimize hops. The default is false. </param>
         /// <param name="nodePublicIpPrefixId"> The public IP prefix ID which VM node should use IPs from. This is of the form: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/publicIPPrefixes/{publicIPPrefixName}. </param>
         /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
-        /// <returns> A new <see cref="Models.MachineNetworkProperties"/> instance for mocking. </returns>
-        public static MachineNetworkProperties MachineNetworkProperties(IEnumerable<ContainerServiceMachineIPAddress> ipAddresses = default, ResourceIdentifier vnetSubnetId = default, ResourceIdentifier podSubnetId = default, bool? isNodePublicIpEnabled = default, ResourceIdentifier nodePublicIpPrefixId = default, IEnumerable<ContainerServiceIPTag> nodePublicIPTags = default)
+        /// <returns> A new <see cref="Models.ContainerServiceMachineNetworkProperties"/> instance for mocking. </returns>
+        public static ContainerServiceMachineNetworkProperties ContainerServiceMachineNetworkProperties(IEnumerable<ContainerServiceMachineIPAddress> ipAddresses = default, ResourceIdentifier vnetSubnetId = default, ResourceIdentifier podSubnetId = default, bool? isNodePublicIpEnabled = default, ResourceIdentifier nodePublicIpPrefixId = default, IEnumerable<ContainerServiceIPTag> nodePublicIPTags = default)
         {
             ipAddresses ??= new ChangeTrackingList<ContainerServiceMachineIPAddress>();
             nodePublicIPTags ??= new ChangeTrackingList<ContainerServiceIPTag>();
 
-            return new MachineNetworkProperties(
+            return new ContainerServiceMachineNetworkProperties(
                 ipAddresses.ToList(),
                 vnetSubnetId,
                 podSubnetId,
@@ -1549,14 +1549,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodeName"> The node name in the Kubernetes cluster. </param>
         /// <param name="workloadRuntime"> Determines the type of workload a node can run. </param>
         /// <param name="isArtifactStreamingEnabled"> Artifact streaming speeds up the cold-start of containers on a node through on-demand image loading. To use this feature, container images must also enable artifact streaming on ACR. If not specified, the default is false. </param>
-        /// <returns> A new <see cref="Models.MachineKubernetesProfile"/> instance for mocking. </returns>
-        public static MachineKubernetesProfile MachineKubernetesProfile(IDictionary<string, string> nodeLabels = default, string orchestratorVersion = default, string currentOrchestratorVersion = default, KubeletDiskType? kubeletDiskType = default, KubeletConfig kubeletConfig = default, IEnumerable<string> nodeInitializationTaints = default, IEnumerable<string> nodeTaints = default, int? maxPods = default, string nodeName = default, WorkloadRuntime? workloadRuntime = default, bool? isArtifactStreamingEnabled = default)
+        /// <returns> A new <see cref="Models.ContainerServiceMachineKubernetesProfile"/> instance for mocking. </returns>
+        public static ContainerServiceMachineKubernetesProfile ContainerServiceMachineKubernetesProfile(IDictionary<string, string> nodeLabels = default, string orchestratorVersion = default, string currentOrchestratorVersion = default, KubeletDiskType? kubeletDiskType = default, KubeletConfig kubeletConfig = default, IEnumerable<string> nodeInitializationTaints = default, IEnumerable<string> nodeTaints = default, int? maxPods = default, string nodeName = default, WorkloadRuntime? workloadRuntime = default, bool? isArtifactStreamingEnabled = default)
         {
             nodeLabels ??= new ChangeTrackingDictionary<string, string>();
             nodeInitializationTaints ??= new ChangeTrackingList<string>();
             nodeTaints ??= new ChangeTrackingList<string>();
 
-            return new MachineKubernetesProfile(
+            return new ContainerServiceMachineKubernetesProfile(
                 nodeLabels,
                 orchestratorVersion,
                 currentOrchestratorVersion,
@@ -1577,10 +1577,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="driftAction"> The drift action of the machine. Indicates whether a machine has deviated from its expected state due to changes in managed cluster properties, requiring corrective action. </param>
         /// <param name="driftReason"> Reason for machine drift. Provides detailed information on why the machine has drifted. This field is omitted if the machine is up to date. </param>
         /// <param name="vmState"> Virtual machine state. Indicates the current state of the underlying virtual machine. </param>
-        /// <returns> A new <see cref="Models.MachineStatus"/> instance for mocking. </returns>
-        public static MachineStatus MachineStatus(ResponseError provisioningError = default, DateTimeOffset? createdOn = default, ContainerServiceMachineDriftAction? driftAction = default, string driftReason = default, ContainerServiceMachineVmState? vmState = default)
+        /// <returns> A new <see cref="Models.ContainerServiceMachineStatus"/> instance for mocking. </returns>
+        public static ContainerServiceMachineStatus ContainerServiceMachineStatus(ResponseError provisioningError = default, DateTimeOffset? createdOn = default, ContainerServiceMachineDriftAction? driftAction = default, string driftReason = default, ContainerServiceMachineVmState? vmState = default)
         {
-            return new MachineStatus(
+            return new ContainerServiceMachineStatus(
                 provisioningError,
                 createdOn,
                 driftAction,
@@ -1638,7 +1638,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="managedClusterPropertiesReadOnly"> What the properties will be showed when getting managed cluster snapshot. Those properties are read-only. </param>
         /// <param name="creationDataSourceResourceId"> This is the ARM ID of the source object to be used to create the target object. </param>
         /// <returns> A new <see cref="ContainerService.ManagedClusterSnapshotData"/> instance for mocking. </returns>
-        public static ManagedClusterSnapshotData ManagedClusterSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SnapshotType? snapshotType = default, ManagedClusterPropertiesForSnapshot managedClusterPropertiesReadOnly = default, ResourceIdentifier creationDataSourceResourceId = default)
+        public static ManagedClusterSnapshotData ManagedClusterSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SnapshotType? snapshotType = default, ManagedClusterSnapshotInfo managedClusterPropertiesReadOnly = default, ResourceIdentifier creationDataSourceResourceId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1658,10 +1658,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="sku"> The current managed cluster sku. </param>
         /// <param name="isRbacEnabled"> Whether the cluster has enabled Kubernetes Role-Based Access Control or not. </param>
         /// <param name="networkProfile"> The current network profile. </param>
-        /// <returns> A new <see cref="Models.ManagedClusterPropertiesForSnapshot"/> instance for mocking. </returns>
-        public static ManagedClusterPropertiesForSnapshot ManagedClusterPropertiesForSnapshot(string kubernetesVersion = default, ManagedClusterSku sku = default, bool? isRbacEnabled = default, NetworkProfileForSnapshot networkProfile = default)
+        /// <returns> A new <see cref="Models.ManagedClusterSnapshotInfo"/> instance for mocking. </returns>
+        public static ManagedClusterSnapshotInfo ManagedClusterSnapshotInfo(string kubernetesVersion = default, ManagedClusterSku sku = default, bool? isRbacEnabled = default, ManagedClusterSnapshotNetworkProfile networkProfile = default)
         {
-            return new ManagedClusterPropertiesForSnapshot(kubernetesVersion, sku, isRbacEnabled, networkProfile, additionalBinaryDataProperties: null);
+            return new ManagedClusterSnapshotInfo(kubernetesVersion, sku, isRbacEnabled, networkProfile, additionalBinaryDataProperties: null);
         }
 
         /// <summary> network profile for managed cluster snapshot, these properties are read only. </summary>
@@ -1670,10 +1670,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="networkPolicy"> networkPolicy for managed cluster snapshot. </param>
         /// <param name="networkMode"> networkMode for managed cluster snapshot. </param>
         /// <param name="loadBalancerSku"> loadBalancerSku for managed cluster snapshot. </param>
-        /// <returns> A new <see cref="Models.NetworkProfileForSnapshot"/> instance for mocking. </returns>
-        public static NetworkProfileForSnapshot NetworkProfileForSnapshot(ContainerServiceNetworkPlugin? networkPlugin = default, ContainerServiceNetworkPluginMode? networkPluginMode = default, ContainerServiceNetworkPolicy? networkPolicy = default, ContainerServiceNetworkMode? networkMode = default, ContainerServiceLoadBalancerSku? loadBalancerSku = default)
+        /// <returns> A new <see cref="Models.ManagedClusterSnapshotNetworkProfile"/> instance for mocking. </returns>
+        public static ManagedClusterSnapshotNetworkProfile ManagedClusterSnapshotNetworkProfile(ContainerServiceNetworkPlugin? networkPlugin = default, ContainerServiceNetworkPluginMode? networkPluginMode = default, ContainerServiceNetworkPolicy? networkPolicy = default, ContainerServiceNetworkMode? networkMode = default, ContainerServiceLoadBalancerSku? loadBalancerSku = default)
         {
-            return new NetworkProfileForSnapshot(
+            return new ManagedClusterSnapshotNetworkProfile(
                 networkPlugin,
                 networkPluginMode,
                 networkPolicy,

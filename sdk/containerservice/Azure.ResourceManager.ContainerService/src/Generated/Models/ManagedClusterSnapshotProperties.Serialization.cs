@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ContainerServiceCreationData creationData = default;
             SnapshotType? snapshotType = default;
-            ManagedClusterPropertiesForSnapshot managedClusterPropertiesReadOnly = default;
+            ManagedClusterSnapshotInfo managedClusterPropertiesReadOnly = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    managedClusterPropertiesReadOnly = ManagedClusterPropertiesForSnapshot.DeserializeManagedClusterPropertiesForSnapshot(prop.Value, options);
+                    managedClusterPropertiesReadOnly = ManagedClusterSnapshotInfo.DeserializeManagedClusterSnapshotInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

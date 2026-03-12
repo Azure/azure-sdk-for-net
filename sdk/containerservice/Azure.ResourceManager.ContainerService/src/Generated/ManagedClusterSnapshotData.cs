@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> What the properties will be showed when getting managed cluster snapshot. Those properties are read-only. </summary>
         [WirePath("properties.managedClusterPropertiesReadOnly")]
-        public ManagedClusterPropertiesForSnapshot ManagedClusterPropertiesReadOnly
+        public ManagedClusterSnapshotInfo ManagedClusterPropertiesReadOnly
         {
             get
             {

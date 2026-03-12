@@ -12,20 +12,20 @@ using Azure.ResourceManager.ContainerService;
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> The Kubernetes configurations used by the machine. </summary>
-    public partial class MachineKubernetesProfile
+    public partial class ContainerServiceMachineKubernetesProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MachineKubernetesProfile"/>. </summary>
-        public MachineKubernetesProfile()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineKubernetesProfile"/>. </summary>
+        public ContainerServiceMachineKubernetesProfile()
         {
             NodeLabels = new ChangeTrackingDictionary<string, string>();
             NodeInitializationTaints = new ChangeTrackingList<string>();
             NodeTaints = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MachineKubernetesProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMachineKubernetesProfile"/>. </summary>
         /// <param name="nodeLabels"> The node labels on the machine. </param>
         /// <param name="orchestratorVersion"> The version of Kubernetes specified by the user. Both patch version &lt;major.minor.patch&gt; and &lt;major.minor&gt; are supported. When &lt;major.minor&gt; is specified, the latest supported patch version is chosen automatically. </param>
         /// <param name="currentOrchestratorVersion"> The version of Kubernetes running on the machine. If orchestratorVersion was a fully specified version &lt;major.minor.patch&gt;, this field will be exactly equal to it. If orchestratorVersion was &lt;major.minor&gt;, this field will contain the full &lt;major.minor.patch&gt; version being used. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="workloadRuntime"> Determines the type of workload a node can run. </param>
         /// <param name="artifactStreamingProfile"> Configuration for using artifact streaming on AKS. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineKubernetesProfile(IDictionary<string, string> nodeLabels, string orchestratorVersion, string currentOrchestratorVersion, KubeletDiskType? kubeletDiskType, KubeletConfig kubeletConfig, IList<string> nodeInitializationTaints, IList<string> nodeTaints, int? maxPods, string nodeName, WorkloadRuntime? workloadRuntime, AgentPoolArtifactStreamingProfile artifactStreamingProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceMachineKubernetesProfile(IDictionary<string, string> nodeLabels, string orchestratorVersion, string currentOrchestratorVersion, KubeletDiskType? kubeletDiskType, KubeletConfig kubeletConfig, IList<string> nodeInitializationTaints, IList<string> nodeTaints, int? maxPods, string nodeName, WorkloadRuntime? workloadRuntime, AgentPoolArtifactStreamingProfile artifactStreamingProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodeLabels = nodeLabels;
             OrchestratorVersion = orchestratorVersion;
