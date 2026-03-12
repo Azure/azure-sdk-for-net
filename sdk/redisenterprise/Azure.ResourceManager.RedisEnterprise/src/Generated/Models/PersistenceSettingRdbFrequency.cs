@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public readonly partial struct PersistenceSettingRdbFrequency : IEquatable<PersistenceSettingRdbFrequency>
     {
         private readonly string _value;
+        /// <summary> 1h. </summary>
+        private const string OneHourValue = "1h";
+        /// <summary> 6h. </summary>
+        private const string SixHoursValue = "6h";
+        /// <summary> 12h. </summary>
+        private const string TwelveHoursValue = "12h";
 
         /// <summary> Initializes a new instance of <see cref="PersistenceSettingRdbFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PersistenceSettingRdbFrequency(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OneHourValue = "1h";
-        private const string SixHoursValue = "6h";
-        private const string TwelveHoursValue = "12h";
+            _value = value;
+        }
 
         /// <summary> 1h. </summary>
         public static PersistenceSettingRdbFrequency OneHour { get; } = new PersistenceSettingRdbFrequency(OneHourValue);
+
         /// <summary> 6h. </summary>
         public static PersistenceSettingRdbFrequency SixHours { get; } = new PersistenceSettingRdbFrequency(SixHoursValue);
+
         /// <summary> 12h. </summary>
         public static PersistenceSettingRdbFrequency TwelveHours { get; } = new PersistenceSettingRdbFrequency(TwelveHoursValue);
+
         /// <summary> Determines if two <see cref="PersistenceSettingRdbFrequency"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PersistenceSettingRdbFrequency left, PersistenceSettingRdbFrequency right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PersistenceSettingRdbFrequency"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PersistenceSettingRdbFrequency left, PersistenceSettingRdbFrequency right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PersistenceSettingRdbFrequency"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PersistenceSettingRdbFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PersistenceSettingRdbFrequency(string value) => new PersistenceSettingRdbFrequency(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PersistenceSettingRdbFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PersistenceSettingRdbFrequency?(string value) => value == null ? null : new PersistenceSettingRdbFrequency(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PersistenceSettingRdbFrequency other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PersistenceSettingRdbFrequency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

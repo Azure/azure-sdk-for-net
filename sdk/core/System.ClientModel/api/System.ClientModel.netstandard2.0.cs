@@ -171,9 +171,11 @@ namespace System.ClientModel.Primitives
         public bool? EnableLogging { get { throw null; } set { } }
         public bool? EnableMessageContentLogging { get { throw null; } set { } }
         public bool? EnableMessageLogging { get { throw null; } set { } }
+        public bool IsReadOnly { get { throw null; } }
         public Microsoft.Extensions.Logging.ILoggerFactory? LoggerFactory { get { throw null; } set { } }
         public int? MessageContentSizeLimit { get { throw null; } set { } }
         protected void AssertNotFrozen() { }
+        public virtual System.ClientModel.Primitives.ClientLoggingOptions Clone() { throw null; }
         public virtual void Freeze() { }
     }
     public sealed partial class ClientPipeline
@@ -192,12 +194,14 @@ namespace System.ClientModel.Primitives
         protected ClientPipelineOptions(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
         public System.ClientModel.Primitives.ClientLoggingOptions? ClientLoggingOptions { get { throw null; } set { } }
         public bool? EnableDistributedTracing { get { throw null; } set { } }
+        public bool IsReadOnly { get { throw null; } }
         public System.ClientModel.Primitives.PipelinePolicy? MessageLoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
         protected void AssertNotFrozen() { }
+        public virtual System.ClientModel.Primitives.ClientPipelineOptions Clone() { throw null; }
         public virtual void Freeze() { }
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -333,6 +337,7 @@ namespace System.ClientModel.Primitives
         public void AppendNull(System.ReadOnlySpan<byte> arrayPath) { }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public bool Contains(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool Contains(System.ReadOnlySpan<byte> prefix, System.ReadOnlySpan<byte> property) { throw null; }
+        public System.ClientModel.Primitives.JsonPatch.ArrayEnumerator EnumerateArray(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public bool GetBoolean(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public byte GetByte(System.ReadOnlySpan<byte> jsonPath) { throw null; }
         public System.DateTime GetDateTime(System.ReadOnlySpan<byte> jsonPath, System.Buffers.StandardFormat format = default(System.Buffers.StandardFormat)) { throw null; }
@@ -377,6 +382,8 @@ namespace System.ClientModel.Primitives
         public void Set(System.ReadOnlySpan<byte> jsonPath, ulong value) { }
         public void SetNull(System.ReadOnlySpan<byte> jsonPath) { }
         public void SetPropagators(System.ClientModel.Primitives.JsonPatch.PropagatorSetter setter, System.ClientModel.Primitives.JsonPatch.PropagatorGetter getter) { }
+        public System.BinaryData ToBinaryData() { throw null; }
+        public System.BinaryData ToBinaryData(string format) { throw null; }
         public override string ToString() { throw null; }
         public string ToString(string format) { throw null; }
         public bool TryGetEncodedValue(System.ReadOnlySpan<byte> jsonPath, out System.ClientModel.Primitives.JsonPatch.EncodedValue value) { throw null; }
@@ -401,6 +408,15 @@ namespace System.ClientModel.Primitives
         public bool TryGetValue(System.ReadOnlySpan<byte> jsonPath, out ulong value) { throw null; }
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer) { }
         public void WriteTo(System.Text.Json.Utf8JsonWriter writer, System.ReadOnlySpan<byte> jsonPath) { }
+        [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        public ref partial struct ArrayEnumerator
+        {
+            private object _dummy;
+            private int _dummyPrimitive;
+            public System.ReadOnlyMemory<byte> Current { get { throw null; } }
+            public System.ClientModel.Primitives.JsonPatch.ArrayEnumerator GetEnumerator() { throw null; }
+            public bool MoveNext() { throw null; }
+        }
         [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
         public partial struct EncodedValue
         {

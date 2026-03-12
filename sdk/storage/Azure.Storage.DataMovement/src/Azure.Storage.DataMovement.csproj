@@ -41,5 +41,7 @@
     <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)Argument.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)StreamExtensions.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)BufferExtensions.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
 </Project>

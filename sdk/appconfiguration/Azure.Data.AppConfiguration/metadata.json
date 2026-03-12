@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2024-09-01"
+  "apiVersions": {
+    "AzureAppConfiguration": "2024-09-01"
+  }
 }
