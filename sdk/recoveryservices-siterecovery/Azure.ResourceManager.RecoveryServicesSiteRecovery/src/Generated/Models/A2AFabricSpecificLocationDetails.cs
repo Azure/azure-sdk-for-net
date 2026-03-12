@@ -7,44 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> ExtendedLocation details data. </summary>
     public partial class A2AFabricSpecificLocationDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="A2AFabricSpecificLocationDetails"/>. </summary>
         internal A2AFabricSpecificLocationDetails()
@@ -64,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryExtendedLocation"> The recovery ExtendedLocation. </param>
         /// <param name="primaryFabricLocation"> Primary fabric location info. </param>
         /// <param name="recoveryFabricLocation"> The recovery fabric location info. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialPrimaryFabricLocation, AzureLocation? initialRecoveryFabricLocation, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal A2AFabricSpecificLocationDetails(string initialPrimaryZone, string initialRecoveryZone, ExtendedLocation initialPrimaryExtendedLocation, ExtendedLocation initialRecoveryExtendedLocation, string initialPrimaryFabricLocation, string initialRecoveryFabricLocation, string primaryZone, string recoveryZone, ExtendedLocation primaryExtendedLocation, ExtendedLocation recoveryExtendedLocation, string primaryFabricLocation, string recoveryFabricLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InitialPrimaryZone = initialPrimaryZone;
             InitialRecoveryZone = initialRecoveryZone;
@@ -79,32 +49,43 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryExtendedLocation = recoveryExtendedLocation;
             PrimaryFabricLocation = primaryFabricLocation;
             RecoveryFabricLocation = recoveryFabricLocation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The initial source zone info. </summary>
         public string InitialPrimaryZone { get; }
+
         /// <summary> The initial target zone info. </summary>
         public string InitialRecoveryZone { get; }
+
         /// <summary> The initial primary ExtendedLocation. </summary>
-        public SiteRecoveryExtendedLocation InitialPrimaryExtendedLocation { get; }
+        public ExtendedLocation InitialPrimaryExtendedLocation { get; }
+
         /// <summary> The initial recovery ExtendedLocation. </summary>
-        public SiteRecoveryExtendedLocation InitialRecoveryExtendedLocation { get; }
+        public ExtendedLocation InitialRecoveryExtendedLocation { get; }
+
         /// <summary> Initial primary fabric location info. </summary>
-        public AzureLocation? InitialPrimaryFabricLocation { get; }
+        public string InitialPrimaryFabricLocation { get; }
+
         /// <summary> The initial recovery fabric location info. </summary>
-        public AzureLocation? InitialRecoveryFabricLocation { get; }
+        public string InitialRecoveryFabricLocation { get; }
+
         /// <summary> Source zone info. </summary>
         public string PrimaryZone { get; }
+
         /// <summary> The target zone info. </summary>
         public string RecoveryZone { get; }
+
         /// <summary> The primary ExtendedLocation. </summary>
-        public SiteRecoveryExtendedLocation PrimaryExtendedLocation { get; }
+        public ExtendedLocation PrimaryExtendedLocation { get; }
+
         /// <summary> The recovery ExtendedLocation. </summary>
-        public SiteRecoveryExtendedLocation RecoveryExtendedLocation { get; }
+        public ExtendedLocation RecoveryExtendedLocation { get; }
+
         /// <summary> Primary fabric location info. </summary>
-        public AzureLocation? PrimaryFabricLocation { get; }
+        public string PrimaryFabricLocation { get; }
+
         /// <summary> The recovery fabric location info. </summary>
-        public AzureLocation? RecoveryFabricLocation { get; }
+        public string RecoveryFabricLocation { get; }
     }
 }

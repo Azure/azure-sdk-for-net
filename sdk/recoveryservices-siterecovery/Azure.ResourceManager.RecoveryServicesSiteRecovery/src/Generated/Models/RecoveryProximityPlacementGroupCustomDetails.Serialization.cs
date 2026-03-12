@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
+    /// <summary>
+    /// Recovery Proximity placement group custom input.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExistingRecoveryProximityPlacementGroup"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownRecoveryProximityPlacementGroupCustomDetails))]
-    public partial class RecoveryProximityPlacementGroupCustomDetails : IUtf8JsonSerializable, IJsonModel<RecoveryProximityPlacementGroupCustomDetails>
+    public abstract partial class RecoveryProximityPlacementGroupCustomDetails : IJsonModel<RecoveryProximityPlacementGroupCustomDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryProximityPlacementGroupCustomDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RecoveryProximityPlacementGroupCustomDetails"/> for deserialization. </summary>
+        internal RecoveryProximityPlacementGroupCustomDetails()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RecoveryProximityPlacementGroupCustomDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryProximityPlacementGroupCustomDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryProximityPlacementGroupCustomDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryProximityPlacementGroupCustomDetails IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecoveryProximityPlacementGroupCustomDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +77,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecoveryProximityPlacementGroupCustomDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,65 +101,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        RecoveryProximityPlacementGroupCustomDetails IJsonModel<RecoveryProximityPlacementGroupCustomDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryProximityPlacementGroupCustomDetails IJsonModel<RecoveryProximityPlacementGroupCustomDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RecoveryProximityPlacementGroupCustomDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecoveryProximityPlacementGroupCustomDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
         }
 
-        internal static RecoveryProximityPlacementGroupCustomDetails DeserializeRecoveryProximityPlacementGroupCustomDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RecoveryProximityPlacementGroupCustomDetails DeserializeRecoveryProximityPlacementGroupCustomDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("resourceType", out JsonElement discriminator))
+            if (element.TryGetProperty("resourceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Existing": return ExistingRecoveryProximityPlacementGroup.DeserializeExistingRecoveryProximityPlacementGroup(element, options);
+                    case "Existing":
+                        return ExistingRecoveryProximityPlacementGroup.DeserializeExistingRecoveryProximityPlacementGroup(element, options);
                 }
             }
             return UnknownRecoveryProximityPlacementGroupCustomDetails.DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(element, options);
         }
-
-        BinaryData IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryProximityPlacementGroupCustomDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RecoveryProximityPlacementGroupCustomDetails IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryProximityPlacementGroupCustomDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RecoveryProximityPlacementGroupCustomDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

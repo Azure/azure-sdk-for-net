@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,23 +15,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class HyperVSiteDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="HyperVSiteDetails"/>. </summary>
-        internal HyperVSiteDetails()
+        internal HyperVSiteDetails() : base("HyperVSite")
         {
             HyperVHosts = new ChangeTrackingList<HyperVHostDetails>();
-            InstanceType = "HyperVSite";
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVSiteDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hyperVHosts"> The list of Hyper-V hosts associated with the fabric. </param>
-        internal HyperVSiteDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<HyperVHostDetails> hyperVHosts) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVSiteDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<HyperVHostDetails> hyperVHosts) : base(instanceType, additionalBinaryDataProperties)
         {
             HyperVHosts = hyperVHosts;
-            InstanceType = instanceType ?? "HyperVSite";
         }
 
         /// <summary> The list of Hyper-V hosts associated with the fabric. </summary>
-        public IReadOnlyList<HyperVHostDetails> HyperVHosts { get; }
+        public IList<HyperVHostDetails> HyperVHosts { get; }
     }
 }

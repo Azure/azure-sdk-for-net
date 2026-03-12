@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,16 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class HyperVReplicaReplicationDetails : ReplicationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaReplicationDetails"/>. </summary>
-        internal HyperVReplicaReplicationDetails()
+        internal HyperVReplicaReplicationDetails() : base("HyperVReplica2012")
         {
-            VmNics = new ChangeTrackingList<VmNicDetails>();
-            VmDiskDetails = new ChangeTrackingList<SiteRecoveryDiskDetails>();
-            InstanceType = "HyperVReplica2012";
+            VmNics = new ChangeTrackingList<VMNicDetails>();
+            VMDiskDetails = new ChangeTrackingList<DiskDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lastReplicatedOn"> The Last replication time. </param>
         /// <param name="vmNics"> The PE Network details. </param>
         /// <param name="vmId"> The virtual machine Id. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
         /// <param name="initialReplicationDetails"> Initial replication details. </param>
         /// <param name="vmDiskDetails"> VM disk details. </param>
-        internal HyperVReplicaReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? lastReplicatedOn, IReadOnlyList<VmNicDetails> vmNics, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IReadOnlyList<SiteRecoveryDiskDetails> vmDiskDetails) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVReplicaReplicationDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? lastReplicatedOn, IList<VMNicDetails> vmNics, string vmId, string vmProtectionState, string vmProtectionStateDescription, InitialReplicationDetails initialReplicationDetails, IList<DiskDetails> vmDiskDetails) : base(instanceType, additionalBinaryDataProperties)
         {
             LastReplicatedOn = lastReplicatedOn;
             VmNics = vmNics;
@@ -39,23 +39,28 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VmProtectionState = vmProtectionState;
             VmProtectionStateDescription = vmProtectionStateDescription;
             InitialReplicationDetails = initialReplicationDetails;
-            VmDiskDetails = vmDiskDetails;
-            InstanceType = instanceType ?? "HyperVReplica2012";
+            VMDiskDetails = vmDiskDetails;
         }
 
         /// <summary> The Last replication time. </summary>
         public DateTimeOffset? LastReplicatedOn { get; }
+
         /// <summary> The PE Network details. </summary>
-        public IReadOnlyList<VmNicDetails> VmNics { get; }
+        public IList<VMNicDetails> VmNics { get; }
+
         /// <summary> The virtual machine Id. </summary>
         public string VmId { get; }
+
         /// <summary> The protection state for the vm. </summary>
         public string VmProtectionState { get; }
+
         /// <summary> The protection state description for the vm. </summary>
         public string VmProtectionStateDescription { get; }
+
         /// <summary> Initial replication details. </summary>
         public InitialReplicationDetails InitialReplicationDetails { get; }
+
         /// <summary> VM disk details. </summary>
-        public IReadOnlyList<SiteRecoveryDiskDetails> VmDiskDetails { get; }
+        public IList<DiskDetails> VMDiskDetails { get; }
     }
 }

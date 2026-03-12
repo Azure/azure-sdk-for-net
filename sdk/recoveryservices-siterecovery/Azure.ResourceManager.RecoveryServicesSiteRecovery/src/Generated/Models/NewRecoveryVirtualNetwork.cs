@@ -14,25 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class NewRecoveryVirtualNetwork : RecoveryVirtualNetworkCustomDetails
     {
         /// <summary> Initializes a new instance of <see cref="NewRecoveryVirtualNetwork"/>. </summary>
-        public NewRecoveryVirtualNetwork()
+        public NewRecoveryVirtualNetwork() : base("New")
         {
-            ResourceType = "New";
         }
 
         /// <summary> Initializes a new instance of <see cref="NewRecoveryVirtualNetwork"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryVirtualNetworkResourceGroupName"> The name of the resource group to be used to create the recovery virtual network. If absent, target network would be created in the same resource group as target VM. </param>
         /// <param name="recoveryVirtualNetworkName"> The recovery virtual network name. </param>
-        internal NewRecoveryVirtualNetwork(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryVirtualNetworkResourceGroupName, string recoveryVirtualNetworkName) : base(resourceType, serializedAdditionalRawData)
+        internal NewRecoveryVirtualNetwork(string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryVirtualNetworkResourceGroupName, string recoveryVirtualNetworkName) : base(resourceType, additionalBinaryDataProperties)
         {
             RecoveryVirtualNetworkResourceGroupName = recoveryVirtualNetworkResourceGroupName;
             RecoveryVirtualNetworkName = recoveryVirtualNetworkName;
-            ResourceType = resourceType ?? "New";
         }
 
         /// <summary> The name of the resource group to be used to create the recovery virtual network. If absent, target network would be created in the same resource group as target VM. </summary>
         public string RecoveryVirtualNetworkResourceGroupName { get; set; }
+
         /// <summary> The recovery virtual network name. </summary>
         public string RecoveryVirtualNetworkName { get; set; }
     }

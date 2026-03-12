@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,30 +17,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="ExistingStorageAccount"/>. </summary>
         /// <param name="azureStorageAccountId"> The storage account Arm Id. Throw error, if resource does not exists. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccountId"/> is null. </exception>
-        public ExistingStorageAccount(ResourceIdentifier azureStorageAccountId)
+        public ExistingStorageAccount(string azureStorageAccountId) : base("Existing")
         {
             Argument.AssertNotNull(azureStorageAccountId, nameof(azureStorageAccountId));
 
             AzureStorageAccountId = azureStorageAccountId;
-            ResourceType = "Existing";
         }
 
         /// <summary> Initializes a new instance of <see cref="ExistingStorageAccount"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="azureStorageAccountId"> The storage account Arm Id. Throw error, if resource does not exists. </param>
-        internal ExistingStorageAccount(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier azureStorageAccountId) : base(resourceType, serializedAdditionalRawData)
+        internal ExistingStorageAccount(string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string azureStorageAccountId) : base(resourceType, additionalBinaryDataProperties)
         {
             AzureStorageAccountId = azureStorageAccountId;
-            ResourceType = resourceType ?? "Existing";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExistingStorageAccount"/> for deserialization. </summary>
-        internal ExistingStorageAccount()
-        {
         }
 
         /// <summary> The storage account Arm Id. Throw error, if resource does not exists. </summary>
-        public ResourceIdentifier AzureStorageAccountId { get; set; }
+        public string AzureStorageAccountId { get; set; }
     }
 }

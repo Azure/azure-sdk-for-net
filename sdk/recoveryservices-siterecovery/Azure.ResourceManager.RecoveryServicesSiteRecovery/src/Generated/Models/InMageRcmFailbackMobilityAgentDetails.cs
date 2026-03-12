@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcmFailback mobility agent details. </summary>
     public partial class InMageRcmFailbackMobilityAgentDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackMobilityAgentDetails"/>. </summary>
         internal InMageRcmFailbackMobilityAgentDetails()
@@ -56,42 +28,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="latestVersion"> The latest agent version available. </param>
         /// <param name="driverVersion"> The driver version. </param>
         /// <param name="latestUpgradableVersionWithoutReboot"> The latest upgradeable version available without reboot. </param>
-        /// <param name="agentVersionExpireOn"> The agent version expiry date. </param>
-        /// <param name="driverVersionExpireOn"> The driver version expiry date. </param>
-        /// <param name="lastHeartbeatReceivedOn"> The time of the last heartbeat received from the agent. </param>
+        /// <param name="agentVersionExpiryOn"> The agent version expiry date. </param>
+        /// <param name="driverVersionExpiryOn"> The driver version expiry date. </param>
+        /// <param name="lastHeartbeatUtc"> The time of the last heartbeat received from the agent. </param>
         /// <param name="reasonsBlockingUpgrade"> The whether update is possible or not. </param>
         /// <param name="isUpgradeable"> A value indicating whether agent is upgradeable or not. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageRcmFailbackMobilityAgentDetails(string version, string latestVersion, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmFailbackMobilityAgentDetails(string version, string latestVersion, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpiryOn, DateTimeOffset? driverVersionExpiryOn, DateTimeOffset? lastHeartbeatUtc, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             LatestVersion = latestVersion;
             DriverVersion = driverVersion;
             LatestUpgradableVersionWithoutReboot = latestUpgradableVersionWithoutReboot;
-            AgentVersionExpireOn = agentVersionExpireOn;
-            DriverVersionExpireOn = driverVersionExpireOn;
-            LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
+            AgentVersionExpiryOn = agentVersionExpiryOn;
+            DriverVersionExpiryOn = driverVersionExpiryOn;
+            LastHeartbeatUtc = lastHeartbeatUtc;
             ReasonsBlockingUpgrade = reasonsBlockingUpgrade;
             IsUpgradeable = isUpgradeable;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The agent version. </summary>
         public string Version { get; }
+
         /// <summary> The latest agent version available. </summary>
         public string LatestVersion { get; }
+
         /// <summary> The driver version. </summary>
         public string DriverVersion { get; }
+
         /// <summary> The latest upgradeable version available without reboot. </summary>
         public string LatestUpgradableVersionWithoutReboot { get; }
+
         /// <summary> The agent version expiry date. </summary>
-        public DateTimeOffset? AgentVersionExpireOn { get; }
+        public DateTimeOffset? AgentVersionExpiryOn { get; }
+
         /// <summary> The driver version expiry date. </summary>
-        public DateTimeOffset? DriverVersionExpireOn { get; }
+        public DateTimeOffset? DriverVersionExpiryOn { get; }
+
         /// <summary> The time of the last heartbeat received from the agent. </summary>
-        public DateTimeOffset? LastHeartbeatReceivedOn { get; }
+        public DateTimeOffset? LastHeartbeatUtc { get; }
+
         /// <summary> The whether update is possible or not. </summary>
         public IReadOnlyList<AgentUpgradeBlockedReason> ReasonsBlockingUpgrade { get; }
+
         /// <summary> A value indicating whether agent is upgradeable or not. </summary>
         public string IsUpgradeable { get; }
     }

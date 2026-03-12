@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureReplicationDetails : IUtf8JsonSerializable, IJsonModel<HyperVReplicaAzureReplicationDetails>
+    /// <summary> Hyper V Replica Azure provider specific settings. </summary>
+    public partial class HyperVReplicaAzureReplicationDetails : ReplicationProviderSpecificSettings, IJsonModel<HyperVReplicaAzureReplicationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzureReplicationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ReplicationProviderSpecificSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHyperVReplicaAzureReplicationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVReplicaAzureReplicationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVReplicaAzureReplicationDetails IPersistableModel<HyperVReplicaAzureReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVReplicaAzureReplicationDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HyperVReplicaAzureReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVReplicaAzureReplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,18 +69,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(AzureVmDiskDetails))
             {
                 writer.WritePropertyName("azureVmDiskDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in AzureVmDiskDetails)
+                foreach (AzureVmDiskDetails item in AzureVmDiskDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -50,10 +90,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoveryAzureVmName"u8);
                 writer.WriteStringValue(RecoveryAzureVmName);
             }
-            if (Optional.IsDefined(RecoveryAzureVmSize))
+            if (Optional.IsDefined(RecoveryAzureVMSize))
             {
                 writer.WritePropertyName("recoveryAzureVMSize"u8);
-                writer.WriteStringValue(RecoveryAzureVmSize);
+                writer.WriteStringValue(RecoveryAzureVMSize);
             }
             if (Optional.IsDefined(RecoveryAzureStorageAccount))
             {
@@ -104,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmNics)
+                foreach (VMNicDetails item in VmNics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -197,6 +237,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 foreach (var item in TargetVmTags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -208,6 +253,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 foreach (var item in SeedManagedDiskTags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -219,6 +269,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 foreach (var item in TargetManagedDiskTags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -230,6 +285,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 foreach (var item in TargetNicTags)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -238,7 +298,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("protectedManagedDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in ProtectedManagedDisks)
+                foreach (HyperVReplicaAzureManagedDiskDetails item in ProtectedManagedDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -248,7 +308,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("allAvailableOSUpgradeConfigurations"u8);
                 writer.WriteStartArray();
-                foreach (var item in AllAvailableOSUpgradeConfigurations)
+                foreach (OSUpgradeSupportedVersions item in AllAvailableOSUpgradeConfigurations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -259,408 +319,430 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
                 writer.WriteObjectValue(TargetVmSecurityProfile, options);
             }
+            if (Optional.IsDefined(TargetCapacityReservationGroupId))
+            {
+                writer.WritePropertyName("targetCapacityReservationGroupId"u8);
+                writer.WriteStringValue(TargetCapacityReservationGroupId);
+            }
         }
 
-        HyperVReplicaAzureReplicationDetails IJsonModel<HyperVReplicaAzureReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVReplicaAzureReplicationDetails IJsonModel<HyperVReplicaAzureReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HyperVReplicaAzureReplicationDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ReplicationProviderSpecificSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVReplicaAzureReplicationDetails(document.RootElement, options);
         }
 
-        internal static HyperVReplicaAzureReplicationDetails DeserializeHyperVReplicaAzureReplicationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HyperVReplicaAzureReplicationDetails DeserializeHyperVReplicaAzureReplicationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<SiteRecoveryVmDiskDetails> azureVmDiskDetails = default;
+            string instanceType = "HyperVReplicaAzure";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<AzureVmDiskDetails> azureVmDiskDetails = default;
             string recoveryAzureVmName = default;
-            string recoveryAzureVmSize = default;
+            string recoveryAzureVMSize = default;
             string recoveryAzureStorageAccount = default;
-            ResourceIdentifier recoveryAzureLogStorageAccountId = default;
-            DateTimeOffset? lastReplicatedTime = default;
+            string recoveryAzureLogStorageAccountId = default;
+            DateTimeOffset? lastReplicatedOn = default;
             long? rpoInSeconds = default;
-            DateTimeOffset? lastRpoCalculatedTime = default;
+            DateTimeOffset? lastRpoCalculatedOn = default;
             string vmId = default;
             string vmProtectionState = default;
             string vmProtectionStateDescription = default;
             InitialReplicationDetails initialReplicationDetails = default;
-            IReadOnlyList<VmNicDetails> vmNics = default;
-            ResourceIdentifier selectedRecoveryAzureNetworkId = default;
+            IList<VMNicDetails> vmNics = default;
+            string selectedRecoveryAzureNetworkId = default;
             string selectedSourceNicId = default;
             string encryption = default;
-            SiteRecoveryOSDetails osDetails = default;
+            OSDetails osDetails = default;
             int? sourceVmRamSizeInMB = default;
             int? sourceVmCpuCount = default;
             string enableRdpOnTargetOption = default;
-            ResourceIdentifier recoveryAzureResourceGroupId = default;
-            ResourceIdentifier recoveryAvailabilitySetId = default;
+            string recoveryAzureResourceGroupId = default;
+            string recoveryAvailabilitySetId = default;
             string targetAvailabilityZone = default;
-            ResourceIdentifier targetProximityPlacementGroupId = default;
+            string targetProximityPlacementGroupId = default;
             string useManagedDisks = default;
             string licenseType = default;
             string sqlServerLicenseType = default;
-            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
+            LinuxLicenseType? linuxLicenseType = default;
             DateTimeOffset? lastRecoveryPointReceived = default;
-            IReadOnlyDictionary<string, string> targetVmTags = default;
-            IReadOnlyDictionary<string, string> seedManagedDiskTags = default;
-            IReadOnlyDictionary<string, string> targetManagedDiskTags = default;
-            IReadOnlyDictionary<string, string> targetNicTags = default;
-            IReadOnlyList<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = default;
-            IReadOnlyList<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations = default;
-            RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, string> targetVmTags = default;
+            IDictionary<string, string> seedManagedDiskTags = default;
+            IDictionary<string, string> targetManagedDiskTags = default;
+            IDictionary<string, string> targetNicTags = default;
+            IList<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = default;
+            IList<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations = default;
+            SecurityProfileProperties targetVmSecurityProfile = default;
+            string targetCapacityReservationGroupId = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("azureVmDiskDetails"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    instanceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("azureVmDiskDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<SiteRecoveryVmDiskDetails> array = new List<SiteRecoveryVmDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<AzureVmDiskDetails> array = new List<AzureVmDiskDetails>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryVmDiskDetails.DeserializeSiteRecoveryVmDiskDetails(item, options));
+                        array.Add(Models.AzureVmDiskDetails.DeserializeAzureVmDiskDetails(item, options));
                     }
                     azureVmDiskDetails = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureVmName"u8))
+                if (prop.NameEquals("recoveryAzureVmName"u8))
                 {
-                    recoveryAzureVmName = property.Value.GetString();
+                    recoveryAzureVmName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureVMSize"u8))
+                if (prop.NameEquals("recoveryAzureVMSize"u8))
                 {
-                    recoveryAzureVmSize = property.Value.GetString();
+                    recoveryAzureVMSize = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureStorageAccount"u8))
+                if (prop.NameEquals("recoveryAzureStorageAccount"u8))
                 {
-                    recoveryAzureStorageAccount = property.Value.GetString();
+                    recoveryAzureStorageAccount = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAzureLogStorageAccountId"u8))
+                if (prop.NameEquals("recoveryAzureLogStorageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    recoveryAzureLogStorageAccountId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("lastReplicatedTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryAzureLogStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    lastReplicatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastReplicatedTime"u8))
+                if (prop.NameEquals("rpoInSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastReplicatedTime = property.Value.GetDateTimeOffset("O");
+                    rpoInSeconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rpoInSeconds"u8))
+                if (prop.NameEquals("lastRpoCalculatedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rpoInSeconds = property.Value.GetInt64();
+                    lastRpoCalculatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastRpoCalculatedTime"u8))
+                if (prop.NameEquals("vmId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    vmId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("vmProtectionState"u8))
+                {
+                    vmProtectionState = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("vmProtectionStateDescription"u8))
+                {
+                    vmProtectionStateDescription = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("initialReplicationDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRpoCalculatedTime = property.Value.GetDateTimeOffset("O");
+                    initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vmId"u8))
+                if (prop.NameEquals("vmNics"u8))
                 {
-                    vmId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("vmProtectionState"u8))
-                {
-                    vmProtectionState = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("vmProtectionStateDescription"u8))
-                {
-                    vmProtectionStateDescription = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("initialReplicationDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialReplicationDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("vmNics"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<VMNicDetails> array = new List<VMNicDetails>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        continue;
-                    }
-                    List<VmNicDetails> array = new List<VmNicDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item, options));
+                        array.Add(VMNicDetails.DeserializeVMNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
                 }
-                if (property.NameEquals("selectedRecoveryAzureNetworkId"u8))
+                if (prop.NameEquals("selectedRecoveryAzureNetworkId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    selectedRecoveryAzureNetworkId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("selectedSourceNicId"u8))
+                {
+                    selectedSourceNicId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("encryption"u8))
+                {
+                    encryption = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("oSDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    selectedRecoveryAzureNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    osDetails = OSDetails.DeserializeOSDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("selectedSourceNicId"u8))
+                if (prop.NameEquals("sourceVmRamSizeInMB"u8))
                 {
-                    selectedSourceNicId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("encryption"u8))
-                {
-                    encryption = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("oSDetails"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDetails.DeserializeSiteRecoveryOSDetails(property.Value, options);
+                    sourceVmRamSizeInMB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sourceVmRamSizeInMB"u8))
+                if (prop.NameEquals("sourceVmCpuCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceVmRamSizeInMB = property.Value.GetInt32();
+                    sourceVmCpuCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sourceVmCpuCount"u8))
+                if (prop.NameEquals("enableRdpOnTargetOption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    enableRdpOnTargetOption = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryAzureResourceGroupId"u8))
+                {
+                    recoveryAzureResourceGroupId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryAvailabilitySetId"u8))
+                {
+                    recoveryAvailabilitySetId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("targetAvailabilityZone"u8))
+                {
+                    targetAvailabilityZone = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("targetProximityPlacementGroupId"u8))
+                {
+                    targetProximityPlacementGroupId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("useManagedDisks"u8))
+                {
+                    useManagedDisks = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("licenseType"u8))
+                {
+                    licenseType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sqlServerLicenseType"u8))
+                {
+                    sqlServerLicenseType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("linuxLicenseType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceVmCpuCount = property.Value.GetInt32();
+                    linuxLicenseType = new LinuxLicenseType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("enableRdpOnTargetOption"u8))
+                if (prop.NameEquals("lastRecoveryPointReceived"u8))
                 {
-                    enableRdpOnTargetOption = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("recoveryAzureResourceGroupId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryAzureResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    lastRecoveryPointReceived = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recoveryAvailabilitySetId"u8))
+                if (prop.NameEquals("targetVmTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("targetAvailabilityZone"u8))
-                {
-                    targetAvailabilityZone = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetProximityPlacementGroupId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("useManagedDisks"u8))
-                {
-                    useManagedDisks = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("licenseType"u8))
-                {
-                    licenseType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sqlServerLicenseType"u8))
-                {
-                    sqlServerLicenseType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("linuxLicenseType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("lastRecoveryPointReceived"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastRecoveryPointReceived = property.Value.GetDateTimeOffset("O");
-                    continue;
-                }
-                if (property.NameEquals("targetVmTags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     targetVmTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("seedManagedDiskTags"u8))
+                if (prop.NameEquals("seedManagedDiskTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     seedManagedDiskTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetManagedDiskTags"u8))
+                if (prop.NameEquals("targetManagedDiskTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     targetManagedDiskTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("targetNicTags"u8))
+                if (prop.NameEquals("targetNicTags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     targetNicTags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("protectedManagedDisks"u8))
+                if (prop.NameEquals("protectedManagedDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HyperVReplicaAzureManagedDiskDetails> array = new List<HyperVReplicaAzureManagedDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(HyperVReplicaAzureManagedDiskDetails.DeserializeHyperVReplicaAzureManagedDiskDetails(item, options));
                     }
                     protectedManagedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("allAvailableOSUpgradeConfigurations"u8))
+                if (prop.NameEquals("allAvailableOSUpgradeConfigurations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<OSUpgradeSupportedVersions> array = new List<OSUpgradeSupportedVersions>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OSUpgradeSupportedVersions.DeserializeOSUpgradeSupportedVersions(item, options));
                     }
                     allAvailableOSUpgradeConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("targetVmSecurityProfile"u8))
+                if (prop.NameEquals("targetVmSecurityProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(property.Value, options);
+                    targetVmSecurityProfile = SecurityProfileProperties.DeserializeSecurityProfileProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("instanceType"u8))
+                if (prop.NameEquals("targetCapacityReservationGroupId"u8))
                 {
-                    instanceType = property.Value.GetString();
+                    targetCapacityReservationGroupId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVReplicaAzureReplicationDetails(
                 instanceType,
-                serializedAdditionalRawData,
-                azureVmDiskDetails ?? new ChangeTrackingList<SiteRecoveryVmDiskDetails>(),
+                additionalBinaryDataProperties,
+                azureVmDiskDetails ?? new ChangeTrackingList<AzureVmDiskDetails>(),
                 recoveryAzureVmName,
-                recoveryAzureVmSize,
+                recoveryAzureVMSize,
                 recoveryAzureStorageAccount,
                 recoveryAzureLogStorageAccountId,
-                lastReplicatedTime,
+                lastReplicatedOn,
                 rpoInSeconds,
-                lastRpoCalculatedTime,
+                lastRpoCalculatedOn,
                 vmId,
                 vmProtectionState,
                 vmProtectionStateDescription,
                 initialReplicationDetails,
-                vmNics ?? new ChangeTrackingList<VmNicDetails>(),
+                vmNics ?? new ChangeTrackingList<VMNicDetails>(),
                 selectedRecoveryAzureNetworkId,
                 selectedSourceNicId,
                 encryption,
@@ -683,38 +765,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
                 protectedManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>(),
                 allAvailableOSUpgradeConfigurations ?? new ChangeTrackingList<OSUpgradeSupportedVersions>(),
-                targetVmSecurityProfile);
+                targetVmSecurityProfile,
+                targetCapacityReservationGroupId);
         }
-
-        BinaryData IPersistableModel<HyperVReplicaAzureReplicationDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HyperVReplicaAzureReplicationDetails IPersistableModel<HyperVReplicaAzureReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHyperVReplicaAzureReplicationDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HyperVReplicaAzureReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

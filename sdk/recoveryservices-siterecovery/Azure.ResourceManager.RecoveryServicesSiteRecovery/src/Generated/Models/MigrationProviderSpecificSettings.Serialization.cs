@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
+    /// <summary>
+    /// Migration provider specific settings.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="VMwareCbtMigrationDetails"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownMigrationProviderSpecificSettings))]
-    public partial class MigrationProviderSpecificSettings : IUtf8JsonSerializable, IJsonModel<MigrationProviderSpecificSettings>
+    public abstract partial class MigrationProviderSpecificSettings : IJsonModel<MigrationProviderSpecificSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationProviderSpecificSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MigrationProviderSpecificSettings"/> for deserialization. </summary>
+        internal MigrationProviderSpecificSettings()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MigrationProviderSpecificSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMigrationProviderSpecificSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrationProviderSpecificSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MigrationProviderSpecificSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MigrationProviderSpecificSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrationProviderSpecificSettings IPersistableModel<MigrationProviderSpecificSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MigrationProviderSpecificSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrationProviderSpecificSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +77,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrationProviderSpecificSettings)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,65 +101,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        MigrationProviderSpecificSettings IJsonModel<MigrationProviderSpecificSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrationProviderSpecificSettings IJsonModel<MigrationProviderSpecificSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MigrationProviderSpecificSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrationProviderSpecificSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMigrationProviderSpecificSettings(document.RootElement, options);
         }
 
-        internal static MigrationProviderSpecificSettings DeserializeMigrationProviderSpecificSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MigrationProviderSpecificSettings DeserializeMigrationProviderSpecificSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            if (element.TryGetProperty("instanceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "VMwareCbt": return VMwareCbtMigrationDetails.DeserializeVMwareCbtMigrationDetails(element, options);
+                    case "VMwareCbt":
+                        return VMwareCbtMigrationDetails.DeserializeVMwareCbtMigrationDetails(element, options);
                 }
             }
             return UnknownMigrationProviderSpecificSettings.DeserializeUnknownMigrationProviderSpecificSettings(element, options);
         }
-
-        BinaryData IPersistableModel<MigrationProviderSpecificSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MigrationProviderSpecificSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MigrationProviderSpecificSettings IPersistableModel<MigrationProviderSpecificSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrationProviderSpecificSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MigrationProviderSpecificSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MigrationProviderSpecificSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RcmProxyDetails : IUtf8JsonSerializable, IJsonModel<RcmProxyDetails>
+    /// <summary> RCM proxy details. </summary>
+    public partial class RcmProxyDetails : IJsonModel<RcmProxyDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RcmProxyDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RcmProxyDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RcmProxyDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRcmProxyDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RcmProxyDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RcmProxyDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RcmProxyDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RcmProxyDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RcmProxyDetails IPersistableModel<RcmProxyDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RcmProxyDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RcmProxyDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RcmProxyDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RcmProxyDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RcmProxyDetails)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -69,10 +109,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatReceivedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatUtc))
             {
                 writer.WritePropertyName("lastHeartbeatUtc"u8);
-                writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+                writer.WriteStringValue(LastHeartbeatUtc.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
@@ -83,21 +123,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in HealthErrors)
+                foreach (HealthError item in HealthErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,22 +146,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        RcmProxyDetails IJsonModel<RcmProxyDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RcmProxyDetails IJsonModel<RcmProxyDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RcmProxyDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RcmProxyDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RcmProxyDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RcmProxyDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRcmProxyDetails(document.RootElement, options);
         }
 
-        internal static RcmProxyDetails DeserializeRcmProxyDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RcmProxyDetails DeserializeRcmProxyDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,94 +174,88 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string id = default;
             string name = default;
             string biosId = default;
-            ResourceIdentifier fabricObjectId = default;
+            string fabricObjectId = default;
             string fqdn = default;
             string clientAuthenticationType = default;
             string version = default;
             DateTimeOffset? lastHeartbeatUtc = default;
-            SiteRecoveryProtectionHealth? health = default;
-            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ProtectionHealth? health = default;
+            IReadOnlyList<HealthError> healthErrors = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("biosId"u8))
+                if (prop.NameEquals("biosId"u8))
                 {
-                    biosId = property.Value.GetString();
+                    biosId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricObjectId"u8))
+                if (prop.NameEquals("fabricObjectId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    fabricObjectId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("fqdn"u8))
+                {
+                    fqdn = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("clientAuthenticationType"u8))
+                {
+                    clientAuthenticationType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("version"u8))
+                {
+                    version = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("lastHeartbeatUtc"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fabricObjectId = new ResourceIdentifier(property.Value.GetString());
+                    lastHeartbeatUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("fqdn"u8))
+                if (prop.NameEquals("health"u8))
                 {
-                    fqdn = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("clientAuthenticationType"u8))
-                {
-                    clientAuthenticationType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("version"u8))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("lastHeartbeatUtc"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastHeartbeatUtc = property.Value.GetDateTimeOffset("O");
+                    health = new ProtectionHealth(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("health"u8))
+                if (prop.NameEquals("healthErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    health = new SiteRecoveryProtectionHealth(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("healthErrors"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    List<HealthError> array = new List<HealthError>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        continue;
-                    }
-                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
+                        array.Add(HealthError.DeserializeHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RcmProxyDetails(
                 id,
                 name,
@@ -227,39 +266,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 version,
                 lastHeartbeatUtc,
                 health,
-                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
-                serializedAdditionalRawData);
+                healthErrors ?? new ChangeTrackingList<HealthError>(),
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<RcmProxyDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RcmProxyDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RcmProxyDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RcmProxyDetails IPersistableModel<RcmProxyDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RcmProxyDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRcmProxyDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RcmProxyDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RcmProxyDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

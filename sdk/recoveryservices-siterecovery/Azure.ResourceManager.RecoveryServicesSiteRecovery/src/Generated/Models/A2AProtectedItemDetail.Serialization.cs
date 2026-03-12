@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AProtectedItemDetail : IUtf8JsonSerializable, IJsonModel<A2AProtectedItemDetail>
+    /// <summary> A2A specific switch cluster protection input. </summary>
+    public partial class A2AProtectedItemDetail : IJsonModel<A2AProtectedItemDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AProtectedItemDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual A2AProtectedItemDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2AProtectedItemDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeA2AProtectedItemDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2AProtectedItemDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2AProtectedItemDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(A2AProtectedItemDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<A2AProtectedItemDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        A2AProtectedItemDetail IPersistableModel<A2AProtectedItemDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<A2AProtectedItemDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<A2AProtectedItemDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +69,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedItemDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2AProtectedItemDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2AProtectedItemDetail)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(VmManagedDisks))
             {
                 writer.WritePropertyName("vmManagedDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmManagedDisks)
+                foreach (A2AVmManagedDiskInputDetails item in VmManagedDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -89,15 +129,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("replicationProtectedItemName"u8);
                 writer.WriteStringValue(ReplicationProtectedItemName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,135 +146,114 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        A2AProtectedItemDetail IJsonModel<A2AProtectedItemDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        A2AProtectedItemDetail IJsonModel<A2AProtectedItemDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual A2AProtectedItemDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedItemDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2AProtectedItemDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2AProtectedItemDetail)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeA2AProtectedItemDetail(document.RootElement, options);
         }
 
-        internal static A2AProtectedItemDetail DeserializeA2AProtectedItemDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static A2AProtectedItemDetail DeserializeA2AProtectedItemDetail(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<A2AVmManagedDiskDetails> vmManagedDisks = default;
-            ResourceIdentifier recoveryResourceGroupId = default;
-            ResourceIdentifier recoveryAvailabilitySetId = default;
-            ResourceIdentifier recoveryBootDiagStorageAccountId = default;
+            IList<A2AVmManagedDiskInputDetails> vmManagedDisks = default;
+            string recoveryResourceGroupId = default;
+            string recoveryAvailabilitySetId = default;
+            string recoveryBootDiagStorageAccountId = default;
             string recoveryAvailabilityZone = default;
-            ResourceIdentifier recoveryProximityPlacementGroupId = default;
-            ResourceIdentifier recoveryVirtualMachineScaleSetId = default;
-            ResourceIdentifier recoveryCapacityReservationGroupId = default;
-            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
+            string recoveryProximityPlacementGroupId = default;
+            string recoveryVirtualMachineScaleSetId = default;
+            string recoveryCapacityReservationGroupId = default;
+            DiskEncryptionInfo diskEncryptionInfo = default;
             string replicationProtectedItemName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vmManagedDisks"u8))
+                if (prop.NameEquals("vmManagedDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<A2AVmManagedDiskDetails> array = new List<A2AVmManagedDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<A2AVmManagedDiskInputDetails> array = new List<A2AVmManagedDiskInputDetails>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(A2AVmManagedDiskDetails.DeserializeA2AVmManagedDiskDetails(item, options));
+                        array.Add(A2AVmManagedDiskInputDetails.DeserializeA2AVmManagedDiskInputDetails(item, options));
                     }
                     vmManagedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("recoveryResourceGroupId"u8))
+                if (prop.NameEquals("recoveryResourceGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    recoveryResourceGroupId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryAvailabilitySetId"u8))
+                {
+                    recoveryAvailabilitySetId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryBootDiagStorageAccountId"u8))
+                {
+                    recoveryBootDiagStorageAccountId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryAvailabilityZone"u8))
+                {
+                    recoveryAvailabilityZone = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryProximityPlacementGroupId"u8))
+                {
+                    recoveryProximityPlacementGroupId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryVirtualMachineScaleSetId"u8))
+                {
+                    recoveryVirtualMachineScaleSetId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryCapacityReservationGroupId"u8))
+                {
+                    recoveryCapacityReservationGroupId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("diskEncryptionInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryResourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    diskEncryptionInfo = DiskEncryptionInfo.DeserializeDiskEncryptionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("recoveryAvailabilitySetId"u8))
+                if (prop.NameEquals("replicationProtectedItemName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("recoveryBootDiagStorageAccountId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryBootDiagStorageAccountId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("recoveryAvailabilityZone"u8))
-                {
-                    recoveryAvailabilityZone = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("recoveryProximityPlacementGroupId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("recoveryVirtualMachineScaleSetId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryVirtualMachineScaleSetId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("recoveryCapacityReservationGroupId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryCapacityReservationGroupId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("diskEncryptionInfo"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("replicationProtectedItemName"u8))
-                {
-                    replicationProtectedItemName = property.Value.GetString();
+                    replicationProtectedItemName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new A2AProtectedItemDetail(
-                vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskDetails>(),
+                vmManagedDisks ?? new ChangeTrackingList<A2AVmManagedDiskInputDetails>(),
                 recoveryResourceGroupId,
                 recoveryAvailabilitySetId,
                 recoveryBootDiagStorageAccountId,
@@ -244,38 +263,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 recoveryCapacityReservationGroupId,
                 diskEncryptionInfo,
                 replicationProtectedItemName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<A2AProtectedItemDetail>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedItemDetail>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(A2AProtectedItemDetail)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        A2AProtectedItemDetail IPersistableModel<A2AProtectedItemDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedItemDetail>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeA2AProtectedItemDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(A2AProtectedItemDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<A2AProtectedItemDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct FailoverDeploymentModel : IEquatable<FailoverDeploymentModel>
     {
         private readonly string _value;
+        /// <summary> NotApplicable. </summary>
+        private const string NotApplicableValue = "NotApplicable";
+        /// <summary> Classic. </summary>
+        private const string ClassicValue = "Classic";
+        /// <summary> ResourceManager. </summary>
+        private const string ResourceManagerValue = "ResourceManager";
 
         /// <summary> Initializes a new instance of <see cref="FailoverDeploymentModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FailoverDeploymentModel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotApplicableValue = "NotApplicable";
-        private const string ClassicValue = "Classic";
-        private const string ResourceManagerValue = "ResourceManager";
+            _value = value;
+        }
 
         /// <summary> NotApplicable. </summary>
         public static FailoverDeploymentModel NotApplicable { get; } = new FailoverDeploymentModel(NotApplicableValue);
+
         /// <summary> Classic. </summary>
         public static FailoverDeploymentModel Classic { get; } = new FailoverDeploymentModel(ClassicValue);
+
         /// <summary> ResourceManager. </summary>
         public static FailoverDeploymentModel ResourceManager { get; } = new FailoverDeploymentModel(ResourceManagerValue);
+
         /// <summary> Determines if two <see cref="FailoverDeploymentModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FailoverDeploymentModel left, FailoverDeploymentModel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FailoverDeploymentModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FailoverDeploymentModel left, FailoverDeploymentModel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverDeploymentModel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FailoverDeploymentModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FailoverDeploymentModel(string value) => new FailoverDeploymentModel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FailoverDeploymentModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FailoverDeploymentModel?(string value) => value == null ? null : new FailoverDeploymentModel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FailoverDeploymentModel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FailoverDeploymentModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

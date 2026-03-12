@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
+    /// <summary>
+    /// Recovery plan provider specific details.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RecoveryPlanA2ADetails"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownRecoveryPlanProviderSpecificDetails))]
-    public partial class RecoveryPlanProviderSpecificDetails : IUtf8JsonSerializable, IJsonModel<RecoveryPlanProviderSpecificDetails>
+    public abstract partial class RecoveryPlanProviderSpecificDetails : IJsonModel<RecoveryPlanProviderSpecificDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanProviderSpecificDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanProviderSpecificDetails"/> for deserialization. </summary>
+        internal RecoveryPlanProviderSpecificDetails()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RecoveryPlanProviderSpecificDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRecoveryPlanProviderSpecificDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RecoveryPlanProviderSpecificDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryPlanProviderSpecificDetails IPersistableModel<RecoveryPlanProviderSpecificDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RecoveryPlanProviderSpecificDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecoveryPlanProviderSpecificDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +77,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,65 +101,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        RecoveryPlanProviderSpecificDetails IJsonModel<RecoveryPlanProviderSpecificDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryPlanProviderSpecificDetails IJsonModel<RecoveryPlanProviderSpecificDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RecoveryPlanProviderSpecificDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRecoveryPlanProviderSpecificDetails(document.RootElement, options);
         }
 
-        internal static RecoveryPlanProviderSpecificDetails DeserializeRecoveryPlanProviderSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RecoveryPlanProviderSpecificDetails DeserializeRecoveryPlanProviderSpecificDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            if (element.TryGetProperty("instanceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return RecoveryPlanA2ADetails.DeserializeRecoveryPlanA2ADetails(element, options);
+                    case "A2A":
+                        return RecoveryPlanA2ADetails.DeserializeRecoveryPlanA2ADetails(element, options);
                 }
             }
             return UnknownRecoveryPlanProviderSpecificDetails.DeserializeUnknownRecoveryPlanProviderSpecificDetails(element, options);
         }
-
-        BinaryData IPersistableModel<RecoveryPlanProviderSpecificDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RecoveryPlanProviderSpecificDetails IPersistableModel<RecoveryPlanProviderSpecificDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRecoveryPlanProviderSpecificDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanProviderSpecificDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RecoveryPlanProviderSpecificDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

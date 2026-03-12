@@ -7,64 +7,37 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Supported OS upgrade versions. </summary>
     public partial class OSUpgradeSupportedVersions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OSUpgradeSupportedVersions"/>. </summary>
         internal OSUpgradeSupportedVersions()
         {
-            SupportedTargetOSVersions = new ChangeTrackingList<string>();
+            SupportedTargetOsVersions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OSUpgradeSupportedVersions"/>. </summary>
-        /// <param name="supportedSourceOSVersion"> The source OS version name. </param>
-        /// <param name="supportedTargetOSVersions"> The target OS version names. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSUpgradeSupportedVersions(string supportedSourceOSVersion, IReadOnlyList<string> supportedTargetOSVersions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="supportedSourceOsVersion"> The source OS version name. </param>
+        /// <param name="supportedTargetOsVersions"> The target OS version names. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OSUpgradeSupportedVersions(string supportedSourceOsVersion, IReadOnlyList<string> supportedTargetOsVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SupportedSourceOSVersion = supportedSourceOSVersion;
-            SupportedTargetOSVersions = supportedTargetOSVersions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SupportedSourceOsVersion = supportedSourceOsVersion;
+            SupportedTargetOsVersions = supportedTargetOsVersions;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The source OS version name. </summary>
-        public string SupportedSourceOSVersion { get; }
+        public string SupportedSourceOsVersion { get; }
+
         /// <summary> The target OS version names. </summary>
-        public IReadOnlyList<string> SupportedTargetOSVersions { get; }
+        public IReadOnlyList<string> SupportedTargetOsVersions { get; }
     }
 }

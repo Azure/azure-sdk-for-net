@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The details of the InMage agent. </summary>
     public partial class InMageAgentDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InMageAgentDetails"/>. </summary>
         internal InMageAgentDetails()
@@ -54,24 +25,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentVersion"> The agent version. </param>
         /// <param name="agentUpdateStatus"> A value indicating whether installed agent needs to be updated. </param>
         /// <param name="postUpdateRebootStatus"> A value indicating whether reboot is required after update is applied. </param>
-        /// <param name="agentExpireOn"> Agent expiry date. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageAgentDetails(string agentVersion, string agentUpdateStatus, string postUpdateRebootStatus, DateTimeOffset? agentExpireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="agentExpiryOn"> Agent expiry date. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InMageAgentDetails(string agentVersion, string agentUpdateStatus, string postUpdateRebootStatus, DateTimeOffset? agentExpiryOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentVersion = agentVersion;
             AgentUpdateStatus = agentUpdateStatus;
             PostUpdateRebootStatus = postUpdateRebootStatus;
-            AgentExpireOn = agentExpireOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            AgentExpiryOn = agentExpiryOn;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The agent version. </summary>
         public string AgentVersion { get; }
+
         /// <summary> A value indicating whether installed agent needs to be updated. </summary>
         public string AgentUpdateStatus { get; }
+
         /// <summary> A value indicating whether reboot is required after update is applied. </summary>
         public string PostUpdateRebootStatus { get; }
+
         /// <summary> Agent expiry date. </summary>
-        public DateTimeOffset? AgentExpireOn { get; }
+        public DateTimeOffset? AgentExpiryOn { get; }
     }
 }

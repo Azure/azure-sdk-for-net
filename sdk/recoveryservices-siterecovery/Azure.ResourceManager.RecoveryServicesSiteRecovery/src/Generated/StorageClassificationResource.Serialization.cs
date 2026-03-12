@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
+    /// <summary></summary>
     public partial class StorageClassificationResource : IJsonModel<StorageClassificationData>
     {
-        private static StorageClassificationData s_dataDeserializationInstance;
-        private static StorageClassificationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageClassificationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageClassificationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageClassificationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageClassificationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageClassificationData>)Data).Write(writer, options);
 
-        StorageClassificationData IJsonModel<StorageClassificationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageClassificationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageClassificationData IJsonModel<StorageClassificationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageClassificationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageClassificationData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageClassificationData IPersistableModel<StorageClassificationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageClassificationData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
 
-        string IPersistableModel<StorageClassificationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageClassificationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageClassificationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

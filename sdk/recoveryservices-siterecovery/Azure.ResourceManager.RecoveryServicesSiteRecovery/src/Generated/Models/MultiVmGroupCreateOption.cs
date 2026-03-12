@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct MultiVmGroupCreateOption : IEquatable<MultiVmGroupCreateOption>
     {
         private readonly string _value;
+        /// <summary> AutoCreated. </summary>
+        private const string AutoCreatedValue = "AutoCreated";
+        /// <summary> UserSpecified. </summary>
+        private const string UserSpecifiedValue = "UserSpecified";
 
         /// <summary> Initializes a new instance of <see cref="MultiVmGroupCreateOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MultiVmGroupCreateOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutoCreatedValue = "AutoCreated";
-        private const string UserSpecifiedValue = "UserSpecified";
+            _value = value;
+        }
 
         /// <summary> AutoCreated. </summary>
         public static MultiVmGroupCreateOption AutoCreated { get; } = new MultiVmGroupCreateOption(AutoCreatedValue);
+
         /// <summary> UserSpecified. </summary>
         public static MultiVmGroupCreateOption UserSpecified { get; } = new MultiVmGroupCreateOption(UserSpecifiedValue);
+
         /// <summary> Determines if two <see cref="MultiVmGroupCreateOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MultiVmGroupCreateOption left, MultiVmGroupCreateOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MultiVmGroupCreateOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MultiVmGroupCreateOption left, MultiVmGroupCreateOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MultiVmGroupCreateOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MultiVmGroupCreateOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MultiVmGroupCreateOption(string value) => new MultiVmGroupCreateOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MultiVmGroupCreateOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MultiVmGroupCreateOption?(string value) => value == null ? null : new MultiVmGroupCreateOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MultiVmGroupCreateOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MultiVmGroupCreateOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

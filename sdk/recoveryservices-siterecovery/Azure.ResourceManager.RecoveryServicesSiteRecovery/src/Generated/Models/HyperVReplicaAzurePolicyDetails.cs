@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,21 +14,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class HyperVReplicaAzurePolicyDetails : PolicyProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzurePolicyDetails"/>. </summary>
-        internal HyperVReplicaAzurePolicyDetails()
+        internal HyperVReplicaAzurePolicyDetails() : base("HyperVReplicaAzure")
         {
-            InstanceType = "HyperVReplicaAzure";
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzurePolicyDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointHistoryDurationInHours"> The duration (in hours) to which point the recovery history needs to be maintained. </param>
         /// <param name="applicationConsistentSnapshotFrequencyInHours"> The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM. </param>
         /// <param name="replicationInterval"> The replication interval. </param>
         /// <param name="onlineReplicationStartTime"> The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately. </param>
         /// <param name="encryption"> A value indicating whether encryption is enabled for virtual machines in this cloud. </param>
         /// <param name="activeStorageAccountId"> The active storage account Id. </param>
-        internal HyperVReplicaAzurePolicyDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? recoveryPointHistoryDurationInHours, int? applicationConsistentSnapshotFrequencyInHours, int? replicationInterval, string onlineReplicationStartTime, string encryption, ResourceIdentifier activeStorageAccountId) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVReplicaAzurePolicyDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? recoveryPointHistoryDurationInHours, int? applicationConsistentSnapshotFrequencyInHours, int? replicationInterval, string onlineReplicationStartTime, string encryption, string activeStorageAccountId) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointHistoryDurationInHours = recoveryPointHistoryDurationInHours;
             ApplicationConsistentSnapshotFrequencyInHours = applicationConsistentSnapshotFrequencyInHours;
@@ -37,20 +35,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             OnlineReplicationStartTime = onlineReplicationStartTime;
             Encryption = encryption;
             ActiveStorageAccountId = activeStorageAccountId;
-            InstanceType = instanceType ?? "HyperVReplicaAzure";
         }
 
         /// <summary> The duration (in hours) to which point the recovery history needs to be maintained. </summary>
         public int? RecoveryPointHistoryDurationInHours { get; }
+
         /// <summary> The interval (in hours) at which Hyper-V Replica should create an application consistent snapshot within the VM. </summary>
         public int? ApplicationConsistentSnapshotFrequencyInHours { get; }
+
         /// <summary> The replication interval. </summary>
         public int? ReplicationInterval { get; }
+
         /// <summary> The scheduled start time for the initial replication. If this parameter is Null, the initial replication starts immediately. </summary>
         public string OnlineReplicationStartTime { get; }
+
         /// <summary> A value indicating whether encryption is enabled for virtual machines in this cloud. </summary>
         public string Encryption { get; }
+
         /// <summary> The active storage account Id. </summary>
-        public ResourceIdentifier ActiveStorageAccountId { get; }
+        public string ActiveStorageAccountId { get; }
     }
 }

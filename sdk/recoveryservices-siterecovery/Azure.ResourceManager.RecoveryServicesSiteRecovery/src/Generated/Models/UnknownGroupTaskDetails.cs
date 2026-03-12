@@ -10,20 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of GroupTaskDetails. </summary>
-    internal partial class UnknownGroupTaskDetails : SiteRecoveryGroupTaskDetails
+    internal partial class UnknownGroupTaskDetails : GroupTaskDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownGroupTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="childTasks"> The child tasks. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, childTasks, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownGroupTaskDetails"/> for deserialization. </summary>
-        internal UnknownGroupTaskDetails()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownGroupTaskDetails(string instanceType, IList<ASRTask> childTasks, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", childTasks, additionalBinaryDataProperties)
         {
         }
     }

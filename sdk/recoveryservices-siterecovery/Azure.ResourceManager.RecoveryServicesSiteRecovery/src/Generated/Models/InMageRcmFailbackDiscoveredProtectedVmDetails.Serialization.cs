@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackDiscoveredProtectedVmDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackDiscoveredProtectedVmDetails>
+    /// <summary> InMageRcmFailback discovered VM details. </summary>
+    public partial class InMageRcmFailbackDiscoveredProtectedVmDetails : IJsonModel<InMageRcmFailbackDiscoveredProtectedVmDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InMageRcmFailbackDiscoveredProtectedVmDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmFailbackDiscoveredProtectedVmDetails IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(VCenterId))
             {
                 writer.WritePropertyName("vCenterId"u8);
@@ -49,31 +88,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("datastores"u8);
                 writer.WriteStartArray();
-                foreach (var item in Datastores)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
-            {
-                writer.WritePropertyName("ipAddresses"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPAddresses)
+                foreach (string item in Datastores)
                 {
                     if (item == null)
                     {
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(VMwareToolsStatus))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IpAddresses))
+            {
+                writer.WritePropertyName("ipAddresses"u8);
+                writer.WriteStartArray();
+                foreach (string item in IpAddresses)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(VmwareToolsStatus))
             {
                 writer.WritePropertyName("vmwareToolsStatus"u8);
-                writer.WriteStringValue(VMwareToolsStatus);
+                writer.WriteStringValue(VmwareToolsStatus);
             }
             if (options.Format != "W" && Optional.IsDefined(PowerStatus))
             {
@@ -85,40 +129,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("vmFqdn"u8);
                 writer.WriteStringValue(VmFqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSName))
+            if (options.Format != "W" && Optional.IsDefined(OsName))
             {
                 writer.WritePropertyName("osName"u8);
-                writer.WriteStringValue(OSName);
+                writer.WriteStringValue(OsName);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (options.Format != "W" && Optional.IsDefined(CreatedTimestamp))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreatedTimestamp.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            if (options.Format != "W" && Optional.IsDefined(UpdatedTimestamp))
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
-                writer.WriteStringValue(UpdatedOn.Value, "O");
+                writer.WriteStringValue(UpdatedTimestamp.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastDiscoveredOn))
+            if (options.Format != "W" && Optional.IsDefined(LastDiscoveryTimeInUtc))
             {
                 writer.WritePropertyName("lastDiscoveryTimeInUtc"u8);
-                writer.WriteStringValue(LastDiscoveredOn.Value, "O");
+                writer.WriteStringValue(LastDiscoveryTimeInUtc.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -127,22 +171,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        InMageRcmFailbackDiscoveredProtectedVmDetails IJsonModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmFailbackDiscoveredProtectedVmDetails IJsonModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InMageRcmFailbackDiscoveredProtectedVmDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(document.RootElement, options);
         }
 
-        internal static InMageRcmFailbackDiscoveredProtectedVmDetails DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InMageRcmFailbackDiscoveredProtectedVmDetails DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -150,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string vCenterId = default;
             string vCenterFqdn = default;
             IReadOnlyList<string> datastores = default;
-            IReadOnlyList<IPAddress> ipAddresses = default;
+            IReadOnlyList<string> ipAddresses = default;
             string vmwareToolsStatus = default;
             string powerStatus = default;
             string vmFqdn = default;
@@ -159,42 +208,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DateTimeOffset? updatedTimestamp = default;
             bool? isDeleted = default;
             DateTimeOffset? lastDiscoveryTimeInUtc = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("vCenterId"u8))
+                if (prop.NameEquals("vCenterId"u8))
                 {
-                    vCenterId = property.Value.GetString();
+                    vCenterId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vCenterFqdn"u8))
+                if (prop.NameEquals("vCenterFqdn"u8))
                 {
-                    vCenterFqdn = property.Value.GetString();
+                    vCenterFqdn = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("datastores"u8))
+                if (prop.NameEquals("datastores"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    datastores = array;
-                    continue;
-                }
-                if (property.NameEquals("ipAddresses"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<IPAddress> array = new List<IPAddress>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -202,79 +236,99 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         }
                         else
                         {
-                            array.Add(IPAddress.Parse(item.GetString()));
+                            array.Add(item.GetString());
+                        }
+                    }
+                    datastores = array;
+                    continue;
+                }
+                if (prop.NameEquals("ipAddresses"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
                         }
                     }
                     ipAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("vmwareToolsStatus"u8))
+                if (prop.NameEquals("vmwareToolsStatus"u8))
                 {
-                    vmwareToolsStatus = property.Value.GetString();
+                    vmwareToolsStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("powerStatus"u8))
+                if (prop.NameEquals("powerStatus"u8))
                 {
-                    powerStatus = property.Value.GetString();
+                    powerStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmFqdn"u8))
+                if (prop.NameEquals("vmFqdn"u8))
                 {
-                    vmFqdn = property.Value.GetString();
+                    vmFqdn = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osName"u8))
+                if (prop.NameEquals("osName"u8))
                 {
-                    osName = property.Value.GetString();
+                    osName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("createdTimestamp"u8))
+                if (prop.NameEquals("createdTimestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    createdTimestamp = property.Value.GetDateTimeOffset("O");
+                    createdTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("updatedTimestamp"u8))
+                if (prop.NameEquals("updatedTimestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    updatedTimestamp = property.Value.GetDateTimeOffset("O");
+                    updatedTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("isDeleted"u8))
+                if (prop.NameEquals("isDeleted"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDeleted = property.Value.GetBoolean();
+                    isDeleted = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("lastDiscoveryTimeInUtc"u8))
+                if (prop.NameEquals("lastDiscoveryTimeInUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastDiscoveryTimeInUtc = property.Value.GetDateTimeOffset("O");
+                    lastDiscoveryTimeInUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InMageRcmFailbackDiscoveredProtectedVmDetails(
                 vCenterId,
                 vCenterFqdn,
                 datastores ?? new ChangeTrackingList<string>(),
-                ipAddresses ?? new ChangeTrackingList<IPAddress>(),
+                ipAddresses ?? new ChangeTrackingList<string>(),
                 vmwareToolsStatus,
                 powerStatus,
                 vmFqdn,
@@ -283,38 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 updatedTimestamp,
                 isDeleted,
                 lastDiscoveryTimeInUtc,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InMageRcmFailbackDiscoveredProtectedVmDetails IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class OSUpgradeSupportedVersions : IUtf8JsonSerializable, IJsonModel<OSUpgradeSupportedVersions>
+    /// <summary> Supported OS upgrade versions. </summary>
+    public partial class OSUpgradeSupportedVersions : IJsonModel<OSUpgradeSupportedVersions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSUpgradeSupportedVersions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OSUpgradeSupportedVersions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOSUpgradeSupportedVersions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OSUpgradeSupportedVersions>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OSUpgradeSupportedVersions IPersistableModel<OSUpgradeSupportedVersions>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OSUpgradeSupportedVersions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OSUpgradeSupportedVersions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,36 +69,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support writing '{format}' format.");
             }
-
-            if (options.Format != "W" && Optional.IsDefined(SupportedSourceOSVersion))
+            if (options.Format != "W" && Optional.IsDefined(SupportedSourceOsVersion))
             {
                 writer.WritePropertyName("supportedSourceOsVersion"u8);
-                writer.WriteStringValue(SupportedSourceOSVersion);
+                writer.WriteStringValue(SupportedSourceOsVersion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedTargetOSVersions))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedTargetOsVersions))
             {
                 writer.WritePropertyName("supportedTargetOsVersions"u8);
                 writer.WriteStartArray();
-                foreach (var item in SupportedTargetOSVersions)
+                foreach (string item in SupportedTargetOsVersions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,89 +111,68 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        OSUpgradeSupportedVersions IJsonModel<OSUpgradeSupportedVersions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OSUpgradeSupportedVersions IJsonModel<OSUpgradeSupportedVersions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OSUpgradeSupportedVersions JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOSUpgradeSupportedVersions(document.RootElement, options);
         }
 
-        internal static OSUpgradeSupportedVersions DeserializeOSUpgradeSupportedVersions(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OSUpgradeSupportedVersions DeserializeOSUpgradeSupportedVersions(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string supportedSourceOSVersion = default;
-            IReadOnlyList<string> supportedTargetOSVersions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string supportedSourceOsVersion = default;
+            IReadOnlyList<string> supportedTargetOsVersions = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("supportedSourceOsVersion"u8))
+                if (prop.NameEquals("supportedSourceOsVersion"u8))
                 {
-                    supportedSourceOSVersion = property.Value.GetString();
+                    supportedSourceOsVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedTargetOsVersions"u8))
+                if (prop.NameEquals("supportedTargetOsVersions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
-                    supportedTargetOSVersions = array;
+                    supportedTargetOsVersions = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new OSUpgradeSupportedVersions(supportedSourceOSVersion, supportedTargetOSVersions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new OSUpgradeSupportedVersions(supportedSourceOsVersion, supportedTargetOsVersions ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<OSUpgradeSupportedVersions>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        OSUpgradeSupportedVersions IPersistableModel<OSUpgradeSupportedVersions>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOSUpgradeSupportedVersions(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<OSUpgradeSupportedVersions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

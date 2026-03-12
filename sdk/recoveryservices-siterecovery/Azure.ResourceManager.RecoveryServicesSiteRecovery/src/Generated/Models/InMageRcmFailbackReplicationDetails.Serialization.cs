@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackReplicationDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackReplicationDetails>
+    /// <summary> InMageRcmFailback provider specific details. </summary>
+    public partial class InMageRcmFailbackReplicationDetails : ReplicationProviderSpecificSettings, IJsonModel<InMageRcmFailbackReplicationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackReplicationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ReplicationProviderSpecificSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInMageRcmFailbackReplicationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InMageRcmFailbackReplicationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmFailbackReplicationDetails IPersistableModel<InMageRcmFailbackReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (InMageRcmFailbackReplicationDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InMageRcmFailbackReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InMageRcmFailbackReplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(InternalIdentifier))
             {
@@ -60,20 +100,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("reprotectAgentName"u8);
                 writer.WriteStringValue(ReprotectAgentName);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
+            if (options.Format != "W" && Optional.IsDefined(OsType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType);
+                writer.WriteStringValue(OsType);
             }
             if (options.Format != "W" && Optional.IsDefined(LogStorageAccountId))
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
                 writer.WriteStringValue(LogStorageAccountId);
             }
-            if (options.Format != "W" && Optional.IsDefined(TargetVCenterId))
+            if (options.Format != "W" && Optional.IsDefined(TargetvCenterId))
             {
                 writer.WritePropertyName("targetvCenterId"u8);
-                writer.WriteStringValue(TargetVCenterId);
+                writer.WriteStringValue(TargetvCenterId);
             }
             if (options.Format != "W" && Optional.IsDefined(TargetDataStoreName))
             {
@@ -139,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in ProtectedDisks)
+                foreach (InMageRcmFailbackProtectedDiskDetails item in ProtectedDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -154,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmNics)
+                foreach (InMageRcmFailbackNicDetails item in VmNics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -192,33 +232,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        InMageRcmFailbackReplicationDetails IJsonModel<InMageRcmFailbackReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmFailbackReplicationDetails IJsonModel<InMageRcmFailbackReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InMageRcmFailbackReplicationDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ReplicationProviderSpecificSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInMageRcmFailbackReplicationDetails(document.RootElement, options);
         }
 
-        internal static InMageRcmFailbackReplicationDetails DeserializeInMageRcmFailbackReplicationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InMageRcmFailbackReplicationDetails DeserializeInMageRcmFailbackReplicationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "InMageRcmFailback";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string internalIdentifier = default;
-            ResourceIdentifier azureVirtualMachineId = default;
+            string azureVirtualMachineId = default;
             string multiVmGroupName = default;
             string reprotectAgentId = default;
             string reprotectAgentName = default;
             string osType = default;
-            ResourceIdentifier logStorageAccountId = default;
+            string logStorageAccountId = default;
             string targetvCenterId = default;
             string targetDataStoreName = default;
             string targetVmName = default;
@@ -231,266 +278,250 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             long? resyncTransferredBytes = default;
             VmReplicationProgressHealth? resyncProgressHealth = default;
             string resyncRequired = default;
-            SiteRecoveryResyncState? resyncState = default;
-            IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks = default;
+            ResyncState? resyncState = default;
+            IList<InMageRcmFailbackProtectedDiskDetails> protectedDisks = default;
             InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails = default;
-            IReadOnlyList<InMageRcmFailbackNicDetails> vmNics = default;
-            DateTimeOffset? lastPlannedFailoverStartTime = default;
+            IList<InMageRcmFailbackNicDetails> vmNics = default;
+            DateTimeOffset? lastPlannedFailoverStartOn = default;
             PlannedFailoverStatus? lastPlannedFailoverStatus = default;
             InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails = default;
-            ResourceIdentifier lastUsedPolicyId = default;
+            string lastUsedPolicyId = default;
             string lastUsedPolicyFriendlyName = default;
             bool? isAgentRegistrationSuccessfulAfterFailover = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("internalIdentifier"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    internalIdentifier = property.Value.GetString();
+                    instanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureVirtualMachineId"u8))
+                if (prop.NameEquals("internalIdentifier"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    internalIdentifier = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("azureVirtualMachineId"u8))
+                {
+                    azureVirtualMachineId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("multiVmGroupName"u8))
+                {
+                    multiVmGroupName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("reprotectAgentId"u8))
+                {
+                    reprotectAgentId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("reprotectAgentName"u8))
+                {
+                    reprotectAgentName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("osType"u8))
+                {
+                    osType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("logStorageAccountId"u8))
+                {
+                    logStorageAccountId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("targetvCenterId"u8))
+                {
+                    targetvCenterId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("targetDataStoreName"u8))
+                {
+                    targetDataStoreName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("targetVmName"u8))
+                {
+                    targetVmName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("initialReplicationProgressPercentage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureVirtualMachineId = new ResourceIdentifier(property.Value.GetString());
+                    initialReplicationProgressPercentage = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupName"u8))
+                if (prop.NameEquals("initialReplicationProcessedBytes"u8))
                 {
-                    multiVmGroupName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("reprotectAgentId"u8))
-                {
-                    reprotectAgentId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("reprotectAgentName"u8))
-                {
-                    reprotectAgentName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("osType"u8))
-                {
-                    osType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("logStorageAccountId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    logStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    initialReplicationProcessedBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("targetvCenterId"u8))
+                if (prop.NameEquals("initialReplicationTransferredBytes"u8))
                 {
-                    targetvCenterId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetDataStoreName"u8))
-                {
-                    targetDataStoreName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetVmName"u8))
-                {
-                    targetVmName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("initialReplicationProgressPercentage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialReplicationProgressPercentage = property.Value.GetInt32();
+                    initialReplicationTransferredBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("initialReplicationProcessedBytes"u8))
+                if (prop.NameEquals("initialReplicationProgressHealth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialReplicationProcessedBytes = property.Value.GetInt64();
+                    initialReplicationProgressHealth = new VmReplicationProgressHealth(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("initialReplicationTransferredBytes"u8))
+                if (prop.NameEquals("resyncProgressPercentage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialReplicationTransferredBytes = property.Value.GetInt64();
+                    resyncProgressPercentage = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("initialReplicationProgressHealth"u8))
+                if (prop.NameEquals("resyncProcessedBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialReplicationProgressHealth = new VmReplicationProgressHealth(property.Value.GetString());
+                    resyncProcessedBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncProgressPercentage"u8))
+                if (prop.NameEquals("resyncTransferredBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncProgressPercentage = property.Value.GetInt32();
+                    resyncTransferredBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncProcessedBytes"u8))
+                if (prop.NameEquals("resyncProgressHealth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncProcessedBytes = property.Value.GetInt64();
+                    resyncProgressHealth = new VmReplicationProgressHealth(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resyncTransferredBytes"u8))
+                if (prop.NameEquals("resyncRequired"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    resyncRequired = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resyncState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncTransferredBytes = property.Value.GetInt64();
+                    resyncState = new ResyncState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resyncProgressHealth"u8))
+                if (prop.NameEquals("protectedDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resyncProgressHealth = new VmReplicationProgressHealth(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resyncRequired"u8))
-                {
-                    resyncRequired = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resyncState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resyncState = new SiteRecoveryResyncState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("protectedDisks"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InMageRcmFailbackProtectedDiskDetails> array = new List<InMageRcmFailbackProtectedDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InMageRcmFailbackProtectedDiskDetails.DeserializeInMageRcmFailbackProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("mobilityAgentDetails"u8))
+                if (prop.NameEquals("mobilityAgentDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mobilityAgentDetails = InMageRcmFailbackMobilityAgentDetails.DeserializeInMageRcmFailbackMobilityAgentDetails(property.Value, options);
+                    mobilityAgentDetails = InMageRcmFailbackMobilityAgentDetails.DeserializeInMageRcmFailbackMobilityAgentDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vmNics"u8))
+                if (prop.NameEquals("vmNics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InMageRcmFailbackNicDetails> array = new List<InMageRcmFailbackNicDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InMageRcmFailbackNicDetails.DeserializeInMageRcmFailbackNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
                 }
-                if (property.NameEquals("lastPlannedFailoverStartTime"u8))
+                if (prop.NameEquals("lastPlannedFailoverStartTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastPlannedFailoverStartTime = property.Value.GetDateTimeOffset("O");
+                    lastPlannedFailoverStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastPlannedFailoverStatus"u8))
+                if (prop.NameEquals("lastPlannedFailoverStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastPlannedFailoverStatus = new PlannedFailoverStatus(property.Value.GetString());
+                    lastPlannedFailoverStatus = new PlannedFailoverStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("discoveredVmDetails"u8))
+                if (prop.NameEquals("discoveredVmDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    discoveredVmDetails = InMageRcmFailbackDiscoveredProtectedVmDetails.DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(property.Value, options);
+                    discoveredVmDetails = InMageRcmFailbackDiscoveredProtectedVmDetails.DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("lastUsedPolicyId"u8))
+                if (prop.NameEquals("lastUsedPolicyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    lastUsedPolicyId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("lastUsedPolicyFriendlyName"u8))
+                {
+                    lastUsedPolicyFriendlyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isAgentRegistrationSuccessfulAfterFailover"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastUsedPolicyId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("lastUsedPolicyFriendlyName"u8))
-                {
-                    lastUsedPolicyFriendlyName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isAgentRegistrationSuccessfulAfterFailover"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isAgentRegistrationSuccessfulAfterFailover = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
+                    isAgentRegistrationSuccessfulAfterFailover = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InMageRcmFailbackReplicationDetails(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 internalIdentifier,
                 azureVirtualMachineId,
                 multiVmGroupName,
@@ -514,43 +545,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 protectedDisks ?? new ChangeTrackingList<InMageRcmFailbackProtectedDiskDetails>(),
                 mobilityAgentDetails,
                 vmNics ?? new ChangeTrackingList<InMageRcmFailbackNicDetails>(),
-                lastPlannedFailoverStartTime,
+                lastPlannedFailoverStartOn,
                 lastPlannedFailoverStatus,
                 discoveredVmDetails,
                 lastUsedPolicyId,
                 lastUsedPolicyFriendlyName,
                 isAgentRegistrationSuccessfulAfterFailover);
         }
-
-        BinaryData IPersistableModel<InMageRcmFailbackReplicationDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InMageRcmFailbackReplicationDetails IPersistableModel<InMageRcmFailbackReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInMageRcmFailbackReplicationDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InMageRcmFailbackReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

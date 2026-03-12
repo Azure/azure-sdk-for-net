@@ -7,50 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm discovered protected VM details. </summary>
     public partial class InMageRcmDiscoveredProtectedVmDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmDiscoveredProtectedVmDetails"/>. </summary>
         internal InMageRcmDiscoveredProtectedVmDetails()
         {
             Datastores = new ChangeTrackingList<string>();
-            IPAddresses = new ChangeTrackingList<IPAddress>();
+            IpAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmDiscoveredProtectedVmDetails"/>. </summary>
@@ -62,50 +33,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="powerStatus"> The VM power status. </param>
         /// <param name="vmFqdn"> The VM fqdn. </param>
         /// <param name="osName"> The VM's OS name. </param>
-        /// <param name="createdOn"> The SDS created timestamp. </param>
-        /// <param name="updatedOn"> The SDS updated timestamp. </param>
+        /// <param name="createdTimestamp"> The SDS created timestamp. </param>
+        /// <param name="updatedTimestamp"> The SDS updated timestamp. </param>
         /// <param name="isDeleted"> A value indicating whether the VM is deleted. </param>
         /// <param name="lastDiscoveryTimeInUtc"> The last time when SDS information discovered in SRS. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageRcmDiscoveredProtectedVmDetails(string vCenterId, string vCenterFqdn, IReadOnlyList<string> datastores, IReadOnlyList<IPAddress> ipAddresses, string vmwareToolsStatus, string powerStatus, string vmFqdn, string osName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, bool? isDeleted, DateTimeOffset? lastDiscoveryTimeInUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmDiscoveredProtectedVmDetails(string vCenterId, string vCenterFqdn, IReadOnlyList<string> datastores, IReadOnlyList<string> ipAddresses, string vmwareToolsStatus, string powerStatus, string vmFqdn, string osName, DateTimeOffset? createdTimestamp, DateTimeOffset? updatedTimestamp, bool? isDeleted, DateTimeOffset? lastDiscoveryTimeInUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VCenterId = vCenterId;
             VCenterFqdn = vCenterFqdn;
             Datastores = datastores;
-            IPAddresses = ipAddresses;
-            VMwareToolsStatus = vmwareToolsStatus;
+            IpAddresses = ipAddresses;
+            VmwareToolsStatus = vmwareToolsStatus;
             PowerStatus = powerStatus;
             VmFqdn = vmFqdn;
-            OSName = osName;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
+            OsName = osName;
+            CreatedTimestamp = createdTimestamp;
+            UpdatedTimestamp = updatedTimestamp;
             IsDeleted = isDeleted;
             LastDiscoveryTimeInUtc = lastDiscoveryTimeInUtc;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The VCenter Id. </summary>
         public string VCenterId { get; }
+
         /// <summary> The VCenter fqdn. </summary>
         public string VCenterFqdn { get; }
+
         /// <summary> The list of datastores. </summary>
         public IReadOnlyList<string> Datastores { get; }
+
         /// <summary> The list of IP addresses. </summary>
-        public IReadOnlyList<IPAddress> IPAddresses { get; }
+        public IReadOnlyList<string> IpAddresses { get; }
+
         /// <summary> The VMware tools status. </summary>
-        public string VMwareToolsStatus { get; }
+        public string VmwareToolsStatus { get; }
+
         /// <summary> The VM power status. </summary>
         public string PowerStatus { get; }
+
         /// <summary> The VM fqdn. </summary>
         public string VmFqdn { get; }
+
         /// <summary> The VM's OS name. </summary>
-        public string OSName { get; }
+        public string OsName { get; }
+
         /// <summary> The SDS created timestamp. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedTimestamp { get; }
+
         /// <summary> The SDS updated timestamp. </summary>
-        public DateTimeOffset? UpdatedOn { get; }
+        public DateTimeOffset? UpdatedTimestamp { get; }
+
         /// <summary> A value indicating whether the VM is deleted. </summary>
         public bool? IsDeleted { get; }
+
         /// <summary> The last time when SDS information discovered in SRS. </summary>
         public DateTimeOffset? LastDiscoveryTimeInUtc { get; }
     }

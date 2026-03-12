@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
+    /// <summary>
+    /// Base class for Provider specific details for policies.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, and <see cref="VmwareCbtPolicyDetails"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownPolicyProviderSpecificDetails))]
-    public partial class PolicyProviderSpecificDetails : IUtf8JsonSerializable, IJsonModel<PolicyProviderSpecificDetails>
+    public abstract partial class PolicyProviderSpecificDetails : IJsonModel<PolicyProviderSpecificDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyProviderSpecificDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="PolicyProviderSpecificDetails"/> for deserialization. </summary>
+        internal PolicyProviderSpecificDetails()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PolicyProviderSpecificDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePolicyProviderSpecificDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyProviderSpecificDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyProviderSpecificDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PolicyProviderSpecificDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicyProviderSpecificDetails IPersistableModel<PolicyProviderSpecificDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PolicyProviderSpecificDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PolicyProviderSpecificDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +77,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyProviderSpecificDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,75 +101,60 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        PolicyProviderSpecificDetails IJsonModel<PolicyProviderSpecificDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicyProviderSpecificDetails IJsonModel<PolicyProviderSpecificDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PolicyProviderSpecificDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyProviderSpecificDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePolicyProviderSpecificDetails(document.RootElement, options);
         }
 
-        internal static PolicyProviderSpecificDetails DeserializePolicyProviderSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PolicyProviderSpecificDetails DeserializePolicyProviderSpecificDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            if (element.TryGetProperty("instanceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2APolicyDetails.DeserializeA2APolicyDetails(element, options);
-                    case "HyperVReplica2012": return HyperVReplicaPolicyDetails.DeserializeHyperVReplicaPolicyDetails(element, options);
-                    case "HyperVReplica2012R2": return HyperVReplicaBluePolicyDetails.DeserializeHyperVReplicaBluePolicyDetails(element, options);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzurePolicyDetails.DeserializeHyperVReplicaAzurePolicyDetails(element, options);
-                    case "HyperVReplicaBasePolicyDetails": return HyperVReplicaBasePolicyDetails.DeserializeHyperVReplicaBasePolicyDetails(element, options);
-                    case "InMage": return InMagePolicyDetails.DeserializeInMagePolicyDetails(element, options);
-                    case "InMageAzureV2": return InMageAzureV2PolicyDetails.DeserializeInMageAzureV2PolicyDetails(element, options);
-                    case "InMageBasePolicyDetails": return InMageBasePolicyDetails.DeserializeInMageBasePolicyDetails(element, options);
-                    case "InMageRcm": return InMageRcmPolicyDetails.DeserializeInMageRcmPolicyDetails(element, options);
-                    case "InMageRcmFailback": return InMageRcmFailbackPolicyDetails.DeserializeInMageRcmFailbackPolicyDetails(element, options);
-                    case "VMwareCbt": return VMwareCbtPolicyDetails.DeserializeVMwareCbtPolicyDetails(element, options);
+                    case "A2A":
+                        return A2APolicyDetails.DeserializeA2APolicyDetails(element, options);
+                    case "HyperVReplicaAzure":
+                        return HyperVReplicaAzurePolicyDetails.DeserializeHyperVReplicaAzurePolicyDetails(element, options);
+                    case "HyperVReplicaBasePolicyDetails":
+                        return HyperVReplicaBasePolicyDetails.DeserializeHyperVReplicaBasePolicyDetails(element, options);
+                    case "HyperVReplica2012R2":
+                        return HyperVReplicaBluePolicyDetails.DeserializeHyperVReplicaBluePolicyDetails(element, options);
+                    case "HyperVReplica2012":
+                        return HyperVReplicaPolicyDetails.DeserializeHyperVReplicaPolicyDetails(element, options);
+                    case "InMageAzureV2":
+                        return InMageAzureV2PolicyDetails.DeserializeInMageAzureV2PolicyDetails(element, options);
+                    case "InMageBasePolicyDetails":
+                        return InMageBasePolicyDetails.DeserializeInMageBasePolicyDetails(element, options);
+                    case "InMage":
+                        return InMagePolicyDetails.DeserializeInMagePolicyDetails(element, options);
+                    case "InMageRcmFailback":
+                        return InMageRcmFailbackPolicyDetails.DeserializeInMageRcmFailbackPolicyDetails(element, options);
+                    case "InMageRcm":
+                        return InMageRcmPolicyDetails.DeserializeInMageRcmPolicyDetails(element, options);
+                    case "VMwareCbt":
+                        return VmwareCbtPolicyDetails.DeserializeVmwareCbtPolicyDetails(element, options);
                 }
             }
             return UnknownPolicyProviderSpecificDetails.DeserializeUnknownPolicyProviderSpecificDetails(element, options);
         }
-
-        BinaryData IPersistableModel<PolicyProviderSpecificDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PolicyProviderSpecificDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PolicyProviderSpecificDetails IPersistableModel<PolicyProviderSpecificDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyProviderSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePolicyProviderSpecificDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PolicyProviderSpecificDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PolicyProviderSpecificDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

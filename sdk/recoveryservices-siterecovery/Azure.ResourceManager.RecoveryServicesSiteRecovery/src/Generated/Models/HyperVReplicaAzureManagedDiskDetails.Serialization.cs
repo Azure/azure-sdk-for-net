@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureManagedDiskDetails : IUtf8JsonSerializable, IJsonModel<HyperVReplicaAzureManagedDiskDetails>
+    /// <summary> Hyper-V Managed disk details. </summary>
+    public partial class HyperVReplicaAzureManagedDiskDetails : IJsonModel<HyperVReplicaAzureManagedDiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzureManagedDiskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HyperVReplicaAzureManagedDiskDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHyperVReplicaAzureManagedDiskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureManagedDiskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureManagedDiskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVReplicaAzureManagedDiskDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVReplicaAzureManagedDiskDetails IPersistableModel<HyperVReplicaAzureManagedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HyperVReplicaAzureManagedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVReplicaAzureManagedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaAzureManagedDiskDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
@@ -64,15 +104,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("sectorSizeInBytes"u8);
                 writer.WriteNumberValue(SectorSizeInBytes.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(Iops))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("iops"u8);
+                writer.WriteNumberValue(Iops.Value);
+            }
+            if (Optional.IsDefined(ThroughputInMbps))
+            {
+                writer.WritePropertyName("throughputInMbps"u8);
+                writer.WriteNumberValue(ThroughputInMbps.Value);
+            }
+            if (Optional.IsDefined(DiskSizeInGB))
+            {
+                writer.WritePropertyName("diskSizeInGB"u8);
+                writer.WriteNumberValue(DiskSizeInGB.Value);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +136,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        HyperVReplicaAzureManagedDiskDetails IJsonModel<HyperVReplicaAzureManagedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVReplicaAzureManagedDiskDetails IJsonModel<HyperVReplicaAzureManagedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HyperVReplicaAzureManagedDiskDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaAzureManagedDiskDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVReplicaAzureManagedDiskDetails(document.RootElement, options);
         }
 
-        internal static HyperVReplicaAzureManagedDiskDetails DeserializeHyperVReplicaAzureManagedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HyperVReplicaAzureManagedDiskDetails DeserializeHyperVReplicaAzureManagedDiskDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,61 +164,85 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string diskId = default;
             string seedManagedDiskId = default;
             string replicaDiskType = default;
-            ResourceIdentifier diskEncryptionSetId = default;
-            SiteRecoveryDiskAccountType? targetDiskAccountType = default;
+            string diskEncryptionSetId = default;
+            DiskAccountType? targetDiskAccountType = default;
             int? sectorSizeInBytes = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            long? iops = default;
+            long? throughputInMbps = default;
+            long? diskSizeInGB = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"u8))
+                if (prop.NameEquals("diskId"u8))
                 {
-                    diskId = property.Value.GetString();
+                    diskId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("seedManagedDiskId"u8))
+                if (prop.NameEquals("seedManagedDiskId"u8))
                 {
-                    seedManagedDiskId = property.Value.GetString();
+                    seedManagedDiskId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("replicaDiskType"u8))
+                if (prop.NameEquals("replicaDiskType"u8))
                 {
-                    replicaDiskType = property.Value.GetString();
+                    replicaDiskType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSetId"u8))
+                if (prop.NameEquals("diskEncryptionSetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    diskEncryptionSetId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("targetDiskAccountType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());
+                    targetDiskAccountType = new DiskAccountType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetDiskAccountType"u8))
+                if (prop.NameEquals("sectorSizeInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetDiskAccountType = new SiteRecoveryDiskAccountType(property.Value.GetString());
+                    sectorSizeInBytes = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sectorSizeInBytes"u8))
+                if (prop.NameEquals("iops"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sectorSizeInBytes = property.Value.GetInt32();
+                    iops = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("throughputInMbps"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    throughputInMbps = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("diskSizeInGB"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskSizeInGB = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVReplicaAzureManagedDiskDetails(
                 diskId,
                 seedManagedDiskId,
@@ -166,38 +250,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 diskEncryptionSetId,
                 targetDiskAccountType,
                 sectorSizeInBytes,
-                serializedAdditionalRawData);
+                iops,
+                throughputInMbps,
+                diskSizeInGB,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<HyperVReplicaAzureManagedDiskDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureManagedDiskDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HyperVReplicaAzureManagedDiskDetails IPersistableModel<HyperVReplicaAzureManagedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHyperVReplicaAzureManagedDiskDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureManagedDiskDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HyperVReplicaAzureManagedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

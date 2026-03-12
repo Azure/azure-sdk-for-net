@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,41 +14,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2ACrossClusterMigrationReplicationDetails : ReplicationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationReplicationDetails"/>. </summary>
-        internal A2ACrossClusterMigrationReplicationDetails()
+        internal A2ACrossClusterMigrationReplicationDetails() : base("A2ACrossClusterMigration")
         {
-            InstanceType = "A2ACrossClusterMigration";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2ACrossClusterMigrationReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="primaryFabricLocation"> Primary fabric location. </param>
         /// <param name="osType"> The type of operating system. </param>
         /// <param name="vmProtectionState"> The protection state for the vm. </param>
         /// <param name="vmProtectionStateDescription"> The protection state description for the vm. </param>
         /// <param name="lifecycleId"> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </param>
-        internal A2ACrossClusterMigrationReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fabricObjectId, AzureLocation? primaryFabricLocation, string osType, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId) : base(instanceType, serializedAdditionalRawData)
+        internal A2ACrossClusterMigrationReplicationDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string fabricObjectId, string primaryFabricLocation, string osType, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId) : base(instanceType, additionalBinaryDataProperties)
         {
             FabricObjectId = fabricObjectId;
             PrimaryFabricLocation = primaryFabricLocation;
-            OSType = osType;
+            OsType = osType;
             VmProtectionState = vmProtectionState;
             VmProtectionStateDescription = vmProtectionStateDescription;
             LifecycleId = lifecycleId;
-            InstanceType = instanceType ?? "A2ACrossClusterMigration";
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>
-        public ResourceIdentifier FabricObjectId { get; }
+        public string FabricObjectId { get; }
+
         /// <summary> Primary fabric location. </summary>
-        public AzureLocation? PrimaryFabricLocation { get; }
+        public string PrimaryFabricLocation { get; }
+
         /// <summary> The type of operating system. </summary>
-        public string OSType { get; }
+        public string OsType { get; }
+
         /// <summary> The protection state for the vm. </summary>
         public string VmProtectionState { get; }
+
         /// <summary> The protection state description for the vm. </summary>
         public string VmProtectionStateDescription { get; }
+
         /// <summary> An id associated with the PE that survives actions like switch protection which change the backing PE/CPE objects internally.The lifecycle id gets carried forward to have a link/continuity in being able to have an Id that denotes the "same" protected item even though other internal Ids/ARM Id might be changing. </summary>
         public string LifecycleId { get; }
     }

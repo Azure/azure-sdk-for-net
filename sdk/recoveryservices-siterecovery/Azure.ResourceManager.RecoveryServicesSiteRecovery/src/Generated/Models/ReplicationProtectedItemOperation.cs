@@ -7,81 +7,125 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The ReplicationProtectedItemOperation. </summary>
+    /// <summary> The list of failover types. </summary>
     public readonly partial struct ReplicationProtectedItemOperation : IEquatable<ReplicationProtectedItemOperation>
     {
         private readonly string _value;
+        /// <summary> ReverseReplicate. </summary>
+        private const string ReverseReplicateValue = "ReverseReplicate";
+        /// <summary> Commit. </summary>
+        private const string CommitValue = "Commit";
+        /// <summary> PlannedFailover. </summary>
+        private const string PlannedFailoverValue = "PlannedFailover";
+        /// <summary> UnplannedFailover. </summary>
+        private const string UnplannedFailoverValue = "UnplannedFailover";
+        /// <summary> DisableProtection. </summary>
+        private const string DisableProtectionValue = "DisableProtection";
+        /// <summary> TestFailover. </summary>
+        private const string TestFailoverValue = "TestFailover";
+        /// <summary> TestFailoverCleanup. </summary>
+        private const string TestFailoverCleanupValue = "TestFailoverCleanup";
+        /// <summary> Failback. </summary>
+        private const string FailbackValue = "Failback";
+        /// <summary> FinalizeFailback. </summary>
+        private const string FinalizeFailbackValue = "FinalizeFailback";
+        /// <summary> CancelFailover. </summary>
+        private const string CancelFailoverValue = "CancelFailover";
+        /// <summary> ChangePit. </summary>
+        private const string ChangePitValue = "ChangePit";
+        /// <summary> RepairReplication. </summary>
+        private const string RepairReplicationValue = "RepairReplication";
+        /// <summary> SwitchProtection. </summary>
+        private const string SwitchProtectionValue = "SwitchProtection";
+        /// <summary> CompleteMigration. </summary>
+        private const string CompleteMigrationValue = "CompleteMigration";
 
         /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReplicationProtectedItemOperation(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReverseReplicateValue = "ReverseReplicate";
-        private const string CommitValue = "Commit";
-        private const string PlannedFailoverValue = "PlannedFailover";
-        private const string UnplannedFailoverValue = "UnplannedFailover";
-        private const string DisableProtectionValue = "DisableProtection";
-        private const string TestFailoverValue = "TestFailover";
-        private const string TestFailoverCleanupValue = "TestFailoverCleanup";
-        private const string FailbackValue = "Failback";
-        private const string FinalizeFailbackValue = "FinalizeFailback";
-        private const string CancelFailoverValue = "CancelFailover";
-        private const string ChangePitValue = "ChangePit";
-        private const string RepairReplicationValue = "RepairReplication";
-        private const string SwitchProtectionValue = "SwitchProtection";
-        private const string CompleteMigrationValue = "CompleteMigration";
+            _value = value;
+        }
 
         /// <summary> ReverseReplicate. </summary>
         public static ReplicationProtectedItemOperation ReverseReplicate { get; } = new ReplicationProtectedItemOperation(ReverseReplicateValue);
+
         /// <summary> Commit. </summary>
         public static ReplicationProtectedItemOperation Commit { get; } = new ReplicationProtectedItemOperation(CommitValue);
+
         /// <summary> PlannedFailover. </summary>
         public static ReplicationProtectedItemOperation PlannedFailover { get; } = new ReplicationProtectedItemOperation(PlannedFailoverValue);
+
         /// <summary> UnplannedFailover. </summary>
         public static ReplicationProtectedItemOperation UnplannedFailover { get; } = new ReplicationProtectedItemOperation(UnplannedFailoverValue);
+
         /// <summary> DisableProtection. </summary>
         public static ReplicationProtectedItemOperation DisableProtection { get; } = new ReplicationProtectedItemOperation(DisableProtectionValue);
+
         /// <summary> TestFailover. </summary>
         public static ReplicationProtectedItemOperation TestFailover { get; } = new ReplicationProtectedItemOperation(TestFailoverValue);
+
         /// <summary> TestFailoverCleanup. </summary>
         public static ReplicationProtectedItemOperation TestFailoverCleanup { get; } = new ReplicationProtectedItemOperation(TestFailoverCleanupValue);
+
         /// <summary> Failback. </summary>
         public static ReplicationProtectedItemOperation Failback { get; } = new ReplicationProtectedItemOperation(FailbackValue);
+
         /// <summary> FinalizeFailback. </summary>
         public static ReplicationProtectedItemOperation FinalizeFailback { get; } = new ReplicationProtectedItemOperation(FinalizeFailbackValue);
+
         /// <summary> CancelFailover. </summary>
         public static ReplicationProtectedItemOperation CancelFailover { get; } = new ReplicationProtectedItemOperation(CancelFailoverValue);
+
         /// <summary> ChangePit. </summary>
         public static ReplicationProtectedItemOperation ChangePit { get; } = new ReplicationProtectedItemOperation(ChangePitValue);
+
         /// <summary> RepairReplication. </summary>
         public static ReplicationProtectedItemOperation RepairReplication { get; } = new ReplicationProtectedItemOperation(RepairReplicationValue);
+
         /// <summary> SwitchProtection. </summary>
         public static ReplicationProtectedItemOperation SwitchProtection { get; } = new ReplicationProtectedItemOperation(SwitchProtectionValue);
+
         /// <summary> CompleteMigration. </summary>
         public static ReplicationProtectedItemOperation CompleteMigration { get; } = new ReplicationProtectedItemOperation(CompleteMigrationValue);
+
         /// <summary> Determines if two <see cref="ReplicationProtectedItemOperation"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReplicationProtectedItemOperation left, ReplicationProtectedItemOperation right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReplicationProtectedItemOperation"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReplicationProtectedItemOperation left, ReplicationProtectedItemOperation right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReplicationProtectedItemOperation"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReplicationProtectedItemOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReplicationProtectedItemOperation(string value) => new ReplicationProtectedItemOperation(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReplicationProtectedItemOperation"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReplicationProtectedItemOperation?(string value) => value == null ? null : new ReplicationProtectedItemOperation(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReplicationProtectedItemOperation other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReplicationProtectedItemOperation other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

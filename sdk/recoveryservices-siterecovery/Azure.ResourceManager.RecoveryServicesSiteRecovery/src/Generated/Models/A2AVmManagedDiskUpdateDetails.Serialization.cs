@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AVmManagedDiskUpdateDetails : IUtf8JsonSerializable, IJsonModel<A2AVmManagedDiskUpdateDetails>
+    /// <summary> A2A Vm managed disk update details. </summary>
+    public partial class A2AVmManagedDiskUpdateDetails : IJsonModel<A2AVmManagedDiskUpdateDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AVmManagedDiskUpdateDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual A2AVmManagedDiskUpdateDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeA2AVmManagedDiskUpdateDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<A2AVmManagedDiskUpdateDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        A2AVmManagedDiskUpdateDetails IPersistableModel<A2AVmManagedDiskUpdateDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<A2AVmManagedDiskUpdateDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<A2AVmManagedDiskUpdateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
@@ -64,15 +104,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("tfoDiskName"u8);
                 writer.WriteStringValue(TfoDiskName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +121,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        A2AVmManagedDiskUpdateDetails IJsonModel<A2AVmManagedDiskUpdateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        A2AVmManagedDiskUpdateDetails IJsonModel<A2AVmManagedDiskUpdateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual A2AVmManagedDiskUpdateDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeA2AVmManagedDiskUpdateDetails(document.RootElement, options);
         }
 
-        internal static A2AVmManagedDiskUpdateDetails DeserializeA2AVmManagedDiskUpdateDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static A2AVmManagedDiskUpdateDetails DeserializeA2AVmManagedDiskUpdateDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -104,53 +149,51 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string diskId = default;
             string recoveryTargetDiskAccountType = default;
             string recoveryReplicaDiskAccountType = default;
-            SiteRecoveryDiskEncryptionInfo diskEncryptionInfo = default;
+            DiskEncryptionInfo diskEncryptionInfo = default;
             string failoverDiskName = default;
             string tfoDiskName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"u8))
+                if (prop.NameEquals("diskId"u8))
                 {
-                    diskId = property.Value.GetString();
+                    diskId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryTargetDiskAccountType"u8))
+                if (prop.NameEquals("recoveryTargetDiskAccountType"u8))
                 {
-                    recoveryTargetDiskAccountType = property.Value.GetString();
+                    recoveryTargetDiskAccountType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryReplicaDiskAccountType"u8))
+                if (prop.NameEquals("recoveryReplicaDiskAccountType"u8))
                 {
-                    recoveryReplicaDiskAccountType = property.Value.GetString();
+                    recoveryReplicaDiskAccountType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionInfo"u8))
+                if (prop.NameEquals("diskEncryptionInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
+                    diskEncryptionInfo = DiskEncryptionInfo.DeserializeDiskEncryptionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("failoverDiskName"u8))
+                if (prop.NameEquals("failoverDiskName"u8))
                 {
-                    failoverDiskName = property.Value.GetString();
+                    failoverDiskName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tfoDiskName"u8))
+                if (prop.NameEquals("tfoDiskName"u8))
                 {
-                    tfoDiskName = property.Value.GetString();
+                    tfoDiskName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new A2AVmManagedDiskUpdateDetails(
                 diskId,
                 recoveryTargetDiskAccountType,
@@ -158,38 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 diskEncryptionInfo,
                 failoverDiskName,
                 tfoDiskName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<A2AVmManagedDiskUpdateDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        A2AVmManagedDiskUpdateDetails IPersistableModel<A2AVmManagedDiskUpdateDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeA2AVmManagedDiskUpdateDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(A2AVmManagedDiskUpdateDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<A2AVmManagedDiskUpdateDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

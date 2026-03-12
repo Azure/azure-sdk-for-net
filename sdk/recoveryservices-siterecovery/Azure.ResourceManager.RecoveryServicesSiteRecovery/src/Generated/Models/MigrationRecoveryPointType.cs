@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct MigrationRecoveryPointType : IEquatable<MigrationRecoveryPointType>
     {
         private readonly string _value;
+        /// <summary> NotSpecified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> ApplicationConsistent. </summary>
+        private const string ApplicationConsistentValue = "ApplicationConsistent";
+        /// <summary> CrashConsistent. </summary>
+        private const string CrashConsistentValue = "CrashConsistent";
 
         /// <summary> Initializes a new instance of <see cref="MigrationRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MigrationRecoveryPointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string ApplicationConsistentValue = "ApplicationConsistent";
-        private const string CrashConsistentValue = "CrashConsistent";
+            _value = value;
+        }
 
         /// <summary> NotSpecified. </summary>
         public static MigrationRecoveryPointType NotSpecified { get; } = new MigrationRecoveryPointType(NotSpecifiedValue);
+
         /// <summary> ApplicationConsistent. </summary>
         public static MigrationRecoveryPointType ApplicationConsistent { get; } = new MigrationRecoveryPointType(ApplicationConsistentValue);
+
         /// <summary> CrashConsistent. </summary>
         public static MigrationRecoveryPointType CrashConsistent { get; } = new MigrationRecoveryPointType(CrashConsistentValue);
+
         /// <summary> Determines if two <see cref="MigrationRecoveryPointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MigrationRecoveryPointType left, MigrationRecoveryPointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MigrationRecoveryPointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MigrationRecoveryPointType left, MigrationRecoveryPointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationRecoveryPointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MigrationRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MigrationRecoveryPointType(string value) => new MigrationRecoveryPointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MigrationRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MigrationRecoveryPointType?(string value) => value == null ? null : new MigrationRecoveryPointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MigrationRecoveryPointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MigrationRecoveryPointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

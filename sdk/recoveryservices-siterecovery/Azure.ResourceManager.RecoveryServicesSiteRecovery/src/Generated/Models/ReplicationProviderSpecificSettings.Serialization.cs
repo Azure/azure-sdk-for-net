@@ -8,15 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
+    /// <summary>
+    /// Replication provider specific settings.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="A2ACrossClusterMigrationReplicationDetails"/>, <see cref="A2AReplicationDetails"/>, <see cref="HyperVReplicaAzureReplicationDetails"/>, <see cref="HyperVReplicaBaseReplicationDetails"/>, <see cref="HyperVReplicaBlueReplicationDetails"/>, <see cref="HyperVReplicaReplicationDetails"/>, <see cref="InMageAzureV2ReplicationDetails"/>, <see cref="InMageRcmFailbackReplicationDetails"/>, <see cref="InMageRcmReplicationDetails"/>, and <see cref="InMageReplicationDetails"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownReplicationProviderSpecificSettings))]
-    public partial class ReplicationProviderSpecificSettings : IUtf8JsonSerializable, IJsonModel<ReplicationProviderSpecificSettings>
+    public abstract partial class ReplicationProviderSpecificSettings : IJsonModel<ReplicationProviderSpecificSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProviderSpecificSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ReplicationProviderSpecificSettings"/> for deserialization. </summary>
+        internal ReplicationProviderSpecificSettings()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReplicationProviderSpecificSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeReplicationProviderSpecificSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ReplicationProviderSpecificSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReplicationProviderSpecificSettings IPersistableModel<ReplicationProviderSpecificSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ReplicationProviderSpecificSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReplicationProviderSpecificSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +77,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReplicationProviderSpecificSettings)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,74 +101,58 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        ReplicationProviderSpecificSettings IJsonModel<ReplicationProviderSpecificSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReplicationProviderSpecificSettings IJsonModel<ReplicationProviderSpecificSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReplicationProviderSpecificSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReplicationProviderSpecificSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeReplicationProviderSpecificSettings(document.RootElement, options);
         }
 
-        internal static ReplicationProviderSpecificSettings DeserializeReplicationProviderSpecificSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ReplicationProviderSpecificSettings DeserializeReplicationProviderSpecificSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            if (element.TryGetProperty("instanceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AReplicationDetails.DeserializeA2AReplicationDetails(element, options);
-                    case "A2ACrossClusterMigration": return A2ACrossClusterMigrationReplicationDetails.DeserializeA2ACrossClusterMigrationReplicationDetails(element, options);
-                    case "HyperVReplica2012": return HyperVReplicaReplicationDetails.DeserializeHyperVReplicaReplicationDetails(element, options);
-                    case "HyperVReplica2012R2": return HyperVReplicaBlueReplicationDetails.DeserializeHyperVReplicaBlueReplicationDetails(element, options);
-                    case "HyperVReplicaAzure": return HyperVReplicaAzureReplicationDetails.DeserializeHyperVReplicaAzureReplicationDetails(element, options);
-                    case "HyperVReplicaBaseReplicationDetails": return HyperVReplicaBaseReplicationDetails.DeserializeHyperVReplicaBaseReplicationDetails(element, options);
-                    case "InMage": return InMageReplicationDetails.DeserializeInMageReplicationDetails(element, options);
-                    case "InMageAzureV2": return InMageAzureV2ReplicationDetails.DeserializeInMageAzureV2ReplicationDetails(element, options);
-                    case "InMageRcm": return InMageRcmReplicationDetails.DeserializeInMageRcmReplicationDetails(element, options);
-                    case "InMageRcmFailback": return InMageRcmFailbackReplicationDetails.DeserializeInMageRcmFailbackReplicationDetails(element, options);
+                    case "A2ACrossClusterMigration":
+                        return A2ACrossClusterMigrationReplicationDetails.DeserializeA2ACrossClusterMigrationReplicationDetails(element, options);
+                    case "A2A":
+                        return A2AReplicationDetails.DeserializeA2AReplicationDetails(element, options);
+                    case "HyperVReplicaAzure":
+                        return HyperVReplicaAzureReplicationDetails.DeserializeHyperVReplicaAzureReplicationDetails(element, options);
+                    case "HyperVReplicaBaseReplicationDetails":
+                        return HyperVReplicaBaseReplicationDetails.DeserializeHyperVReplicaBaseReplicationDetails(element, options);
+                    case "HyperVReplica2012R2":
+                        return HyperVReplicaBlueReplicationDetails.DeserializeHyperVReplicaBlueReplicationDetails(element, options);
+                    case "HyperVReplica2012":
+                        return HyperVReplicaReplicationDetails.DeserializeHyperVReplicaReplicationDetails(element, options);
+                    case "InMageAzureV2":
+                        return InMageAzureV2ReplicationDetails.DeserializeInMageAzureV2ReplicationDetails(element, options);
+                    case "InMageRcmFailback":
+                        return InMageRcmFailbackReplicationDetails.DeserializeInMageRcmFailbackReplicationDetails(element, options);
+                    case "InMageRcm":
+                        return InMageRcmReplicationDetails.DeserializeInMageRcmReplicationDetails(element, options);
+                    case "InMage":
+                        return InMageReplicationDetails.DeserializeInMageReplicationDetails(element, options);
                 }
             }
             return UnknownReplicationProviderSpecificSettings.DeserializeUnknownReplicationProviderSpecificSettings(element, options);
         }
-
-        BinaryData IPersistableModel<ReplicationProviderSpecificSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ReplicationProviderSpecificSettings IPersistableModel<ReplicationProviderSpecificSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProviderSpecificSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeReplicationProviderSpecificSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ReplicationProviderSpecificSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ReplicationProviderSpecificSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

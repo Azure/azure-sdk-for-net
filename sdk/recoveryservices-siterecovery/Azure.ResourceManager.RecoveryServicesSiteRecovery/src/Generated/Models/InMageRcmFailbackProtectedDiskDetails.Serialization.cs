@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackProtectedDiskDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackProtectedDiskDetails>
+    /// <summary> InMageRcmFailback protected disk details. </summary>
+    public partial class InMageRcmFailbackProtectedDiskDetails : IJsonModel<InMageRcmFailbackProtectedDiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackProtectedDiskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InMageRcmFailbackProtectedDiskDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInMageRcmFailbackProtectedDiskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InMageRcmFailbackProtectedDiskDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmFailbackProtectedDiskDetails IPersistableModel<InMageRcmFailbackProtectedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InMageRcmFailbackProtectedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InMageRcmFailbackProtectedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
@@ -84,20 +124,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("resyncDetails"u8);
                 writer.WriteObjectValue(ResyncDetails, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastSyncedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastSyncOn))
             {
                 writer.WritePropertyName("lastSyncTime"u8);
-                writer.WriteStringValue(LastSyncedOn.Value, "O");
+                writer.WriteStringValue(LastSyncOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,22 +146,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        InMageRcmFailbackProtectedDiskDetails IJsonModel<InMageRcmFailbackProtectedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmFailbackProtectedDiskDetails IJsonModel<InMageRcmFailbackProtectedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InMageRcmFailbackProtectedDiskDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInMageRcmFailbackProtectedDiskDetails(document.RootElement, options);
         }
 
-        internal static InMageRcmFailbackProtectedDiskDetails DeserializeInMageRcmFailbackProtectedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InMageRcmFailbackProtectedDiskDetails DeserializeInMageRcmFailbackProtectedDiskDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -136,96 +181,94 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string isInitialReplicationComplete = default;
             InMageRcmFailbackSyncDetails irDetails = default;
             InMageRcmFailbackSyncDetails resyncDetails = default;
-            DateTimeOffset? lastSyncTime = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? lastSyncOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"u8))
+                if (prop.NameEquals("diskId"u8))
                 {
-                    diskId = property.Value.GetString();
+                    diskId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskName"u8))
+                if (prop.NameEquals("diskName"u8))
                 {
-                    diskName = property.Value.GetString();
+                    diskName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isOSDisk"u8))
+                if (prop.NameEquals("isOSDisk"u8))
                 {
-                    isOSDisk = property.Value.GetString();
+                    isOSDisk = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("capacityInBytes"u8))
+                if (prop.NameEquals("capacityInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacityInBytes = property.Value.GetInt64();
+                    capacityInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskUuid"u8))
+                if (prop.NameEquals("diskUuid"u8))
                 {
-                    diskUuid = property.Value.GetString();
+                    diskUuid = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataPendingInLogDataStoreInMB"u8))
+                if (prop.NameEquals("dataPendingInLogDataStoreInMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataPendingInLogDataStoreInMB = property.Value.GetDouble();
+                    dataPendingInLogDataStoreInMB = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("dataPendingAtSourceAgentInMB"u8))
+                if (prop.NameEquals("dataPendingAtSourceAgentInMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataPendingAtSourceAgentInMB = property.Value.GetDouble();
+                    dataPendingAtSourceAgentInMB = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("isInitialReplicationComplete"u8))
+                if (prop.NameEquals("isInitialReplicationComplete"u8))
                 {
-                    isInitialReplicationComplete = property.Value.GetString();
+                    isInitialReplicationComplete = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("irDetails"u8))
+                if (prop.NameEquals("irDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    irDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value, options);
+                    irDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resyncDetails"u8))
+                if (prop.NameEquals("resyncDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(property.Value, options);
+                    resyncDetails = InMageRcmFailbackSyncDetails.DeserializeInMageRcmFailbackSyncDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("lastSyncTime"u8))
+                if (prop.NameEquals("lastSyncTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSyncTime = property.Value.GetDateTimeOffset("O");
+                    lastSyncOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InMageRcmFailbackProtectedDiskDetails(
                 diskId,
                 diskName,
@@ -237,39 +280,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 isInitialReplicationComplete,
                 irDetails,
                 resyncDetails,
-                lastSyncTime,
-                serializedAdditionalRawData);
+                lastSyncOn,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<InMageRcmFailbackProtectedDiskDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InMageRcmFailbackProtectedDiskDetails IPersistableModel<InMageRcmFailbackProtectedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInMageRcmFailbackProtectedDiskDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InMageRcmFailbackProtectedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,49 +7,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Reprotect agent details. </summary>
     public partial class ReprotectAgentDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReprotectAgentDetails"/>. </summary>
         internal ReprotectAgentDetails()
         {
-            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
+            HealthErrors = new ChangeTrackingList<HealthError>();
             AccessibleDatastores = new ChangeTrackingList<string>();
         }
 
@@ -60,15 +31,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="fabricObjectId"> The fabric object Id. </param>
         /// <param name="fqdn"> The reprotect agent Fqdn. </param>
         /// <param name="version"> The version. </param>
-        /// <param name="lastHeartbeatReceivedOn"> The last heartbeat received from the reprotect agent. </param>
+        /// <param name="lastHeartbeatUtc"> The last heartbeat received from the reprotect agent. </param>
         /// <param name="health"> The health of the reprotect agent. </param>
         /// <param name="healthErrors"> The health errors. </param>
         /// <param name="protectedItemCount"> The protected item count. </param>
         /// <param name="accessibleDatastores"> The list of accessible datastores fetched from discovery. </param>
-        /// <param name="vCenterId"> The Vcenter Id. </param>
-        /// <param name="last"> The last time when SDS information discovered in SRS. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReprotectAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, IReadOnlyList<string> accessibleDatastores, string vCenterId, DateTimeOffset? last, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="vcenterId"> The Vcenter Id. </param>
+        /// <param name="lastDiscoveryInUtc"> The last time when SDS information discovered in SRS. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReprotectAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors, int? protectedItemCount, IReadOnlyList<string> accessibleDatastores, string vcenterId, DateTimeOffset? lastDiscoveryInUtc, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -76,41 +47,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             FabricObjectId = fabricObjectId;
             Fqdn = fqdn;
             Version = version;
-            LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
+            LastHeartbeatUtc = lastHeartbeatUtc;
             Health = health;
             HealthErrors = healthErrors;
             ProtectedItemCount = protectedItemCount;
             AccessibleDatastores = accessibleDatastores;
-            VCenterId = vCenterId;
-            Last = last;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            VcenterId = vcenterId;
+            LastDiscoveryInUtc = lastDiscoveryInUtc;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The reprotect agent Id. </summary>
         public string Id { get; }
+
         /// <summary> The reprotect agent name. </summary>
         public string Name { get; }
+
         /// <summary> The reprotect agent Bios Id. </summary>
         public string BiosId { get; }
+
         /// <summary> The fabric object Id. </summary>
-        public ResourceIdentifier FabricObjectId { get; }
+        public string FabricObjectId { get; }
+
         /// <summary> The reprotect agent Fqdn. </summary>
         public string Fqdn { get; }
+
         /// <summary> The version. </summary>
         public string Version { get; }
+
         /// <summary> The last heartbeat received from the reprotect agent. </summary>
-        public DateTimeOffset? LastHeartbeatReceivedOn { get; }
+        public DateTimeOffset? LastHeartbeatUtc { get; }
+
         /// <summary> The health of the reprotect agent. </summary>
-        public SiteRecoveryProtectionHealth? Health { get; }
+        public ProtectionHealth? Health { get; }
+
         /// <summary> The health errors. </summary>
-        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
+        public IReadOnlyList<HealthError> HealthErrors { get; }
+
         /// <summary> The protected item count. </summary>
         public int? ProtectedItemCount { get; }
+
         /// <summary> The list of accessible datastores fetched from discovery. </summary>
         public IReadOnlyList<string> AccessibleDatastores { get; }
+
         /// <summary> The Vcenter Id. </summary>
-        public string VCenterId { get; }
+        public string VcenterId { get; }
+
         /// <summary> The last time when SDS information discovered in SRS. </summary>
-        public DateTimeOffset? Last { get; }
+        public DateTimeOffset? LastDiscoveryInUtc { get; }
     }
 }

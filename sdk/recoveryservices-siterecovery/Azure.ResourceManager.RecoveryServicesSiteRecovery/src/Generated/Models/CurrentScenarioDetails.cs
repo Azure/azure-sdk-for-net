@@ -7,44 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Current scenario details of the protected entity. </summary>
     public partial class CurrentScenarioDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CurrentScenarioDetails"/>. </summary>
         public CurrentScenarioDetails()
@@ -55,19 +25,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="scenarioName"> Scenario name. </param>
         /// <param name="jobId"> ARM Id of the job being executed. </param>
         /// <param name="startOn"> Start time of the workflow. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CurrentScenarioDetails(string scenarioName, ResourceIdentifier jobId, DateTimeOffset? startOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CurrentScenarioDetails(string scenarioName, string jobId, DateTimeOffset? startOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScenarioName = scenarioName;
             JobId = jobId;
             StartOn = startOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Scenario name. </summary>
         public string ScenarioName { get; set; }
+
         /// <summary> ARM Id of the job being executed. </summary>
-        public ResourceIdentifier JobId { get; set; }
+        public string JobId { get; set; }
+
         /// <summary> Start time of the workflow. </summary>
         public DateTimeOffset? StartOn { get; set; }
     }

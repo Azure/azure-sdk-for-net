@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of ApplianceSpecificDetails. </summary>
-    internal partial class UnknownApplianceSpecificDetails : SiteRecoveryApplianceSpecificDetails
+    internal partial class UnknownApplianceSpecificDetails : ApplianceSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownApplianceSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownApplianceSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownApplianceSpecificDetails"/> for deserialization. </summary>
-        internal UnknownApplianceSpecificDetails()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownApplianceSpecificDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 using Azure.ResourceManager.Resources;
@@ -18,196 +20,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// <summary> A class to add extension methods to Azure.ResourceManager.RecoveryServicesSiteRecovery. </summary>
     public static partial class RecoveryServicesSiteRecoveryExtensions
     {
+        /// <param name="client"></param>
         private static MockableRecoveryServicesSiteRecoveryArmClient GetMockableRecoveryServicesSiteRecoveryArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableRecoveryServicesSiteRecoveryArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableRecoveryServicesSiteRecoveryArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableRecoveryServicesSiteRecoveryResourceGroupResource GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableRecoveryServicesSiteRecoveryResourceGroupResource GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableRecoveryServicesSiteRecoveryResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableRecoveryServicesSiteRecoveryResourceGroupResource(client, resourceGroupResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryAlertResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MigrationRecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryAlertResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetMigrationRecoveryPointResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryAlertResource"/> object. </returns>
-        public static SiteRecoveryAlertResource GetSiteRecoveryAlertResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryAlertResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ReplicationEligibilityResultResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationEligibilityResultResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationEligibilityResultResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetReplicationEligibilityResultResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ReplicationEligibilityResultResource"/> object. </returns>
-        public static ReplicationEligibilityResultResource GetReplicationEligibilityResultResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetReplicationEligibilityResultResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryEventResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryEventResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryEventResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryEventResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryEventResource"/> object. </returns>
-        public static SiteRecoveryEventResource GetSiteRecoveryEventResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryEventResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryFabricResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryFabricResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryFabricResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryFabricResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryFabricResource"/> object. </returns>
-        public static SiteRecoveryFabricResource GetSiteRecoveryFabricResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryFabricResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryLogicalNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryLogicalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryLogicalNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryLogicalNetworkResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryLogicalNetworkResource"/> object. </returns>
-        public static SiteRecoveryLogicalNetworkResource GetSiteRecoveryLogicalNetworkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryLogicalNetworkResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryNetworkResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryNetworkResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryNetworkResource"/> object. </returns>
-        public static SiteRecoveryNetworkResource GetSiteRecoveryNetworkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryNetworkResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryNetworkMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryNetworkMappingResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryNetworkMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryNetworkMappingResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryNetworkMappingResource"/> object. </returns>
-        public static SiteRecoveryNetworkMappingResource GetSiteRecoveryNetworkMappingResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryNetworkMappingResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryProtectionContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryProtectionContainerResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryProtectionContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryProtectionContainerResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryProtectionContainerResource"/> object. </returns>
-        public static SiteRecoveryProtectionContainerResource GetSiteRecoveryProtectionContainerResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryProtectionContainerResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryMigrationItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryMigrationItemResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryMigrationItemResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryMigrationItemResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryMigrationItemResource"/> object. </returns>
-        public static SiteRecoveryMigrationItemResource GetSiteRecoveryMigrationItemResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryMigrationItemResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MigrationRecoveryPointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="MigrationRecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetMigrationRecoveryPointResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="MigrationRecoveryPointResource"/> object. </returns>
@@ -219,33 +51,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryProtectableItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryProtectableItemResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryProtectableItemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectedItemResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryProtectableItemResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetReplicationProtectedItemResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryProtectableItemResource"/> object. </returns>
-        public static SiteRecoveryProtectableItemResource GetSiteRecoveryProtectableItemResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryProtectableItemResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ReplicationProtectedItemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationProtectedItemResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectedItemResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetReplicationProtectedItemResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ReplicationProtectedItemResource"/> object. </returns>
@@ -257,204 +69,49 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryPointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RecoveryPointResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryPointResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetRecoveryPointResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryPointResource"/> object. </returns>
-        public static SiteRecoveryPointResource GetSiteRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="RecoveryPointResource"/> object. </returns>
+        public static RecoveryPointResource GetRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryPointResource(id);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetRecoveryPointResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryReplicationProtectionClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryReplicationProtectionClusterResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryReplicationProtectionClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectionClusterResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryReplicationProtectionClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetReplicationProtectionClusterResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryReplicationProtectionClusterResource"/> object. </returns>
-        public static SiteRecoveryReplicationProtectionClusterResource GetSiteRecoveryReplicationProtectionClusterResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationProtectionClusterResource"/> object. </returns>
+        public static ReplicationProtectionClusterResource GetReplicationProtectionClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryReplicationProtectionClusterResource(id);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetReplicationProtectionClusterResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryClusterRecoveryPointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryClusterRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryClusterRecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationProtectionIntentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryClusterRecoveryPointResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetReplicationProtectionIntentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryClusterRecoveryPointResource"/> object. </returns>
-        public static SiteRecoveryClusterRecoveryPointResource GetSiteRecoveryClusterRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryClusterRecoveryPointResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ProtectionContainerMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProtectionContainerMappingResource.CreateResourceIdentifier" /> to create a <see cref="ProtectionContainerMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetProtectionContainerMappingResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ProtectionContainerMappingResource"/> object. </returns>
-        public static ProtectionContainerMappingResource GetProtectionContainerMappingResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetProtectionContainerMappingResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryServicesProviderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryServicesProviderResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryServicesProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryServicesProviderResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryServicesProviderResource"/> object. </returns>
-        public static SiteRecoveryServicesProviderResource GetSiteRecoveryServicesProviderResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryServicesProviderResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageClassificationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageClassificationResource.CreateResourceIdentifier" /> to create a <see cref="StorageClassificationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetStorageClassificationResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageClassificationResource"/> object. </returns>
-        public static StorageClassificationResource GetStorageClassificationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetStorageClassificationResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="StorageClassificationMappingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageClassificationMappingResource.CreateResourceIdentifier" /> to create a <see cref="StorageClassificationMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetStorageClassificationMappingResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="StorageClassificationMappingResource"/> object. </returns>
-        public static StorageClassificationMappingResource GetStorageClassificationMappingResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetStorageClassificationMappingResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryVCenterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryVCenterResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryVCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryVCenterResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryVCenterResource"/> object. </returns>
-        public static SiteRecoveryVCenterResource GetSiteRecoveryVCenterResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryVCenterResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryJobResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryJobResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryJobResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryJobResource"/> object. </returns>
-        public static SiteRecoveryJobResource GetSiteRecoveryJobResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryJobResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryPolicyResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryPolicyResource"/> object. </returns>
-        public static SiteRecoveryPolicyResource GetSiteRecoveryPolicyResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryPolicyResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ReplicationProtectionIntentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicationProtectionIntentResource.CreateResourceIdentifier" /> to create a <see cref="ReplicationProtectionIntentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetReplicationProtectionIntentResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="ReplicationProtectionIntentResource"/> object. </returns>
@@ -466,637 +123,358 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryRecoveryPlanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryRecoveryPlanResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryRecoveryPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="AlertResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryRecoveryPlanResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetAlertResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryRecoveryPlanResource"/> object. </returns>
-        public static SiteRecoveryRecoveryPlanResource GetSiteRecoveryRecoveryPlanResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AlertResource"/> object. </returns>
+        public static AlertResource GetAlertResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryRecoveryPlanResource(id);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetAlertResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SiteRecoveryVaultSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteRecoveryVaultSettingResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecoveryVaultSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ReplicationEligibilityResultsResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetSiteRecoveryVaultSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetReplicationEligibilityResultsResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteRecoveryVaultSettingResource"/> object. </returns>
-        public static SiteRecoveryVaultSettingResource GetSiteRecoveryVaultSettingResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReplicationEligibilityResultsResource"/> object. </returns>
+        public static ReplicationEligibilityResultsResource GetReplicationEligibilityResultsResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetSiteRecoveryVaultSettingResource(id);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetReplicationEligibilityResultsResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of SiteRecoveryAlertResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="EventResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryAlerts(string)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetEventResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of SiteRecoveryAlertResources and their operations over a SiteRecoveryAlertResource. </returns>
-        public static SiteRecoveryAlertCollection GetSiteRecoveryAlerts(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EventResource"/> object. </returns>
+        public static EventResource GetEventResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryAlerts(resourceName);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetEventResource(id);
         }
 
         /// <summary>
-        /// Gets the details of the specified email notification(alert) configuration.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="FabricResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAlertSettings/{alertSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationAlertSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryAlertAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetFabricResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="alertSettingName"> The name of the email notification configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SiteRecoveryAlertResource>> GetSiteRecoveryAlertAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FabricResource"/> object. </returns>
+        public static FabricResource GetFabricResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryAlertAsync(resourceName, alertSettingName, cancellationToken).ConfigureAwait(false);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetFabricResource(id);
         }
 
         /// <summary>
-        /// Gets the details of the specified email notification(alert) configuration.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="LogicalNetworkResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAlertSettings/{alertSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationAlertSettings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryAlertResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryAlert(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetLogicalNetworkResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="alertSettingName"> The name of the email notification configuration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="alertSettingName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<SiteRecoveryAlertResource> GetSiteRecoveryAlert(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LogicalNetworkResource"/> object. </returns>
+        public static LogicalNetworkResource GetLogicalNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryAlert(resourceName, alertSettingName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetLogicalNetworkResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of ReplicationEligibilityResultResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="NetworkResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationEligibilityResults(string)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetNetworkResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualMachineName"> Virtual Machine name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ReplicationEligibilityResultResources and their operations over a ReplicationEligibilityResultResource. </returns>
-        public static ReplicationEligibilityResultCollection GetReplicationEligibilityResults(this ResourceGroupResource resourceGroupResource, string virtualMachineName)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkResource"/> object. </returns>
+        public static NetworkResource GetNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetReplicationEligibilityResults(virtualMachineName);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetNetworkResource(id);
         }
 
         /// <summary>
-        /// Validates whether a given VM can be protected or not in which case returns list of errors.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="NetworkMappingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationEligibilityResults_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReplicationEligibilityResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationEligibilityResultAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetNetworkMappingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualMachineName"> Virtual Machine name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ReplicationEligibilityResultResource>> GetReplicationEligibilityResultAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="NetworkMappingResource"/> object. </returns>
+        public static NetworkMappingResource GetNetworkMappingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetReplicationEligibilityResultAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetNetworkMappingResource(id);
         }
 
         /// <summary>
-        /// Validates whether a given VM can be protected or not in which case returns list of errors.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="ProtectionContainerResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{virtualMachineName}/providers/Microsoft.RecoveryServices/replicationEligibilityResults/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationEligibilityResults_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReplicationEligibilityResultResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationEligibilityResult(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetProtectionContainerResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualMachineName"> Virtual Machine name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualMachineName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<ReplicationEligibilityResultResource> GetReplicationEligibilityResult(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProtectionContainerResource"/> object. </returns>
+        public static ProtectionContainerResource GetProtectionContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetReplicationEligibilityResult(virtualMachineName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetProtectionContainerResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of SiteRecoveryEventResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="MigrationItemResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryEvents(string)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetMigrationItemResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of SiteRecoveryEventResources and their operations over a SiteRecoveryEventResource. </returns>
-        public static SiteRecoveryEventCollection GetSiteRecoveryEvents(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MigrationItemResource"/> object. </returns>
+        public static MigrationItemResource GetMigrationItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryEvents(resourceName);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetMigrationItemResource(id);
         }
 
         /// <summary>
-        /// The operation to get the details of an Azure Site recovery event.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="ProtectableItemResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationEvents/{eventName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationEvents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryEventResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryEventAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetProtectableItemResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="eventName"> The name of the Azure Site Recovery event. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="eventName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SiteRecoveryEventResource>> GetSiteRecoveryEventAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string eventName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProtectableItemResource"/> object. </returns>
+        public static ProtectableItemResource GetProtectableItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryEventAsync(resourceName, eventName, cancellationToken).ConfigureAwait(false);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetProtectableItemResource(id);
         }
 
         /// <summary>
-        /// The operation to get the details of an Azure Site recovery event.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="ProtectionContainerMappingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationEvents/{eventName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationEvents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryEventResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryEvent(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetProtectionContainerMappingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="eventName"> The name of the Azure Site Recovery event. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="eventName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="eventName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<SiteRecoveryEventResource> GetSiteRecoveryEvent(this ResourceGroupResource resourceGroupResource, string resourceName, string eventName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProtectionContainerMappingResource"/> object. </returns>
+        public static ProtectionContainerMappingResource GetProtectionContainerMappingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryEvent(resourceName, eventName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetProtectionContainerMappingResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of SiteRecoveryFabricResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="RecoveryServicesProviderResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryFabrics(string)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetRecoveryServicesProviderResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of SiteRecoveryFabricResources and their operations over a SiteRecoveryFabricResource. </returns>
-        public static SiteRecoveryFabricCollection GetSiteRecoveryFabrics(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RecoveryServicesProviderResource"/> object. </returns>
+        public static RecoveryServicesProviderResource GetRecoveryServicesProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryFabrics(resourceName);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetRecoveryServicesProviderResource(id);
         }
 
         /// <summary>
-        /// Gets the details of an Azure Site Recovery fabric.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="StorageClassificationResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationFabrics_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryFabricResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryFabricAsync(string,string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetStorageClassificationResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="fabricName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SiteRecoveryFabricResource>> GetSiteRecoveryFabricAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageClassificationResource"/> object. </returns>
+        public static StorageClassificationResource GetStorageClassificationResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryFabricAsync(resourceName, fabricName, filter, cancellationToken).ConfigureAwait(false);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetStorageClassificationResource(id);
         }
 
         /// <summary>
-        /// Gets the details of an Azure Site Recovery fabric.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="StorageClassificationMappingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationFabrics_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryFabricResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryFabric(string,string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetStorageClassificationMappingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="fabricName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="fabricName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<SiteRecoveryFabricResource> GetSiteRecoveryFabric(this ResourceGroupResource resourceGroupResource, string resourceName, string fabricName, string filter = null, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="StorageClassificationMappingResource"/> object. </returns>
+        public static StorageClassificationMappingResource GetStorageClassificationMappingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryFabric(resourceName, fabricName, filter, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetStorageClassificationMappingResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of SiteRecoveryJobResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="VCenterResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryJobs(string)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetVCenterResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of SiteRecoveryJobResources and their operations over a SiteRecoveryJobResource. </returns>
-        public static SiteRecoveryJobCollection GetSiteRecoveryJobs(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VCenterResource"/> object. </returns>
+        public static VCenterResource GetVCenterResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryJobs(resourceName);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetVCenterResource(id);
         }
 
         /// <summary>
-        /// Get the details of an Azure Site Recovery job.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="JobResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryJobAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetJobResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="jobName"> Job identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SiteRecoveryJobResource>> GetSiteRecoveryJobAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string jobName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="JobResource"/> object. </returns>
+        public static JobResource GetJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryJobAsync(resourceName, jobName, cancellationToken).ConfigureAwait(false);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetJobResource(id);
         }
 
         /// <summary>
-        /// Get the details of an Azure Site Recovery job.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="PolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationJobs_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryJob(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetPolicyResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="jobName"> Job identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<SiteRecoveryJobResource> GetSiteRecoveryJob(this ResourceGroupResource resourceGroupResource, string resourceName, string jobName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PolicyResource"/> object. </returns>
+        public static PolicyResource GetPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryJob(resourceName, jobName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetPolicyResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of SiteRecoveryPolicyResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="RecoveryPlanResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryPolicies(string)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetRecoveryPlanResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of SiteRecoveryPolicyResources and their operations over a SiteRecoveryPolicyResource. </returns>
-        public static SiteRecoveryPolicyCollection GetSiteRecoveryPolicies(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RecoveryPlanResource"/> object. </returns>
+        public static RecoveryPlanResource GetRecoveryPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryPolicies(resourceName);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetRecoveryPlanResource(id);
         }
 
         /// <summary>
-        /// Gets the details of a replication policy.
-        /// <list type="bullet">
+        /// Gets an object representing a <see cref="VaultSettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryPolicyAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryArmClient.GetVaultSettingResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="policyName"> Replication policy name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SiteRecoveryPolicyResource>> GetSiteRecoveryPolicyAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VaultSettingResource"/> object. </returns>
+        public static VaultSettingResource GetVaultSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryPolicyAsync(resourceName, policyName, cancellationToken).ConfigureAwait(false);
+            return GetMockableRecoveryServicesSiteRecoveryArmClient(client).GetVaultSettingResource(id);
         }
 
         /// <summary>
-        /// Gets the details of a replication policy.
-        /// <list type="bullet">
+        /// Gets a collection of ReplicationProtectionIntents in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationPolicies/{policyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationPolicies_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryPolicyResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryPolicy(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationProtectionIntents(string)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="policyName"> Replication policy name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="policyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="policyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<SiteRecoveryPolicyResource> GetSiteRecoveryPolicy(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryPolicy(resourceName, policyName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a collection of ReplicationProtectionIntentResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationProtectionIntents(string)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ReplicationProtectionIntentResources and their operations over a ReplicationProtectionIntentResource. </returns>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ReplicationProtectionIntents and their operations over a ReplicationProtectionIntentResource. </returns>
         public static ReplicationProtectionIntentCollection GetReplicationProtectionIntents(this ResourceGroupResource resourceGroupResource, string resourceName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -1106,35 +484,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary>
         /// Gets the details of an ASR replication protection intent.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionIntents/{intentObjectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionIntents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionIntentResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationProtectionIntentAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationProtectionIntentAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <param name="intentObjectName"> Replication protection intent name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ReplicationProtectionIntentResource>> GetReplicationProtectionIntentAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string intentObjectName, CancellationToken cancellationToken = default)
         {
@@ -1145,35 +504,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         /// <summary>
         /// Gets the details of an ASR replication protection intent.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionIntents/{intentObjectName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionIntents_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectionIntentResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationProtectionIntent(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationProtectionIntent(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <param name="intentObjectName"> Replication protection intent name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="intentObjectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<ReplicationProtectionIntentResource> GetReplicationProtectionIntent(this ResourceGroupResource resourceGroupResource, string resourceName, string intentObjectName, CancellationToken cancellationToken = default)
         {
@@ -1183,1319 +523,739 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         }
 
         /// <summary>
-        /// Gets a collection of SiteRecoveryRecoveryPlanResources in the ResourceGroupResource.
+        /// Gets a collection of Alerts in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryRecoveryPlans(string)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAlerts(string)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of SiteRecoveryRecoveryPlanResources and their operations over a SiteRecoveryRecoveryPlanResource. </returns>
-        public static SiteRecoveryRecoveryPlanCollection GetSiteRecoveryRecoveryPlans(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Alerts and their operations over a AlertResource. </returns>
+        public static AlertCollection GetAlerts(this ResourceGroupResource resourceGroupResource, string resourceName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryRecoveryPlans(resourceName);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAlerts(resourceName);
+        }
+
+        /// <summary>
+        /// Gets the details of the specified email notification(alert) configuration.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAlertAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <param name="alertSettingName"> The name of the email notification configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<AlertResource>> GetAlertAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAlertAsync(resourceName, alertSettingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the specified email notification(alert) configuration.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAlert(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <param name="alertSettingName"> The name of the email notification configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<AlertResource> GetAlert(this ResourceGroupResource resourceGroupResource, string resourceName, string alertSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAlert(resourceName, alertSettingName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ReplicationEligibilityResultsResource"/> along with the instance operations that can be performed on it in the <see cref="ResourceGroupResource"/>.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationEligibilityResults()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReplicationEligibilityResultsResource"/> object. </returns>
+        public static ReplicationEligibilityResultsResource GetReplicationEligibilityResults(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetReplicationEligibilityResults();
+        }
+
+        /// <summary>
+        /// Gets a collection of Events in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetEvents(string)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Events and their operations over a EventResource. </returns>
+        public static EventCollection GetEvents(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetEvents(resourceName);
+        }
+
+        /// <summary>
+        /// The operation to get the details of an Azure Site recovery event.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetEventAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <param name="eventName"> The name of the Azure Site Recovery event. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<EventResource>> GetEventAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string eventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetEventAsync(resourceName, eventName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// The operation to get the details of an Azure Site recovery event.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetEvent(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <param name="eventName"> The name of the Azure Site Recovery event. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<EventResource> GetEvent(this ResourceGroupResource resourceGroupResource, string resourceName, string eventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetEvent(resourceName, eventName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Fabrics in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetFabrics(string)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Fabrics and their operations over a FabricResource. </returns>
+        public static FabricCollection GetFabrics(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetFabrics(resourceName);
+        }
+
+        /// <summary>
+        /// Gets the details of an Azure Site Recovery fabric.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetFabricAsync(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<FabricResource>> GetFabricAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string fabricName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetFabricAsync(resourceName, fabricName, filter, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of an Azure Site Recovery fabric.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetFabric(string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <param name="fabricName"> Fabric name. </param>
+        /// <param name="filter"> OData filter options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<FabricResource> GetFabric(this ResourceGroupResource resourceGroupResource, string resourceName, string fabricName, string filter = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetFabric(resourceName, fabricName, filter, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Jobs in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetJobs(string)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Jobs and their operations over a JobResource. </returns>
+        public static JobCollection GetJobs(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetJobs(resourceName);
+        }
+
+        /// <summary>
+        /// Get the details of an Azure Site Recovery job.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetJobAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <param name="jobName"> Job identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<JobResource>> GetJobAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetJobAsync(resourceName, jobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the details of an Azure Site Recovery job.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetJob(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <param name="jobName"> Job identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<JobResource> GetJob(this ResourceGroupResource resourceGroupResource, string resourceName, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetJob(resourceName, jobName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Policies in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetPolicies(string)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Policies and their operations over a PolicyResource. </returns>
+        public static PolicyCollection GetPolicies(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetPolicies(resourceName);
+        }
+
+        /// <summary>
+        /// Gets the details of a replication policy.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetPolicyAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <param name="policyName"> Replication policy name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<PolicyResource>> GetPolicyAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetPolicyAsync(resourceName, policyName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of a replication policy.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetPolicy(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <param name="policyName"> Replication policy name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<PolicyResource> GetPolicy(this ResourceGroupResource resourceGroupResource, string resourceName, string policyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetPolicy(resourceName, policyName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of RecoveryPlans in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetRecoveryPlans(string)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of RecoveryPlans and their operations over a RecoveryPlanResource. </returns>
+        public static RecoveryPlanCollection GetRecoveryPlans(this ResourceGroupResource resourceGroupResource, string resourceName)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetRecoveryPlans(resourceName);
         }
 
         /// <summary>
         /// Gets the details of the recovery plan.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryPlans/{recoveryPlanName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationRecoveryPlans_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryRecoveryPlanAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetRecoveryPlanAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SiteRecoveryRecoveryPlanResource>> GetSiteRecoveryRecoveryPlanAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
+        public static async Task<Response<RecoveryPlanResource>> GetRecoveryPlanAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryRecoveryPlanAsync(resourceName, recoveryPlanName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetRecoveryPlanAsync(resourceName, recoveryPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the details of the recovery plan.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryPlans/{recoveryPlanName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationRecoveryPlans_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryRecoveryPlan(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetRecoveryPlan(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The resourceName for the resource. </param>
         /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SiteRecoveryRecoveryPlanResource> GetSiteRecoveryRecoveryPlan(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
+        public static Response<RecoveryPlanResource> GetRecoveryPlan(this ResourceGroupResource resourceGroupResource, string resourceName, string recoveryPlanName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryRecoveryPlan(resourceName, recoveryPlanName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetRecoveryPlan(resourceName, recoveryPlanName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of SiteRecoveryVaultSettingResources in the ResourceGroupResource.
+        /// Gets a collection of VaultSettings in the <see cref="ResourceGroupResource"/>
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryVaultSettings(string)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetVaultSettings()"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of SiteRecoveryVaultSettingResources and their operations over a SiteRecoveryVaultSettingResource. </returns>
-        public static SiteRecoveryVaultSettingCollection GetSiteRecoveryVaultSettings(this ResourceGroupResource resourceGroupResource, string resourceName)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of VaultSettings and their operations over a VaultSettingResource. </returns>
+        public static VaultSettingCollection GetVaultSettings(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryVaultSettings(resourceName);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetVaultSettings();
         }
 
         /// <summary>
         /// Gets the vault setting. This includes the Migration Hub connection settings.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultSetting_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVaultSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryVaultSettingAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetVaultSettingAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SiteRecoveryVaultSettingResource>> GetSiteRecoveryVaultSettingAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        public static async Task<Response<VaultSettingResource>> GetVaultSettingAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryVaultSettingAsync(resourceName, vaultSettingName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetVaultSettingAsync(resourceName, vaultSettingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the vault setting. This includes the Migration Hub connection settings.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultSettings/{vaultSettingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultSetting_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVaultSettingResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryVaultSetting(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetVaultSetting(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The name of the Vault. </param>
         /// <param name="vaultSettingName"> Vault setting name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="vaultSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SiteRecoveryVaultSettingResource> GetSiteRecoveryVaultSetting(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
+        public static Response<VaultSettingResource> GetVaultSetting(this ResourceGroupResource resourceGroupResource, string resourceName, string vaultSettingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryVaultSetting(resourceName, vaultSettingName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of Azure Site Recovery appliances for the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAppliances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationAppliances_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationAppliances(string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteRecoveryReplicationAppliance"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteRecoveryReplicationAppliance> GetReplicationAppliancesAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetReplicationAppliancesAsync(resourceName, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of Azure Site Recovery appliances for the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationAppliances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationAppliances_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationAppliances(string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteRecoveryReplicationAppliance"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteRecoveryReplicationAppliance> GetReplicationAppliances(this ResourceGroupResource resourceGroupResource, string resourceName, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetReplicationAppliances(resourceName, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the networks available in a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationNetworks_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryNetworkResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryNetworks(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteRecoveryNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteRecoveryNetworkResource> GetSiteRecoveryNetworksAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryNetworksAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the networks available in a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworks</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationNetworks_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryNetworkResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryNetworks(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteRecoveryNetworkResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteRecoveryNetworkResource> GetSiteRecoveryNetworks(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryNetworks(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all ASR network mappings in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworkMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationNetworkMappings_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryNetworkMappingResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryNetworkMappings(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteRecoveryNetworkMappingResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteRecoveryNetworkMappingResource> GetSiteRecoveryNetworkMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryNetworkMappingsAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all ASR network mappings in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationNetworkMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationNetworkMappings_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryNetworkMappingResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryNetworkMappings(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteRecoveryNetworkMappingResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteRecoveryNetworkMappingResource> GetSiteRecoveryNetworkMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryNetworkMappings(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the protection containers in a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainers_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryProtectionContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryProtectionContainers(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteRecoveryProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteRecoveryProtectionContainerResource> GetSiteRecoveryProtectionContainersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryProtectionContainersAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the protection containers in a vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainers_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryProtectionContainerResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryProtectionContainers(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteRecoveryProtectionContainerResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteRecoveryProtectionContainerResource> GetSiteRecoveryProtectionContainers(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryProtectionContainers(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of migration items in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationMigrationItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryMigrationItems(string,string,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. </param>
-        /// <param name="takeToken"> The page size. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteRecoveryMigrationItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteRecoveryMigrationItemResource> GetSiteRecoveryMigrationItemsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryMigrationItemsAsync(resourceName, skipToken, takeToken, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of migration items in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationMigrationItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationMigrationItems_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryMigrationItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryMigrationItems(string,string,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. </param>
-        /// <param name="takeToken"> The page size. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteRecoveryMigrationItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteRecoveryMigrationItemResource> GetSiteRecoveryMigrationItems(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string takeToken = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryMigrationItems(resourceName, skipToken, takeToken, filter, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetVaultSetting(resourceName, vaultSettingName, cancellationToken);
         }
 
         /// <summary>
         /// Gets the list of ASR replication protected items in the vault.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectedItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectedItems_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectedItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationProtectedItems(string,string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAllAsync(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ReplicationProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReplicationProtectedItemResource> GetReplicationProtectedItemsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetReplicationProtectedItemsAsync(resourceName, skipToken, filter, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the list of ASR replication protected items in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectedItems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectedItems_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ReplicationProtectedItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationProtectedItems(string,string,string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
-        /// <param name="filter"> OData filter options. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> A collection of <see cref="ReplicationProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReplicationProtectedItemResource> GetReplicationProtectedItems(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ReplicationProtectedItemResource> GetAllAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetReplicationProtectedItems(resourceName, skipToken, filter, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAllAsync(resourceName, skipToken, filter, cancellationToken);
         }
 
         /// <summary>
-        /// Gets the list of ASR replication protected clusters in the vault.
-        /// <list type="bullet">
+        /// Gets the list of ASR replication protected items in the vault.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionClusters_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryReplicationProtectionClusterResources(string,string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAll(string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteRecoveryReplicationProtectionClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteRecoveryReplicationProtectionClusterResource> GetSiteRecoveryReplicationProtectionClusterResourcesAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationProtectedItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationProtectedItemResource> GetAll(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryReplicationProtectionClusterResourcesAsync(resourceName, skipToken, filter, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAll(resourceName, skipToken, filter, cancellationToken);
         }
 
         /// <summary>
-        /// Gets the list of ASR replication protected clusters in the vault.
-        /// <list type="bullet">
+        /// Lists the networks available in a vault.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionClusters_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryReplicationProtectionClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryReplicationProtectionClusterResources(string,string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAllAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="skipToken"> The pagination token. Possible values: "FabricId" or "FabricId_CloudId" or null. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkResource> GetAllAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAllAsync(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the networks available in a vault.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAll(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkResource> GetAll(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAll(resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of migration items in the vault.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAllAsync(string, string, string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="skipToken"> The pagination token. </param>
+        /// <param name="takeToken"> The page size. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteRecoveryReplicationProtectionClusterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteRecoveryReplicationProtectionClusterResource> GetSiteRecoveryReplicationProtectionClusterResources(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = null, string filter = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MigrationItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MigrationItemResource> GetAllAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = default, string takeToken = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryReplicationProtectionClusterResources(resourceName, skipToken, filter, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAllAsync(resourceName, skipToken, takeToken, filter, cancellationToken);
         }
 
         /// <summary>
-        /// Lists the protection container mappings in the vault.
-        /// <list type="bullet">
+        /// Gets the list of migration items in the vault.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainerMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetProtectionContainerMappings(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAll(string, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="skipToken"> The pagination token. </param>
+        /// <param name="takeToken"> The page size. </param>
+        /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ProtectionContainerMappingResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProtectionContainerMappingResource> GetProtectionContainerMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MigrationItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MigrationItemResource> GetAll(this ResourceGroupResource resourceGroupResource, string resourceName, string skipToken = default, string takeToken = default, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetProtectionContainerMappingsAsync(resourceName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAll(resourceName, skipToken, takeToken, filter, cancellationToken);
         }
 
         /// <summary>
-        /// Lists the protection container mappings in the vault.
-        /// <list type="bullet">
+        /// Operation to return the list of available operations.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationProtectionContainerMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetProtectionContainerMappings(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAllAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ProtectionContainerMappingResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProtectionContainerMappingResource> GetProtectionContainerMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OperationsDiscovery"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OperationsDiscovery> GetAllAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetProtectionContainerMappings(resourceName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAllAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Lists the registered recovery services providers in the vault.
-        /// <list type="bullet">
+        /// Operation to return the list of available operations.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryServicesProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationRecoveryServicesProviders_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryServicesProviderResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryServicesProviders(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAll(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteRecoveryServicesProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProvidersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OperationsDiscovery"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OperationsDiscovery> GetAll(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryServicesProvidersAsync(resourceName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAll(cancellationToken);
         }
 
         /// <summary>
-        /// Lists the registered recovery services providers in the vault.
-        /// <list type="bullet">
+        /// Gets the list of Azure Site Recovery appliances for the vault.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryServicesProviders</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationRecoveryServicesProviders_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryServicesProviderResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryServicesProviders(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAllAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteRecoveryServicesProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteRecoveryServicesProviderResource> GetSiteRecoveryServicesProviders(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationAppliance"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReplicationAppliance> GetAllAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryServicesProviders(resourceName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAllAsync(resourceName, filter, cancellationToken);
         }
 
         /// <summary>
-        /// Lists the storage classifications in the vault.
-        /// <list type="bullet">
+        /// Gets the list of Azure Site Recovery appliances for the vault.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassifications</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetStorageClassifications(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAll(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
+        /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StorageClassificationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageClassificationResource> GetStorageClassificationsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ReplicationAppliance"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReplicationAppliance> GetAll(this ResourceGroupResource resourceGroupResource, string resourceName, string filter = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetStorageClassificationsAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the storage classifications in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassifications</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetStorageClassifications(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="StorageClassificationResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageClassificationResource> GetStorageClassifications(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetStorageClassifications(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the storage classification mappings in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassificationMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassificationMappings_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationMappingResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetStorageClassificationMappings(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="StorageClassificationMappingResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageClassificationMappingResource> GetStorageClassificationMappingsAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetStorageClassificationMappingsAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the storage classification mappings in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationStorageClassificationMappings</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassificationMappings_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationMappingResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetStorageClassificationMappings(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="StorageClassificationMappingResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageClassificationMappingResource> GetStorageClassificationMappings(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetStorageClassificationMappings(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the vCenter servers registered in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationvCenters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryVCenters(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteRecoveryVCenterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteRecoveryVCenterResource> GetSiteRecoveryVCentersAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryVCentersAsync(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the vCenter servers registered in the vault.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationvCenters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationvCenters_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteRecoveryVCenterResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSiteRecoveryVCenters(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> The name of the recovery services vault. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteRecoveryVCenterResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteRecoveryVCenterResource> GetSiteRecoveryVCenters(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSiteRecoveryVCenters(resourceName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAll(resourceName, filter, cancellationToken);
         }
 
         /// <summary>
         /// Gets the data of supported operating systems by SRS.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationSupportedOperatingSystems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportedOperatingSystems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSupportedOperatingSystem(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="instanceType"> The instance type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        public static async Task<Response<SiteRecoverySupportedOperatingSystems>> GetSupportedOperatingSystemAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<Models.SupportedOperatingSystems>> GetAsync(this ResourceGroupResource resourceGroupResource, string resourceName, string instanceType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSupportedOperatingSystemAsync(resourceName, instanceType, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAsync(resourceName, instanceType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the data of supported operating systems by SRS.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationSupportedOperatingSystems</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SupportedOperatingSystems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetSupportedOperatingSystem(string,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.Get(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="instanceType"> The instance type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        public static Response<SiteRecoverySupportedOperatingSystems> GetSupportedOperatingSystem(this ResourceGroupResource resourceGroupResource, string resourceName, string instanceType = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<Models.SupportedOperatingSystems> Get(this ResourceGroupResource resourceGroupResource, string resourceName, string instanceType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetSupportedOperatingSystem(resourceName, instanceType, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).Get(resourceName, instanceType, cancellationToken);
         }
 
         /// <summary>
         /// Gets the health details of the vault.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultHealth_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationVaultHealth(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        public static async Task<Response<VaultHealthDetails>> GetReplicationVaultHealthAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<Response<VaultHealthDetails>> GetAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetReplicationVaultHealthAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the health details of the vault.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultHealth_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.GetReplicationVaultHealth(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.Get(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        public static Response<VaultHealthDetails> GetReplicationVaultHealth(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static Response<VaultHealthDetails> Get(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).GetReplicationVaultHealth(resourceName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).Get(resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Refreshes health summary of the vault.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth/default/refresh</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultHealth_Refresh</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.RefreshReplicationVaultHealth(WaitUntil,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.RefreshAsync(WaitUntil, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        public static async Task<ArmOperation<VaultHealthDetails>> RefreshReplicationVaultHealthAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static async Task<ArmOperation<VaultHealthDetails>> RefreshAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).RefreshReplicationVaultHealthAsync(waitUntil, resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).RefreshAsync(waitUntil, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Refreshes health summary of the vault.
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationVaultHealth/default/refresh</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationVaultHealth_Refresh</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.RefreshReplicationVaultHealth(WaitUntil,string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesSiteRecoveryResourceGroupResource.Refresh(WaitUntil, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
-        public static ArmOperation<VaultHealthDetails> RefreshReplicationVaultHealth(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        public static ArmOperation<VaultHealthDetails> Refresh(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).RefreshReplicationVaultHealth(waitUntil, resourceName, cancellationToken);
+            return GetMockableRecoveryServicesSiteRecoveryResourceGroupResource(resourceGroupResource).Refresh(waitUntil, resourceName, cancellationToken);
         }
     }
 }

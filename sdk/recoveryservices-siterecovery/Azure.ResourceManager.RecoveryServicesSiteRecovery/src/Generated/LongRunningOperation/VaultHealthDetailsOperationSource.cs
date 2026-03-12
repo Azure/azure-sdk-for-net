@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
-    internal class VaultHealthDetailsOperationSource : IOperationSource<VaultHealthDetails>
+    /// <summary></summary>
+    internal partial class VaultHealthDetailsOperationSource : IOperationSource<VaultHealthDetails>
     {
-        VaultHealthDetails IOperationSource<VaultHealthDetails>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal VaultHealthDetailsOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return VaultHealthDetails.DeserializeVaultHealthDetails(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        VaultHealthDetails IOperationSource<VaultHealthDetails>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            VaultHealthDetails result = VaultHealthDetails.DeserializeVaultHealthDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<VaultHealthDetails> IOperationSource<VaultHealthDetails>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return VaultHealthDetails.DeserializeVaultHealthDetails(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            VaultHealthDetails result = VaultHealthDetails.DeserializeVaultHealthDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }

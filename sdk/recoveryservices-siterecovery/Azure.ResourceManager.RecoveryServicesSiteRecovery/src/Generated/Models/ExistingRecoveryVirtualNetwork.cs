@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -17,33 +17,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="ExistingRecoveryVirtualNetwork"/>. </summary>
         /// <param name="recoveryVirtualNetworkId"> The recovery virtual network Id. Will throw error, if resource does not exist. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryVirtualNetworkId"/> is null. </exception>
-        public ExistingRecoveryVirtualNetwork(ResourceIdentifier recoveryVirtualNetworkId)
+        public ExistingRecoveryVirtualNetwork(string recoveryVirtualNetworkId) : base("Existing")
         {
             Argument.AssertNotNull(recoveryVirtualNetworkId, nameof(recoveryVirtualNetworkId));
 
             RecoveryVirtualNetworkId = recoveryVirtualNetworkId;
-            ResourceType = "Existing";
         }
 
         /// <summary> Initializes a new instance of <see cref="ExistingRecoveryVirtualNetwork"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryVirtualNetworkId"> The recovery virtual network Id. Will throw error, if resource does not exist. </param>
         /// <param name="recoverySubnetName"> The recovery subnet name. </param>
-        internal ExistingRecoveryVirtualNetwork(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryVirtualNetworkId, string recoverySubnetName) : base(resourceType, serializedAdditionalRawData)
+        internal ExistingRecoveryVirtualNetwork(string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string recoveryVirtualNetworkId, string recoverySubnetName) : base(resourceType, additionalBinaryDataProperties)
         {
             RecoveryVirtualNetworkId = recoveryVirtualNetworkId;
             RecoverySubnetName = recoverySubnetName;
-            ResourceType = resourceType ?? "Existing";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExistingRecoveryVirtualNetwork"/> for deserialization. </summary>
-        internal ExistingRecoveryVirtualNetwork()
-        {
         }
 
         /// <summary> The recovery virtual network Id. Will throw error, if resource does not exist. </summary>
-        public ResourceIdentifier RecoveryVirtualNetworkId { get; set; }
+        public string RecoveryVirtualNetworkId { get; set; }
+
         /// <summary> The recovery subnet name. </summary>
         public string RecoverySubnetName { get; set; }
     }

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,18 +15,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VMwareDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="VMwareDetails"/>. </summary>
-        internal VMwareDetails()
+        internal VMwareDetails() : base("VMware")
         {
-            ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServer>();
+            ProcessServers = new ChangeTrackingList<ProcessServer>();
             MasterTargetServers = new ChangeTrackingList<MasterTargetServer>();
-            RunAsAccounts = new ChangeTrackingList<SiteRecoveryRunAsAccount>();
+            RunAsAccounts = new ChangeTrackingList<RunAsAccount>();
             SwitchProviderBlockingErrorDetails = new ChangeTrackingList<InMageFabricSwitchProviderBlockingErrorDetails>();
-            InstanceType = "VMware";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="processServers"> The list of Process Servers associated with the fabric. </param>
         /// <param name="masterTargetServers"> The list of Master Target servers associated with the fabric. </param>
         /// <param name="runAsAccounts"> The list of run as accounts created on the server. </param>
@@ -54,13 +53,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="hostName"> The host name. </param>
         /// <param name="lastHeartbeat"> The last heartbeat received from CS server. </param>
         /// <param name="versionStatus"> Version status. </param>
-        /// <param name="sslCertExpireOn"> CS SSL cert expiry date. </param>
+        /// <param name="sslCertExpiryOn"> CS SSL cert expiry date. </param>
         /// <param name="sslCertExpiryRemainingDays"> CS SSL cert expiry date. </param>
         /// <param name="psTemplateVersion"> PS template version. </param>
-        /// <param name="agentExpireOn"> Agent expiry date. </param>
+        /// <param name="agentExpiryOn"> Agent expiry date. </param>
         /// <param name="agentVersionDetails"> The agent version details. </param>
         /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
-        internal VMwareDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<SiteRecoveryProcessServer> processServers, IReadOnlyList<MasterTargetServer> masterTargetServers, IReadOnlyList<SiteRecoveryRunAsAccount> runAsAccounts, string replicationPairCount, string processServerCount, string agentCount, string protectedServers, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string webLoad, string webLoadStatus, string databaseServerLoad, string databaseServerLoadStatus, string csServiceStatus, IPAddress ipAddress, string agentVersion, string hostName, DateTimeOffset? lastHeartbeat, string versionStatus, DateTimeOffset? sslCertExpireOn, int? sslCertExpiryRemainingDays, string psTemplateVersion, DateTimeOffset? agentExpireOn, SiteRecoveryVersionDetails agentVersionDetails, IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ProcessServer> processServers, IList<MasterTargetServer> masterTargetServers, IList<RunAsAccount> runAsAccounts, string replicationPairCount, string processServerCount, string agentCount, string protectedServers, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string webLoad, string webLoadStatus, string databaseServerLoad, string databaseServerLoadStatus, string csServiceStatus, string ipAddress, string agentVersion, string hostName, DateTimeOffset? lastHeartbeat, string versionStatus, DateTimeOffset? sslCertExpiryOn, int? sslCertExpiryRemainingDays, string psTemplateVersion, DateTimeOffset? agentExpiryOn, VersionDetails agentVersionDetails, IList<InMageFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails) : base(instanceType, additionalBinaryDataProperties)
         {
             ProcessServers = processServers;
             MasterTargetServers = masterTargetServers;
@@ -84,85 +83,116 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DatabaseServerLoad = databaseServerLoad;
             DatabaseServerLoadStatus = databaseServerLoadStatus;
             CsServiceStatus = csServiceStatus;
-            IPAddress = ipAddress;
+            IpAddress = ipAddress;
             AgentVersion = agentVersion;
             HostName = hostName;
             LastHeartbeat = lastHeartbeat;
             VersionStatus = versionStatus;
-            SslCertExpireOn = sslCertExpireOn;
+            SslCertExpiryOn = sslCertExpiryOn;
             SslCertExpiryRemainingDays = sslCertExpiryRemainingDays;
-            PSTemplateVersion = psTemplateVersion;
-            AgentExpireOn = agentExpireOn;
+            PsTemplateVersion = psTemplateVersion;
+            AgentExpiryOn = agentExpiryOn;
             AgentVersionDetails = agentVersionDetails;
             SwitchProviderBlockingErrorDetails = switchProviderBlockingErrorDetails;
-            InstanceType = instanceType ?? "VMware";
         }
 
         /// <summary> The list of Process Servers associated with the fabric. </summary>
-        public IReadOnlyList<SiteRecoveryProcessServer> ProcessServers { get; }
+        public IList<ProcessServer> ProcessServers { get; }
+
         /// <summary> The list of Master Target servers associated with the fabric. </summary>
-        public IReadOnlyList<MasterTargetServer> MasterTargetServers { get; }
+        public IList<MasterTargetServer> MasterTargetServers { get; }
+
         /// <summary> The list of run as accounts created on the server. </summary>
-        public IReadOnlyList<SiteRecoveryRunAsAccount> RunAsAccounts { get; }
+        public IList<RunAsAccount> RunAsAccounts { get; }
+
         /// <summary> The number of replication pairs configured in this CS. </summary>
         public string ReplicationPairCount { get; }
+
         /// <summary> The number of process servers. </summary>
         public string ProcessServerCount { get; }
+
         /// <summary> The number of source and target servers configured to talk to this CS. </summary>
         public string AgentCount { get; }
+
         /// <summary> The number of protected servers. </summary>
         public string ProtectedServers { get; }
+
         /// <summary> The percentage of the system load. </summary>
         public string SystemLoad { get; }
+
         /// <summary> The system load status. </summary>
         public string SystemLoadStatus { get; }
+
         /// <summary> The percentage of the CPU load. </summary>
         public string CpuLoad { get; }
+
         /// <summary> The CPU load status. </summary>
         public string CpuLoadStatus { get; }
+
         /// <summary> The total memory. </summary>
         public long? TotalMemoryInBytes { get; }
+
         /// <summary> The available memory. </summary>
         public long? AvailableMemoryInBytes { get; }
+
         /// <summary> The memory usage status. </summary>
         public string MemoryUsageStatus { get; }
+
         /// <summary> The total space. </summary>
         public long? TotalSpaceInBytes { get; }
+
         /// <summary> The available space. </summary>
         public long? AvailableSpaceInBytes { get; }
+
         /// <summary> The space usage status. </summary>
         public string SpaceUsageStatus { get; }
+
         /// <summary> The web load. </summary>
         public string WebLoad { get; }
+
         /// <summary> The web load status. </summary>
         public string WebLoadStatus { get; }
+
         /// <summary> The database server load. </summary>
         public string DatabaseServerLoad { get; }
+
         /// <summary> The database server load status. </summary>
         public string DatabaseServerLoadStatus { get; }
+
         /// <summary> The CS service status. </summary>
         public string CsServiceStatus { get; }
+
         /// <summary> The IP address. </summary>
-        public IPAddress IPAddress { get; }
+        public string IpAddress { get; }
+
         /// <summary> The agent Version. </summary>
         public string AgentVersion { get; }
+
         /// <summary> The host name. </summary>
         public string HostName { get; }
+
         /// <summary> The last heartbeat received from CS server. </summary>
         public DateTimeOffset? LastHeartbeat { get; }
+
         /// <summary> Version status. </summary>
         public string VersionStatus { get; }
+
         /// <summary> CS SSL cert expiry date. </summary>
-        public DateTimeOffset? SslCertExpireOn { get; }
+        public DateTimeOffset? SslCertExpiryOn { get; }
+
         /// <summary> CS SSL cert expiry date. </summary>
         public int? SslCertExpiryRemainingDays { get; }
+
         /// <summary> PS template version. </summary>
-        public string PSTemplateVersion { get; }
+        public string PsTemplateVersion { get; }
+
         /// <summary> Agent expiry date. </summary>
-        public DateTimeOffset? AgentExpireOn { get; }
+        public DateTimeOffset? AgentExpiryOn { get; }
+
         /// <summary> The agent version details. </summary>
-        public SiteRecoveryVersionDetails AgentVersionDetails { get; }
+        public VersionDetails AgentVersionDetails { get; }
+
         /// <summary> The switch provider blocking error information. </summary>
-        public IReadOnlyList<InMageFabricSwitchProviderBlockingErrorDetails> SwitchProviderBlockingErrorDetails { get; }
+        public IList<InMageFabricSwitchProviderBlockingErrorDetails> SwitchProviderBlockingErrorDetails { get; }
     }
 }

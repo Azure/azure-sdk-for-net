@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VmmToVmmNetworkMappingSettings : NetworkMappingFabricSpecificSettings
     {
         /// <summary> Initializes a new instance of <see cref="VmmToVmmNetworkMappingSettings"/>. </summary>
-        internal VmmToVmmNetworkMappingSettings()
+        internal VmmToVmmNetworkMappingSettings() : base("VmmToVmm")
         {
-            InstanceType = "VmmToVmm";
         }
 
         /// <summary> Initializes a new instance of <see cref="VmmToVmmNetworkMappingSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmmToVmmNetworkMappingSettings(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VmmToVmmNetworkMappingSettings(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType, additionalBinaryDataProperties)
         {
-            InstanceType = instanceType ?? "VmmToVmm";
         }
     }
 }

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanShutdownGroupTaskDetails : IUtf8JsonSerializable, IJsonModel<RecoveryPlanShutdownGroupTaskDetails>
+    /// <summary> This class represents the recovery plan shutdown group task details. </summary>
+    public partial class RecoveryPlanShutdownGroupTaskDetails : RecoveryPlanGroupTaskDetails, IJsonModel<RecoveryPlanShutdownGroupTaskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanShutdownGroupTaskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GroupTaskDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRecoveryPlanShutdownGroupTaskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanShutdownGroupTaskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanShutdownGroupTaskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryPlanShutdownGroupTaskDetails IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (RecoveryPlanShutdownGroupTaskDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecoveryPlanShutdownGroupTaskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,122 +69,93 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecoveryPlanShutdownGroupTaskDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        RecoveryPlanShutdownGroupTaskDetails IJsonModel<RecoveryPlanShutdownGroupTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryPlanShutdownGroupTaskDetails IJsonModel<RecoveryPlanShutdownGroupTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RecoveryPlanShutdownGroupTaskDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GroupTaskDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecoveryPlanShutdownGroupTaskDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRecoveryPlanShutdownGroupTaskDetails(document.RootElement, options);
         }
 
-        internal static RecoveryPlanShutdownGroupTaskDetails DeserializeRecoveryPlanShutdownGroupTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RecoveryPlanShutdownGroupTaskDetails DeserializeRecoveryPlanShutdownGroupTaskDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "RecoveryPlanShutdownGroupTaskDetails";
+            IList<ASRTask> childTasks = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string groupId = default;
             string rpGroupType = default;
-            string instanceType = default;
-            IReadOnlyList<AsrTask> childTasks = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    name = property.Value.GetString();
+                    instanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupId"u8))
+                if (prop.NameEquals("childTasks"u8))
                 {
-                    groupId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("rpGroupType"u8))
-                {
-                    rpGroupType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("childTasks"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<AsrTask> array = new List<AsrTask>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<ASRTask> array = new List<ASRTask>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AsrTask.DeserializeAsrTask(item, options));
+                        array.Add(ASRTask.DeserializeASRTask(item, options));
                     }
                     childTasks = array;
                     continue;
                 }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("groupId"u8))
+                {
+                    groupId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("rpGroupType"u8))
+                {
+                    rpGroupType = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RecoveryPlanShutdownGroupTaskDetails(
                 instanceType,
-                childTasks ?? new ChangeTrackingList<AsrTask>(),
-                serializedAdditionalRawData,
+                childTasks ?? new ChangeTrackingList<ASRTask>(),
+                additionalBinaryDataProperties,
                 name,
                 groupId,
                 rpGroupType);
         }
-
-        BinaryData IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanShutdownGroupTaskDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RecoveryPlanShutdownGroupTaskDetails IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRecoveryPlanShutdownGroupTaskDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanShutdownGroupTaskDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RecoveryPlanShutdownGroupTaskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMage protected disk details. </summary>
     public partial class InMageProtectedDiskDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InMageProtectedDiskDetails"/>. </summary>
         internal InMageProtectedDiskDetails()
@@ -73,8 +44,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="resyncStartOn"> The resync start time. </param>
         /// <param name="progressHealth"> The Progress Health. </param>
         /// <param name="progressStatus"> The Progress Status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMB, double? psDataInMB, double? targetDataInMB, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferTimeUTC, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InMageProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMB, double? psDataInMB, double? targetDataInMB, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferTimeUTC, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -87,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskCapacityInBytes = diskCapacityInBytes;
             FileSystemCapacityInBytes = fileSystemCapacityInBytes;
             SourceDataInMB = sourceDataInMB;
-            PSDataInMB = psDataInMB;
+            PsDataInMB = psDataInMB;
             TargetDataInMB = targetDataInMB;
             DiskResized = diskResized;
             LastRpoCalculatedOn = lastRpoCalculatedOn;
@@ -98,51 +69,72 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResyncStartOn = resyncStartOn;
             ProgressHealth = progressHealth;
             ProgressStatus = progressStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The disk id. </summary>
         public string DiskId { get; }
+
         /// <summary> The disk name. </summary>
         public string DiskName { get; }
+
         /// <summary> The protection stage. </summary>
         public string ProtectionStage { get; }
+
         /// <summary> The health error code for the disk. </summary>
         public string HealthErrorCode { get; }
+
         /// <summary> The RPO in seconds. </summary>
         public long? RpoInSeconds { get; }
+
         /// <summary> A value indicating whether resync is required for this disk. </summary>
         public string ResyncRequired { get; }
+
         /// <summary> The resync progress percentage. </summary>
         public int? ResyncProgressPercentage { get; }
+
         /// <summary> The resync duration in seconds. </summary>
         public long? ResyncDurationInSeconds { get; }
+
         /// <summary> The disk capacity in bytes. </summary>
         public long? DiskCapacityInBytes { get; }
+
         /// <summary> The file system capacity in bytes. </summary>
         public long? FileSystemCapacityInBytes { get; }
+
         /// <summary> The source data transit in MB. </summary>
         public double? SourceDataInMB { get; }
+
         /// <summary> The PS data transit in MB. </summary>
-        public double? PSDataInMB { get; }
+        public double? PsDataInMB { get; }
+
         /// <summary> The target data transit in MB. </summary>
         public double? TargetDataInMB { get; }
+
         /// <summary> A value indicating whether disk is resized. </summary>
         public string DiskResized { get; }
+
         /// <summary> The last RPO calculated time. </summary>
         public DateTimeOffset? LastRpoCalculatedOn { get; }
+
         /// <summary> The resync processed bytes. </summary>
         public long? ResyncProcessedBytes { get; }
+
         /// <summary> The resync total transferred bytes. </summary>
         public long? ResyncTotalTransferredBytes { get; }
+
         /// <summary> The resync last 15 minutes transferred bytes. </summary>
         public long? ResyncLast15MinutesTransferredBytes { get; }
+
         /// <summary> The last data transfer time in UTC. </summary>
         public DateTimeOffset? ResyncLastDataTransferTimeUTC { get; }
+
         /// <summary> The resync start time. </summary>
         public DateTimeOffset? ResyncStartOn { get; }
+
         /// <summary> The Progress Health. </summary>
         public string ProgressHealth { get; }
+
         /// <summary> The Progress Status. </summary>
         public string ProgressStatus { get; }
     }

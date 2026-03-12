@@ -12,55 +12,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
     /// Base class for Provider specific details for policies.
-    /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VMwareCbtPolicyDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, and <see cref="VmwareCbtPolicyDetails"/>.
     /// </summary>
     public abstract partial class PolicyProviderSpecificDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PolicyProviderSpecificDetails"/>. </summary>
-        protected PolicyProviderSpecificDetails()
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        private protected PolicyProviderSpecificDetails(string instanceType)
         {
+            InstanceType = instanceType;
         }
 
         /// <summary> Initializes a new instance of <see cref="PolicyProviderSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyProviderSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyProviderSpecificDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceType = instanceType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the class type. Overridden in derived classes. </summary>

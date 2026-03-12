@@ -7,29 +7,27 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Model class for event details of a A2A event. </summary>
-    public partial class A2AEventDetails : SiteRecoveryEventProviderSpecificDetails
+    public partial class A2AEventDetails : EventProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="A2AEventDetails"/>. </summary>
-        internal A2AEventDetails()
+        internal A2AEventDetails() : base("A2A")
         {
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2AEventDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="protectedItemName"> The protected item arm name. </param>
         /// <param name="fabricObjectId"> The azure vm arm id. </param>
         /// <param name="fabricName"> Fabric arm name. </param>
         /// <param name="fabricLocation"> The fabric location. </param>
         /// <param name="remoteFabricName"> Remote fabric arm name. </param>
         /// <param name="remoteFabricLocation"> Remote fabric location. </param>
-        internal A2AEventDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string protectedItemName, ResourceIdentifier fabricObjectId, string fabricName, AzureLocation? fabricLocation, string remoteFabricName, AzureLocation? remoteFabricLocation) : base(instanceType, serializedAdditionalRawData)
+        internal A2AEventDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string protectedItemName, string fabricObjectId, string fabricName, string fabricLocation, string remoteFabricName, string remoteFabricLocation) : base(instanceType, additionalBinaryDataProperties)
         {
             ProtectedItemName = protectedItemName;
             FabricObjectId = fabricObjectId;
@@ -37,20 +35,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             FabricLocation = fabricLocation;
             RemoteFabricName = remoteFabricName;
             RemoteFabricLocation = remoteFabricLocation;
-            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> The protected item arm name. </summary>
         public string ProtectedItemName { get; }
+
         /// <summary> The azure vm arm id. </summary>
-        public ResourceIdentifier FabricObjectId { get; }
+        public string FabricObjectId { get; }
+
         /// <summary> Fabric arm name. </summary>
         public string FabricName { get; }
+
         /// <summary> The fabric location. </summary>
-        public AzureLocation? FabricLocation { get; }
+        public string FabricLocation { get; }
+
         /// <summary> Remote fabric arm name. </summary>
         public string RemoteFabricName { get; }
+
         /// <summary> Remote fabric location. </summary>
-        public AzureLocation? RemoteFabricLocation { get; }
+        public string RemoteFabricLocation { get; }
     }
 }

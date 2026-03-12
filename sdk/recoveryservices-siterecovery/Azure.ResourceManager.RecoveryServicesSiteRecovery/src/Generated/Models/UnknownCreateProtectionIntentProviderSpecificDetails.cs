@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of CreateProtectionIntentProviderSpecificDetails. </summary>
-    internal partial class UnknownCreateProtectionIntentProviderSpecificDetails : SiteRecoveryCreateProtectionIntentProviderDetail
+    internal partial class UnknownCreateProtectionIntentProviderSpecificDetails : CreateProtectionIntentProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCreateProtectionIntentProviderSpecificDetails"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownCreateProtectionIntentProviderSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownCreateProtectionIntentProviderSpecificDetails"/> for deserialization. </summary>
-        internal UnknownCreateProtectionIntentProviderSpecificDetails()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCreateProtectionIntentProviderSpecificDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

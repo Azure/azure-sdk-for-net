@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Details of the gateway operation. </summary>
     public partial class GatewayOperationDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GatewayOperationDetails"/>. </summary>
         internal GatewayOperationDetails()
@@ -60,8 +32,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="hostName"> A value indicating the ESXi host name. </param>
         /// <param name="dataStores"> A value indicating the datastore collection. </param>
         /// <param name="vmwareReadThroughput"> A value indicating the VMware read throughput in bytes per second. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayOperationDetails(string state, int? progressPercentage, long? timeElapsed, long? timeRemaining, long? uploadSpeed, string hostName, IReadOnlyList<string> dataStores, long? vmwareReadThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayOperationDetails(string state, int? progressPercentage, long? timeElapsed, long? timeRemaining, long? uploadSpeed, string hostName, IReadOnlyList<string> dataStores, long? vmwareReadThroughput, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ProgressPercentage = progressPercentage;
@@ -70,25 +42,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             UploadSpeed = uploadSpeed;
             HostName = hostName;
             DataStores = dataStores;
-            VMwareReadThroughput = vmwareReadThroughput;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            VmwareReadThroughput = vmwareReadThroughput;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A value indicating the state of gateway operation. </summary>
         public string State { get; }
+
         /// <summary> A value indicating the progress percentage of gateway operation. </summary>
         public int? ProgressPercentage { get; }
+
         /// <summary> A value indicating the time elapsed for the operation in milliseconds. </summary>
         public long? TimeElapsed { get; }
+
         /// <summary> A value indicating the time remaining for the operation in milliseconds. </summary>
         public long? TimeRemaining { get; }
+
         /// <summary> A value indicating the upload speed in bytes per second. </summary>
         public long? UploadSpeed { get; }
+
         /// <summary> A value indicating the ESXi host name. </summary>
         public string HostName { get; }
+
         /// <summary> A value indicating the datastore collection. </summary>
         public IReadOnlyList<string> DataStores { get; }
+
         /// <summary> A value indicating the VMware read throughput in bytes per second. </summary>
-        public long? VMwareReadThroughput { get; }
+        public long? VmwareReadThroughput { get; }
     }
 }

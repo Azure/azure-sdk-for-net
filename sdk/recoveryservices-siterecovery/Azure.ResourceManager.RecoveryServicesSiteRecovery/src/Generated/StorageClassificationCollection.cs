@@ -8,85 +8,92 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="StorageClassificationResource"/> and their operations.
-    /// Each <see cref="StorageClassificationResource"/> in the collection will belong to the same instance of <see cref="SiteRecoveryFabricResource"/>.
-    /// To get a <see cref="StorageClassificationCollection"/> instance call the GetStorageClassifications method from an instance of <see cref="SiteRecoveryFabricResource"/>.
+    /// Each <see cref="StorageClassificationResource"/> in the collection will belong to the same instance of <see cref="FabricResource"/>.
+    /// To get a <see cref="StorageClassificationCollection"/> instance call the GetStorageClassifications method from an instance of <see cref="FabricResource"/>.
     /// </summary>
     public partial class StorageClassificationCollection : ArmCollection, IEnumerable<StorageClassificationResource>, IAsyncEnumerable<StorageClassificationResource>
     {
-        private readonly ClientDiagnostics _storageClassificationReplicationStorageClassificationsClientDiagnostics;
-        private readonly ReplicationStorageClassificationsRestOperations _storageClassificationReplicationStorageClassificationsRestClient;
+        private readonly ClientDiagnostics _replicationStorageClassificationsClientDiagnostics;
+        private readonly ReplicationStorageClassifications _replicationStorageClassificationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="StorageClassificationCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StorageClassificationCollection for mocking. </summary>
         protected StorageClassificationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StorageClassificationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StorageClassificationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageClassificationReplicationStorageClassificationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", StorageClassificationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(StorageClassificationResource.ResourceType, out string storageClassificationReplicationStorageClassificationsApiVersion);
-            _storageClassificationReplicationStorageClassificationsRestClient = new ReplicationStorageClassificationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageClassificationReplicationStorageClassificationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(StorageClassificationResource.ResourceType, out string storageClassificationApiVersion);
+            _replicationStorageClassificationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", StorageClassificationResource.ResourceType.Namespace, Diagnostics);
+            _replicationStorageClassificationsRestClient = new ReplicationStorageClassifications(_replicationStorageClassificationsClientDiagnostics, Pipeline, Endpoint, storageClassificationApiVersion ?? "2025-08-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteRecoveryFabricResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryFabricResource.ResourceType), nameof(id));
+            if (id.ResourceType != FabricResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FabricResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the details of the specified storage classification.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationName"> Storage classification name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<StorageClassificationResource>> GetAsync(string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
 
-            using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Get");
+            using DiagnosticScope scope = _replicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _storageClassificationReplicationStorageClassificationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationStorageClassificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StorageClassificationData> response = Response.FromValue(StorageClassificationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageClassificationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Gets the details of the specified storage classification.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationName"> Storage classification name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<StorageClassificationResource> Get(string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
 
-            using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Get");
+            using DiagnosticScope scope = _replicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Get");
             scope.Start();
             try
             {
-                var response = _storageClassificationReplicationStorageClassificationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationStorageClassificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StorageClassificationData> response = Response.FromValue(StorageClassificationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageClassificationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Lists the storage classifications available in the specified fabric.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_ListByReplicationFabrics</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClassifications_ListByReplicationFabrics. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageClassificationResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StorageClassificationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StorageClassificationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), _storageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "StorageClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<StorageClassificationData, StorageClassificationResource>(new ReplicationStorageClassificationsGetByReplicationFabricsAsyncCollectionResultOfT(
+                _replicationStorageClassificationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new StorageClassificationResource(Client, data));
         }
 
         /// <summary>
         /// Lists the storage classifications available in the specified fabric.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_ListByReplicationFabrics</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClassifications_ListByReplicationFabrics. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +207,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="StorageClassificationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StorageClassificationResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageClassificationReplicationStorageClassificationsRestClient.CreateListByReplicationFabricsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageClassificationResource(Client, StorageClassificationData.DeserializeStorageClassificationData(e)), _storageClassificationReplicationStorageClassificationsClientDiagnostics, Pipeline, "StorageClassificationCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<StorageClassificationData, StorageClassificationResource>(new ReplicationStorageClassificationsGetByReplicationFabricsCollectionResultOfT(
+                _replicationStorageClassificationsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new StorageClassificationResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationName"> Storage classification name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
 
-            using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Exists");
+            using DiagnosticScope scope = _replicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _storageClassificationReplicationStorageClassificationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationStorageClassificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StorageClassificationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageClassificationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageClassificationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +281,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationName"> Storage classification name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
 
-            using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Exists");
+            using DiagnosticScope scope = _replicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _storageClassificationReplicationStorageClassificationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationStorageClassificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StorageClassificationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageClassificationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageClassificationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +338,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationName"> Storage classification name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<StorageClassificationResource>> GetIfExistsAsync(string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
 
-            using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.GetIfExists");
+            using DiagnosticScope scope = _replicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _storageClassificationReplicationStorageClassificationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationStorageClassificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StorageClassificationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageClassificationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageClassificationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StorageClassificationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageClassificationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +399,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClassifications_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageClassificationName"> Storage classification name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<StorageClassificationResource> GetIfExists(string storageClassificationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(storageClassificationName, nameof(storageClassificationName));
 
-            using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.GetIfExists");
+            using DiagnosticScope scope = _replicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _storageClassificationReplicationStorageClassificationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationStorageClassificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, storageClassificationName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StorageClassificationData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StorageClassificationData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StorageClassificationData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StorageClassificationResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StorageClassificationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +466,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StorageClassificationResource> IAsyncEnumerable<StorageClassificationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

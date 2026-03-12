@@ -7,49 +7,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> A2A specific switch cluster protection input. </summary>
     public partial class A2AProtectedItemDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="A2AProtectedItemDetail"/>. </summary>
         public A2AProtectedItemDetail()
         {
-            VmManagedDisks = new ChangeTrackingList<A2AVmManagedDiskDetails>();
+            VmManagedDisks = new ChangeTrackingList<A2AVmManagedDiskInputDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="A2AProtectedItemDetail"/>. </summary>
@@ -63,8 +34,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information. </param>
         /// <param name="replicationProtectedItemName"> The Replication Protected item name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal A2AProtectedItemDetail(IList<A2AVmManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier recoveryBootDiagStorageAccountId, string recoveryAvailabilityZone, ResourceIdentifier recoveryProximityPlacementGroupId, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string replicationProtectedItemName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal A2AProtectedItemDetail(IList<A2AVmManagedDiskInputDetails> vmManagedDisks, string recoveryResourceGroupId, string recoveryAvailabilitySetId, string recoveryBootDiagStorageAccountId, string recoveryAvailabilityZone, string recoveryProximityPlacementGroupId, string recoveryVirtualMachineScaleSetId, string recoveryCapacityReservationGroupId, DiskEncryptionInfo diskEncryptionInfo, string replicationProtectedItemName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmManagedDisks = vmManagedDisks;
             RecoveryResourceGroupId = recoveryResourceGroupId;
@@ -76,27 +47,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryCapacityReservationGroupId = recoveryCapacityReservationGroupId;
             DiskEncryptionInfo = diskEncryptionInfo;
             ReplicationProtectedItemName = replicationProtectedItemName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of vm managed disk details. </summary>
-        public IList<A2AVmManagedDiskDetails> VmManagedDisks { get; }
+        public IList<A2AVmManagedDiskInputDetails> VmManagedDisks { get; }
+
         /// <summary> The recovery resource group Id. </summary>
-        public ResourceIdentifier RecoveryResourceGroupId { get; set; }
+        public string RecoveryResourceGroupId { get; set; }
+
         /// <summary> The recovery availability set. </summary>
-        public ResourceIdentifier RecoveryAvailabilitySetId { get; set; }
+        public string RecoveryAvailabilitySetId { get; set; }
+
         /// <summary> The boot diagnostic storage account. </summary>
-        public ResourceIdentifier RecoveryBootDiagStorageAccountId { get; set; }
+        public string RecoveryBootDiagStorageAccountId { get; set; }
+
         /// <summary> The recovery availability zone. </summary>
         public string RecoveryAvailabilityZone { get; set; }
+
         /// <summary> The recovery proximity placement group Id. </summary>
-        public ResourceIdentifier RecoveryProximityPlacementGroupId { get; set; }
+        public string RecoveryProximityPlacementGroupId { get; set; }
+
         /// <summary> The virtual machine scale set id. </summary>
-        public ResourceIdentifier RecoveryVirtualMachineScaleSetId { get; set; }
+        public string RecoveryVirtualMachineScaleSetId { get; set; }
+
         /// <summary> The recovery capacity reservation group Id. </summary>
-        public ResourceIdentifier RecoveryCapacityReservationGroupId { get; set; }
+        public string RecoveryCapacityReservationGroupId { get; set; }
+
         /// <summary> The recovery disk encryption information. </summary>
-        public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
+        public DiskEncryptionInfo DiskEncryptionInfo { get; set; }
+
         /// <summary> The Replication Protected item name. </summary>
         public string ReplicationProtectedItemName { get; set; }
     }

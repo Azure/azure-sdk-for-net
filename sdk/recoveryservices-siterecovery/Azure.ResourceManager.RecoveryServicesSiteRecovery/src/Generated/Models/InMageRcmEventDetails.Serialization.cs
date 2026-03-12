@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmEventDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmEventDetails>
+    /// <summary> Event details for InMageRcm provider. </summary>
+    public partial class InMageRcmEventDetails : EventProviderSpecificDetails, IJsonModel<InMageRcmEventDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmEventDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EventProviderSpecificDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInMageRcmEventDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmEventDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmEventDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InMageRcmEventDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmEventDetails IPersistableModel<InMageRcmEventDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (InMageRcmEventDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InMageRcmEventDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InMageRcmEventDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmEventDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProtectedItemName))
             {
@@ -77,97 +117,96 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        InMageRcmEventDetails IJsonModel<InMageRcmEventDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmEventDetails IJsonModel<InMageRcmEventDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InMageRcmEventDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EventProviderSpecificDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmEventDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmEventDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInMageRcmEventDetails(document.RootElement, options);
         }
 
-        internal static InMageRcmEventDetails DeserializeInMageRcmEventDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InMageRcmEventDetails DeserializeInMageRcmEventDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "InMageRcm";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string protectedItemName = default;
             string vmName = default;
             string latestAgentVersion = default;
-            ResourceIdentifier jobId = default;
+            string jobId = default;
             string fabricName = default;
             string applianceName = default;
             string serverType = default;
             string componentDisplayName = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("protectedItemName"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    protectedItemName = property.Value.GetString();
+                    instanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmName"u8))
+                if (prop.NameEquals("protectedItemName"u8))
                 {
-                    vmName = property.Value.GetString();
+                    protectedItemName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestAgentVersion"u8))
+                if (prop.NameEquals("vmName"u8))
                 {
-                    latestAgentVersion = property.Value.GetString();
+                    vmName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("jobId"u8))
+                if (prop.NameEquals("latestAgentVersion"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    jobId = new ResourceIdentifier(property.Value.GetString());
+                    latestAgentVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fabricName"u8))
+                if (prop.NameEquals("jobId"u8))
                 {
-                    fabricName = property.Value.GetString();
+                    jobId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("applianceName"u8))
+                if (prop.NameEquals("fabricName"u8))
                 {
-                    applianceName = property.Value.GetString();
+                    fabricName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverType"u8))
+                if (prop.NameEquals("applianceName"u8))
                 {
-                    serverType = property.Value.GetString();
+                    applianceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("componentDisplayName"u8))
+                if (prop.NameEquals("serverType"u8))
                 {
-                    componentDisplayName = property.Value.GetString();
+                    serverType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"u8))
+                if (prop.NameEquals("componentDisplayName"u8))
                 {
-                    instanceType = property.Value.GetString();
+                    componentDisplayName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InMageRcmEventDetails(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 protectedItemName,
                 vmName,
                 latestAgentVersion,
@@ -177,36 +216,5 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 serverType,
                 componentDisplayName);
         }
-
-        BinaryData IPersistableModel<InMageRcmEventDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmEventDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmEventDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InMageRcmEventDetails IPersistableModel<InMageRcmEventDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmEventDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInMageRcmEventDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmEventDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InMageRcmEventDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

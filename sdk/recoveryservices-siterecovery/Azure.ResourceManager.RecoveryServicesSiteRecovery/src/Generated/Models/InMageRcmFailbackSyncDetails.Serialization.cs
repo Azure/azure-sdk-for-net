@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackSyncDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackSyncDetails>
+    /// <summary> InMageRcmFailback disk level sync details. </summary>
+    public partial class InMageRcmFailbackSyncDetails : IJsonModel<InMageRcmFailbackSyncDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackSyncDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InMageRcmFailbackSyncDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInMageRcmFailbackSyncDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InMageRcmFailbackSyncDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmFailbackSyncDetails IPersistableModel<InMageRcmFailbackSyncDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InMageRcmFailbackSyncDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InMageRcmFailbackSyncDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProgressHealth))
             {
                 writer.WritePropertyName("progressHealth"u8);
@@ -49,40 +89,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("last15MinutesTransferredBytes"u8);
                 writer.WriteNumberValue(Last15MinutesTransferredBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastDataTransferOn))
+            if (options.Format != "W" && Optional.IsDefined(LastDataTransferTimeUtc))
             {
                 writer.WritePropertyName("lastDataTransferTimeUtc"u8);
-                writer.WriteStringValue(LastDataTransferOn.Value, "O");
+                writer.WriteStringValue(LastDataTransferTimeUtc);
             }
             if (options.Format != "W" && Optional.IsDefined(ProcessedBytes))
             {
                 writer.WritePropertyName("processedBytes"u8);
                 writer.WriteNumberValue(ProcessedBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartTime);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastRefreshedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastRefreshTime))
             {
                 writer.WritePropertyName("lastRefreshTime"u8);
-                writer.WriteStringValue(LastRefreshedOn.Value, "O");
+                writer.WriteStringValue(LastRefreshTime);
             }
             if (options.Format != "W" && Optional.IsDefined(ProgressPercentage))
             {
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,116 +131,107 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        InMageRcmFailbackSyncDetails IJsonModel<InMageRcmFailbackSyncDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmFailbackSyncDetails IJsonModel<InMageRcmFailbackSyncDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InMageRcmFailbackSyncDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInMageRcmFailbackSyncDetails(document.RootElement, options);
         }
 
-        internal static InMageRcmFailbackSyncDetails DeserializeInMageRcmFailbackSyncDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InMageRcmFailbackSyncDetails DeserializeInMageRcmFailbackSyncDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SiteRecoveryDiskReplicationProgressHealth? progressHealth = default;
+            DiskReplicationProgressHealth? progressHealth = default;
             long? transferredBytes = default;
             long? last15MinutesTransferredBytes = default;
-            DateTimeOffset? lastDataTransferTimeUtc = default;
+            string lastDataTransferTimeUtc = default;
             long? processedBytes = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? lastRefreshTime = default;
+            string startTime = default;
+            string lastRefreshTime = default;
             int? progressPercentage = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("progressHealth"u8))
+                if (prop.NameEquals("progressHealth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    progressHealth = new SiteRecoveryDiskReplicationProgressHealth(property.Value.GetString());
+                    progressHealth = new DiskReplicationProgressHealth(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("transferredBytes"u8))
+                if (prop.NameEquals("transferredBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    transferredBytes = property.Value.GetInt64();
+                    transferredBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("last15MinutesTransferredBytes"u8))
+                if (prop.NameEquals("last15MinutesTransferredBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    last15MinutesTransferredBytes = property.Value.GetInt64();
+                    last15MinutesTransferredBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastDataTransferTimeUtc"u8))
+                if (prop.NameEquals("lastDataTransferTimeUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastDataTransferTimeUtc = property.Value.GetDateTimeOffset("O");
+                    lastDataTransferTimeUtc = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("processedBytes"u8))
+                if (prop.NameEquals("processedBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    processedBytes = property.Value.GetInt64();
+                    processedBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("startTime"u8))
+                if (prop.NameEquals("startTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startTime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastRefreshTime"u8))
+                if (prop.NameEquals("lastRefreshTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastRefreshTime = property.Value.GetDateTimeOffset("O");
+                    lastRefreshTime = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progressPercentage"u8))
+                if (prop.NameEquals("progressPercentage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    progressPercentage = property.Value.GetInt32();
+                    progressPercentage = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InMageRcmFailbackSyncDetails(
                 progressHealth,
                 transferredBytes,
@@ -210,38 +241,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 startTime,
                 lastRefreshTime,
                 progressPercentage,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<InMageRcmFailbackSyncDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InMageRcmFailbackSyncDetails IPersistableModel<InMageRcmFailbackSyncDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInMageRcmFailbackSyncDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InMageRcmFailbackSyncDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

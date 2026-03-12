@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A Class representing a StorageClassification along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageClassificationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetStorageClassificationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryFabricResource"/> using the GetStorageClassification method.
+    /// A class representing a StorageClassification along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageClassificationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="FabricResource"/> using the GetStorageClassifications method.
     /// </summary>
     public partial class StorageClassificationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="StorageClassificationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        /// <param name="fabricName"> The fabricName. </param>
-        /// <param name="storageClassificationName"> The storageClassificationName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _storageClassificationReplicationStorageClassificationsClientDiagnostics;
-        private readonly ReplicationStorageClassificationsRestOperations _storageClassificationReplicationStorageClassificationsRestClient;
+        private readonly ClientDiagnostics _replicationStorageClassificationsClientDiagnostics;
+        private readonly ReplicationStorageClassifications _replicationStorageClassificationsRestClient;
         private readonly StorageClassificationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/replicationFabrics/replicationStorageClassifications";
 
-        /// <summary> Initializes a new instance of the <see cref="StorageClassificationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StorageClassificationResource for mocking. </summary>
         protected StorageClassificationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StorageClassificationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageClassificationResource(ArmClient client, StorageClassificationData data) : this(client, data.Id)
@@ -55,68 +43,159 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StorageClassificationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageClassificationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StorageClassificationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _storageClassificationReplicationStorageClassificationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string storageClassificationReplicationStorageClassificationsApiVersion);
-            _storageClassificationReplicationStorageClassificationsRestClient = new ReplicationStorageClassificationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, storageClassificationReplicationStorageClassificationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string storageClassificationApiVersion);
+            _replicationStorageClassificationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ResourceType.Namespace, Diagnostics);
+            _replicationStorageClassificationsRestClient = new ReplicationStorageClassifications(_replicationStorageClassificationsClientDiagnostics, Pipeline, Endpoint, storageClassificationApiVersion ?? "2025-08-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual StorageClassificationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="storageClassificationName"> The storageClassificationName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string storageClassificationName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
-        /// <summary> Gets a collection of StorageClassificationMappingResources in the StorageClassification. </summary>
-        /// <returns> An object representing collection of StorageClassificationMappingResources and their operations over a StorageClassificationMappingResource. </returns>
+        /// <summary>
+        /// Gets the details of the specified storage classification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClassifications_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageClassificationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<StorageClassificationResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _replicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationStorageClassificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StorageClassificationData> response = Response.FromValue(StorageClassificationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new StorageClassificationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the details of the specified storage classification.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClassifications_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="StorageClassificationResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<StorageClassificationResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _replicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationStorageClassificationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StorageClassificationData> response = Response.FromValue(StorageClassificationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new StorageClassificationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets a collection of StorageClassificationMappings in the <see cref="StorageClassificationResource"/>. </summary>
+        /// <returns> An object representing collection of StorageClassificationMappings and their operations over a StorageClassificationMappingResource. </returns>
         public virtual StorageClassificationMappingCollection GetStorageClassificationMappings()
         {
             return GetCachedClient(client => new StorageClassificationMappingCollection(client, Id));
         }
 
-        /// <summary>
-        /// Gets the details of the specified storage classification mapping.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}/replicationStorageClassificationMappings/{storageClassificationMappingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassificationMappings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationMappingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the details of the specified storage classification mapping. </summary>
         /// <param name="storageClassificationMappingName"> Storage classification mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
@@ -124,30 +203,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageClassificationMappingResource>> GetStorageClassificationMappingAsync(string storageClassificationMappingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
+
             return await GetStorageClassificationMappings().GetAsync(storageClassificationMappingName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Gets the details of the specified storage classification mapping.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}/replicationStorageClassificationMappings/{storageClassificationMappingName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassificationMappings_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationMappingResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Gets the details of the specified storage classification mapping. </summary>
         /// <param name="storageClassificationMappingName"> Storage classification mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageClassificationMappingName"/> is null. </exception>
@@ -155,87 +216,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         [ForwardsClientCalls]
         public virtual Response<StorageClassificationMappingResource> GetStorageClassificationMapping(string storageClassificationMappingName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(storageClassificationMappingName, nameof(storageClassificationMappingName));
+
             return GetStorageClassificationMappings().Get(storageClassificationMappingName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the details of the specified storage classification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<StorageClassificationResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _storageClassificationReplicationStorageClassificationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageClassificationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the details of the specified storage classification.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationStorageClassifications/{storageClassificationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationStorageClassifications_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StorageClassificationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<StorageClassificationResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _storageClassificationReplicationStorageClassificationsClientDiagnostics.CreateScope("StorageClassificationResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _storageClassificationReplicationStorageClassificationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new StorageClassificationResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
     }
 }

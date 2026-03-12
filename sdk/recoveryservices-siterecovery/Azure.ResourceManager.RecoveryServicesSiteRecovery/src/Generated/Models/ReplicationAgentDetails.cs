@@ -7,49 +7,20 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Replication agent details. </summary>
     public partial class ReplicationAgentDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReplicationAgentDetails"/>. </summary>
         internal ReplicationAgentDetails()
         {
-            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
+            HealthErrors = new ChangeTrackingList<HealthError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReplicationAgentDetails"/>. </summary>
@@ -62,8 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastHeartbeatUtc"> The last heartbeat received from the replication agent. </param>
         /// <param name="health"> The health of the replication agent. </param>
         /// <param name="healthErrors"> The health errors. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationAgentDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -74,26 +45,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastHeartbeatUtc = lastHeartbeatUtc;
             Health = health;
             HealthErrors = healthErrors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The replication agent Id. </summary>
         public string Id { get; }
+
         /// <summary> The replication agent name. </summary>
         public string Name { get; }
+
         /// <summary> The replication agent Bios Id. </summary>
         public string BiosId { get; }
+
         /// <summary> The fabric object Id. </summary>
-        public ResourceIdentifier FabricObjectId { get; }
+        public string FabricObjectId { get; }
+
         /// <summary> The replication agent Fqdn. </summary>
         public string Fqdn { get; }
+
         /// <summary> The version. </summary>
         public string Version { get; }
+
         /// <summary> The last heartbeat received from the replication agent. </summary>
         public DateTimeOffset? LastHeartbeatUtc { get; }
+
         /// <summary> The health of the replication agent. </summary>
-        public SiteRecoveryProtectionHealth? Health { get; }
+        public ProtectionHealth? Health { get; }
+
         /// <summary> The health errors. </summary>
-        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
+        public IReadOnlyList<HealthError> HealthErrors { get; }
     }
 }

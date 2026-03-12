@@ -4,7 +4,13 @@
 
 ### Features Added
 
+- Migrated from AutoRest to TypeSpec-based code generation (Management Plane Generator).
+- Upgraded API version to 2025-08-01.
+
 ### Breaking Changes
+
+- This version is a major rewrite based on TypeSpec code generation. Many type names, property names, and method signatures have changed from the previous AutoRest-based SDK.
+- Types previously prefixed with `SiteRecovery` may have different names (e.g., `SiteRecoveryHealthError` → `HealthError`).
 
 ### Bugs Fixed
 

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackMobilityAgentDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackMobilityAgentDetails>
+    /// <summary> InMageRcmFailback mobility agent details. </summary>
+    public partial class InMageRcmFailbackMobilityAgentDetails : IJsonModel<InMageRcmFailbackMobilityAgentDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackMobilityAgentDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InMageRcmFailbackMobilityAgentDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackMobilityAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInMageRcmFailbackMobilityAgentDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackMobilityAgentDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackMobilityAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackMobilityAgentDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InMageRcmFailbackMobilityAgentDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmFailbackMobilityAgentDetails IPersistableModel<InMageRcmFailbackMobilityAgentDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InMageRcmFailbackMobilityAgentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InMageRcmFailbackMobilityAgentDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackMobilityAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackMobilityAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmFailbackMobilityAgentDetails)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -54,26 +94,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("latestUpgradableVersionWithoutReboot"u8);
                 writer.WriteStringValue(LatestUpgradableVersionWithoutReboot);
             }
-            if (options.Format != "W" && Optional.IsDefined(AgentVersionExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(AgentVersionExpiryOn))
             {
                 writer.WritePropertyName("agentVersionExpiryDate"u8);
-                writer.WriteStringValue(AgentVersionExpireOn.Value, "O");
+                writer.WriteStringValue(AgentVersionExpiryOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(DriverVersionExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(DriverVersionExpiryOn))
             {
                 writer.WritePropertyName("driverVersionExpiryDate"u8);
-                writer.WriteStringValue(DriverVersionExpireOn.Value, "O");
+                writer.WriteStringValue(DriverVersionExpiryOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatReceivedOn))
+            if (options.Format != "W" && Optional.IsDefined(LastHeartbeatUtc))
             {
                 writer.WritePropertyName("lastHeartbeatUtc"u8);
-                writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
+                writer.WriteStringValue(LastHeartbeatUtc.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ReasonsBlockingUpgrade))
             {
                 writer.WritePropertyName("reasonsBlockingUpgrade"u8);
                 writer.WriteStartArray();
-                foreach (var item in ReasonsBlockingUpgrade)
+                foreach (AgentUpgradeBlockedReason item in ReasonsBlockingUpgrade)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -84,15 +124,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("isUpgradeable"u8);
                 writer.WriteStringValue(IsUpgradeable);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,22 +141,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        InMageRcmFailbackMobilityAgentDetails IJsonModel<InMageRcmFailbackMobilityAgentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageRcmFailbackMobilityAgentDetails IJsonModel<InMageRcmFailbackMobilityAgentDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InMageRcmFailbackMobilityAgentDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackMobilityAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackMobilityAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageRcmFailbackMobilityAgentDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInMageRcmFailbackMobilityAgentDetails(document.RootElement, options);
         }
 
-        internal static InMageRcmFailbackMobilityAgentDetails DeserializeInMageRcmFailbackMobilityAgentDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InMageRcmFailbackMobilityAgentDetails DeserializeInMageRcmFailbackMobilityAgentDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -125,129 +170,96 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string latestVersion = default;
             string driverVersion = default;
             string latestUpgradableVersionWithoutReboot = default;
-            DateTimeOffset? agentVersionExpireOn = default;
-            DateTimeOffset? driverVersionExpireOn = default;
+            DateTimeOffset? agentVersionExpiryOn = default;
+            DateTimeOffset? driverVersionExpiryOn = default;
             DateTimeOffset? lastHeartbeatUtc = default;
             IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade = default;
             string isUpgradeable = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestVersion"u8))
+                if (prop.NameEquals("latestVersion"u8))
                 {
-                    latestVersion = property.Value.GetString();
+                    latestVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("driverVersion"u8))
+                if (prop.NameEquals("driverVersion"u8))
                 {
-                    driverVersion = property.Value.GetString();
+                    driverVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latestUpgradableVersionWithoutReboot"u8))
+                if (prop.NameEquals("latestUpgradableVersionWithoutReboot"u8))
                 {
-                    latestUpgradableVersionWithoutReboot = property.Value.GetString();
+                    latestUpgradableVersionWithoutReboot = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentVersionExpiryDate"u8))
+                if (prop.NameEquals("agentVersionExpiryDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agentVersionExpireOn = property.Value.GetDateTimeOffset("O");
+                    agentVersionExpiryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("driverVersionExpiryDate"u8))
+                if (prop.NameEquals("driverVersionExpiryDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    driverVersionExpireOn = property.Value.GetDateTimeOffset("O");
+                    driverVersionExpiryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeatUtc"u8))
+                if (prop.NameEquals("lastHeartbeatUtc"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastHeartbeatUtc = property.Value.GetDateTimeOffset("O");
+                    lastHeartbeatUtc = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("reasonsBlockingUpgrade"u8))
+                if (prop.NameEquals("reasonsBlockingUpgrade"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AgentUpgradeBlockedReason> array = new List<AgentUpgradeBlockedReason>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new AgentUpgradeBlockedReason(item.GetString()));
                     }
                     reasonsBlockingUpgrade = array;
                     continue;
                 }
-                if (property.NameEquals("isUpgradeable"u8))
+                if (prop.NameEquals("isUpgradeable"u8))
                 {
-                    isUpgradeable = property.Value.GetString();
+                    isUpgradeable = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InMageRcmFailbackMobilityAgentDetails(
                 version,
                 latestVersion,
                 driverVersion,
                 latestUpgradableVersionWithoutReboot,
-                agentVersionExpireOn,
-                driverVersionExpireOn,
+                agentVersionExpiryOn,
+                driverVersionExpiryOn,
                 lastHeartbeatUtc,
                 reasonsBlockingUpgrade ?? new ChangeTrackingList<AgentUpgradeBlockedReason>(),
                 isUpgradeable,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<InMageRcmFailbackMobilityAgentDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackMobilityAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackMobilityAgentDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InMageRcmFailbackMobilityAgentDetails IPersistableModel<InMageRcmFailbackMobilityAgentDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackMobilityAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInMageRcmFailbackMobilityAgentDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackMobilityAgentDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InMageRcmFailbackMobilityAgentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class FailoverReplicationProtectedItemDetails : IUtf8JsonSerializable, IJsonModel<FailoverReplicationProtectedItemDetails>
+    /// <summary> Failover details for a replication protected item. </summary>
+    public partial class FailoverReplicationProtectedItemDetails : IJsonModel<FailoverReplicationProtectedItemDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailoverReplicationProtectedItemDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FailoverReplicationProtectedItemDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FailoverReplicationProtectedItemDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFailoverReplicationProtectedItemDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FailoverReplicationProtectedItemDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FailoverReplicationProtectedItemDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FailoverReplicationProtectedItemDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FailoverReplicationProtectedItemDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FailoverReplicationProtectedItemDetails IPersistableModel<FailoverReplicationProtectedItemDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FailoverReplicationProtectedItemDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FailoverReplicationProtectedItemDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FailoverReplicationProtectedItemDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FailoverReplicationProtectedItemDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FailoverReplicationProtectedItemDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -79,15 +119,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoveryPointOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,22 +136,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        FailoverReplicationProtectedItemDetails IJsonModel<FailoverReplicationProtectedItemDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FailoverReplicationProtectedItemDetails IJsonModel<FailoverReplicationProtectedItemDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual FailoverReplicationProtectedItemDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FailoverReplicationProtectedItemDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FailoverReplicationProtectedItemDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FailoverReplicationProtectedItemDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFailoverReplicationProtectedItemDetails(document.RootElement, options);
         }
 
-        internal static FailoverReplicationProtectedItemDetails DeserializeFailoverReplicationProtectedItemDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FailoverReplicationProtectedItemDetails DeserializeFailoverReplicationProtectedItemDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,71 +168,65 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string networkConnectionStatus = default;
             string networkFriendlyName = default;
             string subnet = default;
-            ResourceIdentifier recoveryPointId = default;
-            DateTimeOffset? recoveryPointTime = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string recoveryPointId = default;
+            DateTimeOffset? recoveryPointOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"u8))
+                if (prop.NameEquals("friendlyName"u8))
                 {
-                    friendlyName = property.Value.GetString();
+                    friendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testVmName"u8))
+                if (prop.NameEquals("testVmName"u8))
                 {
-                    testVmName = property.Value.GetString();
+                    testVmName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testVmFriendlyName"u8))
+                if (prop.NameEquals("testVmFriendlyName"u8))
                 {
-                    testVmFriendlyName = property.Value.GetString();
+                    testVmFriendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkConnectionStatus"u8))
+                if (prop.NameEquals("networkConnectionStatus"u8))
                 {
-                    networkConnectionStatus = property.Value.GetString();
+                    networkConnectionStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkFriendlyName"u8))
+                if (prop.NameEquals("networkFriendlyName"u8))
                 {
-                    networkFriendlyName = property.Value.GetString();
+                    networkFriendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnet"u8))
+                if (prop.NameEquals("subnet"u8))
                 {
-                    subnet = property.Value.GetString();
+                    subnet = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointId"u8))
+                if (prop.NameEquals("recoveryPointId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    recoveryPointId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryPointTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryPointId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("recoveryPointTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recoveryPointTime = property.Value.GetDateTimeOffset("O");
+                    recoveryPointOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FailoverReplicationProtectedItemDetails(
                 name,
                 friendlyName,
@@ -197,39 +236,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 networkFriendlyName,
                 subnet,
                 recoveryPointId,
-                recoveryPointTime,
-                serializedAdditionalRawData);
+                recoveryPointOn,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<FailoverReplicationProtectedItemDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FailoverReplicationProtectedItemDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FailoverReplicationProtectedItemDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FailoverReplicationProtectedItemDetails IPersistableModel<FailoverReplicationProtectedItemDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FailoverReplicationProtectedItemDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFailoverReplicationProtectedItemDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FailoverReplicationProtectedItemDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FailoverReplicationProtectedItemDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

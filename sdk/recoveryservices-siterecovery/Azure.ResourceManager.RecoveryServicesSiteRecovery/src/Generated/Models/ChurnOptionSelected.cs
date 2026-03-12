@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct ChurnOptionSelected : IEquatable<ChurnOptionSelected>
     {
         private readonly string _value;
+        /// <summary> Normal. </summary>
+        private const string NormalValue = "Normal";
+        /// <summary> High. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="ChurnOptionSelected"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ChurnOptionSelected(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NormalValue = "Normal";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Normal. </summary>
         public static ChurnOptionSelected Normal { get; } = new ChurnOptionSelected(NormalValue);
+
         /// <summary> High. </summary>
         public static ChurnOptionSelected High { get; } = new ChurnOptionSelected(HighValue);
+
         /// <summary> Determines if two <see cref="ChurnOptionSelected"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ChurnOptionSelected left, ChurnOptionSelected right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ChurnOptionSelected"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ChurnOptionSelected left, ChurnOptionSelected right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ChurnOptionSelected"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ChurnOptionSelected"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ChurnOptionSelected(string value) => new ChurnOptionSelected(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ChurnOptionSelected"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ChurnOptionSelected?(string value) => value == null ? null : new ChurnOptionSelected(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ChurnOptionSelected other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ChurnOptionSelected other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -18,24 +19,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal A2AClusterRecoveryPointDetails()
         {
             Nodes = new ChangeTrackingList<ResourceIdentifier>();
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2AClusterRecoveryPointDetails"/>. </summary>
         /// <param name="instanceType"> Gets the provider type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointSyncType"> A value indicating whether the recovery point is multi VM consistent. </param>
         /// <param name="nodes"> The list of nodes representing the cluster. </param>
-        internal A2AClusterRecoveryPointDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, RecoveryPointSyncType? recoveryPointSyncType, IReadOnlyList<ResourceIdentifier> nodes) : base(instanceType, serializedAdditionalRawData)
+        internal A2AClusterRecoveryPointDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecoveryPointSyncType? recoveryPointSyncType, IList<ResourceIdentifier> nodes) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointSyncType = recoveryPointSyncType;
             Nodes = nodes;
-            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> A value indicating whether the recovery point is multi VM consistent. </summary>
         public RecoveryPointSyncType? RecoveryPointSyncType { get; }
+
         /// <summary> The list of nodes representing the cluster. </summary>
-        public IReadOnlyList<ResourceIdentifier> Nodes { get; }
+        public IList<ResourceIdentifier> Nodes { get; }
     }
 }

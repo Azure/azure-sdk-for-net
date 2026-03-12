@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,17 +15,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2ASharedDiskReplicationDetails : SharedDiskReplicationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of <see cref="A2ASharedDiskReplicationDetails"/>. </summary>
-        public A2ASharedDiskReplicationDetails()
+        public A2ASharedDiskReplicationDetails() : base("A2A")
         {
             UnprotectedDisks = new ChangeTrackingList<A2AUnprotectedDiskDetails>();
             ProtectedManagedDisks = new ChangeTrackingList<A2AProtectedManagedDiskDetails>();
             SharedDiskIRErrors = new ChangeTrackingList<A2ASharedDiskIRErrorDetails>();
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2ASharedDiskReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managementId"> The management Id. </param>
         /// <param name="unprotectedDisks"> The list of unprotected disks. </param>
         /// <param name="protectedManagedDisks"> The list of protected managed disks. </param>
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="rpoInSeconds"> The last RPO value in seconds. </param>
         /// <param name="lastRpoCalculatedOn"> The time (in UTC) when the last RPO value was calculated by Protection Service. </param>
         /// <param name="sharedDiskIRErrors"> The IR Errors. </param>
-        internal A2ASharedDiskReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? managementId, IList<A2AUnprotectedDiskDetails> unprotectedDisks, IList<A2AProtectedManagedDiskDetails> protectedManagedDisks, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, ResourceIdentifier failoverRecoveryPointId, int? monitoringPercentageCompletion, string monitoringJobType, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, IList<A2ASharedDiskIRErrorDetails> sharedDiskIRErrors) : base(instanceType, serializedAdditionalRawData)
+        internal A2ASharedDiskReplicationDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string managementId, IList<A2AUnprotectedDiskDetails> unprotectedDisks, IList<A2AProtectedManagedDiskDetails> protectedManagedDisks, string primaryFabricLocation, string recoveryFabricLocation, string failoverRecoveryPointId, int? monitoringPercentageCompletion, string monitoringJobType, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, IList<A2ASharedDiskIRErrorDetails> sharedDiskIRErrors) : base(instanceType, additionalBinaryDataProperties)
         {
             ManagementId = managementId;
             UnprotectedDisks = unprotectedDisks;
@@ -50,29 +49,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RpoInSeconds = rpoInSeconds;
             LastRpoCalculatedOn = lastRpoCalculatedOn;
             SharedDiskIRErrors = sharedDiskIRErrors;
-            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> The management Id. </summary>
-        public Guid? ManagementId { get; set; }
+        public string ManagementId { get; set; }
+
         /// <summary> The list of unprotected disks. </summary>
         public IList<A2AUnprotectedDiskDetails> UnprotectedDisks { get; }
+
         /// <summary> The list of protected managed disks. </summary>
         public IList<A2AProtectedManagedDiskDetails> ProtectedManagedDisks { get; }
+
         /// <summary> Primary fabric location. </summary>
-        public AzureLocation? PrimaryFabricLocation { get; set; }
+        public string PrimaryFabricLocation { get; set; }
+
         /// <summary> The recovery fabric location. </summary>
-        public AzureLocation? RecoveryFabricLocation { get; set; }
+        public string RecoveryFabricLocation { get; set; }
+
         /// <summary> The recovery point id to which the Virtual node was failed over. </summary>
-        public ResourceIdentifier FailoverRecoveryPointId { get; set; }
+        public string FailoverRecoveryPointId { get; set; }
+
         /// <summary> The percentage of the monitoring job. The type of the monitoring job is defined by MonitoringJobType property. </summary>
         public int? MonitoringPercentageCompletion { get; set; }
+
         /// <summary> The type of the monitoring job. The progress is contained in MonitoringPercentageCompletion property. </summary>
         public string MonitoringJobType { get; set; }
+
         /// <summary> The last RPO value in seconds. </summary>
         public long? RpoInSeconds { get; set; }
+
         /// <summary> The time (in UTC) when the last RPO value was calculated by Protection Service. </summary>
         public DateTimeOffset? LastRpoCalculatedOn { get; set; }
+
         /// <summary> The IR Errors. </summary>
         public IList<A2ASharedDiskIRErrorDetails> SharedDiskIRErrors { get; }
     }

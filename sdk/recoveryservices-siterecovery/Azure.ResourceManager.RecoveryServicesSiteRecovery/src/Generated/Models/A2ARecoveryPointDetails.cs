@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,27 +15,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2ARecoveryPointDetails : ProviderSpecificRecoveryPointDetails
     {
         /// <summary> Initializes a new instance of <see cref="A2ARecoveryPointDetails"/>. </summary>
-        internal A2ARecoveryPointDetails()
+        internal A2ARecoveryPointDetails() : base("A2A")
         {
             Disks = new ChangeTrackingList<string>();
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2ARecoveryPointDetails"/>. </summary>
         /// <param name="instanceType"> Gets the provider type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointSyncType"> A value indicating whether the recovery point is multi VM consistent. </param>
         /// <param name="disks"> List of disk ids representing a recovery point. </param>
-        internal A2ARecoveryPointDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, RecoveryPointSyncType? recoveryPointSyncType, IReadOnlyList<string> disks) : base(instanceType, serializedAdditionalRawData)
+        internal A2ARecoveryPointDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecoveryPointSyncType? recoveryPointSyncType, IList<string> disks) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointSyncType = recoveryPointSyncType;
             Disks = disks;
-            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> A value indicating whether the recovery point is multi VM consistent. </summary>
         public RecoveryPointSyncType? RecoveryPointSyncType { get; }
+
         /// <summary> List of disk ids representing a recovery point. </summary>
-        public IReadOnlyList<string> Disks { get; }
+        public IList<string> Disks { get; }
     }
 }

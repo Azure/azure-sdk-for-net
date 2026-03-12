@@ -8,55 +8,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan action details. </summary>
     public partial class RecoveryPlanAction
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanAction"/>. </summary>
         /// <param name="actionName"> The action name. </param>
         /// <param name="failoverTypes"> The list of failover types. </param>
         /// <param name="failoverDirections"> The list of failover directions. </param>
-        /// <param name="customDetails">
-        /// The custom details.
-        /// Please note <see cref="RecoveryPlanActionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RecoveryPlanAutomationRunbookActionDetails"/>, <see cref="RecoveryPlanManualActionDetails"/> and <see cref="RecoveryPlanScriptActionDetails"/>.
-        /// </param>
+        /// <param name="customDetails"> The custom details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="actionName"/>, <paramref name="failoverTypes"/>, <paramref name="failoverDirections"/> or <paramref name="customDetails"/> is null. </exception>
-        public RecoveryPlanAction(string actionName, IEnumerable<ReplicationProtectedItemOperation> failoverTypes, IEnumerable<PossibleOperationsDirection> failoverDirections, RecoveryPlanActionDetails customDetails)
+        public RecoveryPlanAction(string actionName, IEnumerable<ReplicationProtectedItemOperation> failoverTypes, IEnumerable<PossibleOperationsDirections> failoverDirections, RecoveryPlanActionDetails customDetails)
         {
             Argument.AssertNotNull(actionName, nameof(actionName));
             Argument.AssertNotNull(failoverTypes, nameof(failoverTypes));
@@ -73,37 +41,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="actionName"> The action name. </param>
         /// <param name="failoverTypes"> The list of failover types. </param>
         /// <param name="failoverDirections"> The list of failover directions. </param>
-        /// <param name="customDetails">
-        /// The custom details.
-        /// Please note <see cref="RecoveryPlanActionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RecoveryPlanAutomationRunbookActionDetails"/>, <see cref="RecoveryPlanManualActionDetails"/> and <see cref="RecoveryPlanScriptActionDetails"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPlanAction(string actionName, IList<ReplicationProtectedItemOperation> failoverTypes, IList<PossibleOperationsDirection> failoverDirections, RecoveryPlanActionDetails customDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="customDetails"> The custom details. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPlanAction(string actionName, IList<ReplicationProtectedItemOperation> failoverTypes, IList<PossibleOperationsDirections> failoverDirections, RecoveryPlanActionDetails customDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionName = actionName;
             FailoverTypes = failoverTypes;
             FailoverDirections = failoverDirections;
             CustomDetails = customDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RecoveryPlanAction"/> for deserialization. </summary>
-        internal RecoveryPlanAction()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The action name. </summary>
         public string ActionName { get; set; }
+
         /// <summary> The list of failover types. </summary>
         public IList<ReplicationProtectedItemOperation> FailoverTypes { get; }
+
         /// <summary> The list of failover directions. </summary>
-        public IList<PossibleOperationsDirection> FailoverDirections { get; }
-        /// <summary>
-        /// The custom details.
-        /// Please note <see cref="RecoveryPlanActionDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="RecoveryPlanAutomationRunbookActionDetails"/>, <see cref="RecoveryPlanManualActionDetails"/> and <see cref="RecoveryPlanScriptActionDetails"/>.
-        /// </summary>
+        public IList<PossibleOperationsDirections> FailoverDirections { get; }
+
+        /// <summary> The custom details. </summary>
         public RecoveryPlanActionDetails CustomDetails { get; set; }
     }
 }

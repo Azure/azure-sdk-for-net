@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageProtectedDiskDetails : IUtf8JsonSerializable, IJsonModel<InMageProtectedDiskDetails>
+    /// <summary> InMage protected disk details. </summary>
+    public partial class InMageProtectedDiskDetails : IJsonModel<InMageProtectedDiskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageProtectedDiskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InMageProtectedDiskDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInMageProtectedDiskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InMageProtectedDiskDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageProtectedDiskDetails IPersistableModel<InMageProtectedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InMageProtectedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InMageProtectedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
@@ -89,10 +129,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("sourceDataInMB"u8);
                 writer.WriteNumberValue(SourceDataInMB.Value);
             }
-            if (Optional.IsDefined(PSDataInMB))
+            if (Optional.IsDefined(PsDataInMB))
             {
                 writer.WritePropertyName("psDataInMB"u8);
-                writer.WriteNumberValue(PSDataInMB.Value);
+                writer.WriteNumberValue(PsDataInMB.Value);
             }
             if (Optional.IsDefined(TargetDataInMB))
             {
@@ -144,15 +184,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("progressStatus"u8);
                 writer.WriteStringValue(ProgressStatus);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -161,22 +201,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        InMageProtectedDiskDetails IJsonModel<InMageProtectedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageProtectedDiskDetails IJsonModel<InMageProtectedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual InMageProtectedDiskDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInMageProtectedDiskDetails(document.RootElement, options);
         }
 
-        internal static InMageProtectedDiskDetails DeserializeInMageProtectedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InMageProtectedDiskDetails DeserializeInMageProtectedDiskDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -195,190 +240,188 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             double? psDataInMB = default;
             double? targetDataInMB = default;
             string diskResized = default;
-            DateTimeOffset? lastRpoCalculatedTime = default;
+            DateTimeOffset? lastRpoCalculatedOn = default;
             long? resyncProcessedBytes = default;
             long? resyncTotalTransferredBytes = default;
             long? resyncLast15MinutesTransferredBytes = default;
             DateTimeOffset? resyncLastDataTransferTimeUTC = default;
-            DateTimeOffset? resyncStartTime = default;
+            DateTimeOffset? resyncStartOn = default;
             string progressHealth = default;
             string progressStatus = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("diskId"u8))
+                if (prop.NameEquals("diskId"u8))
                 {
-                    diskId = property.Value.GetString();
+                    diskId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskName"u8))
+                if (prop.NameEquals("diskName"u8))
                 {
-                    diskName = property.Value.GetString();
+                    diskName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionStage"u8))
+                if (prop.NameEquals("protectionStage"u8))
                 {
-                    protectionStage = property.Value.GetString();
+                    protectionStage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthErrorCode"u8))
+                if (prop.NameEquals("healthErrorCode"u8))
                 {
-                    healthErrorCode = property.Value.GetString();
+                    healthErrorCode = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rpoInSeconds"u8))
+                if (prop.NameEquals("rpoInSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rpoInSeconds = property.Value.GetInt64();
+                    rpoInSeconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncRequired"u8))
+                if (prop.NameEquals("resyncRequired"u8))
                 {
-                    resyncRequired = property.Value.GetString();
+                    resyncRequired = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resyncProgressPercentage"u8))
+                if (prop.NameEquals("resyncProgressPercentage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncProgressPercentage = property.Value.GetInt32();
+                    resyncProgressPercentage = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("resyncDurationInSeconds"u8))
+                if (prop.NameEquals("resyncDurationInSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncDurationInSeconds = property.Value.GetInt64();
+                    resyncDurationInSeconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("diskCapacityInBytes"u8))
+                if (prop.NameEquals("diskCapacityInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskCapacityInBytes = property.Value.GetInt64();
+                    diskCapacityInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("fileSystemCapacityInBytes"u8))
+                if (prop.NameEquals("fileSystemCapacityInBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fileSystemCapacityInBytes = property.Value.GetInt64();
+                    fileSystemCapacityInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("sourceDataInMB"u8))
+                if (prop.NameEquals("sourceDataInMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceDataInMB = property.Value.GetDouble();
+                    sourceDataInMB = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("psDataInMB"u8))
+                if (prop.NameEquals("psDataInMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    psDataInMB = property.Value.GetDouble();
+                    psDataInMB = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("targetDataInMB"u8))
+                if (prop.NameEquals("targetDataInMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetDataInMB = property.Value.GetDouble();
+                    targetDataInMB = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("diskResized"u8))
+                if (prop.NameEquals("diskResized"u8))
                 {
-                    diskResized = property.Value.GetString();
+                    diskResized = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastRpoCalculatedTime"u8))
+                if (prop.NameEquals("lastRpoCalculatedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRpoCalculatedTime = property.Value.GetDateTimeOffset("O");
+                    lastRpoCalculatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resyncProcessedBytes"u8))
+                if (prop.NameEquals("resyncProcessedBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncProcessedBytes = property.Value.GetInt64();
+                    resyncProcessedBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncTotalTransferredBytes"u8))
+                if (prop.NameEquals("resyncTotalTransferredBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncTotalTransferredBytes = property.Value.GetInt64();
+                    resyncTotalTransferredBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncLast15MinutesTransferredBytes"u8))
+                if (prop.NameEquals("resyncLast15MinutesTransferredBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncLast15MinutesTransferredBytes = property.Value.GetInt64();
+                    resyncLast15MinutesTransferredBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("resyncLastDataTransferTimeUTC"u8))
+                if (prop.NameEquals("resyncLastDataTransferTimeUTC"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncLastDataTransferTimeUTC = property.Value.GetDateTimeOffset("O");
+                    resyncLastDataTransferTimeUTC = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resyncStartTime"u8))
+                if (prop.NameEquals("resyncStartTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncStartTime = property.Value.GetDateTimeOffset("O");
+                    resyncStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("progressHealth"u8))
+                if (prop.NameEquals("progressHealth"u8))
                 {
-                    progressHealth = property.Value.GetString();
+                    progressHealth = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("progressStatus"u8))
+                if (prop.NameEquals("progressStatus"u8))
                 {
-                    progressStatus = property.Value.GetString();
+                    progressStatus = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InMageProtectedDiskDetails(
                 diskId,
                 diskName,
@@ -394,46 +437,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 psDataInMB,
                 targetDataInMB,
                 diskResized,
-                lastRpoCalculatedTime,
+                lastRpoCalculatedOn,
                 resyncProcessedBytes,
                 resyncTotalTransferredBytes,
                 resyncLast15MinutesTransferredBytes,
                 resyncLastDataTransferTimeUTC,
-                resyncStartTime,
+                resyncStartOn,
                 progressHealth,
                 progressStatus,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<InMageProtectedDiskDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InMageProtectedDiskDetails IPersistableModel<InMageProtectedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInMageProtectedDiskDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InMageProtectedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

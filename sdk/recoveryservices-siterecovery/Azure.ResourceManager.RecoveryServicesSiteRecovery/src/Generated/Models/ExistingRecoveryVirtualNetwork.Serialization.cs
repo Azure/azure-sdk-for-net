@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ExistingRecoveryVirtualNetwork : IUtf8JsonSerializable, IJsonModel<ExistingRecoveryVirtualNetwork>
+    /// <summary> Existing recovery virtual network input. </summary>
+    public partial class ExistingRecoveryVirtualNetwork : RecoveryVirtualNetworkCustomDetails, IJsonModel<ExistingRecoveryVirtualNetwork>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExistingRecoveryVirtualNetwork>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ExistingRecoveryVirtualNetwork"/> for deserialization. </summary>
+        internal ExistingRecoveryVirtualNetwork()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RecoveryVirtualNetworkCustomDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExistingRecoveryVirtualNetwork(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExistingRecoveryVirtualNetwork)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExistingRecoveryVirtualNetwork)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExistingRecoveryVirtualNetwork>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExistingRecoveryVirtualNetwork IPersistableModel<ExistingRecoveryVirtualNetwork>.Create(BinaryData data, ModelReaderWriterOptions options) => (ExistingRecoveryVirtualNetwork)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExistingRecoveryVirtualNetwork>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExistingRecoveryVirtualNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExistingRecoveryVirtualNetwork)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("recoveryVirtualNetworkId"u8);
             writer.WriteStringValue(RecoveryVirtualNetworkId);
@@ -44,86 +89,58 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        ExistingRecoveryVirtualNetwork IJsonModel<ExistingRecoveryVirtualNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExistingRecoveryVirtualNetwork IJsonModel<ExistingRecoveryVirtualNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ExistingRecoveryVirtualNetwork)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RecoveryVirtualNetworkCustomDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExistingRecoveryVirtualNetwork)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExistingRecoveryVirtualNetwork(document.RootElement, options);
         }
 
-        internal static ExistingRecoveryVirtualNetwork DeserializeExistingRecoveryVirtualNetwork(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExistingRecoveryVirtualNetwork DeserializeExistingRecoveryVirtualNetwork(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier recoveryVirtualNetworkId = default;
+            string resourceType = "Existing";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string recoveryVirtualNetworkId = default;
             string recoverySubnetName = default;
-            string resourceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("recoveryVirtualNetworkId"u8))
+                if (prop.NameEquals("resourceType"u8))
                 {
-                    recoveryVirtualNetworkId = new ResourceIdentifier(property.Value.GetString());
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoverySubnetName"u8))
+                if (prop.NameEquals("recoveryVirtualNetworkId"u8))
                 {
-                    recoverySubnetName = property.Value.GetString();
+                    recoveryVirtualNetworkId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceType"u8))
+                if (prop.NameEquals("recoverySubnetName"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    recoverySubnetName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ExistingRecoveryVirtualNetwork(resourceType, serializedAdditionalRawData, recoveryVirtualNetworkId, recoverySubnetName);
+            return new ExistingRecoveryVirtualNetwork(resourceType, additionalBinaryDataProperties, recoveryVirtualNetworkId, recoverySubnetName);
         }
-
-        BinaryData IPersistableModel<ExistingRecoveryVirtualNetwork>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ExistingRecoveryVirtualNetwork)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExistingRecoveryVirtualNetwork IPersistableModel<ExistingRecoveryVirtualNetwork>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExistingRecoveryVirtualNetwork(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExistingRecoveryVirtualNetwork)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExistingRecoveryVirtualNetwork>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

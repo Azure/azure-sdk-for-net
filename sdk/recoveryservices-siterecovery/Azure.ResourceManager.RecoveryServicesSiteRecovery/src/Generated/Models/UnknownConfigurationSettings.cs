@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of ConfigurationSettings. </summary>
-    internal partial class UnknownConfigurationSettings : SiteRecoveryReplicationProviderSettings
+    internal partial class UnknownConfigurationSettings : ConfigurationSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownConfigurationSettings"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownConfigurationSettings(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownConfigurationSettings"/> for deserialization. </summary>
-        internal UnknownConfigurationSettings()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownConfigurationSettings(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

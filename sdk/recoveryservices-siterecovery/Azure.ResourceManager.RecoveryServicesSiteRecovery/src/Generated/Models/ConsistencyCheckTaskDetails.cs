@@ -7,30 +7,29 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class contains monitoring details of all the inconsistent Protected Entities in Vmm. </summary>
-    public partial class ConsistencyCheckTaskDetails : SiteRecoveryTaskTypeDetails
+    public partial class ConsistencyCheckTaskDetails : TaskTypeDetails
     {
         /// <summary> Initializes a new instance of <see cref="ConsistencyCheckTaskDetails"/>. </summary>
-        internal ConsistencyCheckTaskDetails()
+        internal ConsistencyCheckTaskDetails() : base("ConsistencyCheckTaskDetails")
         {
             VmDetails = new ChangeTrackingList<InconsistentVmDetails>();
-            InstanceType = "ConsistencyCheckTaskDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="ConsistencyCheckTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmDetails"> The list of inconsistent Vm details. </param>
-        internal ConsistencyCheckTaskDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<InconsistentVmDetails> vmDetails) : base(instanceType, serializedAdditionalRawData)
+        internal ConsistencyCheckTaskDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<InconsistentVmDetails> vmDetails) : base(instanceType, additionalBinaryDataProperties)
         {
             VmDetails = vmDetails;
-            InstanceType = instanceType ?? "ConsistencyCheckTaskDetails";
         }
 
         /// <summary> The list of inconsistent Vm details. </summary>
-        public IReadOnlyList<InconsistentVmDetails> VmDetails { get; }
+        public IList<InconsistentVmDetails> VmDetails { get; }
     }
 }

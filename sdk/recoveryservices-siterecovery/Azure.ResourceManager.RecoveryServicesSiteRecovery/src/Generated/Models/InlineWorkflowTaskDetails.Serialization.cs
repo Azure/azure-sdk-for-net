@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InlineWorkflowTaskDetails : IUtf8JsonSerializable, IJsonModel<InlineWorkflowTaskDetails>
+    /// <summary> This class represents the inline workflow task details. </summary>
+    public partial class InlineWorkflowTaskDetails : GroupTaskDetails, IJsonModel<InlineWorkflowTaskDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InlineWorkflowTaskDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GroupTaskDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InlineWorkflowTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInlineWorkflowTaskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InlineWorkflowTaskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InlineWorkflowTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InlineWorkflowTaskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InlineWorkflowTaskDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InlineWorkflowTaskDetails IPersistableModel<InlineWorkflowTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (InlineWorkflowTaskDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InlineWorkflowTaskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InlineWorkflowTaskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,123 +69,106 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InlineWorkflowTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InlineWorkflowTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InlineWorkflowTaskDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(WorkflowIds))
             {
                 writer.WritePropertyName("workflowIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in WorkflowIds)
+                foreach (string item in WorkflowIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
         }
 
-        InlineWorkflowTaskDetails IJsonModel<InlineWorkflowTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InlineWorkflowTaskDetails IJsonModel<InlineWorkflowTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InlineWorkflowTaskDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GroupTaskDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InlineWorkflowTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InlineWorkflowTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InlineWorkflowTaskDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInlineWorkflowTaskDetails(document.RootElement, options);
         }
 
-        internal static InlineWorkflowTaskDetails DeserializeInlineWorkflowTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InlineWorkflowTaskDetails DeserializeInlineWorkflowTaskDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<string> workflowIds = default;
-            string instanceType = default;
-            IReadOnlyList<AsrTask> childTasks = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string instanceType = "InlineWorkflowTaskDetails";
+            IList<ASRTask> childTasks = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<string> workflowIds = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("workflowIds"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    instanceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("childTasks"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<ASRTask> array = new List<ASRTask>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
-                    }
-                    workflowIds = array;
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("childTasks"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AsrTask> array = new List<AsrTask>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(AsrTask.DeserializeAsrTask(item, options));
+                        array.Add(ASRTask.DeserializeASRTask(item, options));
                     }
                     childTasks = array;
                     continue;
                 }
+                if (prop.NameEquals("workflowIds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    workflowIds = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new InlineWorkflowTaskDetails(instanceType, childTasks ?? new ChangeTrackingList<AsrTask>(), serializedAdditionalRawData, workflowIds ?? new ChangeTrackingList<string>());
+            return new InlineWorkflowTaskDetails(instanceType, childTasks ?? new ChangeTrackingList<ASRTask>(), additionalBinaryDataProperties, workflowIds ?? new ChangeTrackingList<string>());
         }
-
-        BinaryData IPersistableModel<InlineWorkflowTaskDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InlineWorkflowTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InlineWorkflowTaskDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InlineWorkflowTaskDetails IPersistableModel<InlineWorkflowTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InlineWorkflowTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInlineWorkflowTaskDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InlineWorkflowTaskDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InlineWorkflowTaskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

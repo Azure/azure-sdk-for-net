@@ -7,44 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageAzureV2 Managed disk details. </summary>
     public partial class InMageAzureV2ManagedDiskDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InMageAzureV2ManagedDiskDetails"/>. </summary>
         internal InMageAzureV2ManagedDiskDetails()
@@ -57,25 +27,29 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="replicaDiskType"> The replica disk type. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
         /// <param name="targetDiskName"> The target disk name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageAzureV2ManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, ResourceIdentifier diskEncryptionSetId, string targetDiskName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InMageAzureV2ManagedDiskDetails(string diskId, string seedManagedDiskId, string replicaDiskType, string diskEncryptionSetId, string targetDiskName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             SeedManagedDiskId = seedManagedDiskId;
             ReplicaDiskType = replicaDiskType;
             DiskEncryptionSetId = diskEncryptionSetId;
             TargetDiskName = targetDiskName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The disk id. </summary>
         public string DiskId { get; }
+
         /// <summary> Seed managed disk Id. </summary>
         public string SeedManagedDiskId { get; }
+
         /// <summary> The replica disk type. </summary>
         public string ReplicaDiskType { get; }
+
         /// <summary> The DiskEncryptionSet ARM ID. </summary>
-        public ResourceIdentifier DiskEncryptionSetId { get; }
+        public string DiskEncryptionSetId { get; }
+
         /// <summary> The target disk name. </summary>
         public string TargetDiskName { get; }
     }

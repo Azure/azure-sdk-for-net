@@ -7,44 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Failover details for a replication protected item. </summary>
     public partial class FailoverReplicationProtectedItemDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FailoverReplicationProtectedItemDetails"/>. </summary>
         internal FailoverReplicationProtectedItemDetails()
@@ -61,8 +31,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="subnet"> The network subnet. </param>
         /// <param name="recoveryPointId"> The recovery point Id. </param>
         /// <param name="recoveryPointOn"> The recovery point time. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FailoverReplicationProtectedItemDetails(string name, string friendlyName, string testVmName, string testVmFriendlyName, string networkConnectionStatus, string networkFriendlyName, string subnet, ResourceIdentifier recoveryPointId, DateTimeOffset? recoveryPointOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FailoverReplicationProtectedItemDetails(string name, string friendlyName, string testVmName, string testVmFriendlyName, string networkConnectionStatus, string networkFriendlyName, string subnet, string recoveryPointId, DateTimeOffset? recoveryPointOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             FriendlyName = friendlyName;
@@ -73,25 +43,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Subnet = subnet;
             RecoveryPointId = recoveryPointId;
             RecoveryPointOn = recoveryPointOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name. </summary>
         public string Name { get; }
+
         /// <summary> The friendly name. </summary>
         public string FriendlyName { get; }
+
         /// <summary> The test Vm name. </summary>
         public string TestVmName { get; }
+
         /// <summary> The test Vm friendly name. </summary>
         public string TestVmFriendlyName { get; }
+
         /// <summary> The network connection status. </summary>
         public string NetworkConnectionStatus { get; }
+
         /// <summary> The network friendly name. </summary>
         public string NetworkFriendlyName { get; }
+
         /// <summary> The network subnet. </summary>
         public string Subnet { get; }
+
         /// <summary> The recovery point Id. </summary>
-        public ResourceIdentifier RecoveryPointId { get; }
+        public string RecoveryPointId { get; }
+
         /// <summary> The recovery point time. </summary>
         public DateTimeOffset? RecoveryPointOn { get; }
     }

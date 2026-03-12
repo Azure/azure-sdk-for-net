@@ -8,90 +8,102 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProtectionContainerMappingResource"/> and their operations.
-    /// Each <see cref="ProtectionContainerMappingResource"/> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
-    /// To get a <see cref="ProtectionContainerMappingCollection"/> instance call the GetProtectionContainerMappings method from an instance of <see cref="SiteRecoveryProtectionContainerResource"/>.
+    /// Each <see cref="ProtectionContainerMappingResource"/> in the collection will belong to the same instance of <see cref="ProtectionContainerResource"/>.
+    /// To get a <see cref="ProtectionContainerMappingCollection"/> instance call the GetProtectionContainerMappings method from an instance of <see cref="ProtectionContainerResource"/>.
     /// </summary>
     public partial class ProtectionContainerMappingCollection : ArmCollection, IEnumerable<ProtectionContainerMappingResource>, IAsyncEnumerable<ProtectionContainerMappingResource>
     {
-        private readonly ClientDiagnostics _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics;
-        private readonly ReplicationProtectionContainerMappingsRestOperations _protectionContainerMappingReplicationProtectionContainerMappingsRestClient;
+        private readonly ClientDiagnostics _replicationProtectionContainerMappingsClientDiagnostics;
+        private readonly ReplicationProtectionContainerMappings _replicationProtectionContainerMappingsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ProtectionContainerMappingCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ProtectionContainerMappingCollection for mocking. </summary>
         protected ProtectionContainerMappingCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProtectionContainerMappingCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionContainerMappingCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProtectionContainerMappingCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ProtectionContainerMappingResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ProtectionContainerMappingResource.ResourceType, out string protectionContainerMappingReplicationProtectionContainerMappingsApiVersion);
-            _protectionContainerMappingReplicationProtectionContainerMappingsRestClient = new ReplicationProtectionContainerMappingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, protectionContainerMappingReplicationProtectionContainerMappingsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ProtectionContainerMappingResource.ResourceType, out string protectionContainerMappingApiVersion);
+            _replicationProtectionContainerMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesSiteRecovery", ProtectionContainerMappingResource.ResourceType.Namespace, Diagnostics);
+            _replicationProtectionContainerMappingsRestClient = new ReplicationProtectionContainerMappings(_replicationProtectionContainerMappingsClientDiagnostics, Pipeline, Endpoint, protectionContainerMappingApiVersion ?? "2025-08-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SiteRecoveryProtectionContainerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryProtectionContainerResource.ResourceType), nameof(id));
+            if (id.ResourceType != ProtectionContainerResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ProtectionContainerResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// The operation to create a protection container mapping.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainerMappings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="mappingName"> Protection container mapping name. </param>
+        /// <param name="mappingName"> Protection Container mapping name. </param>
         /// <param name="content"> Mapping creation input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ProtectionContainerMappingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mappingName, ProtectionContainerMappingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<ProtectionContainerMappingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string mappingName, CreateProtectionContainerMappingInput content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _replicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ProtectionContainerMappingResource>(new ProtectionContainerMappingOperationSource(Client), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationProtectionContainerMappingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, CreateProtectionContainerMappingInput.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesSiteRecoveryArmOperation<ProtectionContainerMappingResource> operation = new RecoveryServicesSiteRecoveryArmOperation<ProtectionContainerMappingResource>(
+                    new ProtectionContainerMappingOperationSource(Client),
+                    _replicationProtectionContainerMappingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,42 +117,51 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// The operation to create a protection container mapping.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainerMappings_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="mappingName"> Protection container mapping name. </param>
+        /// <param name="mappingName"> Protection Container mapping name. </param>
         /// <param name="content"> Mapping creation input. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ProtectionContainerMappingResource> CreateOrUpdate(WaitUntil waitUntil, string mappingName, ProtectionContainerMappingCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<ProtectionContainerMappingResource> CreateOrUpdate(WaitUntil waitUntil, string mappingName, CreateProtectionContainerMappingInput content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _replicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, content, cancellationToken);
-                var operation = new RecoveryServicesSiteRecoveryArmOperation<ProtectionContainerMappingResource>(new ProtectionContainerMappingOperationSource(Client), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationProtectionContainerMappingsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, CreateProtectionContainerMappingInput.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesSiteRecoveryArmOperation<ProtectionContainerMappingResource> operation = new RecoveryServicesSiteRecoveryArmOperation<ProtectionContainerMappingResource>(
+                    new ProtectionContainerMappingOperationSource(Client),
+                    _replicationProtectionContainerMappingsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Gets the details of a protection container mapping.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainerMappings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mappingName"> Protection Container mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ProtectionContainerMappingResource>> GetAsync(string mappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
-            using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Get");
+            using DiagnosticScope scope = _replicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Get");
             scope.Start();
             try
             {
-                var response = await _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationProtectionContainerMappingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ProtectionContainerMappingData> response = Response.FromValue(ProtectionContainerMappingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProtectionContainerMappingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Gets the details of a protection container mapping.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainerMappings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mappingName"> Protection Container mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ProtectionContainerMappingResource> Get(string mappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
-            using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Get");
+            using DiagnosticScope scope = _replicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Get");
             scope.Start();
             try
             {
-                var response = _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationProtectionContainerMappingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ProtectionContainerMappingData> response = Response.FromValue(ProtectionContainerMappingData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProtectionContainerMappingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,51 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Lists the protection container mappings for a protection container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_ListByReplicationProtectionContainers</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainerMappings_ListByReplicationProtectionContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProtectionContainerMappingResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProtectionContainerMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProtectionContainerMappingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ProtectionContainerMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ReplicationProtectionContainerMappingsGetByReplicationProtectionContainersAsyncCollectionResultOfT(
+                _replicationProtectionContainerMappingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new ProtectionContainerMappingResource(Client, data));
         }
 
         /// <summary>
         /// Lists the protection container mappings for a protection container.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_ListByReplicationProtectionContainers</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainerMappings_ListByReplicationProtectionContainers. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +325,68 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> A collection of <see cref="ProtectionContainerMappingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProtectionContainerMappingResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ProtectionContainerMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ProtectionContainerMappingData, ProtectionContainerMappingResource>(new ReplicationProtectionContainerMappingsGetByReplicationProtectionContainersCollectionResultOfT(
+                _replicationProtectionContainerMappingsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Parent.Name,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new ProtectionContainerMappingResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainerMappings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mappingName"> Protection Container mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string mappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
-            using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Exists");
+            using DiagnosticScope scope = _replicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationProtectionContainerMappingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ProtectionContainerMappingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProtectionContainerMappingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProtectionContainerMappingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -347,36 +400,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainerMappings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mappingName"> Protection Container mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string mappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
-            using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Exists");
+            using DiagnosticScope scope = _replicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.Exists");
             scope.Start();
             try
             {
-                var response = _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationProtectionContainerMappingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ProtectionContainerMappingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProtectionContainerMappingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProtectionContainerMappingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -390,38 +457,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainerMappings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mappingName"> Protection Container mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ProtectionContainerMappingResource>> GetIfExistsAsync(string mappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
-            using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.GetIfExists");
+            using DiagnosticScope scope = _replicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationProtectionContainerMappingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ProtectionContainerMappingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProtectionContainerMappingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProtectionContainerMappingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ProtectionContainerMappingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProtectionContainerMappingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -435,38 +518,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ReplicationProtectionContainerMappings_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProtectionContainerMappings_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProtectionContainerMappingResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="mappingName"> Protection Container mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ProtectionContainerMappingResource> GetIfExists(string mappingName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
 
-            using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.GetIfExists");
+            using DiagnosticScope scope = _replicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _replicationProtectionContainerMappingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ProtectionContainerMappingData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ProtectionContainerMappingData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ProtectionContainerMappingData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ProtectionContainerMappingResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ProtectionContainerMappingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +585,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ProtectionContainerMappingResource> IAsyncEnumerable<ProtectionContainerMappingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

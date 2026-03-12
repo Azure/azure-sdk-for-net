@@ -7,27 +7,26 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm appliance specific details. </summary>
-    public partial class InMageRcmApplianceSpecificDetails : SiteRecoveryApplianceSpecificDetails
+    public partial class InMageRcmApplianceSpecificDetails : ApplianceSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceSpecificDetails"/>. </summary>
-        internal InMageRcmApplianceSpecificDetails()
+        internal InMageRcmApplianceSpecificDetails() : base("InMageRcm")
         {
             Appliances = new ChangeTrackingList<InMageRcmApplianceDetails>();
-            InstanceType = "InMageRcm";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="appliances"> The list of appliances. </param>
-        internal InMageRcmApplianceSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<InMageRcmApplianceDetails> appliances) : base(instanceType, serializedAdditionalRawData)
+        internal InMageRcmApplianceSpecificDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<InMageRcmApplianceDetails> appliances) : base(instanceType, additionalBinaryDataProperties)
         {
             Appliances = appliances;
-            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> The list of appliances. </summary>

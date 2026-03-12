@@ -7,44 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm appliance details. </summary>
     public partial class InMageRcmApplianceDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmApplianceDetails"/>. </summary>
         internal InMageRcmApplianceDetails()
@@ -64,8 +35,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="marsAgent"> The Mars agent. </param>
         /// <param name="dra"> The DRA. </param>
         /// <param name="switchProviderBlockingErrorDetails"> The switch provider blocking error information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InMageRcmApplianceDetails(string id, string name, ResourceIdentifier fabricArmId, SiteRecoveryProcessServerDetails processServer, RcmProxyDetails rcmProxy, PushInstallerDetails pushInstaller, ReplicationAgentDetails replicationAgent, ReprotectAgentDetails reprotectAgent, MarsAgentDetails marsAgent, SiteRecoveryDraDetails dra, IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmApplianceDetails(string id, string name, string fabricArmId, ProcessServerDetails processServer, RcmProxyDetails rcmProxy, PushInstallerDetails pushInstaller, ReplicationAgentDetails replicationAgent, ReprotectAgentDetails reprotectAgent, MarsAgentDetails marsAgent, DraDetails dra, IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> switchProviderBlockingErrorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -78,29 +49,39 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MarsAgent = marsAgent;
             Dra = dra;
             SwitchProviderBlockingErrorDetails = switchProviderBlockingErrorDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The appliance Id. </summary>
         public string Id { get; }
+
         /// <summary> The appliance name. </summary>
         public string Name { get; }
+
         /// <summary> The fabric ARM Id. </summary>
-        public ResourceIdentifier FabricArmId { get; }
+        public string FabricArmId { get; }
+
         /// <summary> The process server. </summary>
-        public SiteRecoveryProcessServerDetails ProcessServer { get; }
+        public ProcessServerDetails ProcessServer { get; }
+
         /// <summary> The of RCM proxy. </summary>
         public RcmProxyDetails RcmProxy { get; }
+
         /// <summary> The push installer. </summary>
         public PushInstallerDetails PushInstaller { get; }
+
         /// <summary> The replication agent. </summary>
         public ReplicationAgentDetails ReplicationAgent { get; }
+
         /// <summary> The reprotect agent. </summary>
         public ReprotectAgentDetails ReprotectAgent { get; }
+
         /// <summary> The Mars agent. </summary>
         public MarsAgentDetails MarsAgent { get; }
+
         /// <summary> The DRA. </summary>
-        public SiteRecoveryDraDetails Dra { get; }
+        public DraDetails Dra { get; }
+
         /// <summary> The switch provider blocking error information. </summary>
         public IReadOnlyList<InMageRcmFabricSwitchProviderBlockingErrorDetails> SwitchProviderBlockingErrorDetails { get; }
     }

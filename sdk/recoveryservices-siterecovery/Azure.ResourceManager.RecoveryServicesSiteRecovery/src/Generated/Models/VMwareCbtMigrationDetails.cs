@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VMwareCbtMigrationDetails : MigrationProviderSpecificSettings
     {
         /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrationDetails"/>. </summary>
-        internal VMwareCbtMigrationDetails()
+        internal VMwareCbtMigrationDetails() : base("VMwareCbt")
         {
             TargetVmTags = new ChangeTrackingDictionary<string, string>();
             ProtectedDisks = new ChangeTrackingList<VMwareCbtProtectedDiskDetails>();
@@ -24,12 +24,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SeedDiskTags = new ChangeTrackingDictionary<string, string>();
             TargetDiskTags = new ChangeTrackingDictionary<string, string>();
             SupportedOSVersions = new ChangeTrackingList<string>();
-            InstanceType = "VMwareCbt";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtMigrationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the instance type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
         /// <param name="osType"> The type of the OS on the VM. </param>
         /// <param name="osName"> The name of the OS on the VM. </param>
@@ -79,11 +78,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="applianceMonitoringDetails"> A value indicating the appliance monitoring details. </param>
         /// <param name="gatewayOperationDetails"> A value indicating the gateway operation details. </param>
         /// <param name="operationName"> A value indicating the SRS operation name. </param>
-        internal VMwareCbtMigrationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier storageAccountId, string targetVmName, string targetVmSize, string targetLocation, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, ResourceIdentifier migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, ResourceIdentifier lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, int? deltaSyncProgressPercentage, string isCheckSumResyncCycle, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, long? deltaSyncRetryCount, string resyncRequired, SiteRecoveryResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags, IReadOnlyList<string> supportedOSVersions, ApplianceMonitoringDetails applianceMonitoringDetails, GatewayOperationDetails gatewayOperationDetails, string operationName) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="targetCapacityReservationGroupId"> The target capacity reservation group ARM Id. </param>
+        internal VMwareCbtMigrationDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string vmwareMachineId, string osType, string osName, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, LinuxLicenseType? linuxLicenseType, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string storageAccountId, string targetVmName, string targetVmSize, string targetLocation, string targetResourceGroupId, string targetAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, string targetBootDiagnosticsStorageAccountId, IDictionary<string, string> targetVmTags, IList<VMwareCbtProtectedDiskDetails> protectedDisks, string targetNetworkId, string testNetworkId, IList<VMwareCbtNicDetails> vmNics, IDictionary<string, string> targetNicTags, string migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, int? deltaSyncProgressPercentage, string isCheckSumResyncCycle, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, long? deltaSyncRetryCount, string resyncRequired, ResyncState? resyncState, string performAutoResync, IDictionary<string, string> seedDiskTags, IDictionary<string, string> targetDiskTags, IList<string> supportedOSVersions, ApplianceMonitoringDetails applianceMonitoringDetails, GatewayOperationDetails gatewayOperationDetails, string operationName, string targetCapacityReservationGroupId) : base(instanceType, additionalBinaryDataProperties)
         {
-            VMwareMachineId = vmwareMachineId;
-            OSType = osType;
-            OSName = osName;
+            VmwareMachineId = vmwareMachineId;
+            OsType = osType;
+            OsName = osName;
             FirmwareType = firmwareType;
             TargetGeneration = targetGeneration;
             LicenseType = licenseType;
@@ -130,106 +130,157 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ApplianceMonitoringDetails = applianceMonitoringDetails;
             GatewayOperationDetails = gatewayOperationDetails;
             OperationName = operationName;
-            InstanceType = instanceType ?? "VMwareCbt";
+            TargetCapacityReservationGroupId = targetCapacityReservationGroupId;
         }
 
         /// <summary> The ARM Id of the VM discovered in VMware. </summary>
-        public ResourceIdentifier VMwareMachineId { get; }
+        public string VmwareMachineId { get; }
+
         /// <summary> The type of the OS on the VM. </summary>
-        public string OSType { get; }
+        public string OsType { get; }
+
         /// <summary> The name of the OS on the VM. </summary>
-        public string OSName { get; }
+        public string OsName { get; }
+
         /// <summary> The firmware type. </summary>
         public string FirmwareType { get; }
+
         /// <summary> The target generation. </summary>
         public string TargetGeneration { get; }
+
         /// <summary> License Type of the VM to be used. </summary>
         public string LicenseType { get; }
+
         /// <summary> The SQL Server license type. </summary>
         public string SqlServerLicenseType { get; }
+
         /// <summary> The license type for Linux VM's. </summary>
-        public RecoveryServicesSiteRecoveryLinuxLicenseType? LinuxLicenseType { get; }
+        public LinuxLicenseType? LinuxLicenseType { get; }
+
         /// <summary> The data mover run as account Id. </summary>
-        public ResourceIdentifier DataMoverRunAsAccountId { get; }
+        public string DataMoverRunAsAccountId { get; }
+
         /// <summary> The snapshot run as account Id. </summary>
-        public ResourceIdentifier SnapshotRunAsAccountId { get; }
+        public string SnapshotRunAsAccountId { get; }
+
         /// <summary> The replication storage account ARM Id. This is applicable only for the blob based replication test hook. </summary>
-        public ResourceIdentifier StorageAccountId { get; }
+        public string StorageAccountId { get; }
+
         /// <summary> Target VM name. </summary>
         public string TargetVmName { get; }
+
         /// <summary> The target VM size. </summary>
         public string TargetVmSize { get; }
+
         /// <summary> The target location. </summary>
         public string TargetLocation { get; }
+
         /// <summary> The target resource group Id. </summary>
-        public ResourceIdentifier TargetResourceGroupId { get; }
+        public string TargetResourceGroupId { get; }
+
         /// <summary> The target availability set Id. </summary>
-        public ResourceIdentifier TargetAvailabilitySetId { get; }
+        public string TargetAvailabilitySetId { get; }
+
         /// <summary> The target availability zone. </summary>
         public string TargetAvailabilityZone { get; }
+
         /// <summary> The target proximity placement group Id. </summary>
-        public ResourceIdentifier TargetProximityPlacementGroupId { get; }
+        public string TargetProximityPlacementGroupId { get; }
+
         /// <summary> The confidential VM key vault Id for ADE installation. </summary>
-        public ResourceIdentifier ConfidentialVmKeyVaultId { get; }
+        public string ConfidentialVmKeyVaultId { get; }
+
         /// <summary> The target VM security profile. </summary>
         public VMwareCbtSecurityProfileProperties TargetVmSecurityProfile { get; }
+
         /// <summary> The target boot diagnostics storage account ARM Id. </summary>
-        public ResourceIdentifier TargetBootDiagnosticsStorageAccountId { get; }
+        public string TargetBootDiagnosticsStorageAccountId { get; }
+
         /// <summary> The target VM tags. </summary>
-        public IReadOnlyDictionary<string, string> TargetVmTags { get; }
+        public IDictionary<string, string> TargetVmTags { get; }
+
         /// <summary> The list of protected disks. </summary>
-        public IReadOnlyList<VMwareCbtProtectedDiskDetails> ProtectedDisks { get; }
+        public IList<VMwareCbtProtectedDiskDetails> ProtectedDisks { get; }
+
         /// <summary> The target network Id. </summary>
-        public ResourceIdentifier TargetNetworkId { get; }
+        public string TargetNetworkId { get; }
+
         /// <summary> The test network Id. </summary>
-        public ResourceIdentifier TestNetworkId { get; }
+        public string TestNetworkId { get; }
+
         /// <summary> The network details. </summary>
-        public IReadOnlyList<VMwareCbtNicDetails> VmNics { get; }
+        public IList<VMwareCbtNicDetails> VmNics { get; }
+
         /// <summary> The tags for the target NICs. </summary>
-        public IReadOnlyDictionary<string, string> TargetNicTags { get; }
+        public IDictionary<string, string> TargetNicTags { get; }
+
         /// <summary> The recovery point Id to which the VM was migrated. </summary>
-        public ResourceIdentifier MigrationRecoveryPointId { get; }
+        public string MigrationRecoveryPointId { get; }
+
         /// <summary> The last recovery point received time. </summary>
         public DateTimeOffset? LastRecoveryPointReceived { get; }
+
         /// <summary> The last recovery point Id. </summary>
-        public ResourceIdentifier LastRecoveryPointId { get; }
+        public string LastRecoveryPointId { get; }
+
         /// <summary> The initial seeding progress percentage. </summary>
         public int? InitialSeedingProgressPercentage { get; }
+
         /// <summary> The migration progress percentage. </summary>
         public int? MigrationProgressPercentage { get; }
+
         /// <summary> The resync progress percentage. </summary>
         public int? ResyncProgressPercentage { get; }
+
         /// <summary> The resume progress percentage. </summary>
         public int? ResumeProgressPercentage { get; }
+
         /// <summary> The delta sync progress percentage. </summary>
         public int? DeltaSyncProgressPercentage { get; }
+
         /// <summary> A value indicating whether checksum resync cycle is in progress. </summary>
         public string IsCheckSumResyncCycle { get; }
+
         /// <summary> The initial seeding retry count. </summary>
         public long? InitialSeedingRetryCount { get; }
+
         /// <summary> The resync retry count. </summary>
         public long? ResyncRetryCount { get; }
+
         /// <summary> The resume retry count. </summary>
         public long? ResumeRetryCount { get; }
+
         /// <summary> The delta sync retry count. </summary>
         public long? DeltaSyncRetryCount { get; }
+
         /// <summary> A value indicating whether resync is required. </summary>
         public string ResyncRequired { get; }
+
         /// <summary> The resync state. </summary>
-        public SiteRecoveryResyncState? ResyncState { get; }
+        public ResyncState? ResyncState { get; }
+
         /// <summary> A value indicating whether auto resync is to be done. </summary>
         public string PerformAutoResync { get; }
+
         /// <summary> The tags for the seed disks. </summary>
-        public IReadOnlyDictionary<string, string> SeedDiskTags { get; }
+        public IDictionary<string, string> SeedDiskTags { get; }
+
         /// <summary> The tags for the target disks. </summary>
-        public IReadOnlyDictionary<string, string> TargetDiskTags { get; }
+        public IDictionary<string, string> TargetDiskTags { get; }
+
         /// <summary> A value indicating the inplace OS Upgrade version. </summary>
-        public IReadOnlyList<string> SupportedOSVersions { get; }
+        public IList<string> SupportedOSVersions { get; }
+
         /// <summary> A value indicating the appliance monitoring details. </summary>
         public ApplianceMonitoringDetails ApplianceMonitoringDetails { get; }
+
         /// <summary> A value indicating the gateway operation details. </summary>
         public GatewayOperationDetails GatewayOperationDetails { get; }
+
         /// <summary> A value indicating the SRS operation name. </summary>
         public string OperationName { get; }
+
+        /// <summary> The target capacity reservation group ARM Id. </summary>
+        public string TargetCapacityReservationGroupId { get; }
     }
 }

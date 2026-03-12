@@ -7,50 +7,21 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Replication protected item custom data details. </summary>
     public partial class ReplicationProtectedItemProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemProperties"/>. </summary>
         internal ReplicationProtectedItemProperties()
         {
             AllowedOperations = new ChangeTrackingList<string>();
-            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
+            HealthErrors = new ChangeTrackingList<HealthError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReplicationProtectedItemProperties"/>. </summary>
@@ -81,15 +52,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastSuccessfulTestFailoverOn"> The Last successful test failover time. </param>
         /// <param name="currentScenario"> The current scenario. </param>
         /// <param name="failoverRecoveryPointId"> The recovery point ARM Id to which the Vm was failed over. </param>
-        /// <param name="providerSpecificDetails">
-        /// The Replication provider custom settings.
-        /// Please note <see cref="ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AReplicationDetails"/>, <see cref="A2ACrossClusterMigrationReplicationDetails"/>, <see cref="HyperVReplicaReplicationDetails"/>, <see cref="HyperVReplicaBlueReplicationDetails"/>, <see cref="HyperVReplicaAzureReplicationDetails"/>, <see cref="HyperVReplicaBaseReplicationDetails"/>, <see cref="InMageReplicationDetails"/>, <see cref="InMageAzureV2ReplicationDetails"/>, <see cref="InMageRcmReplicationDetails"/> and <see cref="InMageRcmFailbackReplicationDetails"/>.
-        /// </param>
+        /// <param name="providerSpecificDetails"> The Replication provider custom settings. </param>
         /// <param name="recoveryContainerId"> The recovery container Id. </param>
         /// <param name="eventCorrelationId"> The correlation Id for events associated with this protected item. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationProtectedItemProperties(string friendlyName, string protectedItemType, ResourceIdentifier protectableItemId, string recoveryServicesProviderId, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, ResourceIdentifier recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, string switchProviderState, string switchProviderStateDescription, IReadOnlyList<string> allowedOperations, string replicationHealth, string failoverHealth, IReadOnlyList<SiteRecoveryHealthError> healthErrors, ResourceIdentifier policyId, string policyFriendlyName, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, CurrentScenarioDetails currentScenario, ResourceIdentifier failoverRecoveryPointId, ReplicationProviderSpecificSettings providerSpecificDetails, ResourceIdentifier recoveryContainerId, Guid? eventCorrelationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationProtectedItemProperties(string friendlyName, string protectedItemType, string protectableItemId, string recoveryServicesProviderId, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, string recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, string switchProviderState, string switchProviderStateDescription, IList<string> allowedOperations, string replicationHealth, string failoverHealth, IList<HealthError> healthErrors, string policyId, string policyFriendlyName, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, CurrentScenarioDetails currentScenario, string failoverRecoveryPointId, ReplicationProviderSpecificSettings providerSpecificDetails, string recoveryContainerId, string eventCorrelationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             ProtectedItemType = protectedItemType;
@@ -121,72 +88,97 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProviderSpecificDetails = providerSpecificDetails;
             RecoveryContainerId = recoveryContainerId;
             EventCorrelationId = eventCorrelationId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name. </summary>
         public string FriendlyName { get; }
+
         /// <summary> The type of protected item type. </summary>
         public string ProtectedItemType { get; }
+
         /// <summary> The protected item ARM Id. </summary>
-        public ResourceIdentifier ProtectableItemId { get; }
+        public string ProtectableItemId { get; }
+
         /// <summary> The recovery provider ARM Id. </summary>
         public string RecoveryServicesProviderId { get; }
+
         /// <summary> The friendly name of the primary fabric. </summary>
         public string PrimaryFabricFriendlyName { get; }
+
         /// <summary> The fabric provider of the primary fabric. </summary>
         public string PrimaryFabricProvider { get; }
+
         /// <summary> The friendly name of recovery fabric. </summary>
         public string RecoveryFabricFriendlyName { get; }
+
         /// <summary> The Arm Id of recovery fabric. </summary>
-        public ResourceIdentifier RecoveryFabricId { get; }
+        public string RecoveryFabricId { get; }
+
         /// <summary> The name of primary protection container friendly name. </summary>
         public string PrimaryProtectionContainerFriendlyName { get; }
+
         /// <summary> The name of recovery container friendly name. </summary>
         public string RecoveryProtectionContainerFriendlyName { get; }
+
         /// <summary> The protection status. </summary>
         public string ProtectionState { get; }
+
         /// <summary> The protection state description. </summary>
         public string ProtectionStateDescription { get; }
+
         /// <summary> The Current active location of the PE. </summary>
         public string ActiveLocation { get; }
+
         /// <summary> The Test failover state. </summary>
         public string TestFailoverState { get; }
+
         /// <summary> The Test failover state description. </summary>
         public string TestFailoverStateDescription { get; }
+
         /// <summary> The switch provider state. </summary>
         public string SwitchProviderState { get; }
+
         /// <summary> The switch provider state description. </summary>
         public string SwitchProviderStateDescription { get; }
+
         /// <summary> The allowed operations on the Replication protected item. </summary>
-        public IReadOnlyList<string> AllowedOperations { get; }
+        public IList<string> AllowedOperations { get; }
+
         /// <summary> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration. </summary>
         public string ReplicationHealth { get; }
+
         /// <summary> The consolidated failover health for the VM. </summary>
         public string FailoverHealth { get; }
+
         /// <summary> List of health errors. </summary>
-        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
+        public IList<HealthError> HealthErrors { get; }
+
         /// <summary> The ID of Policy governing this PE. </summary>
-        public ResourceIdentifier PolicyId { get; }
+        public string PolicyId { get; }
+
         /// <summary> The name of Policy governing this PE. </summary>
         public string PolicyFriendlyName { get; }
+
         /// <summary> The Last successful failover time. </summary>
         public DateTimeOffset? LastSuccessfulFailoverOn { get; }
+
         /// <summary> The Last successful test failover time. </summary>
         public DateTimeOffset? LastSuccessfulTestFailoverOn { get; }
+
         /// <summary> The current scenario. </summary>
         public CurrentScenarioDetails CurrentScenario { get; }
+
         /// <summary> The recovery point ARM Id to which the Vm was failed over. </summary>
-        public ResourceIdentifier FailoverRecoveryPointId { get; }
-        /// <summary>
-        /// The Replication provider custom settings.
-        /// Please note <see cref="ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2AReplicationDetails"/>, <see cref="A2ACrossClusterMigrationReplicationDetails"/>, <see cref="HyperVReplicaReplicationDetails"/>, <see cref="HyperVReplicaBlueReplicationDetails"/>, <see cref="HyperVReplicaAzureReplicationDetails"/>, <see cref="HyperVReplicaBaseReplicationDetails"/>, <see cref="InMageReplicationDetails"/>, <see cref="InMageAzureV2ReplicationDetails"/>, <see cref="InMageRcmReplicationDetails"/> and <see cref="InMageRcmFailbackReplicationDetails"/>.
-        /// </summary>
+        public string FailoverRecoveryPointId { get; }
+
+        /// <summary> The Replication provider custom settings. </summary>
         public ReplicationProviderSpecificSettings ProviderSpecificDetails { get; }
+
         /// <summary> The recovery container Id. </summary>
-        public ResourceIdentifier RecoveryContainerId { get; }
+        public string RecoveryContainerId { get; }
+
         /// <summary> The correlation Id for events associated with this protected item. </summary>
-        public Guid? EventCorrelationId { get; }
+        public string EventCorrelationId { get; }
     }
 }

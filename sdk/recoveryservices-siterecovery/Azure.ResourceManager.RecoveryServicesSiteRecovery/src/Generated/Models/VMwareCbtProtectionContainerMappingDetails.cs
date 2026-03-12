@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,16 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VMwareCbtProtectionContainerMappingDetails : ProtectionContainerMappingProviderSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="VMwareCbtProtectionContainerMappingDetails"/>. </summary>
-        internal VMwareCbtProtectionContainerMappingDetails()
+        internal VMwareCbtProtectionContainerMappingDetails() : base("VMwareCbt")
         {
             RoleSizeToNicCountMap = new ChangeTrackingDictionary<string, int>();
             ExcludedSkus = new ChangeTrackingList<string>();
-            InstanceType = "VMwareCbt";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtProtectionContainerMappingDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyVaultId"> The target key vault ARM Id. </param>
         /// <param name="keyVaultUri"> The target key vault URI. </param>
         /// <param name="storageAccountId"> The storage account ARM Id. </param>
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetLocation"> The target location. </param>
         /// <param name="roleSizeToNicCountMap"> The role size to NIC count map. </param>
         /// <param name="excludedSkus"> The SKUs to be excluded. </param>
-        internal VMwareCbtProtectionContainerMappingDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier keyVaultId, Uri keyVaultUri, ResourceIdentifier storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation, IReadOnlyDictionary<string, int> roleSizeToNicCountMap, IReadOnlyList<string> excludedSkus) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareCbtProtectionContainerMappingDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string keyVaultId, string keyVaultUri, string storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation, IReadOnlyDictionary<string, int> roleSizeToNicCountMap, IList<string> excludedSkus) : base(instanceType, additionalBinaryDataProperties)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
@@ -43,24 +42,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetLocation = targetLocation;
             RoleSizeToNicCountMap = roleSizeToNicCountMap;
             ExcludedSkus = excludedSkus;
-            InstanceType = instanceType ?? "VMwareCbt";
         }
 
         /// <summary> The target key vault ARM Id. </summary>
-        public ResourceIdentifier KeyVaultId { get; }
+        public string KeyVaultId { get; }
+
         /// <summary> The target key vault URI. </summary>
-        public Uri KeyVaultUri { get; }
+        public string KeyVaultUri { get; }
+
         /// <summary> The storage account ARM Id. </summary>
-        public ResourceIdentifier StorageAccountId { get; }
+        public string StorageAccountId { get; }
+
         /// <summary> The secret name of the storage account. </summary>
         public string StorageAccountSasSecretName { get; }
+
         /// <summary> The secret name of the service bus connection string. </summary>
         public string ServiceBusConnectionStringSecretName { get; }
+
         /// <summary> The target location. </summary>
         public string TargetLocation { get; }
+
         /// <summary> The role size to NIC count map. </summary>
         public IReadOnlyDictionary<string, int> RoleSizeToNicCountMap { get; }
+
         /// <summary> The SKUs to be excluded. </summary>
-        public IReadOnlyList<string> ExcludedSkus { get; }
+        public IList<string> ExcludedSkus { get; }
     }
 }

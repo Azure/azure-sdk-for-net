@@ -7,44 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> VMwareCbt protected disk details. </summary>
     public partial class VMwareCbtProtectedDiskDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtProtectedDiskDetails"/>. </summary>
         internal VMwareCbtProtectedDiskDetails()
@@ -68,8 +38,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetDiskName"> The name for the target managed disk. </param>
         /// <param name="gatewayOperationDetails"> A value indicating the gateway operation details. </param>
         /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails, int? sectorSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="iops"> The number of IOPS allowed for Premium V2 and Ultra disks. </param>
+        /// <param name="throughputInMbps"> The total throughput in Mbps for Premium V2 and Ultra disks. </param>
+        /// <param name="diskSizeInGB"> The target disk size in GB. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, DiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, string logStorageAccountId, string logStorageAccountSasSecretName, string diskEncryptionSetId, string seedManagedDiskId, string seedBlobUri, string targetManagedDiskId, string targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails, int? sectorSizeInBytes, long? iops, long? throughputInMbps, long? diskSizeInGB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -87,40 +60,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetDiskName = targetDiskName;
             GatewayOperationDetails = gatewayOperationDetails;
             SectorSizeInBytes = sectorSizeInBytes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Iops = iops;
+            ThroughputInMbps = throughputInMbps;
+            DiskSizeInGB = diskSizeInGB;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The disk id. </summary>
         public string DiskId { get; }
+
         /// <summary> The disk name. </summary>
         public string DiskName { get; }
+
         /// <summary> The disk type. </summary>
-        public SiteRecoveryDiskAccountType? DiskType { get; }
+        public DiskAccountType? DiskType { get; }
+
         /// <summary> The disk path. </summary>
         public string DiskPath { get; }
+
         /// <summary> A value indicating whether the disk is the OS disk. </summary>
         public string IsOSDisk { get; }
+
         /// <summary> The disk capacity in bytes. </summary>
         public long? CapacityInBytes { get; }
+
         /// <summary> The log storage account ARM Id. </summary>
-        public ResourceIdentifier LogStorageAccountId { get; }
+        public string LogStorageAccountId { get; }
+
         /// <summary> The key vault secret name of the log storage account. </summary>
         public string LogStorageAccountSasSecretName { get; }
+
         /// <summary> The DiskEncryptionSet ARM Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId { get; }
+        public string DiskEncryptionSetId { get; }
+
         /// <summary> The ARM Id of the seed managed disk. </summary>
         public string SeedManagedDiskId { get; }
+
         /// <summary> The uri of the seed blob. </summary>
-        public Uri SeedBlobUri { get; }
+        public string SeedBlobUri { get; }
+
         /// <summary> The ARM Id of the target managed disk. </summary>
         public string TargetManagedDiskId { get; }
+
         /// <summary> The uri of the target blob. </summary>
-        public Uri TargetBlobUri { get; }
+        public string TargetBlobUri { get; }
+
         /// <summary> The name for the target managed disk. </summary>
         public string TargetDiskName { get; }
+
         /// <summary> A value indicating the gateway operation details. </summary>
         public GatewayOperationDetails GatewayOperationDetails { get; }
+
         /// <summary> The logical sector size (in bytes), 512 by default. </summary>
         public int? SectorSizeInBytes { get; }
+
+        /// <summary> The number of IOPS allowed for Premium V2 and Ultra disks. </summary>
+        public long? Iops { get; }
+
+        /// <summary> The total throughput in Mbps for Premium V2 and Ultra disks. </summary>
+        public long? ThroughputInMbps { get; }
+
+        /// <summary> The target disk size in GB. </summary>
+        public long? DiskSizeInGB { get; }
     }
 }
