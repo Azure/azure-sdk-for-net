@@ -13,7 +13,7 @@ using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
-    // Manually flatten properties from the StoragePrivateEndpointConnectionProperties envelope
+    // Manually flatten properties from the PrivateEndpointConnectionProperties envelope
     // to preserve the prior GA API surface, which exposed these properties directly on the Data type.
 
     /// <summary> The Private Endpoint Connection resource. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Resource properties. </param>
-        internal StoragePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, StoragePrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
+        internal StoragePrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointConnectionProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
-        internal StoragePrivateEndpointConnectionProperties Properties { get; set; }
+        internal PrivateEndpointConnectionProperties Properties { get; set; }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         [WirePath("properties.privateLinkServiceConnectionState")]
@@ -50,15 +50,15 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties is null ? default : Properties.ConnectionState;
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
             }
             set
             {
                 if (Properties is null)
                 {
-                    Properties = new StoragePrivateEndpointConnectionProperties();
+                    Properties = new PrivateEndpointConnectionProperties();
                 }
-                Properties.ConnectionState = value;
+                Properties.PrivateLinkServiceConnectionState = value;
             }
         }
 

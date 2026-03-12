@@ -14,16 +14,6 @@ namespace Azure.ResourceManager.Storage
 {
     public static partial class StorageExtensions
     {
-        /// <summary> Lists deleted accounts under the subscription. Backward-compatible overload. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
-
-        /// <summary> Lists deleted accounts under the subscription. Backward-compatible overload. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<DeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
-            => GetMockableStorageSubscriptionResource(subscriptionResource).GetDeletedAccounts(cancellationToken);
-
         /// <summary> Gets the current usage count and the limit for the resources of the location under the subscription. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<StorageUsage> GetUsagesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)

@@ -13,16 +13,6 @@ namespace Azure.ResourceManager.Storage.Mocking
 {
     public partial class MockableStorageSubscriptionResource
     {
-        /// <summary> Lists deleted accounts under the subscription. Backward-compatible overload. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<DeletedAccountResource> GetDeletedAccountsAsync(CancellationToken cancellationToken)
-            => GetDeletedAccounts().GetAllAsync(cancellationToken);
-
-        /// <summary> Lists deleted accounts under the subscription. Backward-compatible overload. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<DeletedAccountResource> GetDeletedAccounts(CancellationToken cancellationToken)
-            => GetDeletedAccounts().GetAll(cancellationToken);
-
         /// <summary> Gets the current usage count and the limit for the resources of the location under the subscription. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<StorageUsage> GetUsagesByLocationAsync(AzureLocation location, CancellationToken cancellationToken)

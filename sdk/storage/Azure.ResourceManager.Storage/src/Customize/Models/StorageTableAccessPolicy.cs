@@ -11,17 +11,25 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> Table Access Policy Properties Object. </summary>
     public partial class StorageTableAccessPolicy
     {
+        /// <summary> Expiry time of the access policy. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public DateTimeOffset? ExpireOn
+        {
+            get => ExpiryOn;
+            set => ExpiryOn = value;
+        }
+
         /// <summary> The deleted date. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public DateTimeOffset? ExpiresOn
         {
             get
             {
-                return ExpireOn;
+                return ExpiryOn;
             }
             set
             {
-                ExpireOn = value;
+                ExpiryOn = value;
             }
         }
     }

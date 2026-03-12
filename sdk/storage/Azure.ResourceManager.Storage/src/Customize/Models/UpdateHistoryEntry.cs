@@ -5,6 +5,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -13,15 +14,19 @@ namespace Azure.ResourceManager.Storage.Models
         // Internal constructor used by serialization (deserializer passes Guid? tenantId directly)
         internal UpdateHistoryEntry(ImmutabilityPolicyUpdateType? update, int? immutabilityPeriodSinceCreationInDays, DateTimeOffset? timestamp, string objectIdentifier, Guid? tenantId, string upn, bool? allowProtectedAppendWrites, bool? allowProtectedAppendWritesAll, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            UpdateType = update;
+            Update = update;
             ImmutabilityPeriodSinceCreationInDays = immutabilityPeriodSinceCreationInDays;
             Timestamp = timestamp;
             ObjectIdentifier = objectIdentifier;
-            TenantId = tenantId;
+            TenantId = tenantId?.ToString();
             Upn = upn;
             AllowProtectedAppendWrites = allowProtectedAppendWrites;
             AllowProtectedAppendWritesAll = allowProtectedAppendWritesAll;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Backward-compat: The ImmutabilityPolicy update type. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ImmutabilityPolicyUpdateType? UpdateType => Update;
     }
 }

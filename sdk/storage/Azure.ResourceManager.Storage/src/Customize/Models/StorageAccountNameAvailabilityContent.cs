@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal StorageAccountNameAvailabilityContent(string name, string resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            ResourceType = string.IsNullOrEmpty(resourceType) ? new ResourceType("Microsoft.Storage/storageAccounts") : new ResourceType(resourceType);
+            _type = string.IsNullOrEmpty(resourceType) ? "Microsoft.Storage/storageAccounts" : resourceType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,9 +43,14 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("name")]
         public string Name { get; }
 
-        // Backward-compat: prior GA exposed ResourceType as public Azure.Core.ResourceType.
+        private readonly string _type = "Microsoft.Storage/storageAccounts";
+
         /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
         [WirePath("type")]
-        public ResourceType ResourceType { get; } = new ResourceType("Microsoft.Storage/storageAccounts");
+        internal string Type => _type;
+
+        // Backward-compat: prior GA exposed ResourceType as public Azure.Core.ResourceType.
+        /// <summary> The type of resource, Microsoft.Storage/storageAccounts. </summary>
+        public ResourceType ResourceType => new ResourceType(_type);
     }
 }
