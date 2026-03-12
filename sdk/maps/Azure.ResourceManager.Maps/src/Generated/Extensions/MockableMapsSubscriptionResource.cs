@@ -5,88 +5,97 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Maps;
+using Azure.ResourceManager.Maps.Models;
+using System.ClientModel.Primitives;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maps.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableMapsSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _mapsAccountAccountsClientDiagnostics;
-        private AccountsRestOperations _mapsAccountAccountsRestClient;
+        private ClientDiagnostics _accountsClientDiagnostics;
+        private Accounts _accountsRestClient;
+        private ClientDiagnostics _operationResultClientDiagnostics;
+        private OperationResult _operationResultRestClient;
+        private ClientDiagnostics _operationStatusClientDiagnostics;
+        private OperationStatus _operationStatusRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMapsSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMapsSubscriptionResource for mocking. </summary>
         protected MockableMapsSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMapsSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMapsSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMapsSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics MapsAccountAccountsClientDiagnostics => _mapsAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps", MapsAccountResource.ResourceType.Namespace, Diagnostics);
-        private AccountsRestOperations MapsAccountAccountsRestClient => _mapsAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MapsAccountResource.ResourceType));
+        private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+
+        private ClientDiagnostics OperationResultClientDiagnostics => _operationResultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OperationResult OperationResultRestClient => _operationResultRestClient ??= new OperationResult(OperationResultClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
+
+        private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Maps.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private OperationStatus OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatus(OperationStatusClientDiagnostics, Pipeline, Endpoint, "2025-10-01-preview");
 
         /// <summary>
         /// Get all Maps Accounts in a Subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maps/accounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maps/accounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MapsAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MapsAccountResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MapsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MapsAccountResource> GetMapsAccountsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MapsAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MapsAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), MapsAccountAccountsClientDiagnostics, Pipeline, "MockableMapsSubscriptionResource.GetMapsAccounts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetBySubscriptionAsyncCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MapsAccountResource(Client, data));
         }
 
         /// <summary>
         /// Get all Maps Accounts in a Subscription
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maps/accounts</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maps/accounts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Accounts_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> Accounts_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="MapsAccountResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +103,203 @@ namespace Azure.ResourceManager.Maps.Mocking
         /// <returns> A collection of <see cref="MapsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MapsAccountResource> GetMapsAccounts(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => MapsAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MapsAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MapsAccountResource(Client, MapsAccountData.DeserializeMapsAccountData(e)), MapsAccountAccountsClientDiagnostics, Pipeline, "MockableMapsSubscriptionResource.GetMapsAccounts", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<MapsAccountData, MapsAccountResource>(new AccountsGetBySubscriptionCollectionResultOfT(AccountsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new MapsAccountResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get the result of a long running azure asynchronous operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maps/locations/{location}/operationResults/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationResultOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual async Task<ArmOperation> GetAsync(WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = OperationResultClientDiagnostics.CreateScope("MockableMapsSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationResultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MapsArmOperation operation = new MapsArmOperation(OperationResultClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the result of a long running azure asynchronous operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maps/locations/{location}/operationResults/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationResultOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual ArmOperation Get(WaitUntil waitUntil, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = OperationResultClientDiagnostics.CreateScope("MockableMapsSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationResultRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MapsArmOperation operation = new MapsArmOperation(OperationResultClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the status of a long running azure asynchronous operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maps/locations/{location}/operationStatuses/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationStatusOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual async Task<Response<OperationStatusResult>> GetAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = OperationStatusClientDiagnostics.CreateScope("MockableMapsSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                #pragma warning disable IL2026, IL3050
+                OperationStatusResult value = ModelReaderWriter.Read<OperationStatusResult>(result.Content);
+#pragma warning restore IL2026, IL3050
+                Response<OperationStatusResult> response = Response.FromValue(value, result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the status of a long running azure asynchronous operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Maps/locations/{location}/operationStatuses/{operationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OperationStatusOperationGroup_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="operationId"> The ID of an ongoing async operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        internal virtual Response<OperationStatusResult> Get(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = OperationStatusClientDiagnostics.CreateScope("MockableMapsSubscriptionResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = OperationStatusRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), location, operationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                #pragma warning disable IL2026, IL3050
+                OperationStatusResult value = ModelReaderWriter.Read<OperationStatusResult>(result.Content);
+#pragma warning restore IL2026, IL3050
+                Response<OperationStatusResult> response = Response.FromValue(value, result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

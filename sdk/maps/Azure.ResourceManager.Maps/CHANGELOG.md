@@ -4,9 +4,19 @@
 
 ### Features Added
 
+- Upgraded API version to `2025-10-01-preview`.
+- Added support for `PrivateEndpointConnection` and `PrivateLinkResource` resource types.
+- Added support for operation status and operation result queries.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Migrated from AutoRest to TypeSpec-based code generation.
+- Removed `MapsAccountKind.Gen1` enum value (removed in API version `2025-10-01-preview`).
+- Removed `MapsSkuName.S0` and `MapsSkuName.S1` enum values (removed in API version `2025-10-01-preview`).
+- Renamed property `CorsRulesValue` to `CorsRules` on `MapsAccountProperties` and `MapsAccountPatch`.
+- Changed type of `CustomerManagedKeyEncryption.KeyEncryptionKeyUri` from `Uri` to `string`.
+- Removed type `MapsInfrastructureEncryption`.
+- Changed type of `MapsCreatorPatch.StorageUnits` from `int?` to `int`.
 
 ### Other Changes
 
