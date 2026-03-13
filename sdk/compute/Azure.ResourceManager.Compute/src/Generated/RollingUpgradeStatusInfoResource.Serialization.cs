@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
     public partial class RollingUpgradeStatusInfoResource : IJsonModel<RollingUpgradeStatusInfoData>
@@ -27,11 +27,11 @@ namespace ComputeCombine
         RollingUpgradeStatusInfoData IJsonModel<RollingUpgradeStatusInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RollingUpgradeStatusInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RollingUpgradeStatusInfoData>(Data, options, ComputeCombineContext.Default);
+        BinaryData IPersistableModel<RollingUpgradeStatusInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RollingUpgradeStatusInfoData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RollingUpgradeStatusInfoData IPersistableModel<RollingUpgradeStatusInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RollingUpgradeStatusInfoData>(data, options, ComputeCombineContext.Default);
+        RollingUpgradeStatusInfoData IPersistableModel<RollingUpgradeStatusInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RollingUpgradeStatusInfoData>(data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<RollingUpgradeStatusInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

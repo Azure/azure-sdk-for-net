@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The definition of a parameter that can be passed to a custom action of a Gallery Application Version. </summary>
     public partial class GalleryApplicationCustomActionParameter : IJsonModel<GalleryApplicationCustomActionParameter>
@@ -45,7 +45,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryApplicationCustomActionParameter)} does not support writing '{options.Format}' format.");
             }

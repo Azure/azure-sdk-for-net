@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The instance view of a capacity reservation that includes the name of the capacity reservation. It is used for the response to the instance view of a capacity reservation group. </summary>
     public partial class CapacityReservationInstanceViewWithName : CapacityReservationInstanceView
@@ -23,7 +23,7 @@ namespace Compute.Models
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the capacity reservation. </param>
-        internal CapacityReservationInstanceViewWithName(CapacityReservationUtilization utilizationInfo, IList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name) : base(utilizationInfo, statuses, additionalBinaryDataProperties)
+        internal CapacityReservationInstanceViewWithName(CapacityReservationUtilization utilizationInfo, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name) : base(utilizationInfo, statuses, additionalBinaryDataProperties)
         {
             Name = name;
         }

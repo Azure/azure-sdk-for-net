@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     internal static partial class TypeFormatters
     {

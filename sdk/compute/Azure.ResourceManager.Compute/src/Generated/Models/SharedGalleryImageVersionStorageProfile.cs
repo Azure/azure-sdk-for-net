@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
     public partial class SharedGalleryImageVersionStorageProfile
@@ -27,7 +27,7 @@ namespace ComputeGallery.Models
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         /// <param name="dataDiskImages"> A list of data disk images. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedGalleryImageVersionStorageProfile(SharedGalleryOSDiskImage osDiskImage, IList<SharedGalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedGalleryImageVersionStorageProfile(SharedGalleryOSDiskImage osDiskImage, IReadOnlyList<SharedGalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OsDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
@@ -38,6 +38,6 @@ namespace ComputeGallery.Models
         public SharedGalleryOSDiskImage OsDiskImage { get; }
 
         /// <summary> A list of data disk images. </summary>
-        public IList<SharedGalleryDataDiskImage> DataDiskImages { get; }
+        public IReadOnlyList<SharedGalleryDataDiskImage> DataDiskImages { get; }
     }
 }

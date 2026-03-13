@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> In the case of an availability or connectivity issue with the data disk, specify the behavior of your VM. </summary>
     internal partial class AvailabilityPolicy

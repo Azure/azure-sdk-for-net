@@ -9,7 +9,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     internal static partial class Argument
     {

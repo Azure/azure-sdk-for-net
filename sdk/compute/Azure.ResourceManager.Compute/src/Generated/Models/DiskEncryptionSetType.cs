@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The type of key used to encrypt the data of the disk. </summary>
     public readonly partial struct DiskEncryptionSetType : IEquatable<DiskEncryptionSetType>

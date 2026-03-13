@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
-using ComputeGallery.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> Specifies information about the gallery image definition that you want to create or update. </summary>
     public partial class CommunityGalleryImageData : PirCommunityGalleryResource
@@ -64,15 +63,6 @@ namespace ComputeCombine
             get
             {
                 return Properties.EndOfLifeOn;
-            }
-        }
-
-        /// <summary> This is the community gallery image definition identifier. </summary>
-        public CommunityGalleryImageIdentifier Identifier
-        {
-            get
-            {
-                return Properties.Identifier;
             }
         }
 

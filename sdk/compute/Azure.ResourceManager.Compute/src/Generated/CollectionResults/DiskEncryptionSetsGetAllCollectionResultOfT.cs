@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeCombine;
-using ComputeDisk.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeDisk
+namespace Azure.ResourceManager.Compute
 {
     internal partial class DiskEncryptionSetsGetAllCollectionResultOfT : Pageable<DiskEncryptionSetData>
     {
@@ -62,7 +61,7 @@ namespace ComputeDisk
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeCombineSubscriptionResource.GetDiskEncryptionSets");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeSubscriptionResource.GetDiskEncryptionSets");
             scope.Start();
             try
             {

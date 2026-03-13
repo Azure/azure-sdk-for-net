@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The metadata of community gallery. </summary>
     public partial class CommunityGalleryMetadata : IJsonModel<CommunityGalleryMetadata>
@@ -45,7 +45,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CommunityGalleryMetadata)} does not support writing '{options.Format}' format.");
             }
@@ -153,7 +153,7 @@ namespace ComputeGallery.Models
             Uri publisherUri = default;
             string publisherContact = default;
             string eula = default;
-            IList<string> publicNames = default;
+            IReadOnlyList<string> publicNames = default;
             Uri privacyStatementUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

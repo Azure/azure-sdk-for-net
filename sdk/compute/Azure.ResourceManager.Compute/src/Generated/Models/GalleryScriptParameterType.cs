@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the type of the Gallery Script parameter. Possible values are: String, Int, Double, Boolean, Enum. </summary>
     public readonly partial struct GalleryScriptParameterType : IEquatable<GalleryScriptParameterType>

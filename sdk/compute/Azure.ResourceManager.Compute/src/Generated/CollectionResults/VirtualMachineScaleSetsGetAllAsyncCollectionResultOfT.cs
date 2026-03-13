@@ -11,25 +11,27 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Compute.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachineScaleSetsGetAllAsyncCollectionResultOfT : AsyncPageable<VirtualMachineScaleSetData>
     {
         private readonly VirtualMachineScaleSets _client;
         private readonly string _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetsGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachineScaleSets client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VirtualMachineScaleSetsGetAllAsyncCollectionResultOfT(VirtualMachineScaleSets client, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public VirtualMachineScaleSetsGetAllAsyncCollectionResultOfT(VirtualMachineScaleSets client, string subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _context = context;
         }
 
@@ -42,12 +44,12 @@ namespace Compute
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                VirtualMachineScaleSetListWithLinkResult result = VirtualMachineScaleSetListWithLinkResult.FromResponse(response);
+                VirtualMachineScaleSetListResult result = VirtualMachineScaleSetListResult.FromResponse(response);
                 yield return Page<VirtualMachineScaleSetData>.FromValues((IReadOnlyList<VirtualMachineScaleSetData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
@@ -62,8 +64,8 @@ namespace Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeCombineSubscriptionResource.GetVirtualMachineScaleSets");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineScaleSetCollection.GetAll");
             scope.Start();
             try
             {

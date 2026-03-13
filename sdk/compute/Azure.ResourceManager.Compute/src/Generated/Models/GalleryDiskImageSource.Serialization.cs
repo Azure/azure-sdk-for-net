@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The source for the disk image. </summary>
     public partial class GalleryDiskImageSource : GalleryArtifactVersionSource, IJsonModel<GalleryDiskImageSource>
@@ -40,7 +40,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support writing '{options.Format}' format.");
             }
@@ -75,11 +75,6 @@ namespace ComputeGallery.Models
                 throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Uri))
-            {
-                writer.WritePropertyName("uri"u8);
-                writer.WriteStringValue(Uri);
-            }
             if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
@@ -114,18 +109,12 @@ namespace ComputeGallery.Models
             }
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string uri = default;
             string storageAccountId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("uri"u8))
-                {
-                    uri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("storageAccountId"u8))
@@ -138,7 +127,7 @@ namespace ComputeGallery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GalleryDiskImageSource(id, additionalBinaryDataProperties, uri, storageAccountId);
+            return new GalleryDiskImageSource(id, additionalBinaryDataProperties, storageAccountId);
         }
     }
 }

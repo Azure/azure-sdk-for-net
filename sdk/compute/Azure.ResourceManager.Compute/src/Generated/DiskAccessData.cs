@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Common.Models;
-using ComputeDisk.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary> disk access resource. </summary>
     public partial class DiskAccessData : TrackedResourceData
@@ -50,7 +49,7 @@ namespace ComputeCombine
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> A readonly collection of private endpoint connections created on the disk. Currently only one endpoint connection is supported. </summary>
-        public IReadOnlyList<ComputeCombinePrivateEndpointConnectionData> PrivateEndpointConnections
+        public IReadOnlyList<ComputePrivateEndpointConnectionData> PrivateEndpointConnections
         {
             get
             {

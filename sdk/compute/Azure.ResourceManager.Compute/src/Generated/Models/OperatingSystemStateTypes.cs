@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Common.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The OS State. For managed images, use Generalized. </summary>
     public enum OperatingSystemStateTypes

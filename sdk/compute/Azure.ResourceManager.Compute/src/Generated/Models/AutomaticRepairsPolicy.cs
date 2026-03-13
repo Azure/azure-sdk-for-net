@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the configuration parameters for automatic repairs on the virtual machine scale set. </summary>
     public partial class AutomaticRepairsPolicy

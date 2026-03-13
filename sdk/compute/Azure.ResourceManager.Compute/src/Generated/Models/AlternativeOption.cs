@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </summary>
     public partial class AlternativeOption

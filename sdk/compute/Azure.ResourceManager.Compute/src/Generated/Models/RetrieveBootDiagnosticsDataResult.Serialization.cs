@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The SAS URIs of the console screenshot and serial log blobs. </summary>
     public partial class RetrieveBootDiagnosticsDataResult : IJsonModel<RetrieveBootDiagnosticsDataResult>
@@ -41,7 +41,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RetrieveBootDiagnosticsDataResult)} does not support writing '{options.Format}' format.");
             }

@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Optional. The action to be taken with regards to install/update/remove of the gallery application in the event of a reboot. </summary>
     public readonly partial struct GalleryApplicationScriptRebootBehavior : IEquatable<GalleryApplicationScriptRebootBehavior>

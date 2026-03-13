@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
     public readonly partial struct StorageAccountType : IEquatable<StorageAccountType>

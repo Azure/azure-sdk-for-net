@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The configuration parameters used to limit the number of virtual machines per availability zone in the virtual machine scale set. </summary>
     public partial class MaxInstancePercentPerZonePolicy

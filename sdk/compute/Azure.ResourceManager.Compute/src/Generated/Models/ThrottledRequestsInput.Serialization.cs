@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Api request input for LogAnalytics getThrottledRequests Api. </summary>
     public partial class ThrottledRequestsInput : LogAnalyticsInputBase, IJsonModel<ThrottledRequestsInput>
@@ -46,7 +46,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ThrottledRequestsInput)} does not support writing '{options.Format}' format.");
             }
@@ -69,9 +69,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(throttledRequestsInput, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(throttledRequestsInput, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

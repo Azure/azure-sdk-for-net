@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Key Vault Key Url to be used for server side encryption of Managed Disks and Snapshots. </summary>
     public partial class KeyForDiskEncryptionSet

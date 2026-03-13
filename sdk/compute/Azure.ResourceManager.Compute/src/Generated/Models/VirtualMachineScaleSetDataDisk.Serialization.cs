@@ -9,12 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set data disk. </summary>
-    public partial class VirtualMachineScaleSetDataDisk : IJsonModel<VirtualMachineScaleSetDataDisk>
+    internal partial class VirtualMachineScaleSetDataDisk : IJsonModel<VirtualMachineScaleSetDataDisk>
     {
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetDataDisk"/> for deserialization. </summary>
         internal VirtualMachineScaleSetDataDisk()
@@ -45,7 +45,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetDataDisk)} does not support writing '{options.Format}' format.");
             }

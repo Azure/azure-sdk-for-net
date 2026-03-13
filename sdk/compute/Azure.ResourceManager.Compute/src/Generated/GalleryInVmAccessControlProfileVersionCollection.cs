@@ -15,9 +15,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using ComputeGallery;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="GalleryInVMAccessControlProfileVersionResource"/> and their operations.
@@ -40,7 +39,7 @@ namespace ComputeCombine
         internal GalleryInVMAccessControlProfileVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(GalleryInVMAccessControlProfileVersionResource.ResourceType, out string galleryInVMAccessControlProfileVersionApiVersion);
-            _galleryInVMAccessControlProfileVersionsClientDiagnostics = new ClientDiagnostics("ComputeCombine", GalleryInVMAccessControlProfileVersionResource.ResourceType.Namespace, Diagnostics);
+            _galleryInVMAccessControlProfileVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryInVMAccessControlProfileVersionResource.ResourceType.Namespace, Diagnostics);
             _galleryInVMAccessControlProfileVersionsRestClient = new GalleryInVMAccessControlProfileVersions(_galleryInVMAccessControlProfileVersionsClientDiagnostics, Pipeline, Endpoint, galleryInVMAccessControlProfileVersionApiVersion ?? "2025-03-03");
             ValidateResourceId(id);
         }
@@ -93,7 +92,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, GalleryInVMAccessControlProfileVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<GalleryInVMAccessControlProfileVersionResource> operation = new ComputeCombineArmOperation<GalleryInVMAccessControlProfileVersionResource>(
+                ComputeArmOperation<GalleryInVMAccessControlProfileVersionResource> operation = new ComputeArmOperation<GalleryInVMAccessControlProfileVersionResource>(
                     new GalleryInVMAccessControlProfileVersionOperationSource(Client),
                     _galleryInVMAccessControlProfileVersionsClientDiagnostics,
                     Pipeline,
@@ -151,7 +150,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryInVMAccessControlProfileVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, inVMAccessControlProfileVersionName, GalleryInVMAccessControlProfileVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<GalleryInVMAccessControlProfileVersionResource> operation = new ComputeCombineArmOperation<GalleryInVMAccessControlProfileVersionResource>(
+                ComputeArmOperation<GalleryInVMAccessControlProfileVersionResource> operation = new ComputeArmOperation<GalleryInVMAccessControlProfileVersionResource>(
                     new GalleryInVMAccessControlProfileVersionOperationSource(Client),
                     _galleryInVMAccessControlProfileVersionsClientDiagnostics,
                     Pipeline,

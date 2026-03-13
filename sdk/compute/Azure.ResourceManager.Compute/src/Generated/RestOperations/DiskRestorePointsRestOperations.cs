@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace ComputeDisk
+namespace Azure.ResourceManager.Compute
 {
     internal partial class DiskRestorePoints
     {

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery Application Version that you want to update. </summary>
     public partial class GalleryApplicationVersionPatch : UpdateResourceDefinition

@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
     public partial class GalleryResource : IJsonModel<GalleryData>
@@ -27,11 +27,11 @@ namespace ComputeCombine
         GalleryData IJsonModel<GalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryData>(Data, options, ComputeCombineContext.Default);
+        BinaryData IPersistableModel<GalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GalleryData IPersistableModel<GalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryData>(data, options, ComputeCombineContext.Default);
+        GalleryData IPersistableModel<GalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryData>(data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

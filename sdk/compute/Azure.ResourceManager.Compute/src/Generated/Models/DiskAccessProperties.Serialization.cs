@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The DiskAccessProperties. </summary>
     internal partial class DiskAccessProperties : IJsonModel<DiskAccessProperties>
@@ -40,7 +40,7 @@ namespace ComputeDisk.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DiskAccessProperties)} does not support writing '{options.Format}' format.");
             }
@@ -78,7 +78,7 @@ namespace ComputeDisk.Models
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
-                foreach (ComputeCombinePrivateEndpointConnectionData item in PrivateEndpointConnections)
+                foreach (ComputePrivateEndpointConnectionData item in PrivateEndpointConnections)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,7 +136,7 @@ namespace ComputeDisk.Models
             {
                 return null;
             }
-            IReadOnlyList<ComputeCombinePrivateEndpointConnectionData> privateEndpointConnections = default;
+            IReadOnlyList<ComputePrivateEndpointConnectionData> privateEndpointConnections = default;
             string provisioningState = default;
             DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -148,10 +148,10 @@ namespace ComputeDisk.Models
                     {
                         continue;
                     }
-                    List<ComputeCombinePrivateEndpointConnectionData> array = new List<ComputeCombinePrivateEndpointConnectionData>();
+                    List<ComputePrivateEndpointConnectionData> array = new List<ComputePrivateEndpointConnectionData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ComputeCombinePrivateEndpointConnectionData.DeserializeComputeCombinePrivateEndpointConnectionData(item, options));
+                        array.Add(ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -175,7 +175,7 @@ namespace ComputeDisk.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DiskAccessProperties(privateEndpointConnections ?? new ChangeTrackingList<ComputeCombinePrivateEndpointConnectionData>(), provisioningState, timeCreated, additionalBinaryDataProperties);
+            return new DiskAccessProperties(privateEndpointConnections ?? new ChangeTrackingList<ComputePrivateEndpointConnectionData>(), provisioningState, timeCreated, additionalBinaryDataProperties);
         }
     }
 }

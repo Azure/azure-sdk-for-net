@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Scale Set. </summary>
     public partial class VirtualMachineScaleSetPatch : ComputeResourcePatch, IJsonModel<VirtualMachineScaleSetPatch>
@@ -41,7 +41,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetPatch)} does not support writing '{options.Format}' format.");
             }
@@ -64,9 +64,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(virtualMachineScaleSetPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(virtualMachineScaleSetPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -152,7 +150,7 @@ namespace Compute.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ComputeCombineSku sku = default;
+            ComputeSku sku = default;
             ComputePlan plan = default;
             VirtualMachineScaleSetUpdateProperties properties = default;
             VirtualMachineScaleSetIdentity identity = default;
@@ -186,7 +184,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    sku = ComputeCombineSku.DeserializeComputeCombineSku(prop.Value, options);
+                    sku = ComputeSku.DeserializeComputeSku(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("plan"u8))

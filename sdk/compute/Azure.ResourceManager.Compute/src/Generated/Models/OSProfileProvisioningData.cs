@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Additional parameters for Reimaging Non-Ephemeral Virtual Machine. </summary>
     public partial class OSProfileProvisioningData

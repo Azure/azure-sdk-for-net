@@ -5,35 +5,13 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
-    public partial class CommunityGalleryResource : IJsonModel<CommunityGalleryData>
+    public partial class CommunityGalleryResource : ArmResource, IJsonModel<CommunityGalleryData>
     {
-        private static IJsonModel<CommunityGalleryData> s_dataDeserializationInstance;
-
-        private static IJsonModel<CommunityGalleryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CommunityGalleryData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CommunityGalleryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommunityGalleryData>)Data).Write(writer, options);
-
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CommunityGalleryData IJsonModel<CommunityGalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CommunityGalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommunityGalleryData>(Data, options, ComputeCombineContext.Default);
-
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        CommunityGalleryData IPersistableModel<CommunityGalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunityGalleryData>(data, options, ComputeCombineContext.Default);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CommunityGalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

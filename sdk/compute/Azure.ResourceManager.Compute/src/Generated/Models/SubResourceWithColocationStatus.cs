@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The SubResourceWithColocationStatus. </summary>
     public partial class SubResourceWithColocationStatus : SubResource

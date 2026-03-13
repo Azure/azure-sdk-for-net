@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The reboot state of the VM following completion of the operation. </summary>
     public readonly partial struct VMGuestPatchRebootStatus : IEquatable<VMGuestPatchRebootStatus>

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Common.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The UserAssignedIdentitiesValue. </summary>
     public partial class UserAssignedIdentitiesValue

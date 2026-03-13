@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Common.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The hypervisor generation of the Virtual Machine. </summary>
     public readonly partial struct HyperVGeneration : IEquatable<HyperVGeneration>

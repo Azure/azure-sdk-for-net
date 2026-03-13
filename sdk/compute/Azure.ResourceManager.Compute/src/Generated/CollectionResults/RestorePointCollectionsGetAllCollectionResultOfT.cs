@@ -10,25 +10,27 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Compute.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class RestorePointCollectionsGetAllCollectionResultOfT : Pageable<RestorePointCollectionData>
     {
         private readonly RestorePointCollections _client;
         private readonly string _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of RestorePointCollectionsGetAllCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The RestorePointCollections client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public RestorePointCollectionsGetAllCollectionResultOfT(RestorePointCollections client, string subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public RestorePointCollectionsGetAllCollectionResultOfT(RestorePointCollections client, string subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _context = context;
         }
 
@@ -41,7 +43,7 @@ namespace Compute
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = this.GetNextResponse(pageSizeHint, nextPage);
+                Response response = GetNextResponse(pageSizeHint, nextPage);
                 if (response is null)
                 {
                     yield break;
@@ -61,8 +63,8 @@ namespace Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _context) : _client.CreateGetAllRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeCombineSubscriptionResource.GetRestorePointCollections");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("RestorePointCollectionCollection.GetAll");
             scope.Start();
             try
             {

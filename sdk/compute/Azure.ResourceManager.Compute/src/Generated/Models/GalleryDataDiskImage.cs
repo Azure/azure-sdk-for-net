@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the data disk image. </summary>
     public partial class GalleryDataDiskImage : GalleryDiskImage
@@ -26,7 +26,7 @@ namespace ComputeGallery.Models
         /// <param name="source"> The source for the disk image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
-        internal GalleryDataDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryDiskImageSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties, int lun) : base(sizeInGB, hostCaching, source, additionalBinaryDataProperties)
+        internal GalleryDataDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryArtifactVersionSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties, int lun) : base(sizeInGB, hostCaching, source, additionalBinaryDataProperties)
         {
             Lun = lun;
         }

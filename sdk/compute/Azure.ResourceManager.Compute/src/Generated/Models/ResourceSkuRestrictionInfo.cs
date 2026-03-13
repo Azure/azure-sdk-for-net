@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeSku.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an available Compute SKU Restriction Information. </summary>
     public partial class ResourceSkuRestrictionInfo

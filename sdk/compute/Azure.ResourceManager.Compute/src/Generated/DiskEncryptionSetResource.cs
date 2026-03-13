@@ -14,11 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using ComputeDisk;
-using ComputeDisk.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a DiskEncryptionSet along with the instance operations that can be performed on it.
@@ -53,7 +52,7 @@ namespace ComputeCombine
         internal DiskEncryptionSetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string diskEncryptionSetApiVersion);
-            _diskEncryptionSetsClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _diskEncryptionSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _diskEncryptionSetsRestClient = new DiskEncryptionSets(_diskEncryptionSetsClientDiagnostics, Pipeline, Endpoint, diskEncryptionSetApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
@@ -229,7 +228,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskEncryptionSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DiskEncryptionSetPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<DiskEncryptionSetResource> operation = new ComputeCombineArmOperation<DiskEncryptionSetResource>(
+                ComputeArmOperation<DiskEncryptionSetResource> operation = new ComputeArmOperation<DiskEncryptionSetResource>(
                     new DiskEncryptionSetOperationSource(Client),
                     _diskEncryptionSetsClientDiagnostics,
                     Pipeline,
@@ -288,7 +287,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskEncryptionSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DiskEncryptionSetPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<DiskEncryptionSetResource> operation = new ComputeCombineArmOperation<DiskEncryptionSetResource>(
+                ComputeArmOperation<DiskEncryptionSetResource> operation = new ComputeArmOperation<DiskEncryptionSetResource>(
                     new DiskEncryptionSetOperationSource(Client),
                     _diskEncryptionSetsClientDiagnostics,
                     Pipeline,
@@ -343,7 +342,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskEncryptionSetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_diskEncryptionSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_diskEncryptionSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -392,7 +391,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskEncryptionSetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_diskEncryptionSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_diskEncryptionSetsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

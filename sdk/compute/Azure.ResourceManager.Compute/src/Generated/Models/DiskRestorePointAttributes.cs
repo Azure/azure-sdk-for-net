@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Disk Restore Point details. </summary>
     public partial class DiskRestorePointAttributes : SubResourceReadOnly

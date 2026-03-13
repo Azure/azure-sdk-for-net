@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
     internal partial class PrivateEndpointConnectionOperationSource : IOperationSource<PrivateEndpointConnectionResource>
@@ -32,7 +32,7 @@ namespace ComputeCombine
         PrivateEndpointConnectionResource IOperationSource<PrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ComputeCombinePrivateEndpointConnectionData data = ComputeCombinePrivateEndpointConnectionData.DeserializeComputeCombinePrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ComputePrivateEndpointConnectionData data = ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PrivateEndpointConnectionResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace ComputeCombine
         async ValueTask<PrivateEndpointConnectionResource> IOperationSource<PrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ComputeCombinePrivateEndpointConnectionData data = ComputeCombinePrivateEndpointConnectionData.DeserializeComputeCombinePrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            ComputePrivateEndpointConnectionData data = ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PrivateEndpointConnectionResource(_client, data);
         }
     }

@@ -14,11 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using ComputeDisk;
-using ComputeDisk.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a DiskAccess along with the instance operations that can be performed on it.
@@ -53,7 +52,7 @@ namespace ComputeCombine
         internal DiskAccessResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string diskAccessApiVersion);
-            _diskAccessesClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _diskAccessesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _diskAccessesRestClient = new DiskAccesses(_diskAccessesClientDiagnostics, Pipeline, Endpoint, diskAccessApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
@@ -229,7 +228,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskAccessesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DiskAccessPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<DiskAccessResource> operation = new ComputeCombineArmOperation<DiskAccessResource>(
+                ComputeArmOperation<DiskAccessResource> operation = new ComputeArmOperation<DiskAccessResource>(
                     new DiskAccessOperationSource(Client),
                     _diskAccessesClientDiagnostics,
                     Pipeline,
@@ -288,7 +287,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskAccessesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, DiskAccessPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<DiskAccessResource> operation = new ComputeCombineArmOperation<DiskAccessResource>(
+                ComputeArmOperation<DiskAccessResource> operation = new ComputeArmOperation<DiskAccessResource>(
                     new DiskAccessOperationSource(Client),
                     _diskAccessesClientDiagnostics,
                     Pipeline,
@@ -343,7 +342,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskAccessesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_diskAccessesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_diskAccessesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -392,7 +391,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskAccessesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_diskAccessesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_diskAccessesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -428,7 +427,7 @@ namespace ComputeCombine
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ComputeCombinePrivateLinkResourceListResult>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ComputePrivateLinkResourceListResult>> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diskAccessesClientDiagnostics.CreateScope("DiskAccessResource.GetPrivateLinkResources");
             scope.Start();
@@ -440,7 +439,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskAccessesRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ComputeCombinePrivateLinkResourceListResult> response = Response.FromValue(ComputeCombinePrivateLinkResourceListResult.FromResponse(result), result);
+                Response<ComputePrivateLinkResourceListResult> response = Response.FromValue(ComputePrivateLinkResourceListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -476,7 +475,7 @@ namespace ComputeCombine
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ComputeCombinePrivateLinkResourceListResult> GetPrivateLinkResources(CancellationToken cancellationToken = default)
+        public virtual Response<ComputePrivateLinkResourceListResult> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diskAccessesClientDiagnostics.CreateScope("DiskAccessResource.GetPrivateLinkResources");
             scope.Start();
@@ -488,7 +487,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskAccessesRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ComputeCombinePrivateLinkResourceListResult> response = Response.FromValue(ComputeCombinePrivateLinkResourceListResult.FromResponse(result), result);
+                Response<ComputePrivateLinkResourceListResult> response = Response.FromValue(ComputePrivateLinkResourceListResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

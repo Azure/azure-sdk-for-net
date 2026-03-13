@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The List Soft-deleted Resources operation response. </summary>
     internal partial class GallerySoftDeletedResourceList

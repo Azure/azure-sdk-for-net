@@ -14,11 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using ComputeGallery;
-using ComputeGallery.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a GalleryApplicationVersion along with the instance operations that can be performed on it.
@@ -53,7 +52,7 @@ namespace ComputeCombine
         internal GalleryApplicationVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string galleryApplicationVersionApiVersion);
-            _galleryApplicationVersionsClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _galleryApplicationVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _galleryApplicationVersionsRestClient = new GalleryApplicationVersions(_galleryApplicationVersionsClientDiagnostics, Pipeline, Endpoint, galleryApplicationVersionApiVersion ?? "2025-03-03");
             ValidateResourceId(id);
         }
@@ -233,7 +232,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryApplicationVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GalleryApplicationVersionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<GalleryApplicationVersionResource> operation = new ComputeCombineArmOperation<GalleryApplicationVersionResource>(
+                ComputeArmOperation<GalleryApplicationVersionResource> operation = new ComputeArmOperation<GalleryApplicationVersionResource>(
                     new GalleryApplicationVersionOperationSource(Client),
                     _galleryApplicationVersionsClientDiagnostics,
                     Pipeline,
@@ -292,7 +291,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryApplicationVersionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GalleryApplicationVersionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<GalleryApplicationVersionResource> operation = new ComputeCombineArmOperation<GalleryApplicationVersionResource>(
+                ComputeArmOperation<GalleryApplicationVersionResource> operation = new ComputeArmOperation<GalleryApplicationVersionResource>(
                     new GalleryApplicationVersionOperationSource(Client),
                     _galleryApplicationVersionsClientDiagnostics,
                     Pipeline,
@@ -347,7 +346,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryApplicationVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_galleryApplicationVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_galleryApplicationVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -396,7 +395,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryApplicationVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_galleryApplicationVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_galleryApplicationVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

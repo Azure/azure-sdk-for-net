@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the aggregated replication status based on all the regional replication status flags. </summary>
     public readonly partial struct AggregatedReplicationState : IEquatable<AggregatedReplicationState>

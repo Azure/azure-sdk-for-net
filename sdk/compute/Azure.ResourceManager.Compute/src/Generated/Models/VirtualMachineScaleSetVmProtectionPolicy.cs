@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The protection policy of a virtual machine scale set VM. </summary>
     public partial class VirtualMachineScaleSetVmProtectionPolicy

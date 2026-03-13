@@ -7,12 +7,12 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
-    public readonly partial struct EdgeZoneStorageAccountType : IEquatable<EdgeZoneStorageAccountType>
+    internal readonly partial struct EdgeZoneStorageAccountType : IEquatable<EdgeZoneStorageAccountType>
     {
         private readonly string _value;
         private const string StandardLRSValue = "Standard_LRS";

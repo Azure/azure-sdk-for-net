@@ -9,9 +9,8 @@ using System;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeCombine;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachineImagesEdgeZoneOperationGroup
     {
@@ -42,7 +41,7 @@ namespace Compute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetPublishersRequest(string subscriptionId, string location, string edgeZone, RequestContext context)
+        internal HttpMessage CreateGetPublishersVirtualMachineImagesEdgeZonesRequest(string subscriptionId, string location, string edgeZone, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -65,7 +64,7 @@ namespace Compute
             return message;
         }
 
-        internal HttpMessage CreateGetOffersRequest(string subscriptionId, string location, string edgeZone, string publisherName, RequestContext context)
+        internal HttpMessage CreateGetOffersVirtualMachineImagesEdgeZonesRequest(string subscriptionId, string location, string edgeZone, string publisherName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -90,7 +89,7 @@ namespace Compute
             return message;
         }
 
-        internal HttpMessage CreateGetSkusRequest(string subscriptionId, string location, string edgeZone, string publisherName, string offer, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImageEdgeZoneSkusRequest(string subscriptionId, string location, string edgeZone, string publisherName, string offer, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -117,7 +116,7 @@ namespace Compute
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string location, string edgeZone, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagesEdgeZonesRequest(string subscriptionId, string location, string edgeZone, string publisherName, string offer, string skus, string expand, int? top, string @orderby, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -144,7 +143,7 @@ namespace Compute
             }
             if (top != null)
             {
-                uri.AppendQuery("$top", ComputeCombine.TypeFormatters.ConvertToString(top), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (@orderby != null)
             {
@@ -158,7 +157,7 @@ namespace Compute
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, string subscriptionId, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachineImagesEdgeZoneRequest(AzureLocation location, string edgeZone, string publisherName, string offer, string skus, string version, string subscriptionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

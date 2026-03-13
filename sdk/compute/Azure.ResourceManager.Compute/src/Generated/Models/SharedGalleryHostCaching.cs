@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </summary>
     public readonly partial struct SharedGalleryHostCaching : IEquatable<SharedGalleryHostCaching>

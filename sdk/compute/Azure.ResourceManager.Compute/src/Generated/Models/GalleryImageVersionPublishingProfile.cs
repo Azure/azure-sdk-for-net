@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The publishing profile of a gallery image Version. </summary>
     public partial class GalleryImageVersionPublishingProfile : GalleryArtifactPublishingProfileBase

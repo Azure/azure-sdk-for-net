@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Input for InstallPatches on a Linux VM, as directly received by the API. </summary>
     public partial class LinuxParameters : IJsonModel<LinuxParameters>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LinuxParameters)} does not support writing '{options.Format}' format.");
             }
@@ -78,7 +78,7 @@ namespace Compute.Models
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
-                foreach (VMGuestPatchClassificationLinux item in ClassificationsToInclude)
+                foreach (Models.VmGuestPatchClassificationForLinux item in ClassificationsToInclude)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -161,7 +161,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            IList<VMGuestPatchClassificationLinux> classificationsToInclude = default;
+            IList<Models.VmGuestPatchClassificationForLinux> classificationsToInclude = default;
             IList<string> packageNameMasksToInclude = default;
             IList<string> packageNameMasksToExclude = default;
             string maintenanceRunId = default;
@@ -174,10 +174,10 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    List<VMGuestPatchClassificationLinux> array = new List<VMGuestPatchClassificationLinux>();
+                    List<Models.VmGuestPatchClassificationForLinux> array = new List<Models.VmGuestPatchClassificationForLinux>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new VMGuestPatchClassificationLinux(item.GetString()));
+                        array.Add(new Models.VmGuestPatchClassificationForLinux(item.GetString()));
                     }
                     classificationsToInclude = array;
                     continue;
@@ -234,7 +234,7 @@ namespace Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LinuxParameters(classificationsToInclude ?? new ChangeTrackingList<VMGuestPatchClassificationLinux>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), packageNameMasksToExclude ?? new ChangeTrackingList<string>(), maintenanceRunId, additionalBinaryDataProperties);
+            return new LinuxParameters(classificationsToInclude ?? new ChangeTrackingList<Models.VmGuestPatchClassificationForLinux>(), packageNameMasksToInclude ?? new ChangeTrackingList<string>(), packageNameMasksToExclude ?? new ChangeTrackingList<string>(), maintenanceRunId, additionalBinaryDataProperties);
         }
     }
 }

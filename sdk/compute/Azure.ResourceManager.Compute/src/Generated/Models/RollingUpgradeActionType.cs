@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The last action performed on the rolling upgrade. </summary>
     public enum RollingUpgradeActionType

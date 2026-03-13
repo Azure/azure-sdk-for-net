@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Properties of the SSH public key. </summary>
     internal partial class SshPublicKeyResourceProperties

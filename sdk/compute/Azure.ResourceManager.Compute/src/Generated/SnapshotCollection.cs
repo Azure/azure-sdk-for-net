@@ -16,9 +16,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using ComputeDisk;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="SnapshotResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal SnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SnapshotResource.ResourceType, out string snapshotApiVersion);
-            _snapshotsClientDiagnostics = new ClientDiagnostics("ComputeCombine", SnapshotResource.ResourceType.Namespace, Diagnostics);
+            _snapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SnapshotResource.ResourceType.Namespace, Diagnostics);
             _snapshotsRestClient = new Snapshots(_snapshotsClientDiagnostics, Pipeline, Endpoint, snapshotApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
@@ -94,7 +93,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _snapshotsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, SnapshotData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<SnapshotResource> operation = new ComputeCombineArmOperation<SnapshotResource>(
+                ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
                     new SnapshotOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _snapshotsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, SnapshotData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<SnapshotResource> operation = new ComputeCombineArmOperation<SnapshotResource>(
+                ComputeArmOperation<SnapshotResource> operation = new ComputeArmOperation<SnapshotResource>(
                     new SnapshotOperationSource(Client),
                     _snapshotsClientDiagnostics,
                     Pipeline,

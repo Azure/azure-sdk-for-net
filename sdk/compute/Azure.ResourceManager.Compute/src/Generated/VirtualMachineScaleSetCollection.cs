@@ -15,11 +15,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using Compute;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="VirtualMachineScaleSetResource"/> and their operations.
@@ -30,6 +29,8 @@ namespace ComputeCombine
     {
         private readonly ClientDiagnostics _virtualMachineScaleSetsClientDiagnostics;
         private readonly VirtualMachineScaleSets _virtualMachineScaleSetsRestClient;
+        private readonly ClientDiagnostics _virtualMachineScaleSetsSubscriptionClientDiagnostics;
+        private readonly VirtualMachineScaleSetsSubscription _virtualMachineScaleSetsSubscriptionRestClient;
 
         /// <summary> Initializes a new instance of VirtualMachineScaleSetCollection for mocking. </summary>
         protected VirtualMachineScaleSetCollection()
@@ -42,8 +43,10 @@ namespace ComputeCombine
         internal VirtualMachineScaleSetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(VirtualMachineScaleSetResource.ResourceType, out string virtualMachineScaleSetApiVersion);
-            _virtualMachineScaleSetsClientDiagnostics = new ClientDiagnostics("ComputeCombine", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineScaleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
             _virtualMachineScaleSetsRestClient = new VirtualMachineScaleSets(_virtualMachineScaleSetsClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetApiVersion ?? "2025-04-01");
+            _virtualMachineScaleSetsSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineScaleSetsSubscriptionRestClient = new VirtualMachineScaleSetsSubscription(_virtualMachineScaleSetsSubscriptionClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
 
@@ -96,7 +99,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, VirtualMachineScaleSetData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<VirtualMachineScaleSetResource> operation = new ComputeCombineArmOperation<VirtualMachineScaleSetResource>(
+                ComputeArmOperation<VirtualMachineScaleSetResource> operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(
                     new VirtualMachineScaleSetOperationSource(Client),
                     _virtualMachineScaleSetsClientDiagnostics,
                     Pipeline,
@@ -155,7 +158,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineScaleSetsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmScaleSetName, VirtualMachineScaleSetData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<VirtualMachineScaleSetResource> operation = new ComputeCombineArmOperation<VirtualMachineScaleSetResource>(
+                ComputeArmOperation<VirtualMachineScaleSetResource> operation = new ComputeArmOperation<VirtualMachineScaleSetResource>(
                     new VirtualMachineScaleSetOperationSource(Client),
                     _virtualMachineScaleSetsClientDiagnostics,
                     Pipeline,

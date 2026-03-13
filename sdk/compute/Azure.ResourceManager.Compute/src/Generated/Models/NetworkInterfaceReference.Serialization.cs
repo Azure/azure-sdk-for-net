@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a network interface reference. </summary>
     public partial class NetworkInterfaceReference : SubResource, IJsonModel<NetworkInterfaceReference>
@@ -41,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkInterfaceReference)} does not support writing '{options.Format}' format.");
             }
@@ -79,7 +78,7 @@ namespace Compute.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WriteObjectValue<Models.NetworkInterfaceReferenceProperties>(Properties, options);
             }
         }
 
@@ -110,7 +109,7 @@ namespace Compute.Models
             }
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            NetworkInterfaceReferenceProperties properties = default;
+            Models.NetworkInterfaceReferenceProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -124,7 +123,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    properties = NetworkInterfaceReferenceProperties.DeserializeNetworkInterfaceReferenceProperties(prop.Value, options);
+                    properties = Models.NetworkInterfaceReferenceProperties.DeserializeNetworkInterfaceReferenceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

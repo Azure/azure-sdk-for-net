@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains information about SSH certificate public key and the path on the Linux VM where the public key is placed. </summary>
     public partial class SshPublicKey

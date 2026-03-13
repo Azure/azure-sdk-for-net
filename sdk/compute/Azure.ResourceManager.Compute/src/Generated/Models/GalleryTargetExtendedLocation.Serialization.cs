@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The GalleryTargetExtendedLocation. </summary>
     public partial class GalleryTargetExtendedLocation : IJsonModel<GalleryTargetExtendedLocation>
@@ -40,7 +40,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryTargetExtendedLocation)} does not support writing '{options.Format}' format.");
             }
@@ -144,7 +144,7 @@ namespace ComputeGallery.Models
             string name = default;
             GalleryExtendedLocation extendedLocation = default;
             int? extendedLocationReplicaCount = default;
-            EdgeZoneStorageAccountType? storageAccountType = default;
+            ImageStorageAccountType? storageAccountType = default;
             EncryptionImages encryption = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace ComputeGallery.Models
                     {
                         continue;
                     }
-                    storageAccountType = new EdgeZoneStorageAccountType(prop.Value.GetString());
+                    storageAccountType = new ImageStorageAccountType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encryption"u8))

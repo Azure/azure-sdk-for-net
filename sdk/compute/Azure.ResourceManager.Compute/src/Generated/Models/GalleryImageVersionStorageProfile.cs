@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the storage profile of a Gallery Image Version. </summary>
     public partial class GalleryImageVersionStorageProfile
@@ -28,16 +28,13 @@ namespace ComputeGallery.Models
         /// <param name="osDiskImage"> This is the OS disk image. </param>
         /// <param name="dataDiskImages"> A list of data disk images. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionStorageProfile(GalleryArtifactVersionFullSource source, GalleryOSDiskImage osDiskImage, IList<GalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryImageVersionStorageProfile(GalleryArtifactVersionSource source, GalleryOSDiskImage osDiskImage, IList<GalleryDataDiskImage> dataDiskImages, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             OsDiskImage = osDiskImage;
             DataDiskImages = dataDiskImages;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The source of the gallery artifact version. </summary>
-        public GalleryArtifactVersionFullSource Source { get; set; }
 
         /// <summary> This is the OS disk image. </summary>
         public GalleryOSDiskImage OsDiskImage { get; set; }

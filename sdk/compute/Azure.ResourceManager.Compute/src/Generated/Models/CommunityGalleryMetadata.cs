@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The metadata of community gallery. </summary>
     public partial class CommunityGalleryMetadata
@@ -33,7 +33,7 @@ namespace ComputeGallery.Models
         /// <param name="publicNames"> A list of public names the gallery has. </param>
         /// <param name="privacyStatementUri"> The link for the privacy statement of this community gallery from the gallery publisher. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunityGalleryMetadata(Uri publisherUri, string publisherContact, string eula, IList<string> publicNames, Uri privacyStatementUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommunityGalleryMetadata(Uri publisherUri, string publisherContact, string eula, IReadOnlyList<string> publicNames, Uri privacyStatementUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublisherUri = publisherUri;
             PublisherContact = publisherContact;
@@ -53,7 +53,7 @@ namespace ComputeGallery.Models
         public string Eula { get; }
 
         /// <summary> A list of public names the gallery has. </summary>
-        public IList<string> PublicNames { get; }
+        public IReadOnlyList<string> PublicNames { get; }
 
         /// <summary> The link for the privacy statement of this community gallery from the gallery publisher. </summary>
         public Uri PrivacyStatementUri { get; }

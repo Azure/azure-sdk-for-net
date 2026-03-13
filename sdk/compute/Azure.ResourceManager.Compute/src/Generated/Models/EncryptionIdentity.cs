@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the Managed Identity used by ADE to get access token for keyvault operations. </summary>
     internal partial class EncryptionIdentity

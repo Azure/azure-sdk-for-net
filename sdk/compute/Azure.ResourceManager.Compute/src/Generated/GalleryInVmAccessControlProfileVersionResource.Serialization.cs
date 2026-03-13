@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary></summary>
     public partial class GalleryInVMAccessControlProfileVersionResource : IJsonModel<GalleryInVMAccessControlProfileVersionData>
@@ -27,11 +27,11 @@ namespace ComputeCombine
         GalleryInVMAccessControlProfileVersionData IJsonModel<GalleryInVMAccessControlProfileVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GalleryInVMAccessControlProfileVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryInVMAccessControlProfileVersionData>(Data, options, ComputeCombineContext.Default);
+        BinaryData IPersistableModel<GalleryInVMAccessControlProfileVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryInVMAccessControlProfileVersionData>(Data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GalleryInVMAccessControlProfileVersionData IPersistableModel<GalleryInVMAccessControlProfileVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryInVMAccessControlProfileVersionData>(data, options, ComputeCombineContext.Default);
+        GalleryInVMAccessControlProfileVersionData IPersistableModel<GalleryInVMAccessControlProfileVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryInVMAccessControlProfileVersionData>(data, options, AzureResourceManagerComputeContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GalleryInVMAccessControlProfileVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

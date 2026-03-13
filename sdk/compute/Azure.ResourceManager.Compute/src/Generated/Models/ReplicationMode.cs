@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Optional parameter which specifies the mode to be used for replication. This property is not updatable. </summary>
     public readonly partial struct ReplicationMode : IEquatable<ReplicationMode>

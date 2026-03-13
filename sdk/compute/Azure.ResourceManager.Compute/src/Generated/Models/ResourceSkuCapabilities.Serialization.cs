@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeSku.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes The SKU capabilities object. </summary>
     public partial class ResourceSkuCapabilities : IJsonModel<ResourceSkuCapabilities>
@@ -40,7 +40,7 @@ namespace ComputeSku.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceSkuCapabilities)} does not support writing '{options.Format}' format.");
             }

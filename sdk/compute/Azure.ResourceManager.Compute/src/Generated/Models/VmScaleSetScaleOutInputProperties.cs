@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The input properties for ScaleOut. </summary>
     internal partial class VMScaleSetScaleOutInputProperties

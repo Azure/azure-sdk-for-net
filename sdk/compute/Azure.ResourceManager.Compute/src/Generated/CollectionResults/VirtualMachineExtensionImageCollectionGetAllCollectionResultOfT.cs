@@ -13,9 +13,8 @@ using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Compute;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT : Pageable<VirtualMachineExtensionImageData>
     {
@@ -96,7 +95,7 @@ namespace ComputeCombine
             List<VirtualMachineExtensionImageData> result = new List<VirtualMachineExtensionImageData>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<VirtualMachineExtensionImageData>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, ComputeCombineContext.Default));
+                result.Add(ModelReaderWriter.Read<VirtualMachineExtensionImageData>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default));
             }
             return result;
         }

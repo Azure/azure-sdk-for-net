@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Parameters for GenerateSshKeyPair. </summary>
     public partial class SshGenerateKeyPairInputParameters

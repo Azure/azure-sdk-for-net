@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the dedicated host. Only tags, autoReplaceOnFailure and licenseType may be updated. </summary>
     public partial class DedicatedHostPatch : ComputeResourcePatch, IJsonModel<DedicatedHostPatch>
@@ -41,7 +41,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DedicatedHostPatch)} does not support writing '{options.Format}' format.");
             }
@@ -64,9 +64,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dedicatedHostPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dedicatedHostPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
@@ -128,7 +126,7 @@ namespace Compute.Models
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DedicatedHostProperties properties = default;
-            ComputeCombineSku sku = default;
+            ComputeSku sku = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tags"u8))
@@ -167,7 +165,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    sku = ComputeCombineSku.DeserializeComputeCombineSku(prop.Value, options);
+                    sku = ComputeSku.DeserializeComputeSku(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

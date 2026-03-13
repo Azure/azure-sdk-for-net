@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the network interfaces or the networking configuration of the virtual machine. </summary>
     public partial class VirtualMachineNetworkProfile : IJsonModel<VirtualMachineNetworkProfile>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineNetworkProfile)} does not support writing '{options.Format}' format.");
             }
@@ -78,9 +78,9 @@ namespace Compute.Models
             {
                 writer.WritePropertyName("networkInterfaces"u8);
                 writer.WriteStartArray();
-                foreach (NetworkInterfaceReference item in NetworkInterfaces)
+                foreach (Models.VirtualMachineNetworkInterfaceReference item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<Models.VirtualMachineNetworkInterfaceReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +141,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            IList<NetworkInterfaceReference> networkInterfaces = default;
+            IList<Models.VirtualMachineNetworkInterfaceReference> networkInterfaces = default;
             NetworkApiVersion? networkApiVersion = default;
             IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -153,10 +153,10 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    List<NetworkInterfaceReference> array = new List<NetworkInterfaceReference>();
+                    List<Models.VirtualMachineNetworkInterfaceReference> array = new List<Models.VirtualMachineNetworkInterfaceReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterfaceReference.DeserializeNetworkInterfaceReference(item, options));
+                        array.Add(Models.VirtualMachineNetworkInterfaceReference.DeserializeVirtualMachineNetworkInterfaceReference(item, options));
                     }
                     networkInterfaces = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), additionalBinaryDataProperties);
+            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<Models.VirtualMachineNetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), additionalBinaryDataProperties);
         }
     }
 }

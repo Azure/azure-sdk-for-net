@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Determines on how to handle disks with slow I/O. </summary>
     public readonly partial struct AvailabilityPolicyDiskDelay : IEquatable<AvailabilityPolicyDiskDelay>

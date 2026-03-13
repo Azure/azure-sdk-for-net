@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the behavior of the managed disk when the VM gets deleted, for example whether the managed disk is deleted or detached. Supported values are: <b>Delete.</b> If this value is used, the managed disk is deleted when VM gets deleted. <b>Detach.</b> If this value is used, the managed disk is retained after VM gets deleted. Minimum api-version: 2021-03-01. </summary>
     public readonly partial struct DiskDeleteOptionType : IEquatable<DiskDeleteOptionType>

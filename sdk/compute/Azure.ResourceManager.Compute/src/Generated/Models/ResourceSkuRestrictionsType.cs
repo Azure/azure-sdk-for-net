@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace ComputeSku.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The type of restrictions. </summary>
     public enum ResourceSkuRestrictionsType

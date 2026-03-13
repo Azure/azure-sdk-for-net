@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes each OS upgrade on the Virtual Machine Scale Set. </summary>
     public partial class UpgradeOperationHistoricalStatusInfoProperties

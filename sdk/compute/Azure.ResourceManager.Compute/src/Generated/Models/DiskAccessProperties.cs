@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The DiskAccessProperties. </summary>
     internal partial class DiskAccessProperties
@@ -20,7 +20,7 @@ namespace ComputeDisk.Models
         /// <summary> Initializes a new instance of <see cref="DiskAccessProperties"/>. </summary>
         public DiskAccessProperties()
         {
-            PrivateEndpointConnections = new ChangeTrackingList<ComputeCombinePrivateEndpointConnectionData>();
+            PrivateEndpointConnections = new ChangeTrackingList<ComputePrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskAccessProperties"/>. </summary>
@@ -28,7 +28,7 @@ namespace ComputeDisk.Models
         /// <param name="provisioningState"> The disk access resource provisioning state. </param>
         /// <param name="timeCreated"> The time when the disk access was created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiskAccessProperties(IReadOnlyList<ComputeCombinePrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiskAccessProperties(IReadOnlyList<ComputePrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, DateTimeOffset? timeCreated, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateEndpointConnections = privateEndpointConnections;
             ProvisioningState = provisioningState;
@@ -37,7 +37,7 @@ namespace ComputeDisk.Models
         }
 
         /// <summary> A readonly collection of private endpoint connections created on the disk. Currently only one endpoint connection is supported. </summary>
-        public IReadOnlyList<ComputeCombinePrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<ComputeCombinePrivateEndpointConnectionData>();
+        public IReadOnlyList<ComputePrivateEndpointConnectionData> PrivateEndpointConnections { get; } = new ChangeTrackingList<ComputePrivateEndpointConnectionData>();
 
         /// <summary> The disk access resource provisioning state. </summary>
         public string ProvisioningState { get; }

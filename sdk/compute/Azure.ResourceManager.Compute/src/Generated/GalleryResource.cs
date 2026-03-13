@@ -14,11 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using ComputeGallery;
-using ComputeGallery.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a Gallery along with the instance operations that can be performed on it.
@@ -53,7 +52,7 @@ namespace ComputeCombine
         internal GalleryResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string galleryApiVersion);
-            _galleriesClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _galleriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _galleriesRestClient = new Galleries(_galleriesClientDiagnostics, Pipeline, Endpoint, galleryApiVersion ?? "2025-03-03");
             ValidateResourceId(id);
         }
@@ -233,7 +232,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GalleryPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<GalleryResource> operation = new ComputeCombineArmOperation<GalleryResource>(
+                ComputeArmOperation<GalleryResource> operation = new ComputeArmOperation<GalleryResource>(
                     new GalleryOperationSource(Client),
                     _galleriesClientDiagnostics,
                     Pipeline,
@@ -292,7 +291,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleriesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, GalleryPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<GalleryResource> operation = new ComputeCombineArmOperation<GalleryResource>(
+                ComputeArmOperation<GalleryResource> operation = new ComputeArmOperation<GalleryResource>(
                     new GalleryOperationSource(Client),
                     _galleriesClientDiagnostics,
                     Pipeline,
@@ -347,7 +346,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_galleriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_galleriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -396,7 +395,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleriesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_galleriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_galleriesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -449,7 +448,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleriesRestClient.CreateGallerySharingProfileUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SharingUpdate.ToRequestContent(sharingUpdate), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<SharingUpdate> operation = new ComputeCombineArmOperation<SharingUpdate>(
+                ComputeArmOperation<SharingUpdate> operation = new ComputeArmOperation<SharingUpdate>(
                     new SharingUpdateOperationSource(),
                     _galleriesClientDiagnostics,
                     Pipeline,
@@ -508,7 +507,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleriesRestClient.CreateGallerySharingProfileUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, SharingUpdate.ToRequestContent(sharingUpdate), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<SharingUpdate> operation = new ComputeCombineArmOperation<SharingUpdate>(
+                ComputeArmOperation<SharingUpdate> operation = new ComputeArmOperation<SharingUpdate>(
                     new SharingUpdateOperationSource(),
                     _galleriesClientDiagnostics,
                     Pipeline,

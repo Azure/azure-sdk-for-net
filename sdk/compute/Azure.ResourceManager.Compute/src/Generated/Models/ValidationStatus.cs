@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This property specifies the status of the validationProfile of the image version. </summary>
     public readonly partial struct ValidationStatus : IEquatable<ValidationStatus>

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
     public partial class WindowsParameters : IJsonModel<WindowsParameters>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WindowsParameters)} does not support writing '{options.Format}' format.");
             }
@@ -78,7 +78,7 @@ namespace Compute.Models
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
-                foreach (VMGuestPatchClassificationWindows item in ClassificationsToInclude)
+                foreach (Models.VmGuestPatchClassificationForWindows item in ClassificationsToInclude)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -196,7 +196,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            IList<VMGuestPatchClassificationWindows> classificationsToInclude = default;
+            IList<Models.VmGuestPatchClassificationForWindows> classificationsToInclude = default;
             IList<string> kbNumbersToInclude = default;
             IList<string> kbNumbersToExclude = default;
             bool? excludeKbsRequiringReboot = default;
@@ -212,10 +212,10 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    List<VMGuestPatchClassificationWindows> array = new List<VMGuestPatchClassificationWindows>();
+                    List<Models.VmGuestPatchClassificationForWindows> array = new List<Models.VmGuestPatchClassificationForWindows>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new VMGuestPatchClassificationWindows(item.GetString()));
+                        array.Add(new Models.VmGuestPatchClassificationForWindows(item.GetString()));
                     }
                     classificationsToInclude = array;
                     continue;
@@ -328,7 +328,7 @@ namespace Compute.Models
                 }
             }
             return new WindowsParameters(
-                classificationsToInclude ?? new ChangeTrackingList<VMGuestPatchClassificationWindows>(),
+                classificationsToInclude ?? new ChangeTrackingList<Models.VmGuestPatchClassificationForWindows>(),
                 kbNumbersToInclude ?? new ChangeTrackingList<string>(),
                 kbNumbersToExclude ?? new ChangeTrackingList<string>(),
                 excludeKbsRequiringReboot,

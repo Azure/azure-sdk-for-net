@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Common.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class OperatingSystemTypesExtensions
     {

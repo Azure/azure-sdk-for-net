@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class LogAnalyticsOperationGroup
     {
@@ -41,7 +41,7 @@ namespace Compute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateExportRequestRateByIntervalRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateExportLogAnalyticsRequestRateByIntervalRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -64,7 +64,7 @@ namespace Compute
             return message;
         }
 
-        internal HttpMessage CreateExportThrottledRequestsRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateExportLogAnalyticsThrottledRequestsRequest(string subscriptionId, string location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

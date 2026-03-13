@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     internal enum SerializationFormat
     {

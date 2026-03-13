@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a network interface reference. </summary>
     public partial class NetworkInterfaceReference : SubResource
@@ -23,13 +22,13 @@ namespace Compute.Models
         /// <param name="id"> Resource Id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Describes a network interface reference properties. </param>
-        internal NetworkInterfaceReference(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, NetworkInterfaceReferenceProperties properties) : base(id, additionalBinaryDataProperties)
+        internal NetworkInterfaceReference(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, Models.NetworkInterfaceReferenceProperties properties) : base(id, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> Describes a network interface reference properties. </summary>
-        internal NetworkInterfaceReferenceProperties Properties { get; set; }
+        internal Models.NetworkInterfaceReferenceProperties Properties { get; set; }
 
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
         public bool? Primary
@@ -42,7 +41,7 @@ namespace Compute.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new NetworkInterfaceReferenceProperties();
+                    Properties = new Models.NetworkInterfaceReferenceProperties();
                 }
                 Properties.Primary = value.Value;
             }
@@ -59,7 +58,7 @@ namespace Compute.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new NetworkInterfaceReferenceProperties();
+                    Properties = new Models.NetworkInterfaceReferenceProperties();
                 }
                 Properties.DeleteOption = value.Value;
             }

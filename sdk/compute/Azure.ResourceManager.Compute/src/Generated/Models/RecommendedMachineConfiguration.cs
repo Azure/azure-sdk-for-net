@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>
     public partial class RecommendedMachineConfiguration

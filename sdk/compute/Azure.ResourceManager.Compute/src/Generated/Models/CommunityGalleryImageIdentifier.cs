@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the community gallery image definition identifier. </summary>
-    public partial class CommunityGalleryImageIdentifier
+    internal partial class CommunityGalleryImageIdentifier
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

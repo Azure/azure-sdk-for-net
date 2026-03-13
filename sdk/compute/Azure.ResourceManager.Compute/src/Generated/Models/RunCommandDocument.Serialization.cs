@@ -10,10 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Common.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the properties of a Run Command. </summary>
     public partial class RunCommandDocument : RunCommandDocumentBase, IJsonModel<RunCommandDocument>
@@ -47,7 +46,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RunCommandDocument)} does not support writing '{options.Format}' format.");
             }
@@ -144,8 +143,8 @@ namespace Compute.Models
             string label = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<string> script = default;
-            IList<RunCommandParameterDefinition> parameters = default;
+            IReadOnlyList<string> script = default;
+            IReadOnlyList<RunCommandParameterDefinition> parameters = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("$schema"u8))

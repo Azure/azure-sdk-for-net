@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The GalleryTargetExtendedLocation. </summary>
     public partial class GalleryTargetExtendedLocation
@@ -28,7 +28,7 @@ namespace ComputeGallery.Models
         /// <param name="storageAccountType"> Specifies the storage account type to be used to store the image. This property is not updatable. </param>
         /// <param name="encryption"> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryTargetExtendedLocation(string name, GalleryExtendedLocation extendedLocation, int? extendedLocationReplicaCount, EdgeZoneStorageAccountType? storageAccountType, EncryptionImages encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryTargetExtendedLocation(string name, GalleryExtendedLocation extendedLocation, int? extendedLocationReplicaCount, ImageStorageAccountType? storageAccountType, EncryptionImages encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ExtendedLocation = extendedLocation;
@@ -46,9 +46,6 @@ namespace ComputeGallery.Models
 
         /// <summary> The number of replicas of the Image Version to be created per extended location. This property is updatable. </summary>
         public int? ExtendedLocationReplicaCount { get; set; }
-
-        /// <summary> Specifies the storage account type to be used to store the image. This property is not updatable. </summary>
-        public EdgeZoneStorageAccountType? StorageAccountType { get; set; }
 
         /// <summary> Optional. Allows users to provide customer managed keys for encrypting the OS and data disks in the gallery artifact. </summary>
         public EncryptionImages Encryption { get; set; }

@@ -9,9 +9,8 @@ using System;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeCombine;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachines
     {
@@ -140,7 +139,7 @@ namespace Compute
             }
             if (forceDeletion != null)
             {
-                uri.AppendQuery("forceDeletion", ComputeCombine.TypeFormatters.ConvertToString(forceDeletion), true);
+                uri.AppendQuery("forceDeletion", TypeFormatters.ConvertToString(forceDeletion), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -179,60 +178,6 @@ namespace Compute
         }
 
         internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            if (nextPage.IsAbsoluteUri)
-            {
-                uri.Reset(nextPage);
-            }
-            else
-            {
-                uri.Reset(new Uri(_endpoint, nextPage));
-            }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string statusOnly, string filter, string expand, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.Compute/virtualMachines", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (statusOnly != null)
-            {
-                uri.AppendQuery("statusOnly", statusOnly, true);
-            }
-            if (filter != null)
-            {
-                uri.AppendQuery("$filter", filter, true);
-            }
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string statusOnly, string filter, string expand, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -367,7 +312,7 @@ namespace Compute
             }
             if (hibernate != null)
             {
-                uri.AppendQuery("hibernate", ComputeCombine.TypeFormatters.ConvertToString(hibernate), true);
+                uri.AppendQuery("hibernate", TypeFormatters.ConvertToString(hibernate), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -485,7 +430,7 @@ namespace Compute
             }
             if (skipShutdown != null)
             {
-                uri.AppendQuery("skipShutdown", ComputeCombine.TypeFormatters.ConvertToString(skipShutdown), true);
+                uri.AppendQuery("skipShutdown", TypeFormatters.ConvertToString(skipShutdown), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -604,7 +549,7 @@ namespace Compute
             }
             if (sasUriExpirationTimeInMinutes != null)
             {
-                uri.AppendQuery("sasUriExpirationTimeInMinutes", ComputeCombine.TypeFormatters.ConvertToString(sasUriExpirationTimeInMinutes), true);
+                uri.AppendQuery("sasUriExpirationTimeInMinutes", TypeFormatters.ConvertToString(sasUriExpirationTimeInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

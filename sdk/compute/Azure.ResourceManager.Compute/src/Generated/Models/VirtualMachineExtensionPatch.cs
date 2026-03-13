@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a Virtual Machine Extension. </summary>
     public partial class VirtualMachineExtensionPatch : ComputeResourcePatch
@@ -180,23 +180,6 @@ namespace Compute.Models
                     Properties = new VirtualMachineExtensionUpdateProperties();
                 }
                 Properties.SuppressFailures = value.Value;
-            }
-        }
-
-        /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
-        public KeyVaultSecretReference ProtectedSettingsFromKeyVault
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ProtectedSettingsFromKeyVault;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new VirtualMachineExtensionUpdateProperties();
-                }
-                Properties.ProtectedSettingsFromKeyVault = value;
             }
         }
     }

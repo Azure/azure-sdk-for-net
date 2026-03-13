@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The safety profile of the Gallery Script Version. </summary>
     public partial class GalleryScriptVersionSafetyProfile : GalleryArtifactSafetyProfileBase

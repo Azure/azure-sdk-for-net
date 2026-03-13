@@ -16,9 +16,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Compute;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="SshPublicKeyResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal SshPublicKeyResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(SshPublicKeyResource.ResourceType, out string sshPublicKeyResourceApiVersion);
-            _sshPublicKeyResourcesClientDiagnostics = new ClientDiagnostics("ComputeCombine", SshPublicKeyResource.ResourceType.Namespace, Diagnostics);
+            _sshPublicKeyResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", SshPublicKeyResource.ResourceType.Namespace, Diagnostics);
             _sshPublicKeyResourcesRestClient = new SshPublicKeyResources(_sshPublicKeyResourcesClientDiagnostics, Pipeline, Endpoint, sshPublicKeyResourceApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -97,7 +96,7 @@ namespace ComputeCombine
                 Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<SshPublicKeyResource> operation = new ComputeCombineArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<SshPublicKeyResource> operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 Response<SshPublicKeyResourceData> response = Response.FromValue(SshPublicKeyResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<SshPublicKeyResource> operation = new ComputeCombineArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<SshPublicKeyResource> operation = new ComputeArmOperation<SshPublicKeyResource>(Response.FromValue(new SshPublicKeyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

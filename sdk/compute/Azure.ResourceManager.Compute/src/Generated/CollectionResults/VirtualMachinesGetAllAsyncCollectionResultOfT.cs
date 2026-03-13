@@ -11,16 +11,15 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Compute.Models;
-using ComputeCombine;
+using Azure.ResourceManager.Compute.Models;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachinesGetAllAsyncCollectionResultOfT : AsyncPageable<VirtualMachineData>
     {
         private readonly VirtualMachines _client;
         private readonly string _subscriptionId;
-        private readonly string _statusOnly;
+        private readonly string _resourceGroupName;
         private readonly string _filter;
         private readonly string _expand;
         private readonly RequestContext _context;
@@ -28,15 +27,15 @@ namespace Compute
         /// <summary> Initializes a new instance of VirtualMachinesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The VirtualMachines client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="statusOnly"> statusOnly=true enables fetching run time status of all Virtual Machines in the subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id' eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'. </param>
         /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public VirtualMachinesGetAllAsyncCollectionResultOfT(VirtualMachines client, string subscriptionId, string statusOnly, string filter, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
+        public VirtualMachinesGetAllAsyncCollectionResultOfT(VirtualMachines client, string subscriptionId, string resourceGroupName, string filter, string expand, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _statusOnly = statusOnly;
+            _resourceGroupName = resourceGroupName;
             _filter = filter;
             _expand = expand;
             _context = context;
@@ -51,7 +50,7 @@ namespace Compute
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = await this.GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -71,8 +70,8 @@ namespace Compute
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _statusOnly, _filter, _expand, _context) : _client.CreateGetAllRequest(_subscriptionId, _statusOnly, _filter, _expand, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableComputeCombineSubscriptionResource.GetVirtualMachines");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _subscriptionId, _resourceGroupName, _filter, _expand, _context) : _client.CreateGetAllRequest(_subscriptionId, _resourceGroupName, _filter, _expand, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("VirtualMachineCollection.GetAll");
             scope.Start();
             try
             {

@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> List of supported capabilities persisted on the disk resource for VM use. </summary>
     public partial class SupportedCapabilities

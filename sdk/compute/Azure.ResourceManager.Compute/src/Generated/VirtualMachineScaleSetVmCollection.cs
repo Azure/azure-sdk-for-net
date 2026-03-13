@@ -15,10 +15,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Compute;
-using Compute.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="VirtualMachineScaleSetVMResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal VirtualMachineScaleSetVMCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(VirtualMachineScaleSetVMResource.ResourceType, out string virtualMachineScaleSetVMApiVersion);
-            _virtualMachineScaleSetVMSClientDiagnostics = new ClientDiagnostics("ComputeCombine", VirtualMachineScaleSetVMResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineScaleSetVMSClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineScaleSetVMResource.ResourceType.Namespace, Diagnostics);
             _virtualMachineScaleSetVMSRestClient = new VirtualMachineScaleSetVMS(_virtualMachineScaleSetVMSClientDiagnostics, Pipeline, Endpoint, virtualMachineScaleSetVMApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -95,7 +94,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineScaleSetVMSRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, VirtualMachineScaleSetVMData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<VirtualMachineScaleSetVMResource> operation = new ComputeCombineArmOperation<VirtualMachineScaleSetVMResource>(
+                ComputeArmOperation<VirtualMachineScaleSetVMResource> operation = new ComputeArmOperation<VirtualMachineScaleSetVMResource>(
                     new VirtualMachineScaleSetVMOperationSource(Client),
                     _virtualMachineScaleSetVMSClientDiagnostics,
                     Pipeline,
@@ -154,7 +153,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineScaleSetVMSRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, instanceId, VirtualMachineScaleSetVMData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<VirtualMachineScaleSetVMResource> operation = new ComputeCombineArmOperation<VirtualMachineScaleSetVMResource>(
+                ComputeArmOperation<VirtualMachineScaleSetVMResource> operation = new ComputeArmOperation<VirtualMachineScaleSetVMResource>(
                     new VirtualMachineScaleSetVMOperationSource(Client),
                     _virtualMachineScaleSetVMSClientDiagnostics,
                     Pipeline,

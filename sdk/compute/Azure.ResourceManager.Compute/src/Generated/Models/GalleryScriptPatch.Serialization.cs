@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the gallery Script Definition that you want to update. </summary>
     public partial class GalleryScriptPatch : UpdateResourceDefinition, IJsonModel<GalleryScriptPatch>
@@ -41,7 +41,7 @@ namespace ComputeGallery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GalleryScriptPatch)} does not support writing '{options.Format}' format.");
             }
@@ -64,9 +64,7 @@ namespace ComputeGallery.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(galleryScriptPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(galleryScriptPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

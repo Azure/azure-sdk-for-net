@@ -7,7 +7,7 @@
 
 using Azure.Core.Pipeline;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     internal static partial class ProviderConstants
     {

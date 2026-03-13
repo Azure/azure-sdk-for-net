@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the nature of the policy violation. </summary>
     public readonly partial struct PolicyViolationCategory : IEquatable<PolicyViolationCategory>

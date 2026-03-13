@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the sku profile for the virtual machine scale set. With this property the customer is able to specify a list of VM sizes and an allocation strategy. </summary>
     public partial class ComputeSkuProfile : IJsonModel<ComputeSkuProfile>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ComputeSkuProfile)} does not support writing '{options.Format}' format.");
             }
@@ -78,9 +78,9 @@ namespace Compute.Models
             {
                 writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();
-                foreach (SkuProfileVMSize item in VmSizes)
+                foreach (Models.ComputeSkuProfileVmSize item in VmSizes)
                 {
-                    writer.WriteObjectValue(item, options);
+                    writer.WriteObjectValue<Models.ComputeSkuProfileVmSize>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +131,7 @@ namespace Compute.Models
             {
                 return null;
             }
-            IList<SkuProfileVMSize> vmSizes = default;
+            IList<Models.ComputeSkuProfileVmSize> vmSizes = default;
             AllocationStrategy? allocationStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -142,10 +142,10 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    List<SkuProfileVMSize> array = new List<SkuProfileVMSize>();
+                    List<Models.ComputeSkuProfileVmSize> array = new List<Models.ComputeSkuProfileVmSize>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SkuProfileVMSize.DeserializeSkuProfileVMSize(item, options));
+                        array.Add(Models.ComputeSkuProfileVmSize.DeserializeComputeSkuProfileVmSize(item, options));
                     }
                     vmSizes = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ComputeSkuProfile(vmSizes ?? new ChangeTrackingList<SkuProfileVMSize>(), allocationStrategy, additionalBinaryDataProperties);
+            return new ComputeSkuProfile(vmSizes ?? new ChangeTrackingList<Models.ComputeSkuProfileVmSize>(), allocationStrategy, additionalBinaryDataProperties);
         }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Information about the current running state of the overall upgrade. </summary>
     public partial class RollingUpgradeRunningStatus

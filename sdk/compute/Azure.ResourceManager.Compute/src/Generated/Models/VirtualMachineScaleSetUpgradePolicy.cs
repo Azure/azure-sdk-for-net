@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an upgrade policy - automatic, manual, or rolling. </summary>
     public partial class VirtualMachineScaleSetUpgradePolicy

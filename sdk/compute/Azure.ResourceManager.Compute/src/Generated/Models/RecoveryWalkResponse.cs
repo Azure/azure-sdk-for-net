@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Response after calling a manual recovery walk. </summary>
     public partial class RecoveryWalkResponse

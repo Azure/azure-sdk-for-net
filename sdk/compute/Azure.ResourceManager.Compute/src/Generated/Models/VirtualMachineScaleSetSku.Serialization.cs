@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes an available virtual machine scale set sku. </summary>
     public partial class VirtualMachineScaleSetSku : IJsonModel<VirtualMachineScaleSetSku>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetSku)} does not support writing '{options.Format}' format.");
             }
@@ -132,7 +132,7 @@ namespace Compute.Models
                 return null;
             }
             string resourceType = default;
-            ComputeCombineSku sku = default;
+            ComputeSku sku = default;
             VirtualMachineScaleSetSkuCapacity capacity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Compute.Models
                     {
                         continue;
                     }
-                    sku = ComputeCombineSku.DeserializeComputeCombineSku(prop.Value, options);
+                    sku = ComputeSku.DeserializeComputeSku(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("capacity"u8))

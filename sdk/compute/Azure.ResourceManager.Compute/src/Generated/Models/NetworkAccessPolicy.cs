@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeDisk.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Policy for accessing the disk via network. </summary>
     public readonly partial struct NetworkAccessPolicy : IEquatable<NetworkAccessPolicy>

@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
     public readonly partial struct DeleteOptions : IEquatable<DeleteOptions>

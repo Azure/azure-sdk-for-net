@@ -10,10 +10,9 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeCombine;
-using ComputeDisk.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeDisk
+namespace Azure.ResourceManager.Compute
 {
     internal partial class DiskAccessesGetByResourceGroupCollectionResultOfT : Pageable<DiskAccessData>
     {

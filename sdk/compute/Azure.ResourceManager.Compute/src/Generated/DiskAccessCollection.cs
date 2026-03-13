@@ -16,9 +16,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using ComputeDisk;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="DiskAccessResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal DiskAccessCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DiskAccessResource.ResourceType, out string diskAccessApiVersion);
-            _diskAccessesClientDiagnostics = new ClientDiagnostics("ComputeCombine", DiskAccessResource.ResourceType.Namespace, Diagnostics);
+            _diskAccessesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskAccessResource.ResourceType.Namespace, Diagnostics);
             _diskAccessesRestClient = new DiskAccesses(_diskAccessesClientDiagnostics, Pipeline, Endpoint, diskAccessApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
@@ -94,7 +93,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskAccessesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, DiskAccessData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<DiskAccessResource> operation = new ComputeCombineArmOperation<DiskAccessResource>(
+                ComputeArmOperation<DiskAccessResource> operation = new ComputeArmOperation<DiskAccessResource>(
                     new DiskAccessOperationSource(Client),
                     _diskAccessesClientDiagnostics,
                     Pipeline,
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _diskAccessesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskAccessName, DiskAccessData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<DiskAccessResource> operation = new ComputeCombineArmOperation<DiskAccessResource>(
+                ComputeArmOperation<DiskAccessResource> operation = new ComputeArmOperation<DiskAccessResource>(
                     new DiskAccessOperationSource(Client),
                     _diskAccessesClientDiagnostics,
                     Pipeline,

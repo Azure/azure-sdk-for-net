@@ -15,9 +15,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Compute;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="VirtualMachineRunCommandResource"/> and their operations.
@@ -40,7 +39,7 @@ namespace ComputeCombine
         internal VirtualMachineRunCommandCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(VirtualMachineRunCommandResource.ResourceType, out string virtualMachineRunCommandApiVersion);
-            _virtualMachineRunCommandsClientDiagnostics = new ClientDiagnostics("ComputeCombine", VirtualMachineRunCommandResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineRunCommandsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineRunCommandResource.ResourceType.Namespace, Diagnostics);
             _virtualMachineRunCommandsRestClient = new VirtualMachineRunCommands(_virtualMachineRunCommandsClientDiagnostics, Pipeline, Endpoint, virtualMachineRunCommandApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -93,7 +92,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, VirtualMachineRunCommandData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<VirtualMachineRunCommandResource> operation = new ComputeCombineArmOperation<VirtualMachineRunCommandResource>(
+                ComputeArmOperation<VirtualMachineRunCommandResource> operation = new ComputeArmOperation<VirtualMachineRunCommandResource>(
                     new VirtualMachineRunCommandOperationSource(Client),
                     _virtualMachineRunCommandsClientDiagnostics,
                     Pipeline,
@@ -151,7 +150,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _virtualMachineRunCommandsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runCommandName, VirtualMachineRunCommandData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<VirtualMachineRunCommandResource> operation = new ComputeCombineArmOperation<VirtualMachineRunCommandResource>(
+                ComputeArmOperation<VirtualMachineRunCommandResource> operation = new ComputeArmOperation<VirtualMachineRunCommandResource>(
                     new VirtualMachineRunCommandOperationSource(Client),
                     _virtualMachineRunCommandsClientDiagnostics,
                     Pipeline,

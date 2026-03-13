@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Sharing status of current gallery. </summary>
     public partial class SharingStatus
@@ -27,7 +27,7 @@ namespace ComputeGallery.Models
         /// <param name="aggregatedState"> Aggregated sharing state of current gallery. </param>
         /// <param name="summary"> Summary of all regional sharing status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharingStatus(SharingState? aggregatedState, IList<RegionalSharingStatus> summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharingStatus(SharingState? aggregatedState, IReadOnlyList<RegionalSharingStatus> summary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AggregatedState = aggregatedState;
             Summary = summary;
@@ -38,6 +38,6 @@ namespace ComputeGallery.Models
         public SharingState? AggregatedState { get; }
 
         /// <summary> Summary of all regional sharing status. </summary>
-        public IList<RegionalSharingStatus> Summary { get; }
+        public IReadOnlyList<RegionalSharingStatus> Summary { get; }
     }
 }

@@ -14,11 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using ComputeGallery;
-using ComputeGallery.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a GalleryInVMAccessControlProfile along with the instance operations that can be performed on it.
@@ -53,7 +52,7 @@ namespace ComputeCombine
         internal GalleryInVMAccessControlProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string galleryInVMAccessControlProfileApiVersion);
-            _galleryInVMAccessControlProfilesClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _galleryInVMAccessControlProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _galleryInVMAccessControlProfilesRestClient = new GalleryInVMAccessControlProfiles(_galleryInVMAccessControlProfilesClientDiagnostics, Pipeline, Endpoint, galleryInVMAccessControlProfileApiVersion ?? "2025-03-03");
             ValidateResourceId(id);
         }
@@ -230,7 +229,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GalleryInVMAccessControlProfilePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<GalleryInVMAccessControlProfileResource> operation = new ComputeCombineArmOperation<GalleryInVMAccessControlProfileResource>(
+                ComputeArmOperation<GalleryInVMAccessControlProfileResource> operation = new ComputeArmOperation<GalleryInVMAccessControlProfileResource>(
                     new GalleryInVMAccessControlProfileOperationSource(Client),
                     _galleryInVMAccessControlProfilesClientDiagnostics,
                     Pipeline,
@@ -289,7 +288,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GalleryInVMAccessControlProfilePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<GalleryInVMAccessControlProfileResource> operation = new ComputeCombineArmOperation<GalleryInVMAccessControlProfileResource>(
+                ComputeArmOperation<GalleryInVMAccessControlProfileResource> operation = new ComputeArmOperation<GalleryInVMAccessControlProfileResource>(
                     new GalleryInVMAccessControlProfileOperationSource(Client),
                     _galleryInVMAccessControlProfilesClientDiagnostics,
                     Pipeline,
@@ -344,7 +343,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_galleryInVMAccessControlProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_galleryInVMAccessControlProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -393,7 +392,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_galleryInVMAccessControlProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                ComputeArmOperation operation = new ComputeArmOperation(_galleryInVMAccessControlProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);

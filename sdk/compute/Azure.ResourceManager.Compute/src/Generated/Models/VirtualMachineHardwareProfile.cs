@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the hardware settings for the virtual machine. </summary>
     public partial class VirtualMachineHardwareProfile

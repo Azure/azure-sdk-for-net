@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Information about rollback on failed VM instances after a OS Upgrade operation. </summary>
     public partial class RollbackStatusInfo

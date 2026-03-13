@@ -15,10 +15,9 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Compute;
-using Compute.Models;
+using Azure.ResourceManager.Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="DedicatedHostResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal DedicatedHostCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DedicatedHostResource.ResourceType, out string dedicatedHostApiVersion);
-            _dedicatedHostsClientDiagnostics = new ClientDiagnostics("ComputeCombine", DedicatedHostResource.ResourceType.Namespace, Diagnostics);
+            _dedicatedHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DedicatedHostResource.ResourceType.Namespace, Diagnostics);
             _dedicatedHostsRestClient = new DedicatedHosts(_dedicatedHostsClientDiagnostics, Pipeline, Endpoint, dedicatedHostApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -94,7 +93,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, DedicatedHostData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<DedicatedHostResource> operation = new ComputeCombineArmOperation<DedicatedHostResource>(
+                ComputeArmOperation<DedicatedHostResource> operation = new ComputeArmOperation<DedicatedHostResource>(
                     new DedicatedHostOperationSource(Client),
                     _dedicatedHostsClientDiagnostics,
                     Pipeline,
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _dedicatedHostsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, hostName, DedicatedHostData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<DedicatedHostResource> operation = new ComputeCombineArmOperation<DedicatedHostResource>(
+                ComputeArmOperation<DedicatedHostResource> operation = new ComputeArmOperation<DedicatedHostResource>(
                     new DedicatedHostOperationSource(Client),
                     _dedicatedHostsClientDiagnostics,
                     Pipeline,

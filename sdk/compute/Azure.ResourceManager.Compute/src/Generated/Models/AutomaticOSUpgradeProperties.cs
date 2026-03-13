@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes automatic OS upgrade properties on the image. </summary>
     internal partial class AutomaticOSUpgradeProperties

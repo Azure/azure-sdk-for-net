@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
     public partial class PublicIPAddressSku

@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the availability of a given patch. </summary>
     public readonly partial struct PatchAssessmentState : IEquatable<PatchAssessmentState>

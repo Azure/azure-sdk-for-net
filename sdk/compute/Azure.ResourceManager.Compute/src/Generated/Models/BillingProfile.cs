@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the billing related details of a Azure Spot VM or VMSS. Minimum api-version: 2019-03-01. </summary>
     internal partial class BillingProfile

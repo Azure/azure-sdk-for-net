@@ -16,9 +16,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Compute;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="VirtualMachineExtensionImageResource"/> and their operations.
@@ -53,7 +52,7 @@ namespace ComputeCombine
             _location = location;
             _publisherName = publisherName;
             _type = @type;
-            _virtualMachineExtensionImagesClientDiagnostics = new ClientDiagnostics("ComputeCombine", VirtualMachineExtensionImageResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineExtensionImagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineExtensionImageResource.ResourceType.Namespace, Diagnostics);
             _virtualMachineExtensionImagesRestClient = new VirtualMachineExtensionImages(_virtualMachineExtensionImagesClientDiagnostics, Pipeline, Endpoint, virtualMachineExtensionImageApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }

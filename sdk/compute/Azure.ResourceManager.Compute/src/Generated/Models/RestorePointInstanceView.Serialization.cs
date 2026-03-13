@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The instance view of a restore point. </summary>
     public partial class RestorePointInstanceView : IJsonModel<RestorePointInstanceView>
@@ -40,7 +40,7 @@ namespace Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RestorePointInstanceView)} does not support writing '{options.Format}' format.");
             }
@@ -136,8 +136,8 @@ namespace Compute.Models
             {
                 return null;
             }
-            IList<DiskRestorePointInstanceView> diskRestorePoints = default;
-            IList<InstanceViewStatus> statuses = default;
+            IReadOnlyList<DiskRestorePointInstanceView> diskRestorePoints = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The configuration parameters used while performing resilient VM creation. </summary>
     internal partial class ResilientVMCreationPolicy

@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the Availability Set properties related to migration to Flexible Virtual Machine Scale Set. </summary>
     public partial class VirtualMachineScaleSetMigrationInfo

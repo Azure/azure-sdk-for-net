@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> This is the disk image base class. </summary>
     public partial class GalleryDiskImage
@@ -26,7 +26,7 @@ namespace ComputeGallery.Models
         /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
         /// <param name="source"> The source for the disk image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryDiskImageSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GalleryDiskImage(int? sizeInGB, HostCaching? hostCaching, GalleryArtifactVersionSource source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SizeInGB = sizeInGB;
             HostCaching = hostCaching;
@@ -39,8 +39,5 @@ namespace ComputeGallery.Models
 
         /// <summary> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </summary>
         public HostCaching? HostCaching { get; set; }
-
-        /// <summary> The source for the disk image. </summary>
-        public GalleryDiskImageSource Source { get; set; }
     }
 }

@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Common.Models;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies information about the dedicated host. Only tags, autoReplaceOnFailure and licenseType may be updated. </summary>
     public partial class DedicatedHostPatch : ComputeResourcePatch
@@ -24,7 +23,7 @@ namespace Compute.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the dedicated host. </param>
         /// <param name="sku"> [List all available dedicated host sizes for resizing] (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes). Resizing can be only used to scale up DedicatedHost. Only name is required to be set. </param>
-        internal DedicatedHostPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, DedicatedHostProperties properties, ComputeCombineSku sku) : base(tags, additionalBinaryDataProperties)
+        internal DedicatedHostPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, DedicatedHostProperties properties, ComputeSku sku) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
             Sku = sku;
@@ -34,7 +33,7 @@ namespace Compute.Models
         internal DedicatedHostProperties Properties { get; set; }
 
         /// <summary> [List all available dedicated host sizes for resizing] (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes). Resizing can be only used to scale up DedicatedHost. Only name is required to be set. </summary>
-        public ComputeCombineSku Sku { get; set; }
+        public ComputeSku Sku { get; set; }
 
         /// <summary> Fault domain of the dedicated host within a dedicated host group. </summary>
         public int? PlatformFaultDomain

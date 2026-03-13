@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The Virtual Machine Scale Set List Skus operation response. </summary>
     internal partial class VirtualMachineScaleSetListSkusResult

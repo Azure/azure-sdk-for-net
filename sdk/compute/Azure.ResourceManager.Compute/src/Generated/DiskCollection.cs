@@ -16,9 +16,8 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using ComputeDisk;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="DiskResource"/> and their operations.
@@ -41,7 +40,7 @@ namespace ComputeCombine
         internal DiskCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DiskResource.ResourceType, out string diskApiVersion);
-            _disksClientDiagnostics = new ClientDiagnostics("ComputeCombine", DiskResource.ResourceType.Namespace, Diagnostics);
+            _disksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskResource.ResourceType.Namespace, Diagnostics);
             _disksRestClient = new Disks(_disksClientDiagnostics, Pipeline, Endpoint, diskApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
@@ -94,7 +93,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, DiskData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ComputeCombineArmOperation<DiskResource> operation = new ComputeCombineArmOperation<DiskResource>(
+                ComputeArmOperation<DiskResource> operation = new ComputeArmOperation<DiskResource>(
                     new DiskOperationSource(Client),
                     _disksClientDiagnostics,
                     Pipeline,
@@ -152,7 +151,7 @@ namespace ComputeCombine
                 };
                 HttpMessage message = _disksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, diskName, DiskData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ComputeCombineArmOperation<DiskResource> operation = new ComputeCombineArmOperation<DiskResource>(
+                ComputeArmOperation<DiskResource> operation = new ComputeArmOperation<DiskResource>(
                     new DiskOperationSource(Client),
                     _disksClientDiagnostics,
                     Pipeline,

@@ -13,9 +13,8 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Compute;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a RollingUpgradeStatusInfo along with the instance operations that can be performed on it.
@@ -50,7 +49,7 @@ namespace ComputeCombine
         internal RollingUpgradeStatusInfoResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string rollingUpgradeStatusInfoApiVersion);
-            _rollingUpgradeStatusInfosClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _rollingUpgradeStatusInfosClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             _rollingUpgradeStatusInfosRestClient = new RollingUpgradeStatusInfos(_rollingUpgradeStatusInfosClientDiagnostics, Pipeline, Endpoint, rollingUpgradeStatusInfoApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }

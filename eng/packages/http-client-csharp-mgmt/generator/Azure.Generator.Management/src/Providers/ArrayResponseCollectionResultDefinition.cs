@@ -12,6 +12,7 @@ using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
@@ -85,9 +86,9 @@ namespace Azure.Generator.Management.Providers
         }
 
         /// <summary>
-        /// Converts a parameter name to a valid C# field name by stripping OData '$' prefix.
+        /// Converts a parameter name to a valid C# field name.
         /// </summary>
-        private static string ToFieldName(string paramName) => $"_{paramName.TrimStart('$')}";
+        private static string ToFieldName(string paramName) => $"_{paramName.ToVariableName()}";
 
         protected override FieldProvider[] BuildFields()
         {

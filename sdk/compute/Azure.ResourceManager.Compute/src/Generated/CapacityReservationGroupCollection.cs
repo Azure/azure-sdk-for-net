@@ -15,11 +15,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using Compute;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="CapacityReservationGroupResource"/> and their operations.
@@ -42,7 +41,7 @@ namespace ComputeCombine
         internal CapacityReservationGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(CapacityReservationGroupResource.ResourceType, out string capacityReservationGroupApiVersion);
-            _capacityReservationGroupsClientDiagnostics = new ClientDiagnostics("ComputeCombine", CapacityReservationGroupResource.ResourceType.Namespace, Diagnostics);
+            _capacityReservationGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", CapacityReservationGroupResource.ResourceType.Namespace, Diagnostics);
             _capacityReservationGroupsRestClient = new CapacityReservationGroups(_capacityReservationGroupsClientDiagnostics, Pipeline, Endpoint, capacityReservationGroupApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -98,7 +97,7 @@ namespace ComputeCombine
                 Response<CapacityReservationGroupData> response = Response.FromValue(CapacityReservationGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<CapacityReservationGroupResource> operation = new ComputeCombineArmOperation<CapacityReservationGroupResource>(Response.FromValue(new CapacityReservationGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<CapacityReservationGroupResource> operation = new ComputeArmOperation<CapacityReservationGroupResource>(Response.FromValue(new CapacityReservationGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -153,7 +152,7 @@ namespace ComputeCombine
                 Response<CapacityReservationGroupData> response = Response.FromValue(CapacityReservationGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<CapacityReservationGroupResource> operation = new ComputeCombineArmOperation<CapacityReservationGroupResource>(Response.FromValue(new CapacityReservationGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<CapacityReservationGroupResource> operation = new ComputeArmOperation<CapacityReservationGroupResource>(Response.FromValue(new CapacityReservationGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

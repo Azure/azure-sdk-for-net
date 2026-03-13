@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Virtual Machine Scale Set OS Upgrade History operation response. </summary>
     public partial class UpgradeOperationHistoricalStatusInfo

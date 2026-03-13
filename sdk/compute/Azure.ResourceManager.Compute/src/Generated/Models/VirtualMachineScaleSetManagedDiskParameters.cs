@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes the parameters of a ScaleSet managed disk. </summary>
-    public partial class VirtualMachineScaleSetManagedDiskParameters
+    internal partial class VirtualMachineScaleSetManagedDiskParameters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

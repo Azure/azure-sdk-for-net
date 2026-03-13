@@ -9,9 +9,8 @@ using System;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using ComputeCombine;
 
-namespace Compute
+namespace Azure.ResourceManager.Compute
 {
     internal partial class VirtualMachineScaleSetVMS
     {
@@ -118,7 +117,7 @@ namespace Compute
             }
             if (forceDeletion != null)
             {
-                uri.AppendQuery("forceDeletion", ComputeCombine.TypeFormatters.ConvertToString(forceDeletion), true);
+                uri.AppendQuery("forceDeletion", TypeFormatters.ConvertToString(forceDeletion), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -405,7 +404,7 @@ namespace Compute
             }
             if (skipShutdown != null)
             {
-                uri.AppendQuery("skipShutdown", ComputeCombine.TypeFormatters.ConvertToString(skipShutdown), true);
+                uri.AppendQuery("skipShutdown", TypeFormatters.ConvertToString(skipShutdown), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -481,7 +480,7 @@ namespace Compute
             }
             if (sasUriExpirationTimeInMinutes != null)
             {
-                uri.AppendQuery("sasUriExpirationTimeInMinutes", ComputeCombine.TypeFormatters.ConvertToString(sasUriExpirationTimeInMinutes), true);
+                uri.AppendQuery("sasUriExpirationTimeInMinutes", TypeFormatters.ConvertToString(sasUriExpirationTimeInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

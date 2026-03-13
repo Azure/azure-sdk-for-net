@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies how the virtual machine disk should be created. Possible values are <b>Attach:</b> This value is used when you are using a specialized disk to create the virtual machine. <b>FromImage:</b> This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. <b>Empty:</b> This value is used when creating an empty data disk. <b>Copy:</b> This value is used to create a data disk from a snapshot or another disk. <b>Restore:</b> This value is used to create a data disk from a disk restore point. </summary>
     public readonly partial struct DiskCreateOptionType : IEquatable<DiskCreateOptionType>

@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Represents the dedicated host unutilized capacity in terms of a specific VM size. </summary>
     public partial class DedicatedHostAllocatableVM

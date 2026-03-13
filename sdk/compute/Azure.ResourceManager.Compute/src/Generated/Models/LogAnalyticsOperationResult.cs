@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> LogAnalytics operation status response. </summary>
     public partial class LogAnalyticsOperationResult

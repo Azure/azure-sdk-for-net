@@ -15,11 +15,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
-using Compute;
-using Compute.Models;
 
-namespace ComputeCombine
+namespace Azure.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing a collection of <see cref="DedicatedHostGroupResource"/> and their operations.
@@ -42,7 +41,7 @@ namespace ComputeCombine
         internal DedicatedHostGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DedicatedHostGroupResource.ResourceType, out string dedicatedHostGroupApiVersion);
-            _dedicatedHostGroupsClientDiagnostics = new ClientDiagnostics("ComputeCombine", DedicatedHostGroupResource.ResourceType.Namespace, Diagnostics);
+            _dedicatedHostGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DedicatedHostGroupResource.ResourceType.Namespace, Diagnostics);
             _dedicatedHostGroupsRestClient = new DedicatedHostGroups(_dedicatedHostGroupsClientDiagnostics, Pipeline, Endpoint, dedicatedHostGroupApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -98,7 +97,7 @@ namespace ComputeCombine
                 Response<DedicatedHostGroupData> response = Response.FromValue(DedicatedHostGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<DedicatedHostGroupResource> operation = new ComputeCombineArmOperation<DedicatedHostGroupResource>(Response.FromValue(new DedicatedHostGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<DedicatedHostGroupResource> operation = new ComputeArmOperation<DedicatedHostGroupResource>(Response.FromValue(new DedicatedHostGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -153,7 +152,7 @@ namespace ComputeCombine
                 Response<DedicatedHostGroupData> response = Response.FromValue(DedicatedHostGroupData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ComputeCombineArmOperation<DedicatedHostGroupResource> operation = new ComputeCombineArmOperation<DedicatedHostGroupResource>(Response.FromValue(new DedicatedHostGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ComputeArmOperation<DedicatedHostGroupResource> operation = new ComputeArmOperation<DedicatedHostGroupResource>(Response.FromValue(new DedicatedHostGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

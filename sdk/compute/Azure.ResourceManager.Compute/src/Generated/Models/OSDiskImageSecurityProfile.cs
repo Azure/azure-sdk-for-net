@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ComputeGallery.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Contains security profile for an OS disk image. </summary>
     public partial class OSDiskImageSecurityProfile

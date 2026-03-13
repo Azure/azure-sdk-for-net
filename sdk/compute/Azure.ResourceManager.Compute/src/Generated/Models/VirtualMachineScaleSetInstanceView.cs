@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using ComputeCombine;
+using Azure.ResourceManager.Compute;
 
-namespace Compute.Models
+namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The instance view of a virtual machine scale set. </summary>
     public partial class VirtualMachineScaleSetInstanceView
@@ -31,7 +31,7 @@ namespace Compute.Models
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="orchestrationServices"> The orchestration services information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetInstanceView(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine, IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary> extensions, IList<InstanceViewStatus> statuses, IReadOnlyList<OrchestrationServiceSummary> orchestrationServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetInstanceView(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine, IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary> extensions, IReadOnlyList<InstanceViewStatus> statuses, IReadOnlyList<OrchestrationServiceSummary> orchestrationServices, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualMachine = virtualMachine;
             Extensions = extensions;
@@ -47,7 +47,7 @@ namespace Compute.Models
         public IReadOnlyList<VirtualMachineScaleSetVMExtensionsSummary> Extensions { get; }
 
         /// <summary> The resource status information. </summary>
-        public IList<InstanceViewStatus> Statuses { get; }
+        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
 
         /// <summary> The orchestration services information. </summary>
         public IReadOnlyList<OrchestrationServiceSummary> OrchestrationServices { get; }
