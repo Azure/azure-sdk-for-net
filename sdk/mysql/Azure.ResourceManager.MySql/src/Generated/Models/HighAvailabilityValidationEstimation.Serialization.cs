@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(highAvailabilityValidationEstimation, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(highAvailabilityValidationEstimation, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HighAvailabilityValidationEstimation"/> from. </param>

@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(attestationProviderCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(attestationProviderCreateOrUpdateContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

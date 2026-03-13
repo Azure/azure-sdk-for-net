@@ -463,6 +463,9 @@ When there are many errors (20+), fix them in batches to avoid unnecessary regen
 - **`[CodeGenSuppress("MemberName", typeof(...))]`** — Suppress a generated member.
 - **`[CodeGenMember("MemberName")]`** — Link custom property to generated counterpart.
 - **Match existing custom code folder convention** — `Custom/`, `Customization/`, or `Customized/`.
+- **Add justification comments** — Every custom code file must include a code comment (`//`) explaining **why** the customization exists (e.g., backward-compat shim for removed enum value, property rename from flattening change). This helps future maintainers understand the intent and decide whether the shim can be removed.
+- **No XML `<summary>` on partial type declarations in custom code** — Partial types in customization files do not need an XML doc summary on the type itself; the generated partial already carries the summary and it will be merged by the compiler. Adding a summary here risks leaking internal justification into the released NuGet package's XML documentation. Only add XML docs on **new members** (properties, methods) introduced in custom code.
+- **Mark backward-compat shims with `[EditorBrowsable(EditorBrowsableState.Never)]`** — Deprecated shim members (e.g., restored enum values, renamed properties) should be hidden from IntelliSense to guide users toward the new API surface.
 
 > **Further reading**: [C# Customization Guide](https://github.com/microsoft/typespec/blob/main/packages/http-client-csharp/.tspd/docs/customization.md), [TypeSpec client customization](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/knowledge/customizing-client-tsp.md).
 
@@ -556,9 +559,10 @@ During the iteration loop, changes fall into three categories. Identify which on
 ### Step 2 — Create Spec PR (if applicable)
 
 1. In the local spec repo (`../azure-rest-api-specs`), create a branch and commit all spec changes.
-2. Push the branch and create a PR against `Azure/azure-rest-api-specs`.
-3. Note the **final commit SHA** from the pushed branch.
-4. PR title: `Add csharp client customizations for <Service> migration`
+2. Run `tsp format "*.tsp"` in the TypeSpec project directory to ensure formatting passes CI validation.
+3. Push the branch and create a PR against `Azure/azure-rest-api-specs`.
+4. Note the **final commit SHA** from the pushed branch.
+5. PR title: `Add csharp client customizations for <Service> migration`
 
 ### Step 3 — Create Generator PR (if applicable) [MPG only]
 
@@ -643,6 +647,12 @@ Report: error messages, generated code snippet, repro steps. Do NOT manually fix
 4. **Never add entries to `ApiCompatBaseline.txt`** without explicit user approval.
 5. **Never bump the major version** of an Azure SDK package.
 6. **Preserve git history** — prefer renames over delete+create.
+7. **Never manually edit files under `src/Generated/`** — this is strictly forbidden. All generated code must come from the generator. If generated code has a bug (e.g., references a non-existent method, wrong type), fix it through:
+   - **TypeSpec decorators** (`@@clientName`, `@@alternateType`, `@@access`) in `client.tsp`
+   - **Custom partial classes** with `[CodeGenSuppress]` in `src/Custom/` to suppress the broken member and provide a corrected replacement
+   - **Generator bug fix** if no decorator or customization can resolve it
+   
+   Note: `[CodeGenSuppress]` only takes effect when the custom files exist **before** code generation. After adding custom files, regenerate with `dotnet build /t:GenerateCode` so the generator reads them and honors the suppression.
 
 ### Autonomous Mode (Default)
 

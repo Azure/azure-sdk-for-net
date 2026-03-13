@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SelfHelpSolutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpSolutionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SelfHelpSolutionResource> CreateOrUpdate(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpSolutionResource> CreateOrUpdate(WaitUntil waitUntil, string solutionResourceName, SelfHelpSolutionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
 

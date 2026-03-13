@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.IotOperations
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(iotOperationsDataflowGraphData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(iotOperationsDataflowGraphData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotOperationsDataflowGraphData"/> from. </param>

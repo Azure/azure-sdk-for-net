@@ -13,46 +13,14 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    /// <summary>
-    /// A class representing the ConfluentOrganization data model.
-    /// Organization resource.
-    /// </summary>
+    /// <summary> Organization resource. </summary>
     public partial class ConfluentOrganizationData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="offerDetail"> Confluent offer detail. </param>
         /// <param name="userDetail"> Subscriber detail. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offerDetail"/> or <paramref name="userDetail"/> is null. </exception>
@@ -61,61 +29,112 @@ namespace Azure.ResourceManager.Confluent
             Argument.AssertNotNull(offerDetail, nameof(offerDetail));
             Argument.AssertNotNull(userDetail, nameof(userDetail));
 
-            OfferDetail = offerDetail;
-            UserDetail = userDetail;
+            Properties = new OrganizationResourceProperties(offerDetail, userDetail);
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="createdOn"> The creation time of the resource. </param>
-        /// <param name="provisioningState"> Provision states for confluent RP. </param>
-        /// <param name="organizationId"> Id of the Confluent organization. </param>
-        /// <param name="ssoUri"> SSO url for the Confluent organization. </param>
-        /// <param name="offerDetail"> Confluent offer detail. </param>
-        /// <param name="userDetail"> Subscriber detail. </param>
-        /// <param name="linkOrganization"> Link an existing Confluent organization. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, ConfluentProvisionState? provisioningState, Guid? organizationId, Uri ssoUri, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail, LinkOrganization linkOrganization, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Organization resource properties. </param>
+        internal ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, OrganizationResourceProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            CreatedOn = createdOn;
-            ProvisioningState = provisioningState;
-            OrganizationId = organizationId;
-            SsoUri = ssoUri;
-            OfferDetail = offerDetail;
-            UserDetail = userDetail;
-            LinkOrganization = linkOrganization;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfluentOrganizationData"/> for deserialization. </summary>
-        internal ConfluentOrganizationData()
-        {
-        }
+        /// <summary> Organization resource properties. </summary>
+        internal OrganizationResourceProperties Properties { get; set; }
 
         /// <summary> The creation time of the resource. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Provision states for confluent RP. </summary>
-        public ConfluentProvisionState? ProvisioningState { get; }
+        public ConfluentProvisionState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Id of the Confluent organization. </summary>
-        public Guid? OrganizationId { get; }
+        public Guid? OrganizationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OrganizationId;
+            }
+        }
+
         /// <summary> SSO url for the Confluent organization. </summary>
-        public Uri SsoUri { get; }
+        public Uri SsoUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SsoUri;
+            }
+        }
+
         /// <summary> Confluent offer detail. </summary>
-        public ConfluentOfferDetail OfferDetail { get; set; }
+        public ConfluentOfferDetail OfferDetail
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OfferDetail;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OrganizationResourceProperties();
+                }
+                Properties.OfferDetail = value;
+            }
+        }
+
         /// <summary> Subscriber detail. </summary>
-        public ConfluentUserDetail UserDetail { get; set; }
-        /// <summary> Link an existing Confluent organization. </summary>
-        internal LinkOrganization LinkOrganization { get; set; }
+        public ConfluentUserDetail UserDetail
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserDetail;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OrganizationResourceProperties();
+                }
+                Properties.UserDetail = value;
+            }
+        }
+
         /// <summary> User auth token. </summary>
         public string LinkOrganizationToken
         {
-            get => LinkOrganization is null ? default : LinkOrganization.Token;
-            set => LinkOrganization = new LinkOrganization(value);
+            get
+            {
+                return Properties is null ? default : Properties.LinkOrganizationToken;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OrganizationResourceProperties();
+                }
+                Properties.LinkOrganizationToken = value;
+            }
         }
     }
 }
