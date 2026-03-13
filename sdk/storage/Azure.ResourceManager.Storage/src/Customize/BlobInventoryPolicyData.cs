@@ -3,6 +3,8 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden PolicySchema alias for renamed Policy property.
+
 using System.ComponentModel;
 using Azure.ResourceManager.Storage.Models;
 

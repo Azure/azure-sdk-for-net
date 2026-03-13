@@ -3,6 +3,8 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden aliases (IPRules, IPv6Rules) for renamed properties.
+
 using System.Collections.Generic;
 using System.ComponentModel;
 

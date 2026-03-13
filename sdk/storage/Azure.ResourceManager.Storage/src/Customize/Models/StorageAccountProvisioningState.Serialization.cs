@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 // Backward-compat (Compile Remove replacement): Custom serialization for the hand-authored
 // StorageAccountProvisioningState struct that replaces the generated enum.
+
+#nullable disable
 
 namespace Azure.ResourceManager.Storage.Models
 {

@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 // Backward-compat (Compile Remove replacement): Hand-authored extensible struct replacing
-// generated enum to preserve older GA naming (e.g. 'Creating' not 'creating').
-// Could potentially use @@clientName on enum values in spec.
+// generated enum to preserve older GA naming.
+
+#nullable disable
 
 using System;
 using System.ComponentModel;

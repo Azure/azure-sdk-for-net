@@ -3,6 +3,8 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden alias for renamed automatic snapshot policy property.
+
 using System.ComponentModel;
 using Azure.ResourceManager.Storage.Models;
 

@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
-
 // Structural fix (Compile Remove replacement): Hand-written JSON serialization replacing
 // broken generated serialization for StorageTaskAssignmentReport.
-// TODO: Generator bug - generated serialization is incorrect for this model.
+
+#nullable disable
 
 using System;
 using System.ClientModel.Primitives;

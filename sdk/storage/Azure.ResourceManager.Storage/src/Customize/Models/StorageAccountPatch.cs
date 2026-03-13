@@ -3,6 +3,8 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden aliases for older patch property names.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models

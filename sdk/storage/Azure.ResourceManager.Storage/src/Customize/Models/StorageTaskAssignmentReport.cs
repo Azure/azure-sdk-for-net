@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
+// Backward-compat (Compile Remove replacement): Restores older public constructor shape.
 
-// Backward-compat (Compile Remove replacement): Restores older public constructor shape
-// and additional binary data capture. Generated version has incompatible constructor.
+#nullable disable
 
 using System;
 using System.Collections.Generic;

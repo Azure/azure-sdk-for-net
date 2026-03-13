@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Backward-compat: Adds constructor overload matching prior GA (sku, kind, location) and
+// hidden property aliases for renamed boolean properties. Constructor initializes Tags
+// and Zones collections to avoid NRE during serialization.
+
 using System.ComponentModel;
 using Azure.Core;
 

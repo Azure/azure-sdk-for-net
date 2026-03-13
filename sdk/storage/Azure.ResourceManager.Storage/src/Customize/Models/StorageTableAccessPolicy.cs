@@ -3,6 +3,8 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden ExpireOn/ExpiresOn aliases for renamed expiry property.
+
 using System;
 using System.ComponentModel;
 

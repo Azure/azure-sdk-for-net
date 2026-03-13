@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
+// Backward-compat (Compile Remove replacement): Replaces generated model to use unified
+// StorageAccountNetworkRuleAction type for Action property, matching prior GA surface.
 
-// Backward-compat (Compile Remove replacement): Replaces generated model to change Action
-// property type from StorageAccountVirtualNetworkRuleAction to StorageAccountNetworkRuleAction,
-// matching the prior GA unified action type. Could use @@alternateType in spec.
+#nullable disable
 
 using System;
 using System.Collections.Generic;

@@ -3,6 +3,8 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden alias properties for renamed metrics and priority flags.
+
 using System.ComponentModel;
 using Azure.ResourceManager.Storage.Models;
 
