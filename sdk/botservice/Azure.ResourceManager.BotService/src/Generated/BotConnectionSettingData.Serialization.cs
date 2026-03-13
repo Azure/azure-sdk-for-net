@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.BotService
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(botConnectionSettingData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(botConnectionSettingData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BotConnectionSettingData"/> from. </param>
