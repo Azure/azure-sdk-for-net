@@ -12,24 +12,24 @@ using Azure.ResourceManager.ContainerRegistry.Tasks;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The properties for updating triggers. </summary>
-    public partial class TriggerUpdateContent
+    public partial class ContainerRegistryTaskTriggerUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TriggerUpdateContent"/>. </summary>
-        public TriggerUpdateContent()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskTriggerUpdateContent"/>. </summary>
+        public ContainerRegistryTaskTriggerUpdateContent()
         {
-            TimerTriggers = new ChangeTrackingList<TimerTriggerUpdateContent>();
-            SourceTriggers = new ChangeTrackingList<SourceTriggerUpdateContent>();
+            TimerTriggers = new ChangeTrackingList<ContainerRegistryTaskTimerTriggerUpdateContent>();
+            SourceTriggers = new ChangeTrackingList<ContainerRegistryTaskSourceTriggerUpdateContent>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TriggerUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskTriggerUpdateContent"/>. </summary>
         /// <param name="timerTriggers"> The collection of timer triggers. </param>
         /// <param name="sourceTriggers"> The collection of triggers based on source code repository. </param>
         /// <param name="baseImageTrigger"> The trigger based on base image dependencies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerUpdateContent(IList<TimerTriggerUpdateContent> timerTriggers, IList<SourceTriggerUpdateContent> sourceTriggers, BaseImageTriggerUpdateContent baseImageTrigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskTriggerUpdateContent(IList<ContainerRegistryTaskTimerTriggerUpdateContent> timerTriggers, IList<ContainerRegistryTaskSourceTriggerUpdateContent> sourceTriggers, ContainerRegistryTaskBaseImageTriggerUpdateContent baseImageTrigger, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TimerTriggers = timerTriggers;
             SourceTriggers = sourceTriggers;
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <summary> The collection of timer triggers. </summary>
-        public IList<TimerTriggerUpdateContent> TimerTriggers { get; }
+        public IList<ContainerRegistryTaskTimerTriggerUpdateContent> TimerTriggers { get; }
 
         /// <summary> The collection of triggers based on source code repository. </summary>
-        public IList<SourceTriggerUpdateContent> SourceTriggers { get; }
+        public IList<ContainerRegistryTaskSourceTriggerUpdateContent> SourceTriggers { get; }
 
         /// <summary> The trigger based on base image dependencies. </summary>
-        public BaseImageTriggerUpdateContent BaseImageTrigger { get; set; }
+        public ContainerRegistryTaskBaseImageTriggerUpdateContent BaseImageTrigger { get; set; }
     }
 }

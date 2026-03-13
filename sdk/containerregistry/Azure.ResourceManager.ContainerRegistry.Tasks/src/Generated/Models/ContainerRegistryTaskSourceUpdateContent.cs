@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The properties for updating the source code repository. </summary>
-    public partial class SourceUpdateContent
+    public partial class ContainerRegistryTaskSourceUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SourceUpdateContent"/>. </summary>
-        public SourceUpdateContent()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskSourceUpdateContent"/>. </summary>
+        public ContainerRegistryTaskSourceUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SourceUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskSourceUpdateContent"/>. </summary>
         /// <param name="sourceControlType"> The type of source control service. </param>
         /// <param name="repositoryUri"> The full URL to the source code repository. </param>
         /// <param name="branch"> The branch name of the source code. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// webhooks for notifications.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceUpdateContent(ContainerRegistryTaskSourceControlType? sourceControlType, string repositoryUri, string branch, AuthInfoUpdateContent sourceControlAuthProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskSourceUpdateContent(ContainerRegistryTaskSourceControlType? sourceControlType, string repositoryUri, string branch, ContainerRegistryTaskAuthInfoUpdateContent sourceControlAuthProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceControlType = sourceControlType;
             RepositoryUri = repositoryUri;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// The authorization properties for accessing the source code repository and to set up
         /// webhooks for notifications.
         /// </summary>
-        public AuthInfoUpdateContent SourceControlAuthProperties { get; set; }
+        public ContainerRegistryTaskAuthInfoUpdateContent SourceControlAuthProperties { get; set; }
     }
 }

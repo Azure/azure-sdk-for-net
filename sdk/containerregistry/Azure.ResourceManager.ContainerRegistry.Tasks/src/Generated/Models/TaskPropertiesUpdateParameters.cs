@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="credentials"> The parameters that describes a set of credentials that will be used when this run is invoked. </param>
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TaskPropertiesUpdateParameters(ContainerRegistryTaskStatus? status, PlatformUpdateContent platform, AgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, TaskStepUpdateContent step, TriggerUpdateContent trigger, ContainerRegistryTaskCredentials credentials, string logTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TaskPropertiesUpdateParameters(ContainerRegistryTaskStatus? status, ContainerRegistryTaskPlatformUpdateContent platform, AgentProperties agentConfiguration, string agentPoolName, int? timeoutInSeconds, TaskStepUpdateContent step, ContainerRegistryTaskTriggerUpdateContent trigger, ContainerRegistryTaskCredentials credentials, string logTemplate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Platform = platform;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public ContainerRegistryTaskStatus? Status { get; set; }
 
         /// <summary> The platform properties against which the run has to happen. </summary>
-        public PlatformUpdateContent Platform { get; set; }
+        public ContainerRegistryTaskPlatformUpdateContent Platform { get; set; }
 
         /// <summary> The machine configuration of the run agent. </summary>
         internal AgentProperties AgentConfiguration { get; set; }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public TaskStepUpdateContent Step { get; set; }
 
         /// <summary> The properties for updating trigger properties. </summary>
-        public TriggerUpdateContent Trigger { get; set; }
+        public ContainerRegistryTaskTriggerUpdateContent Trigger { get; set; }
 
         /// <summary> The parameters that describes a set of credentials that will be used when this run is invoked. </summary>
         public ContainerRegistryTaskCredentials Credentials { get; set; }

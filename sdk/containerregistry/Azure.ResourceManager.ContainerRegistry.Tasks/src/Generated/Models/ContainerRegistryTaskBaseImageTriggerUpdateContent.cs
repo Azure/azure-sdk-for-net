@@ -12,29 +12,29 @@ using Azure.ResourceManager.ContainerRegistry.Tasks;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The properties for updating base image dependency trigger. </summary>
-    public partial class BaseImageTriggerUpdateContent
+    public partial class ContainerRegistryTaskBaseImageTriggerUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BaseImageTriggerUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskBaseImageTriggerUpdateContent"/>. </summary>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public BaseImageTriggerUpdateContent(string name)
+        public ContainerRegistryTaskBaseImageTriggerUpdateContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BaseImageTriggerUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskBaseImageTriggerUpdateContent"/>. </summary>
         /// <param name="baseImageTriggerType"> The type of the auto trigger for base image dependency updates. </param>
         /// <param name="updateTriggerEndpoint"> The endpoint URL for receiving update triggers. </param>
         /// <param name="updateTriggerPayloadType"> Type of Payload body for Base image update triggers. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BaseImageTriggerUpdateContent(ContainerRegistryTaskBaseImageTriggerType? baseImageTriggerType, string updateTriggerEndpoint, ContainerRegistryTaskUpdateTriggerPayloadType? updateTriggerPayloadType, ContainerRegistryTaskTriggerStatus? status, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskBaseImageTriggerUpdateContent(ContainerRegistryTaskBaseImageTriggerType? baseImageTriggerType, string updateTriggerEndpoint, ContainerRegistryTaskUpdateTriggerPayloadType? updateTriggerPayloadType, ContainerRegistryTaskTriggerStatus? status, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BaseImageTriggerType = baseImageTriggerType;
             UpdateTriggerEndpoint = updateTriggerEndpoint;

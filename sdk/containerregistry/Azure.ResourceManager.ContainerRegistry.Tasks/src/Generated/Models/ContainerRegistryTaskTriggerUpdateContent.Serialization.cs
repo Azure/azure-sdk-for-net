@@ -14,51 +14,51 @@ using Azure.ResourceManager.ContainerRegistry.Tasks;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The properties for updating triggers. </summary>
-    public partial class TriggerUpdateContent : IJsonModel<TriggerUpdateContent>
+    public partial class ContainerRegistryTaskTriggerUpdateContent : IJsonModel<ContainerRegistryTaskTriggerUpdateContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TriggerUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerRegistryTaskTriggerUpdateContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskTriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTriggerUpdateContent(document.RootElement, options);
+                        return DeserializeContainerRegistryTaskTriggerUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggerUpdateContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskTriggerUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskTriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TriggerUpdateContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskTriggerUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TriggerUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerRegistryTaskTriggerUpdateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TriggerUpdateContent IPersistableModel<TriggerUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerRegistryTaskTriggerUpdateContent IPersistableModel<ContainerRegistryTaskTriggerUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TriggerUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerRegistryTaskTriggerUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TriggerUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerRegistryTaskTriggerUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,16 +69,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskTriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerUpdateContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskTriggerUpdateContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(TimerTriggers))
             {
                 writer.WritePropertyName("timerTriggers"u8);
                 writer.WriteStartArray();
-                foreach (TimerTriggerUpdateContent item in TimerTriggers)
+                foreach (ContainerRegistryTaskTimerTriggerUpdateContent item in TimerTriggers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 writer.WritePropertyName("sourceTriggers"u8);
                 writer.WriteStartArray();
-                foreach (SourceTriggerUpdateContent item in SourceTriggers)
+                foreach (ContainerRegistryTaskSourceTriggerUpdateContent item in SourceTriggers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -118,32 +118,32 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TriggerUpdateContent IJsonModel<TriggerUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerRegistryTaskTriggerUpdateContent IJsonModel<ContainerRegistryTaskTriggerUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TriggerUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerRegistryTaskTriggerUpdateContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskTriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerUpdateContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskTriggerUpdateContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTriggerUpdateContent(document.RootElement, options);
+            return DeserializeContainerRegistryTaskTriggerUpdateContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TriggerUpdateContent DeserializeTriggerUpdateContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerRegistryTaskTriggerUpdateContent DeserializeContainerRegistryTaskTriggerUpdateContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<TimerTriggerUpdateContent> timerTriggers = default;
-            IList<SourceTriggerUpdateContent> sourceTriggers = default;
-            BaseImageTriggerUpdateContent baseImageTrigger = default;
+            IList<ContainerRegistryTaskTimerTriggerUpdateContent> timerTriggers = default;
+            IList<ContainerRegistryTaskSourceTriggerUpdateContent> sourceTriggers = default;
+            ContainerRegistryTaskBaseImageTriggerUpdateContent baseImageTrigger = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    List<TimerTriggerUpdateContent> array = new List<TimerTriggerUpdateContent>();
+                    List<ContainerRegistryTaskTimerTriggerUpdateContent> array = new List<ContainerRegistryTaskTimerTriggerUpdateContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TimerTriggerUpdateContent.DeserializeTimerTriggerUpdateContent(item, options));
+                        array.Add(ContainerRegistryTaskTimerTriggerUpdateContent.DeserializeContainerRegistryTaskTimerTriggerUpdateContent(item, options));
                     }
                     timerTriggers = array;
                     continue;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    List<SourceTriggerUpdateContent> array = new List<SourceTriggerUpdateContent>();
+                    List<ContainerRegistryTaskSourceTriggerUpdateContent> array = new List<ContainerRegistryTaskSourceTriggerUpdateContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(SourceTriggerUpdateContent.DeserializeSourceTriggerUpdateContent(item, options));
+                        array.Add(ContainerRegistryTaskSourceTriggerUpdateContent.DeserializeContainerRegistryTaskSourceTriggerUpdateContent(item, options));
                     }
                     sourceTriggers = array;
                     continue;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    baseImageTrigger = BaseImageTriggerUpdateContent.DeserializeBaseImageTriggerUpdateContent(prop.Value, options);
+                    baseImageTrigger = ContainerRegistryTaskBaseImageTriggerUpdateContent.DeserializeContainerRegistryTaskBaseImageTriggerUpdateContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TriggerUpdateContent(timerTriggers ?? new ChangeTrackingList<TimerTriggerUpdateContent>(), sourceTriggers ?? new ChangeTrackingList<SourceTriggerUpdateContent>(), baseImageTrigger, additionalBinaryDataProperties);
+            return new ContainerRegistryTaskTriggerUpdateContent(timerTriggers ?? new ChangeTrackingList<ContainerRegistryTaskTimerTriggerUpdateContent>(), sourceTriggers ?? new ChangeTrackingList<ContainerRegistryTaskSourceTriggerUpdateContent>(), baseImageTrigger, additionalBinaryDataProperties);
         }
     }
 }

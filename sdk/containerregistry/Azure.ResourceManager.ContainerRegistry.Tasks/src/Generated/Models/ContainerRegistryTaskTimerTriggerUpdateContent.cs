@@ -12,27 +12,27 @@ using Azure.ResourceManager.ContainerRegistry.Tasks;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The properties for updating a timer trigger. </summary>
-    public partial class TimerTriggerUpdateContent
+    public partial class ContainerRegistryTaskTimerTriggerUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TimerTriggerUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskTimerTriggerUpdateContent"/>. </summary>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public TimerTriggerUpdateContent(string name)
+        public ContainerRegistryTaskTimerTriggerUpdateContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TimerTriggerUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskTimerTriggerUpdateContent"/>. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TimerTriggerUpdateContent(string schedule, ContainerRegistryTaskTriggerStatus? status, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskTimerTriggerUpdateContent(string schedule, ContainerRegistryTaskTriggerStatus? status, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Schedule = schedule;
             Status = status;

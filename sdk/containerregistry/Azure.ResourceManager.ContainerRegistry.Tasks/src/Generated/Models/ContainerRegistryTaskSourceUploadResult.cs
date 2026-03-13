@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The properties of a response to source upload request. </summary>
-    public partial class SourceUploadResult
+    public partial class ContainerRegistryTaskSourceUploadResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SourceUploadResult"/>. </summary>
-        internal SourceUploadResult()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskSourceUploadResult"/>. </summary>
+        internal ContainerRegistryTaskSourceUploadResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SourceUploadResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskSourceUploadResult"/>. </summary>
         /// <param name="uploadUri"> The URL where the client can upload the source. </param>
         /// <param name="relativePath"> The relative path to the source. This is used to submit the subsequent queue build request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceUploadResult(string uploadUri, string relativePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskSourceUploadResult(string uploadUri, string relativePath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UploadUri = uploadUri;
             RelativePath = relativePath;

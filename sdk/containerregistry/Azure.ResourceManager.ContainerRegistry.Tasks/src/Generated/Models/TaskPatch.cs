@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <summary> The platform properties against which the run has to happen. </summary>
-        public PlatformUpdateContent Platform
+        public ContainerRegistryTaskPlatformUpdateContent Platform
         {
             get
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <summary> The properties for updating trigger properties. </summary>
-        public TriggerUpdateContent Trigger
+        public ContainerRegistryTaskTriggerUpdateContent Trigger
         {
             get
             {

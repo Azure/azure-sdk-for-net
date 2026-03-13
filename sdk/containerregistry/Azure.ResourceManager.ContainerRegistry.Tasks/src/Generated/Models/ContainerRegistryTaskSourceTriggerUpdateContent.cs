@@ -12,15 +12,15 @@ using Azure.ResourceManager.ContainerRegistry.Tasks;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The properties for updating a source based trigger. </summary>
-    public partial class SourceTriggerUpdateContent
+    public partial class ContainerRegistryTaskSourceTriggerUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SourceTriggerUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskSourceTriggerUpdateContent"/>. </summary>
         /// <param name="name"> The name of the trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SourceTriggerUpdateContent(string name)
+        public ContainerRegistryTaskSourceTriggerUpdateContent(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SourceTriggerUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskSourceTriggerUpdateContent"/>. </summary>
         /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
         /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SourceTriggerUpdateContent(SourceUpdateContent sourceRepository, IList<ContainerRegistryTaskSourceTriggerEvent> sourceTriggerEvents, ContainerRegistryTaskTriggerStatus? status, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskSourceTriggerUpdateContent(ContainerRegistryTaskSourceUpdateContent sourceRepository, IList<ContainerRegistryTaskSourceTriggerEvent> sourceTriggerEvents, ContainerRegistryTaskTriggerStatus? status, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceRepository = sourceRepository;
             SourceTriggerEvents = sourceTriggerEvents;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         }
 
         /// <summary> The properties that describes the source(code) for the task. </summary>
-        public SourceUpdateContent SourceRepository { get; set; }
+        public ContainerRegistryTaskSourceUpdateContent SourceRepository { get; set; }
 
         /// <summary> The source event corresponding to the trigger. </summary>
         public IList<ContainerRegistryTaskSourceTriggerEvent> SourceTriggerEvents { get; }

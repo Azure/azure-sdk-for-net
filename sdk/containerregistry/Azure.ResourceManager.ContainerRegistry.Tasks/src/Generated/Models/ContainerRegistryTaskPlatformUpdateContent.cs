@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The properties for updating the platform configuration. </summary>
-    public partial class PlatformUpdateContent
+    public partial class ContainerRegistryTaskPlatformUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PlatformUpdateContent"/>. </summary>
-        public PlatformUpdateContent()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskPlatformUpdateContent"/>. </summary>
+        public ContainerRegistryTaskPlatformUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlatformUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskPlatformUpdateContent"/>. </summary>
         /// <param name="os"> The operating system type required for the run. </param>
         /// <param name="architecture"> The OS architecture. </param>
         /// <param name="variant"> Variant of the CPU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PlatformUpdateContent(ContainerRegistryTaskOS? os, ContainerRegistryTaskArchitecture? architecture, ContainerRegistryTaskVariant? variant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskPlatformUpdateContent(ContainerRegistryTaskOS? os, ContainerRegistryTaskArchitecture? architecture, ContainerRegistryTaskVariant? variant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OS = os;
             Architecture = architecture;

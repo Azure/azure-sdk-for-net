@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
         /// <param name="tags"> The ARM resource tags. </param>
         /// <returns> A new <see cref="Models.TaskPatch"/> instance for mocking. </returns>
-        public static TaskPatch TaskPatch(ContainerRegistryTaskIdentityProperties identity = default, ContainerRegistryTaskStatus? status = default, PlatformUpdateContent platform = default, string agentPoolName = default, int? timeoutInSeconds = default, TaskStepUpdateContent step = default, TriggerUpdateContent trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, int? agentCpu = default, IDictionary<string, string> tags = default)
+        public static TaskPatch TaskPatch(ContainerRegistryTaskIdentityProperties identity = default, ContainerRegistryTaskStatus? status = default, ContainerRegistryTaskPlatformUpdateContent platform = default, string agentPoolName = default, int? timeoutInSeconds = default, TaskStepUpdateContent step = default, ContainerRegistryTaskTriggerUpdateContent trigger = default, ContainerRegistryTaskCredentials credentials = default, string logTemplate = default, int? agentCpu = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -701,23 +701,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="timerTriggers"> The collection of timer triggers. </param>
         /// <param name="sourceTriggers"> The collection of triggers based on source code repository. </param>
         /// <param name="baseImageTrigger"> The trigger based on base image dependencies. </param>
-        /// <returns> A new <see cref="Models.TriggerUpdateContent"/> instance for mocking. </returns>
-        public static TriggerUpdateContent TriggerUpdateContent(IEnumerable<TimerTriggerUpdateContent> timerTriggers = default, IEnumerable<SourceTriggerUpdateContent> sourceTriggers = default, BaseImageTriggerUpdateContent baseImageTrigger = default)
+        /// <returns> A new <see cref="Models.ContainerRegistryTaskTriggerUpdateContent"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskTriggerUpdateContent ContainerRegistryTaskTriggerUpdateContent(IEnumerable<ContainerRegistryTaskTimerTriggerUpdateContent> timerTriggers = default, IEnumerable<ContainerRegistryTaskSourceTriggerUpdateContent> sourceTriggers = default, ContainerRegistryTaskBaseImageTriggerUpdateContent baseImageTrigger = default)
         {
-            timerTriggers ??= new ChangeTrackingList<TimerTriggerUpdateContent>();
-            sourceTriggers ??= new ChangeTrackingList<SourceTriggerUpdateContent>();
+            timerTriggers ??= new ChangeTrackingList<ContainerRegistryTaskTimerTriggerUpdateContent>();
+            sourceTriggers ??= new ChangeTrackingList<ContainerRegistryTaskSourceTriggerUpdateContent>();
 
-            return new TriggerUpdateContent(timerTriggers.ToList(), sourceTriggers.ToList(), baseImageTrigger, additionalBinaryDataProperties: null);
+            return new ContainerRegistryTaskTriggerUpdateContent(timerTriggers.ToList(), sourceTriggers.ToList(), baseImageTrigger, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The properties for updating a timer trigger. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
-        /// <returns> A new <see cref="Models.TimerTriggerUpdateContent"/> instance for mocking. </returns>
-        public static TimerTriggerUpdateContent TimerTriggerUpdateContent(string schedule = default, ContainerRegistryTaskTriggerStatus? status = default, string name = default)
+        /// <returns> A new <see cref="Models.ContainerRegistryTaskTimerTriggerUpdateContent"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskTimerTriggerUpdateContent ContainerRegistryTaskTimerTriggerUpdateContent(string schedule = default, ContainerRegistryTaskTriggerStatus? status = default, string name = default)
         {
-            return new TimerTriggerUpdateContent(schedule, status, name, additionalBinaryDataProperties: null);
+            return new ContainerRegistryTaskTimerTriggerUpdateContent(schedule, status, name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The properties for updating a source based trigger. </summary>
@@ -725,12 +725,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
-        /// <returns> A new <see cref="Models.SourceTriggerUpdateContent"/> instance for mocking. </returns>
-        public static SourceTriggerUpdateContent SourceTriggerUpdateContent(SourceUpdateContent sourceRepository = default, IEnumerable<ContainerRegistryTaskSourceTriggerEvent> sourceTriggerEvents = default, ContainerRegistryTaskTriggerStatus? status = default, string name = default)
+        /// <returns> A new <see cref="Models.ContainerRegistryTaskSourceTriggerUpdateContent"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskSourceTriggerUpdateContent ContainerRegistryTaskSourceTriggerUpdateContent(ContainerRegistryTaskSourceUpdateContent sourceRepository = default, IEnumerable<ContainerRegistryTaskSourceTriggerEvent> sourceTriggerEvents = default, ContainerRegistryTaskTriggerStatus? status = default, string name = default)
         {
             sourceTriggerEvents ??= new ChangeTrackingList<ContainerRegistryTaskSourceTriggerEvent>();
 
-            return new SourceTriggerUpdateContent(sourceRepository, sourceTriggerEvents.ToList(), status, name, additionalBinaryDataProperties: null);
+            return new ContainerRegistryTaskSourceTriggerUpdateContent(sourceRepository, sourceTriggerEvents.ToList(), status, name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The properties for updating base image dependency trigger. </summary>
@@ -739,10 +739,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="updateTriggerPayloadType"> Type of Payload body for Base image update triggers. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
-        /// <returns> A new <see cref="Models.BaseImageTriggerUpdateContent"/> instance for mocking. </returns>
-        public static BaseImageTriggerUpdateContent BaseImageTriggerUpdateContent(ContainerRegistryTaskBaseImageTriggerType? baseImageTriggerType = default, string updateTriggerEndpoint = default, ContainerRegistryTaskUpdateTriggerPayloadType? updateTriggerPayloadType = default, ContainerRegistryTaskTriggerStatus? status = default, string name = default)
+        /// <returns> A new <see cref="Models.ContainerRegistryTaskBaseImageTriggerUpdateContent"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskBaseImageTriggerUpdateContent ContainerRegistryTaskBaseImageTriggerUpdateContent(ContainerRegistryTaskBaseImageTriggerType? baseImageTriggerType = default, string updateTriggerEndpoint = default, ContainerRegistryTaskUpdateTriggerPayloadType? updateTriggerPayloadType = default, ContainerRegistryTaskTriggerStatus? status = default, string name = default)
         {
-            return new BaseImageTriggerUpdateContent(
+            return new ContainerRegistryTaskBaseImageTriggerUpdateContent(
                 baseImageTriggerType,
                 updateTriggerEndpoint,
                 updateTriggerPayloadType,
@@ -754,10 +754,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <summary> The properties of a response to source upload request. </summary>
         /// <param name="uploadUri"> The URL where the client can upload the source. </param>
         /// <param name="relativePath"> The relative path to the source. This is used to submit the subsequent queue build request. </param>
-        /// <returns> A new <see cref="Models.SourceUploadResult"/> instance for mocking. </returns>
-        public static SourceUploadResult SourceUploadResult(string uploadUri = default, string relativePath = default)
+        /// <returns> A new <see cref="Models.ContainerRegistryTaskSourceUploadResult"/> instance for mocking. </returns>
+        public static ContainerRegistryTaskSourceUploadResult ContainerRegistryTaskSourceUploadResult(string uploadUri = default, string relativePath = default)
         {
-            return new SourceUploadResult(uploadUri, relativePath, additionalBinaryDataProperties: null);
+            return new ContainerRegistryTaskSourceUploadResult(uploadUri, relativePath, additionalBinaryDataProperties: null);
         }
     }
 }

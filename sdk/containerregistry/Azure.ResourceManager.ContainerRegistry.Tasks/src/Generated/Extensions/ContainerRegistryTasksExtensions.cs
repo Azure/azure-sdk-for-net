@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<SourceUploadResult>> GetBuildSourceUploadUrlAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerRegistryTaskSourceUploadResult>> GetBuildSourceUploadUrlAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<SourceUploadResult> GetBuildSourceUploadUrl(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
+        public static Response<ContainerRegistryTaskSourceUploadResult> GetBuildSourceUploadUrl(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 

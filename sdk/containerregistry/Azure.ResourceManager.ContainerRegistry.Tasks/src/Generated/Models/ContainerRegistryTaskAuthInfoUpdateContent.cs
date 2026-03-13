@@ -11,24 +11,24 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The authorization properties for accessing the source code repository. </summary>
-    public partial class AuthInfoUpdateContent
+    public partial class ContainerRegistryTaskAuthInfoUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AuthInfoUpdateContent"/>. </summary>
-        public AuthInfoUpdateContent()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskAuthInfoUpdateContent"/>. </summary>
+        public ContainerRegistryTaskAuthInfoUpdateContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AuthInfoUpdateContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskAuthInfoUpdateContent"/>. </summary>
         /// <param name="tokenType"> The type of Auth token. </param>
         /// <param name="token"> The access token used to access the source control provider. </param>
         /// <param name="refreshToken"> The refresh token used to refresh the access token. </param>
         /// <param name="scope"> The scope of the access token. </param>
         /// <param name="expiresInSeconds"> Time in seconds that the token remains valid. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AuthInfoUpdateContent(ContainerRegistryTaskTokenType? tokenType, string token, string refreshToken, string scope, int? expiresInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerRegistryTaskAuthInfoUpdateContent(ContainerRegistryTaskTokenType? tokenType, string token, string refreshToken, string scope, int? expiresInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TokenType = tokenType;
             Token = token;
