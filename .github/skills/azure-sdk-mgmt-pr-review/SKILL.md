@@ -42,10 +42,16 @@ To determine the review scope:
 ### Instructions
 
 1. Determine review scope per the "Scope of Review" section above.
-2. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface.
-3. Check Generated models and resources in src/Generated/.
-4. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
-5. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment.
+2. **Run the automated naming rule scanner** to find all deterministic naming violations:
+   ```powershell
+   pwsh .github/skills/azure-sdk-mgmt-pr-review/Check-MgmtNamingRules.ps1 -PackagePath <package-path>
+   ```
+   The script checks all rules in the "API Review Checklist" below and outputs violations with rule IDs, line numbers, and suggested fixes. Include every violation from the script output as an inline review comment.
+   If `ApiCompatVersion` is present (i.e., a prior stable version exists), filter the script output to only report violations on **new or changed** API surface (per the "Scope of Review" section). Violations on types/members that existed unchanged in the prior stable release should be ignored.
+3. Examine API surface files (api/*.cs) for public API, focusing on new/changed surface. Check for any additional issues not covered by the script (e.g., contextual judgment calls, domain-specific naming).
+4. Check Generated models and resources in src/Generated/.
+5. Review TypeSpec customizations (e.g., `client.tsp`, `tspconfig.yaml`).
+6. For each issue found, record the exact file path, line number, and comment body to include as an inline review comment.
 
 ### API Review Checklist
 
