@@ -3,22 +3,26 @@
 
 #nullable disable
 
-// Backward-compat: Adds hidden IsAutomaticSnapshotPolicyEnabled alias for renamed property.
-// Could use @@clientName in spec but would lose the improved name.
-
 using System.ComponentModel;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     public partial class BlobServiceData
     {
-        /// <summary> Backward-compatible alias for AutomaticSnapshotPolicyEnabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.automaticSnapshotPolicyEnabled")]
         public bool? IsAutomaticSnapshotPolicyEnabled
         {
-            get => AutomaticSnapshotPolicyEnabled;
-            set => AutomaticSnapshotPolicyEnabled = value;
+            get => BlobServiceProperties is null ? default : BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled;
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled = value;
+            }
         }
     }
 }

@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Indicates whether multichannel is enabled. </summary>
         [WirePath("multichannel.enabled")]
-        public bool? MultichannelEnabled
+        public bool? IsMultiChannelEnabled
         {
             get
             {
-                return Multichannel is null ? default : Multichannel.Enabled;
+                return Multichannel is null ? default : Multichannel.IsMultiChannelEnabled;
             }
             set
             {
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     Multichannel = new Multichannel();
                 }
-                Multichannel.Enabled = value;
+                Multichannel.IsMultiChannelEnabled = value;
             }
         }
 
         /// <summary> Indicates whether encryption in transit is required. </summary>
         [WirePath("encryptionInTransit.required")]
-        public bool? Required
+        public bool? IsRequired
         {
             get
             {
-                return EncryptionInTransit is null ? default : EncryptionInTransit.Required;
+                return EncryptionInTransit is null ? default : EncryptionInTransit.IsRequired;
             }
             set
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     EncryptionInTransit = new EncryptionInTransit();
                 }
-                EncryptionInTransit.Required = value;
+                EncryptionInTransit.IsRequired = value;
             }
         }
     }

@@ -13,39 +13,32 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageAccountEndpoints
     {
-        /// <summary> Backward-compatible alias for Blob. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("blob")]
-        public Uri BlobUri => !string.IsNullOrEmpty(Blob) ? new Uri(Blob) : null;
+        public Uri BlobUri { get; }
 
-        /// <summary> Backward-compatible alias for Queue. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("queue")]
-        public Uri QueueUri => !string.IsNullOrEmpty(Queue) ? new Uri(Queue) : null;
+        public Uri QueueUri { get; }
 
-        /// <summary> Backward-compatible alias for Table. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("table")]
-        public Uri TableUri => !string.IsNullOrEmpty(Table) ? new Uri(Table) : null;
+        public Uri TableUri { get; }
 
-        /// <summary> Backward-compatible alias for File. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("file")]
-        public Uri FileUri => !string.IsNullOrEmpty(File) ? new Uri(File) : null;
+        public Uri FileUri { get; }
 
-        /// <summary> Backward-compatible alias for Web. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("web")]
-        public Uri WebUri => !string.IsNullOrEmpty(Web) ? new Uri(Web) : null;
+        public Uri WebUri { get; }
 
-        /// <summary> Backward-compatible alias for Dfs. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("dfs")]
-        public Uri DfsUri => !string.IsNullOrEmpty(Dfs) ? new Uri(Dfs) : null;
+        public Uri DfsUri { get; }
 
-        /// <summary> Backward-compatible alias for Ipv6Endpoints. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("ipv6Endpoints")]
-        public StorageAccountIPv6Endpoints IPv6Endpoints => Ipv6Endpoints;
+        public StorageAccountIPv6Endpoints IPv6Endpoints { get; set; }
     }
 }

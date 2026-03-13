@@ -19,37 +19,37 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicySchema"/>. </summary>
-        /// <param name="enabled"> Policy is enabled if set to true. </param>
-        /// <param name="type"> The valid value is Inventory. </param>
+        /// <param name="isEnabled"> Policy is enabled if set to true. </param>
+        /// <param name="ruleType"> The valid value is Inventory. </param>
         /// <param name="rules"> The storage account blob inventory policy rules. The rule is applied when it is enabled. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
-        public BlobInventoryPolicySchema(bool enabled, BlobInventoryRuleType @type, IEnumerable<BlobInventoryPolicyRule> rules)
+        public BlobInventoryPolicySchema(bool isEnabled, BlobInventoryRuleType ruleType, IEnumerable<BlobInventoryPolicyRule> rules)
         {
             Argument.AssertNotNull(rules, nameof(rules));
 
-            Enabled = enabled;
-            Type = @type;
+            IsEnabled = isEnabled;
+            RuleType = ruleType;
             Rules = rules.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicySchema"/>. </summary>
-        /// <param name="enabled"> Policy is enabled if set to true. </param>
+        /// <param name="isEnabled"> Policy is enabled if set to true. </param>
         /// <param name="destination"> Deprecated Property from API version 2021-04-01 onwards, the required destination container name must be specified at the rule level 'policy.rule.destination'. </param>
-        /// <param name="type"> The valid value is Inventory. </param>
+        /// <param name="ruleType"> The valid value is Inventory. </param>
         /// <param name="rules"> The storage account blob inventory policy rules. The rule is applied when it is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobInventoryPolicySchema(bool enabled, string destination, BlobInventoryRuleType @type, IList<BlobInventoryPolicyRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobInventoryPolicySchema(bool isEnabled, string destination, BlobInventoryRuleType ruleType, IList<BlobInventoryPolicyRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Destination = destination;
-            Type = @type;
+            RuleType = ruleType;
             Rules = rules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Policy is enabled if set to true. </summary>
         [WirePath("enabled")]
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
 
         /// <summary> Deprecated Property from API version 2021-04-01 onwards, the required destination container name must be specified at the rule level 'policy.rule.destination'. </summary>
         [WirePath("destination")]
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> The valid value is Inventory. </summary>
         [WirePath("type")]
-        public BlobInventoryRuleType Type { get; set; }
+        public BlobInventoryRuleType RuleType { get; set; }
 
         /// <summary> The storage account blob inventory policy rules. The rule is applied when it is enabled. </summary>
         [WirePath("rules")]

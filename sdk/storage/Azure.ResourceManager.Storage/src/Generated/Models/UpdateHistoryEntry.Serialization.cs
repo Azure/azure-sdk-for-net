@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(UpdateHistoryEntry)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Update))
+            if (options.Format != "W" && Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("update"u8);
-                writer.WriteStringValue(Update.Value.ToString());
+                writer.WriteStringValue(UpdateType.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            ImmutabilityPolicyUpdateType? update = default;
+            ImmutabilityPolicyUpdateType? updateType = default;
             int? immutabilityPeriodSinceCreationInDays = default;
             DateTimeOffset? timestamp = default;
             string objectIdentifier = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    update = new ImmutabilityPolicyUpdateType(prop.Value.GetString());
+                    updateType = new ImmutabilityPolicyUpdateType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("immutabilityPeriodSinceCreationInDays"u8))
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             return new UpdateHistoryEntry(
-                update,
+                updateType,
                 immutabilityPeriodSinceCreationInDays,
                 timestamp,
                 objectIdentifier,

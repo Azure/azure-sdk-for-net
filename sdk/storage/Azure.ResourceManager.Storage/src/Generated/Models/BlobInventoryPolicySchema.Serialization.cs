@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(BlobInventoryPolicySchema)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (options.Format != "W" && Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(RuleType.ToString());
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (BlobInventoryPolicyRule item in Rules)
@@ -137,16 +137,16 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            bool enabled = default;
+            bool isEnabled = default;
             string destination = default;
-            BlobInventoryRuleType @type = default;
+            BlobInventoryRuleType ruleType = default;
             IList<BlobInventoryPolicyRule> rules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("destination"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new BlobInventoryRuleType(prop.Value.GetString());
+                    ruleType = new BlobInventoryRuleType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rules"u8))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BlobInventoryPolicySchema(enabled, destination, @type, rules, additionalBinaryDataProperties);
+            return new BlobInventoryPolicySchema(isEnabled, destination, ruleType, rules, additionalBinaryDataProperties);
         }
     }
 }

@@ -3,40 +3,55 @@
 
 #nullable disable
 
-// Backward-compat: Adds hidden aliases for older patch property names.
-// Could use @@clientName in spec but would lose improved names.
-
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageAccountPatch
     {
-        /// <summary> Backward-compatible alias for DefaultToOAuthAuthentication. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.defaultToOAuthAuthentication")]
         public bool? IsDefaultToOAuthAuthentication
         {
-            get => DefaultToOAuthAuthentication;
-            set => DefaultToOAuthAuthentication = value;
+            get => Properties is null ? default : Properties.IsDefaultToOAuthAuthentication;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsDefaultToOAuthAuthentication = value;
+            }
         }
 
-        /// <summary> Backward-compatible alias for EnableExtendedGroups. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.enableExtendedGroups")]
         public bool? IsExtendedGroupEnabled
         {
-            get => EnableExtendedGroups;
-            set => EnableExtendedGroups = value;
+            get => Properties is null ? default : Properties.IsExtendedGroupEnabled;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsExtendedGroupEnabled = value;
+            }
         }
 
-        /// <summary> Backward-compatible alias for PublishIpv6Endpoint. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
         public bool? IsIPv6EndpointToBePublished
         {
-            get => PublishIpv6Endpoint;
-            set => PublishIpv6Endpoint = value;
+            get => Properties is null ? default : Properties.IsIPv6EndpointToBePublished;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsIPv6EndpointToBePublished = value;
+            }
         }
     }
 }

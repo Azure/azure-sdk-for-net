@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("provisionedStorageGiB"u8);
                 writer.WriteNumberValue(ProvisionedStorageGiB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisionedIOPS))
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedIops))
             {
                 writer.WritePropertyName("provisionedIOPS"u8);
-                writer.WriteNumberValue(ProvisionedIOPS.Value);
+                writer.WriteNumberValue(ProvisionedIops.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisionedBandwidthMiBPerSec))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             int? fileShareCount = default;
             int? provisionedStorageGiB = default;
-            int? provisionedIOPS = default;
+            int? provisionedIops = default;
             int? provisionedBandwidthMiBPerSec = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    provisionedIOPS = prop.Value.GetInt32();
+                    provisionedIops = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("provisionedBandwidthMiBPerSec"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileServiceAccountUsageElements(fileShareCount, provisionedStorageGiB, provisionedIOPS, provisionedBandwidthMiBPerSec, additionalBinaryDataProperties);
+            return new FileServiceAccountUsageElements(fileShareCount, provisionedStorageGiB, provisionedIops, provisionedBandwidthMiBPerSec, additionalBinaryDataProperties);
         }
     }
 }

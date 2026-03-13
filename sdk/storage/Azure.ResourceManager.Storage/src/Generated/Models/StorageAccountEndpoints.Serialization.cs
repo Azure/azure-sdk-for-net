@@ -74,35 +74,35 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(StorageAccountEndpoints)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Blob))
+            if (options.Format != "W" && Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blob"u8);
-                writer.WriteStringValue(Blob);
+                writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Queue))
+            if (options.Format != "W" && Optional.IsDefined(QueueUri))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteStringValue(Queue);
+                writer.WriteStringValue(QueueUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Table))
+            if (options.Format != "W" && Optional.IsDefined(TableUri))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteStringValue(Table);
+                writer.WriteStringValue(TableUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(File))
+            if (options.Format != "W" && Optional.IsDefined(FileUri))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteStringValue(File);
+                writer.WriteStringValue(FileUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Web))
+            if (options.Format != "W" && Optional.IsDefined(WebUri))
             {
                 writer.WritePropertyName("web"u8);
-                writer.WriteStringValue(Web);
+                writer.WriteStringValue(WebUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(Dfs))
+            if (options.Format != "W" && Optional.IsDefined(DfsUri))
             {
                 writer.WritePropertyName("dfs"u8);
-                writer.WriteStringValue(Dfs);
+                writer.WriteStringValue(DfsUri.AbsoluteUri);
             }
             if (Optional.IsDefined(MicrosoftEndpoints))
             {
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("internetEndpoints"u8);
                 writer.WriteObjectValue(InternetEndpoints, options);
             }
-            if (Optional.IsDefined(Ipv6Endpoints))
+            if (Optional.IsDefined(IPv6Endpoints))
             {
                 writer.WritePropertyName("ipv6Endpoints"u8);
-                writer.WriteObjectValue(Ipv6Endpoints, options);
+                writer.WriteObjectValue(IPv6Endpoints, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -161,46 +161,70 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            string blob = default;
-            string queue = default;
-            string table = default;
-            string @file = default;
-            string web = default;
-            string dfs = default;
+            Uri blobUri = default;
+            Uri queueUri = default;
+            Uri tableUri = default;
+            Uri fileUri = default;
+            Uri webUri = default;
+            Uri dfsUri = default;
             StorageAccountMicrosoftEndpoints microsoftEndpoints = default;
             StorageAccountInternetEndpoints internetEndpoints = default;
-            StorageAccountIPv6Endpoints ipv6Endpoints = default;
+            StorageAccountIPv6Endpoints iPv6Endpoints = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("blob"u8))
                 {
-                    blob = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    blobUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("queue"u8))
                 {
-                    queue = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queueUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("table"u8))
                 {
-                    table = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tableUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("file"u8))
                 {
-                    @file = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fileUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("web"u8))
                 {
-                    web = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    webUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("dfs"u8))
                 {
-                    dfs = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dfsUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("microsoftEndpoints"u8))
@@ -227,7 +251,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    ipv6Endpoints = StorageAccountIPv6Endpoints.DeserializeStorageAccountIPv6Endpoints(prop.Value, options);
+                    iPv6Endpoints = StorageAccountIPv6Endpoints.DeserializeStorageAccountIPv6Endpoints(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -236,15 +260,15 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
             return new StorageAccountEndpoints(
-                blob,
-                queue,
-                table,
-                @file,
-                web,
-                dfs,
+                blobUri,
+                queueUri,
+                tableUri,
+                fileUri,
+                webUri,
+                dfsUri,
                 microsoftEndpoints,
                 internetEndpoints,
-                ipv6Endpoints,
+                iPv6Endpoints,
                 additionalBinaryDataProperties);
         }
     }

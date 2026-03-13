@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountIPv6Endpoints"/>. </summary>
-        internal StorageAccountIPv6Endpoints()
+        public StorageAccountIPv6Endpoints()
         {
         }
 
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Gets the microsoft routing storage endpoints. </summary>
         [WirePath("microsoftEndpoints")]
-        public StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get; }
+        public StorageAccountMicrosoftEndpoints MicrosoftEndpoints { get; set; }
 
         /// <summary> Gets the internet routing storage endpoints. </summary>
         [WirePath("internetEndpoints")]
-        public StorageAccountInternetEndpoints InternetEndpoints { get; }
+        public StorageAccountInternetEndpoints InternetEndpoints { get; set; }
     }
 }

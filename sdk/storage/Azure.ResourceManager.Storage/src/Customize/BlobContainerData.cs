@@ -3,27 +3,30 @@
 
 #nullable disable
 
-// Backward-compat: Adds hidden alias properties (IsDeleted, PreventEncryptionScopeOverride)
-// for renamed generated properties. Could use @@clientName in spec but would lose improved names.
-
 using System.ComponentModel;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     public partial class BlobContainerData
     {
-        /// <summary> Backward-compatible alias for Deleted. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.deleted")]
-        public bool? IsDeleted => Deleted;
+        public bool? IsDeleted => ContainerProperties is null ? default : ContainerProperties.IsDeleted;
 
-        /// <summary> Backward-compatible alias for DenyEncryptionScopeOverride. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.denyEncryptionScopeOverride")]
         public bool? PreventEncryptionScopeOverride
         {
-            get => DenyEncryptionScopeOverride;
-            set => DenyEncryptionScopeOverride = value;
+            get => ContainerProperties is null ? default : ContainerProperties.PreventEncryptionScopeOverride;
+            set
+            {
+                if (ContainerProperties is null)
+                {
+                    ContainerProperties = new ContainerProperties();
+                }
+                ContainerProperties.PreventEncryptionScopeOverride = value;
+            }
         }
     }
 }

@@ -30,13 +30,8 @@ namespace Azure.ResourceManager.Storage.Models
                 return new StorageTaskAssignmentProvisioningState(ProvisioningState.Value.ToString());
             }
         }
-        /// <summary> Backward-compatible alias for Enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("enabled")]
-        public bool? IsEnabled
-        {
-            get => Enabled;
-            set => Enabled = value;
-        }
+        public bool? IsEnabled { get; set; }
     }
 }

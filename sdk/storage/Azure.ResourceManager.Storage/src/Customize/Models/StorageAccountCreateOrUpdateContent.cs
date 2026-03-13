@@ -3,10 +3,6 @@
 
 #nullable disable
 
-// Backward-compat: Adds constructor overload matching prior GA (sku, kind, location) and
-// hidden property aliases for renamed boolean properties. Constructor initializes Tags
-// and Zones collections to avoid NRE during serialization.
-
 using System.ComponentModel;
 using Azure.Core;
 
@@ -14,43 +10,66 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class StorageAccountCreateOrUpdateContent
     {
-        /// <summary> Backward-compatible alias for DefaultToOAuthAuthentication. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.defaultToOAuthAuthentication")]
         public bool? IsDefaultToOAuthAuthentication
         {
-            get => DefaultToOAuthAuthentication;
-            set => DefaultToOAuthAuthentication = value;
+            get => Properties is null ? default : Properties.IsDefaultToOAuthAuthentication;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesCreateParameters();
+                }
+                Properties.IsDefaultToOAuthAuthentication = value;
+            }
         }
 
-        /// <summary> Backward-compatible alias for EnableExtendedGroups. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.enableExtendedGroups")]
         public bool? IsExtendedGroupEnabled
         {
-            get => EnableExtendedGroups;
-            set => EnableExtendedGroups = value;
+            get => Properties is null ? default : Properties.IsExtendedGroupEnabled;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesCreateParameters();
+                }
+                Properties.IsExtendedGroupEnabled = value;
+            }
         }
 
-        /// <summary> Backward-compatible alias for EnableNfsV3. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.isNfsV3Enabled")]
         public bool? IsNfsV3Enabled
         {
-            get => EnableNfsV3;
-            set => EnableNfsV3 = value;
+            get => Properties is null ? default : Properties.IsNfsV3Enabled;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesCreateParameters();
+                }
+                Properties.IsNfsV3Enabled = value;
+            }
         }
 
-        /// <summary> Backward-compatible alias for PublishIpv6Endpoint. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
         public bool? IsIPv6EndpointToBePublished
         {
-            get => PublishIpv6Endpoint;
-            set => PublishIpv6Endpoint = value;
+            get => Properties is null ? default : Properties.IsIPv6EndpointToBePublished;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesCreateParameters();
+                }
+                Properties.IsIPv6EndpointToBePublished = value;
+            }
         }
 
-        /// <summary> Backward-compatible constructor. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public StorageAccountCreateOrUpdateContent(StorageSku sku, StorageKind kind, AzureLocation location) : this(sku, kind, location, default, new ChangeTrackingList<string>(), default, new ChangeTrackingDictionary<string, string>(), default, default, default)
         {

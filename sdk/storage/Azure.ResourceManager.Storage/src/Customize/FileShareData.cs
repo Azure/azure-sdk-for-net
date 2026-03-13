@@ -3,9 +3,6 @@
 
 #nullable disable
 
-// Backward-compat: Adds hidden alias properties (IsDeleted, EnabledProtocol) for renamed
-// generated properties. Could use @@clientName in spec but would lose improved names.
-
 using System.ComponentModel;
 using Azure.ResourceManager.Storage.Models;
 
@@ -13,18 +10,23 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class FileShareData
     {
-        /// <summary> Backward-compatible alias for Deleted. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.deleted")]
-        public bool? IsDeleted => Deleted;
+        public bool? IsDeleted => FileShareProperties is null ? default : FileShareProperties.IsDeleted;
 
-        /// <summary> Backward-compatible alias for EnabledProtocols. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.enabledProtocols")]
         public FileShareEnabledProtocol? EnabledProtocol
         {
-            get => EnabledProtocols;
-            set => EnabledProtocols = value;
+            get => FileShareProperties is null ? default : FileShareProperties.EnabledProtocol;
+            set
+            {
+                if (FileShareProperties is null)
+                {
+                    FileShareProperties = new FileShareProperties();
+                }
+                FileShareProperties.EnabledProtocol = value;
+            }
         }
     }
 }

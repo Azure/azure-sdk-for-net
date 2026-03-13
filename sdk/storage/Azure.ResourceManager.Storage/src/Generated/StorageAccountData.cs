@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Properties of the storage account. </summary>
         [WirePath("properties")]
-        internal StorageAccountProperties Properties { get; }
+        internal StorageAccountProperties Properties { get; set; }
 
         /// <summary> Gets the SKU. </summary>
         [WirePath("sku")]
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Optional. Gets or sets the zonal placement details for the storage account. </summary>
         [WirePath("placement")]
-        internal Placement Placement { get; }
+        internal Placement Placement { get; set; }
 
         /// <summary> Gets the URLs that are used to perform a retrieval of a public blob, queue, or table object. Note that Standard_ZRS and Premium_LRS accounts only return the blob endpoint. </summary>
         [WirePath("properties.primaryEndpoints")]
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.PrimaryEndpoints;
+                return Properties is null ? default : Properties.PrimaryEndpoints;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.PrimaryLocation;
+                return Properties is null ? default : Properties.PrimaryLocation;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.StatusOfPrimary;
+                return Properties is null ? default : Properties.StatusOfPrimary;
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.LastGeoFailoverOn;
+                return Properties is null ? default : Properties.LastGeoFailoverOn;
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.SecondaryLocation;
+                return Properties is null ? default : Properties.SecondaryLocation;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.StatusOfSecondary;
+                return Properties is null ? default : Properties.StatusOfSecondary;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.CustomDomain;
+                return Properties is null ? default : Properties.CustomDomain;
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.SasPolicy;
+                return Properties is null ? default : Properties.SasPolicy;
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.KeyCreationTime;
+                return Properties is null ? default : Properties.KeyCreationTime;
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.SecondaryEndpoints;
+                return Properties is null ? default : Properties.SecondaryEndpoints;
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.Encryption;
+                return Properties is null ? default : Properties.Encryption;
             }
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.AccessTier;
+                return Properties is null ? default : Properties.AccessTier;
             }
         }
 
@@ -218,9 +218,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.AzureFilesIdentityBasedAuthentication;
+                return Properties is null ? default : Properties.AzureFilesIdentityBasedAuthentication;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AzureFilesIdentityBasedAuthentication = value;
+            }
         }
 
         /// <summary> Allows https traffic only to storage service if sets to true. </summary>
@@ -229,9 +236,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.EnableHttpsTrafficOnly;
+                return Properties is null ? default : Properties.EnableHttpsTrafficOnly;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.EnableHttpsTrafficOnly = value.Value;
+            }
         }
 
         /// <summary> Network rule set. </summary>
@@ -240,7 +254,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.NetworkRuleSet;
+                return Properties is null ? default : Properties.NetworkRuleSet;
             }
         }
 
@@ -250,9 +264,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.IsSftpEnabled;
+                return Properties is null ? default : Properties.IsSftpEnabled;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.IsSftpEnabled = value.Value;
+            }
         }
 
         /// <summary> Enables local users feature, if set to true. </summary>
@@ -261,18 +282,15 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.IsLocalUserEnabled;
+                return Properties is null ? default : Properties.IsLocalUserEnabled;
             }
-            set { }
-        }
-
-        /// <summary> Enables extended group support with local users feature, if set to true. </summary>
-        [WirePath("properties.enableExtendedGroups")]
-        public bool? EnableExtendedGroups
-        {
-            get
+            set
             {
-                return Properties.EnableExtendedGroups;
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.IsLocalUserEnabled = value.Value;
             }
         }
 
@@ -282,9 +300,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.IsHnsEnabled;
+                return Properties is null ? default : Properties.IsHnsEnabled;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.IsHnsEnabled = value.Value;
+            }
         }
 
         /// <summary> Geo Replication Stats. </summary>
@@ -293,17 +318,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.GeoReplicationStats;
-            }
-        }
-
-        /// <summary> If the failover is in progress, the value will be true, otherwise, it will be null. </summary>
-        [WirePath("properties.failoverInProgress")]
-        public bool? FailoverInProgress
-        {
-            get
-            {
-                return Properties.FailoverInProgress;
+                return Properties is null ? default : Properties.GeoReplicationStats;
             }
         }
 
@@ -313,9 +328,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.LargeFileSharesState;
+                return Properties is null ? default : Properties.LargeFileSharesState;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.LargeFileSharesState = value.Value;
+            }
         }
 
         /// <summary> List of private endpoint connection associated with the specified storage account. </summary>
@@ -324,6 +346,10 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
                 return Properties.PrivateEndpointConnections;
             }
         }
@@ -334,9 +360,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.RoutingPreference;
+                return Properties is null ? default : Properties.RoutingPreference;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.RoutingPreference = value;
+            }
         }
 
         /// <summary> Blob restore status. </summary>
@@ -345,7 +378,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.BlobRestoreStatus;
+                return Properties is null ? default : Properties.BlobRestoreStatus;
             }
         }
 
@@ -355,9 +388,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.AllowBlobPublicAccess;
+                return Properties is null ? default : Properties.AllowBlobPublicAccess;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowBlobPublicAccess = value.Value;
+            }
         }
 
         /// <summary> Set the minimum TLS version to be permitted on requests to storage. The default interpretation is TLS 1.0 for this property. </summary>
@@ -366,9 +406,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.MinimumTlsVersion;
+                return Properties is null ? default : Properties.MinimumTlsVersion;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.MinimumTlsVersion = value.Value;
+            }
         }
 
         /// <summary> Indicates whether the storage account permits requests to be authorized with the account access key via Shared Key. If false, then all requests, including shared access signatures, must be authorized with Azure Active Directory (Azure AD). The default value is null, which is equivalent to true. </summary>
@@ -377,18 +424,15 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.AllowSharedKeyAccess;
+                return Properties is null ? default : Properties.AllowSharedKeyAccess;
             }
-            set { }
-        }
-
-        /// <summary> NFS 3.0 protocol support enabled if set to true. </summary>
-        [WirePath("properties.isNfsV3Enabled")]
-        public bool? EnableNfsV3
-        {
-            get
+            set
             {
-                return Properties.EnableNfsV3;
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowSharedKeyAccess = value.Value;
             }
         }
 
@@ -398,18 +442,15 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.AllowCrossTenantReplication;
+                return Properties is null ? default : Properties.AllowCrossTenantReplication;
             }
-            set { }
-        }
-
-        /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
-        [WirePath("properties.defaultToOAuthAuthentication")]
-        public bool? DefaultToOAuthAuthentication
-        {
-            get
+            set
             {
-                return Properties.DefaultToOAuthAuthentication;
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowCrossTenantReplication = value.Value;
             }
         }
 
@@ -419,9 +460,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.PublicNetworkAccess;
+                return Properties is null ? default : Properties.PublicNetworkAccess;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
         }
 
         /// <summary> The property is immutable and can only be set to true at the account creation time. When set to true, it enables object level immutability for all the containers in the account by default. </summary>
@@ -430,9 +478,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.ImmutableStorageWithVersioning;
+                return Properties is null ? default : Properties.ImmutableStorageWithVersioning;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.ImmutableStorageWithVersioning = value;
+            }
         }
 
         /// <summary> Restrict copy to and from Storage Accounts within an AAD tenant or with Private Links to the same VNet. </summary>
@@ -441,9 +496,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.AllowedCopyScope;
+                return Properties is null ? default : Properties.AllowedCopyScope;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowedCopyScope = value.Value;
+            }
         }
 
         /// <summary> This property is readOnly and is set by server during asynchronous storage account sku conversion operations. </summary>
@@ -452,9 +514,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.StorageAccountSkuConversionStatus;
+                return Properties is null ? default : Properties.StorageAccountSkuConversionStatus;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.StorageAccountSkuConversionStatus = value;
+            }
         }
 
         /// <summary> Allows you to specify the type of endpoint. Set this to AzureDNSZone to create a large number of accounts in a single subscription, which creates accounts in an Azure DNS Zone and the endpoint URL will have an alphanumeric DNS Zone identifier. </summary>
@@ -463,9 +532,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.DnsEndpointType;
+                return Properties is null ? default : Properties.DnsEndpointType;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.DnsEndpointType = value.Value;
+            }
         }
 
         /// <summary> This property will be set to true or false on an event of ongoing migration. Default value is null. </summary>
@@ -474,17 +550,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.IsSkuConversionBlocked;
-            }
-        }
-
-        /// <summary> If customer initiated account migration is in progress, the value will be true else it will be null. </summary>
-        [WirePath("properties.accountMigrationInProgress")]
-        public bool? AccountMigrationInProgress
-        {
-            get
-            {
-                return Properties.AccountMigrationInProgress;
+                return Properties is null ? default : Properties.IsSkuConversionBlocked;
             }
         }
 
@@ -494,7 +560,15 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.AllowSharedKeyAccessForServices;
+                return Properties is null ? default : Properties.AllowSharedKeyAccessForServices;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.AllowSharedKeyAccessForServices = value;
             }
         }
 
@@ -504,7 +578,15 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.DataCollaborationPolicyProperties;
+                return Properties is null ? default : Properties.DataCollaborationPolicyProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.DataCollaborationPolicyProperties = value;
             }
         }
 
@@ -514,17 +596,7 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.KeyExpirationPeriodInDays;
-            }
-        }
-
-        /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
-        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
-        public bool? PublishIpv6Endpoint
-        {
-            get
-            {
-                return Properties.PublishIpv6Endpoint;
+                return Properties is null ? default : Properties.KeyExpirationPeriodInDays;
             }
         }
 
@@ -534,9 +606,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Properties.IsBlobEnabled;
+                return Properties is null ? default : Properties.IsBlobEnabled;
             }
-            set { }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.IsBlobEnabled = value.Value;
+            }
         }
 
         /// <summary> The availability zone pinning policy for the storage account. </summary>
@@ -545,9 +624,16 @@ namespace Azure.ResourceManager.Storage
         {
             get
             {
-                return Placement.ZonePlacementPolicy;
+                return Placement is null ? default : Placement.ZonePlacementPolicy;
             }
-            set { }
+            set
+            {
+                if (Placement is null)
+                {
+                    Placement = new Placement();
+                }
+                Placement.ZonePlacementPolicy = value;
+            }
         }
     }
 }

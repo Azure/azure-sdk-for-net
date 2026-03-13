@@ -176,24 +176,6 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
-        /// <summary> The authentication protocol that is used for the file share. Can only be specified when creating a share. </summary>
-        [WirePath("properties.enabledProtocols")]
-        public FileShareEnabledProtocol? EnabledProtocols
-        {
-            get
-            {
-                return FileShareProperties is null ? default : FileShareProperties.EnabledProtocols;
-            }
-            set
-            {
-                if (FileShareProperties is null)
-                {
-                    FileShareProperties = new FileShareProperties();
-                }
-                FileShareProperties.EnabledProtocols = value.Value;
-            }
-        }
-
         /// <summary> The property is for NFS share only. The default is NoRootSquash. </summary>
         [WirePath("properties.rootSquash")]
         public RootSquashType? RootSquash
@@ -219,16 +201,6 @@ namespace Azure.ResourceManager.Storage
             get
             {
                 return FileShareProperties is null ? default : FileShareProperties.Version;
-            }
-        }
-
-        /// <summary> Indicates whether the share was deleted. </summary>
-        [WirePath("properties.deleted")]
-        public bool? Deleted
-        {
-            get
-            {
-                return FileShareProperties is null ? default : FileShareProperties.Deleted;
             }
         }
 

@@ -12,22 +12,12 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class ManagementPolicyRule
     {
-        /// <summary> Backward-compatible alias for Enabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("enabled")]
-        public bool? IsEnabled
-        {
-            get => Enabled;
-            set => Enabled = value;
-        }
+        public bool? IsEnabled { get; set; }
 
-        /// <summary> Backward-compatible alias for Type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("type")]
-        public ManagementPolicyRuleType RuleType
-        {
-            get => Type;
-            set => Type = value;
-        }
+        public ManagementPolicyRuleType RuleType { get; set; }
     }
 }

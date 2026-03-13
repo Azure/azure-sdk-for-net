@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountKeyCreationTime"/>. </summary>
-        internal StorageAccountKeyCreationTime()
+        public StorageAccountKeyCreationTime()
         {
         }
 
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.Storage.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Key1. </summary>
+        /// <summary> Gets or sets the Key1. </summary>
         [WirePath("key1")]
-        public DateTimeOffset? Key1 { get; }
+        public DateTimeOffset? Key1 { get; set; }
 
-        /// <summary> Gets the Key2. </summary>
+        /// <summary> Gets or sets the Key2. </summary>
         [WirePath("key2")]
-        public DateTimeOffset? Key2 { get; }
+        public DateTimeOffset? Key2 { get; set; }
     }
 }

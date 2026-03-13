@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="data"> The parameters to provide to create a table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TableResource>> UpdateAsync(TableData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TableResource>> UpdateAsync(TableData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tableClientDiagnostics.CreateScope("TableResource.Update");
             scope.Start();
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Storage
         /// </summary>
         /// <param name="data"> The parameters to provide to create a table. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TableResource> Update(TableData data = default, CancellationToken cancellationToken = default)
+        public virtual Response<TableResource> Update(TableData data, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _tableClientDiagnostics.CreateScope("TableResource.Update");
             scope.Start();

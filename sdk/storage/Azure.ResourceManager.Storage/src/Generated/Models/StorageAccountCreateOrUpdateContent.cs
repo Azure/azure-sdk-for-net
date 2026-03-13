@@ -47,15 +47,15 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Required. Gets or sets the SKU name. </summary>
         [WirePath("sku")]
-        public StorageSku Sku { get; }
+        public StorageSku Sku { get; set; }
 
         /// <summary> Required. Indicates the type of storage account. </summary>
         [WirePath("kind")]
-        public StorageKind Kind { get; }
+        public StorageKind Kind { get; set; }
 
         /// <summary> Required. Gets or sets the location of the resource. This will be one of the supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). The geo region of a resource cannot be changed once it is created, but if an identical geo region is specified on update, the request will succeed. </summary>
         [WirePath("location")]
-        public AzureLocation Location { get; }
+        public AzureLocation Location { get; set; }
 
         /// <summary> Optional. Set the extended location of the resource. If not set, the storage account will be created in Azure main region. Otherwise it will be created in the specified extended location. </summary>
         [WirePath("extendedLocation")]
@@ -297,24 +297,6 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <summary> Enables extended group support with local users feature, if set to true. </summary>
-        [WirePath("properties.enableExtendedGroups")]
-        public bool? EnableExtendedGroups
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableExtendedGroups;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountPropertiesCreateParameters();
-                }
-                Properties.EnableExtendedGroups = value.Value;
-            }
-        }
-
         /// <summary> Account HierarchicalNamespace enabled if sets to true. </summary>
         [WirePath("properties.isHnsEnabled")]
         public bool? IsHnsEnabled
@@ -423,24 +405,6 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <summary> NFS 3.0 protocol support enabled if set to true. </summary>
-        [WirePath("properties.isNfsV3Enabled")]
-        public bool? EnableNfsV3
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableNfsV3;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountPropertiesCreateParameters();
-                }
-                Properties.EnableNfsV3 = value.Value;
-            }
-        }
-
         /// <summary> Allow or disallow cross AAD tenant object replication. Set this property to true for new or existing accounts only if object replication policies will involve storage accounts in different AAD tenants. The default interpretation is false for new accounts to follow best security practices by default. </summary>
         [WirePath("properties.allowCrossTenantReplication")]
         public bool? AllowCrossTenantReplication
@@ -456,24 +420,6 @@ namespace Azure.ResourceManager.Storage.Models
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
                 Properties.AllowCrossTenantReplication = value.Value;
-            }
-        }
-
-        /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
-        [WirePath("properties.defaultToOAuthAuthentication")]
-        public bool? DefaultToOAuthAuthentication
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DefaultToOAuthAuthentication;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountPropertiesCreateParameters();
-                }
-                Properties.DefaultToOAuthAuthentication = value.Value;
             }
         }
 
@@ -564,24 +510,6 @@ namespace Azure.ResourceManager.Storage.Models
                     Properties = new StorageAccountPropertiesCreateParameters();
                 }
                 Properties.KeyExpirationPeriodInDays = value.Value;
-            }
-        }
-
-        /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
-        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
-        public bool? PublishIpv6Endpoint
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PublishIpv6Endpoint;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountPropertiesCreateParameters();
-                }
-                Properties.PublishIpv6Endpoint = value.Value;
             }
         }
 

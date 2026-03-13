@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("isVersioningEnabled"u8);
                 writer.WriteBooleanValue(IsVersioningEnabled.Value);
             }
-            if (Optional.IsDefined(AutomaticSnapshotPolicyEnabled))
+            if (Optional.IsDefined(IsAutomaticSnapshotPolicyEnabled))
             {
                 writer.WritePropertyName("automaticSnapshotPolicyEnabled"u8);
-                writer.WriteBooleanValue(AutomaticSnapshotPolicyEnabled.Value);
+                writer.WriteBooleanValue(IsAutomaticSnapshotPolicyEnabled.Value);
             }
             if (Optional.IsDefined(ChangeFeed))
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Storage.Models
             DeleteRetentionPolicy deleteRetentionPolicy = default;
             StaticWebsite staticWebsite = default;
             bool? isVersioningEnabled = default;
-            bool? automaticSnapshotPolicyEnabled = default;
+            bool? isAutomaticSnapshotPolicyEnabled = default;
             BlobServiceChangeFeed changeFeed = default;
             RestorePolicy restorePolicy = default;
             DeleteRetentionPolicy containerDeleteRetentionPolicy = default;
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    automaticSnapshotPolicyEnabled = prop.Value.GetBoolean();
+                    isAutomaticSnapshotPolicyEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("changeFeed"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Storage.Models
                 deleteRetentionPolicy,
                 staticWebsite,
                 isVersioningEnabled,
-                automaticSnapshotPolicyEnabled,
+                isAutomaticSnapshotPolicyEnabled,
                 changeFeed,
                 restorePolicy,
                 containerDeleteRetentionPolicy,

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProtectedAppendWritesHistory"/>. </summary>
-        internal ProtectedAppendWritesHistory()
+        public ProtectedAppendWritesHistory()
         {
         }
 
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> When enabled, new blocks can be written to both 'Append and Bock Blobs' while maintaining legal hold protection and compliance. Only new blocks can be added and any existing blocks cannot be modified or deleted. </summary>
         [WirePath("allowProtectedAppendWritesAll")]
-        public bool? AllowProtectedAppendWritesAll { get; }
+        public bool? AllowProtectedAppendWritesAll { get; set; }
 
         /// <summary> Returns the date and time the tag was added. </summary>
         [WirePath("timestamp")]

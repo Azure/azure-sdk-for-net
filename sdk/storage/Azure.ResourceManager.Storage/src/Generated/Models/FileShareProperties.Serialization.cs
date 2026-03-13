@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("nextAllowedProvisionedBandwidthDowngradeTime"u8);
                 writer.WriteStringValue(NextAllowedProvisionedBandwidthDowngradeOn.Value, "R");
             }
-            if (Optional.IsDefined(EnabledProtocols))
+            if (Optional.IsDefined(EnabledProtocol))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteStringValue(EnabledProtocols.Value.ToString());
+                writer.WriteStringValue(EnabledProtocol.Value.ToString());
             }
             if (Optional.IsDefined(RootSquash))
             {
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && Optional.IsDefined(Deleted))
+            if (options.Format != "W" && Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("deleted"u8);
-                writer.WriteBooleanValue(Deleted.Value);
+                writer.WriteBooleanValue(IsDeleted.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
@@ -272,10 +272,10 @@ namespace Azure.ResourceManager.Storage.Models
             DateTimeOffset? nextAllowedQuotaDowngradeOn = default;
             DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn = default;
             DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn = default;
-            FileShareEnabledProtocol? enabledProtocols = default;
+            FileShareEnabledProtocol? enabledProtocol = default;
             RootSquashType? rootSquash = default;
             string version = default;
-            bool? deleted = default;
+            bool? isDeleted = default;
             DateTimeOffset? deletedOn = default;
             int? remainingRetentionDays = default;
             FileShareAccessTier? accessTier = default;
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    enabledProtocols = new FileShareEnabledProtocol(prop.Value.GetString());
+                    enabledProtocol = new FileShareEnabledProtocol(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("rootSquash"u8))
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    deleted = prop.Value.GetBoolean();
+                    isDeleted = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("deletedTime"u8))
@@ -550,10 +550,10 @@ namespace Azure.ResourceManager.Storage.Models
                 nextAllowedQuotaDowngradeOn,
                 nextAllowedProvisionedIopsDowngradeOn,
                 nextAllowedProvisionedBandwidthDowngradeOn,
-                enabledProtocols,
+                enabledProtocol,
                 rootSquash,
                 version,
-                deleted,
+                isDeleted,
                 deletedOn,
                 remainingRetentionDays,
                 accessTier,

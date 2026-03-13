@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageRoutingPreference"/>. </summary>
         /// <param name="routingChoice"> Routing Choice defines the kind of network routing opted by the user. </param>
-        /// <param name="publishMicrosoftEndpoints"> A boolean flag which indicates whether microsoft routing storage endpoints are to be published. </param>
-        /// <param name="publishInternetEndpoints"> A boolean flag which indicates whether internet routing storage endpoints are to be published. </param>
+        /// <param name="isMicrosoftEndpointsPublished"> A boolean flag which indicates whether microsoft routing storage endpoints are to be published. </param>
+        /// <param name="isInternetEndpointsPublished"> A boolean flag which indicates whether internet routing storage endpoints are to be published. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageRoutingPreference(StorageRoutingChoice? routingChoice, bool? publishMicrosoftEndpoints, bool? publishInternetEndpoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageRoutingPreference(StorageRoutingChoice? routingChoice, bool? isMicrosoftEndpointsPublished, bool? isInternetEndpointsPublished, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoutingChoice = routingChoice;
-            PublishMicrosoftEndpoints = publishMicrosoftEndpoints;
-            PublishInternetEndpoints = publishInternetEndpoints;
+            IsMicrosoftEndpointsPublished = isMicrosoftEndpointsPublished;
+            IsInternetEndpointsPublished = isInternetEndpointsPublished;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> A boolean flag which indicates whether microsoft routing storage endpoints are to be published. </summary>
         [WirePath("publishMicrosoftEndpoints")]
-        public bool? PublishMicrosoftEndpoints { get; set; }
+        public bool? IsMicrosoftEndpointsPublished { get; set; }
 
         /// <summary> A boolean flag which indicates whether internet routing storage endpoints are to be published. </summary>
         [WirePath("publishInternetEndpoints")]
-        public bool? PublishInternetEndpoints { get; set; }
+        public bool? IsInternetEndpointsPublished { get; set; }
     }
 }

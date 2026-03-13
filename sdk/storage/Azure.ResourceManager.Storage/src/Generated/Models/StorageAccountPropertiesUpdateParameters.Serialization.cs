@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("isLocalUserEnabled"u8);
                 writer.WriteBooleanValue(IsLocalUserEnabled.Value);
             }
-            if (Optional.IsDefined(EnableExtendedGroups))
+            if (Optional.IsDefined(IsExtendedGroupEnabled))
             {
                 writer.WritePropertyName("enableExtendedGroups"u8);
-                writer.WriteBooleanValue(EnableExtendedGroups.Value);
+                writer.WriteBooleanValue(IsExtendedGroupEnabled.Value);
             }
             if (Optional.IsDefined(NetworkRuleSet))
             {
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("allowCrossTenantReplication"u8);
                 writer.WriteBooleanValue(AllowCrossTenantReplication.Value);
             }
-            if (Optional.IsDefined(DefaultToOAuthAuthentication))
+            if (Optional.IsDefined(IsDefaultToOAuthAuthentication))
             {
                 writer.WritePropertyName("defaultToOAuthAuthentication"u8);
-                writer.WriteBooleanValue(DefaultToOAuthAuthentication.Value);
+                writer.WriteBooleanValue(IsDefaultToOAuthAuthentication.Value);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Storage.Models
             bool? enableHttpsTrafficOnly = default;
             bool? isSftpEnabled = default;
             bool? isLocalUserEnabled = default;
-            bool? enableExtendedGroups = default;
+            bool? isExtendedGroupEnabled = default;
             StorageAccountNetworkRuleSet networkRuleSet = default;
             LargeFileSharesState? largeFileSharesState = default;
             StorageRoutingPreference routingPreference = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageMinimumTlsVersion? minimumTlsVersion = default;
             bool? allowSharedKeyAccess = default;
             bool? allowCrossTenantReplication = default;
-            bool? defaultToOAuthAuthentication = default;
+            bool? isDefaultToOAuthAuthentication = default;
             StoragePublicNetworkAccess? publicNetworkAccess = default;
             ImmutableStorageAccount immutableStorageWithVersioning = default;
             AllowedCopyScope? allowedCopyScope = default;
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    enableExtendedGroups = prop.Value.GetBoolean();
+                    isExtendedGroupEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("networkAcls"u8))
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    defaultToOAuthAuthentication = prop.Value.GetBoolean();
+                    isDefaultToOAuthAuthentication = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("publicNetworkAccess"u8))
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Storage.Models
                 enableHttpsTrafficOnly,
                 isSftpEnabled,
                 isLocalUserEnabled,
-                enableExtendedGroups,
+                isExtendedGroupEnabled,
                 networkRuleSet,
                 largeFileSharesState,
                 routingPreference,
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Storage.Models
                 minimumTlsVersion,
                 allowSharedKeyAccess,
                 allowCrossTenantReplication,
-                defaultToOAuthAuthentication,
+                isDefaultToOAuthAuthentication,
                 publicNetworkAccess,
                 immutableStorageWithVersioning,
                 allowedCopyScope,

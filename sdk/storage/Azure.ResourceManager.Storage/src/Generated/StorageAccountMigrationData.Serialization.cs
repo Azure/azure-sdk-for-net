@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(storageAccountMigrationData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(storageAccountMigrationData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageAccountMigrationData"/> from. </param>

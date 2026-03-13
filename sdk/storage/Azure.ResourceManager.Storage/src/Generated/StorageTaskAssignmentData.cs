@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the storage task assignment. </param>
-        internal StorageTaskAssignmentData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageTaskAssignmentProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
+        internal StorageTaskAssignmentData(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, StorageTaskAssignmentProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

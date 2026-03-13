@@ -70,9 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(legalHold, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(legalHold, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LegalHold"/> from. </param>

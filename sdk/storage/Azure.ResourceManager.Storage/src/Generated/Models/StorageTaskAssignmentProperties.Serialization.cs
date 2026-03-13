@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WritePropertyName("taskId"u8);
             writer.WriteStringValue(TaskId);
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("executionContext"u8);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Storage.Models
                 return null;
             }
             ResourceIdentifier taskId = default;
-            bool enabled = default;
+            bool isEnabled = default;
             string description = default;
             StorageTaskAssignmentExecutionContext executionContext = default;
             StorageTaskAssignmentReport report = default;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = prop.Value.GetBoolean();
+                    isEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             return new StorageTaskAssignmentProperties(
                 taskId,
-                enabled,
+                isEnabled,
                 description,
                 executionContext,
                 report,

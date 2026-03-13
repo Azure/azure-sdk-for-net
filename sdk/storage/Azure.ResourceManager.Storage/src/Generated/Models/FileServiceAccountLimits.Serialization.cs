@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("maxProvisionedStorageGiB"u8);
                 writer.WriteNumberValue(MaxProvisionedStorageGiB.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(MaxProvisionedIOPS))
+            if (options.Format != "W" && Optional.IsDefined(MaxProvisionedIops))
             {
                 writer.WritePropertyName("maxProvisionedIOPS"u8);
-                writer.WriteNumberValue(MaxProvisionedIOPS.Value);
+                writer.WriteNumberValue(MaxProvisionedIops.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(MaxProvisionedBandwidthMiBPerSec))
             {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Storage.Models
             }
             int? maxFileShares = default;
             int? maxProvisionedStorageGiB = default;
-            int? maxProvisionedIOPS = default;
+            int? maxProvisionedIops = default;
             int? maxProvisionedBandwidthMiBPerSec = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    maxProvisionedIOPS = prop.Value.GetInt32();
+                    maxProvisionedIops = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("maxProvisionedBandwidthMiBPerSec"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FileServiceAccountLimits(maxFileShares, maxProvisionedStorageGiB, maxProvisionedIOPS, maxProvisionedBandwidthMiBPerSec, additionalBinaryDataProperties);
+            return new FileServiceAccountLimits(maxFileShares, maxProvisionedStorageGiB, maxProvisionedIops, maxProvisionedBandwidthMiBPerSec, additionalBinaryDataProperties);
         }
     }
 }

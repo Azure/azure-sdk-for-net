@@ -70,9 +70,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(storageTaskAssignmentData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(storageTaskAssignmentData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="StorageTaskAssignmentData"/> from. </param>
@@ -130,7 +128,7 @@ namespace Azure.ResourceManager.Storage
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
             string @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -139,11 +137,7 @@ namespace Azure.ResourceManager.Storage
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -18,51 +17,27 @@ namespace Azure.ResourceManager.Storage.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountMicrosoftEndpoints"/>. </summary>
-        internal StorageAccountMicrosoftEndpoints()
+        public StorageAccountMicrosoftEndpoints()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountMicrosoftEndpoints"/>. </summary>
-        /// <param name="blob"> Gets the blob endpoint. </param>
-        /// <param name="queue"> Gets the queue endpoint. </param>
-        /// <param name="table"> Gets the table endpoint. </param>
-        /// <param name="file"> Gets the file endpoint. </param>
-        /// <param name="web"> Gets the web endpoint. </param>
-        /// <param name="dfs"> Gets the dfs endpoint. </param>
+        /// <param name="blobUri"> Gets the blob endpoint. </param>
+        /// <param name="queueUri"> Gets the queue endpoint. </param>
+        /// <param name="tableUri"> Gets the table endpoint. </param>
+        /// <param name="fileUri"> Gets the file endpoint. </param>
+        /// <param name="webUri"> Gets the web endpoint. </param>
+        /// <param name="dfsUri"> Gets the dfs endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageAccountMicrosoftEndpoints(string blob, string queue, string table, string @file, string web, string dfs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageAccountMicrosoftEndpoints(Uri blobUri, Uri queueUri, Uri tableUri, Uri fileUri, Uri webUri, Uri dfsUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Blob = blob;
-            Queue = queue;
-            Table = table;
-            File = @file;
-            Web = web;
-            Dfs = dfs;
+            BlobUri = blobUri;
+            QueueUri = queueUri;
+            TableUri = tableUri;
+            FileUri = fileUri;
+            WebUri = webUri;
+            DfsUri = dfsUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Gets the blob endpoint. </summary>
-        [WirePath("blob")]
-        public string Blob { get; }
-
-        /// <summary> Gets the queue endpoint. </summary>
-        [WirePath("queue")]
-        public string Queue { get; }
-
-        /// <summary> Gets the table endpoint. </summary>
-        [WirePath("table")]
-        public string Table { get; }
-
-        /// <summary> Gets the file endpoint. </summary>
-        [WirePath("file")]
-        public string File { get; }
-
-        /// <summary> Gets the web endpoint. </summary>
-        [WirePath("web")]
-        public string Web { get; }
-
-        /// <summary> Gets the dfs endpoint. </summary>
-        [WirePath("dfs")]
-        public string Dfs { get; }
     }
 }

@@ -3,31 +3,41 @@
 
 #nullable disable
 
-// Backward-compat: Adds hidden alias properties for renamed metrics and priority flags.
-// Could use @@clientName in spec but would lose improved names.
-
 using System.ComponentModel;
+using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.ResourceManager.Storage
 {
     public partial class ObjectReplicationPolicyData
     {
-        /// <summary> Backward-compatible alias for MetricsEnabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.metrics.enabled")]
         public bool? IsMetricsEnabled
         {
-            get => MetricsEnabled;
-            set => MetricsEnabled = value;
+            get => Properties is null ? default : Properties.IsMetricsEnabled;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ObjectReplicationPolicyProperties();
+                }
+                Properties.IsMetricsEnabled = value;
+            }
         }
 
-        /// <summary> Backward-compatible alias for PriorityReplicationEnabled. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.priorityReplication.enabled")]
         public bool? IsPriorityReplicationEnabled
         {
-            get => PriorityReplicationEnabled;
-            set => PriorityReplicationEnabled = value;
+            get => Properties is null ? default : Properties.IsPriorityReplicationEnabled;
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ObjectReplicationPolicyProperties();
+                }
+                Properties.IsPriorityReplicationEnabled = value;
+            }
         }
     }
 }

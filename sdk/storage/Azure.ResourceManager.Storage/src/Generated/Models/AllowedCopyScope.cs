@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Storage.Models
     {
         private readonly string _value;
         private const string PrivateLinkValue = "PrivateLink";
-        private const string AADValue = "AAD";
+        private const string AadValue = "AAD";
         private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="AllowedCopyScope"/>. </summary>
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Gets the PrivateLink. </summary>
         public static AllowedCopyScope PrivateLink { get; } = new AllowedCopyScope(PrivateLinkValue);
 
-        /// <summary> Gets the AAD. </summary>
-        public static AllowedCopyScope AAD { get; } = new AllowedCopyScope(AADValue);
+        /// <summary> Gets the Aad. </summary>
+        public static AllowedCopyScope Aad { get; } = new AllowedCopyScope(AadValue);
 
         /// <summary> Gets the All. </summary>
         public static AllowedCopyScope All { get; } = new AllowedCopyScope(AllValue);
