@@ -118,9 +118,14 @@ namespace Azure.ResourceManager.Storage
         }
 #pragma warning restore AZC0107
 
-        // NOTE: RegenerateKey/RegenerateKeyAsync Pageable overloads cannot be added because the
-        // parameter types match the generated methods (only return type differs, which C# doesn't allow).
-        // These 2 violations must remain in the baseline.
+        // NOTE: RegenerateKey/RegenerateKeyAsync cannot return Pageable<StorageAccountKey> (prior GA)
+        // because the parameter types match the generated methods — only the return type differs,
+        // and C# does not allow overloading by return type alone.
+        // @@markAsPageable is in client.tsp but the mgmt generator does not support it for action
+        // operations (ArmResourceActionSync) with non-standard response shapes — listKeys and
+        // regenerateKey return StorageAccountListKeysResult with a "keys" array, not the standard
+        // "value" array used by list operations.
+        // These 2 violations must remain in the ApiCompat baseline.
 
         /// <summary> Gets the private link resources that need to be created for a storage account. Backward-compatible overload. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
