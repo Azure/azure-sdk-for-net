@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(crossRegionRestoreJobsContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(crossRegionRestoreJobsContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

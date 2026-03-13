@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(dataProtectionBackupPolicyData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(dataProtectionBackupPolicyData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataProtectionBackupPolicyData"/> from. </param>
