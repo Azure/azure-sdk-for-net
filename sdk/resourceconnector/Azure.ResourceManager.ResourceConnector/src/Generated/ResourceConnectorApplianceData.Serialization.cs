@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.ResourceConnector
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(resourceConnectorApplianceData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(resourceConnectorApplianceData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceConnectorApplianceData"/> from. </param>
