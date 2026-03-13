@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(confidentialLedgerFilesExport, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(confidentialLedgerFilesExport, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

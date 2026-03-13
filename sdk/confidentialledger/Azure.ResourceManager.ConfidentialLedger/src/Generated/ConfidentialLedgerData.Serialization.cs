@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(confidentialLedgerData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(confidentialLedgerData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfidentialLedgerData"/> from. </param>
