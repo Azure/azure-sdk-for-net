@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<TopicRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string topicName, TopicRecordData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<TopicRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string topicName, TopicRecordData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<TopicRecordResource> CreateOrUpdate(WaitUntil waitUntil, string topicName, TopicRecordData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<TopicRecordResource> CreateOrUpdate(WaitUntil waitUntil, string topicName, TopicRecordData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
 

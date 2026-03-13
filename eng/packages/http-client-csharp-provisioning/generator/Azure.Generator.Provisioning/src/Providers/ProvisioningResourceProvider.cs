@@ -22,7 +22,7 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Provisioning.Providers
 {
     /// <summary>
-    /// Generates a ProvisionableResource subclass from an InputModelType + ResourceMetadata.
+    /// Generates a ProvisionableResource subclass from an InputModelType + ArmResourceMetadata.
     /// Flattens the ARM "properties" bag, includes system properties from the base model chain,
     /// and generates ResourceVersions, FromExisting, and the resource constructor.
     /// </summary>
@@ -49,7 +49,7 @@ namespace Azure.Generator.Provisioning.Providers
         };
 
         private readonly InputModelType _inputModel;
-        private readonly ResourceMetadata? _resourceMetadata;
+        private readonly ArmResourceMetadata? _resourceMetadata;
         private readonly string? _defaultApiVersion;
         private readonly List<ResourcePropertyInfo> _allProperties;
 
@@ -60,7 +60,7 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>
         /// Gets the resource metadata, if this is a base resource type.
         /// </summary>
-        internal ResourceMetadata? ResourceMetadata => _resourceMetadata;
+        internal ArmResourceMetadata? ResourceMetadata => _resourceMetadata;
 
         /// <summary>
         /// Gets the parent resource's CSharpType via the output library, or null for top-level resources.
@@ -86,7 +86,7 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>
         /// Constructor for base resource types (with metadata from ARM provider schema).
         /// </summary>
-        public ProvisioningResourceProvider(InputModelType inputModel, ResourceMetadata metadata)
+        public ProvisioningResourceProvider(InputModelType inputModel, ArmResourceMetadata metadata)
             : base(inputModel)
         {
             _inputModel = inputModel;
