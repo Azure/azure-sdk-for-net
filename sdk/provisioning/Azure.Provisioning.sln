@@ -62,10 +62,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventHub
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventHubs.Tests", "Azure.Provisioning.EventHubs\tests\Azure.Provisioning.EventHubs.Tests.csproj", "{B3F7B4D6-4D4E-42AF-944A-5D10AA3A0BEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.KeyVault", "Azure.Provisioning.KeyVault\src\Azure.Provisioning.KeyVault.csproj", "{47B41BF9-10BB-4536-A39C-514AED908003}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.KeyVault.Tests", "Azure.Provisioning.KeyVault\tests\Azure.Provisioning.KeyVault.Tests.csproj", "{8BDD2240-731D-4ADA-AC70-9EC70C46D715}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kubernetes", "Azure.Provisioning.Kubernetes\src\Azure.Provisioning.Kubernetes.csproj", "{ED3BF558-C208-4245-A310-1C95936C2030}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Kubernetes.Tests", "Azure.Provisioning.Kubernetes\tests\Azure.Provisioning.Kubernetes.Tests.csproj", "{7ECCE73C-3811-4F59-BC89-63F5C1E4A90D}"
