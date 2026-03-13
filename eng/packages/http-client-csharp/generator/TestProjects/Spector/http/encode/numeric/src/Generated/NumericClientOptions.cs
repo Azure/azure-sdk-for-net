@@ -5,11 +5,17 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Encode.Numeric
 {
     public partial class NumericClientOptions : ClientOptions
     {
+        public NumericClientOptions() => throw null;
+
+        [Experimental("SCME0002")]
+        internal NumericClientOptions(IConfigurationSection section) : base(section, null) => throw null;
     }
 }

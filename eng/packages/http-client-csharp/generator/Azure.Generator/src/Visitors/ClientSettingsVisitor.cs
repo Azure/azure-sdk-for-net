@@ -17,7 +17,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
-using static Microsoft.TypeSpec.Generator.Snippets.StringSnippets;
 
 namespace Azure.Generator.Visitors
 {
@@ -26,9 +25,11 @@ namespace Azure.Generator.Visitors
     /// <list type="bullet">
     /// <item>ClientOptions: Changes IConfigurationSection constructor to use base(section, null)
     /// and adds a partial void ConfigureLogging() method called from all constructors.</item>
-    /// <item>ClientProvider: Removes the internal AuthenticationPolicy constructor (Azure clients use
-    /// credential types directly), inlines its body into the "with options" credential constructors,
-    /// and modifies the Settings constructor to chain to the appropriate credential constructor.</item>
+    /// <item>ClientProvider: Changes the internal AuthenticationPolicy constructor parameter type to
+    /// HttpPipelinePolicy (Azure clients use Azure.Core policy types instead of the base library's
+    /// AuthenticationPolicy), and modifies the Settings constructor to chain to the appropriate
+    /// credential constructor (or to the internal constructor with null auth policy when no
+    /// credentials are configured).</item>
     /// </list>
     /// </summary>
     internal class ClientSettingsVisitor : ScmLibraryVisitor
@@ -56,74 +57,22 @@ namespace Azure.Generator.Visitors
             return clientProvider;
         }
 
-        protected override ConstructorProvider? VisitConstructor(ConstructorProvider constructor)
-        {
-            // Remove the internal AuthenticationPolicy constructor from ClientProviders.
-            // Azure clients use credential types (TokenCredential, AzureKeyCredential) directly
-            // instead of the base library's AuthenticationPolicy abstraction.
-            // The "with options" credential constructors have their body inlined by Visit().
-            if (constructor.EnclosingType is ClientProvider &&
-                constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
-                constructor.Signature.Parameters.Any(p => p.Type.Name == nameof(AuthenticationPolicy)))
-            {
-                return null;
-            }
-
-            // Remove Settings constructor if no credential constructors exist in the client.
-            // Libraries without credential support don't get a Settings/configuration constructor.
-            if (constructor.EnclosingType is ClientProvider &&
-                constructor.Signature.Parameters.Count == 1 &&
-                constructor.Signature.Parameters[0].Type.Name.EndsWith("Settings"))
-            {
-                var allConstructors = constructor.EnclosingType.Constructors;
-                bool hasAnyCred = allConstructors.Any(c =>
-                    c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
-                    c.Signature.Parameters.Count >= 3 &&
-                    c.Signature.Parameters.Any(p =>
-                        p.Type.Name == nameof(TokenCredential) ||
-                        p.Type.Name == nameof(AzureKeyCredential)));
-                if (!hasAnyCred)
-                {
-                    return null;
-                }
-            }
-
-            return base.VisitConstructor(constructor);
-        }
-
         private static void UpdateClientConstructors(ClientProvider clientProvider)
         {
             var constructors = clientProvider.Constructors;
 
-            // Find the internal AuthenticationPolicy constructor to inline its body
+            // Azure clients use HttpPipelinePolicy (from Azure.Core) instead of the base library's
+            // AuthenticationPolicy abstraction. Change the parameter type on the internal constructor
+            // so that credential constructors can chain to it with Azure-specific policy types
+            // (AzureKeyCredentialPolicy, BearerTokenAuthenticationPolicy).
             var internalCtor = constructors.FirstOrDefault(c =>
                 c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
                 c.Signature.Parameters.Any(p => p.Type.Name == nameof(AuthenticationPolicy)));
-
             if (internalCtor != null)
             {
-                var internalBody = internalCtor.BodyStatements;
                 var authPolicyParam = internalCtor.Signature.Parameters.First(
                     p => p.Type.Name == nameof(AuthenticationPolicy));
-
-                // Inline the internal constructor's body into "with options" credential constructors
-                // that previously chained to it via : this(policyExpr, endpoint, options)
-                foreach (var ctor in constructors)
-                {
-                    if (ctor == internalCtor) continue;
-
-                    var initializer = ctor.Signature.Initializer;
-                    if (initializer != null && !initializer.IsBase &&
-                        initializer.Arguments.Count == internalCtor.Signature.Parameters.Count &&
-                        ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
-                        ctor.Signature.Parameters.Count >= 3 &&
-                        ctor.Signature.Parameters.Any(p =>
-                            p.Type.Name == nameof(TokenCredential) ||
-                            p.Type.Name == nameof(AzureKeyCredential)))
-                    {
-                        InlineInternalBody(ctor, initializer, authPolicyParam, internalBody);
-                    }
-                }
+                authPolicyParam.Update(type: HttpPipelinePolicyType);
             }
 
             // Modify Settings constructor to chain to the appropriate credential constructor
@@ -146,31 +95,14 @@ namespace Azure.Generator.Visitors
                     {
                         UpdateSettingsConstructor(ctor, hasTokenCredCtor, hasKeyCredCtor);
                     }
+                    else
+                    {
+                        // No credential constructors — chain to the internal constructor
+                        // with null for the auth policy parameter.
+                        UpdateSettingsConstructorForNoAuth(ctor);
+                    }
                 }
             }
-        }
-
-        private static void InlineInternalBody(
-            ConstructorProvider ctor,
-            ConstructorInitializer initializer,
-            ParameterProvider authPolicyParam,
-            MethodBodyStatement? internalBody)
-        {
-            // The first argument of the initializer is the policy expression
-            // (e.g., new AzureKeyCredentialPolicy(credential, AuthorizationHeader))
-            var policyExpr = initializer.Arguments[0];
-
-            // Declare a local variable with the same name as the internal constructor's parameter
-            // so the copied body statements can reference it by name
-            var declarePolicy = Declare(authPolicyParam.Name, HttpPipelinePolicyType, policyExpr, out _);
-
-            if (internalBody != null)
-            {
-                ctor.Update(bodyStatements: new List<MethodBodyStatement> { declarePolicy, internalBody });
-            }
-
-            // Remove the chaining initializer since the body is now inline
-            ctor.Signature.Update(initializer: null);
         }
 
         private static void UpdateSettingsConstructor(ConstructorProvider settingsCtor, bool hasTokenCredCtor, bool hasKeyCredCtor)
@@ -181,7 +113,9 @@ namespace Azure.Generator.Visitors
             if (hasTokenCredCtor)
             {
                 // Build: settings?.CredentialProvider as TokenCredential
+#pragma warning disable SCME0002
                 var credentialProviderAccess = settingsParam.NullConditional().Property(nameof(ClientSettings.CredentialProvider));
+#pragma warning restore SCME0002
                 var tokenCredentialArg = new AsExpression(credentialProviderAccess, TokenCredentialType);
 
                 var newArgs = new List<ValueExpression>();
@@ -199,15 +133,19 @@ namespace Azure.Generator.Visitors
                 // Key-credential only library.
                 // Build a ternary: check CredentialSource == "apikeycredential" (case-insensitive),
                 // construct AzureKeyCredential if true, otherwise pass null.
+#pragma warning disable SCME0002
                 var credentialAccess = settingsParam.NullConditional().Property(nameof(ClientSettings.Credential));
                 var credentialSourceProp = credentialAccess.NullConditional().Property(nameof(CredentialSettings.CredentialSource));
+#pragma warning restore SCME0002
 
-                var stringEqualsCall = Equals(
+                var stringEqualsCall = StringSnippets.Equals(
                     credentialSourceProp.As<string>(),
                     Literal("apikeycredential").As<string>(),
                     StringComparison.OrdinalIgnoreCase);
 
+#pragma warning disable SCME0002
                 var keyAccess = settingsParam.Property(nameof(ClientSettings.Credential)).Property(nameof(CredentialSettings.Key));
+#pragma warning restore SCME0002
                 var newKeyCredential = New.Instance(AzureKeyCredentialType, [keyAccess]);
 
                 var keyCredentialArg = new TernaryConditionalExpression(
@@ -225,6 +163,20 @@ namespace Azure.Generator.Visitors
 
                 settingsCtor.Signature.Update(initializer: new ConstructorInitializer(false, newArgs));
             }
+        }
+
+        private static void UpdateSettingsConstructorForNoAuth(ConstructorProvider settingsCtor)
+        {
+            // No credential constructors exist — the Settings constructor chains to the
+            // internal (HttpPipelinePolicy, endpoint, options) constructor with null for auth.
+            var existingArgs = settingsCtor.Signature.Initializer!.Arguments;
+            var newArgs = new List<ValueExpression>();
+            newArgs.Add(Null); // null auth policy
+            for (int i = 1; i < existingArgs.Count; i++)
+            {
+                newArgs.Add(existingArgs[i]);
+            }
+            settingsCtor.Signature.Update(initializer: new ConstructorInitializer(false, newArgs));
         }
 
         private static void UpdateClientOptions(ClientOptionsProvider options)
@@ -247,7 +199,7 @@ namespace Azure.Generator.Visitors
                     // Azure.Core.ClientOptions takes (IConfigurationSection, DiagnosticsOptions?)
                     var azureBaseInitializer = new ConstructorInitializer(
                         true,
-                        [sectionParam, Snippet.Null]);
+                        [sectionParam, Null]);
 
                     ctor.Signature.Update(initializer: azureBaseInitializer);
                 }

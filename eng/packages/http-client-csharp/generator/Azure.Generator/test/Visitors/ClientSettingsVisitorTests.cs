@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.Extensions.Configuration;
@@ -154,7 +155,7 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
-        public void InternalAuthenticationPolicyConstructorIsRemoved()
+        public void InternalAuthenticationPolicyConstructorUsesHttpPipelinePolicy()
         {
             var endpointParam = InputFactory.EndpointParameter(
                 "endpoint",
@@ -173,14 +174,19 @@ namespace Azure.Generator.Tests.Visitors
                 .OfType<ClientProvider>().FirstOrDefault();
             Assert.IsNotNull(clientProvider);
 
-            // The internal AuthenticationPolicy constructor should be completely removed.
-            // Azure clients use credential types directly instead of the base library's
-            // AuthenticationPolicy abstraction. The "with options" constructors have the
-            // body inlined.
+            // The internal constructor should exist but its AuthenticationPolicy parameter
+            // should be changed to HttpPipelinePolicy (Azure.Core type).
             var internalCtors = clientProvider!.Constructors.Where(c =>
                 c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal)).ToList();
-            Assert.IsEmpty(internalCtors,
-                "No internal constructors should exist — the AuthenticationPolicy constructor should be removed");
+            Assert.AreEqual(1, internalCtors.Count,
+                "There should be exactly one internal constructor");
+
+            var policyParam = internalCtors[0].Signature.Parameters.FirstOrDefault(
+                p => p.Name == "authenticationPolicy");
+            Assert.IsNotNull(policyParam,
+                "The internal constructor should have an authenticationPolicy parameter");
+            Assert.AreEqual(nameof(HttpPipelinePolicy), policyParam!.Type.Name,
+                "The authenticationPolicy parameter should be HttpPipelinePolicy, not AuthenticationPolicy");
         }
 
         [Test]
