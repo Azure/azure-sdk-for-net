@@ -505,11 +505,11 @@ namespace Azure.ResourceManager.BotService
         /// <param name="content"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BotChannelResource>> GetBotChannelWithRegenerateKeysAsyncAsync(BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelResource>> GetBotChannelWithRegenerateKeysAsync(BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _botChannelsClientDiagnostics.CreateScope("BotChannelResource.GetBotChannelWithRegenerateKeysAsync");
+            using DiagnosticScope scope = _botChannelsClientDiagnostics.CreateScope("BotChannelResource.GetBotChannelWithRegenerateKeys");
             scope.Start();
             try
             {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botChannelsRestClient.CreateGetBotChannelWithRegenerateKeysAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BotChannelRegenerateKeysContent.ToRequestContent(content), context);
+                HttpMessage message = _botChannelsRestClient.CreateGetBotChannelWithRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BotChannelRegenerateKeysContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BotChannelData> response = Response.FromValue(BotChannelData.FromResponse(result), result);
                 if (response.Value == null)
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.BotService
         /// <param name="content"> The parameters to provide for the created bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BotChannelResource> GetBotChannelWithRegenerateKeysAsync(BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelResource> GetBotChannelWithRegenerateKeys(BotChannelRegenerateKeysContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.BotService
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _botChannelsRestClient.CreateGetBotChannelWithRegenerateKeysAsyncRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BotChannelRegenerateKeysContent.ToRequestContent(content), context);
+                HttpMessage message = _botChannelsRestClient.CreateGetBotChannelWithRegenerateKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, BotChannelRegenerateKeysContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BotChannelData> response = Response.FromValue(BotChannelData.FromResponse(result), result);
                 if (response.Value == null)

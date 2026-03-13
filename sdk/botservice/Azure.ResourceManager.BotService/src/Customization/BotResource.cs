@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.BotService
                 : BotChannelName.DirectLineChannel;
 
             BotChannelResource channelResource = Client.GetBotChannelResource(BotChannelResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, botChannelName.ToString()));
-            return await channelResource.GetBotChannelWithRegenerateKeysAsyncAsync(content, cancellationToken).ConfigureAwait(false);
+            return await channelResource.GetBotChannelWithRegenerateKeysAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.BotService
                 : BotChannelName.DirectLineChannel;
 
             BotChannelResource channelResource = Client.GetBotChannelResource(BotChannelResource.CreateResourceIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, botChannelName.ToString()));
-            return channelResource.GetBotChannelWithRegenerateKeysAsync(content, cancellationToken);
+            return channelResource.GetBotChannelWithRegenerateKeys(content, cancellationToken);
         }
     }
 }

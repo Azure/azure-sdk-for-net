@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.BotService
             return message;
         }
 
-        internal HttpMessage CreateGetBotChannelWithRegenerateKeysAsyncRequest(string subscriptionId, string resourceGroupName, string resourceName, string channelName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetBotChannelWithRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string resourceName, string channelName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
