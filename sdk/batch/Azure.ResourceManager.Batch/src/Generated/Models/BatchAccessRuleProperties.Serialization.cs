@@ -244,16 +244,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (prop.NameEquals("subscriptions"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<SubResource> array = new List<SubResource>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ModelReaderWriter.Read<SubResource>(BinaryData.FromString(item.GetRawText()), options, AzureResourceManagerBatchContext.Default));
-                    }
-                    subscriptions = array;
+                    DeserializeSubscriptionsList(prop, ref subscriptions);
                     continue;
                 }
                 if (prop.NameEquals("networkSecurityPerimeters"u8))
