@@ -1,4 +1,4 @@
-# Secure Credential Handling
+# Secure credential handling
 
 This document describes best practices for keeping secrets out of
 `appsettings.json` when configuring `System.ClientModel`-based clients.
