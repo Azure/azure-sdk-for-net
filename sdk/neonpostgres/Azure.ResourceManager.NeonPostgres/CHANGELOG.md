@@ -1,6 +1,6 @@
 # Release History
 
-# 1.0.1 (2026-03-13)
+## 1.0.1 (2026-03-13)
 
 - This package has been deprecated and will no longer be maintained. The Azure Marketplace listing for Neon Serverless Postgres has been removed and the service is no longer available. Refer to our [deprecation policy](https://aka.ms/azsdk/support-policies) for more details.
 
