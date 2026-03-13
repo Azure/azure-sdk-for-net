@@ -50,5 +50,23 @@ namespace Azure.ResourceManager.Storage
                 return Properties is null ? default : Properties.LastModifiedOn;
             }
         }
+
+        /// <summary> The storage account blob inventory policy object. It is composed of policy rules. </summary>
+        [WirePath("properties.policy")]
+        public BlobInventoryPolicySchema PolicySchema
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PolicySchema;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BlobInventoryPolicyProperties();
+                }
+                Properties.PolicySchema = value;
+            }
+        }
     }
 }

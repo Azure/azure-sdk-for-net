@@ -179,6 +179,24 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> Indicates whether ACL authorization is allowed for this user. Set it to false to disallow using ACL authorization. </summary>
+        [WirePath("properties.allowAclAuthorization")]
+        public bool? IsAclAuthorizationAllowed
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsAclAuthorizationAllowed;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LocalUserProperties();
+                }
+                Properties.IsAclAuthorizationAllowed = value.Value;
+            }
+        }
+
         /// <summary> Supplementary group membership. Only applicable for local users enabled for NFSv3 access. </summary>
         [WirePath("properties.extendedGroups")]
         public IList<int> ExtendedGroups
@@ -190,6 +208,24 @@ namespace Azure.ResourceManager.Storage
                     Properties = new LocalUserProperties();
                 }
                 return Properties.ExtendedGroups;
+            }
+        }
+
+        /// <summary> Indicates if the local user is enabled for access with NFSv3 protocol. </summary>
+        [WirePath("properties.isNFSv3Enabled")]
+        public bool? IsNfsV3Enabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsNfsV3Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LocalUserProperties();
+                }
+                Properties.IsNfsV3Enabled = value.Value;
             }
         }
     }

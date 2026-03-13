@@ -59,6 +59,14 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("virtualNetworkRules")]
         public IList<StorageAccountVirtualNetworkRule> VirtualNetworkRules { get; }
 
+        /// <summary> Sets the IP ACL rules. </summary>
+        [WirePath("ipRules")]
+        public IList<StorageAccountIPRule> IPRules { get; }
+
+        /// <summary> Sets the IPv6 ACL rules. </summary>
+        [WirePath("ipv6Rules")]
+        public IList<StorageAccountIPRule> IPv6Rules { get; }
+
         /// <summary> Specifies the default action of allow or deny when no other rules match. </summary>
         [WirePath("defaultAction")]
         public StorageNetworkDefaultAction DefaultAction { get; set; }

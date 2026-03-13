@@ -2521,7 +2521,17 @@ namespace Azure.ResourceManager.Storage.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileShareData FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IEnumerable<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? etag)
         {
-            return FileShareData(id, name, resourceType, systemData, lastModifiedOn, metadata, shareQuota, provisionedIops: default, provisionedBandwidthMibps: default, includedBurstIops: default, maxBurstCreditsForIops: default, nextAllowedQuotaDowngradeOn: default, nextAllowedProvisionedIopsDowngradeOn: default, nextAllowedProvisionedBandwidthDowngradeOn: default, enabledProtocol: default, rootSquash: default, version, isDeleted, deletedOn, remainingRetentionDays, accessTier: default, accessTierChangeOn, accessTierStatus, shareUsageBytes, leaseStatus: default, leaseState: default, leaseDuration: default, signedIdentifiers: default, snapshotOn, fileSharePaidBursting: default, etag);
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+            signedIdentifiers ??= new ChangeTrackingList<StorageSignedIdentifier>();
+
+            return new FileShareData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Storage.ObjectReplicationPolicyData"/>. </summary>

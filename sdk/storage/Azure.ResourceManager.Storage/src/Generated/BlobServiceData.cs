@@ -119,6 +119,24 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> Deprecated in favor of isVersioningEnabled property. </summary>
+        [WirePath("properties.automaticSnapshotPolicyEnabled")]
+        public bool? IsAutomaticSnapshotPolicyEnabled
+        {
+            get
+            {
+                return BlobServiceProperties is null ? default : BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled;
+            }
+            set
+            {
+                if (BlobServiceProperties is null)
+                {
+                    BlobServiceProperties = new BlobServicePropertiesProperties();
+                }
+                BlobServiceProperties.IsAutomaticSnapshotPolicyEnabled = value.Value;
+            }
+        }
+
         /// <summary> The blob service properties for change feed events. </summary>
         [WirePath("properties.changeFeed")]
         public BlobServiceChangeFeed ChangeFeed

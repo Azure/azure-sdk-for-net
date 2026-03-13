@@ -58,6 +58,16 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> Indicates whether the blob container was deleted. </summary>
+        [WirePath("properties.deleted")]
+        public bool? IsDeleted
+        {
+            get
+            {
+                return ContainerProperties is null ? default : ContainerProperties.IsDeleted;
+            }
+        }
+
         /// <summary> Blob container deletion time. </summary>
         [WirePath("properties.deletedTime")]
         public DateTimeOffset? DeletedOn
@@ -93,6 +103,24 @@ namespace Azure.ResourceManager.Storage
                     ContainerProperties = new ContainerProperties();
                 }
                 ContainerProperties.DefaultEncryptionScope = value;
+            }
+        }
+
+        /// <summary> Block override of encryption scope from the container default. </summary>
+        [WirePath("properties.denyEncryptionScopeOverride")]
+        public bool? PreventEncryptionScopeOverride
+        {
+            get
+            {
+                return ContainerProperties is null ? default : ContainerProperties.PreventEncryptionScopeOverride;
+            }
+            set
+            {
+                if (ContainerProperties is null)
+                {
+                    ContainerProperties = new ContainerProperties();
+                }
+                ContainerProperties.PreventEncryptionScopeOverride = value.Value;
             }
         }
 

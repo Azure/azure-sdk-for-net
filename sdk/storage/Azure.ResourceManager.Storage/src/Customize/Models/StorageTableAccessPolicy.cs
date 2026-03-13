@@ -3,7 +3,8 @@
 
 #nullable disable
 
-// Backward-compat: Adds hidden ExpireOn/ExpiresOn aliases for renamed expiry property.
+// Backward-compat: Adds hidden ExpiresOn alias alongside the generated ExpireOn property.
+// Old GA had both ExpireOn and ExpiresOn; @@clientName can only produce one name.
 
 using System;
 using System.ComponentModel;

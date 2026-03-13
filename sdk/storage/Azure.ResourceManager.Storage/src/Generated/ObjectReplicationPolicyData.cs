@@ -111,6 +111,42 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        /// <summary> Indicates whether object replication metrics feature is enabled for the policy. </summary>
+        [WirePath("properties.metrics.enabled")]
+        public bool? IsMetricsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsMetricsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ObjectReplicationPolicyProperties();
+                }
+                Properties.IsMetricsEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Indicates whether object replication priority replication feature is enabled for the policy. </summary>
+        [WirePath("properties.priorityReplication.enabled")]
+        public bool? IsPriorityReplicationEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPriorityReplicationEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ObjectReplicationPolicyProperties();
+                }
+                Properties.IsPriorityReplicationEnabled = value.Value;
+            }
+        }
+
         /// <summary> Indicates whether object replication tags replication feature is enabled for the policy. </summary>
         [WirePath("properties.tagsReplication.enabled")]
         public bool? TagsReplicationEnabled

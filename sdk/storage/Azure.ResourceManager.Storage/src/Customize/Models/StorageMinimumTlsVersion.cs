@@ -3,29 +3,27 @@
 
 #nullable disable
 
-// Backward-compat: Adds hidden enum aliases for older TLS version member names.
-// Could use @@clientName on enum values in spec.
+// Backward-compat: @@clientName produces Tls10/Tls11/Tls12/Tls13 but old GA had Tls1_0/Tls1_1/Tls1_2/Tls1_3.
+// The generator strips underscores during PascalCase transform, so @@clientName alone cannot produce
+// the old names. These hidden aliases preserve backward compatibility.
 
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public readonly partial struct StorageMinimumTlsVersion
+    public partial struct StorageMinimumTlsVersion
     {
-        /// <summary> TLS1_0. </summary>
+        /// <summary> Backward-compatible alias for Tls10. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageMinimumTlsVersion Tls1_0 => Tls10;
-
-        /// <summary> TLS1_1. </summary>
+        public static StorageMinimumTlsVersion Tls1_0 { get; } = new StorageMinimumTlsVersion("TLS1_0");
+        /// <summary> Backward-compatible alias for Tls11. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageMinimumTlsVersion Tls1_1 => Tls11;
-
-        /// <summary> TLS1_2. </summary>
+        public static StorageMinimumTlsVersion Tls1_1 { get; } = new StorageMinimumTlsVersion("TLS1_1");
+        /// <summary> Backward-compatible alias for Tls12. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageMinimumTlsVersion Tls1_2 => Tls12;
-
-        /// <summary> TLS1_3. </summary>
+        public static StorageMinimumTlsVersion Tls1_2 { get; } = new StorageMinimumTlsVersion("TLS1_2");
+        /// <summary> Backward-compatible alias for Tls13. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static StorageMinimumTlsVersion Tls1_3 => Tls13;
+        public static StorageMinimumTlsVersion Tls1_3 { get; } = new StorageMinimumTlsVersion("TLS1_3");
     }
 }

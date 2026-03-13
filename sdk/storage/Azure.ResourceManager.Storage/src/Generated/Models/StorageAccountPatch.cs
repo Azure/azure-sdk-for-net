@@ -218,6 +218,24 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
+        /// <summary> Enables extended group support with local users feature, if set to true. </summary>
+        [WirePath("properties.enableExtendedGroups")]
+        public bool? IsExtendedGroupEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsExtendedGroupEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsExtendedGroupEnabled = value.Value;
+            }
+        }
+
         /// <summary> Network rule set. </summary>
         [WirePath("properties.networkAcls")]
         public StorageAccountNetworkRuleSet NetworkRuleSet
@@ -344,6 +362,24 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
+        /// <summary> A boolean flag which indicates whether the default authentication is OAuth or not. The default interpretation is false for this property. </summary>
+        [WirePath("properties.defaultToOAuthAuthentication")]
+        public bool? IsDefaultToOAuthAuthentication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDefaultToOAuthAuthentication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsDefaultToOAuthAuthentication = value.Value;
+            }
+        }
+
         /// <summary> Allow, disallow, or let Network Security Perimeter configuration to evaluate public network access to Storage Account. Value is optional but if passed in, must be 'Enabled', 'Disabled' or 'SecuredByPerimeter'. </summary>
         [WirePath("properties.publicNetworkAccess")]
         public StoragePublicNetworkAccess? PublicNetworkAccess
@@ -467,6 +503,24 @@ namespace Azure.ResourceManager.Storage.Models
                     Properties = new StorageAccountPropertiesUpdateParameters();
                 }
                 Properties.KeyExpirationPeriodInDays = value.Value;
+            }
+        }
+
+        /// <summary> A boolean flag which indicates whether IPv6 storage endpoints are to be published. </summary>
+        [WirePath("properties.dualStackEndpointPreference.publishIpv6Endpoint")]
+        public bool? IsIPv6EndpointToBePublished
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsIPv6EndpointToBePublished;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountPropertiesUpdateParameters();
+                }
+                Properties.IsIPv6EndpointToBePublished = value.Value;
             }
         }
 
