@@ -385,13 +385,14 @@ function convertResolvedResourceToMetadata(
 
   // Extract name constraints from the resource model's "name" property
   const nameProperty = resolvedResource.type.properties.get("name");
-  const nameConstraints = nameProperty
-    ? {
-        pattern: getPattern(program, nameProperty),
-        minLength: getMinLength(program, nameProperty),
-        maxLength: getMaxLength(program, nameProperty)
-      }
+  const rawPattern = nameProperty
+    ? getPattern(program, nameProperty)
     : undefined;
+  const nameConstraints: NameConstraints = {
+    pattern: rawPattern || undefined,
+    minLength: nameProperty ? getMinLength(program, nameProperty) : undefined,
+    maxLength: nameProperty ? getMaxLength(program, nameProperty) : undefined
+  };
 
   return {
     // we only assign resourceIdPattern when this resource has a read operation, otherwise this is empty

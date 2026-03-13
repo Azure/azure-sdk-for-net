@@ -516,13 +516,18 @@ export function buildArmProviderSchema(
     const sdkModel = models.get(resource.resourceModelId);
     const typespecModel = sdkModel?.__raw as Model | undefined;
     const nameProperty = typespecModel?.properties.get("name");
-    if (nameProperty) {
-      resource.metadata.nameConstraints = {
-        pattern: getPattern(sdkContext.program, nameProperty),
-        minLength: getMinLength(sdkContext.program, nameProperty),
-        maxLength: getMaxLength(sdkContext.program, nameProperty)
-      };
-    }
+    const rawPattern = nameProperty
+      ? getPattern(sdkContext.program, nameProperty)
+      : undefined;
+    resource.metadata.nameConstraints = {
+      pattern: rawPattern || undefined,
+      minLength: nameProperty
+        ? getMinLength(sdkContext.program, nameProperty)
+        : undefined,
+      maxLength: nameProperty
+        ? getMaxLength(sdkContext.program, nameProperty)
+        : undefined
+    };
   }
 
   // Assign non-resource methods to resources based on operationPath prefix matching.

@@ -66,7 +66,7 @@ export interface ResourceMetadata {
   singletonResourceName?: string;
   resourceName: string;
   /** The name constraints for the resource, from TypeSpec decorators */
-  nameConstraints?: NameConstraints;
+  nameConstraints: NameConstraints;
 }
 
 export function convertResourceMetadataToArguments(

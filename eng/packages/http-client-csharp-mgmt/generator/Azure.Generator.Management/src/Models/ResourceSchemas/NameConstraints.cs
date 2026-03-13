@@ -14,7 +14,7 @@ public record NameConstraints(
     int? MinLength,
     int? MaxLength)
 {
-    internal static NameConstraints? DeserializeNameConstraints(JsonElement element)
+    internal static NameConstraints DeserializeNameConstraints(JsonElement element)
     {
         string? pattern = null;
         int? minLength = null;
@@ -22,7 +22,8 @@ public record NameConstraints(
 
         if (element.TryGetProperty("pattern", out var patternElement))
         {
-            pattern = patternElement.GetString();
+            var raw = patternElement.GetString();
+            pattern = string.IsNullOrEmpty(raw) ? null : raw;
         }
         if (element.TryGetProperty("minLength", out var minLengthElement))
         {
@@ -31,11 +32,6 @@ public record NameConstraints(
         if (element.TryGetProperty("maxLength", out var maxLengthElement))
         {
             maxLength = maxLengthElement.GetInt32();
-        }
-
-        if (pattern is null && minLength is null && maxLength is null)
-        {
-            return null;
         }
 
         return new(pattern, minLength, maxLength);
