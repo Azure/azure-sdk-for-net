@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Migrated SDK generation from AutoRest/Swagger to TypeSpec-based generation.
+- Added support for API version `2026-01-01-preview`.
+- Added new resource types: `AccessBridge`, `KubernetesVersion`.
+
 ### Breaking Changes
 
 ### Bugs Fixed

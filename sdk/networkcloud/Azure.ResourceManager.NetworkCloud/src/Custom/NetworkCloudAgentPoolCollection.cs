@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudAgentPoolResource> CreateOrUpdate(WaitUntil waitUntil, string agentPoolName, NetworkCloudAgentPoolData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, agentPoolName, data, null, null, cancellationToken);
+            => CreateOrUpdate(waitUntil, agentPoolName, data, matchConditions: default, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Create a new Kubernetes cluster agent pool or update the properties of the existing one.
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudAgentPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentPoolName, NetworkCloudAgentPoolData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, agentPoolName, data, null, null, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, agentPoolName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Get a list of agent pools for the provided Kubernetes cluster.

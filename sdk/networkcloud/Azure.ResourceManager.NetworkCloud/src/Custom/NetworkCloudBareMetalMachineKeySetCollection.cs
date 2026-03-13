@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudBareMetalMachineKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, bareMetalMachineKeySetName, data, null, null, cancellationToken);
+            => CreateOrUpdate(waitUntil, bareMetalMachineKeySetName, data, matchConditions: default, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Create a new bare metal machine key set or update the existing one for the provided cluster.
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bareMetalMachineKeySetName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudBareMetalMachineKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bareMetalMachineKeySetName, NetworkCloudBareMetalMachineKeySetData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, bareMetalMachineKeySetName, data, null, null, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, bareMetalMachineKeySetName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Get a list of bare metal machine key sets for the provided cluster.

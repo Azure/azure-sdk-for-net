@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudBmcKeySetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, bmcKeySetName, data, null, null, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, bmcKeySetName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new baseboard management controller key set or update the existing one for the provided cluster.
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudBmcKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, bmcKeySetName, data, null, null, cancellationToken);
+            => CreateOrUpdate(waitUntil, bmcKeySetName, data, matchConditions: default, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Get a list of baseboard management controller key sets for the provided cluster.

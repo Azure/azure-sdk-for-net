@@ -10,9 +10,11 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
+    /// <summary> Model factory for backward-compatible NetworkCloud shims. </summary>
     public static partial class ArmNetworkCloudModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesClusterNode"/>. </summary>
@@ -61,7 +63,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 role,
                 taints?.ToList(),
                 vmSkuName,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloud.NetworkCloudAgentPoolData"/>. </summary>
@@ -95,33 +97,37 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             labels ??= new List<KubernetesLabel>();
             taints ??= new List<KubernetesLabel>();
 
+            AgentPoolProperties properties = new AgentPoolProperties(
+                administratorConfiguration,
+                agentOptions,
+                attachedNetworkConfiguration,
+                availabilityZones.ToList(),
+                count,
+                labels.ToList(),
+                mode,
+                taints.ToList(),
+                upgradeMaxSurge is null ? null : new AgentPoolUpgradeSettings()
+                {
+                    MaxSurge = upgradeMaxSurge
+                },
+                vmSkuName,
+                detailedStatus,
+                detailedStatusMessage,
+                kubernetesVersion,
+                provisioningState,
+                additionalBinaryDataProperties: null);
+
             return new NetworkCloudAgentPoolData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                null,
-                extendedLocation,
-                administratorConfiguration,
-                agentOptions,
-                attachedNetworkConfiguration,
-                availabilityZones?.ToList(),
-                count,
-                detailedStatus,
-                detailedStatusMessage,
-                kubernetesVersion,
-                labels?.ToList(),
-                mode,
-                provisioningState,
-                taints?.ToList(),
-                new AgentPoolUpgradeSettings()
-                {
-                    MaxSurge = upgradeMaxSurge
-                },
-                vmSkuName,
-                serializedAdditionalRawData: null);
+                properties,
+                eTag: null,
+                extendedLocation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkAttachment"/>. </summary>
@@ -177,6 +183,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 ipv6Address,
                 macAddress,
                 networkAttachmentName,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(DateTimeOffset? endOn, ResponseError error, ResourceIdentifier id, string name, IEnumerable<NetworkCloudOperationStatusResult> operations, float? percentComplete, string exitCode, string outputHead, Uri resultRef, Uri resultUri, ResourceIdentifier resourceId, DateTimeOffset? startOn, string status)
+        {
+            operations ??= new List<NetworkCloudOperationStatusResult>();
+
+            return new NetworkCloudOperationStatusResult(
+                endOn,
+                error,
+                id,
+                name,
+                operations.ToList(),
+                percentComplete,
+                exitCode is null && outputHead is null && resultRef is null && resultUri is null
+                    ? default
+                    : new OperationStatusResultProperties(exitCode, outputHead, resultRef, resultUri, additionalBinaryDataProperties: null),
+                resourceId,
+                startOn,
+                status,
+                additionalBinaryDataProperties: null);
+        }
     }
 }

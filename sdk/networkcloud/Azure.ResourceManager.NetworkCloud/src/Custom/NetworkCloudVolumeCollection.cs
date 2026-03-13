@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<NetworkCloudVolumeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken)
-            => await CreateOrUpdateAsync(waitUntil, volumeName, data, null, null, cancellationToken).ConfigureAwait(false);
+            => await CreateOrUpdateAsync(waitUntil, volumeName, data, matchConditions: default, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Create a new volume or update the properties of the existing one.
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="data"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<NetworkCloudVolumeResource> CreateOrUpdate(WaitUntil waitUntil, string volumeName, NetworkCloudVolumeData data, CancellationToken cancellationToken)
-            => CreateOrUpdate(waitUntil, volumeName, data, null, null, cancellationToken);
+            => CreateOrUpdate(waitUntil, volumeName, data, matchConditions: default, cancellationToken: cancellationToken);
 
         /// <summary>
         /// Get a list of volumes in the provided resource group.

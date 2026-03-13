@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Argument.AssertNotNull(attachedNetworkId, nameof(attachedNetworkId));
 
             AttachedNetworkId = attachedNetworkId;
-            IPAllocationMethod = ipAllocationMethod;
+            IpAllocationMethod = ipAllocationMethod;
         }
 
         /// <summary>
