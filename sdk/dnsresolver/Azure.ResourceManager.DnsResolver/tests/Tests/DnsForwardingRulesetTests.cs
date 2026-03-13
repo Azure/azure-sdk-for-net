@@ -38,10 +38,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                 Id = new ResourceIdentifier(vnetId)
             });
 
-            dnsResolverData.VirtualNetwork = new WritableSubResource()
-            {
-                Id = new ResourceIdentifier(vnetId)
-            };
+            dnsResolverData.VirtualNetworkId = new ResourceIdentifier(vnetId);
 
             _dnsResolver = (await resourceGroup.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
             _dnsForwardingRulesetCollection = resourceGroup.GetDnsForwardingRulesets();

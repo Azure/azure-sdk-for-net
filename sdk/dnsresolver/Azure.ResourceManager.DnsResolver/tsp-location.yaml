@@ -1,0 +1,5 @@
+directory: specification/dnsresolver/resource-manager/Microsoft.Network/DnsResolver
+commit: 661354eacb7c1e697aa2d7be980c7ebe02255138
+repo: Azure/azure-rest-api-specs
+cleanup: true
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -46,12 +46,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollection();
             var inboundEndpointData = new DnsResolverInboundEndpointData(this.DefaultLocation, new List<InboundEndpointIPConfiguration>
             {
-                new InboundEndpointIPConfiguration(new WritableSubResource
+                new InboundEndpointIPConfiguration(new ResourceIdentifier(DefaultSubnetID))
                 {
-                    Id = new ResourceIdentifier(DefaultSubnetID),
-                },
-                privateIPAddress: null,
-                InboundEndpointIPAllocationMethod.Dynamic, null)
+                    PrivateIPAllocationMethod = InboundEndpointIPAllocationMethod.Dynamic,
+                }
             });
 
             // ACT
@@ -70,12 +68,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollection();
             var inboundEndpointData = new DnsResolverInboundEndpointData(this.DefaultLocation, new List<InboundEndpointIPConfiguration>
             {
-                new InboundEndpointIPConfiguration(new WritableSubResource
+                new InboundEndpointIPConfiguration(new ResourceIdentifier(DefaultSubnetID))
                 {
-                    Id = new ResourceIdentifier(DefaultSubnetID),
-                },
-                privateIPAddress: null,
-                InboundEndpointIPAllocationMethod.Dynamic, null)
+                    PrivateIPAllocationMethod = InboundEndpointIPAllocationMethod.Dynamic,
+                }
             });
 
             await _dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
@@ -97,12 +93,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollection();
             var inboundEndpointData = new DnsResolverInboundEndpointData(this.DefaultLocation, new List<InboundEndpointIPConfiguration>
             {
-                new InboundEndpointIPConfiguration(new WritableSubResource
+                new InboundEndpointIPConfiguration(new ResourceIdentifier(DefaultSubnetID))
                 {
-                    Id = new ResourceIdentifier(DefaultSubnetID),
-                },
-                privateIPAddress: null,
-                InboundEndpointIPAllocationMethod.Dynamic, null)
+                    PrivateIPAllocationMethod = InboundEndpointIPAllocationMethod.Dynamic,
+                }
             });
 
             var createdInboundEndpoint = await _dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
@@ -126,12 +120,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollection();
             var inboundEndpointData = new DnsResolverInboundEndpointData(this.DefaultLocation, new List<InboundEndpointIPConfiguration>
             {
-                new InboundEndpointIPConfiguration(new WritableSubResource
+                new InboundEndpointIPConfiguration(new ResourceIdentifier(DefaultSubnetID))
                 {
-                    Id = new ResourceIdentifier(DefaultSubnetID),
-                },
-                privateIPAddress: null,
-                InboundEndpointIPAllocationMethod.Dynamic, null)
+                    PrivateIPAllocationMethod = InboundEndpointIPAllocationMethod.Dynamic,
+                }
             });
 
             var createdInboundEndpoint = await _dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
