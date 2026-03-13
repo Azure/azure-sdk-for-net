@@ -20,13 +20,11 @@ namespace Azure.Generator.Visitors
     /// Visitor that applies Azure-specific modifications to the ClientOptions provider.
     /// Modifies the IConfigurationSection constructor to use base(section, null)
     /// (Azure.Core.ClientOptions takes IConfigurationSection, DiagnosticsOptions?) instead of base(section).
-    /// Adds partial void ConfigureLoggedHeaderDefaults() and ConfigureLoggedQueryParameterDefaults() methods
-    /// and calls them from all constructors.
+    /// Adds a partial void ConfigureLogging() method and calls it from all constructors.
     /// </summary>
     internal class ClientSettingsVisitor : ScmLibraryVisitor
     {
-        private const string ConfigureLoggedHeaderDefaultsMethodName = "ConfigureLoggedHeaderDefaults";
-        private const string ConfigureLoggedQueryParameterDefaultsMethodName = "ConfigureLoggedQueryParameterDefaults";
+        private const string ConfigureLoggingMethodName = "ConfigureLogging";
         private static readonly CSharpType IConfigurationSectionType = typeof(IConfigurationSection);
 
         protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)
@@ -69,44 +67,31 @@ namespace Azure.Generator.Visitors
                     ctor.Signature.Update(initializer: azureBaseInitializer);
                 }
 
-                // Call both logging configuration methods from all constructors
-                var headerDefaultsCall = This.Invoke(ConfigureLoggedHeaderDefaultsMethodName).Terminate();
-                var queryParamDefaultsCall = This.Invoke(ConfigureLoggedQueryParameterDefaultsMethodName).Terminate();
+                // Call ConfigureLogging() from all constructors
+                var configureLoggingCall = This.Invoke(ConfigureLoggingMethodName).Terminate();
                 List<MethodBodyStatement> updatedBody = ctor.BodyStatements != null
-                    ? [ctor.BodyStatements, headerDefaultsCall, queryParamDefaultsCall]
-                    : [headerDefaultsCall, queryParamDefaultsCall];
+                    ? [ctor.BodyStatements, configureLoggingCall]
+                    : [configureLoggingCall];
                 ctor.Update(bodyStatements: updatedBody);
             }
         }
 
         private static void AddLoggingConfigurationMethods(ClientOptionsProvider options)
         {
-            // Add: partial void ConfigureLoggedHeaderDefaults();
-            // Services can implement this to add service-specific logged headers.
+            // Add: partial void ConfigureLogging();
+            // Services can implement this to configure service-specific logging (headers, query params).
             // If not implemented, the call is removed at compile time.
-            var headerDefaultsSignature = new MethodSignature(
-                ConfigureLoggedHeaderDefaultsMethodName,
-                (FormattableString)$"Configures the default logged header names for the client options.",
+            var configureLoggingSignature = new MethodSignature(
+                ConfigureLoggingMethodName,
+                (FormattableString)$"Configures logging for the client options.",
                 MethodSignatureModifiers.Partial,
                 null,
                 null,
                 []);
 
-            // Add: partial void ConfigureLoggedQueryParameterDefaults();
-            // Services can implement this to add service-specific logged query parameters.
-            // If not implemented, the call is removed at compile time.
-            var queryParamDefaultsSignature = new MethodSignature(
-                ConfigureLoggedQueryParameterDefaultsMethodName,
-                (FormattableString)$"Configures the default logged query parameters for the client options.",
-                MethodSignatureModifiers.Partial,
-                null,
-                null,
-                []);
+            var configureLoggingMethod = new MethodProvider(configureLoggingSignature, options);
 
-            var headerDefaultsMethod = new MethodProvider(headerDefaultsSignature, options);
-            var queryParamDefaultsMethod = new MethodProvider(queryParamDefaultsSignature, options);
-
-            options.Update(methods: [.. options.Methods, headerDefaultsMethod, queryParamDefaultsMethod]);
+            options.Update(methods: [.. options.Methods, configureLoggingMethod]);
         }
     }
 }

@@ -27,8 +27,7 @@ namespace BasicTypeSpec
                 ServiceVersion.V2024_08_16_Preview => "2024-08-16-preview",
                 _ => throw new NotSupportedException()
             };
-            ConfigureLoggedHeaderDefaults();
-            ConfigureLoggedQueryParameterDefaults();
+            ConfigureLogging();
         }
 
         /// <summary> Initializes a new instance of BasicTypeSpecClientOptions from configuration. </summary>
@@ -45,18 +44,14 @@ namespace BasicTypeSpec
             {
                 Version = version;
             }
-            ConfigureLoggedHeaderDefaults();
-            ConfigureLoggedQueryParameterDefaults();
+            ConfigureLogging();
         }
 
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
-        /// <summary> Configures the default logged header names for the client options. </summary>
-        partial void ConfigureLoggedHeaderDefaults();
-
-        /// <summary> Configures the default logged query parameters for the client options. </summary>
-        partial void ConfigureLoggedQueryParameterDefaults();
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion

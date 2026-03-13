@@ -54,7 +54,7 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
-        public void ClientOptionsHasLoggedHeaderDefaultsPartialMethod()
+        public void ClientOptionsHasConfigureLoggingPartialMethod()
         {
             var endpointParam = InputFactory.EndpointParameter(
                 "endpoint",
@@ -77,60 +77,22 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(options);
 
             var method = options!.Methods.FirstOrDefault(
-                m => m.Signature.Name == "ConfigureLoggedHeaderDefaults");
-            Assert.IsNotNull(method, "ClientOptions should have a ConfigureLoggedHeaderDefaults method");
+                m => m.Signature.Name == "ConfigureLogging");
+            Assert.IsNotNull(method, "ClientOptions should have a ConfigureLogging method");
             Assert.IsTrue(method!.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Partial),
-                "ConfigureLoggedHeaderDefaults should be a partial method");
+                "ConfigureLogging should be a partial method");
             Assert.IsNull(method.Signature.ReturnType,
-                "ConfigureLoggedHeaderDefaults should return void");
+                "ConfigureLogging should return void");
             Assert.IsEmpty(method.Signature.Parameters,
-                "ConfigureLoggedHeaderDefaults should have no parameters");
+                "ConfigureLogging should have no parameters");
             Assert.IsNull(method.BodyStatements,
-                "ConfigureLoggedHeaderDefaults partial declaration should have no body");
+                "ConfigureLogging partial declaration should have no body");
             Assert.IsNull(method.BodyExpression,
-                "ConfigureLoggedHeaderDefaults partial declaration should have no body expression");
+                "ConfigureLogging partial declaration should have no body expression");
         }
 
         [Test]
-        public void ClientOptionsHasLoggedQueryParameterDefaultsPartialMethod()
-        {
-            var endpointParam = InputFactory.EndpointParameter(
-                "endpoint",
-                InputPrimitiveType.String,
-                isRequired: true,
-                isEndpoint: true);
-            var client = InputFactory.Client(
-                "TestClient",
-                parameters: [endpointParam]);
-
-            MockHelpers.LoadMockGenerator(
-                apiKeyAuth: () => new InputApiKeyAuth("mock", null),
-                clients: () => [client]);
-
-            var clientProvider = AzureClientGenerator.Instance.OutputLibrary.TypeProviders
-                .OfType<ClientProvider>().FirstOrDefault();
-            Assert.IsNotNull(clientProvider);
-
-            var options = clientProvider!.ClientOptions;
-            Assert.IsNotNull(options);
-
-            var method = options!.Methods.FirstOrDefault(
-                m => m.Signature.Name == "ConfigureLoggedQueryParameterDefaults");
-            Assert.IsNotNull(method, "ClientOptions should have a ConfigureLoggedQueryParameterDefaults method");
-            Assert.IsTrue(method!.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Partial),
-                "ConfigureLoggedQueryParameterDefaults should be a partial method");
-            Assert.IsNull(method.Signature.ReturnType,
-                "ConfigureLoggedQueryParameterDefaults should return void");
-            Assert.IsEmpty(method.Signature.Parameters,
-                "ConfigureLoggedQueryParameterDefaults should have no parameters");
-            Assert.IsNull(method.BodyStatements,
-                "ConfigureLoggedQueryParameterDefaults partial declaration should have no body");
-            Assert.IsNull(method.BodyExpression,
-                "ConfigureLoggedQueryParameterDefaults partial declaration should have no body expression");
-        }
-
-        [Test]
-        public void AllConstructorsCallLoggingConfigurationMethods()
+        public void AllConstructorsCallConfigureLogging()
         {
             var endpointParam = InputFactory.EndpointParameter(
                 "endpoint",
@@ -155,10 +117,8 @@ namespace Azure.Generator.Tests.Visitors
             foreach (var ctor in options!.Constructors)
             {
                 var display = ctor.BodyStatements!.ToDisplayString();
-                Assert.IsTrue(display.Contains("ConfigureLoggedHeaderDefaults"),
-                    $"Constructor should call ConfigureLoggedHeaderDefaults. Body: {display}");
-                Assert.IsTrue(display.Contains("ConfigureLoggedQueryParameterDefaults"),
-                    $"Constructor should call ConfigureLoggedQueryParameterDefaults. Body: {display}");
+                Assert.IsTrue(display.Contains("ConfigureLogging"),
+                    $"Constructor should call ConfigureLogging. Body: {display}");
             }
         }
 
