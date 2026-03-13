@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks
+namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary></summary>
     internal partial class TaskRunOperationSource : IOperationSource<TaskRunResource>

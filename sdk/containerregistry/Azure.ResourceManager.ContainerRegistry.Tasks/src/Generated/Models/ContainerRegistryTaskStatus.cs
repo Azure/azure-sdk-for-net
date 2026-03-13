@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.ContainerRegistry._Tasks;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The current status of task. </summary>
     public readonly partial struct ContainerRegistryTaskStatus : IEquatable<ContainerRegistryTaskStatus>

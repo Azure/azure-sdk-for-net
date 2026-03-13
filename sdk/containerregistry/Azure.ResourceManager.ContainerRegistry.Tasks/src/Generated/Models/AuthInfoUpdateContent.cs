@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The authorization properties for accessing the source code repository. </summary>
     public partial class AuthInfoUpdateContent

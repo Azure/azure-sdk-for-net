@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The properties of a task run update parameters. </summary>
     internal partial class TaskRunPropertiesUpdateParameters

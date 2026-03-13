@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ContainerRegistry._Tasks;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The request parameters for a scheduling run against a task file. </summary>
     public partial class FileTaskRunContent : RunContent

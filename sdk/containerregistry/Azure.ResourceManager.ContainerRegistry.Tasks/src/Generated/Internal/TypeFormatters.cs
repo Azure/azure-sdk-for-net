@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks
+namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     internal static partial class TypeFormatters
     {

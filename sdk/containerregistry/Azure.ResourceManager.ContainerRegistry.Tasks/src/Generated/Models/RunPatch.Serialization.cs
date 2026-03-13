@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistry._Tasks;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> The set of run properties that can be updated. </summary>
     public partial class RunPatch : IJsonModel<RunPatch>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RunPatch)} does not support writing '{options.Format}' format.");
             }

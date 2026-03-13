@@ -14,10 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
+using Azure.ResourceManager.ContainerRegistry.Tasks.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks
+namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary>
     /// A class representing a AgentPool along with the instance operations that can be performed on it.
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
         internal AgentPoolResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string agentPoolApiVersion);
-            _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry._Tasks", ResourceType.Namespace, Diagnostics);
+            _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", ResourceType.Namespace, Diagnostics);
             _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Endpoint, agentPoolApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }

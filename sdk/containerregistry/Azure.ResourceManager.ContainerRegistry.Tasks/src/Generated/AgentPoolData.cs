@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
+using Azure.ResourceManager.ContainerRegistry.Tasks.Models;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks
+namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary>
     /// The agentpool that has the ARM resource and properties.

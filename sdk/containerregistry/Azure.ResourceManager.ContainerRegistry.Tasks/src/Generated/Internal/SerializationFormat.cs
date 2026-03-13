@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks
+namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     internal enum SerializationFormat
     {

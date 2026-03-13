@@ -10,24 +10,24 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks
+namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
-    internal partial class Tasks
+    internal partial class ContainerRegistryTaskRestClient
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of Tasks for mocking. </summary>
-        protected Tasks()
+        /// <summary> Initializes a new instance of ContainerRegistryTaskRestClient for mocking. </summary>
+        protected ContainerRegistryTaskRestClient()
         {
         }
 
-        /// <summary> Initializes a new instance of Tasks. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryTaskRestClient. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal Tasks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal ContainerRegistryTaskRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerRegistry._Tasks;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     internal partial class UnknownTaskStepProperties : TaskStepProperties, IJsonModel<TaskStepProperties>
     {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TaskStepProperties)} does not support writing '{options.Format}' format.");
             }

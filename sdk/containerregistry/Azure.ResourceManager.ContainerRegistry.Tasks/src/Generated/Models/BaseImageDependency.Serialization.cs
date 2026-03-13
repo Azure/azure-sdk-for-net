@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.ContainerRegistry._Tasks;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     /// <summary> Properties that describe a base image dependency. </summary>
     public partial class BaseImageDependency : IJsonModel<BaseImageDependency>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryTasksContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BaseImageDependency)} does not support writing '{options.Format}' format.");
             }

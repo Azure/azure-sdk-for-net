@@ -12,11 +12,11 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistry._Tasks;
-using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
+using Azure.ResourceManager.ContainerRegistry.Tasks.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks.Mocking
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableContainerRegistryTasksResourceGroupResource : ArmResource
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks.Mocking
         {
         }
 
-        private ClientDiagnostics RegistriesClientDiagnostics => _registriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry._Tasks.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics RegistriesClientDiagnostics => _registriesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Registries RegistriesRestClient => _registriesRestClient ??= new Registries(RegistriesClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
 

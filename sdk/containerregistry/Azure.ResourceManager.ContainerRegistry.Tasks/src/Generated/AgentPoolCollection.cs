@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks
+namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary>
     /// A class representing a collection of <see cref="AgentPoolResource"/> and their operations.
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
         {
             TryGetApiVersion(AgentPoolResource.ResourceType, out string agentPoolApiVersion);
             _registryName = registryName;
-            _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry._Tasks", AgentPoolResource.ResourceType.Namespace, Diagnostics);
+            _agentPoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", AgentPoolResource.ResourceType.Namespace, Diagnostics);
             _agentPoolsRestClient = new AgentPools(_agentPoolsClientDiagnostics, Pipeline, Endpoint, agentPoolApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }

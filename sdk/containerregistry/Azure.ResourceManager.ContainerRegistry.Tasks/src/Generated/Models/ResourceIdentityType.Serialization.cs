@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 {
     internal static partial class ResourceIdentityTypeExtensions
     {

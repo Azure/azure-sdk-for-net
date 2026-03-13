@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks
+namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary>
     /// A class representing a collection of <see cref="TaskResource"/> and their operations.
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
     /// </summary>
     public partial class TaskCollection : ArmCollection, IEnumerable<TaskResource>, IAsyncEnumerable<TaskResource>
     {
-        private readonly ClientDiagnostics _tasksClientDiagnostics;
-        private readonly Tasks _tasksRestClient;
+        private readonly ClientDiagnostics _containerRegistryTaskRestClientClientDiagnostics;
+        private readonly ContainerRegistryTaskRestClient _containerRegistryTaskRestClientRestClient;
         /// <summary> The registryName. </summary>
         private readonly string _registryName;
 
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
         {
             TryGetApiVersion(TaskResource.ResourceType, out string taskApiVersion);
             _registryName = registryName;
-            _tasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry._Tasks", TaskResource.ResourceType.Namespace, Diagnostics);
-            _tasksRestClient = new Tasks(_tasksClientDiagnostics, Pipeline, Endpoint, taskApiVersion ?? "2025-03-01-preview");
+            _containerRegistryTaskRestClientClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry.Tasks", TaskResource.ResourceType.Namespace, Diagnostics);
+            _containerRegistryTaskRestClientRestClient = new ContainerRegistryTaskRestClient(_containerRegistryTaskRestClientClientDiagnostics, Pipeline, Endpoint, taskApiVersion ?? "2025-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _containerRegistryTaskRestClientClientDiagnostics.CreateScope("TaskCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, TaskData.ToRequestContent(data), context);
+                HttpMessage message = _containerRegistryTaskRestClientRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, TaskData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TaskData> response = Response.FromValue(TaskData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _containerRegistryTaskRestClientClientDiagnostics.CreateScope("TaskCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, TaskData.ToRequestContent(data), context);
+                HttpMessage message = _containerRegistryTaskRestClientRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, TaskData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TaskData> response = Response.FromValue(TaskData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.Get");
+            using DiagnosticScope scope = _containerRegistryTaskRestClientClientDiagnostics.CreateScope("TaskCollection.Get");
             scope.Start();
             try
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
+                HttpMessage message = _containerRegistryTaskRestClientRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TaskData> response = Response.FromValue(TaskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.Get");
+            using DiagnosticScope scope = _containerRegistryTaskRestClientClientDiagnostics.CreateScope("TaskCollection.Get");
             scope.Start();
             try
             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
+                HttpMessage message = _containerRegistryTaskRestClientRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TaskData> response = Response.FromValue(TaskData.FromResponse(result), result);
                 if (response.Value == null)
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<TaskData, TaskResource>(new TasksGetAllAsyncCollectionResultOfT(_tasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, context), data => new TaskResource(Client, data));
+            return new AsyncPageableWrapper<TaskData, TaskResource>(new ContainerRegistryTaskRestClientGetAllAsyncCollectionResultOfT(_containerRegistryTaskRestClientRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, context), data => new TaskResource(Client, data));
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<TaskData, TaskResource>(new TasksGetAllCollectionResultOfT(_tasksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, context), data => new TaskResource(Client, data));
+            return new PageableWrapper<TaskData, TaskResource>(new ContainerRegistryTaskRestClientGetAllCollectionResultOfT(_containerRegistryTaskRestClientRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, context), data => new TaskResource(Client, data));
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.Exists");
+            using DiagnosticScope scope = _containerRegistryTaskRestClientClientDiagnostics.CreateScope("TaskCollection.Exists");
             scope.Start();
             try
             {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
+                HttpMessage message = _containerRegistryTaskRestClientRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TaskData> response = default;
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.Exists");
+            using DiagnosticScope scope = _containerRegistryTaskRestClientClientDiagnostics.CreateScope("TaskCollection.Exists");
             scope.Start();
             try
             {
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
+                HttpMessage message = _containerRegistryTaskRestClientRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TaskData> response = default;
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.GetIfExists");
+            using DiagnosticScope scope = _containerRegistryTaskRestClientClientDiagnostics.CreateScope("TaskCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
+                HttpMessage message = _containerRegistryTaskRestClientRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<TaskData> response = default;
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
         {
             Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
 
-            using DiagnosticScope scope = _tasksClientDiagnostics.CreateScope("TaskCollection.GetIfExists");
+            using DiagnosticScope scope = _containerRegistryTaskRestClientClientDiagnostics.CreateScope("TaskCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _tasksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
+                HttpMessage message = _containerRegistryTaskRestClientRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _registryName, taskName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<TaskData> response = default;

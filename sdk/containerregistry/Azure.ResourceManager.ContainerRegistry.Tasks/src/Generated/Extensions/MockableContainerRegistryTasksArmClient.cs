@@ -7,9 +7,9 @@
 
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistry._Tasks;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks.Mocking
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableContainerRegistryTasksArmClient : ArmResource

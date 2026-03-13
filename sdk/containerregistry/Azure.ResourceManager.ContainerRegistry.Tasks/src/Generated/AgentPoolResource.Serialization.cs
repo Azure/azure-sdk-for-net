@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks
+namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
     /// <summary></summary>
     public partial class AgentPoolResource : IJsonModel<AgentPoolData>
@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.ContainerRegistry._Tasks
         AgentPoolData IJsonModel<AgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AgentPoolData>(Data, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
+        BinaryData IPersistableModel<AgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AgentPoolData>(Data, options, AzureResourceManagerContainerRegistryTasksContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgentPoolData IPersistableModel<AgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgentPoolData>(data, options, AzureResourceManagerContainerRegistry_TasksContext.Default);
+        AgentPoolData IPersistableModel<AgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AgentPoolData>(data, options, AzureResourceManagerContainerRegistryTasksContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

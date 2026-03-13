@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerRegistry._Tasks.Mocking;
-using Azure.ResourceManager.ContainerRegistry._Tasks.Models;
+using Azure.ResourceManager.ContainerRegistry.Tasks.Mocking;
+using Azure.ResourceManager.ContainerRegistry.Tasks.Models;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.ContainerRegistry._Tasks
+namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerRegistry._Tasks. </summary>
+    /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerRegistry.Tasks. </summary>
     public static partial class ContainerRegistryTasksExtensions
     {
         /// <param name="client"></param>
