@@ -9,12 +9,12 @@ namespace Azure.Generator.Management.Models;
 /// <param name="Pattern"> The regex pattern constraint for the resource name. </param>
 /// <param name="MinLength"> The minimum length constraint for the resource name. </param>
 /// <param name="MaxLength"> The maximum length constraint for the resource name. </param>
-public record NameConstraints(
+public record ArmResourceNameConstraints(
     string? Pattern,
     int? MinLength,
     int? MaxLength)
 {
-    internal static NameConstraints DeserializeNameConstraints(JsonElement element)
+    internal static ArmResourceNameConstraints DeserializeNameConstraints(JsonElement element)
     {
         string? pattern = null;
         int? minLength = null;

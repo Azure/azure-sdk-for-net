@@ -19,7 +19,7 @@ namespace Azure.Generator.Management.Models;
 /// <param name="ParentResourceId"> The parent resource ID pattern, if applicable. </param>
 /// <param name="ChildResourceIds"> The list of child resource ID patterns. </param>
 /// <param name="NameConstraints"> The name constraints for the resource. </param>
-public record ResourceMetadata(
+public record ArmResourceMetadata(
     string ResourceIdPattern,
     string ResourceName,
     string ResourceType,
@@ -29,10 +29,10 @@ public record ResourceMetadata(
     string? SingletonResourceName,
     string? ParentResourceId,
     IReadOnlyList<string> ChildResourceIds,
-    NameConstraints NameConstraints)
+    ArmResourceNameConstraints NameConstraints)
 {
     // ChildResourceIds is currently unpopulated and passed in as an empty array
-    internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
+    internal static ArmResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
     {
         string? resourceIdPattern = null;
         string? resourceType = null;
@@ -84,10 +84,10 @@ public record ResourceMetadata(
             resourceName = resourceNameElement.GetString();
         }
 
-        NameConstraints nameConstraints = new(null, null, null);
+        ArmResourceNameConstraints nameConstraints = new(null, null, null);
         if (element.TryGetProperty("nameConstraints", out var nameConstraintsElement))
         {
-            nameConstraints = NameConstraints.DeserializeNameConstraints(nameConstraintsElement);
+            nameConstraints = ArmResourceNameConstraints.DeserializeNameConstraints(nameConstraintsElement);
         }
 
         return new(
