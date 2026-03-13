@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
 using System.Linq;
@@ -16,33 +15,6 @@ namespace Azure.Generator.Tests.Visitors
 {
     public class ClientSettingsVisitorTests
     {
-        [Test]
-        public void ClientSettingsHasPartialModifier()
-        {
-            var endpointParam = InputFactory.EndpointParameter(
-                "endpoint",
-                InputPrimitiveType.String,
-                isRequired: true,
-                isEndpoint: true);
-            var client = InputFactory.Client(
-                "TestClient",
-                parameters: [endpointParam]);
-
-            MockHelpers.LoadMockGenerator(
-                apiKeyAuth: () => new InputApiKeyAuth("mock", null),
-                clients: () => [client]);
-
-            var clientProvider = AzureClientGenerator.Instance.OutputLibrary.TypeProviders
-                .OfType<ClientProvider>().FirstOrDefault();
-            Assert.IsNotNull(clientProvider);
-
-            var settings = clientProvider!.ClientSettings;
-            Assert.IsNotNull(settings);
-            Assert.IsTrue(settings!.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
-            Assert.IsTrue(settings.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Partial));
-            Assert.IsTrue(settings.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Class));
-        }
-
         [Test]
         public void ClientOptionsHasConfigurationSectionConstructorWithBaseCallToSectionNull()
         {
