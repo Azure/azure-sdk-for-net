@@ -3,16 +3,18 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Microsoft.TypeSpec.Generator.Customizations;
+using System.ComponentModel;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    [CodeGenSuppress("ErrorDetails")]
     public partial class DataProtectionBackupJobProperties
     {
         /// <summary> A List, detailing the errors related to the job. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and will be removed in a future release. Please use JobErrorDetails instead.")]
         public IReadOnlyList<Azure.ResponseError> ErrorDetails { get; }
     }
 }

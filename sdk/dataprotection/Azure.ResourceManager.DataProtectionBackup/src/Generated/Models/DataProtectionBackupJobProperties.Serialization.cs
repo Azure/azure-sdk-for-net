@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -114,18 +113,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
+            if (options.Format != "W" && Optional.IsCollectionDefined(JobErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
-                foreach (ResponseError item in ErrorDetails)
+                foreach (UserFacingError item in JobErrorDetails)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<ResponseError>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -258,7 +252,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string dataSourceType = default;
             TimeSpan? duration = default;
             DateTimeOffset? endOn = default;
-            IReadOnlyList<ResponseError> errorDetails = default;
+            IReadOnlyList<UserFacingError> jobErrorDetails = default;
             BackupJobExtendedInfo extendedInfo = default;
             bool isUserTriggered = default;
             string operation = default;
@@ -350,19 +344,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    List<ResponseError> array = new List<ResponseError>();
+                    List<UserFacingError> array = new List<UserFacingError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataProtectionBackupContext.Default));
-                        }
+                        array.Add(UserFacingError.DeserializeUserFacingError(item, options));
                     }
-                    errorDetails = array;
+                    jobErrorDetails = array;
                     continue;
                 }
                 if (prop.NameEquals("extendedInfo"u8))
@@ -509,7 +496,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceType,
                 duration,
                 endOn,
-                errorDetails ?? new ChangeTrackingList<ResponseError>(),
+                jobErrorDetails ?? new ChangeTrackingList<UserFacingError>(),
                 extendedInfo,
                 isUserTriggered,
                 operation,

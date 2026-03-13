@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
         /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
-        /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
+        /// <param name="resourceProtectionErrorDetails"> Specifies the protection error of the resource. </param>
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
         /// <param name="dataSourceAuthCredentials"> Credentials to use to authenticate with data source provider. </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="objectType"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IList<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IList<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, UserFacingError resourceProtectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             DataSourceInfo = dataSourceInfo;
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ResourceGuardOperationRequests = resourceGuardOperationRequests;
             ProtectionStatus = protectionStatus;
             CurrentProtectionState = currentProtectionState;
-            ProtectionErrorDetails = protectionErrorDetails;
+            ResourceProtectionErrorDetails = resourceProtectionErrorDetails;
             ProvisioningState = provisioningState;
             DataSourceAuthCredentials = dataSourceAuthCredentials;
             ValidationType = validationType;
@@ -91,6 +90,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Specifies the current protection state of the resource. </summary>
         public CurrentProtectionState? CurrentProtectionState { get; }
+
+        /// <summary> Specifies the protection error of the resource. </summary>
+        public UserFacingError ResourceProtectionErrorDetails { get; }
 
         /// <summary> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </summary>
         public string ProvisioningState { get; }

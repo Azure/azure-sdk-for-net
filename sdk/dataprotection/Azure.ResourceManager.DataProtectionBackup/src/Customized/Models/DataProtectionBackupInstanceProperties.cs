@@ -3,15 +3,17 @@
 
 #nullable disable
 
-using Microsoft.TypeSpec.Generator.Customizations;
+using System;
+using System.ComponentModel;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    [CodeGenSuppress("ProtectionErrorDetails")]
     public partial class DataProtectionBackupInstanceProperties
     {
         /// <summary> Specifies the protection error of the resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is deprecated and will be removed in a future release. Please use ResourceProtectionErrorDetails instead.")]
         public Azure.ResponseError ProtectionErrorDetails { get; }
     }
 }

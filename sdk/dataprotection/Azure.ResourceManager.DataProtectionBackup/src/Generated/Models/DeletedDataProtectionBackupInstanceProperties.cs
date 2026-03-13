@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
         /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
-        /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
+        /// <param name="resourceProtectionErrorDetails"> Specifies the protection error of the resource. </param>
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
         /// <param name="dataSourceAuthCredentials"> Credentials to use to authenticate with data source provider. </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
-        internal DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IList<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupInstanceDeletionInfo deletionInfo) : base(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, resourceGuardOperationRequests, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails, objectType, additionalBinaryDataProperties)
+        internal DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IList<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, UserFacingError resourceProtectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupInstanceDeletionInfo deletionInfo) : base(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, resourceGuardOperationRequests, protectionStatus, currentProtectionState, resourceProtectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails, objectType, additionalBinaryDataProperties)
         {
             DeletionInfo = deletionInfo;
         }

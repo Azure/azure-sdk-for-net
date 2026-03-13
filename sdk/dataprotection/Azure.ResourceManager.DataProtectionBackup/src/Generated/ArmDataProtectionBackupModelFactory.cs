@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
         /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
-        /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
+        /// <param name="resourceProtectionErrorDetails"> Specifies the protection error of the resource. </param>
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
         /// <param name="dataSourceAuthCredentials"> Credentials to use to authenticate with data source provider. </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="objectType"></param>
         /// <returns> A new <see cref="Models.DataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName = default, DataSourceInfo dataSourceInfo = default, DataSourceSetInfo dataSourceSetInfo = default, BackupInstancePolicyInfo policyInfo = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupInstanceProtectionStatusDetails protectionStatus = default, CurrentProtectionState? currentProtectionState = default, ResponseError protectionErrorDetails = default, string provisioningState = default, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default, BackupValidationType? validationType = default, DataProtectionIdentityDetails identityDetails = default, string objectType = default)
+        public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName = default, DataSourceInfo dataSourceInfo = default, DataSourceSetInfo dataSourceSetInfo = default, BackupInstancePolicyInfo policyInfo = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupInstanceProtectionStatusDetails protectionStatus = default, CurrentProtectionState? currentProtectionState = default, UserFacingError resourceProtectionErrorDetails = default, string provisioningState = default, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default, BackupValidationType? validationType = default, DataProtectionIdentityDetails identityDetails = default, string objectType = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 resourceGuardOperationRequests.ToList(),
                 protectionStatus,
                 currentProtectionState,
-                protectionErrorDetails,
+                resourceProtectionErrorDetails,
                 provisioningState,
                 dataSourceAuthCredentials,
                 validationType,
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataSourceType"> Type of DataSource. </param>
         /// <param name="duration"> Total run time of the job. ISO 8601 format. </param>
         /// <param name="endOn"> EndTime of the job(in UTC). </param>
-        /// <param name="errorDetails"> A List, detailing the errors related to the job. </param>
+        /// <param name="jobErrorDetails"> A List, detailing the errors related to the job. </param>
         /// <param name="extendedInfo"> Extended Information about the job. </param>
         /// <param name="isUserTriggered"> Indicated that whether the job is adhoc(true) or scheduled(false). </param>
         /// <param name="operation"> It indicates the type of Job i.e. Backup:full/log/diff ;Restore:ALR/OLR; Tiering:Backup/Archive ; Management:ConfigureProtection/UnConfigure. </param>
@@ -1057,9 +1057,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
         /// <returns> A new <see cref="Models.DataProtectionBackupJobProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId = default, string backupInstanceFriendlyName = default, ResourceIdentifier backupInstanceId = default, ResourceIdentifier dataSourceId = default, AzureLocation dataSourceLocation = default, string dataSourceName = default, string dataSourceSetName = default, string dataSourceType = default, TimeSpan? duration = default, DateTimeOffset? endOn = default, IEnumerable<ResponseError> errorDetails = default, BackupJobExtendedInfo extendedInfo = default, bool isUserTriggered = default, string operation = default, string operationCategory = default, ResourceIdentifier policyId = default, string policyName = default, bool isProgressEnabled = default, Uri progressUri = default, string rehydrationPriority = default, string restoreType = default, string sourceResourceGroup = default, string sourceSubscriptionId = default, DateTimeOffset startOn = default, string status = default, string subscriptionId = default, IEnumerable<string> supportedActions = default, string vaultName = default, ETag? etag = default, string sourceDataStoreName = default, string destinationDataStoreName = default)
+        public static DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId = default, string backupInstanceFriendlyName = default, ResourceIdentifier backupInstanceId = default, ResourceIdentifier dataSourceId = default, AzureLocation dataSourceLocation = default, string dataSourceName = default, string dataSourceSetName = default, string dataSourceType = default, TimeSpan? duration = default, DateTimeOffset? endOn = default, IEnumerable<UserFacingError> jobErrorDetails = default, BackupJobExtendedInfo extendedInfo = default, bool isUserTriggered = default, string operation = default, string operationCategory = default, ResourceIdentifier policyId = default, string policyName = default, bool isProgressEnabled = default, Uri progressUri = default, string rehydrationPriority = default, string restoreType = default, string sourceResourceGroup = default, string sourceSubscriptionId = default, DateTimeOffset startOn = default, string status = default, string subscriptionId = default, IEnumerable<string> supportedActions = default, string vaultName = default, ETag? etag = default, string sourceDataStoreName = default, string destinationDataStoreName = default)
         {
-            errorDetails ??= new ChangeTrackingList<ResponseError>();
+            jobErrorDetails ??= new ChangeTrackingList<UserFacingError>();
             supportedActions ??= new ChangeTrackingList<string>();
 
             return new DataProtectionBackupJobProperties(
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceType,
                 duration,
                 endOn,
-                errorDetails.ToList(),
+                jobErrorDetails.ToList(),
                 extendedInfo,
                 isUserTriggered,
                 operation,
@@ -1171,7 +1171,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
         /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
-        /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
+        /// <param name="resourceProtectionErrorDetails"> Specifies the protection error of the resource. </param>
         /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
         /// <param name="dataSourceAuthCredentials"> Credentials to use to authenticate with data source provider. </param>
         /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"></param>
         /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
         /// <returns> A new <see cref="Models.DeletedDataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
-        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = default, DataSourceInfo dataSourceInfo = default, DataSourceSetInfo dataSourceSetInfo = default, BackupInstancePolicyInfo policyInfo = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupInstanceProtectionStatusDetails protectionStatus = default, CurrentProtectionState? currentProtectionState = default, ResponseError protectionErrorDetails = default, string provisioningState = default, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default, BackupValidationType? validationType = default, DataProtectionIdentityDetails identityDetails = default, string objectType = default, BackupInstanceDeletionInfo deletionInfo = default)
+        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = default, DataSourceInfo dataSourceInfo = default, DataSourceSetInfo dataSourceSetInfo = default, BackupInstancePolicyInfo policyInfo = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupInstanceProtectionStatusDetails protectionStatus = default, CurrentProtectionState? currentProtectionState = default, UserFacingError resourceProtectionErrorDetails = default, string provisioningState = default, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default, BackupValidationType? validationType = default, DataProtectionIdentityDetails identityDetails = default, string objectType = default, BackupInstanceDeletionInfo deletionInfo = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 resourceGuardOperationRequests.ToList(),
                 protectionStatus,
                 currentProtectionState,
-                protectionErrorDetails,
+                resourceProtectionErrorDetails,
                 provisioningState,
                 dataSourceAuthCredentials,
                 validationType,
@@ -1499,7 +1499,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, string objectType)
         {
-            return DataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, resourceGuardOperationRequests: default, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails: default, objectType);
+            return new DataProtectionBackupInstanceProperties(
+                friendlyName,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                policyInfo,
+                default,
+                protectionStatus,
+                currentProtectionState,
+                default,
+                provisioningState,
+                dataSourceAuthCredentials,
+                validationType,
+                default,
+                objectType,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProtectionOperationJobExtendedInfo"/>. </summary>
@@ -1509,6 +1523,50 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(ResourceIdentifier jobResourceId)
         {
             return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", additionalBinaryDataProperties: null, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupInstanceProperties"/>. </summary>
+        /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
+        /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
+        /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
+        /// <param name="policyInfo"> Gets or sets the policy information. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
+        /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
+        /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
+        /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
+        /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
+        /// <param name="dataSourceAuthCredentials">
+        /// Credentials to use to authenticate with data source provider.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include .
+        /// </param>
+        /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
+        /// <param name="identityDetails">
+        /// Contains information of the Identity Details for the BI.
+        ///             If it is null, default will be considered as System Assigned.
+        /// </param>
+        /// <param name="objectType"></param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IEnumerable<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType)
+        {
+            resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
+
+            return new DataProtectionBackupInstanceProperties(
+                friendlyName,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                policyInfo,
+                resourceGuardOperationRequests.ToList(),
+                protectionStatus,
+                currentProtectionState,
+                default,
+                provisioningState,
+                dataSourceAuthCredentials,
+                validationType,
+                identityDetails,
+                objectType,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BackupFindRestorableTimeRangeResult"/>. </summary>
@@ -1529,6 +1587,80 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 properties);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.DataProtectionBackupJobProperties"/>. </summary>
+        /// <param name="activityId"> Job Activity Id. </param>
+        /// <param name="backupInstanceFriendlyName"> Name of the Backup Instance. </param>
+        /// <param name="backupInstanceId"> ARM ID of the Backup Instance. </param>
+        /// <param name="dataSourceId"> ARM ID of the DataSource. </param>
+        /// <param name="dataSourceLocation"> Location of the DataSource. </param>
+        /// <param name="dataSourceName"> User Friendly Name of the DataSource. </param>
+        /// <param name="dataSourceSetName"> Data Source Set Name of the DataSource. </param>
+        /// <param name="dataSourceType"> Type of DataSource. </param>
+        /// <param name="duration"> Total run time of the job. ISO 8601 format. </param>
+        /// <param name="endOn"> EndTime of the job(in UTC). </param>
+        /// <param name="errorDetails"> A List, detailing the errors related to the job. </param>
+        /// <param name="extendedInfo"> Extended Information about the job. </param>
+        /// <param name="isUserTriggered"> Indicated that whether the job is adhoc(true) or scheduled(false). </param>
+        /// <param name="operation"> It indicates the type of Job i.e. Backup:full/log/diff ;Restore:ALR/OLR; Tiering:Backup/Archive ; Management:ConfigureProtection/UnConfigure. </param>
+        /// <param name="operationCategory"> It indicates the type of Job i.e. Backup/Restore/Tiering/Management. </param>
+        /// <param name="policyId"> ARM ID of the policy. </param>
+        /// <param name="policyName"> Name of the policy. </param>
+        /// <param name="isProgressEnabled"> Indicated whether progress is enabled for the job. </param>
+        /// <param name="progressUri"> Url which contains job's progress. </param>
+        /// <param name="rehydrationPriority"> Priority to be used for rehydration. </param>
+        /// <param name="restoreType"> It indicates the sub type of operation i.e. in case of Restore it can be ALR/OLR. </param>
+        /// <param name="sourceResourceGroup"> Resource Group Name of the Datasource. </param>
+        /// <param name="sourceSubscriptionId"> SubscriptionId corresponding to the DataSource. </param>
+        /// <param name="startOn"> StartTime of the job(in UTC). </param>
+        /// <param name="status"> Status of the job like InProgress/Completed/Failed/Cancelled/CompletedWithWarnings/Cancelling/Paused. </param>
+        /// <param name="subscriptionId"> Subscription Id of the corresponding backup vault. </param>
+        /// <param name="supportedActions"> List of supported actions. </param>
+        /// <param name="vaultName"> Name of the vault. </param>
+        /// <param name="eTag"></param>
+        /// <param name="sourceDataStoreName"></param>
+        /// <param name="destinationDataStoreName"></param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupJobProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IEnumerable<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IEnumerable<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName)
+        {
+            errorDetails ??= new ChangeTrackingList<ResponseError>();
+            supportedActions ??= new ChangeTrackingList<string>();
+
+            return new DataProtectionBackupJobProperties(
+                activityId,
+                backupInstanceFriendlyName,
+                backupInstanceId,
+                dataSourceId,
+                dataSourceLocation,
+                dataSourceName,
+                dataSourceSetName,
+                dataSourceType,
+                duration,
+                endOn,
+                default,
+                extendedInfo,
+                isUserTriggered,
+                operation,
+                operationCategory,
+                policyId,
+                policyName,
+                isProgressEnabled,
+                progressUri,
+                rehydrationPriority,
+                restoreType,
+                sourceResourceGroup,
+                sourceSubscriptionId,
+                startOn,
+                status,
+                subscriptionId,
+                supportedActions.ToList(),
+                vaultName,
+                eTag,
+                sourceDataStoreName,
+                destinationDataStoreName,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.RestoreJobRecoveryPointDetails"/>. </summary>
         /// <param name="recoveryPointId"></param>
         /// <param name="recoverOn"></param>
@@ -1546,7 +1678,53 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static UserFacingWarningDetail UserFacingWarningDetail(string resourceName, ResponseError warning)
         {
-            return new UserFacingWarningDetail(resourceName, warning, additionalBinaryDataProperties: null);
+            return new UserFacingWarningDetail(resourceName, default, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeletedDataProtectionBackupInstanceProperties"/>. </summary>
+        /// <param name="friendlyName"> Gets or sets the Backup Instance friendly name. </param>
+        /// <param name="dataSourceInfo"> Gets or sets the data source information. </param>
+        /// <param name="dataSourceSetInfo"> Gets or sets the data source set information. </param>
+        /// <param name="policyInfo"> Gets or sets the policy information. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
+        /// <param name="protectionStatus"> Specifies the protection status of the resource. </param>
+        /// <param name="currentProtectionState"> Specifies the current protection state of the resource. </param>
+        /// <param name="protectionErrorDetails"> Specifies the protection error of the resource. </param>
+        /// <param name="provisioningState"> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </param>
+        /// <param name="dataSourceAuthCredentials">
+        /// Credentials to use to authenticate with data source provider.
+        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///             The available derived classes include .
+        /// </param>
+        /// <param name="validationType"> Specifies the type of validation. In case of DeepValidation, all validations from /validateForBackup API will run again. </param>
+        /// <param name="identityDetails">
+        /// Contains information of the Identity Details for the BI.
+        ///             If it is null, default will be considered as System Assigned.
+        /// </param>
+        /// <param name="objectType"></param>
+        /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
+        /// <returns> A new <see cref="Models.DeletedDataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IEnumerable<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, BackupInstanceDeletionInfo deletionInfo)
+        {
+            resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
+
+            return new DeletedDataProtectionBackupInstanceProperties(
+                friendlyName,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                policyInfo,
+                resourceGuardOperationRequests.ToList(),
+                protectionStatus,
+                currentProtectionState,
+                default,
+                provisioningState,
+                dataSourceAuthCredentials,
+                validationType,
+                identityDetails,
+                objectType,
+                additionalBinaryDataProperties: null,
+                deletionInfo);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ItemPathBasedRestoreCriteria"/>. </summary>
@@ -1609,7 +1787,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceType,
                 duration,
                 endOn,
-                errorDetails.ToList(),
+                default,
                 extendedInfo,
                 isUserTriggered,
                 operation,
@@ -1650,7 +1828,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, string objectType, BackupInstanceDeletionInfo deletionInfo)
         {
-            return DeletedDataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, resourceGuardOperationRequests: default, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails: default, objectType, deletionInfo);
+            return new DeletedDataProtectionBackupInstanceProperties(
+                friendlyName,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                policyInfo,
+                default,
+                protectionStatus,
+                currentProtectionState,
+                default,
+                provisioningState,
+                dataSourceAuthCredentials,
+                validationType,
+                default,
+                objectType,
+                additionalBinaryDataProperties: null,
+                deletionInfo);
         }
 
         /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
@@ -1806,7 +1999,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType)
         {
-            return DataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, resourceGuardOperationRequests: default, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails, objectType);
+            return new DataProtectionBackupInstanceProperties(
+                friendlyName,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                policyInfo,
+                default,
+                protectionStatus,
+                currentProtectionState,
+                default,
+                provisioningState,
+                dataSourceAuthCredentials,
+                validationType,
+                identityDetails,
+                objectType,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeletedDataProtectionBackupInstanceProperties"/>. </summary>
@@ -1834,7 +2041,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, BackupInstanceDeletionInfo deletionInfo)
         {
-            return DeletedDataProtectionBackupInstanceProperties(friendlyName, dataSourceInfo, dataSourceSetInfo, policyInfo, resourceGuardOperationRequests: default, protectionStatus, currentProtectionState, protectionErrorDetails, provisioningState, dataSourceAuthCredentials, validationType, identityDetails, objectType, deletionInfo);
+            return new DeletedDataProtectionBackupInstanceProperties(
+                friendlyName,
+                dataSourceInfo,
+                dataSourceSetInfo,
+                policyInfo,
+                default,
+                protectionStatus,
+                currentProtectionState,
+                default,
+                provisioningState,
+                dataSourceAuthCredentials,
+                validationType,
+                identityDetails,
+                objectType,
+                additionalBinaryDataProperties: null,
+                deletionInfo);
         }
     }
 }

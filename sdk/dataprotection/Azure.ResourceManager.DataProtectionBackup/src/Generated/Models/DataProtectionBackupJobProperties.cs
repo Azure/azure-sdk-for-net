@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataSourceLocation = dataSourceLocation;
             DataSourceName = dataSourceName;
             DataSourceType = dataSourceType;
-            ErrorDetails = new ChangeTrackingList<ResponseError>();
+            JobErrorDetails = new ChangeTrackingList<UserFacingError>();
             IsUserTriggered = isUserTriggered;
             Operation = operation;
             OperationCategory = operationCategory;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataSourceType"> Type of DataSource. </param>
         /// <param name="duration"> Total run time of the job. ISO 8601 format. </param>
         /// <param name="endOn"> EndTime of the job(in UTC). </param>
-        /// <param name="errorDetails"> A List, detailing the errors related to the job. </param>
+        /// <param name="jobErrorDetails"> A List, detailing the errors related to the job. </param>
         /// <param name="extendedInfo"> Extended Information about the job. </param>
         /// <param name="isUserTriggered"> Indicated that whether the job is adhoc(true) or scheduled(false). </param>
         /// <param name="operation"> It indicates the type of Job i.e. Backup:full/log/diff ;Restore:ALR/OLR; Tiering:Backup/Archive ; Management:ConfigureProtection/UnConfigure. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<ResponseError> errorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<UserFacingError> jobErrorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActivityId = activityId;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataSourceType = dataSourceType;
             Duration = duration;
             EndOn = endOn;
-            ErrorDetails = errorDetails;
+            JobErrorDetails = jobErrorDetails;
             ExtendedInfo = extendedInfo;
             IsUserTriggered = isUserTriggered;
             Operation = operation;
@@ -173,6 +173,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> EndTime of the job(in UTC). </summary>
         public DateTimeOffset? EndOn { get; }
+
+        /// <summary> A List, detailing the errors related to the job. </summary>
+        public IReadOnlyList<UserFacingError> JobErrorDetails { get; }
 
         /// <summary> Extended Information about the job. </summary>
         public BackupJobExtendedInfo ExtendedInfo { get; }

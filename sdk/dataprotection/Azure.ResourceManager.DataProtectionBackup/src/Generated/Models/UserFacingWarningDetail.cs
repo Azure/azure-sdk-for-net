@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -19,27 +18,30 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UserFacingWarningDetail"/>. </summary>
-        /// <param name="warning"> Error details for the warning. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="warning"/> is null. </exception>
-        public UserFacingWarningDetail(ResponseError warning)
+        /// <param name="warningDetails"> Error details for the warning. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="warningDetails"/> is null. </exception>
+        public UserFacingWarningDetail(UserFacingError warningDetails)
         {
-            Argument.AssertNotNull(warning, nameof(warning));
+            Argument.AssertNotNull(warningDetails, nameof(warningDetails));
 
-            Warning = warning;
+            WarningDetails = warningDetails;
         }
 
         /// <summary> Initializes a new instance of <see cref="UserFacingWarningDetail"/>. </summary>
         /// <param name="resourceName"> Name of resource for which warning is raised. </param>
-        /// <param name="warning"> Error details for the warning. </param>
+        /// <param name="warningDetails"> Error details for the warning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserFacingWarningDetail(string resourceName, ResponseError warning, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserFacingWarningDetail(string resourceName, UserFacingError warningDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceName = resourceName;
-            Warning = warning;
+            WarningDetails = warningDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of resource for which warning is raised. </summary>
         public string ResourceName { get; set; }
+
+        /// <summary> Error details for the warning. </summary>
+        public UserFacingError WarningDetails { get; set; }
     }
 }
