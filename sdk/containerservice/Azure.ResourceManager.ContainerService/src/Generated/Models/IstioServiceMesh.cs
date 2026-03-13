@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Istio service mesh configuration. </summary>
     public partial class IstioServiceMesh
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IstioServiceMesh"/>. </summary>
         public IstioServiceMesh()
@@ -55,35 +27,43 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="components"> Istio components configuration. </param>
         /// <param name="certificateAuthority"> Istio Service Mesh Certificate Authority (CA) configuration. For now, we only support plugin certificates as described here https://aka.ms/asm-plugin-ca. </param>
         /// <param name="revisions"> The list of revisions of the Istio control plane. When an upgrade is not in progress, this holds one value. When canary upgrade is in progress, this can only hold two consecutive values. For more information, see: https://learn.microsoft.com/en-us/azure/aks/istio-upgrade. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IstioServiceMesh(IstioComponents components, IstioCertificateAuthority certificateAuthority, IList<string> revisions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IstioServiceMesh(IstioComponents components, IstioCertificateAuthority certificateAuthority, IList<string> revisions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Components = components;
             CertificateAuthority = certificateAuthority;
             Revisions = revisions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Istio components configuration. </summary>
         [WirePath("components")]
         public IstioComponents Components { get; set; }
+
         /// <summary> Istio Service Mesh Certificate Authority (CA) configuration. For now, we only support plugin certificates as described here https://aka.ms/asm-plugin-ca. </summary>
+        [WirePath("certificateAuthority")]
         internal IstioCertificateAuthority CertificateAuthority { get; set; }
-        /// <summary> Plugin certificates information for Service Mesh. </summary>
-        [WirePath("certificateAuthority.plugin")]
-        public IstioPluginCertificateAuthority CertificateAuthorityPlugin
-        {
-            get => CertificateAuthority is null ? default : CertificateAuthority.Plugin;
-            set
-            {
-                if (CertificateAuthority is null)
-                    CertificateAuthority = new IstioCertificateAuthority();
-                CertificateAuthority.Plugin = value;
-            }
-        }
 
         /// <summary> The list of revisions of the Istio control plane. When an upgrade is not in progress, this holds one value. When canary upgrade is in progress, this can only hold two consecutive values. For more information, see: https://learn.microsoft.com/en-us/azure/aks/istio-upgrade. </summary>
         [WirePath("revisions")]
         public IList<string> Revisions { get; }
+
+        /// <summary> Plugin certificates information for Service Mesh. </summary>
+        [WirePath("certificateAuthority.plugin")]
+        public IstioPluginCertificateAuthority CertificateAuthorityPlugin
+        {
+            get
+            {
+                return CertificateAuthority is null ? default : CertificateAuthority.Plugin;
+            }
+            set
+            {
+                if (CertificateAuthority is null)
+                {
+                    CertificateAuthority = new IstioCertificateAuthority();
+                }
+                CertificateAuthority.Plugin = value;
+            }
+        }
     }
 }

@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<VirtualWorkspaceResource>> UpdateAsync(VirtualWorkspacePatch patch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VirtualWorkspaceResource>> UpdateAsync(VirtualWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("VirtualWorkspaceResource.Update");
             scope.Start();
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<VirtualWorkspaceResource> Update(VirtualWorkspacePatch patch = default, CancellationToken cancellationToken = default)
+        public virtual Response<VirtualWorkspaceResource> Update(VirtualWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _workspacesClientDiagnostics.CreateScope("VirtualWorkspaceResource.Update");
             scope.Start();

@@ -27,5 +27,7 @@ namespace SpecialWords
         public virtual Operations GetOperationsClient() => throw null;
 
         public virtual Parameters GetParametersClient() => throw null;
+
+        public virtual ExtensibleStrings GetExtensibleStringsClient() => throw null;
     }
 }

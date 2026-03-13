@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.Quantum.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(workspaceApiKeys, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(workspaceApiKeys, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

@@ -64,9 +64,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(trafficManagerRelativeDnsNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(trafficManagerRelativeDnsNameAvailabilityContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
