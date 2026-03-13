@@ -247,7 +247,7 @@ public class AuthenticationPolicyCreateTests
             AuthenticationPolicy.Create(settings));
 
         Assert.That(ex!.Message, Does.Contain("Scope must be provided in configuration"));
-        Assert.That(ex.Message, Does.Contain("'TokenCredential'"));
+        Assert.That(ex.Message, Does.Contain("'tokencredential'"));
     }
 
     [Test]
