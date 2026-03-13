@@ -10,6 +10,12 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Communication.Models
 {
+    // Backward compat: the generator emits broken backward-compat factory overloads for
+    // CommunicationServiceResourceData — the overloads pass positional args in the wrong order
+    // (provisioningState at position 7 where identity is expected) and reference non-existent
+    // named parameters (publicNetworkAccess, isLocalAuthDisabled). These two [CodeGenSuppress]
+    // attributes remove the broken overloads, and the replacement methods below delegate to the
+    // current overload with correct parameter ordering.
     [CodeGenSuppress("CommunicationServiceResourceData",
         typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData),
         typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ManagedServiceIdentity),
