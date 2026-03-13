@@ -5,7 +5,7 @@
 This update restores compatibility with the latest `2.9.*` release of `OpenAI` and enables access to the latest features. For details, please see the full [OpenAI 2.9.0](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#290-2026-02-27) and [OpenAI 2.9.1](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#291-2026-03-02) release notes.
 
 > [!NOTE]
-> Consider removing the Azure OpenAI SDK from your application in favor of using the OpenAI SDK only for broader models, unified APIs, latest features, and simpler authentication.
+> Consider [removing the Azure OpenAI SDK from your application](./migration-guidance.md) in favor of using the OpenAI SDK only for broader models, unified APIs, latest features, and simpler authentication.
 
 ### Features Added
 
