@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Parameters for DataStore
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OperationalDataStoreSettings"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataStoreSettings))]
+    [PersistableModelProxy(typeof(UnknownDataStoreParameters))]
     public abstract partial class DataStoreSettings : IJsonModel<DataStoreSettings>
     {
         /// <summary> Initializes a new instance of <see cref="DataStoreSettings"/> for deserialization. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return OperationalDataStoreSettings.DeserializeOperationalDataStoreSettings(element, options);
                 }
             }
-            return UnknownDataStoreSettings.DeserializeUnknownDataStoreSettings(element, options);
+            return UnknownDataStoreParameters.DeserializeUnknownDataStoreParameters(element, options);
         }
     }
 }

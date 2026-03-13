@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// BasePolicy Rule
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataProtectionBackupRule"/> and <see cref="DataProtectionRetentionRule"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataProtectionBasePolicyRule))]
+    [PersistableModelProxy(typeof(UnknownBasePolicyRule))]
     public abstract partial class DataProtectionBasePolicyRule : IJsonModel<DataProtectionBasePolicyRule>
     {
         /// <summary> Initializes a new instance of <see cref="DataProtectionBasePolicyRule"/> for deserialization. </summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DataProtectionRetentionRule.DeserializeDataProtectionRetentionRule(element, options);
                 }
             }
-            return UnknownDataProtectionBasePolicyRule.DeserializeUnknownDataProtectionBasePolicyRule(element, options);
+            return UnknownBasePolicyRule.DeserializeUnknownBasePolicyRule(element, options);
         }
     }
 }

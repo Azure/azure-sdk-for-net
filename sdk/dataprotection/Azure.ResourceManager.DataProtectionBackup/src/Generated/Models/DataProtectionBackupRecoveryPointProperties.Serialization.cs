@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Azure backup recoveryPoint
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataProtectionBackupDiscreteRecoveryPointProperties"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataProtectionBackupRecoveryPointProperties))]
+    [PersistableModelProxy(typeof(UnknownAzureBackupRecoveryPoint))]
     public abstract partial class DataProtectionBackupRecoveryPointProperties : IJsonModel<DataProtectionBackupRecoveryPointProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DataProtectionBackupDiscreteRecoveryPointProperties.DeserializeDataProtectionBackupDiscreteRecoveryPointProperties(element, options);
                 }
             }
-            return UnknownDataProtectionBackupRecoveryPointProperties.DeserializeUnknownDataProtectionBackupRecoveryPointProperties(element, options);
+            return UnknownAzureBackupRecoveryPoint.DeserializeUnknownAzureBackupRecoveryPoint(element, options);
         }
     }
 }

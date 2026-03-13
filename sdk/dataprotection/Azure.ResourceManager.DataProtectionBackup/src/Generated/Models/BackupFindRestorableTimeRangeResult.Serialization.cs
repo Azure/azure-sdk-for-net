@@ -11,17 +11,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> List Restore Ranges Response. </summary>
-    public partial class BackupFindRestorableTimeRangeResult : DppResource, IJsonModel<BackupFindRestorableTimeRangeResult>
+    public partial class BackupFindRestorableTimeRangeResult : ResourceData, IJsonModel<BackupFindRestorableTimeRangeResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DppResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override DppResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -117,27 +118,35 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            string id = default;
-            string name = default;
-            string @type = default;
-            SystemData systemData = default;
+            ResourceIdentifier id = default;
+            ResourceType resourceType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string name = default;
+            SystemData systemData = default;
             BackupFindRestorableTimeRangeResultProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("systemData"u8))
@@ -165,10 +174,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return new BackupFindRestorableTimeRangeResult(
                 id,
-                name,
-                @type,
-                systemData,
+                resourceType,
                 additionalBinaryDataProperties,
+                name,
+                systemData,
                 properties);
         }
     }

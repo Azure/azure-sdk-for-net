@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Parameters for Backup Datasource
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KubernetesClusterBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/>, and <see cref="AdlsBlobBackupDataSourceSettings"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownBackupDataSourceSettings))]
+    [PersistableModelProxy(typeof(UnknownBackupDatasourceParameters))]
     public abstract partial class BackupDataSourceSettings : IJsonModel<BackupDataSourceSettings>
     {
         /// <param name="data"> The data to parse. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return AdlsBlobBackupDataSourceSettings.DeserializeAdlsBlobBackupDataSourceSettings(element, options);
                 }
             }
-            return UnknownBackupDataSourceSettings.DeserializeUnknownBackupDataSourceSettings(element, options);
+            return UnknownBackupDatasourceParameters.DeserializeUnknownBackupDatasourceParameters(element, options);
         }
     }
 }

@@ -7,27 +7,32 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> List Restore Ranges Response. </summary>
-    public partial class BackupFindRestorableTimeRangeResult : DppResource
+    public partial class BackupFindRestorableTimeRangeResult
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResult"/>. </summary>
         public BackupFindRestorableTimeRangeResult()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupFindRestorableTimeRangeResult"/>. </summary>
-        /// <param name="id"> Resource Id represents the complete path to the resource. </param>
-        /// <param name="name"> Resource name associated with the resource. </param>
-        /// <param name="type"> Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/... </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Resource name associated with the resource. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="properties"> AzureBackupFindRestorableTimeRangesResponseResource properties. </param>
-        internal BackupFindRestorableTimeRangeResult(string id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupFindRestorableTimeRangeResultProperties properties) : base(id, name, @type, systemData, additionalBinaryDataProperties)
+        internal BackupFindRestorableTimeRangeResult(ResourceIdentifier id, ResourceType resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, SystemData systemData, BackupFindRestorableTimeRangeResultProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
         }
 

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// BackupCriteria base class
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ScheduleBasedBackupCriteria"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataProtectionBackupCriteria))]
+    [PersistableModelProxy(typeof(UnknownBackupCriteria))]
     public abstract partial class DataProtectionBackupCriteria : IJsonModel<DataProtectionBackupCriteria>
     {
         /// <param name="data"> The data to parse. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return ScheduleBasedBackupCriteria.DeserializeScheduleBasedBackupCriteria(element, options);
                 }
             }
-            return UnknownDataProtectionBackupCriteria.DeserializeUnknownDataProtectionBackupCriteria(element, options);
+            return UnknownBackupCriteria.DeserializeUnknownBackupCriteria(element, options);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Delete Option
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataProtectionBackupAbsoluteDeleteSetting"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataProtectionBackupDeleteSetting))]
+    [PersistableModelProxy(typeof(UnknownDeleteOption))]
     public abstract partial class DataProtectionBackupDeleteSetting : IJsonModel<DataProtectionBackupDeleteSetting>
     {
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupDeleteSetting"/> for deserialization. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DataProtectionBackupAbsoluteDeleteSetting.DeserializeDataProtectionBackupAbsoluteDeleteSetting(element, options);
                 }
             }
-            return UnknownDataProtectionBackupDeleteSetting.DeserializeUnknownDataProtectionBackupDeleteSetting(element, options);
+            return UnknownDeleteOption.DeserializeUnknownDeleteOption(element, options);
         }
     }
 }

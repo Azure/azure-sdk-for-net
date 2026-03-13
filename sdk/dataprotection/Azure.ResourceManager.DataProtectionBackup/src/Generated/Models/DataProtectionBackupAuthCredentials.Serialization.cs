@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Base class for different types of authentication credentials.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SecretStoreBasedAuthCredentials"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataProtectionBackupAuthCredentials))]
+    [PersistableModelProxy(typeof(UnknownAuthCredentials))]
     public abstract partial class DataProtectionBackupAuthCredentials : IJsonModel<DataProtectionBackupAuthCredentials>
     {
         /// <param name="data"> The data to parse. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return SecretStoreBasedAuthCredentials.DeserializeSecretStoreBasedAuthCredentials(element, options);
                 }
             }
-            return UnknownDataProtectionBackupAuthCredentials.DeserializeUnknownDataProtectionBackupAuthCredentials(element, options);
+            return UnknownAuthCredentials.DeserializeUnknownAuthCredentials(element, options);
         }
     }
 }

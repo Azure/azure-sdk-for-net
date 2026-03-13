@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Base class for Backup Feature support
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BackupFeatureValidationResult"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownBackupFeatureValidationResultBase))]
+    [PersistableModelProxy(typeof(UnknownFeatureValidationResponseBase))]
     public abstract partial class BackupFeatureValidationResultBase : IJsonModel<BackupFeatureValidationResultBase>
     {
         /// <param name="data"> The data to parse. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return BackupFeatureValidationResult.DeserializeBackupFeatureValidationResult(element, options);
                 }
             }
-            return UnknownBackupFeatureValidationResultBase.DeserializeUnknownBackupFeatureValidationResultBase(element, options);
+            return UnknownFeatureValidationResponseBase.DeserializeUnknownFeatureValidationResponseBase(element, options);
         }
     }
 }

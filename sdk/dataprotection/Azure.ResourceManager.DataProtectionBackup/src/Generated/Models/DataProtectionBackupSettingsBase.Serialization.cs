@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// BackupParameters base
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataProtectionBackupSettings"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataProtectionBackupSettingsBase))]
+    [PersistableModelProxy(typeof(UnknownBackupParameters))]
     public abstract partial class DataProtectionBackupSettingsBase : IJsonModel<DataProtectionBackupSettingsBase>
     {
         /// <param name="data"> The data to parse. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DataProtectionBackupSettings.DeserializeDataProtectionBackupSettings(element, options);
                 }
             }
-            return UnknownDataProtectionBackupSettingsBase.DeserializeUnknownDataProtectionBackupSettingsBase(element, options);
+            return UnknownBackupParameters.DeserializeUnknownBackupParameters(element, options);
         }
     }
 }

@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             dataSourceTypes ??= new ChangeTrackingList<string>();
 
-            return new UnknownDataProtectionBackupPolicyPropertiesBase(dataSourceTypes.ToList(), objectType, additionalBinaryDataProperties: null);
+            return new UnknownBaseBackupPolicy(dataSourceTypes.ToList(), objectType, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Rule based backup policy. </summary>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
-            return new UnknownBackupRestoreContent(
+            return new UnknownAzureBackupRestoreRequest(
                 objectType,
                 restoreTargetInfo,
                 sourceDataStoreType,
@@ -920,24 +920,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> List Restore Ranges Response. </summary>
-        /// <param name="id"> Resource Id represents the complete path to the resource. </param>
-        /// <param name="name"> Resource name associated with the resource. </param>
-        /// <param name="type"> Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/... </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <param name="properties"> AzureBackupFindRestorableTimeRangesResponseResource properties. </param>
-        /// <returns> A new <see cref="Models.BackupFindRestorableTimeRangeResult"/> instance for mocking. </returns>
-        public static BackupFindRestorableTimeRangeResult BackupFindRestorableTimeRangeResult(string id = default, string name = default, string @type = default, SystemData systemData = default, BackupFindRestorableTimeRangeResultProperties properties = default)
-        {
-            return new BackupFindRestorableTimeRangeResult(
-                id,
-                name,
-                @type,
-                systemData,
-                additionalBinaryDataProperties: null,
-                properties);
-        }
-
-        /// <summary> List Restore Ranges Response. </summary>
         /// <param name="restorableTimeRanges"> Returns the Restore Ranges available on the Backup Instance. </param>
         /// <param name="objectType"></param>
         /// <returns> A new <see cref="Models.BackupFindRestorableTimeRangeResultProperties"/> instance for mocking. </returns>
@@ -946,17 +928,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             restorableTimeRanges ??= new ChangeTrackingList<RestorableTimeRange>();
 
             return new BackupFindRestorableTimeRangeResultProperties(restorableTimeRanges.ToList(), objectType, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Resource class. </summary>
-        /// <param name="id"> Resource Id represents the complete path to the resource. </param>
-        /// <param name="name"> Resource name associated with the resource. </param>
-        /// <param name="type"> Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/... </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <returns> A new <see cref="Models.DppResource"/> instance for mocking. </returns>
-        public static DppResource DppResource(string id = default, string name = default, string @type = default, SystemData systemData = default)
-        {
-            return new DppResource(id, name, @type, systemData, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Azure backup recoveryPoint resource. </summary>
@@ -1547,15 +1518,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> AzureBackupFindRestorableTimeRangesResponseResource properties. </param>
         /// <returns> A new <see cref="Models.BackupFindRestorableTimeRangeResult"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static BackupFindRestorableTimeRangeResult BackupFindRestorableTimeRangeResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BackupFindRestorableTimeRangeResultProperties properties)
+        public static BackupFindRestorableTimeRangeResult BackupFindRestorableTimeRangeResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BackupFindRestorableTimeRangeResultProperties properties = default)
         {
             return new BackupFindRestorableTimeRangeResult(
                 id,
-                name,
-                default,
-                systemData,
+                resourceType,
                 additionalBinaryDataProperties: null,
+                name,
+                systemData,
                 properties);
         }
 

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Operation Extended Info
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DataProtectionOperationJobExtendedInfo"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataProtectionOperationExtendedInfo))]
+    [PersistableModelProxy(typeof(UnknownOperationExtendedInfo))]
     public abstract partial class DataProtectionOperationExtendedInfo : IJsonModel<DataProtectionOperationExtendedInfo>
     {
         /// <param name="data"> The data to parse. </param>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DataProtectionOperationJobExtendedInfo.DeserializeDataProtectionOperationJobExtendedInfo(element, options);
                 }
             }
-            return UnknownDataProtectionOperationExtendedInfo.DeserializeUnknownDataProtectionOperationExtendedInfo(element, options);
+            return UnknownOperationExtendedInfo.DeserializeUnknownOperationExtendedInfo(element, options);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Trigger context
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AdhocBasedBackupTriggerContext"/> and <see cref="ScheduleBasedBackupTriggerContext"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataProtectionBackupTriggerContext))]
+    [PersistableModelProxy(typeof(UnknownTriggerContext))]
     public abstract partial class DataProtectionBackupTriggerContext : IJsonModel<DataProtectionBackupTriggerContext>
     {
         /// <param name="data"> The data to parse. </param>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return ScheduleBasedBackupTriggerContext.DeserializeScheduleBasedBackupTriggerContext(element, options);
                 }
             }
-            return UnknownDataProtectionBackupTriggerContext.DeserializeUnknownDataProtectionBackupTriggerContext(element, options);
+            return UnknownTriggerContext.DeserializeUnknownTriggerContext(element, options);
         }
     }
 }

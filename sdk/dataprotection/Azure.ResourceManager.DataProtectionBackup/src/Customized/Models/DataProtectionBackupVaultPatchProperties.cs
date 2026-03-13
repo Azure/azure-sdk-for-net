@@ -24,5 +24,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 FeatureSettings.CrossSubscriptionRestoreState = value;
             }
         }
+
+        /// <summary> Gets or sets the alert settings for all job failures. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public AzureMonitorAlertsState? AlertSettingsForAllJobFailures
+        {
+            get
+            {
+                return MonitoringSettings is null ? default : MonitoringSettings.AlertSettingsForAllJobFailures;
+            }
+            set
+            {
+                if (MonitoringSettings is null)
+                {
+                    MonitoringSettings = new MonitoringSettings();
+                }
+                MonitoringSettings.AlertSettingsForAllJobFailures = value;
+            }
+        }
     }
 }

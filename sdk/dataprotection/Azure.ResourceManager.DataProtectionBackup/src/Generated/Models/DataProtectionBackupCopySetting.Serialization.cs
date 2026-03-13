@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// Options to copy
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CopyOnExpirySetting"/>, <see cref="CustomCopySetting"/>, and <see cref="ImmediateCopySetting"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownDataProtectionBackupCopySetting))]
+    [PersistableModelProxy(typeof(UnknownCopyOption))]
     public abstract partial class DataProtectionBackupCopySetting : IJsonModel<DataProtectionBackupCopySetting>
     {
         /// <param name="data"> The data to parse. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return ImmediateCopySetting.DeserializeImmediateCopySetting(element, options);
                 }
             }
-            return UnknownDataProtectionBackupCopySetting.DeserializeUnknownDataProtectionBackupCopySetting(element, options);
+            return UnknownCopyOption.DeserializeUnknownCopyOption(element, options);
         }
     }
 }
