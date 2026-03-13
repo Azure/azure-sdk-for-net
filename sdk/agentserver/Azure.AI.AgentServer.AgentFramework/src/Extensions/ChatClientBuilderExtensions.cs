@@ -5,6 +5,7 @@ using System.Reflection;
 using Azure.AI.AgentServer.Core.Context;
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Core.Tools.Runtime.Facade;
+using Azure.Core;
 using Azure.Identity;
 using Microsoft.Extensions.AI;
 
@@ -19,22 +20,25 @@ public static class ChatClientBuilderExtensions
     /// Adds Foundry tool discovery to the chat client pipeline and enables tool calling using the resolved tools.
     /// </summary>
     /// <param name="builder">The chat client builder.</param>
+    /// <param name="credential">Optional token credential for Foundry tool resolution. Defaults to <see cref="DefaultAzureCredential"/> when <c>null</c>.</param>
     /// <param name="foundryTools">The Foundry tool definitions to resolve.</param>
     /// <returns>The updated <see cref="ChatClientBuilder"/> instance.</returns>
     public static ChatClientBuilder UseFoundryTools(
         this ChatClientBuilder builder,
+        TokenCredential? credential = null,
         params FoundryTool[] foundryTools)
     {
         ArgumentNullException.ThrowIfNull(builder);
         ArgumentNullException.ThrowIfNull(foundryTools);
 
-        return UseFoundryToolsInternal(builder, foundryTools);
+        return UseFoundryToolsInternal(builder, credential, foundryTools);
     }
 
     /// <summary>
     /// Adds Foundry tool discovery using dictionary or anonymous-object facades.
     /// </summary>
     /// <param name="builder">The chat client builder.</param>
+    /// <param name="credential">Optional token credential for Foundry tool resolution. Defaults to <see cref="DefaultAzureCredential"/> when <c>null</c>.</param>
     /// <param name="foundryTools">
     /// Tool facades with a <c>type</c> discriminator. Use <c>type</c> values of
     /// <c>mcp</c> or <c>a2a</c> with <c>project_connection_id</c> for connected tools;
@@ -43,17 +47,19 @@ public static class ChatClientBuilderExtensions
     /// <returns>The updated <see cref="ChatClientBuilder"/> instance.</returns>
     public static ChatClientBuilder UseFoundryTools(
         this ChatClientBuilder builder,
+        TokenCredential? credential = null,
         params object[] foundryTools)
     {
         ArgumentNullException.ThrowIfNull(builder);
         ArgumentNullException.ThrowIfNull(foundryTools);
 
         var converted = foundryTools.Select(ConvertToFoundryTool).ToList();
-        return UseFoundryToolsInternal(builder, converted);
+        return UseFoundryToolsInternal(builder, credential, converted);
     }
 
     private static ChatClientBuilder UseFoundryToolsInternal(
         ChatClientBuilder builder,
+        TokenCredential? credential,
         IReadOnlyList<FoundryTool> foundryTools)
     {
         if (foundryTools.Count == 0)
@@ -62,12 +68,12 @@ public static class ChatClientBuilderExtensions
         }
 
         var endpoint = FoundryProjectEndpointResolver.ResolveProjectEndpointFromEnvironment();
-        var credential = new DefaultAzureCredential();
+        var effectiveCredential = credential ?? new DefaultAzureCredential();
 
         return builder.Use(innerClient =>
         {
             var functionInvokingClient = new FunctionInvokingChatClient(innerClient, loggerFactory: null, functionInvocationServices: null);
-            return new FoundryToolsChatClient(functionInvokingClient, endpoint, credential, foundryTools);
+            return new FoundryToolsChatClient(functionInvokingClient, endpoint, effectiveCredential, foundryTools);
         });
     }
 
