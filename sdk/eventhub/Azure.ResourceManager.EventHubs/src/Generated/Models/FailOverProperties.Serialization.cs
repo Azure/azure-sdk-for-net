@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WritePropertyName("primaryLocation"u8);
                 writer.WriteStringValue(PrimaryLocation.Value);
             }
-            if (Optional.IsDefined(Force))
+            if (Optional.IsDefined(IsForced))
             {
                 writer.WritePropertyName("force"u8);
-                writer.WriteBooleanValue(Force.Value);
+                writer.WriteBooleanValue(IsForced.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             AzureLocation? primaryLocation = default;
-            bool? force = default;
+            bool? isForced = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    force = prop.Value.GetBoolean();
+                    isForced = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FailOverProperties(primaryLocation, force, additionalBinaryDataProperties);
+            return new FailOverProperties(primaryLocation, isForced, additionalBinaryDataProperties);
         }
     }
 }

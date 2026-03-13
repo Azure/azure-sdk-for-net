@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Initializes a new instance of <see cref="FailOverProperties"/>. </summary>
         /// <param name="primaryLocation"> Query parameter for the new primary location after failover. </param>
-        /// <param name="force"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
+        /// <param name="isForced"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FailOverProperties(AzureLocation? primaryLocation, bool? force, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FailOverProperties(AzureLocation? primaryLocation, bool? isForced, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrimaryLocation = primaryLocation;
-            Force = force;
+            IsForced = isForced;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </summary>
         [WirePath("force")]
-        public bool? Force { get; set; }
+        public bool? IsForced { get; set; }
     }
 }

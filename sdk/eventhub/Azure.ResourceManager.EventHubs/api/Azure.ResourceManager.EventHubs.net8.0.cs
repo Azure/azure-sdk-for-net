@@ -1235,7 +1235,7 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class EventHubsNamespaceFailover : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceFailover>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceFailover>
     {
         public EventHubsNamespaceFailover() { }
-        public bool? Force { get { throw null; } set { } }
+        public bool? IsForced { get { throw null; } set { } }
         public Azure.Core.AzureLocation? PrimaryLocation { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceFailover JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
