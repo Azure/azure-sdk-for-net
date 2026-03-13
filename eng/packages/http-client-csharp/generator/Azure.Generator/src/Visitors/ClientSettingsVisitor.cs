@@ -17,6 +17,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using static Microsoft.TypeSpec.Generator.Snippets.StringSnippets;
 
 namespace Azure.Generator.Visitors
 {
@@ -121,7 +122,7 @@ namespace Azure.Generator.Visitors
             if (hasTokenCredCtor)
             {
                 // Build: settings?.CredentialProvider as TokenCredential
-                var credentialProviderAccess = new MemberExpression(new NullConditionalExpression(settingsParam), "CredentialProvider");
+                var credentialProviderAccess = settingsParam.NullConditional().Property(nameof(ClientSettings.CredentialProvider));
                 var tokenCredentialArg = new AsExpression(credentialProviderAccess, TokenCredentialType);
 
                 var newArgs = new List<ValueExpression>();
@@ -139,18 +140,15 @@ namespace Azure.Generator.Visitors
                 // Key-credential only library.
                 // Build a ternary: check CredentialSource == "apikeycredential" (case-insensitive),
                 // construct AzureKeyCredential if true, otherwise pass null.
-                var credentialAccess = new MemberExpression(
-                    new NullConditionalExpression(settingsParam), "Credential");
-                var credentialSourceProp = new MemberExpression(
-                    new NullConditionalExpression(credentialAccess), "CredentialSource");
+                var credentialAccess = settingsParam.NullConditional().Property(nameof(ClientSettings.Credential));
+                var credentialSourceProp = credentialAccess.NullConditional().Property(nameof(CredentialSettings.CredentialSource));
 
-                var stringEqualsCall = Static(typeof(string)).Invoke("Equals", [
-                    credentialSourceProp,
-                    Literal("apikeycredential"),
-                    Static(typeof(StringComparison)).Property("OrdinalIgnoreCase")]);
+                var stringEqualsCall = Equals(
+                    credentialSourceProp.As<string>(),
+                    Literal("apikeycredential").As<string>(),
+                    StringComparison.OrdinalIgnoreCase);
 
-                var keyAccess = new MemberExpression(
-                    new MemberExpression(settingsParam, "Credential"), "Key");
+                var keyAccess = settingsParam.Property(nameof(ClientSettings.Credential)).Property(nameof(CredentialSettings.Key));
                 var newKeyCredential = New.Instance(AzureKeyCredentialType, [keyAccess]);
 
                 var keyCredentialArg = new TernaryConditionalExpression(
