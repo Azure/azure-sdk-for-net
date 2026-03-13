@@ -143,9 +143,6 @@ namespace Azure.Generator.Management
         /// <summary> Gets the ARM provider schema containing all resource metadata and non-resource methods. </summary>
         public ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
 
-        // If there're multiple API versions in the input namespace, use the last one as the default.
-        internal string DefaultApiVersion => InputNamespace.ApiVersions.Last();
-
         private IReadOnlyDictionary<InputModelType, (string ResourceName, bool IsAlsoUsedInCreate)> BuildResourceUpdateModelToResourceNameMap()
         {
             Dictionary<InputModelType, (string ResourceName, int Count, bool IsAlsoUsedInCreate)> tempMap = new();

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct ManagedClusterNodeResourceGroupRestrictionLevel : IEquatable<ManagedClusterNodeResourceGroupRestrictionLevel>
     {
         private readonly string _value;
+        /// <summary> All RBAC permissions are allowed on the managed node resource group. </summary>
+        private const string UnrestrictedValue = "Unrestricted";
+        /// <summary> Only \*\/read RBAC permissions allowed on the managed node resource group. </summary>
+        private const string ReadOnlyValue = "ReadOnly";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNodeResourceGroupRestrictionLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterNodeResourceGroupRestrictionLevel(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnrestrictedValue = "Unrestricted";
-        private const string ReadOnlyValue = "ReadOnly";
+            _value = value;
+        }
 
         /// <summary> All RBAC permissions are allowed on the managed node resource group. </summary>
         public static ManagedClusterNodeResourceGroupRestrictionLevel Unrestricted { get; } = new ManagedClusterNodeResourceGroupRestrictionLevel(UnrestrictedValue);
-        /// <summary> Only */read RBAC permissions allowed on the managed node resource group. </summary>
+
+        /// <summary> Only \*\/read RBAC permissions allowed on the managed node resource group. </summary>
         public static ManagedClusterNodeResourceGroupRestrictionLevel ReadOnly { get; } = new ManagedClusterNodeResourceGroupRestrictionLevel(ReadOnlyValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterNodeResourceGroupRestrictionLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterNodeResourceGroupRestrictionLevel left, ManagedClusterNodeResourceGroupRestrictionLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterNodeResourceGroupRestrictionLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterNodeResourceGroupRestrictionLevel left, ManagedClusterNodeResourceGroupRestrictionLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterNodeResourceGroupRestrictionLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterNodeResourceGroupRestrictionLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterNodeResourceGroupRestrictionLevel(string value) => new ManagedClusterNodeResourceGroupRestrictionLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterNodeResourceGroupRestrictionLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterNodeResourceGroupRestrictionLevel?(string value) => value == null ? null : new ManagedClusterNodeResourceGroupRestrictionLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterNodeResourceGroupRestrictionLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterNodeResourceGroupRestrictionLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

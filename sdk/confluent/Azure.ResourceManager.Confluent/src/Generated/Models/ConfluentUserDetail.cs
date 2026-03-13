@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary> Subscriber detail. </summary>
     public partial class ConfluentUserDetail
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConfluentUserDetail"/>. </summary>
         /// <param name="emailAddress"> Email address. </param>
@@ -61,30 +33,29 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="emailAddress"> Email address. </param>
         /// <param name="userPrincipalName"> User principal name. </param>
         /// <param name="aadEmail"> AAD email address. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfluentUserDetail(string firstName, string lastName, string emailAddress, string userPrincipalName, string aadEmail, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConfluentUserDetail(string firstName, string lastName, string emailAddress, string userPrincipalName, string aadEmail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FirstName = firstName;
             LastName = lastName;
             EmailAddress = emailAddress;
             UserPrincipalName = userPrincipalName;
             AadEmail = aadEmail;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConfluentUserDetail"/> for deserialization. </summary>
-        internal ConfluentUserDetail()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> First name. </summary>
         public string FirstName { get; set; }
+
         /// <summary> Last name. </summary>
         public string LastName { get; set; }
+
         /// <summary> Email address. </summary>
         public string EmailAddress { get; set; }
+
         /// <summary> User principal name. </summary>
         public string UserPrincipalName { get; set; }
+
         /// <summary> AAD email address. </summary>
         public string AadEmail { get; set; }
     }
