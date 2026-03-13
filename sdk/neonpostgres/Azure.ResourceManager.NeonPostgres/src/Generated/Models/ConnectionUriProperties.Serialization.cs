@@ -65,9 +65,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(connectionUriProperties, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(connectionUriProperties, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConnectionUriProperties"/> from. </param>
