@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DatadogMonitoredSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, DatadogMonitoredSubscriptionData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DatadogMonitoredSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationName, DatadogMonitoredSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DatadogMonitoredSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, DatadogMonitoredSubscriptionData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DatadogMonitoredSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string configurationName, DatadogMonitoredSubscriptionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
 

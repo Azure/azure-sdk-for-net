@@ -69,9 +69,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(datadogActivateSaaSContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(datadogActivateSaaSContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

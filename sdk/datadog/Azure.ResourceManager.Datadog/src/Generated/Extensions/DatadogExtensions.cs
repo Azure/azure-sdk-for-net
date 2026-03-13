@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DatadogAgreement>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, DatadogAgreement body = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatadogAgreement>> CreateOrUpdateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, DatadogAgreement body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DatadogAgreement> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, DatadogAgreement body = default, CancellationToken cancellationToken = default)
+        public static Response<DatadogAgreement> CreateOrUpdateMarketplaceAgreement(this SubscriptionResource subscriptionResource, DatadogAgreement body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

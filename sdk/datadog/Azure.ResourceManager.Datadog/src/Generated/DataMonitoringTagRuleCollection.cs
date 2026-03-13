@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<DataMonitoringTagRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleSetName, DataMonitoringTagRuleData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<DataMonitoringTagRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleSetName, DataMonitoringTagRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Datadog
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<DataMonitoringTagRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleSetName, DataMonitoringTagRuleData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<DataMonitoringTagRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleSetName, DataMonitoringTagRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 

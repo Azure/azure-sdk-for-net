@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </summary>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DatadogAgreement>> CreateOrUpdateMarketplaceAgreementAsync(DatadogAgreement body = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DatadogAgreement>> CreateOrUpdateMarketplaceAgreementAsync(DatadogAgreement body, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = MarketplaceAgreementsClientDiagnostics.CreateScope("MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement");
             scope.Start();
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// </summary>
         /// <param name="body"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DatadogAgreement> CreateOrUpdateMarketplaceAgreement(DatadogAgreement body = default, CancellationToken cancellationToken = default)
+        public virtual Response<DatadogAgreement> CreateOrUpdateMarketplaceAgreement(DatadogAgreement body, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = MarketplaceAgreementsClientDiagnostics.CreateScope("MockableDatadogSubscriptionResource.CreateOrUpdateMarketplaceAgreement");
             scope.Start();

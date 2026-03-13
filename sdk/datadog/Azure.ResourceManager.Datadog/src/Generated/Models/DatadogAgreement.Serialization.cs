@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(datadogAgreement, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(datadogAgreement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatadogAgreement"/> from. </param>
