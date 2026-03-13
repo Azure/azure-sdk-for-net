@@ -290,11 +290,13 @@ namespace Azure.Generator.Tests.Visitors
                 .OfType<ClientProvider>().FirstOrDefault();
             Assert.IsNotNull(clientProvider);
 
-            // Client with no credential constructors should still have a Settings constructor
-            // that chains to the internal constructor with null for auth policy
-            var settingsCtor = clientProvider!.Constructors.FirstOrDefault(c =>
-                c.Signature.Parameters.Count == 1 &&
-                c.Signature.Parameters[0].Type.Name.EndsWith("Settings"));
+            // Client with no credential constructors: check if Settings constructor exists
+            var clientSettings = clientProvider!.ClientSettings;
+            var settingsCtor = clientSettings != null
+                ? clientProvider.Constructors.FirstOrDefault(c =>
+                    c.Signature.Parameters.Count == 1 &&
+                    c.Signature.Parameters[0].Type.Equals(clientSettings.Type))
+                : null;
 
             if (settingsCtor != null)
             {
@@ -303,14 +305,14 @@ namespace Azure.Generator.Tests.Visitors
                 Assert.IsFalse(initializer!.IsBase, "Settings constructor should use this(), not base()");
 
                 // The first argument should be null (no auth policy)
-                Assert.IsInstanceOf<KeywordExpression>(initializer.Arguments[0],
-                    "First argument of no-auth Settings constructor should be null");
+                var firstArgDisplay = initializer.Arguments[0].ToDisplayString();
+                Assert.AreEqual("null", firstArgDisplay,
+                    $"First argument of no-auth Settings constructor should be null, was: {firstArgDisplay}");
             }
             else
             {
-                // If no Settings constructor exists, ClientSettings should also be absent
-                // (no credential means no configuration-based construction).
-                // This is acceptable behavior.
+                // If no Settings constructor exists, this is acceptable behavior —
+                // no credential means no configuration-based construction.
                 Assert.Pass("No Settings constructor generated for client without credential support — expected behavior");
             }
         }
