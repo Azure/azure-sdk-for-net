@@ -244,6 +244,21 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistryPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryAgentPoolCollection : Azure.ResourceManager.ArmCollection
+    {
+        internal ContainerRegistryAgentPoolCollection() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryAgentPoolData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public ContainerRegistryAgentPoolData() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryAgentPoolResource : Azure.ResourceManager.ArmResource
+    {
+        internal ContainerRegistryAgentPoolResource() { }
+    }
     public partial class ContainerRegistryCacheRuleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryCacheRuleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryCacheRuleResource>, System.Collections.IEnumerable
     {
         protected ContainerRegistryCacheRuleCollection() { }
@@ -565,9 +580,19 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ArchiveCollection GetArchives(string packageType) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition> GetBuildSourceUploadUrl(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.SourceUploadDefinition>> GetBuildSourceUploadUrlAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ConnectedRegistryCollection GetConnectedRegistries() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource> GetConnectedRegistry(string connectedRegistryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ConnectedRegistryResource>> GetConnectedRegistryAsync(string connectedRegistryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource> GetContainerRegistryAgentPool(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource>> GetContainerRegistryAgentPoolAsync(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolCollection GetContainerRegistryAgentPools() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryCacheRuleResource> GetContainerRegistryCacheRule(string cacheRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryCacheRuleResource>> GetContainerRegistryCacheRuleAsync(string cacheRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryCacheRuleCollection GetContainerRegistryCacheRules() { throw null; }
@@ -580,6 +605,24 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryReplicationResource> GetContainerRegistryReplication(string replicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryReplicationResource>> GetContainerRegistryReplicationAsync(string replicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryReplicationCollection GetContainerRegistryReplications() { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource> GetContainerRegistryRun(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource>> GetContainerRegistryRunAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunCollection GetContainerRegistryRuns() { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskResource> GetContainerRegistryTask(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskResource>> GetContainerRegistryTaskAsync(string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskRunResource> GetContainerRegistryTaskRun(string taskRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskRunResource>> GetContainerRegistryTaskRunAsync(string taskRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskRunCollection GetContainerRegistryTaskRuns() { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryTaskCollection GetContainerRegistryTasks() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTokenResource> GetContainerRegistryToken(string tokenName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTokenResource>> GetContainerRegistryTokenAsync(string tokenName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryTokenCollection GetContainerRegistryTokens() { throw null; }
@@ -612,6 +655,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryListCredentialsResult>> RegenerateCredentialAsync(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialRegenerateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource> ScheduleRun(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("This method has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryRunResource>> ScheduleRunAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.ContainerRegistry.ContainerRegistryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -621,6 +668,51 @@ namespace Azure.ResourceManager.ContainerRegistry
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.ContainerRegistryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryRunCollection : Azure.ResourceManager.ArmCollection
+    {
+        internal ContainerRegistryRunCollection() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryRunData : Azure.ResourceManager.Models.ResourceData
+    {
+        public ContainerRegistryRunData() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryRunResource : Azure.ResourceManager.ArmResource
+    {
+        internal ContainerRegistryRunResource() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTaskCollection : Azure.ResourceManager.ArmCollection
+    {
+        internal ContainerRegistryTaskCollection() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTaskData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public ContainerRegistryTaskData() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTaskResource : Azure.ResourceManager.ArmResource
+    {
+        internal ContainerRegistryTaskResource() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTaskRunCollection : Azure.ResourceManager.ArmCollection
+    {
+        internal ContainerRegistryTaskRunCollection() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTaskRunData : Azure.ResourceManager.Models.ResourceData
+    {
+        public ContainerRegistryTaskRunData() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTaskRunResource : Azure.ResourceManager.ArmResource
+    {
+        internal ContainerRegistryTaskRunResource() { }
     }
     public partial class ContainerRegistryTokenCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTokenResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryTokenResource>, System.Collections.IEnumerable
     {
@@ -1287,6 +1379,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ConnectedRegistrySyncUpdateProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryAgentPoolPatch
+    {
+        public ContainerRegistryAgentPoolPatch() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryAgentPoolQueueStatus
+    {
+        public ContainerRegistryAgentPoolQueueStatus() { }
+    }
     public partial class ContainerRegistryAuthCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential>
     {
         public ContainerRegistryAuthCredential() { }
@@ -1303,6 +1405,51 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryAuthCredential>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryBaseImageDependency
+    {
+        public ContainerRegistryBaseImageDependency() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryBaseImageDependencyType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryBaseImageDependencyType(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageDependencyType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryBaseImageTrigger
+    {
+        public ContainerRegistryBaseImageTrigger() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryBaseImageTriggerType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryBaseImageTriggerType(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryBaseImageTriggerType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryBaseImageTriggerUpdateContent
+    {
+        public ContainerRegistryBaseImageTriggerUpdateContent() { }
     }
     public partial class ContainerRegistryCacheRulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCacheRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCacheRulePatch>
     {
@@ -1333,6 +1480,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCertificateType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCertificateType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCertificateType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCertificateType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryCpuVariant : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryCpuVariant(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCpuVariant right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ContainerRegistryCredentialHealth : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealth>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialHealth>
@@ -1398,6 +1560,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialRegenerateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialRegenerateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryCredentials
+    {
+        public ContainerRegistryCredentials() { }
+    }
     public partial class ContainerRegistryCredentialSetPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialSetPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialSetPatch>
     {
         public ContainerRegistryCredentialSetPatch() { }
@@ -1412,6 +1579,36 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialSetPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialSetPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialSetPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryCredentialSetPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryDockerBuildContent
+    {
+        public ContainerRegistryDockerBuildContent() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryDockerBuildStep
+    {
+        public ContainerRegistryDockerBuildStep() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryDockerBuildStepUpdateContent
+    {
+        public ContainerRegistryDockerBuildStepUpdateContent() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryEncodedTaskRunContent
+    {
+        public ContainerRegistryEncodedTaskRunContent() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryEncodedTaskStep
+    {
+        public ContainerRegistryEncodedTaskStep() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryEncodedTaskStepUpdateContent
+    {
+        public ContainerRegistryEncodedTaskStepUpdateContent() { }
     }
     public partial class ContainerRegistryEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption>
     {
@@ -1462,6 +1659,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryExportPolicyStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryExportPolicyStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryFileTaskRunContent
+    {
+        public ContainerRegistryFileTaskRunContent() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryFileTaskStep
+    {
+        public ContainerRegistryFileTaskStep() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryFileTaskStepUpdateContent
+    {
+        public ContainerRegistryFileTaskStepUpdateContent() { }
+    }
     public partial class ContainerRegistryGenerateCredentialsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryGenerateCredentialsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryGenerateCredentialsContent>
     {
         public ContainerRegistryGenerateCredentialsContent() { }
@@ -1492,6 +1704,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryGenerateCredentialsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryGenerateCredentialsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryGenerateCredentialsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryGenerateCredentialsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryImageDescriptor
+    {
+        public ContainerRegistryImageDescriptor() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryImageUpdateTrigger
+    {
+        public ContainerRegistryImageUpdateTrigger() { }
     }
     public partial class ContainerRegistryImportImageContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportImageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryImportImageContent>
     {
@@ -1710,6 +1932,41 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleSet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNetworkRuleSet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryOS : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryOS(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryOSArchitecture : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryOSArchitecture(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOSArchitecture right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryOverrideTaskStepProperties
+    {
+        public ContainerRegistryOverrideTaskStepProperties() { }
+    }
     public partial class ContainerRegistryPassword : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPassword>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPassword>
     {
         internal ContainerRegistryPassword() { }
@@ -1758,6 +2015,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryPlatformProperties
+    {
+        public ContainerRegistryPlatformProperties() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryPlatformUpdateContent
+    {
+        public ContainerRegistryPlatformUpdateContent() { }
     }
     public partial class ContainerRegistryPolicies : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryPolicies>
     {
@@ -1966,6 +2233,76 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRoleAssignmentMode left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRoleAssignmentMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryRunArgument
+    {
+        public ContainerRegistryRunArgument() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public abstract partial class ContainerRegistryRunContent
+    {
+        protected ContainerRegistryRunContent() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryRunGetLogResult
+    {
+        public ContainerRegistryRunGetLogResult() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryRunPatch
+    {
+        public ContainerRegistryRunPatch() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryRunStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryRunStatus(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryRunType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryRunType(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryRunType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistrySecretObject
+    {
+        public ContainerRegistrySecretObject() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistrySecretObjectType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistrySecretObjectType(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySecretObjectType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ContainerRegistrySku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku>
     {
         public ContainerRegistrySku(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuName name) { }
@@ -2018,6 +2355,96 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySkuTier right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistrySourceTrigger
+    {
+        public ContainerRegistrySourceTrigger() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistrySourceTriggerDescriptor
+    {
+        public ContainerRegistrySourceTriggerDescriptor() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistrySourceTriggerEvent : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistrySourceTriggerEvent(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySourceTriggerEvent right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistrySourceTriggerUpdateContent
+    {
+        public ContainerRegistrySourceTriggerUpdateContent() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTaskOverridableValue
+    {
+        public ContainerRegistryTaskOverridableValue() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTaskPatch
+    {
+        public ContainerRegistryTaskPatch() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTaskRunContent
+    {
+        public ContainerRegistryTaskRunContent() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTaskRunPatch
+    {
+        public ContainerRegistryTaskRunPatch() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryTaskStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryTaskStatus(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTaskStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public abstract partial class ContainerRegistryTaskStepProperties
+    {
+        protected ContainerRegistryTaskStepProperties() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public abstract partial class ContainerRegistryTaskStepUpdateContent
+    {
+        protected ContainerRegistryTaskStepUpdateContent() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTimerTrigger
+    {
+        public ContainerRegistryTimerTrigger() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTimerTriggerDescriptor
+    {
+        public ContainerRegistryTimerTriggerDescriptor() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTimerTriggerUpdateContent
+    {
+        public ContainerRegistryTimerTriggerUpdateContent() { }
     }
     public partial class ContainerRegistryTlsCertificateProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTlsCertificateProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTlsCertificateProperties>
     {
@@ -2182,6 +2609,31 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTokenStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTriggerProperties
+    {
+        public ContainerRegistryTriggerProperties() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryTriggerStatus : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryTriggerStatus(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTriggerStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class ContainerRegistryTriggerUpdateContent
+    {
+        public ContainerRegistryTriggerUpdateContent() { }
+    }
     public partial class ContainerRegistryTrustPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicy>
     {
         public ContainerRegistryTrustPolicy() { }
@@ -2211,6 +2663,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicyType (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicyType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicyType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryTrustPolicyType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerRegistryUpdateTriggerPayloadType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerRegistryUpdateTriggerPayloadType(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUpdateTriggerPayloadType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ContainerRegistryUsage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryUsage>
@@ -2508,6 +2975,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy left, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryZoneRedundancy right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class CustomRegistryCredentials
+    {
+        public CustomRegistryCredentials() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EndpointProtocol : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.EndpointProtocol>
@@ -2835,6 +3307,76 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         Azure.ResourceManager.ContainerRegistry.Models.SoftDeletePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.SoftDeletePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.SoftDeletePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerRegistry.Models.SoftDeletePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class SourceCodeRepoAuthInfo
+    {
+        public SourceCodeRepoAuthInfo() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class SourceCodeRepoAuthInfoUpdateContent
+    {
+        public SourceCodeRepoAuthInfoUpdateContent() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SourceCodeRepoAuthTokenType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SourceCodeRepoAuthTokenType(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType left, Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType left, Azure.ResourceManager.ContainerRegistry.Models.SourceCodeRepoAuthTokenType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class SourceCodeRepoProperties
+    {
+        public SourceCodeRepoProperties() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class SourceCodeRepoUpdateContent
+    {
+        public SourceCodeRepoUpdateContent() { }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SourceControlType : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.SourceControlType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SourceControlType(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.SourceControlType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.SourceControlType left, Azure.ResourceManager.ContainerRegistry.Models.SourceControlType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.SourceControlType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.SourceControlType left, Azure.ResourceManager.ContainerRegistry.Models.SourceControlType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SourceRegistryLoginMode : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SourceRegistryLoginMode(string value) { throw null; }
+        public bool Equals(Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode left, Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode left, Azure.ResourceManager.ContainerRegistry.Models.SourceRegistryLoginMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.ObsoleteAttribute("This type has been moved to Azure.ResourceManager.ContainerRegistryTasks and will be removed in a future version.")]
+    public partial class SourceUploadDefinition
+    {
+        public SourceUploadDefinition() { }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StorageAccessMode : System.IEquatable<Azure.ResourceManager.ContainerRegistry.Models.StorageAccessMode>
