@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </summary>
     public partial class RestorePointEncryption
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestorePointEncryption"/>. </summary>
         public RestorePointEncryption()
@@ -53,31 +22,37 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorePointEncryption"/>. </summary>
-        /// <param name="diskEncryptionSet"> Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. **Note:** The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details. </param>
-        /// <param name="encryptionType"> The type of key used to encrypt the data of the disk restore point. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointEncryption(WritableSubResource diskEncryptionSet, RestorePointEncryptionType? encryptionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="diskEncryptionSet"> Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. <b>Note:</b> The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details. </param>
+        /// <param name="type"> The type of key used to encrypt the data of the disk restore point. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointEncryption(DiskEncryptionSetParameters diskEncryptionSet, RestorePointEncryptionType? @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskEncryptionSet = diskEncryptionSet;
-            EncryptionType = encryptionType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. **Note:** The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details. </summary>
-        internal WritableSubResource DiskEncryptionSet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId
+        /// <summary> Describes the parameter of customer managed disk encryption set resource id that can be specified for disk. <b>Note:</b> The disk encryption set resource id can only be specified for managed disk. Please refer https://aka.ms/mdssewithcmkoverview for more details. </summary>
+        internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
+
+        /// <summary> The type of key used to encrypt the data of the disk restore point. </summary>
+        public RestorePointEncryptionType? Type { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public string DiskEncryptionSetId
         {
-            get => DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            get
+            {
+                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            }
             set
             {
                 if (DiskEncryptionSet is null)
-                    DiskEncryptionSet = new WritableSubResource();
+                {
+                    DiskEncryptionSet = new DiskEncryptionSetParameters();
+                }
                 DiskEncryptionSet.Id = value;
             }
         }
-
-        /// <summary> The type of key used to encrypt the data of the disk restore point. </summary>
-        public RestorePointEncryptionType? EncryptionType { get; set; }
     }
 }

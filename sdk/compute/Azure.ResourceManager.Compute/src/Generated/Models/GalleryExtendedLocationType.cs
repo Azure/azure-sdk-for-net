@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> It is type of the extended location. </summary>
     public readonly partial struct GalleryExtendedLocationType : IEquatable<GalleryExtendedLocationType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="GalleryExtendedLocationType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GalleryExtendedLocationType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EdgeZoneValue = "EdgeZone";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> EdgeZone. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GalleryExtendedLocationType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the EdgeZone. </summary>
         public static GalleryExtendedLocationType EdgeZone { get; } = new GalleryExtendedLocationType(EdgeZoneValue);
-        /// <summary> Unknown. </summary>
+
+        /// <summary> Gets the Unknown. </summary>
         public static GalleryExtendedLocationType Unknown { get; } = new GalleryExtendedLocationType(UnknownValue);
+
         /// <summary> Determines if two <see cref="GalleryExtendedLocationType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GalleryExtendedLocationType left, GalleryExtendedLocationType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GalleryExtendedLocationType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GalleryExtendedLocationType left, GalleryExtendedLocationType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GalleryExtendedLocationType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GalleryExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GalleryExtendedLocationType(string value) => new GalleryExtendedLocationType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GalleryExtendedLocationType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GalleryExtendedLocationType?(string value) => value == null ? null : new GalleryExtendedLocationType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GalleryExtendedLocationType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GalleryExtendedLocationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

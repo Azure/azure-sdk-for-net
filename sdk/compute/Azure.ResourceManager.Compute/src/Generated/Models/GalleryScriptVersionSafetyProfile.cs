@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> The safety profile of the Gallery Script Version. </summary>
-    internal partial class GalleryScriptVersionSafetyProfile : GalleryArtifactSafetyProfileBase
+    public partial class GalleryScriptVersionSafetyProfile : GalleryArtifactSafetyProfileBase
     {
         /// <summary> Initializes a new instance of <see cref="GalleryScriptVersionSafetyProfile"/>. </summary>
         public GalleryScriptVersionSafetyProfile()
@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryScriptVersionSafetyProfile"/>. </summary>
         /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryScriptVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(allowDeletionOfReplicatedLocations, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryScriptVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(allowDeletionOfReplicatedLocations, additionalBinaryDataProperties)
         {
         }
     }

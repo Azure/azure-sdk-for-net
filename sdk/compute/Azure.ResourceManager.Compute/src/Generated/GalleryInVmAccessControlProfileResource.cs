@@ -7,190 +7,134 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using ComputeGallery;
+using ComputeGallery.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
     /// <summary>
-    /// A Class representing a GalleryInVmAccessControlProfile along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GalleryInVmAccessControlProfileResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetGalleryInVmAccessControlProfileResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GalleryResource"/> using the GetGalleryInVmAccessControlProfile method.
+    /// A class representing a GalleryInVMAccessControlProfile along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GalleryInVMAccessControlProfileResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GalleryResource"/> using the GetGalleryInVMAccessControlProfiles method.
     /// </summary>
-    public partial class GalleryInVmAccessControlProfileResource : ArmResource
+    public partial class GalleryInVMAccessControlProfileResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="GalleryInVmAccessControlProfileResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="galleryName"> The galleryName. </param>
-        /// <param name="inVmAccessControlProfileName"> The inVmAccessControlProfileName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string inVmAccessControlProfileName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVmAccessControlProfileName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics;
-        private readonly GalleryInVMAccessControlProfilesRestOperations _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient;
-        private readonly GalleryInVmAccessControlProfileData _data;
-
+        private readonly ClientDiagnostics _galleryInVMAccessControlProfilesClientDiagnostics;
+        private readonly GalleryInVMAccessControlProfiles _galleryInVMAccessControlProfilesRestClient;
+        private readonly GalleryInVMAccessControlProfileData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/galleries/inVMAccessControlProfiles";
 
-        /// <summary> Initializes a new instance of the <see cref="GalleryInVmAccessControlProfileResource"/> class for mocking. </summary>
-        protected GalleryInVmAccessControlProfileResource()
+        /// <summary> Initializes a new instance of GalleryInVMAccessControlProfileResource for mocking. </summary>
+        protected GalleryInVMAccessControlProfileResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GalleryInVmAccessControlProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal GalleryInVmAccessControlProfileResource(ArmClient client, GalleryInVmAccessControlProfileData data) : this(client, data.Id)
+        internal GalleryInVMAccessControlProfileResource(ArmClient client, GalleryInVMAccessControlProfileData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GalleryInVmAccessControlProfileResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal GalleryInVmAccessControlProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal GalleryInVMAccessControlProfileResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesApiVersion);
-            _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient = new GalleryInVMAccessControlProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string galleryInVMAccessControlProfileApiVersion);
+            _galleryInVMAccessControlProfilesClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _galleryInVMAccessControlProfilesRestClient = new GalleryInVMAccessControlProfiles(_galleryInVMAccessControlProfilesClientDiagnostics, Pipeline, Endpoint, galleryInVMAccessControlProfileApiVersion ?? "2025-03-03");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual GalleryInVmAccessControlProfileData Data
+        public virtual GalleryInVMAccessControlProfileData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="galleryName"> The galleryName. </param>
+        /// <param name="inVMAccessControlProfileName"> The inVMAccessControlProfileName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string galleryName, string inVMAccessControlProfileName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of GalleryInVmAccessControlProfileVersionResources in the GalleryInVmAccessControlProfile. </summary>
-        /// <returns> An object representing collection of GalleryInVmAccessControlProfileVersionResources and their operations over a GalleryInVmAccessControlProfileVersionResource. </returns>
-        public virtual GalleryInVmAccessControlProfileVersionCollection GetGalleryInVmAccessControlProfileVersions()
-        {
-            return GetCachedClient(client => new GalleryInVmAccessControlProfileVersionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Retrieves information about a gallery inVMAccessControlProfile version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}/versions/{inVMAccessControlProfileVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfileVersions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="inVmAccessControlProfileVersionName"> The name of the gallery inVMAccessControlProfile version to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inVmAccessControlProfileVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="inVmAccessControlProfileVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<GalleryInVmAccessControlProfileVersionResource>> GetGalleryInVmAccessControlProfileVersionAsync(string inVmAccessControlProfileVersionName, CancellationToken cancellationToken = default)
-        {
-            return await GetGalleryInVmAccessControlProfileVersions().GetAsync(inVmAccessControlProfileVersionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Retrieves information about a gallery inVMAccessControlProfile version.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}/versions/{inVMAccessControlProfileVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfileVersions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="inVmAccessControlProfileVersionName"> The name of the gallery inVMAccessControlProfile version to be retrieved. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inVmAccessControlProfileVersionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="inVmAccessControlProfileVersionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<GalleryInVmAccessControlProfileVersionResource> GetGalleryInVmAccessControlProfileVersion(string inVmAccessControlProfileVersionName, CancellationToken cancellationToken = default)
-        {
-            return GetGalleryInVmAccessControlProfileVersions().Get(inVmAccessControlProfileVersionName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Retrieves information about a gallery inVMAccessControlProfile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryInVMAccessControlProfiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GalleryInVMAccessControlProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<GalleryInVmAccessControlProfileResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryInVMAccessControlProfileResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.Get");
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.Get");
             scope.Start();
             try
             {
-                var response = await _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GalleryInVMAccessControlProfileData> response = Response.FromValue(GalleryInVMAccessControlProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GalleryInVmAccessControlProfileResource(Client, response.Value), response.GetRawResponse());
+                }
+                return Response.FromValue(new GalleryInVMAccessControlProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -203,34 +147,160 @@ namespace Azure.ResourceManager.Compute
         /// Retrieves information about a gallery inVMAccessControlProfile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryInVMAccessControlProfiles_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GalleryInVMAccessControlProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<GalleryInVmAccessControlProfileResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<GalleryInVMAccessControlProfileResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.Get");
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.Get");
             scope.Start();
             try
             {
-                var response = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GalleryInVMAccessControlProfileData> response = Response.FromValue(GalleryInVMAccessControlProfileData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new GalleryInVmAccessControlProfileResource(Client, response.Value), response.GetRawResponse());
+                }
+                return Response.FromValue(new GalleryInVMAccessControlProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a gallery inVMAccessControlProfile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryInVMAccessControlProfiles_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GalleryInVMAccessControlProfileResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the update gallery inVMAccessControlProfile operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<GalleryInVMAccessControlProfileResource>> UpdateAsync(WaitUntil waitUntil, GalleryInVMAccessControlProfilePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GalleryInVMAccessControlProfilePatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeCombineArmOperation<GalleryInVMAccessControlProfileResource> operation = new ComputeCombineArmOperation<GalleryInVMAccessControlProfileResource>(
+                    new GalleryInVMAccessControlProfileOperationSource(Client),
+                    _galleryInVMAccessControlProfilesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a gallery inVMAccessControlProfile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryInVMAccessControlProfiles_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GalleryInVMAccessControlProfileResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Parameters supplied to the update gallery inVMAccessControlProfile operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<GalleryInVMAccessControlProfileResource> Update(WaitUntil waitUntil, GalleryInVMAccessControlProfilePatch patch, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(patch, nameof(patch));
+
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, GalleryInVMAccessControlProfilePatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeCombineArmOperation<GalleryInVMAccessControlProfileResource> operation = new ComputeCombineArmOperation<GalleryInVMAccessControlProfileResource>(
+                    new GalleryInVMAccessControlProfileOperationSource(Client),
+                    _galleryInVMAccessControlProfilesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -243,20 +313,20 @@ namespace Azure.ResourceManager.Compute
         /// Delete a gallery inVMAccessControlProfile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryInVMAccessControlProfiles_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GalleryInVMAccessControlProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,14 +334,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.Delete");
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = await _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics, Pipeline, _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_galleryInVMAccessControlProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -285,20 +362,20 @@ namespace Azure.ResourceManager.Compute
         /// Delete a gallery inVMAccessControlProfile.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryInVMAccessControlProfiles_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="GalleryInVMAccessControlProfileResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,14 +383,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.Delete");
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.Delete");
             scope.Start();
             try
             {
-                var response = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ComputeArmOperation(_galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics, Pipeline, _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_galleryInVMAccessControlProfilesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -323,150 +407,44 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary>
-        /// Update a gallery inVMAccessControlProfile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Parameters supplied to the update gallery inVMAccessControlProfile operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<GalleryInVmAccessControlProfileResource>> UpdateAsync(WaitUntil waitUntil, GalleryInVmAccessControlProfilePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryInVmAccessControlProfileResource>(new GalleryInVmAccessControlProfileOperationSource(Client), _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics, Pipeline, _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a gallery inVMAccessControlProfile.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Parameters supplied to the update gallery inVMAccessControlProfile operation. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<GalleryInVmAccessControlProfileResource> Update(WaitUntil waitUntil, GalleryInVmAccessControlProfilePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryInVmAccessControlProfileResource>(new GalleryInVmAccessControlProfileOperationSource(Client), _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics, Pipeline, _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<GalleryInVmAccessControlProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryInVMAccessControlProfileResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.AddTag");
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new GalleryInVmAccessControlProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<GalleryInVMAccessControlProfileData> response = Response.FromValue(GalleryInVMAccessControlProfileData.FromResponse(result), result);
+                    return Response.FromValue(new GalleryInVMAccessControlProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new GalleryInVmAccessControlProfilePatch();
-                    foreach (var tag in current.Tags)
+                    GalleryInVMAccessControlProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    GalleryInVMAccessControlProfilePatch patch = new GalleryInVMAccessControlProfilePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<GalleryInVMAccessControlProfileResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -477,58 +455,44 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<GalleryInVmAccessControlProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryInVMAccessControlProfileResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.AddTag");
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new GalleryInVmAccessControlProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<GalleryInVMAccessControlProfileData> response = Response.FromValue(GalleryInVMAccessControlProfileData.FromResponse(result), result);
+                    return Response.FromValue(new GalleryInVMAccessControlProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new GalleryInVmAccessControlProfilePatch();
-                    foreach (var tag in current.Tags)
+                    GalleryInVMAccessControlProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    GalleryInVMAccessControlProfilePatch patch = new GalleryInVMAccessControlProfilePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<GalleryInVMAccessControlProfileResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -539,53 +503,39 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<GalleryInVmAccessControlProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryInVMAccessControlProfileResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.SetTags");
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new GalleryInVmAccessControlProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<GalleryInVMAccessControlProfileData> response = Response.FromValue(GalleryInVMAccessControlProfileData.FromResponse(result), result);
+                    return Response.FromValue(new GalleryInVMAccessControlProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new GalleryInVmAccessControlProfilePatch();
+                    GalleryInVMAccessControlProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    GalleryInVMAccessControlProfilePatch patch = new GalleryInVMAccessControlProfilePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<GalleryInVMAccessControlProfileResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -596,53 +546,39 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<GalleryInVmAccessControlProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryInVMAccessControlProfileResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.SetTags");
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new GalleryInVmAccessControlProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<GalleryInVMAccessControlProfileData> response = Response.FromValue(GalleryInVMAccessControlProfileData.FromResponse(result), result);
+                    return Response.FromValue(new GalleryInVMAccessControlProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new GalleryInVmAccessControlProfilePatch();
+                    GalleryInVMAccessControlProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    GalleryInVMAccessControlProfilePatch patch = new GalleryInVMAccessControlProfilePatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<GalleryInVMAccessControlProfileResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -653,56 +589,42 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<GalleryInVmAccessControlProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GalleryInVMAccessControlProfileResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.RemoveTag");
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new GalleryInVmAccessControlProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<GalleryInVMAccessControlProfileData> response = Response.FromValue(GalleryInVMAccessControlProfileData.FromResponse(result), result);
+                    return Response.FromValue(new GalleryInVMAccessControlProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new GalleryInVmAccessControlProfilePatch();
-                    foreach (var tag in current.Tags)
+                    GalleryInVMAccessControlProfileData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    GalleryInVMAccessControlProfilePatch patch = new GalleryInVMAccessControlProfilePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<GalleryInVMAccessControlProfileResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -713,56 +635,42 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{inVMAccessControlProfileName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfiles_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryInVmAccessControlProfileResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<GalleryInVmAccessControlProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<GalleryInVMAccessControlProfileResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVmAccessControlProfileResource.RemoveTag");
+            using DiagnosticScope scope = _galleryInVMAccessControlProfilesClientDiagnostics.CreateScope("GalleryInVMAccessControlProfileResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _galleryInVmAccessControlProfileGalleryInVmAccessControlProfilesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new GalleryInVmAccessControlProfileResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _galleryInVMAccessControlProfilesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<GalleryInVMAccessControlProfileData> response = Response.FromValue(GalleryInVMAccessControlProfileData.FromResponse(result), result);
+                    return Response.FromValue(new GalleryInVMAccessControlProfileResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new GalleryInVmAccessControlProfilePatch();
-                    foreach (var tag in current.Tags)
+                    GalleryInVMAccessControlProfileData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    GalleryInVMAccessControlProfilePatch patch = new GalleryInVMAccessControlProfilePatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<GalleryInVMAccessControlProfileResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -771,6 +679,39 @@ namespace Azure.ResourceManager.Compute
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of GalleryInVMAccessControlProfileVersions in the <see cref="GalleryInVMAccessControlProfileResource"/>. </summary>
+        /// <returns> An object representing collection of GalleryInVMAccessControlProfileVersions and their operations over a GalleryInVMAccessControlProfileVersionResource. </returns>
+        public virtual GalleryInVMAccessControlProfileVersionCollection GetGalleryInVMAccessControlProfileVersions()
+        {
+            return GetCachedClient(client => new GalleryInVMAccessControlProfileVersionCollection(client, Id));
+        }
+
+        /// <summary> Retrieves information about a gallery inVMAccessControlProfile version. </summary>
+        /// <param name="inVMAccessControlProfileVersionName"> The name of the gallery inVMAccessControlProfile version to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inVMAccessControlProfileVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inVMAccessControlProfileVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GalleryInVMAccessControlProfileVersionResource>> GetGalleryInVMAccessControlProfileVersionAsync(string inVMAccessControlProfileVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inVMAccessControlProfileVersionName, nameof(inVMAccessControlProfileVersionName));
+
+            return await GetGalleryInVMAccessControlProfileVersions().GetAsync(inVMAccessControlProfileVersionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Retrieves information about a gallery inVMAccessControlProfile version. </summary>
+        /// <param name="inVMAccessControlProfileVersionName"> The name of the gallery inVMAccessControlProfile version to be retrieved. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="inVMAccessControlProfileVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inVMAccessControlProfileVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GalleryInVMAccessControlProfileVersionResource> GetGalleryInVMAccessControlProfileVersion(string inVMAccessControlProfileVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(inVMAccessControlProfileVersionName, nameof(inVMAccessControlProfileVersionName));
+
+            return GetGalleryInVMAccessControlProfileVersions().Get(inVMAccessControlProfileVersionName, cancellationToken);
         }
     }
 }

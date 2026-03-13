@@ -8,14 +8,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using ComputeGallery;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
     /// <summary>
     /// A class representing a collection of <see cref="GalleryScriptVersionResource"/> and their operations.
@@ -24,51 +26,49 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class GalleryScriptVersionCollection : ArmCollection, IEnumerable<GalleryScriptVersionResource>, IAsyncEnumerable<GalleryScriptVersionResource>
     {
-        private readonly ClientDiagnostics _galleryScriptVersionClientDiagnostics;
-        private readonly GalleryScriptVersionsRestOperations _galleryScriptVersionRestClient;
+        private readonly ClientDiagnostics _galleryScriptVersionsClientDiagnostics;
+        private readonly GalleryScriptVersions _galleryScriptVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="GalleryScriptVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of GalleryScriptVersionCollection for mocking. </summary>
         protected GalleryScriptVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GalleryScriptVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryScriptVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GalleryScriptVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _galleryScriptVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryScriptVersionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GalleryScriptVersionResource.ResourceType, out string galleryScriptVersionApiVersion);
-            _galleryScriptVersionRestClient = new GalleryScriptVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, galleryScriptVersionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _galleryScriptVersionsClientDiagnostics = new ClientDiagnostics("ComputeCombine", GalleryScriptVersionResource.ResourceType.Namespace, Diagnostics);
+            _galleryScriptVersionsRestClient = new GalleryScriptVersions(_galleryScriptVersionsClientDiagnostics, Pipeline, Endpoint, galleryScriptVersionApiVersion ?? "2025-03-03");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != GalleryScriptResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GalleryScriptResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GalleryScriptResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update a gallery Script Version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScriptVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryScriptVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +76,34 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryScriptVersionName"> The name of the gallery Script Version to be retrieved. </param>
         /// <param name="data"> Parameters supplied to the create or update gallery Script Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptVersionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<GalleryScriptVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string galleryScriptVersionName, GalleryScriptVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryScriptVersionName, nameof(galleryScriptVersionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _galleryScriptVersionClientDiagnostics.CreateScope("GalleryScriptVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _galleryScriptVersionsClientDiagnostics.CreateScope("GalleryScriptVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _galleryScriptVersionRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryScriptVersionResource>(new GalleryScriptVersionOperationSource(Client), _galleryScriptVersionClientDiagnostics, Pipeline, _galleryScriptVersionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryScriptVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, GalleryScriptVersionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeCombineArmOperation<GalleryScriptVersionResource> operation = new ComputeCombineArmOperation<GalleryScriptVersionResource>(
+                    new GalleryScriptVersionOperationSource(Client),
+                    _galleryScriptVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +117,16 @@ namespace Azure.ResourceManager.Compute
         /// Create or update a gallery Script Version.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScriptVersions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryScriptVersions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +134,34 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryScriptVersionName"> The name of the gallery Script Version to be retrieved. </param>
         /// <param name="data"> Parameters supplied to the create or update gallery Script Version operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptVersionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<GalleryScriptVersionResource> CreateOrUpdate(WaitUntil waitUntil, string galleryScriptVersionName, GalleryScriptVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryScriptVersionName, nameof(galleryScriptVersionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _galleryScriptVersionClientDiagnostics.CreateScope("GalleryScriptVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _galleryScriptVersionsClientDiagnostics.CreateScope("GalleryScriptVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _galleryScriptVersionRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, data, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryScriptVersionResource>(new GalleryScriptVersionOperationSource(Client), _galleryScriptVersionClientDiagnostics, Pipeline, _galleryScriptVersionRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryScriptVersionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, GalleryScriptVersionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeCombineArmOperation<GalleryScriptVersionResource> operation = new ComputeCombineArmOperation<GalleryScriptVersionResource>(
+                    new GalleryScriptVersionOperationSource(Client),
+                    _galleryScriptVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +175,42 @@ namespace Azure.ResourceManager.Compute
         /// Custom ArmResourceRead operation template with CloudError as Error
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScriptVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryScriptVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryScriptVersionName"> The name of the gallery Script Version to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<GalleryScriptVersionResource>> GetAsync(string galleryScriptVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryScriptVersionName, nameof(galleryScriptVersionName));
 
-            using var scope = _galleryScriptVersionClientDiagnostics.CreateScope("GalleryScriptVersionCollection.Get");
+            using DiagnosticScope scope = _galleryScriptVersionsClientDiagnostics.CreateScope("GalleryScriptVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _galleryScriptVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryScriptVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GalleryScriptVersionData> response = Response.FromValue(GalleryScriptVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GalleryScriptVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +224,42 @@ namespace Azure.ResourceManager.Compute
         /// Custom ArmResourceRead operation template with CloudError as Error
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScriptVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryScriptVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryScriptVersionName"> The name of the gallery Script Version to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<GalleryScriptVersionResource> Get(string galleryScriptVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryScriptVersionName, nameof(galleryScriptVersionName));
 
-            using var scope = _galleryScriptVersionClientDiagnostics.CreateScope("GalleryScriptVersionCollection.Get");
+            using DiagnosticScope scope = _galleryScriptVersionsClientDiagnostics.CreateScope("GalleryScriptVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _galleryScriptVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryScriptVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GalleryScriptVersionData> response = Response.FromValue(GalleryScriptVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GalleryScriptVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +273,50 @@ namespace Azure.ResourceManager.Compute
         /// List gallery Script Versions in a gallery Script Definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScriptVersions_ListByGalleryScript</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryScriptVersions_ListByGalleryScript. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GalleryScriptVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GalleryScriptVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GalleryScriptVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryScriptVersionRestClient.CreateListByGalleryScriptRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryScriptVersionRestClient.CreateListByGalleryScriptNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryScriptVersionResource(Client, GalleryScriptVersionData.DeserializeGalleryScriptVersionData(e)), _galleryScriptVersionClientDiagnostics, Pipeline, "GalleryScriptVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<GalleryScriptVersionData, GalleryScriptVersionResource>(new GalleryScriptVersionsGetByGalleryScriptAsyncCollectionResultOfT(
+                _galleryScriptVersionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new GalleryScriptVersionResource(Client, data));
         }
 
         /// <summary>
         /// List gallery Script Versions in a gallery Script Definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScriptVersions_ListByGalleryScript</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryScriptVersions_ListByGalleryScript. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +324,67 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="GalleryScriptVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GalleryScriptVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryScriptVersionRestClient.CreateListByGalleryScriptRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryScriptVersionRestClient.CreateListByGalleryScriptNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryScriptVersionResource(Client, GalleryScriptVersionData.DeserializeGalleryScriptVersionData(e)), _galleryScriptVersionClientDiagnostics, Pipeline, "GalleryScriptVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<GalleryScriptVersionData, GalleryScriptVersionResource>(new GalleryScriptVersionsGetByGalleryScriptCollectionResultOfT(
+                _galleryScriptVersionsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new GalleryScriptVersionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScriptVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryScriptVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryScriptVersionName"> The name of the gallery Script Version to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string galleryScriptVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryScriptVersionName, nameof(galleryScriptVersionName));
 
-            using var scope = _galleryScriptVersionClientDiagnostics.CreateScope("GalleryScriptVersionCollection.Exists");
+            using DiagnosticScope scope = _galleryScriptVersionsClientDiagnostics.CreateScope("GalleryScriptVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _galleryScriptVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryScriptVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GalleryScriptVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GalleryScriptVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GalleryScriptVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +398,50 @@ namespace Azure.ResourceManager.Compute
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScriptVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryScriptVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryScriptVersionName"> The name of the gallery Script Version to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string galleryScriptVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryScriptVersionName, nameof(galleryScriptVersionName));
 
-            using var scope = _galleryScriptVersionClientDiagnostics.CreateScope("GalleryScriptVersionCollection.Exists");
+            using DiagnosticScope scope = _galleryScriptVersionsClientDiagnostics.CreateScope("GalleryScriptVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _galleryScriptVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryScriptVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GalleryScriptVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GalleryScriptVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GalleryScriptVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +455,54 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScriptVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryScriptVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryScriptVersionName"> The name of the gallery Script Version to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<GalleryScriptVersionResource>> GetIfExistsAsync(string galleryScriptVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryScriptVersionName, nameof(galleryScriptVersionName));
 
-            using var scope = _galleryScriptVersionClientDiagnostics.CreateScope("GalleryScriptVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _galleryScriptVersionsClientDiagnostics.CreateScope("GalleryScriptVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _galleryScriptVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryScriptVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GalleryScriptVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GalleryScriptVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GalleryScriptVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<GalleryScriptVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new GalleryScriptVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +516,54 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/scripts/{galleryScriptName}/versions/{galleryScriptVersionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryScriptVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryScriptVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryScriptVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryScriptVersionName"> The name of the gallery Script Version to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryScriptVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryScriptVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<GalleryScriptVersionResource> GetIfExists(string galleryScriptVersionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryScriptVersionName, nameof(galleryScriptVersionName));
 
-            using var scope = _galleryScriptVersionClientDiagnostics.CreateScope("GalleryScriptVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _galleryScriptVersionsClientDiagnostics.CreateScope("GalleryScriptVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _galleryScriptVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryScriptVersionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryScriptVersionName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GalleryScriptVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GalleryScriptVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GalleryScriptVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<GalleryScriptVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new GalleryScriptVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +583,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<GalleryScriptVersionResource> IAsyncEnumerable<GalleryScriptVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

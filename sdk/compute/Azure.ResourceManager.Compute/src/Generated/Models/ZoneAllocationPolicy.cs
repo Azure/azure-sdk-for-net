@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The configuration parameters for zone allocation of a virtual machine scale set. </summary>
     public partial class ZoneAllocationPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ZoneAllocationPolicy"/>. </summary>
         public ZoneAllocationPolicy()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="ZoneAllocationPolicy"/>. </summary>
         /// <param name="maxZoneCount"> The maximum number of availability zones to use if the ZonePlacementPolicy is 'Auto'. If not specified, all availability zones will be used. </param>
         /// <param name="maxInstancePercentPerZonePolicy"> The configuration parameters used to limit the number of virtual machines per availability zone in the virtual machine scale set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ZoneAllocationPolicy(int? maxZoneCount, MaxInstancePercentPerZonePolicy maxInstancePercentPerZonePolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ZoneAllocationPolicy(int? maxZoneCount, MaxInstancePercentPerZonePolicy maxInstancePercentPerZonePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxZoneCount = maxZoneCount;
             MaxInstancePercentPerZonePolicy = maxInstancePercentPerZonePolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The maximum number of availability zones to use if the ZonePlacementPolicy is 'Auto'. If not specified, all availability zones will be used. </summary>
         public int? MaxZoneCount { get; set; }
+
         /// <summary> The configuration parameters used to limit the number of virtual machines per availability zone in the virtual machine scale set. </summary>
         public MaxInstancePercentPerZonePolicy MaxInstancePercentPerZonePolicy { get; set; }
     }

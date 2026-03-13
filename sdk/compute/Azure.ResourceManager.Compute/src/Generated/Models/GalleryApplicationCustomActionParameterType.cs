@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> Specifies the type of the custom action parameter. Possible values are: String, ConfigurationDataBlob or LogOutputBlob. </summary>
     public enum GalleryApplicationCustomActionParameterType

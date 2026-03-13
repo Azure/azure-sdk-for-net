@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The instance view of a dedicated host that includes the name of the dedicated host. It is used for the response to the instance view of a dedicated host group. </summary>
     public partial class DedicatedHostInstanceViewWithName : DedicatedHostInstanceView
@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="assetId"> Specifies the unique id of the dedicated physical machine on which the dedicated host resides. </param>
         /// <param name="availableCapacity"> Unutilized capacity of the dedicated host. </param>
         /// <param name="statuses"> The resource status information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the dedicated host. </param>
-        internal DedicatedHostInstanceViewWithName(string assetId, DedicatedHostAvailableCapacity availableCapacity, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData, string name) : base(assetId, availableCapacity, statuses, serializedAdditionalRawData)
+        internal DedicatedHostInstanceViewWithName(string assetId, DedicatedHostAvailableCapacity availableCapacity, IList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name) : base(assetId, availableCapacity, statuses, additionalBinaryDataProperties)
         {
             Name = name;
         }

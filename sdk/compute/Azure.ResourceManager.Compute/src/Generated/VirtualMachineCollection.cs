@@ -8,16 +8,18 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Compute;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
     /// <summary>
     /// A class representing a collection of <see cref="VirtualMachineResource"/> and their operations.
@@ -26,75 +28,85 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class VirtualMachineCollection : ArmCollection, IEnumerable<VirtualMachineResource>, IAsyncEnumerable<VirtualMachineResource>
     {
-        private readonly ClientDiagnostics _virtualMachineClientDiagnostics;
-        private readonly VirtualMachinesRestOperations _virtualMachineRestClient;
+        private readonly ClientDiagnostics _virtualMachinesClientDiagnostics;
+        private readonly VirtualMachines _virtualMachinesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualMachineCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineCollection for mocking. </summary>
         protected VirtualMachineCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualMachineCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualMachineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(VirtualMachineResource.ResourceType, out string virtualMachineApiVersion);
-            _virtualMachineRestClient = new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _virtualMachinesClientDiagnostics = new ClientDiagnostics("ComputeCombine", VirtualMachineResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachinesRestClient = new VirtualMachines(_virtualMachinesClientDiagnostics, Pipeline, Endpoint, virtualMachineApiVersion ?? "2025-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="data"> Parameters supplied to the Create Virtual Machine operation. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will result in error from server as they are not supported. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, VirtualMachineData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<VirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vmName, VirtualMachineData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _virtualMachineRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<VirtualMachineResource>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, VirtualMachineData.ToRequestContent(data), matchConditions, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeCombineArmOperation<VirtualMachineResource> operation = new ComputeCombineArmOperation<VirtualMachineResource>(
+                    new VirtualMachineOperationSource(Client),
+                    _virtualMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -108,44 +120,52 @@ namespace Azure.ResourceManager.Compute
         /// The operation to create or update a virtual machine. Please note some properties can be set only during virtual machine creation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="data"> Parameters supplied to the Create Virtual Machine operation. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will result in error from server as they are not supported. </param>
+        /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<VirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string vmName, VirtualMachineData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _virtualMachineRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, vmName, data, ifMatch, ifNoneMatch, cancellationToken);
-                var operation = new ComputeArmOperation<VirtualMachineResource>(new VirtualMachineOperationSource(Client), _virtualMachineClientDiagnostics, Pipeline, _virtualMachineRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, data, ifMatch, ifNoneMatch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, VirtualMachineData.ToRequestContent(data), matchConditions, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeCombineArmOperation<VirtualMachineResource> operation = new ComputeCombineArmOperation<VirtualMachineResource>(
+                    new VirtualMachineOperationSource(Client),
+                    _virtualMachinesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -159,39 +179,43 @@ namespace Azure.ResourceManager.Compute
         /// Retrieves information about the model view or the instance view of a virtual machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual async Task<Response<VirtualMachineResource>> GetAsync(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VirtualMachineResource>> GetAsync(string vmName, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Get");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -205,39 +229,43 @@ namespace Azure.ResourceManager.Compute
         /// Retrieves information about the model view or the instance view of a virtual machine.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual Response<VirtualMachineResource> Get(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VirtualMachineResource> Get(string vmName, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Get");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VirtualMachineData> response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -251,52 +279,16 @@ namespace Azure.ResourceManager.Compute
         /// Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id' eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'. </param>
-        /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineResource> GetAllAsync(string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,48 +296,106 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineResource> GetAll(string filter = null, GetVirtualMachineExpandType? expand = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineResource> GetAllAsync(string filter = default, ExpandTypeForListVMs? expand = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualMachineResource(Client, VirtualMachineData.DeserializeVirtualMachineData(e)), _virtualMachineClientDiagnostics, Pipeline, "VirtualMachineCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesGetAllAsyncCollectionResultOfT(
+                _virtualMachinesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                filter,
+                expand?.ToString(),
+                context), data => new VirtualMachineResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists all of the virtual machines in the specified resource group. Use the nextLink property in the response to get the next page of virtual machines.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The system query option to filter VMs returned in the response. Allowed value is 'virtualMachineScaleSet/id' eq /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}'. </param>
+        /// <param name="expand"> The expand expression to apply on operation. 'instanceView' enables fetching run time status of all Virtual Machines, this can only be specified if a valid $filter option is specified. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineResource> GetAll(string filter = default, ExpandTypeForListVMs? expand = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualMachineData, VirtualMachineResource>(new VirtualMachinesGetAllCollectionResultOfT(
+                _virtualMachinesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                filter,
+                expand?.ToString(),
+                context), data => new VirtualMachineResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string vmName, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VirtualMachineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualMachineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,37 +409,51 @@ namespace Azure.ResourceManager.Compute
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual Response<bool> Exists(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string vmName, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineCollection.Exists");
             scope.Start();
             try
             {
-                var response = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VirtualMachineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualMachineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -403,39 +467,55 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual async Task<NullableResponse<VirtualMachineResource>> GetIfExistsAsync(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<VirtualMachineResource>> GetIfExistsAsync(string vmName, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualMachineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VirtualMachineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualMachineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VirtualMachineResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -449,39 +529,55 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmName"> The name of the virtual machine. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves a snapshot of the runtime properties of the virtual machine that is managed by the platform and can change outside of control plane operations. 'UserData' retrieves the UserData property as part of the VM model view that was provided by the user during the VM Create/Update operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmName"/> is null. </exception>
-        public virtual NullableResponse<VirtualMachineResource> GetIfExists(string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="vmName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<VirtualMachineResource> GetIfExists(string vmName, InstanceViewTypes? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmName, nameof(vmName));
 
-            using var scope = _virtualMachineClientDiagnostics.CreateScope("VirtualMachineCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualMachinesClientDiagnostics.CreateScope("VirtualMachineCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualMachineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachinesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, vmName, expand?.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VirtualMachineData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualMachineData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualMachineData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VirtualMachineResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -501,6 +597,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<VirtualMachineResource> IAsyncEnumerable<VirtualMachineResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

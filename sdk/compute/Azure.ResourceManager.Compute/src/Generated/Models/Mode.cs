@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Specifies the mode that ProxyAgent will execute on if the feature is enabled. ProxyAgent will start to audit or monitor but not enforce access control over requests to host endpoints in Audit mode, while in Enforce mode it will enforce access control. The default value is Enforce mode. </summary>
     public readonly partial struct Mode : IEquatable<Mode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="Mode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Mode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AuditValue = "Audit";
         private const string EnforceValue = "Enforce";
 
-        /// <summary> Audit. </summary>
+        /// <summary> Initializes a new instance of <see cref="Mode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public Mode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Audit. </summary>
         public static Mode Audit { get; } = new Mode(AuditValue);
-        /// <summary> Enforce. </summary>
+
+        /// <summary> Gets the Enforce. </summary>
         public static Mode Enforce { get; } = new Mode(EnforceValue);
+
         /// <summary> Determines if two <see cref="Mode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(Mode left, Mode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="Mode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(Mode left, Mode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="Mode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="Mode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator Mode(string value) => new Mode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="Mode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator Mode?(string value) => value == null ? null : new Mode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Mode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(Mode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

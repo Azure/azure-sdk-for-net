@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeDisk.Models
 {
     /// <summary> Policy for accessing the disk via network. </summary>
     public readonly partial struct NetworkAccessPolicy : IEquatable<NetworkAccessPolicy>
     {
         private readonly string _value;
+        /// <summary> The disk can be exported or uploaded to from any network. </summary>
+        private const string AllowAllValue = "AllowAll";
+        /// <summary> The disk can be exported or uploaded to using a DiskAccess resource's private endpoints. </summary>
+        private const string AllowPrivateValue = "AllowPrivate";
+        /// <summary> The disk cannot be exported. </summary>
+        private const string DenyAllValue = "DenyAll";
 
         /// <summary> Initializes a new instance of <see cref="NetworkAccessPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkAccessPolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowAllValue = "AllowAll";
-        private const string AllowPrivateValue = "AllowPrivate";
-        private const string DenyAllValue = "DenyAll";
+            _value = value;
+        }
 
         /// <summary> The disk can be exported or uploaded to from any network. </summary>
         public static NetworkAccessPolicy AllowAll { get; } = new NetworkAccessPolicy(AllowAllValue);
+
         /// <summary> The disk can be exported or uploaded to using a DiskAccess resource's private endpoints. </summary>
         public static NetworkAccessPolicy AllowPrivate { get; } = new NetworkAccessPolicy(AllowPrivateValue);
+
         /// <summary> The disk cannot be exported. </summary>
         public static NetworkAccessPolicy DenyAll { get; } = new NetworkAccessPolicy(DenyAllValue);
+
         /// <summary> Determines if two <see cref="NetworkAccessPolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkAccessPolicy left, NetworkAccessPolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkAccessPolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkAccessPolicy left, NetworkAccessPolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkAccessPolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkAccessPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkAccessPolicy(string value) => new NetworkAccessPolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkAccessPolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkAccessPolicy?(string value) => value == null ? null : new NetworkAccessPolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkAccessPolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkAccessPolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

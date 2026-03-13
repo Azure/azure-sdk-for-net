@@ -7,72 +7,110 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeDisk.Models
 {
     /// <summary> This enumerates the possible sources of a disk's creation. </summary>
     public readonly partial struct DiskCreateOption : IEquatable<DiskCreateOption>
     {
         private readonly string _value;
+        /// <summary> Create an empty data disk of a size given by diskSizeGB. </summary>
+        private const string EmptyValue = "Empty";
+        /// <summary> Disk will be attached to a VM. </summary>
+        private const string AttachValue = "Attach";
+        /// <summary> Create a new disk from a platform image specified by the given imageReference or galleryImageReference. </summary>
+        private const string FromImageValue = "FromImage";
+        /// <summary> Create a disk by importing from a blob specified by a sourceUri in a storage account specified by storageAccountId. </summary>
+        private const string ImportValue = "Import";
+        /// <summary> Create a new disk or snapshot by copying from a disk or snapshot specified by the given sourceResourceId. </summary>
+        private const string CopyValue = "Copy";
+        /// <summary> Create a new disk by copying from a backup recovery point. </summary>
+        private const string RestoreValue = "Restore";
+        /// <summary> Create a new disk by obtaining a write token and using it to directly upload the contents of the disk. </summary>
+        private const string UploadValue = "Upload";
+        /// <summary> Create a new disk by using a deep copy process, where the resource creation is considered complete only after all data has been copied from the source. </summary>
+        private const string CopyStartValue = "CopyStart";
+        /// <summary> Similar to Import create option. Create a new Trusted Launch VM or Confidential VM supported disk by importing additional blobs for VM guest state specified by securityDataUri and VM metadata specified by securityMetadataUri in storage account specified by storageAccountId. The VM metadata is optional and only required for certain Confidential VM configurations and not required for Trusted Launch VM. </summary>
+        private const string ImportSecureValue = "ImportSecure";
+        /// <summary> Similar to Upload create option. Create a new Trusted Launch VM or Confidential VM supported disk and upload using write token in disk, VM guest state and VM metadata. The VM metadata is optional and only required for certain Confidential VM configurations and not required for Trusted Launch VM. </summary>
+        private const string UploadPreparedSecureValue = "UploadPreparedSecure";
+        /// <summary> Create a new disk by exporting from elastic san volume snapshot. </summary>
+        private const string CopyFromSanSnapshotValue = "CopyFromSanSnapshot";
 
         /// <summary> Initializes a new instance of <see cref="DiskCreateOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskCreateOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EmptyValue = "Empty";
-        private const string AttachValue = "Attach";
-        private const string FromImageValue = "FromImage";
-        private const string ImportValue = "Import";
-        private const string CopyValue = "Copy";
-        private const string RestoreValue = "Restore";
-        private const string UploadValue = "Upload";
-        private const string CopyStartValue = "CopyStart";
-        private const string ImportSecureValue = "ImportSecure";
-        private const string UploadPreparedSecureValue = "UploadPreparedSecure";
-        private const string CopyFromSanSnapshotValue = "CopyFromSanSnapshot";
+            _value = value;
+        }
 
         /// <summary> Create an empty data disk of a size given by diskSizeGB. </summary>
         public static DiskCreateOption Empty { get; } = new DiskCreateOption(EmptyValue);
+
         /// <summary> Disk will be attached to a VM. </summary>
         public static DiskCreateOption Attach { get; } = new DiskCreateOption(AttachValue);
+
         /// <summary> Create a new disk from a platform image specified by the given imageReference or galleryImageReference. </summary>
         public static DiskCreateOption FromImage { get; } = new DiskCreateOption(FromImageValue);
+
         /// <summary> Create a disk by importing from a blob specified by a sourceUri in a storage account specified by storageAccountId. </summary>
         public static DiskCreateOption Import { get; } = new DiskCreateOption(ImportValue);
+
         /// <summary> Create a new disk or snapshot by copying from a disk or snapshot specified by the given sourceResourceId. </summary>
         public static DiskCreateOption Copy { get; } = new DiskCreateOption(CopyValue);
+
         /// <summary> Create a new disk by copying from a backup recovery point. </summary>
         public static DiskCreateOption Restore { get; } = new DiskCreateOption(RestoreValue);
+
         /// <summary> Create a new disk by obtaining a write token and using it to directly upload the contents of the disk. </summary>
         public static DiskCreateOption Upload { get; } = new DiskCreateOption(UploadValue);
+
         /// <summary> Create a new disk by using a deep copy process, where the resource creation is considered complete only after all data has been copied from the source. </summary>
         public static DiskCreateOption CopyStart { get; } = new DiskCreateOption(CopyStartValue);
+
         /// <summary> Similar to Import create option. Create a new Trusted Launch VM or Confidential VM supported disk by importing additional blobs for VM guest state specified by securityDataUri and VM metadata specified by securityMetadataUri in storage account specified by storageAccountId. The VM metadata is optional and only required for certain Confidential VM configurations and not required for Trusted Launch VM. </summary>
         public static DiskCreateOption ImportSecure { get; } = new DiskCreateOption(ImportSecureValue);
+
         /// <summary> Similar to Upload create option. Create a new Trusted Launch VM or Confidential VM supported disk and upload using write token in disk, VM guest state and VM metadata. The VM metadata is optional and only required for certain Confidential VM configurations and not required for Trusted Launch VM. </summary>
         public static DiskCreateOption UploadPreparedSecure { get; } = new DiskCreateOption(UploadPreparedSecureValue);
+
         /// <summary> Create a new disk by exporting from elastic san volume snapshot. </summary>
         public static DiskCreateOption CopyFromSanSnapshot { get; } = new DiskCreateOption(CopyFromSanSnapshotValue);
+
         /// <summary> Determines if two <see cref="DiskCreateOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiskCreateOption left, DiskCreateOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DiskCreateOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiskCreateOption left, DiskCreateOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskCreateOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DiskCreateOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DiskCreateOption(string value) => new DiskCreateOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DiskCreateOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DiskCreateOption?(string value) => value == null ? null : new DiskCreateOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiskCreateOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DiskCreateOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

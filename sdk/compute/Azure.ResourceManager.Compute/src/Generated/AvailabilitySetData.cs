@@ -8,119 +8,148 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the AvailabilitySet data model.
-    /// Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates). Currently, a VM can only be added to an availability set at creation time. An existing VM cannot be added to an availability set.
-    /// </summary>
+    /// <summary> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates). Currently, a VM can only be added to an availability set at creation time. An existing VM cannot be added to an availability set. </summary>
     public partial class AvailabilitySetData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AvailabilitySetData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public AvailabilitySetData(AzureLocation location) : base(location)
         {
-            VirtualMachines = new ChangeTrackingList<WritableSubResource>();
-            Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailabilitySetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The instance view of a resource. </param>
         /// <param name="sku"> Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'. </param>
-        /// <param name="platformUpdateDomainCount"> Update Domain count. </param>
-        /// <param name="platformFaultDomainCount"> Fault Domain count. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
-        /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
-        /// <param name="statuses"> The resource status information. </param>
-        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
-        /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AvailabilitySetData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AvailabilitySetProperties properties, ComputeCombineSku sku) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
-            PlatformUpdateDomainCount = platformUpdateDomainCount;
-            PlatformFaultDomainCount = platformFaultDomainCount;
-            VirtualMachines = virtualMachines;
-            ProximityPlacementGroup = proximityPlacementGroup;
-            Statuses = statuses;
-            ScheduledEventsPolicy = scheduledEventsPolicy;
-            VirtualMachineScaleSetMigrationInfo = virtualMachineScaleSetMigrationInfo;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AvailabilitySetData"/> for deserialization. </summary>
-        internal AvailabilitySetData()
-        {
-        }
+        /// <summary> The instance view of a resource. </summary>
+        internal AvailabilitySetProperties Properties { get; set; }
 
         /// <summary> Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'. </summary>
-        public ComputeSku Sku { get; set; }
+        public ComputeCombineSku Sku { get; set; }
+
         /// <summary> Update Domain count. </summary>
-        public int? PlatformUpdateDomainCount { get; set; }
-        /// <summary> Fault Domain count. </summary>
-        public int? PlatformFaultDomainCount { get; set; }
-        /// <summary> A list of references to all virtual machines in the availability set. </summary>
-        public IList<WritableSubResource> VirtualMachines { get; }
-        /// <summary> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </summary>
-        internal WritableSubResource ProximityPlacementGroup { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier ProximityPlacementGroupId
+        public int? PlatformUpdateDomainCount
         {
-            get => ProximityPlacementGroup is null ? default : ProximityPlacementGroup.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PlatformUpdateDomainCount;
+            }
             set
             {
-                if (ProximityPlacementGroup is null)
-                    ProximityPlacementGroup = new WritableSubResource();
-                ProximityPlacementGroup.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                Properties.PlatformUpdateDomainCount = value.Value;
+            }
+        }
+
+        /// <summary> Fault Domain count. </summary>
+        public int? PlatformFaultDomainCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlatformFaultDomainCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                Properties.PlatformFaultDomainCount = value.Value;
+            }
+        }
+
+        /// <summary> A list of references to all virtual machines in the availability set. </summary>
+        public IList<SubResource> VirtualMachines
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                return Properties.VirtualMachines;
             }
         }
 
         /// <summary> The resource status information. </summary>
-        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
+        public IReadOnlyList<InstanceViewStatus> Statuses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                return Properties.Statuses;
+            }
+        }
+
         /// <summary> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </summary>
-        public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
+        public ScheduledEventsPolicy ScheduledEventsPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledEventsPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                Properties.ScheduledEventsPolicy = value;
+            }
+        }
+
         /// <summary> Describes the migration properties on the Availability Set. </summary>
-        public VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo { get; }
+        public VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachineScaleSetMigrationInfo;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public string ProximityPlacementGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProximityPlacementGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                Properties.ProximityPlacementGroupId = value;
+            }
+        }
     }
 }

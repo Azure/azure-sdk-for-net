@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class VirtualMachineScaleSetUpdateOSProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetUpdateOSProfile>
+    /// <summary> Describes a virtual machine scale set OS profile. </summary>
+    public partial class VirtualMachineScaleSetUpdateOSProfile : IJsonModel<VirtualMachineScaleSetUpdateOSProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetUpdateOSProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineScaleSetUpdateOSProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualMachineScaleSetUpdateOSProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineScaleSetUpdateOSProfile IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineScaleSetUpdateOSProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData"u8);
@@ -53,21 +93,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("secrets"u8);
                 writer.WriteStartArray();
-                foreach (var item in Secrets)
+                foreach (VaultSecretGroup item in Secrets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +116,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        VirtualMachineScaleSetUpdateOSProfile IJsonModel<VirtualMachineScaleSetUpdateOSProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineScaleSetUpdateOSProfile IJsonModel<VirtualMachineScaleSetUpdateOSProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineScaleSetUpdateOSProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualMachineScaleSetUpdateOSProfile(document.RootElement, options);
         }
 
-        internal static VirtualMachineScaleSetUpdateOSProfile DeserializeVirtualMachineScaleSetUpdateOSProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualMachineScaleSetUpdateOSProfile DeserializeVirtualMachineScaleSetUpdateOSProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,41 +145,40 @@ namespace Azure.ResourceManager.Compute.Models
             WindowsConfiguration windowsConfiguration = default;
             LinuxConfiguration linuxConfiguration = default;
             IList<VaultSecretGroup> secrets = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("customData"u8))
+                if (prop.NameEquals("customData"u8))
                 {
-                    customData = property.Value.GetString();
+                    customData = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("windowsConfiguration"u8))
+                if (prop.NameEquals("windowsConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value, options);
+                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("linuxConfiguration"u8))
+                if (prop.NameEquals("linuxConfiguration"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(property.Value, options);
+                    linuxConfiguration = LinuxConfiguration.DeserializeLinuxConfiguration(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("secrets"u8))
+                if (prop.NameEquals("secrets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VaultSecretGroup> array = new List<VaultSecretGroup>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(VaultSecretGroup.DeserializeVaultSecretGroup(item, options));
                     }
@@ -143,42 +187,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualMachineScaleSetUpdateOSProfile(customData, windowsConfiguration, linuxConfiguration, secrets ?? new ChangeTrackingList<VaultSecretGroup>(), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetUpdateOSProfile(customData, windowsConfiguration, linuxConfiguration, secrets ?? new ChangeTrackingList<VaultSecretGroup>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VirtualMachineScaleSetUpdateOSProfile IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualMachineScaleSetUpdateOSProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetUpdateOSProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VirtualMachineScaleSetUpdateOSProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    internal class DedicatedHostOperationSource : IOperationSource<DedicatedHostResource>
+    /// <summary></summary>
+    internal partial class DedicatedHostOperationSource : IOperationSource<DedicatedHostResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DedicatedHostOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DedicatedHostResource IOperationSource<DedicatedHostResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DedicatedHostData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DedicatedHostData data = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DedicatedHostResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DedicatedHostResource> IOperationSource<DedicatedHostResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DedicatedHostData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
-            return await Task.FromResult(new DedicatedHostResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DedicatedHostData data = DedicatedHostData.DeserializeDedicatedHostData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DedicatedHostResource(_client, data);
         }
     }
 }

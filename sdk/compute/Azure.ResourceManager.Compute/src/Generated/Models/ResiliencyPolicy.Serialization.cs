@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class ResiliencyPolicy : IUtf8JsonSerializable, IJsonModel<ResiliencyPolicy>
+    /// <summary> Describes an resiliency policy - AutomaticZoneRebalancingPolicy, ResilientVMCreationPolicy and/or ResilientVMDeletionPolicy. </summary>
+    public partial class ResiliencyPolicy : IJsonModel<ResiliencyPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResiliencyPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResiliencyPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResiliencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResiliencyPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResiliencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResiliencyPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResiliencyPolicy IPersistableModel<ResiliencyPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResiliencyPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResiliencyPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,21 +69,20 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResiliencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResiliencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(ResilientVmCreationPolicy))
+            if (Optional.IsDefined(ResilientVMCreationPolicy))
             {
                 writer.WritePropertyName("resilientVMCreationPolicy"u8);
-                writer.WriteObjectValue(ResilientVmCreationPolicy, options);
+                writer.WriteObjectValue(ResilientVMCreationPolicy, options);
             }
-            if (Optional.IsDefined(ResilientVmDeletionPolicy))
+            if (Optional.IsDefined(ResilientVMDeletionPolicy))
             {
                 writer.WritePropertyName("resilientVMDeletionPolicy"u8);
-                writer.WriteObjectValue(ResilientVmDeletionPolicy, options);
+                writer.WriteObjectValue(ResilientVMDeletionPolicy, options);
             }
             if (Optional.IsDefined(AutomaticZoneRebalancingPolicy))
             {
@@ -54,15 +94,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("zoneAllocationPolicy"u8);
                 writer.WriteObjectValue(ZoneAllocationPolicy, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,108 +111,80 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        ResiliencyPolicy IJsonModel<ResiliencyPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResiliencyPolicy IJsonModel<ResiliencyPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResiliencyPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResiliencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResiliencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResiliencyPolicy(document.RootElement, options);
         }
 
-        internal static ResiliencyPolicy DeserializeResiliencyPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ResiliencyPolicy DeserializeResiliencyPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResilientVmCreationPolicy resilientVmCreationPolicy = default;
-            ResilientVmDeletionPolicy resilientVmDeletionPolicy = default;
+            ResilientVMCreationPolicy resilientVMCreationPolicy = default;
+            ResilientVMDeletionPolicy resilientVMDeletionPolicy = default;
             AutomaticZoneRebalancingPolicy automaticZoneRebalancingPolicy = default;
             ZoneAllocationPolicy zoneAllocationPolicy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resilientVMCreationPolicy"u8))
+                if (prop.NameEquals("resilientVMCreationPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resilientVmCreationPolicy = ResilientVmCreationPolicy.DeserializeResilientVmCreationPolicy(property.Value, options);
+                    resilientVMCreationPolicy = ResilientVMCreationPolicy.DeserializeResilientVMCreationPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("resilientVMDeletionPolicy"u8))
+                if (prop.NameEquals("resilientVMDeletionPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resilientVmDeletionPolicy = ResilientVmDeletionPolicy.DeserializeResilientVmDeletionPolicy(property.Value, options);
+                    resilientVMDeletionPolicy = ResilientVMDeletionPolicy.DeserializeResilientVMDeletionPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("automaticZoneRebalancingPolicy"u8))
+                if (prop.NameEquals("automaticZoneRebalancingPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    automaticZoneRebalancingPolicy = AutomaticZoneRebalancingPolicy.DeserializeAutomaticZoneRebalancingPolicy(property.Value, options);
+                    automaticZoneRebalancingPolicy = AutomaticZoneRebalancingPolicy.DeserializeAutomaticZoneRebalancingPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("zoneAllocationPolicy"u8))
+                if (prop.NameEquals("zoneAllocationPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    zoneAllocationPolicy = ZoneAllocationPolicy.DeserializeZoneAllocationPolicy(property.Value, options);
+                    zoneAllocationPolicy = ZoneAllocationPolicy.DeserializeZoneAllocationPolicy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ResiliencyPolicy(resilientVmCreationPolicy, resilientVmDeletionPolicy, automaticZoneRebalancingPolicy, zoneAllocationPolicy, serializedAdditionalRawData);
+            return new ResiliencyPolicy(resilientVMCreationPolicy, resilientVMDeletionPolicy, automaticZoneRebalancingPolicy, zoneAllocationPolicy, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ResiliencyPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResiliencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ResiliencyPolicy IPersistableModel<ResiliencyPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResiliencyPolicy>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResiliencyPolicy(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResiliencyPolicy)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ResiliencyPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> The type of key signature. </summary>
     public readonly partial struct UefiKeyType : IEquatable<UefiKeyType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="UefiKeyType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UefiKeyType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string Sha256Value = "sha256";
         private const string X509Value = "x509";
 
-        /// <summary> sha256. </summary>
+        /// <summary> Initializes a new instance of <see cref="UefiKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public UefiKeyType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Sha256. </summary>
         public static UefiKeyType Sha256 { get; } = new UefiKeyType(Sha256Value);
-        /// <summary> x509. </summary>
+
+        /// <summary> Gets the X509. </summary>
         public static UefiKeyType X509 { get; } = new UefiKeyType(X509Value);
+
         /// <summary> Determines if two <see cref="UefiKeyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UefiKeyType left, UefiKeyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UefiKeyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UefiKeyType left, UefiKeyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UefiKeyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UefiKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UefiKeyType(string value) => new UefiKeyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UefiKeyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UefiKeyType?(string value) => value == null ? null : new UefiKeyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UefiKeyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UefiKeyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

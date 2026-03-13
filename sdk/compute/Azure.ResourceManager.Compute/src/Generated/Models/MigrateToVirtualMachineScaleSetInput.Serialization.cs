@@ -8,17 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class MigrateToVirtualMachineScaleSetInput : IUtf8JsonSerializable, IJsonModel<MigrateToVirtualMachineScaleSetInput>
+    /// <summary> Describes the Virtual Machine Scale Set to migrate from Availability Set. </summary>
+    public partial class MigrateToVirtualMachineScaleSetInput : IJsonModel<MigrateToVirtualMachineScaleSetInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateToVirtualMachineScaleSetInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="MigrateToVirtualMachineScaleSetInput"/> for deserialization. </summary>
+        internal MigrateToVirtualMachineScaleSetInput()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MigrateToVirtualMachineScaleSetInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateToVirtualMachineScaleSetInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMigrateToVirtualMachineScaleSetInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateToVirtualMachineScaleSetInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateToVirtualMachineScaleSetInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateToVirtualMachineScaleSetInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MigrateToVirtualMachineScaleSetInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateToVirtualMachineScaleSetInput IPersistableModel<MigrateToVirtualMachineScaleSetInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MigrateToVirtualMachineScaleSetInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="migrateToVirtualMachineScaleSetInput"> The <see cref="MigrateToVirtualMachineScaleSetInput"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MigrateToVirtualMachineScaleSetInput migrateToVirtualMachineScaleSetInput)
+        {
+            if (migrateToVirtualMachineScaleSetInput == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(migrateToVirtualMachineScaleSetInput, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MigrateToVirtualMachineScaleSetInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,23 +88,22 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateToVirtualMachineScaleSetInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateToVirtualMachineScaleSetInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateToVirtualMachineScaleSetInput)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("virtualMachineScaleSetFlexible"u8);
-            ((IJsonModel<WritableSubResource>)VirtualMachineScaleSetFlexible).Write(writer, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WriteObjectValue(VirtualMachineScaleSetFlexible, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -55,74 +112,46 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        MigrateToVirtualMachineScaleSetInput IJsonModel<MigrateToVirtualMachineScaleSetInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MigrateToVirtualMachineScaleSetInput IJsonModel<MigrateToVirtualMachineScaleSetInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MigrateToVirtualMachineScaleSetInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateToVirtualMachineScaleSetInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrateToVirtualMachineScaleSetInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MigrateToVirtualMachineScaleSetInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMigrateToVirtualMachineScaleSetInput(document.RootElement, options);
         }
 
-        internal static MigrateToVirtualMachineScaleSetInput DeserializeMigrateToVirtualMachineScaleSetInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MigrateToVirtualMachineScaleSetInput DeserializeMigrateToVirtualMachineScaleSetInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            WritableSubResource virtualMachineScaleSetFlexible = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            SubResource virtualMachineScaleSetFlexible = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("virtualMachineScaleSetFlexible"u8))
+                if (prop.NameEquals("virtualMachineScaleSetFlexible"u8))
                 {
-                    virtualMachineScaleSetFlexible = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
+                    virtualMachineScaleSetFlexible = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MigrateToVirtualMachineScaleSetInput(virtualMachineScaleSetFlexible, serializedAdditionalRawData);
+            return new MigrateToVirtualMachineScaleSetInput(virtualMachineScaleSetFlexible, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<MigrateToVirtualMachineScaleSetInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateToVirtualMachineScaleSetInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(MigrateToVirtualMachineScaleSetInput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MigrateToVirtualMachineScaleSetInput IPersistableModel<MigrateToVirtualMachineScaleSetInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrateToVirtualMachineScaleSetInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrateToVirtualMachineScaleSetInput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MigrateToVirtualMachineScaleSetInput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MigrateToVirtualMachineScaleSetInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

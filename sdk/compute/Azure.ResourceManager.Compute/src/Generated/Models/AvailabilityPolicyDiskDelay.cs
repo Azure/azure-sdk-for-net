@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeDisk.Models
 {
     /// <summary> Determines on how to handle disks with slow I/O. </summary>
     public readonly partial struct AvailabilityPolicyDiskDelay : IEquatable<AvailabilityPolicyDiskDelay>
     {
         private readonly string _value;
+        /// <summary> Defaults to behavior without av policy specified, which is VM restart upon slow disk io. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Upon a disk io failure or slow response, try detaching then reattaching the disk. </summary>
+        private const string AutomaticReattachValue = "AutomaticReattach";
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityPolicyDiskDelay"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AvailabilityPolicyDiskDelay(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string AutomaticReattachValue = "AutomaticReattach";
+            _value = value;
+        }
 
         /// <summary> Defaults to behavior without av policy specified, which is VM restart upon slow disk io. </summary>
         public static AvailabilityPolicyDiskDelay None { get; } = new AvailabilityPolicyDiskDelay(NoneValue);
+
         /// <summary> Upon a disk io failure or slow response, try detaching then reattaching the disk. </summary>
         public static AvailabilityPolicyDiskDelay AutomaticReattach { get; } = new AvailabilityPolicyDiskDelay(AutomaticReattachValue);
+
         /// <summary> Determines if two <see cref="AvailabilityPolicyDiskDelay"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AvailabilityPolicyDiskDelay left, AvailabilityPolicyDiskDelay right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AvailabilityPolicyDiskDelay"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AvailabilityPolicyDiskDelay left, AvailabilityPolicyDiskDelay right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AvailabilityPolicyDiskDelay"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AvailabilityPolicyDiskDelay"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AvailabilityPolicyDiskDelay(string value) => new AvailabilityPolicyDiskDelay(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AvailabilityPolicyDiskDelay"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AvailabilityPolicyDiskDelay?(string value) => value == null ? null : new AvailabilityPolicyDiskDelay(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AvailabilityPolicyDiskDelay other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AvailabilityPolicyDiskDelay other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

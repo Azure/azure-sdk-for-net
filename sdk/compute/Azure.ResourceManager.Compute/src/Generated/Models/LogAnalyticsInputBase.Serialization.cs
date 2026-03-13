@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class LogAnalyticsInputBase : IUtf8JsonSerializable, IJsonModel<LogAnalyticsInputBase>
+    /// <summary> Api input base class for LogAnalytics Api. </summary>
+    public partial class LogAnalyticsInputBase : IJsonModel<LogAnalyticsInputBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsInputBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="LogAnalyticsInputBase"/> for deserialization. </summary>
+        internal LogAnalyticsInputBase()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LogAnalyticsInputBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsInputBase>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLogAnalyticsInputBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsInputBase>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LogAnalyticsInputBase>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LogAnalyticsInputBase IPersistableModel<LogAnalyticsInputBase>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LogAnalyticsInputBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogAnalyticsInputBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,14 +74,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsInputBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsInputBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("blobContainerSasUri"u8);
-            writer.WriteStringValue(BlobContainerSasUri.AbsoluteUri);
+            writer.WriteStringValue(BlobContainerSasUri);
             writer.WritePropertyName("fromTime"u8);
             writer.WriteStringValue(FromTime, "O");
             writer.WritePropertyName("toTime"u8);
@@ -65,15 +110,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("groupByUserAgent"u8);
                 writer.WriteBooleanValue(GroupByUserAgent.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,27 +127,32 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        LogAnalyticsInputBase IJsonModel<LogAnalyticsInputBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LogAnalyticsInputBase IJsonModel<LogAnalyticsInputBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual LogAnalyticsInputBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsInputBase>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsInputBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLogAnalyticsInputBase(document.RootElement, options);
         }
 
-        internal static LogAnalyticsInputBase DeserializeLogAnalyticsInputBase(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LogAnalyticsInputBase DeserializeLogAnalyticsInputBase(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri blobContainerSasUri = default;
+            string blobContainerSasUri = default;
             DateTimeOffset fromTime = default;
             DateTimeOffset toTime = default;
             bool? groupByThrottlePolicy = default;
@@ -110,76 +160,74 @@ namespace Azure.ResourceManager.Compute.Models
             bool? groupByResourceName = default;
             bool? groupByClientApplicationId = default;
             bool? groupByUserAgent = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("blobContainerSasUri"u8))
+                if (prop.NameEquals("blobContainerSasUri"u8))
                 {
-                    blobContainerSasUri = new Uri(property.Value.GetString());
+                    blobContainerSasUri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fromTime"u8))
+                if (prop.NameEquals("fromTime"u8))
                 {
-                    fromTime = property.Value.GetDateTimeOffset("O");
+                    fromTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("toTime"u8))
+                if (prop.NameEquals("toTime"u8))
                 {
-                    toTime = property.Value.GetDateTimeOffset("O");
+                    toTime = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("groupByThrottlePolicy"u8))
+                if (prop.NameEquals("groupByThrottlePolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupByThrottlePolicy = property.Value.GetBoolean();
+                    groupByThrottlePolicy = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupByOperationName"u8))
+                if (prop.NameEquals("groupByOperationName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupByOperationName = property.Value.GetBoolean();
+                    groupByOperationName = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupByResourceName"u8))
+                if (prop.NameEquals("groupByResourceName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupByResourceName = property.Value.GetBoolean();
+                    groupByResourceName = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupByClientApplicationId"u8))
+                if (prop.NameEquals("groupByClientApplicationId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupByClientApplicationId = property.Value.GetBoolean();
+                    groupByClientApplicationId = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("groupByUserAgent"u8))
+                if (prop.NameEquals("groupByUserAgent"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    groupByUserAgent = property.Value.GetBoolean();
+                    groupByUserAgent = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new LogAnalyticsInputBase(
                 blobContainerSasUri,
                 fromTime,
@@ -189,38 +237,7 @@ namespace Azure.ResourceManager.Compute.Models
                 groupByResourceName,
                 groupByClientApplicationId,
                 groupByUserAgent,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<LogAnalyticsInputBase>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsInputBase>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        LogAnalyticsInputBase IPersistableModel<LogAnalyticsInputBase>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsInputBase>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLogAnalyticsInputBase(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsInputBase)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<LogAnalyticsInputBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

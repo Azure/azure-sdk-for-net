@@ -10,17 +10,82 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    public partial class DedicatedHostGroupData : IUtf8JsonSerializable, IJsonModel<DedicatedHostGroupData>
+    /// <summary> Specifies information about the dedicated host group that the dedicated hosts should be assigned to. Currently, a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot be added to another dedicated host group. </summary>
+    public partial class DedicatedHostGroupData : TrackedResourceData, IJsonModel<DedicatedHostGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHostGroupData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupData"/> for deserialization. </summary>
+        internal DedicatedHostGroupData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDedicatedHostGroupData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHostGroupData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHostGroupData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DedicatedHostGroupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DedicatedHostGroupData IPersistableModel<DedicatedHostGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DedicatedHostGroupData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DedicatedHostGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dedicatedHostGroupData"> The <see cref="DedicatedHostGroupData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DedicatedHostGroupData dedicatedHostGroupData)
+        {
+            if (dedicatedHostGroupData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dedicatedHostGroupData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DedicatedHostGroupData"/> from. </param>
+        internal static DedicatedHostGroupData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDedicatedHostGroupData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DedicatedHostGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,264 +97,169 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DedicatedHostGroupData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
-                foreach (var item in Zones)
+                foreach (string item in Zones)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(PlatformFaultDomainCount))
-            {
-                writer.WritePropertyName("platformFaultDomainCount"u8);
-                writer.WriteNumberValue(PlatformFaultDomainCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DedicatedHosts))
-            {
-                writer.WritePropertyName("hosts"u8);
-                writer.WriteStartArray();
-                foreach (var item in DedicatedHosts)
-                {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
-            {
-                writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
-            }
-            if (Optional.IsDefined(SupportAutomaticPlacement))
-            {
-                writer.WritePropertyName("supportAutomaticPlacement"u8);
-                writer.WriteBooleanValue(SupportAutomaticPlacement.Value);
-            }
-            if (Optional.IsDefined(AdditionalCapabilities))
-            {
-                writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities, options);
-            }
-            writer.WriteEndObject();
         }
 
-        DedicatedHostGroupData IJsonModel<DedicatedHostGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DedicatedHostGroupData IJsonModel<DedicatedHostGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DedicatedHostGroupData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DedicatedHostGroupData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDedicatedHostGroupData(document.RootElement, options);
         }
 
-        internal static DedicatedHostGroupData DeserializeDedicatedHostGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DedicatedHostGroupData DeserializeDedicatedHostGroupData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<string> zones = default;
+            string id = default;
+            string name = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            SystemData systemData = default;
-            int? platformFaultDomainCount = default;
-            IReadOnlyList<SubResource> hosts = default;
-            DedicatedHostGroupInstanceView instanceView = default;
-            bool? supportAutomaticPlacement = default;
-            DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DedicatedHostGroupProperties properties = default;
+            IList<string> zones = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("zones"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    zones = array;
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, ComputeCombineContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
+                    properties = DedicatedHostGroupProperties.DeserializeDedicatedHostGroupProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("zones"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (property0.NameEquals("platformFaultDomainCount"u8))
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            platformFaultDomainCount = property0.Value.GetInt32();
-                            continue;
+                            array.Add(null);
                         }
-                        if (property0.NameEquals("hosts"u8))
+                        else
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SubResource> array = new List<SubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
-                            }
-                            hosts = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("instanceView"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            instanceView = DedicatedHostGroupInstanceView.DeserializeDedicatedHostGroupInstanceView(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("supportAutomaticPlacement"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            supportAutomaticPlacement = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("additionalCapabilities"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            additionalCapabilities = DedicatedHostGroupPropertiesAdditionalCapabilities.DeserializeDedicatedHostGroupPropertiesAdditionalCapabilities(property0.Value, options);
-                            continue;
+                            array.Add(item.GetString());
                         }
                     }
+                    zones = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DedicatedHostGroupData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                zones ?? new ChangeTrackingList<string>(),
-                platformFaultDomainCount,
-                hosts ?? new ChangeTrackingList<SubResource>(),
-                instanceView,
-                supportAutomaticPlacement,
-                additionalCapabilities,
-                serializedAdditionalRawData);
+                properties,
+                zones ?? new ChangeTrackingList<string>());
         }
-
-        BinaryData IPersistableModel<DedicatedHostGroupData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DedicatedHostGroupData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DedicatedHostGroupData IPersistableModel<DedicatedHostGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostGroupData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDedicatedHostGroupData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DedicatedHostGroupData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DedicatedHostGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

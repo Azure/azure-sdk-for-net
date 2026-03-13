@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The current state of the service. </summary>
     public readonly partial struct OrchestrationServiceState : IEquatable<OrchestrationServiceState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="OrchestrationServiceState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OrchestrationServiceState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotRunningValue = "NotRunning";
         private const string RunningValue = "Running";
         private const string SuspendedValue = "Suspended";
 
-        /// <summary> NotRunning. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestrationServiceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public OrchestrationServiceState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotRunning. </summary>
         public static OrchestrationServiceState NotRunning { get; } = new OrchestrationServiceState(NotRunningValue);
-        /// <summary> Running. </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static OrchestrationServiceState Running { get; } = new OrchestrationServiceState(RunningValue);
-        /// <summary> Suspended. </summary>
+
+        /// <summary> Gets the Suspended. </summary>
         public static OrchestrationServiceState Suspended { get; } = new OrchestrationServiceState(SuspendedValue);
+
         /// <summary> Determines if two <see cref="OrchestrationServiceState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OrchestrationServiceState left, OrchestrationServiceState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OrchestrationServiceState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OrchestrationServiceState left, OrchestrationServiceState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OrchestrationServiceState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OrchestrationServiceState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OrchestrationServiceState(string value) => new OrchestrationServiceState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OrchestrationServiceState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OrchestrationServiceState?(string value) => value == null ? null : new OrchestrationServiceState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OrchestrationServiceState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OrchestrationServiceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

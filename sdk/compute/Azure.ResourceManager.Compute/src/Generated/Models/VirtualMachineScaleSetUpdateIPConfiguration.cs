@@ -7,77 +7,156 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile's IP configuration. NOTE: The subnet of a scale set may be modified as long as the original subnet and the new subnet are in the same virtual network. </summary>
-    public partial class VirtualMachineScaleSetUpdateIPConfiguration : ComputeWriteableSubResourceData
+    public partial class VirtualMachineScaleSetUpdateIPConfiguration
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateIPConfiguration"/>. </summary>
         public VirtualMachineScaleSetUpdateIPConfiguration()
         {
-            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
-            ApplicationSecurityGroups = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancerBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancerInboundNatPools = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateIPConfiguration"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The IP configuration name. </param>
-        /// <param name="subnet"> The subnet. </param>
-        /// <param name="primary"> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </param>
-        /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
-        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
-        /// <param name="applicationGatewayBackendAddressPools"> The application gateway backend address pools. </param>
-        /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
-        /// <param name="loadBalancerBackendAddressPools"> The load balancer backend address pools. </param>
-        /// <param name="loadBalancerInboundNatPools"> The load balancer inbound nat pools. </param>
-        internal VirtualMachineScaleSetUpdateIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, WritableSubResource subnet, bool? primary, VirtualMachineScaleSetUpdatePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools) : base(id, serializedAdditionalRawData)
+        /// <param name="properties"> Describes a virtual machine scale set network profile's IP configuration properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetUpdateIPConfiguration(string name, VirtualMachineScaleSetUpdateIPConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Subnet = subnet;
-            Primary = primary;
-            PublicIPAddressConfiguration = publicIPAddressConfiguration;
-            PrivateIPAddressVersion = privateIPAddressVersion;
-            ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
-            ApplicationSecurityGroups = applicationSecurityGroups;
-            LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
-            LoadBalancerInboundNatPools = loadBalancerInboundNatPools;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IP configuration name. </summary>
         public string Name { get; set; }
-        /// <summary> The subnet. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SubnetId
+
+        /// <summary> Describes a virtual machine scale set network profile's IP configuration properties. </summary>
+        internal VirtualMachineScaleSetUpdateIPConfigurationProperties Properties { get; set; }
+
+        /// <summary> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </summary>
+        public bool? Primary
         {
-            get => Subnet is null ? default : Subnet.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
             set
             {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
+                }
+                Properties.Primary = value.Value;
             }
         }
 
-        /// <summary> Specifies the primary IP Configuration in case the network interface has more than one IP Configuration. </summary>
-        public bool? Primary { get; set; }
         /// <summary> The publicIPAddressConfiguration. </summary>
-        public VirtualMachineScaleSetUpdatePublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
+        public VirtualMachineScaleSetUpdatePublicIPAddressConfiguration PublicIPAddressConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddressConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
+                }
+                Properties.PublicIPAddressConfiguration = value;
+            }
+        }
+
         /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </summary>
-        public IPVersion? PrivateIPAddressVersion { get; set; }
+        public IPVersion? PrivateIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
+                }
+                Properties.PrivateIPAddressVersion = value.Value;
+            }
+        }
+
         /// <summary> The application gateway backend address pools. </summary>
-        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; }
+        public IList<SubResource> ApplicationGatewayBackendAddressPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
+                }
+                return Properties.ApplicationGatewayBackendAddressPools;
+            }
+        }
+
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<WritableSubResource> ApplicationSecurityGroups { get; }
+        public IList<SubResource> ApplicationSecurityGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
+                }
+                return Properties.ApplicationSecurityGroups;
+            }
+        }
+
         /// <summary> The load balancer backend address pools. </summary>
-        public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; }
+        public IList<SubResource> LoadBalancerBackendAddressPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
+                }
+                return Properties.LoadBalancerBackendAddressPools;
+            }
+        }
+
         /// <summary> The load balancer inbound nat pools. </summary>
-        public IList<WritableSubResource> LoadBalancerInboundNatPools { get; }
+        public IList<SubResource> LoadBalancerInboundNatPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
+                }
+                return Properties.LoadBalancerInboundNatPools;
+            }
+        }
+
+        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public string SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdateIPConfigurationProperties();
+                }
+                Properties.SubnetId = value;
+            }
+        }
     }
 }

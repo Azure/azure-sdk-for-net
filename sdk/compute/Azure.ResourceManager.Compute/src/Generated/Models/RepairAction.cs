@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Type of repair action (replace, restart, reimage) that will be used for repairing unhealthy virtual machines in the scale set. Default value is replace. </summary>
     public readonly partial struct RepairAction : IEquatable<RepairAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RepairAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RepairAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ReplaceValue = "Replace";
         private const string RestartValue = "Restart";
         private const string ReimageValue = "Reimage";
 
-        /// <summary> Replace. </summary>
+        /// <summary> Initializes a new instance of <see cref="RepairAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RepairAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Replace. </summary>
         public static RepairAction Replace { get; } = new RepairAction(ReplaceValue);
-        /// <summary> Restart. </summary>
+
+        /// <summary> Gets the Restart. </summary>
         public static RepairAction Restart { get; } = new RepairAction(RestartValue);
-        /// <summary> Reimage. </summary>
+
+        /// <summary> Gets the Reimage. </summary>
         public static RepairAction Reimage { get; } = new RepairAction(ReimageValue);
+
         /// <summary> Determines if two <see cref="RepairAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RepairAction left, RepairAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RepairAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RepairAction left, RepairAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RepairAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RepairAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RepairAction(string value) => new RepairAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RepairAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RepairAction?(string value) => value == null ? null : new RepairAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RepairAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RepairAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

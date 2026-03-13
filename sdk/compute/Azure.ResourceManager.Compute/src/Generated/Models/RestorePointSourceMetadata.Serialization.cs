@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class RestorePointSourceMetadata : IUtf8JsonSerializable, IJsonModel<RestorePointSourceMetadata>
+    /// <summary> Describes the properties of the Virtual Machine for which the restore point was created. The properties provided are a subset and the snapshot of the overall Virtual Machine properties captured at the time of the restore point creation. </summary>
+    public partial class RestorePointSourceMetadata : IJsonModel<RestorePointSourceMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorePointSourceMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestorePointSourceMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRestorePointSourceMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RestorePointSourceMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestorePointSourceMetadata IPersistableModel<RestorePointSourceMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RestorePointSourceMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestorePointSourceMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
@@ -44,10 +84,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("storageProfile"u8);
                 writer.WriteObjectValue(StorageProfile, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(OSProfile))
+            if (options.Format != "W" && Optional.IsDefined(OsProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile, options);
+                writer.WriteObjectValue(OsProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DiagnosticsProfile))
             {
@@ -72,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
+                writer.WriteStringValue(Location);
             }
             if (options.Format != "W" && Optional.IsDefined(UserData))
             {
@@ -84,15 +124,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,124 +141,123 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        RestorePointSourceMetadata IJsonModel<RestorePointSourceMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestorePointSourceMetadata IJsonModel<RestorePointSourceMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RestorePointSourceMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRestorePointSourceMetadata(document.RootElement, options);
         }
 
-        internal static RestorePointSourceMetadata DeserializeRestorePointSourceMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RestorePointSourceMetadata DeserializeRestorePointSourceMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             VirtualMachineHardwareProfile hardwareProfile = default;
-            RestorePointSourceVmStorageProfile storageProfile = default;
+            RestorePointSourceVMStorageProfile storageProfile = default;
             VirtualMachineOSProfile osProfile = default;
             DiagnosticsProfile diagnosticsProfile = default;
             string licenseType = default;
             string vmId = default;
             SecurityProfile securityProfile = default;
-            AzureLocation? location = default;
+            string location = default;
             string userData = default;
-            HyperVGeneration? hyperVGeneration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            HyperVGenerationTypes? hyperVGeneration = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("hardwareProfile"u8))
+                if (prop.NameEquals("hardwareProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property.Value, options);
+                    hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("storageProfile"u8))
+                if (prop.NameEquals("storageProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageProfile = RestorePointSourceVmStorageProfile.DeserializeRestorePointSourceVmStorageProfile(property.Value, options);
+                    storageProfile = RestorePointSourceVMStorageProfile.DeserializeRestorePointSourceVMStorageProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("osProfile"u8))
+                if (prop.NameEquals("osProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property.Value, options);
+                    osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("diagnosticsProfile"u8))
+                if (prop.NameEquals("diagnosticsProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property.Value, options);
+                    diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("licenseType"u8))
+                if (prop.NameEquals("licenseType"u8))
                 {
-                    licenseType = property.Value.GetString();
+                    licenseType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmId"u8))
+                if (prop.NameEquals("vmId"u8))
                 {
-                    vmId = property.Value.GetString();
+                    vmId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("securityProfile"u8))
+                if (prop.NameEquals("securityProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securityProfile = SecurityProfile.DeserializeSecurityProfile(property.Value, options);
+                    securityProfile = SecurityProfile.DeserializeSecurityProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    location = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("userData"u8))
+                {
+                    userData = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("hyperVGeneration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("userData"u8))
-                {
-                    userData = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("hyperVGeneration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hyperVGeneration = new HyperVGeneration(property.Value.GetString());
+                    hyperVGeneration = new HyperVGenerationTypes(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RestorePointSourceMetadata(
                 hardwareProfile,
                 storageProfile,
@@ -230,38 +269,7 @@ namespace Azure.ResourceManager.Compute.Models
                 location,
                 userData,
                 hyperVGeneration,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<RestorePointSourceMetadata>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RestorePointSourceMetadata IPersistableModel<RestorePointSourceMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRestorePointSourceMetadata(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RestorePointSourceMetadata)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RestorePointSourceMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

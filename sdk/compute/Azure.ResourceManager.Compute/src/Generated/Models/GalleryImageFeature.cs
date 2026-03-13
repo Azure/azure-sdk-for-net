@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> A feature for gallery image. </summary>
     public partial class GalleryImageFeature
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageFeature"/>. </summary>
         public GalleryImageFeature()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="name"> The name of the gallery image feature. </param>
         /// <param name="value"> The value of the gallery image feature. </param>
         /// <param name="startsAtVersion"> The minimum gallery image version which supports this feature. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageFeature(string name, string value, string startsAtVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryImageFeature(string name, string value, string startsAtVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;
             StartsAtVersion = startsAtVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the gallery image feature. </summary>
         public string Name { get; set; }
+
         /// <summary> The value of the gallery image feature. </summary>
         public string Value { get; set; }
+
         /// <summary> The minimum gallery image version which supports this feature. </summary>
         public string StartsAtVersion { get; set; }
     }

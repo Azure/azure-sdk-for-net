@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeDisk.Models
 {
     /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
     public readonly partial struct DataAccessAuthMode : IEquatable<DataAccessAuthMode>
     {
         private readonly string _value;
+        /// <summary> When export/upload URL is used, the system checks if the user has an identity in Azure Active Directory and has necessary permissions to export/upload the data. Please refer to aka.ms/DisksAzureADAuth. </summary>
+        private const string AzureActiveDirectoryValue = "AzureActiveDirectory";
+        /// <summary> No additional authentication would be performed when accessing export/upload URL. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="DataAccessAuthMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataAccessAuthMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureActiveDirectoryValue = "AzureActiveDirectory";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> When export/upload URL is used, the system checks if the user has an identity in Azure Active Directory and has necessary permissions to export/upload the data. Please refer to aka.ms/DisksAzureADAuth. </summary>
         public static DataAccessAuthMode AzureActiveDirectory { get; } = new DataAccessAuthMode(AzureActiveDirectoryValue);
+
         /// <summary> No additional authentication would be performed when accessing export/upload URL. </summary>
         public static DataAccessAuthMode None { get; } = new DataAccessAuthMode(NoneValue);
+
         /// <summary> Determines if two <see cref="DataAccessAuthMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataAccessAuthMode left, DataAccessAuthMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataAccessAuthMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataAccessAuthMode left, DataAccessAuthMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataAccessAuthMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataAccessAuthMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataAccessAuthMode(string value) => new DataAccessAuthMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataAccessAuthMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataAccessAuthMode?(string value) => value == null ? null : new DataAccessAuthMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataAccessAuthMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataAccessAuthMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

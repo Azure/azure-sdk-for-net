@@ -8,110 +8,152 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the RestorePoint data model.
-    /// Restore Point details.
-    /// </summary>
+    /// <summary> Restore Point details. </summary>
     public partial class RestorePointData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestorePointData"/>. </summary>
         public RestorePointData()
         {
-            ExcludeDisks = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorePointData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="excludeDisks"> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </param>
-        /// <param name="sourceMetadata"> Gets the details of the VM captured at the time of the restore point creation. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the restore point. </param>
-        /// <param name="consistencyMode"> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </param>
-        /// <param name="timeCreated"> Gets the creation time of the restore point. </param>
-        /// <param name="sourceRestorePoint"> Resource Id of the source restore point from which a copy needs to be created. </param>
-        /// <param name="instanceView"> The restore point instance view. </param>
-        /// <param name="instantAccessDurationMinutes"> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, WritableSubResource sourceRestorePoint, RestorePointInstanceView instanceView, int? instantAccessDurationMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The restore point properties. </param>
+        internal RestorePointData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorePointProperties properties) : base(id, name, resourceType, systemData)
         {
-            ExcludeDisks = excludeDisks;
-            SourceMetadata = sourceMetadata;
-            ProvisioningState = provisioningState;
-            ConsistencyMode = consistencyMode;
-            TimeCreated = timeCreated;
-            SourceRestorePoint = sourceRestorePoint;
-            InstanceView = instanceView;
-            InstantAccessDurationMinutes = instantAccessDurationMinutes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The restore point properties. </summary>
+        internal RestorePointProperties Properties { get; set; }
+
         /// <summary> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </summary>
-        public IList<WritableSubResource> ExcludeDisks { get; }
-        /// <summary> Gets the details of the VM captured at the time of the restore point creation. </summary>
-        public RestorePointSourceMetadata SourceMetadata { get; set; }
-        /// <summary> Gets the provisioning state of the restore point. </summary>
-        public string ProvisioningState { get; }
-        /// <summary> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </summary>
-        public ConsistencyModeType? ConsistencyMode { get; set; }
-        /// <summary> Gets the creation time of the restore point. </summary>
-        public DateTimeOffset? TimeCreated { get; set; }
-        /// <summary> Resource Id of the source restore point from which a copy needs to be created. </summary>
-        internal WritableSubResource SourceRestorePoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SourceRestorePointId
+        public IList<ApiEntityReference> ExcludeDisks
         {
-            get => SourceRestorePoint is null ? default : SourceRestorePoint.Id;
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestorePointProperties();
+                }
+                return Properties.ExcludeDisks;
+            }
+        }
+
+        /// <summary> Gets the details of the VM captured at the time of the restore point creation. </summary>
+        public RestorePointSourceMetadata SourceMetadata
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceMetadata;
+            }
             set
             {
-                if (SourceRestorePoint is null)
-                    SourceRestorePoint = new WritableSubResource();
-                SourceRestorePoint.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new RestorePointProperties();
+                }
+                Properties.SourceMetadata = value;
+            }
+        }
+
+        /// <summary> Gets the provisioning state of the restore point. </summary>
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </summary>
+        public ConsistencyModeTypes? ConsistencyMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConsistencyMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestorePointProperties();
+                }
+                Properties.ConsistencyMode = value.Value;
+            }
+        }
+
+        /// <summary> Gets the creation time of the restore point. </summary>
+        public DateTimeOffset? TimeCreated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeCreated;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestorePointProperties();
+                }
+                Properties.TimeCreated = value.Value;
             }
         }
 
         /// <summary> The restore point instance view. </summary>
-        public RestorePointInstanceView InstanceView { get; }
+        public RestorePointInstanceView InstanceView
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceView;
+            }
+        }
+
         /// <summary> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </summary>
-        public int? InstantAccessDurationMinutes { get; set; }
+        public int? InstantAccessDurationMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstantAccessDurationMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestorePointProperties();
+                }
+                Properties.InstantAccessDurationMinutes = value.Value;
+            }
+        }
+
+        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public string SourceRestorePointId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceRestorePointId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RestorePointProperties();
+                }
+                Properties.SourceRestorePointId = value;
+            }
+        }
     }
 }

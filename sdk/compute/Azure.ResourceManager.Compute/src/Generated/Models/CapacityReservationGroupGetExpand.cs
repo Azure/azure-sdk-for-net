@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    /// <summary> The CapacityReservationGroupGetExpand. </summary>
+    /// <summary></summary>
     public readonly partial struct CapacityReservationGroupGetExpand : IEquatable<CapacityReservationGroupGetExpand>
     {
         private readonly string _value;
+        private const string VirtualMachineScaleSetVMsRefValue = "virtualMachineScaleSetVMs/$ref";
+        private const string VirtualMachinesRefValue = "virtualMachines/$ref";
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupGetExpand"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CapacityReservationGroupGetExpand(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string VirtualMachineScaleSetVmsRefValue = "virtualMachineScaleSetVMs/$ref";
-        private const string VirtualMachinesRefValue = "virtualMachines/$ref";
+        /// <summary> Gets the VirtualMachineScaleSetVMsRef. </summary>
+        public static CapacityReservationGroupGetExpand VirtualMachineScaleSetVMsRef { get; } = new CapacityReservationGroupGetExpand(VirtualMachineScaleSetVMsRefValue);
 
-        /// <summary> virtualMachineScaleSetVMs/$ref. </summary>
-        public static CapacityReservationGroupGetExpand VirtualMachineScaleSetVmsRef { get; } = new CapacityReservationGroupGetExpand(VirtualMachineScaleSetVmsRefValue);
-        /// <summary> virtualMachines/$ref. </summary>
+        /// <summary> Gets the VirtualMachinesRef. </summary>
         public static CapacityReservationGroupGetExpand VirtualMachinesRef { get; } = new CapacityReservationGroupGetExpand(VirtualMachinesRefValue);
+
         /// <summary> Determines if two <see cref="CapacityReservationGroupGetExpand"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CapacityReservationGroupGetExpand left, CapacityReservationGroupGetExpand right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CapacityReservationGroupGetExpand"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CapacityReservationGroupGetExpand left, CapacityReservationGroupGetExpand right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityReservationGroupGetExpand"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CapacityReservationGroupGetExpand"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CapacityReservationGroupGetExpand(string value) => new CapacityReservationGroupGetExpand(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CapacityReservationGroupGetExpand"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CapacityReservationGroupGetExpand?(string value) => value == null ? null : new CapacityReservationGroupGetExpand(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CapacityReservationGroupGetExpand other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CapacityReservationGroupGetExpand other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

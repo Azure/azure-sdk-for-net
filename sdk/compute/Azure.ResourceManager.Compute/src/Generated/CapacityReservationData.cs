@@ -8,120 +8,140 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the CapacityReservation data model.
-    /// Specifies information about the capacity reservation.
-    /// </summary>
+    /// <summary> Specifies information about the capacity reservation. </summary>
     public partial class CapacityReservationData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set.  For Block capacity reservations, sku.capacity can only accept values 1, 2, 4, 8, 16, 32, 64. Currently VM Skus with the capability called 'CapacityReservationSupported' set to true are supported. When 'CapacityReservationSupported' is true, the SKU capability also specifies the 'SupportedCapacityReservationTypes', which lists the types of capacity reservations (such as Targeted or Block) that the SKU supports. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
-        public CapacityReservationData(AzureLocation location, ComputeSku sku) : base(location)
+        public CapacityReservationData(AzureLocation location, ComputeCombineSku sku) : base(location)
         {
             Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             Zones = new ChangeTrackingList<string>();
-            VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties of the Capacity reservation. </param>
         /// <param name="sku"> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set.  For Block capacity reservations, sku.capacity can only accept values 1, 2, 4, 8, 16, 32, 64. Currently VM Skus with the capability called 'CapacityReservationSupported' set to true are supported. When 'CapacityReservationSupported' is true, the SKU capability also specifies the 'SupportedCapacityReservationTypes', which lists the types of capacity reservations (such as Targeted or Block) that the SKU supports. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <param name="reservationId"> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </param>
-        /// <param name="platformFaultDomainCount"> Specifies the value of fault domain count that Capacity Reservation supports for requested VM size. **Note:** The fault domain count specified for a resource (like virtual machines scale set) must be less than or equal to this value if it deploys using capacity reservation. Minimum api-version: 2022-08-01. </param>
-        /// <param name="virtualMachinesAssociated"> A list of all virtual machine resource ids that are associated with the capacity reservation. </param>
-        /// <param name="provisioningOn"> The date time when the capacity reservation was last updated. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The Capacity reservation instance view. </param>
-        /// <param name="timeCreated"> Specifies the time at which the Capacity Reservation resource was created. Minimum api-version: 2021-11-01. </param>
-        /// <param name="scheduleProfile"> Defines the schedule for Block-type capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. This property is required and only supported when the capacity reservation group type is 'Block'. The scheduleProfile, start, and end fields are immutable after creation. Minimum API version: 2025-04-01. Please refer to https://aka.ms/blockcapacityreservation for more details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, IList<string> zones, string reservationId, int? platformFaultDomainCount, IReadOnlyList<SubResource> virtualMachinesAssociated, DateTimeOffset? provisioningOn, string provisioningState, CapacityReservationInstanceView instanceView, DateTimeOffset? timeCreated, ScheduleProfile scheduleProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CapacityReservationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CapacityReservationProperties properties, ComputeCombineSku sku, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Sku = sku;
             Zones = zones;
-            ReservationId = reservationId;
-            PlatformFaultDomainCount = platformFaultDomainCount;
-            VirtualMachinesAssociated = virtualMachinesAssociated;
-            ProvisioningOn = provisioningOn;
-            ProvisioningState = provisioningState;
-            InstanceView = instanceView;
-            TimeCreated = timeCreated;
-            ScheduleProfile = scheduleProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapacityReservationData"/> for deserialization. </summary>
-        internal CapacityReservationData()
-        {
-        }
+        /// <summary> Properties of the Capacity reservation. </summary>
+        internal CapacityReservationProperties Properties { get; set; }
 
         /// <summary> SKU of the resource for which capacity needs be reserved. The SKU name and capacity is required to be set.  For Block capacity reservations, sku.capacity can only accept values 1, 2, 4, 8, 16, 32, 64. Currently VM Skus with the capability called 'CapacityReservationSupported' set to true are supported. When 'CapacityReservationSupported' is true, the SKU capability also specifies the 'SupportedCapacityReservationTypes', which lists the types of capacity reservations (such as Targeted or Block) that the SKU supports. Refer to List Microsoft.Compute SKUs in a region (https://docs.microsoft.com/rest/api/compute/resourceskus/list) for supported values. </summary>
-        public ComputeSku Sku { get; set; }
+        public ComputeCombineSku Sku { get; set; }
+
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
+
         /// <summary> A unique id generated and assigned to the capacity reservation by the platform which does not change throughout the lifetime of the resource. </summary>
-        public string ReservationId { get; }
-        /// <summary> Specifies the value of fault domain count that Capacity Reservation supports for requested VM size. **Note:** The fault domain count specified for a resource (like virtual machines scale set) must be less than or equal to this value if it deploys using capacity reservation. Minimum api-version: 2022-08-01. </summary>
-        public int? PlatformFaultDomainCount { get; }
+        public string ReservationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservationId;
+            }
+        }
+
+        /// <summary> Specifies the value of fault domain count that Capacity Reservation supports for requested VM size. <b>Note:</b> The fault domain count specified for a resource (like virtual machines scale set) must be less than or equal to this value if it deploys using capacity reservation. Minimum api-version: 2022-08-01. </summary>
+        public int? PlatformFaultDomainCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlatformFaultDomainCount;
+            }
+        }
+
         /// <summary> A list of all virtual machine resource ids that are associated with the capacity reservation. </summary>
-        public IReadOnlyList<SubResource> VirtualMachinesAssociated { get; }
+        public IReadOnlyList<SubResourceReadOnly> VirtualMachinesAssociated
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationProperties();
+                }
+                return Properties.VirtualMachinesAssociated;
+            }
+        }
+
         /// <summary> The date time when the capacity reservation was last updated. </summary>
-        public DateTimeOffset? ProvisioningOn { get; }
+        public DateTimeOffset? ProvisioningOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningOn;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The Capacity reservation instance view. </summary>
-        public CapacityReservationInstanceView InstanceView { get; }
+        public CapacityReservationInstanceView InstanceView
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceView;
+            }
+        }
+
         /// <summary> Specifies the time at which the Capacity Reservation resource was created. Minimum api-version: 2021-11-01. </summary>
-        public DateTimeOffset? TimeCreated { get; }
+        public DateTimeOffset? TimeCreated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeCreated;
+            }
+        }
+
         /// <summary> Defines the schedule for Block-type capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. This property is required and only supported when the capacity reservation group type is 'Block'. The scheduleProfile, start, and end fields are immutable after creation. Minimum API version: 2025-04-01. Please refer to https://aka.ms/blockcapacityreservation for more details. </summary>
-        public ScheduleProfile ScheduleProfile { get; set; }
+        public ScheduleProfile ScheduleProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduleProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationProperties();
+                }
+                Properties.ScheduleProfile = value;
+            }
+        }
     }
 }

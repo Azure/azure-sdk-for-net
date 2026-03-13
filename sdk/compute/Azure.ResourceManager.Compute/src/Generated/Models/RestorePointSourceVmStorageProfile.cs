@@ -7,68 +7,42 @@
 
 using System;
 using System.Collections.Generic;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes the storage profile. </summary>
-    public partial class RestorePointSourceVmStorageProfile
+    public partial class RestorePointSourceVMStorageProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmStorageProfile"/>. </summary>
-        public RestorePointSourceVmStorageProfile()
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVMStorageProfile"/>. </summary>
+        public RestorePointSourceVMStorageProfile()
         {
-            DataDiskList = new ChangeTrackingList<RestorePointSourceVmDataDisk>();
+            DataDisks = new ChangeTrackingList<RestorePointSourceVMDataDisk>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVmStorageProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointSourceVMStorageProfile"/>. </summary>
         /// <param name="osDisk"> Gets the OS disk of the VM captured at the time of the restore point creation. </param>
-        /// <param name="dataDiskList"> Gets the data disks of the VM captured at the time of the restore point creation. </param>
+        /// <param name="dataDisks"> Gets the data disks of the VM captured at the time of the restore point creation. </param>
         /// <param name="diskControllerType"> Gets the disk controller type of the VM captured at the time of the restore point creation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceVmStorageProfile(RestorePointSourceVmOSDisk osDisk, IList<RestorePointSourceVmDataDisk> dataDiskList, DiskControllerType? diskControllerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointSourceVMStorageProfile(RestorePointSourceVMOSDisk osDisk, IList<RestorePointSourceVMDataDisk> dataDisks, DiskControllerTypes? diskControllerType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OSDisk = osDisk;
-            DataDiskList = dataDiskList;
+            OsDisk = osDisk;
+            DataDisks = dataDisks;
             DiskControllerType = diskControllerType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the OS disk of the VM captured at the time of the restore point creation. </summary>
-        public RestorePointSourceVmOSDisk OSDisk { get; set; }
+        public RestorePointSourceVMOSDisk OsDisk { get; set; }
+
         /// <summary> Gets the data disks of the VM captured at the time of the restore point creation. </summary>
-        public IList<RestorePointSourceVmDataDisk> DataDiskList { get; }
+        public IList<RestorePointSourceVMDataDisk> DataDisks { get; }
+
         /// <summary> Gets the disk controller type of the VM captured at the time of the restore point creation. </summary>
-        public DiskControllerType? DiskControllerType { get; }
+        public DiskControllerTypes? DiskControllerType { get; }
     }
 }

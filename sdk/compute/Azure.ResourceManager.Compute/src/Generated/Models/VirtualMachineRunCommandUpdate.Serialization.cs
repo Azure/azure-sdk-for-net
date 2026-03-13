@@ -10,13 +10,67 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class VirtualMachineRunCommandUpdate : IUtf8JsonSerializable, IJsonModel<VirtualMachineRunCommandUpdate>
+    /// <summary> Describes a Virtual Machine run command. </summary>
+    public partial class VirtualMachineRunCommandUpdate : ComputeResourcePatch, IJsonModel<VirtualMachineRunCommandUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineRunCommandUpdate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ComputeResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualMachineRunCommandUpdate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineRunCommandUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineRunCommandUpdate IPersistableModel<VirtualMachineRunCommandUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualMachineRunCommandUpdate)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualMachineRunCommandUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="virtualMachineRunCommandUpdate"> The <see cref="VirtualMachineRunCommandUpdate"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VirtualMachineRunCommandUpdate virtualMachineRunCommandUpdate)
+        {
+            if (virtualMachineRunCommandUpdate == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(virtualMachineRunCommandUpdate, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineRunCommandUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,341 +82,85 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Source))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source, options);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(Parameters))
-            {
-                writer.WritePropertyName("parameters"u8);
-                writer.WriteStartArray();
-                foreach (var item in Parameters)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(ProtectedParameters))
-            {
-                writer.WritePropertyName("protectedParameters"u8);
-                writer.WriteStartArray();
-                foreach (var item in ProtectedParameters)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(AsyncExecution))
-            {
-                writer.WritePropertyName("asyncExecution"u8);
-                writer.WriteBooleanValue(AsyncExecution.Value);
-            }
-            if (Optional.IsDefined(RunAsUser))
-            {
-                writer.WritePropertyName("runAsUser"u8);
-                writer.WriteStringValue(RunAsUser);
-            }
-            if (Optional.IsDefined(RunAsPassword))
-            {
-                writer.WritePropertyName("runAsPassword"u8);
-                writer.WriteStringValue(RunAsPassword);
-            }
-            if (Optional.IsDefined(TimeoutInSeconds))
-            {
-                writer.WritePropertyName("timeoutInSeconds"u8);
-                writer.WriteNumberValue(TimeoutInSeconds.Value);
-            }
-            if (Optional.IsDefined(OutputBlobUri))
-            {
-                writer.WritePropertyName("outputBlobUri"u8);
-                writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(ErrorBlobUri))
-            {
-                writer.WritePropertyName("errorBlobUri"u8);
-                writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(OutputBlobManagedIdentity))
-            {
-                writer.WritePropertyName("outputBlobManagedIdentity"u8);
-                writer.WriteObjectValue(OutputBlobManagedIdentity, options);
-            }
-            if (Optional.IsDefined(ErrorBlobManagedIdentity))
-            {
-                writer.WritePropertyName("errorBlobManagedIdentity"u8);
-                writer.WriteObjectValue(ErrorBlobManagedIdentity, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
-            {
-                writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
-            }
-            if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
-            {
-                writer.WritePropertyName("treatFailureAsDeploymentFailure"u8);
-                writer.WriteBooleanValue(TreatFailureAsDeploymentFailure.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        VirtualMachineRunCommandUpdate IJsonModel<VirtualMachineRunCommandUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineRunCommandUpdate IJsonModel<VirtualMachineRunCommandUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualMachineRunCommandUpdate)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ComputeResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualMachineRunCommandUpdate(document.RootElement, options);
         }
 
-        internal static VirtualMachineRunCommandUpdate DeserializeVirtualMachineRunCommandUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualMachineRunCommandUpdate DeserializeVirtualMachineRunCommandUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
-            VirtualMachineRunCommandScriptSource source = default;
-            IList<RunCommandInputParameter> parameters = default;
-            IList<RunCommandInputParameter> protectedParameters = default;
-            bool? asyncExecution = default;
-            string runAsUser = default;
-            string runAsPassword = default;
-            int? timeoutInSeconds = default;
-            Uri outputBlobUri = default;
-            Uri errorBlobUri = default;
-            RunCommandManagedIdentity outputBlobManagedIdentity = default;
-            RunCommandManagedIdentity errorBlobManagedIdentity = default;
-            string provisioningState = default;
-            VirtualMachineRunCommandInstanceView instanceView = default;
-            bool? treatFailureAsDeploymentFailure = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            VirtualMachineRunCommandProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("source"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            source = VirtualMachineRunCommandScriptSource.DeserializeVirtualMachineRunCommandScriptSource(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("parameters"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
-                            }
-                            parameters = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("protectedParameters"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item, options));
-                            }
-                            protectedParameters = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("asyncExecution"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            asyncExecution = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("runAsUser"u8))
-                        {
-                            runAsUser = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("runAsPassword"u8))
-                        {
-                            runAsPassword = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("timeoutInSeconds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeoutInSeconds = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("outputBlobUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            outputBlobUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("errorBlobUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            errorBlobUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("outputBlobManagedIdentity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            outputBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("errorBlobManagedIdentity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            errorBlobManagedIdentity = RunCommandManagedIdentity.DeserializeRunCommandManagedIdentity(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("instanceView"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            instanceView = VirtualMachineRunCommandInstanceView.DeserializeVirtualMachineRunCommandInstanceView(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("treatFailureAsDeploymentFailure"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            treatFailureAsDeploymentFailure = property0.Value.GetBoolean();
-                            continue;
-                        }
-                    }
+                    properties = VirtualMachineRunCommandProperties.DeserializeVirtualMachineRunCommandProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualMachineRunCommandUpdate(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                source,
-                parameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
-                protectedParameters ?? new ChangeTrackingList<RunCommandInputParameter>(),
-                asyncExecution,
-                runAsUser,
-                runAsPassword,
-                timeoutInSeconds,
-                outputBlobUri,
-                errorBlobUri,
-                outputBlobManagedIdentity,
-                errorBlobManagedIdentity,
-                provisioningState,
-                instanceView,
-                treatFailureAsDeploymentFailure);
+            return new VirtualMachineRunCommandUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
-
-        BinaryData IPersistableModel<VirtualMachineRunCommandUpdate>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VirtualMachineRunCommandUpdate IPersistableModel<VirtualMachineRunCommandUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualMachineRunCommandUpdate(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VirtualMachineRunCommandUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

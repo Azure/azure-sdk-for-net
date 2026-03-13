@@ -7,47 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> Describes the properties of a gallery script definition. </summary>
     public partial class GalleryScriptProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryScriptProperties"/>. </summary>
-        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </param>
-        public GalleryScriptProperties(SupportedOperatingSystemType supportedOSType)
+        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
+        public GalleryScriptProperties(OperatingSystemTypes supportedOSType)
         {
             SupportedOSType = supportedOSType;
         }
@@ -58,10 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="privacyStatementUri"> The privacy statement uri. </param>
         /// <param name="releaseNoteUri"> The release note uri. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery Script Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </param>
+        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryScriptProperties(string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, SupportedOperatingSystemType supportedOSType, GalleryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryScriptProperties(string description, string eula, string privacyStatementUri, string releaseNoteUri, DateTimeOffset? endOfLifeOn, OperatingSystemTypes supportedOSType, GalleryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Eula = eula;
@@ -70,26 +42,27 @@ namespace Azure.ResourceManager.Compute.Models
             EndOfLifeOn = endOfLifeOn;
             SupportedOSType = supportedOSType;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GalleryScriptProperties"/> for deserialization. </summary>
-        internal GalleryScriptProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The description of this gallery script definition resource. This property is updatable. </summary>
         public string Description { get; set; }
+
         /// <summary> The Eula agreement (End User License Agreement) for the gallery Script Definition. </summary>
         public string Eula { get; set; }
+
         /// <summary> The privacy statement uri. </summary>
-        public Uri PrivacyStatementUri { get; set; }
+        public string PrivacyStatementUri { get; set; }
+
         /// <summary> The release note uri. </summary>
-        public Uri ReleaseNoteUri { get; set; }
+        public string ReleaseNoteUri { get; set; }
+
         /// <summary> The end of life date of the gallery Script Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeOn { get; set; }
-        /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </summary>
-        public SupportedOperatingSystemType SupportedOSType { get; set; }
+
+        /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
+        public OperatingSystemTypes SupportedOSType { get; set; }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public GalleryProvisioningState? ProvisioningState { get; }
     }

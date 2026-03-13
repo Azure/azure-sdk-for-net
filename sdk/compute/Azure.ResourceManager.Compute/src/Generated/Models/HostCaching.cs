@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </summary>
     public enum HostCaching

@@ -8,8 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes the properties of a Run Command. </summary>
     public partial class RunCommandDocument : RunCommandDocumentBase
@@ -21,15 +23,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
         /// <param name="script"> The script to be executed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schema"/>, <paramref name="id"/>, <paramref name="label"/>, <paramref name="description"/> or <paramref name="script"/> is null. </exception>
-        internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IEnumerable<string> script) : base(schema, id, osType, label, description)
+        internal RunCommandDocument(string schema, string id, OperatingSystemTypes osType, string label, string description, IEnumerable<string> script) : base(schema, id, osType, label, description)
         {
-            Argument.AssertNotNull(schema, nameof(schema));
-            Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(label, nameof(label));
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(script, nameof(script));
-
             Script = script.ToList();
             Parameters = new ChangeTrackingList<RunCommandParameterDefinition>();
         }
@@ -40,23 +35,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osType"> The Operating System type. </param>
         /// <param name="label"> The VM run command label. </param>
         /// <param name="description"> The VM run command description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="script"> The script to be executed. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
-        internal RunCommandDocument(string schema, string id, SupportedOperatingSystemType osType, string label, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<string> script, IReadOnlyList<RunCommandParameterDefinition> parameters) : base(schema, id, osType, label, description, serializedAdditionalRawData)
+        internal RunCommandDocument(string schema, string id, OperatingSystemTypes osType, string label, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> script, IList<RunCommandParameterDefinition> parameters) : base(schema, id, osType, label, description, additionalBinaryDataProperties)
         {
             Script = script;
             Parameters = parameters;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunCommandDocument"/> for deserialization. </summary>
-        internal RunCommandDocument()
-        {
-        }
-
         /// <summary> The script to be executed. </summary>
-        public IReadOnlyList<string> Script { get; }
+        public IList<string> Script { get; }
+
         /// <summary> The parameters used by the script. </summary>
-        public IReadOnlyList<RunCommandParameterDefinition> Parameters { get; }
+        public IList<RunCommandParameterDefinition> Parameters { get; }
     }
 }

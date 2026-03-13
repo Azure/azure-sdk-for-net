@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
-    public partial class GalleryApplicationVersionPublishingProfile : IUtf8JsonSerializable, IJsonModel<GalleryApplicationVersionPublishingProfile>
+    /// <summary> The publishing profile of a gallery image version. </summary>
+    public partial class GalleryApplicationVersionPublishingProfile : GalleryArtifactPublishingProfileBase, IJsonModel<GalleryApplicationVersionPublishingProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryApplicationVersionPublishingProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionPublishingProfile"/> for deserialization. </summary>
+        internal GalleryApplicationVersionPublishingProfile()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GalleryArtifactPublishingProfileBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGalleryApplicationVersionPublishingProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GalleryApplicationVersionPublishingProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryApplicationVersionPublishingProfile IPersistableModel<GalleryApplicationVersionPublishingProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => (GalleryApplicationVersionPublishingProfile)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GalleryApplicationVersionPublishingProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GalleryApplicationVersionPublishingProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source, options);
@@ -54,6 +99,11 @@ namespace Azure.ResourceManager.Compute.Models
                 foreach (var item in AdvancedSettings)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -67,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("customActions"u8);
                 writer.WriteStartArray();
-                foreach (var item in CustomActions)
+                foreach (GalleryApplicationCustomAction item in CustomActions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -75,213 +125,223 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        GalleryApplicationVersionPublishingProfile IJsonModel<GalleryApplicationVersionPublishingProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryApplicationVersionPublishingProfile IJsonModel<GalleryApplicationVersionPublishingProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GalleryApplicationVersionPublishingProfile)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override GalleryArtifactPublishingProfileBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGalleryApplicationVersionPublishingProfile(document.RootElement, options);
         }
 
-        internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GalleryApplicationVersionPublishingProfile DeserializeGalleryApplicationVersionPublishingProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            IList<TargetRegion> targetRegions = default;
+            int? replicaCount = default;
+            bool? excludeFromLatest = default;
+            DateTimeOffset? publishedOn = default;
+            DateTimeOffset? endOfLifeOn = default;
+            StorageAccountType? storageAccountType = default;
+            ReplicationMode? replicationMode = default;
+            IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
+            StorageAccountStrategy? storageAccountStrategy = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             UserArtifactSource source = default;
-            UserArtifactManagement manageActions = default;
+            UserArtifactManage manageActions = default;
             UserArtifactSettings settings = default;
             IDictionary<string, string> advancedSettings = default;
             bool? enableHealthCheck = default;
             IList<GalleryApplicationCustomAction> customActions = default;
-            IList<TargetRegion> targetRegions = default;
-            int? replicaCount = default;
-            bool? excludeFromLatest = default;
-            DateTimeOffset? publishedDate = default;
-            DateTimeOffset? endOfLifeDate = default;
-            ImageStorageAccountType? storageAccountType = default;
-            GalleryReplicationMode? replicationMode = default;
-            IList<GalleryTargetExtendedLocation> targetExtendedLocations = default;
-            StorageAccountStrategy? storageAccountStrategy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("source"u8))
+                if (prop.NameEquals("targetRegions"u8))
                 {
-                    source = UserArtifactSource.DeserializeUserArtifactSource(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("manageActions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("settings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("advancedSettings"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    advancedSettings = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("enableHealthCheck"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableHealthCheck = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("customActions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item, options));
-                    }
-                    customActions = array;
-                    continue;
-                }
-                if (property.NameEquals("targetRegions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<TargetRegion> array = new List<TargetRegion>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(TargetRegion.DeserializeTargetRegion(item, options));
                     }
                     targetRegions = array;
                     continue;
                 }
-                if (property.NameEquals("replicaCount"u8))
+                if (prop.NameEquals("replicaCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    replicaCount = property.Value.GetInt32();
+                    replicaCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("excludeFromLatest"u8))
+                if (prop.NameEquals("excludeFromLatest"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    excludeFromLatest = property.Value.GetBoolean();
+                    excludeFromLatest = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("publishedDate"u8))
+                if (prop.NameEquals("publishedDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publishedDate = property.Value.GetDateTimeOffset("O");
+                    publishedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("endOfLifeDate"u8))
+                if (prop.NameEquals("endOfLifeDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endOfLifeDate = property.Value.GetDateTimeOffset("O");
+                    endOfLifeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"u8))
+                if (prop.NameEquals("storageAccountType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountType = new ImageStorageAccountType(property.Value.GetString());
+                    storageAccountType = new StorageAccountType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("replicationMode"u8))
+                if (prop.NameEquals("replicationMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    replicationMode = new GalleryReplicationMode(property.Value.GetString());
+                    replicationMode = new ReplicationMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetExtendedLocations"u8))
+                if (prop.NameEquals("targetExtendedLocations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<GalleryTargetExtendedLocation> array = new List<GalleryTargetExtendedLocation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item, options));
                     }
                     targetExtendedLocations = array;
                     continue;
                 }
-                if (property.NameEquals("storageAccountStrategy"u8))
+                if (prop.NameEquals("storageAccountStrategy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountStrategy = new StorageAccountStrategy(property.Value.GetString());
+                    storageAccountStrategy = new StorageAccountStrategy(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("source"u8))
+                {
+                    source = UserArtifactSource.DeserializeUserArtifactSource(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("manageActions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    manageActions = UserArtifactManage.DeserializeUserArtifactManage(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("settings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("advancedSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    advancedSettings = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("enableHealthCheck"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableHealthCheck = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("customActions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item, options));
+                    }
+                    customActions = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GalleryApplicationVersionPublishingProfile(
                 targetRegions ?? new ChangeTrackingList<TargetRegion>(),
                 replicaCount,
                 excludeFromLatest,
-                publishedDate,
-                endOfLifeDate,
+                publishedOn,
+                endOfLifeOn,
                 storageAccountType,
                 replicationMode,
                 targetExtendedLocations ?? new ChangeTrackingList<GalleryTargetExtendedLocation>(),
                 storageAccountStrategy,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 source,
                 manageActions,
                 settings,
@@ -289,36 +349,5 @@ namespace Azure.ResourceManager.Compute.Models
                 enableHealthCheck,
                 customActions ?? new ChangeTrackingList<GalleryApplicationCustomAction>());
         }
-
-        BinaryData IPersistableModel<GalleryApplicationVersionPublishingProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GalleryApplicationVersionPublishingProfile IPersistableModel<GalleryApplicationVersionPublishingProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPublishingProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGalleryApplicationVersionPublishingProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPublishingProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GalleryApplicationVersionPublishingProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

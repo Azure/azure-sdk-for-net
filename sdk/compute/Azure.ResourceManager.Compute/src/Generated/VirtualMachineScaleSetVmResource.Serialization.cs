@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    public partial class VirtualMachineScaleSetVmResource : IJsonModel<VirtualMachineScaleSetVmData>
+    /// <summary></summary>
+    public partial class VirtualMachineScaleSetVMResource : IJsonModel<VirtualMachineScaleSetVMData>
     {
-        private static VirtualMachineScaleSetVmData s_dataDeserializationInstance;
-        private static VirtualMachineScaleSetVmData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualMachineScaleSetVMData> s_dataDeserializationInstance;
 
-        void IJsonModel<VirtualMachineScaleSetVmData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetVmData>)Data).Write(writer, options);
+        private static IJsonModel<VirtualMachineScaleSetVMData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualMachineScaleSetVMData();
 
-        VirtualMachineScaleSetVmData IJsonModel<VirtualMachineScaleSetVmData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetVmData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<VirtualMachineScaleSetVMData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetVMData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<VirtualMachineScaleSetVmData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualMachineScaleSetVmData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineScaleSetVMData IJsonModel<VirtualMachineScaleSetVMData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        VirtualMachineScaleSetVmData IPersistableModel<VirtualMachineScaleSetVmData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineScaleSetVmData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineScaleSetVMData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualMachineScaleSetVMData>(Data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<VirtualMachineScaleSetVmData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineScaleSetVmData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineScaleSetVMData IPersistableModel<VirtualMachineScaleSetVMData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineScaleSetVMData>(data, options, ComputeCombineContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualMachineScaleSetVMData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

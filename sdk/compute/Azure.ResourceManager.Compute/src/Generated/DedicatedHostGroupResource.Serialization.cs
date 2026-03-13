@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
+    /// <summary></summary>
     public partial class DedicatedHostGroupResource : IJsonModel<DedicatedHostGroupData>
     {
-        private static DedicatedHostGroupData s_dataDeserializationInstance;
-        private static DedicatedHostGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DedicatedHostGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DedicatedHostGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DedicatedHostGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DedicatedHostGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedHostGroupData>)Data).Write(writer, options);
 
-        DedicatedHostGroupData IJsonModel<DedicatedHostGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DedicatedHostGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DedicatedHostGroupData IJsonModel<DedicatedHostGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<DedicatedHostGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DedicatedHostGroupData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DedicatedHostGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DedicatedHostGroupData>(Data, options, ComputeCombineContext.Default);
 
-        DedicatedHostGroupData IPersistableModel<DedicatedHostGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedHostGroupData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DedicatedHostGroupData IPersistableModel<DedicatedHostGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DedicatedHostGroupData>(data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<DedicatedHostGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DedicatedHostGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DedicatedHostGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

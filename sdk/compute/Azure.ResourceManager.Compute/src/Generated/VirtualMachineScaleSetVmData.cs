@@ -8,75 +8,44 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the VirtualMachineScaleSetVm data model.
-    /// Describes a virtual machine scale set virtual machine.
-    /// </summary>
-    public partial class VirtualMachineScaleSetVmData : TrackedResourceData
+    /// <summary> Describes a virtual machine scale set virtual machine. </summary>
+    public partial class VirtualMachineScaleSetVMData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public VirtualMachineScaleSetVmData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public VirtualMachineScaleSetVMData(AzureLocation location) : base(location)
         {
             Resources = new ChangeTrackingList<VirtualMachineExtensionData>();
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Describes the properties of a virtual machine scale set virtual machine. </param>
         /// <param name="instanceId"> The virtual machine instance ID. </param>
         /// <param name="sku"> The virtual machine SKU. </param>
-        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
+        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click <b>Want to deploy programmatically, Get Started -&gt;</b>. Enter any required information and then click <b>Save</b>. </param>
         /// <param name="resources"> The virtual machine child extension resources. </param>
         /// <param name="zones"> The virtual machine zones. </param>
         /// <param name="identity"> The identity of the virtual machine, if configured. </param>
-        /// <param name="etag"> Etag is property returned in Update/Get response of the VMSS VM, so that customer can supply it in the header to ensure optimistic updates. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualMachineScaleSetVmProperties properties, string instanceId, ComputeSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, ManagedServiceIdentity identity, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTag"> Etag is property returned in Update/Get response of the VMSS VM, so that customer can supply it in the header to ensure optimistic updates. </param>
+        internal VirtualMachineScaleSetVMData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineScaleSetVmProperties properties, string instanceId, ComputeCombineSku sku, ComputePlan plan, IReadOnlyList<VirtualMachineExtensionData> resources, IReadOnlyList<string> zones, VirtualMachineIdentity identity, string eTag) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             InstanceId = instanceId;
             Sku = sku;
@@ -84,30 +53,302 @@ namespace Azure.ResourceManager.Compute
             Resources = resources;
             Zones = zones;
             Identity = identity;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmData"/> for deserialization. </summary>
-        internal VirtualMachineScaleSetVmData()
-        {
+            ETag = eTag;
         }
 
         /// <summary> Describes the properties of a virtual machine scale set virtual machine. </summary>
-        public VirtualMachineScaleSetVmProperties Properties { get; set; }
+        internal VirtualMachineScaleSetVmProperties Properties { get; set; }
+
         /// <summary> The virtual machine instance ID. </summary>
         public string InstanceId { get; }
+
         /// <summary> The virtual machine SKU. </summary>
-        public ComputeSku Sku { get; }
-        /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </summary>
+        public ComputeCombineSku Sku { get; }
+
+        /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click <b>Want to deploy programmatically, Get Started -&gt;</b>. Enter any required information and then click <b>Save</b>. </summary>
         public ComputePlan Plan { get; set; }
+
         /// <summary> The virtual machine child extension resources. </summary>
         public IReadOnlyList<VirtualMachineExtensionData> Resources { get; }
+
         /// <summary> The virtual machine zones. </summary>
         public IReadOnlyList<string> Zones { get; }
+
         /// <summary> The identity of the virtual machine, if configured. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        public VirtualMachineIdentity Identity { get; set; }
+
         /// <summary> Etag is property returned in Update/Get response of the VMSS VM, so that customer can supply it in the header to ensure optimistic updates. </summary>
         public string ETag { get; }
+
+        /// <summary> Specifies whether the latest model has been applied to the virtual machine. </summary>
+        public bool? LatestModelApplied
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LatestModelApplied;
+            }
+        }
+
+        /// <summary> Azure VM unique ID. </summary>
+        public string VmId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VmId;
+            }
+        }
+
+        /// <summary> The virtual machine instance view. </summary>
+        public VirtualMachineScaleSetVmInstanceView InstanceView
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceView;
+            }
+        }
+
+        /// <summary> Specifies the hardware settings for the virtual machine. </summary>
+        public VirtualMachineHardwareProfile HardwareProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HardwareProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.HardwareProfile = value;
+            }
+        }
+
+        /// <summary> Specifies the resilient VM deletion status for the virtual machine. </summary>
+        public ResilientVmDeletionStatus? ResilientVMDeletionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResilientVMDeletionStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.ResilientVMDeletionStatus = value.Value;
+            }
+        }
+
+        /// <summary> Specifies the storage settings for the virtual machine disks. </summary>
+        public VirtualMachineStorageProfile StorageProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.StorageProfile = value;
+            }
+        }
+
+        /// <summary> Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </summary>
+        public AdditionalCapabilities AdditionalCapabilities
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdditionalCapabilities;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.AdditionalCapabilities = value;
+            }
+        }
+
+        /// <summary> Specifies the operating system settings for the virtual machine. </summary>
+        public VirtualMachineOSProfile OsProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OsProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.OsProfile = value;
+            }
+        }
+
+        /// <summary> Specifies the Security related profile settings for the virtual machine. </summary>
+        public SecurityProfile SecurityProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.SecurityProfile = value;
+            }
+        }
+
+        /// <summary> Specifies the network interfaces of the virtual machine. </summary>
+        public VirtualMachineNetworkProfile NetworkProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.NetworkProfile = value;
+            }
+        }
+
+        /// <summary> The provisioning state, which only appears in the response. </summary>
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </summary>
+        public string LicenseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LicenseType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.LicenseType = value;
+            }
+        }
+
+        /// <summary> Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine. </summary>
+        public string ModelDefinitionApplied
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ModelDefinitionApplied;
+            }
+        }
+
+        /// <summary> Specifies the protection policy of the virtual machine. </summary>
+        public VirtualMachineScaleSetVmProtectionPolicy ProtectionPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProtectionPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.ProtectionPolicy = value;
+            }
+        }
+
+        /// <summary> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </summary>
+        public string UserData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.UserData = value;
+            }
+        }
+
+        /// <summary> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </summary>
+        public DateTimeOffset? TimeCreated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeCreated;
+            }
+        }
+
+        /// <summary> The list of network configurations. </summary>
+        public IList<VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                return Properties.NetworkInterfaceConfigurations;
+            }
+        }
+
+        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
+        public BootDiagnostics BootDiagnostics
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BootDiagnostics;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.BootDiagnostics = value;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public string AvailabilitySetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AvailabilitySetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetVmProperties();
+                }
+                Properties.AvailabilitySetId = value;
+            }
+        }
     }
 }

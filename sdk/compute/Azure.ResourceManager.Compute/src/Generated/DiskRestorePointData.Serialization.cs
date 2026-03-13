@@ -10,16 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using ComputeDisk.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    public partial class DiskRestorePointData : IUtf8JsonSerializable, IJsonModel<DiskRestorePointData>
+    /// <summary> Properties of disk restore point. </summary>
+    public partial class DiskRestorePointData : ResourceData, IJsonModel<DiskRestorePointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskRestorePointData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDiskRestorePointData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DiskRestorePointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskRestorePointData IPersistableModel<DiskRestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DiskRestorePointData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DiskRestorePointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DiskRestorePointData"/> from. </param>
+        internal static DiskRestorePointData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDiskRestorePointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiskRestorePointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,401 +80,101 @@ namespace Azure.ResourceManager.Compute
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("timeCreated"u8);
-                writer.WriteStringValue(TimeCreated.Value, "O");
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(OSType))
-            {
-                writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OSType.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(HyperVGeneration))
-            {
-                writer.WritePropertyName("hyperVGeneration"u8);
-                writer.WriteStringValue(HyperVGeneration.Value.ToString());
-            }
-            if (Optional.IsDefined(PurchasePlan))
-            {
-                writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan, options);
-            }
-            if (Optional.IsDefined(SupportedCapabilities))
-            {
-                writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(FamilyId))
-            {
-                writer.WritePropertyName("familyId"u8);
-                writer.WriteStringValue(FamilyId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SourceUniqueId))
-            {
-                writer.WritePropertyName("sourceUniqueId"u8);
-                writer.WriteStringValue(SourceUniqueId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Encryption))
-            {
-                writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption, options);
-            }
-            if (Optional.IsDefined(SupportsHibernation))
-            {
-                writer.WritePropertyName("supportsHibernation"u8);
-                writer.WriteBooleanValue(SupportsHibernation.Value);
-            }
-            if (Optional.IsDefined(NetworkAccessPolicy))
-            {
-                writer.WritePropertyName("networkAccessPolicy"u8);
-                writer.WriteStringValue(NetworkAccessPolicy.Value.ToString());
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(DiskAccessId))
-            {
-                writer.WritePropertyName("diskAccessId"u8);
-                writer.WriteStringValue(DiskAccessId);
-            }
-            if (Optional.IsDefined(CompletionPercent))
-            {
-                writer.WritePropertyName("completionPercent"u8);
-                writer.WriteNumberValue(CompletionPercent.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
-            {
-                writer.WritePropertyName("replicationState"u8);
-                writer.WriteStringValue(ReplicationState);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SourceResourceLocation))
-            {
-                writer.WritePropertyName("sourceResourceLocation"u8);
-                writer.WriteStringValue(SourceResourceLocation.Value);
-            }
-            if (Optional.IsDefined(SecurityProfile))
-            {
-                writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LogicalSectorSize))
-            {
-                writer.WritePropertyName("logicalSectorSize"u8);
-                writer.WriteNumberValue(LogicalSectorSize.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        DiskRestorePointData IJsonModel<DiskRestorePointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskRestorePointData IJsonModel<DiskRestorePointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DiskRestorePointData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDiskRestorePointData(document.RootElement, options);
         }
 
-        internal static DiskRestorePointData DeserializeDiskRestorePointData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DiskRestorePointData DeserializeDiskRestorePointData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            DateTimeOffset? timeCreated = default;
-            ResourceIdentifier sourceResourceId = default;
-            SupportedOperatingSystemType? osType = default;
-            HyperVGeneration? hyperVGeneration = default;
-            DiskPurchasePlan purchasePlan = default;
-            SupportedCapabilities supportedCapabilities = default;
-            string familyId = default;
-            string sourceUniqueId = default;
-            DiskEncryption encryption = default;
-            bool? supportsHibernation = default;
-            NetworkAccessPolicy? networkAccessPolicy = default;
-            DiskPublicNetworkAccess? publicNetworkAccess = default;
-            ResourceIdentifier diskAccessId = default;
-            float? completionPercent = default;
-            string replicationState = default;
-            AzureLocation? sourceResourceLocation = default;
-            DiskSecurityProfile securityProfile = default;
-            int? logicalSectorSize = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DiskRestorePointProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeContext.Default);
+                    resourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("systemData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, ComputeCombineContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("timeCreated"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            timeCreated = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("osType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            osType = property0.Value.GetString().ToSupportedOperatingSystemType();
-                            continue;
-                        }
-                        if (property0.NameEquals("hyperVGeneration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            hyperVGeneration = new HyperVGeneration(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("purchasePlan"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            purchasePlan = DiskPurchasePlan.DeserializeDiskPurchasePlan(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("supportedCapabilities"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            supportedCapabilities = SupportedCapabilities.DeserializeSupportedCapabilities(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("familyId"u8))
-                        {
-                            familyId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceUniqueId"u8))
-                        {
-                            sourceUniqueId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("encryption"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryption = DiskEncryption.DeserializeDiskEncryption(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("supportsHibernation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            supportsHibernation = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("networkAccessPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            networkAccessPolicy = new NetworkAccessPolicy(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicNetworkAccess"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            publicNetworkAccess = new DiskPublicNetworkAccess(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("diskAccessId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            diskAccessId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("completionPercent"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            completionPercent = property0.Value.GetSingle();
-                            continue;
-                        }
-                        if (property0.NameEquals("replicationState"u8))
-                        {
-                            replicationState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceResourceLocation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceResourceLocation = new AzureLocation(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("securityProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            securityProfile = DiskSecurityProfile.DeserializeDiskSecurityProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("logicalSectorSize"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            logicalSectorSize = property0.Value.GetInt32();
-                            continue;
-                        }
+                        continue;
                     }
+                    properties = DiskRestorePointProperties.DeserializeDiskRestorePointProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DiskRestorePointData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                timeCreated,
-                sourceResourceId,
-                osType,
-                hyperVGeneration,
-                purchasePlan,
-                supportedCapabilities,
-                familyId,
-                sourceUniqueId,
-                encryption,
-                supportsHibernation,
-                networkAccessPolicy,
-                publicNetworkAccess,
-                diskAccessId,
-                completionPercent,
-                replicationState,
-                sourceResourceLocation,
-                securityProfile,
-                logicalSectorSize,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties,
+                properties);
         }
-
-        BinaryData IPersistableModel<DiskRestorePointData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DiskRestorePointData IPersistableModel<DiskRestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDiskRestorePointData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DiskRestorePointData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DiskRestorePointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

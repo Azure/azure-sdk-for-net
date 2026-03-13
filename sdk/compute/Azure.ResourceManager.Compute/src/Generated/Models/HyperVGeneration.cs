@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Common.Models
 {
-    /// <summary> Specifies the HyperVGeneration Type. </summary>
+    /// <summary> The hypervisor generation of the Virtual Machine. </summary>
     public readonly partial struct HyperVGeneration : IEquatable<HyperVGeneration>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="HyperVGeneration"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public HyperVGeneration(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string V1Value = "V1";
         private const string V2Value = "V2";
 
-        /// <summary> V1. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVGeneration"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public HyperVGeneration(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the V1. </summary>
         public static HyperVGeneration V1 { get; } = new HyperVGeneration(V1Value);
-        /// <summary> V2. </summary>
+
+        /// <summary> Gets the V2. </summary>
         public static HyperVGeneration V2 { get; } = new HyperVGeneration(V2Value);
+
         /// <summary> Determines if two <see cref="HyperVGeneration"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HyperVGeneration left, HyperVGeneration right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HyperVGeneration"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HyperVGeneration left, HyperVGeneration right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HyperVGeneration"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HyperVGeneration"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HyperVGeneration(string value) => new HyperVGeneration(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HyperVGeneration"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HyperVGeneration?(string value) => value == null ? null : new HyperVGeneration(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HyperVGeneration other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HyperVGeneration other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

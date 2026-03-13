@@ -7,10 +7,11 @@
 
 using System;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     internal static partial class RollingUpgradeActionTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this RollingUpgradeActionType value) => value switch
         {
             RollingUpgradeActionType.Start => "Start",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RollingUpgradeActionType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static RollingUpgradeActionType ToRollingUpgradeActionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Start")) return RollingUpgradeActionType.Start;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancel")) return RollingUpgradeActionType.Cancel;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Start"))
+            {
+                return RollingUpgradeActionType.Start;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancel"))
+            {
+                return RollingUpgradeActionType.Cancel;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RollingUpgradeActionType value.");
         }
     }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> This is the safety profile of the Gallery Image Version. </summary>
     public partial class GalleryImageVersionSafetyProfile : GalleryArtifactSafetyProfileBase
@@ -16,27 +17,29 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionSafetyProfile"/>. </summary>
         public GalleryImageVersionSafetyProfile()
         {
-            PolicyViolations = new ChangeTrackingList<GalleryImageVersionPolicyViolation>();
+            PolicyViolations = new ChangeTrackingList<PolicyViolation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionSafetyProfile"/>. </summary>
         /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="isReportedForPolicyViolation"> Indicates whether this image has been reported as violating Microsoft's policies. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="reportedForPolicyViolation"> Indicates whether this image has been reported as violating Microsoft's policies. </param>
         /// <param name="policyViolations"> A list of Policy Violations that have been reported for this Gallery Image Version. </param>
-        /// <param name="isBlockedDeletionBeforeEndOfLife"> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </param>
-        internal GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isReportedForPolicyViolation, IReadOnlyList<GalleryImageVersionPolicyViolation> policyViolations, bool? isBlockedDeletionBeforeEndOfLife) : base(allowDeletionOfReplicatedLocations, serializedAdditionalRawData)
+        /// <param name="blockDeletionBeforeEndOfLife"> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </param>
+        internal GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool? reportedForPolicyViolation, IReadOnlyList<PolicyViolation> policyViolations, bool? blockDeletionBeforeEndOfLife) : base(allowDeletionOfReplicatedLocations, additionalBinaryDataProperties)
         {
-            IsReportedForPolicyViolation = isReportedForPolicyViolation;
+            ReportedForPolicyViolation = reportedForPolicyViolation;
             PolicyViolations = policyViolations;
-            IsBlockedDeletionBeforeEndOfLife = isBlockedDeletionBeforeEndOfLife;
+            BlockDeletionBeforeEndOfLife = blockDeletionBeforeEndOfLife;
         }
 
         /// <summary> Indicates whether this image has been reported as violating Microsoft's policies. </summary>
-        public bool? IsReportedForPolicyViolation { get; }
+        public bool? ReportedForPolicyViolation { get; }
+
         /// <summary> A list of Policy Violations that have been reported for this Gallery Image Version. </summary>
-        public IReadOnlyList<GalleryImageVersionPolicyViolation> PolicyViolations { get; }
+        public IReadOnlyList<PolicyViolation> PolicyViolations { get; }
+
         /// <summary> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </summary>
-        public bool? IsBlockedDeletionBeforeEndOfLife { get; set; }
+        public bool? BlockDeletionBeforeEndOfLife { get; set; }
     }
 }

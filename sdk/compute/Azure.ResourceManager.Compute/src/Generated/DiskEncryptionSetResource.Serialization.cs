@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
+    /// <summary></summary>
     public partial class DiskEncryptionSetResource : IJsonModel<DiskEncryptionSetData>
     {
-        private static DiskEncryptionSetData s_dataDeserializationInstance;
-        private static DiskEncryptionSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DiskEncryptionSetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DiskEncryptionSetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DiskEncryptionSetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiskEncryptionSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiskEncryptionSetData>)Data).Write(writer, options);
 
-        DiskEncryptionSetData IJsonModel<DiskEncryptionSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskEncryptionSetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskEncryptionSetData IJsonModel<DiskEncryptionSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiskEncryptionSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskEncryptionSetData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DiskEncryptionSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskEncryptionSetData>(Data, options, ComputeCombineContext.Default);
 
-        DiskEncryptionSetData IPersistableModel<DiskEncryptionSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskEncryptionSetData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskEncryptionSetData IPersistableModel<DiskEncryptionSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskEncryptionSetData>(data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<DiskEncryptionSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskEncryptionSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DiskEncryptionSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

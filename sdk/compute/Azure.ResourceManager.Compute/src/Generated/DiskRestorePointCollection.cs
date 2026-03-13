@@ -8,14 +8,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using ComputeDisk;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
     /// <summary>
     /// A class representing a collection of <see cref="DiskRestorePointResource"/> and their operations.
@@ -24,69 +26,75 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class DiskRestorePointCollection : ArmCollection, IEnumerable<DiskRestorePointResource>, IAsyncEnumerable<DiskRestorePointResource>
     {
-        private readonly ClientDiagnostics _diskRestorePointClientDiagnostics;
-        private readonly DiskRestorePointRestOperations _diskRestorePointRestClient;
+        private readonly ClientDiagnostics _diskRestorePointsClientDiagnostics;
+        private readonly DiskRestorePoints _diskRestorePointsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DiskRestorePointCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DiskRestorePointCollection for mocking. </summary>
         protected DiskRestorePointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiskRestorePointCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiskRestorePointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _diskRestorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", DiskRestorePointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(DiskRestorePointResource.ResourceType, out string diskRestorePointApiVersion);
-            _diskRestorePointRestClient = new DiskRestorePointRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diskRestorePointApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _diskRestorePointsClientDiagnostics = new ClientDiagnostics("ComputeCombine", DiskRestorePointResource.ResourceType.Namespace, Diagnostics);
+            _diskRestorePointsRestClient = new DiskRestorePoints(_diskRestorePointsClientDiagnostics, Pipeline, Endpoint, diskRestorePointApiVersion ?? "2025-01-02");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != RestorePointResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RestorePointResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RestorePointResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get disk restorePoint resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<DiskRestorePointResource>> GetAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.Get");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _diskRestorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiskRestorePointData> response = Response.FromValue(DiskRestorePointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiskRestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +108,42 @@ namespace Azure.ResourceManager.Compute
         /// Get disk restorePoint resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<DiskRestorePointResource> Get(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.Get");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointCollection.Get");
             scope.Start();
             try
             {
-                var response = _diskRestorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiskRestorePointData> response = Response.FromValue(DiskRestorePointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiskRestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +157,50 @@ namespace Azure.ResourceManager.Compute
         /// Lists diskRestorePoints under a vmRestorePoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_ListByRestorePoint</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_ListByRestorePoint. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskRestorePointResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskRestorePointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskRestorePointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _diskRestorePointRestClient.CreateListByRestorePointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskRestorePointRestClient.CreateListByRestorePointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DiskRestorePointResource(Client, DiskRestorePointData.DeserializeDiskRestorePointData(e)), _diskRestorePointClientDiagnostics, Pipeline, "DiskRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<DiskRestorePointData, DiskRestorePointResource>(new DiskRestorePointsGetByRestorePointAsyncCollectionResultOfT(
+                _diskRestorePointsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new DiskRestorePointResource(Client, data));
         }
 
         /// <summary>
         /// Lists diskRestorePoints under a vmRestorePoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_ListByRestorePoint</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_ListByRestorePoint. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +208,67 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="DiskRestorePointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskRestorePointResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _diskRestorePointRestClient.CreateListByRestorePointRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskRestorePointRestClient.CreateListByRestorePointNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DiskRestorePointResource(Client, DiskRestorePointData.DeserializeDiskRestorePointData(e)), _diskRestorePointClientDiagnostics, Pipeline, "DiskRestorePointCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<DiskRestorePointData, DiskRestorePointResource>(new DiskRestorePointsGetByRestorePointCollectionResultOfT(
+                _diskRestorePointsRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context), data => new DiskRestorePointResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.Exists");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _diskRestorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DiskRestorePointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DiskRestorePointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DiskRestorePointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +282,50 @@ namespace Azure.ResourceManager.Compute
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.Exists");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointCollection.Exists");
             scope.Start();
             try
             {
-                var response = _diskRestorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DiskRestorePointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DiskRestorePointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DiskRestorePointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +339,54 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<DiskRestorePointResource>> GetIfExistsAsync(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _diskRestorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DiskRestorePointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DiskRestorePointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DiskRestorePointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DiskRestorePointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiskRestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +400,54 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskRestorePointName"> The name of the DiskRestorePoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="diskRestorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<DiskRestorePointResource> GetIfExists(string diskRestorePointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _diskRestorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, diskRestorePointName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DiskRestorePointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DiskRestorePointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DiskRestorePointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DiskRestorePointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiskRestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +467,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<DiskRestorePointResource> IAsyncEnumerable<DiskRestorePointResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

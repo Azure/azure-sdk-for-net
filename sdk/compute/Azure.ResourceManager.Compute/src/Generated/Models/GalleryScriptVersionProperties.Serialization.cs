@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
-    public partial class GalleryScriptVersionProperties : IUtf8JsonSerializable, IJsonModel<GalleryScriptVersionProperties>
+    /// <summary> Describes the properties of a gallery script version. </summary>
+    public partial class GalleryScriptVersionProperties : IJsonModel<GalleryScriptVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryScriptVersionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="GalleryScriptVersionProperties"/> for deserialization. </summary>
+        internal GalleryScriptVersionProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GalleryScriptVersionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryScriptVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGalleryScriptVersionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GalleryScriptVersionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryScriptVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GalleryScriptVersionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GalleryScriptVersionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryScriptVersionProperties IPersistableModel<GalleryScriptVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GalleryScriptVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GalleryScriptVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryScriptVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryScriptVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GalleryScriptVersionProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("publishingProfile"u8);
             writer.WriteObjectValue(PublishingProfile, options);
             if (Optional.IsDefined(SafetyProfile))
@@ -51,15 +96,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("replicationStatus"u8);
                 writer.WriteObjectValue(ReplicationStatus, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -68,22 +113,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        GalleryScriptVersionProperties IJsonModel<GalleryScriptVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryScriptVersionProperties IJsonModel<GalleryScriptVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GalleryScriptVersionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryScriptVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GalleryScriptVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GalleryScriptVersionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGalleryScriptVersionProperties(document.RootElement, options);
         }
 
-        internal static GalleryScriptVersionProperties DeserializeGalleryScriptVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GalleryScriptVersionProperties DeserializeGalleryScriptVersionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -92,80 +142,47 @@ namespace Azure.ResourceManager.Compute.Models
             GalleryScriptVersionSafetyProfile safetyProfile = default;
             GalleryProvisioningState? provisioningState = default;
             ReplicationStatus replicationStatus = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("publishingProfile"u8))
+                if (prop.NameEquals("publishingProfile"u8))
                 {
-                    publishingProfile = GalleryScriptVersionPublishingProfile.DeserializeGalleryScriptVersionPublishingProfile(property.Value, options);
+                    publishingProfile = GalleryScriptVersionPublishingProfile.DeserializeGalleryScriptVersionPublishingProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("safetyProfile"u8))
+                if (prop.NameEquals("safetyProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    safetyProfile = GalleryScriptVersionSafetyProfile.DeserializeGalleryScriptVersionSafetyProfile(property.Value, options);
+                    safetyProfile = GalleryScriptVersionSafetyProfile.DeserializeGalleryScriptVersionSafetyProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new GalleryProvisioningState(property.Value.GetString());
+                    provisioningState = new GalleryProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("replicationStatus"u8))
+                if (prop.NameEquals("replicationStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property.Value, options);
+                    replicationStatus = ReplicationStatus.DeserializeReplicationStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GalleryScriptVersionProperties(publishingProfile, safetyProfile, provisioningState, replicationStatus, serializedAdditionalRawData);
+            return new GalleryScriptVersionProperties(publishingProfile, safetyProfile, provisioningState, replicationStatus, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<GalleryScriptVersionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryScriptVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GalleryScriptVersionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GalleryScriptVersionProperties IPersistableModel<GalleryScriptVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GalleryScriptVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGalleryScriptVersionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GalleryScriptVersionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GalleryScriptVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

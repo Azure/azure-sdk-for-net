@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
-    /// <summary> The SharedToValue. </summary>
+    /// <summary></summary>
     public readonly partial struct SharedToValue : IEquatable<SharedToValue>
     {
         private readonly string _value;
+        private const string TenantValue = "tenant";
 
         /// <summary> Initializes a new instance of <see cref="SharedToValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SharedToValue(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TenantValue = "tenant";
-
-        /// <summary> tenant. </summary>
+        /// <summary> Gets the Tenant. </summary>
         public static SharedToValue Tenant { get; } = new SharedToValue(TenantValue);
+
         /// <summary> Determines if two <see cref="SharedToValue"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SharedToValue left, SharedToValue right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SharedToValue"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SharedToValue left, SharedToValue right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SharedToValue"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SharedToValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SharedToValue(string value) => new SharedToValue(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SharedToValue"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SharedToValue?(string value) => value == null ? null : new SharedToValue(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SharedToValue other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SharedToValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The configuration parameters used while performing automatic AZ balancing. </summary>
     public partial class AutomaticZoneRebalancingPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomaticZoneRebalancingPolicy"/>. </summary>
         public AutomaticZoneRebalancingPolicy()
@@ -54,20 +25,22 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="enabled"> Specifies whether Automatic AZ Balancing should be enabled on the virtual machine scale set. The default value is false. </param>
         /// <param name="rebalanceStrategy"> Type of rebalance strategy that will be used for rebalancing virtual machines in the scale set across availability zones. Default and only supported value for now is Recreate. </param>
         /// <param name="rebalanceBehavior"> Type of rebalance behavior that will be used for recreating virtual machines in the scale set across availability zones. Default and only supported value for now is CreateBeforeDelete. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomaticZoneRebalancingPolicy(bool? enabled, VmssRebalanceStrategy? rebalanceStrategy, VmssRebalanceBehavior? rebalanceBehavior, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomaticZoneRebalancingPolicy(bool? enabled, RebalanceStrategy? rebalanceStrategy, RebalanceBehavior? rebalanceBehavior, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             RebalanceStrategy = rebalanceStrategy;
             RebalanceBehavior = rebalanceBehavior;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether Automatic AZ Balancing should be enabled on the virtual machine scale set. The default value is false. </summary>
         public bool? Enabled { get; set; }
+
         /// <summary> Type of rebalance strategy that will be used for rebalancing virtual machines in the scale set across availability zones. Default and only supported value for now is Recreate. </summary>
-        public VmssRebalanceStrategy? RebalanceStrategy { get; set; }
+        public RebalanceStrategy? RebalanceStrategy { get; set; }
+
         /// <summary> Type of rebalance behavior that will be used for recreating virtual machines in the scale set across availability zones. Default and only supported value for now is CreateBeforeDelete. </summary>
-        public VmssRebalanceBehavior? RebalanceBehavior { get; set; }
+        public RebalanceBehavior? RebalanceBehavior { get; set; }
     }
 }

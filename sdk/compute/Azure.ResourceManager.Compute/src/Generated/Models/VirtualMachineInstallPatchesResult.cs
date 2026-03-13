@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The result summary of an installation operation. </summary>
     public partial class VirtualMachineInstallPatchesResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstallPatchesResult"/>. </summary>
         internal VirtualMachineInstallPatchesResult()
@@ -64,8 +37,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="patches"> The patches that were installed during the operation. </param>
         /// <param name="startOn"> The UTC timestamp when the operation began. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, IReadOnlyList<PatchInstallationDetail> patches, DateTimeOffset? startOn, ComputeApiError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VMGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, IReadOnlyList<PatchInstallationDetail> patches, DateTimeOffset? startOn, ApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -79,32 +52,43 @@ namespace Azure.ResourceManager.Compute.Models
             Patches = patches;
             StartOn = startOn;
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </summary>
         public PatchOperationStatus? Status { get; }
+
         /// <summary> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </summary>
         public string InstallationActivityId { get; }
+
         /// <summary> The reboot state of the VM following completion of the operation. </summary>
-        public VmGuestPatchRebootStatus? RebootStatus { get; }
+        public VMGuestPatchRebootStatus? RebootStatus { get; }
+
         /// <summary> Whether the operation ran out of time before it completed all its intended actions. </summary>
         public bool? MaintenanceWindowExceeded { get; }
+
         /// <summary> The number of patches that were not installed due to the user blocking their installation. </summary>
         public int? ExcludedPatchCount { get; }
+
         /// <summary> The number of patches that were detected as available for install, but did not meet the operation's criteria. </summary>
         public int? NotSelectedPatchCount { get; }
+
         /// <summary> The number of patches that were identified as meeting the installation criteria, but were not able to be installed. Typically this happens when maintenanceWindowExceeded == true. </summary>
         public int? PendingPatchCount { get; }
+
         /// <summary> The number of patches successfully installed. </summary>
         public int? InstalledPatchCount { get; }
+
         /// <summary> The number of patches that could not be installed due to some issue. See errors for details. </summary>
         public int? FailedPatchCount { get; }
+
         /// <summary> The patches that were installed during the operation. </summary>
         public IReadOnlyList<PatchInstallationDetail> Patches { get; }
+
         /// <summary> The UTC timestamp when the operation began. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
-        public ComputeApiError Error { get; }
+        public ApiError Error { get; }
     }
 }

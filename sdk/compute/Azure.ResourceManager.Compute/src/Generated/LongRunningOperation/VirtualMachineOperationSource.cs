@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    internal class VirtualMachineOperationSource : IOperationSource<VirtualMachineResource>
+    /// <summary></summary>
+    internal partial class VirtualMachineOperationSource : IOperationSource<VirtualMachineResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal VirtualMachineOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         VirtualMachineResource IOperationSource<VirtualMachineResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualMachineData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            VirtualMachineData data = VirtualMachineData.DeserializeVirtualMachineData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new VirtualMachineResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<VirtualMachineResource> IOperationSource<VirtualMachineResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualMachineData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
-            return await Task.FromResult(new VirtualMachineResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            VirtualMachineData data = VirtualMachineData.DeserializeVirtualMachineData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualMachineResource(_client, data);
         }
     }
 }

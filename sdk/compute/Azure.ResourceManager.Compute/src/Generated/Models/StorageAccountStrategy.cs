@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> Specifies the strategy to be used when selecting the storage account type. Cannot be specified along with storageAccountType, but can be overridden per region by specifying targetRegions[].storageAccountType. This property is not updatable. </summary>
     public readonly partial struct StorageAccountStrategy : IEquatable<StorageAccountStrategy>
     {
         private readonly string _value;
+        /// <summary> Choose Standard_ZRS storage if the region supports it, else choose Standard_LRS storage, unless overridden by specifying regional storageAccountType. If no storageAccountStrategy is specified, this is the default strategy (from API version 2025-03-03 onwards). </summary>
+        private const string PreferStandardZRSValue = "PreferStandard_ZRS";
+        /// <summary> Choose Standard_LRS storage unless overridden by specifying regional storageAccountType. </summary>
+        private const string DefaultStandardLRSValue = "DefaultStandard_LRS";
 
         /// <summary> Initializes a new instance of <see cref="StorageAccountStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageAccountStrategy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PreferStandardZrsValue = "PreferStandard_ZRS";
-        private const string DefaultStandardLrsValue = "DefaultStandard_LRS";
-
         /// <summary> Choose Standard_ZRS storage if the region supports it, else choose Standard_LRS storage, unless overridden by specifying regional storageAccountType. If no storageAccountStrategy is specified, this is the default strategy (from API version 2025-03-03 onwards). </summary>
-        public static StorageAccountStrategy PreferStandardZrs { get; } = new StorageAccountStrategy(PreferStandardZrsValue);
+        public static StorageAccountStrategy PreferStandardZRS { get; } = new StorageAccountStrategy(PreferStandardZRSValue);
+
         /// <summary> Choose Standard_LRS storage unless overridden by specifying regional storageAccountType. </summary>
-        public static StorageAccountStrategy DefaultStandardLrs { get; } = new StorageAccountStrategy(DefaultStandardLrsValue);
+        public static StorageAccountStrategy DefaultStandardLRS { get; } = new StorageAccountStrategy(DefaultStandardLRSValue);
+
         /// <summary> Determines if two <see cref="StorageAccountStrategy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageAccountStrategy left, StorageAccountStrategy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageAccountStrategy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageAccountStrategy left, StorageAccountStrategy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageAccountStrategy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageAccountStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageAccountStrategy(string value) => new StorageAccountStrategy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageAccountStrategy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageAccountStrategy?(string value) => value == null ? null : new StorageAccountStrategy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageAccountStrategy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageAccountStrategy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

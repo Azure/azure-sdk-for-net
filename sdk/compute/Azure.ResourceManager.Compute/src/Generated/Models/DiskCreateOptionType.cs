@@ -7,54 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    /// <summary> Specifies how the virtual machine disk should be created. Possible values are **Attach:** This value is used when you are using a specialized disk to create the virtual machine. **FromImage:** This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. **Empty:** This value is used when creating an empty data disk. **Copy:** This value is used to create a data disk from a snapshot or another disk. **Restore:** This value is used to create a data disk from a disk restore point. </summary>
+    /// <summary> Specifies how the virtual machine disk should be created. Possible values are <b>Attach:</b> This value is used when you are using a specialized disk to create the virtual machine. <b>FromImage:</b> This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. <b>Empty:</b> This value is used when creating an empty data disk. <b>Copy:</b> This value is used to create a data disk from a snapshot or another disk. <b>Restore:</b> This value is used to create a data disk from a disk restore point. </summary>
     public readonly partial struct DiskCreateOptionType : IEquatable<DiskCreateOptionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DiskCreateOptionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DiskCreateOptionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string FromImageValue = "FromImage";
         private const string EmptyValue = "Empty";
         private const string AttachValue = "Attach";
         private const string CopyValue = "Copy";
         private const string RestoreValue = "Restore";
 
-        /// <summary> FromImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskCreateOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DiskCreateOptionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the FromImage. </summary>
         public static DiskCreateOptionType FromImage { get; } = new DiskCreateOptionType(FromImageValue);
-        /// <summary> Empty. </summary>
+
+        /// <summary> Gets the Empty. </summary>
         public static DiskCreateOptionType Empty { get; } = new DiskCreateOptionType(EmptyValue);
-        /// <summary> Attach. </summary>
+
+        /// <summary> Gets the Attach. </summary>
         public static DiskCreateOptionType Attach { get; } = new DiskCreateOptionType(AttachValue);
-        /// <summary> Copy. </summary>
+
+        /// <summary> Gets the Copy. </summary>
         public static DiskCreateOptionType Copy { get; } = new DiskCreateOptionType(CopyValue);
-        /// <summary> Restore. </summary>
+
+        /// <summary> Gets the Restore. </summary>
         public static DiskCreateOptionType Restore { get; } = new DiskCreateOptionType(RestoreValue);
+
         /// <summary> Determines if two <see cref="DiskCreateOptionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiskCreateOptionType left, DiskCreateOptionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DiskCreateOptionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiskCreateOptionType left, DiskCreateOptionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskCreateOptionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DiskCreateOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DiskCreateOptionType(string value) => new DiskCreateOptionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DiskCreateOptionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DiskCreateOptionType?(string value) => value == null ? null : new DiskCreateOptionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiskCreateOptionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DiskCreateOptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

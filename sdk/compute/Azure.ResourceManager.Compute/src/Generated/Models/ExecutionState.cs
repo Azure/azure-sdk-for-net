@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Script execution status. </summary>
     public readonly partial struct ExecutionState : IEquatable<ExecutionState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ExecutionState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExecutionState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string PendingValue = "Pending";
         private const string RunningValue = "Running";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.Compute.Models
         private const string TimedOutValue = "TimedOut";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExecutionState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ExecutionState Unknown { get; } = new ExecutionState(UnknownValue);
-        /// <summary> Pending. </summary>
+
+        /// <summary> Gets the Pending. </summary>
         public static ExecutionState Pending { get; } = new ExecutionState(PendingValue);
-        /// <summary> Running. </summary>
+
+        /// <summary> Gets the Running. </summary>
         public static ExecutionState Running { get; } = new ExecutionState(RunningValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static ExecutionState Failed { get; } = new ExecutionState(FailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static ExecutionState Succeeded { get; } = new ExecutionState(SucceededValue);
-        /// <summary> TimedOut. </summary>
+
+        /// <summary> Gets the TimedOut. </summary>
         public static ExecutionState TimedOut { get; } = new ExecutionState(TimedOutValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static ExecutionState Canceled { get; } = new ExecutionState(CanceledValue);
+
         /// <summary> Determines if two <see cref="ExecutionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExecutionState left, ExecutionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExecutionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExecutionState left, ExecutionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExecutionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExecutionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExecutionState(string value) => new ExecutionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExecutionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExecutionState?(string value) => value == null ? null : new ExecutionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExecutionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExecutionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

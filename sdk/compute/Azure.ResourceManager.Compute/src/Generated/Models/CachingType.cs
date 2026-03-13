@@ -5,9 +5,9 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    /// <summary> Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The default values are: **None for Standard storage. ReadOnly for Premium storage**. </summary>
+    /// <summary> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: <b>None for Standard storage. ReadOnly for Premium storage</b>. </summary>
     public enum CachingType
     {
         /// <summary> None. </summary>

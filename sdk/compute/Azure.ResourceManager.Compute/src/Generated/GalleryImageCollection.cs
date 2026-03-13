@@ -8,14 +8,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using ComputeGallery;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
     /// <summary>
     /// A class representing a collection of <see cref="GalleryImageResource"/> and their operations.
@@ -24,51 +26,49 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class GalleryImageCollection : ArmCollection, IEnumerable<GalleryImageResource>, IAsyncEnumerable<GalleryImageResource>
     {
-        private readonly ClientDiagnostics _galleryImageClientDiagnostics;
-        private readonly GalleryImagesRestOperations _galleryImageRestClient;
+        private readonly ClientDiagnostics _galleryImagesClientDiagnostics;
+        private readonly GalleryImages _galleryImagesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="GalleryImageCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of GalleryImageCollection for mocking. </summary>
         protected GalleryImageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="GalleryImageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal GalleryImageCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _galleryImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", GalleryImageResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(GalleryImageResource.ResourceType, out string galleryImageApiVersion);
-            _galleryImageRestClient = new GalleryImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, galleryImageApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _galleryImagesClientDiagnostics = new ClientDiagnostics("ComputeCombine", GalleryImageResource.ResourceType.Namespace, Diagnostics);
+            _galleryImagesRestClient = new GalleryImages(_galleryImagesClientDiagnostics, Pipeline, Endpoint, galleryImageApiVersion ?? "2025-03-03");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != GalleryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, GalleryResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, GalleryResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update a gallery image definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImages_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +76,34 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="data"> Parameters supplied to the create or update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<GalleryImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string galleryImageName, GalleryImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("GalleryImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _galleryImageRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<GalleryImageResource>(new GalleryImageOperationSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, GalleryImageData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeCombineArmOperation<GalleryImageResource> operation = new ComputeCombineArmOperation<GalleryImageResource>(
+                    new GalleryImageOperationSource(Client),
+                    _galleryImagesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +117,16 @@ namespace Azure.ResourceManager.Compute
         /// Create or update a gallery image definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImages_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +134,34 @@ namespace Azure.ResourceManager.Compute
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="data"> Parameters supplied to the create or update gallery image operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<GalleryImageResource> CreateOrUpdate(WaitUntil waitUntil, string galleryImageName, GalleryImageData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("GalleryImageCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _galleryImageRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, data, cancellationToken);
-                var operation = new ComputeArmOperation<GalleryImageResource>(new GalleryImageOperationSource(Client), _galleryImageClientDiagnostics, Pipeline, _galleryImageRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, GalleryImageData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeCombineArmOperation<GalleryImageResource> operation = new ComputeCombineArmOperation<GalleryImageResource>(
+                    new GalleryImageOperationSource(Client),
+                    _galleryImagesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +175,42 @@ namespace Azure.ResourceManager.Compute
         /// Retrieves information about a gallery image definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<GalleryImageResource>> GetAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.Get");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("GalleryImageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _galleryImageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GalleryImageData> response = Response.FromValue(GalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +224,42 @@ namespace Azure.ResourceManager.Compute
         /// Retrieves information about a gallery image definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<GalleryImageResource> Get(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.Get");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("GalleryImageCollection.Get");
             scope.Start();
             try
             {
-                var response = _galleryImageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GalleryImageData> response = Response.FromValue(GalleryImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new GalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +273,44 @@ namespace Azure.ResourceManager.Compute
         /// List gallery image definitions in a gallery.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImages_ListByGallery</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_ListByGallery. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GalleryImageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryImageRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryImageRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryImageResource(Client, GalleryImageData.DeserializeGalleryImageData(e)), _galleryImageClientDiagnostics, Pipeline, "GalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<GalleryImageData, GalleryImageResource>(new GalleryImagesGetByGalleryAsyncCollectionResultOfT(_galleryImagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GalleryImageResource(Client, data));
         }
 
         /// <summary>
         /// List gallery image definitions in a gallery.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImages_ListByGallery</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_ListByGallery. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +318,61 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="GalleryImageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GalleryImageResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryImageRestClient.CreateListByGalleryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryImageRestClient.CreateListByGalleryNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryImageResource(Client, GalleryImageData.DeserializeGalleryImageData(e)), _galleryImageClientDiagnostics, Pipeline, "GalleryImageCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<GalleryImageData, GalleryImageResource>(new GalleryImagesGetByGalleryCollectionResultOfT(_galleryImagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context), data => new GalleryImageResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.Exists");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("GalleryImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _galleryImageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +386,50 @@ namespace Azure.ResourceManager.Compute
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.Exists");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("GalleryImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _galleryImageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +443,54 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<GalleryImageResource>> GetIfExistsAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.GetIfExists");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("GalleryImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _galleryImageRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<GalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<GalleryImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new GalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +504,54 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/images/{galleryImageName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GalleryImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-03</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="GalleryImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-03. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the gallery image definition to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<GalleryImageResource> GetIfExists(string galleryImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(galleryImageName, nameof(galleryImageName));
 
-            using var scope = _galleryImageClientDiagnostics.CreateScope("GalleryImageCollection.GetIfExists");
+            using DiagnosticScope scope = _galleryImagesClientDiagnostics.CreateScope("GalleryImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _galleryImageRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _galleryImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, galleryImageName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<GalleryImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(GalleryImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((GalleryImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<GalleryImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new GalleryImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +571,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<GalleryImageResource> IAsyncEnumerable<GalleryImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

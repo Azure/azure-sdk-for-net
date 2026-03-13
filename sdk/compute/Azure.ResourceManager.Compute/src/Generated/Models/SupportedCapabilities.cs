@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeDisk.Models
 {
     /// <summary> List of supported capabilities persisted on the disk resource for VM use. </summary>
     public partial class SupportedCapabilities
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SupportedCapabilities"/>. </summary>
         public SupportedCapabilities()
@@ -55,22 +27,25 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="acceleratedNetwork"> True if the image from which the OS disk is created supports accelerated networking. </param>
         /// <param name="architecture"> CPU architecture supported by an OS disk. </param>
         /// <param name="supportedSecurityOption"> Refers to the security capability of the disk supported to create a Trusted launch or Confidential VM. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportedCapabilities(string diskControllerTypes, bool? acceleratedNetwork, ArchitectureType? architecture, SupportedSecurityOption? supportedSecurityOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SupportedCapabilities(string diskControllerTypes, bool? acceleratedNetwork, Architecture? architecture, SupportedSecurityOption? supportedSecurityOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskControllerTypes = diskControllerTypes;
             AcceleratedNetwork = acceleratedNetwork;
             Architecture = architecture;
             SupportedSecurityOption = supportedSecurityOption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The disk controllers that an OS disk supports. If set it can be SCSI or SCSI, NVME or NVME, SCSI. </summary>
         public string DiskControllerTypes { get; set; }
+
         /// <summary> True if the image from which the OS disk is created supports accelerated networking. </summary>
         public bool? AcceleratedNetwork { get; set; }
+
         /// <summary> CPU architecture supported by an OS disk. </summary>
-        public ArchitectureType? Architecture { get; set; }
+        public Architecture? Architecture { get; set; }
+
         /// <summary> Refers to the security capability of the disk supported to create a Trusted launch or Confidential VM. </summary>
         public SupportedSecurityOption? SupportedSecurityOption { get; set; }
     }

@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes the Availability Set properties related to migration to Flexible Virtual Machine Scale Set. </summary>
     public partial class VirtualMachineScaleSetMigrationInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetMigrationInfo"/>. </summary>
         internal VirtualMachineScaleSetMigrationInfo()
@@ -55,22 +25,27 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetMigrationInfo"/>. </summary>
         /// <param name="defaultVirtualMachineScaleSetInfo"> Indicates the target Virtual Machine ScaleSet properties upon triggering a seamless migration without downtime of the VMs via the ConvertToVirtualMachineScaleSet API. </param>
         /// <param name="migrateToVirtualMachineScaleSet"> Specifies the Virtual Machine Scale Set that the Availability Set is migrated to. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetMigrationInfo(DefaultVirtualMachineScaleSetInfo defaultVirtualMachineScaleSetInfo, WritableSubResource migrateToVirtualMachineScaleSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetMigrationInfo(DefaultVirtualMachineScaleSetInfo defaultVirtualMachineScaleSetInfo, SubResource migrateToVirtualMachineScaleSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DefaultVirtualMachineScaleSetInfo = defaultVirtualMachineScaleSetInfo;
             MigrateToVirtualMachineScaleSet = migrateToVirtualMachineScaleSet;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates the target Virtual Machine ScaleSet properties upon triggering a seamless migration without downtime of the VMs via the ConvertToVirtualMachineScaleSet API. </summary>
         public DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo { get; }
+
         /// <summary> Specifies the Virtual Machine Scale Set that the Availability Set is migrated to. </summary>
-        internal WritableSubResource MigrateToVirtualMachineScaleSet { get; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier MigrateToVirtualMachineScaleSetId
+        internal SubResource MigrateToVirtualMachineScaleSet { get; }
+
+        /// <summary> Resource Id. </summary>
+        public string MigrateToVirtualMachineScaleSetId
         {
-            get => MigrateToVirtualMachineScaleSet?.Id;
+            get
+            {
+                return MigrateToVirtualMachineScaleSet.Id;
+            }
         }
     }
 }

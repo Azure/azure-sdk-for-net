@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Specifies information about the availability set that the virtual machine should be assigned to. Only tags may be updated. </summary>
     public partial class AvailabilitySetPatch : ComputeResourcePatch
@@ -18,60 +17,126 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="AvailabilitySetPatch"/>. </summary>
         public AvailabilitySetPatch()
         {
-            VirtualMachines = new ChangeTrackingList<WritableSubResource>();
-            Statuses = new ChangeTrackingList<InstanceViewStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailabilitySetPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The instance view of a resource. </param>
         /// <param name="sku"> Sku of the availability set. </param>
-        /// <param name="platformUpdateDomainCount"> Update Domain count. </param>
-        /// <param name="platformFaultDomainCount"> Fault Domain count. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
-        /// <param name="proximityPlacementGroup"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
-        /// <param name="statuses"> The resource status information. </param>
-        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
-        /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
-        internal AvailabilitySetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IList<WritableSubResource> virtualMachines, WritableSubResource proximityPlacementGroup, IReadOnlyList<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo) : base(tags, serializedAdditionalRawData)
+        internal AvailabilitySetPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, AvailabilitySetProperties properties, ComputeCombineSku sku) : base(tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Sku = sku;
-            PlatformUpdateDomainCount = platformUpdateDomainCount;
-            PlatformFaultDomainCount = platformFaultDomainCount;
-            VirtualMachines = virtualMachines;
-            ProximityPlacementGroup = proximityPlacementGroup;
-            Statuses = statuses;
-            ScheduledEventsPolicy = scheduledEventsPolicy;
-            VirtualMachineScaleSetMigrationInfo = virtualMachineScaleSetMigrationInfo;
         }
 
+        /// <summary> The instance view of a resource. </summary>
+        internal AvailabilitySetProperties Properties { get; set; }
+
         /// <summary> Sku of the availability set. </summary>
-        public ComputeSku Sku { get; set; }
+        public ComputeCombineSku Sku { get; set; }
+
         /// <summary> Update Domain count. </summary>
-        public int? PlatformUpdateDomainCount { get; set; }
-        /// <summary> Fault Domain count. </summary>
-        public int? PlatformFaultDomainCount { get; set; }
-        /// <summary> A list of references to all virtual machines in the availability set. </summary>
-        public IList<WritableSubResource> VirtualMachines { get; }
-        /// <summary> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </summary>
-        internal WritableSubResource ProximityPlacementGroup { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier ProximityPlacementGroupId
+        public int? PlatformUpdateDomainCount
         {
-            get => ProximityPlacementGroup is null ? default : ProximityPlacementGroup.Id;
+            get
+            {
+                return Properties is null ? default : Properties.PlatformUpdateDomainCount;
+            }
             set
             {
-                if (ProximityPlacementGroup is null)
-                    ProximityPlacementGroup = new WritableSubResource();
-                ProximityPlacementGroup.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                Properties.PlatformUpdateDomainCount = value.Value;
+            }
+        }
+
+        /// <summary> Fault Domain count. </summary>
+        public int? PlatformFaultDomainCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlatformFaultDomainCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                Properties.PlatformFaultDomainCount = value.Value;
+            }
+        }
+
+        /// <summary> A list of references to all virtual machines in the availability set. </summary>
+        public IList<SubResource> VirtualMachines
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                return Properties.VirtualMachines;
             }
         }
 
         /// <summary> The resource status information. </summary>
-        public IReadOnlyList<InstanceViewStatus> Statuses { get; }
+        public IReadOnlyList<InstanceViewStatus> Statuses
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                return Properties.Statuses;
+            }
+        }
+
         /// <summary> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </summary>
-        public ScheduledEventsPolicy ScheduledEventsPolicy { get; set; }
+        public ScheduledEventsPolicy ScheduledEventsPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledEventsPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                Properties.ScheduledEventsPolicy = value;
+            }
+        }
+
         /// <summary> Describes the migration properties on the Availability Set. </summary>
-        public VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo { get; }
+        public VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualMachineScaleSetMigrationInfo;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public string ProximityPlacementGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProximityPlacementGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AvailabilitySetProperties();
+                }
+                Properties.ProximityPlacementGroupId = value;
+            }
+        }
     }
 }

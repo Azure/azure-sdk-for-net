@@ -7,10 +7,11 @@
 
 using System;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     internal static partial class UpgradeOperationInvokerExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this UpgradeOperationInvoker value) => value switch
         {
             UpgradeOperationInvoker.Unknown => "Unknown",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UpgradeOperationInvoker value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static UpgradeOperationInvoker ToUpgradeOperationInvoker(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return UpgradeOperationInvoker.Unknown;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "User")) return UpgradeOperationInvoker.User;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Platform")) return UpgradeOperationInvoker.Platform;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown"))
+            {
+                return UpgradeOperationInvoker.Unknown;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "User"))
+            {
+                return UpgradeOperationInvoker.User;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Platform"))
+            {
+                return UpgradeOperationInvoker.Platform;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UpgradeOperationInvoker value.");
         }
     }

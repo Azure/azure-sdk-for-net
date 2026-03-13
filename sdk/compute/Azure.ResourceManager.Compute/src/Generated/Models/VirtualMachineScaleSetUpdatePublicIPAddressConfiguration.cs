@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes a virtual machines scale set IP Configuration's PublicIPAddress configuration. </summary>
     public partial class VirtualMachineScaleSetUpdatePublicIPAddressConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdatePublicIPAddressConfiguration"/>. </summary>
         public VirtualMachineScaleSetUpdatePublicIPAddressConfiguration()
@@ -55,46 +25,92 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdatePublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
+        /// <param name="properties"> Describes a virtual machines scale set IP Configuration's PublicIPAddress configuration. </param>
         /// <param name="tags"> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </param>
-        /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
-        /// <param name="dnsSettings"> The dns settings to be applied on the publicIP addresses . </param>
-        /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
-        /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name, IDictionary<string, string> tags, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, WritableSubResource publicIPPrefix, ComputeDeleteOption? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetUpdatePublicIPAddressConfiguration(string name, VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            Properties = properties;
             Tags = tags;
-            IdleTimeoutInMinutes = idleTimeoutInMinutes;
-            DnsSettings = dnsSettings;
-            PublicIPPrefix = publicIPPrefix;
-            DeleteOption = deleteOption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The publicIP address configuration name. </summary>
         public string Name { get; set; }
+
+        /// <summary> Describes a virtual machines scale set IP Configuration's PublicIPAddress configuration. </summary>
+        internal VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties Properties { get; set; }
+
         /// <summary> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The idle timeout of the public IP address. </summary>
-        public int? IdleTimeoutInMinutes { get; set; }
-        /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
-        public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
-        /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
-        internal WritableSubResource PublicIPPrefix { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PublicIPPrefixId
+        public int? IdleTimeoutInMinutes
         {
-            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            get
+            {
+                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
+            }
             set
             {
-                if (PublicIPPrefix is null)
-                    PublicIPPrefix = new WritableSubResource();
-                PublicIPPrefix.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties();
+                }
+                Properties.IdleTimeoutInMinutes = value.Value;
+            }
+        }
+
+        /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
+        public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties();
+                }
+                Properties.DnsSettings = value;
             }
         }
 
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
-        public ComputeDeleteOption? DeleteOption { get; set; }
+        public DeleteOptions? DeleteOption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeleteOption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties();
+                }
+                Properties.DeleteOption = value.Value;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public string PublicIPPrefixId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPPrefixId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetUpdatePublicIPAddressConfigurationProperties();
+                }
+                Properties.PublicIPPrefixId = value;
+            }
+        }
     }
 }

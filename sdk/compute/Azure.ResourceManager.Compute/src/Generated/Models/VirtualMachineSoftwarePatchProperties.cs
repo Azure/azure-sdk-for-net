@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes the properties of a Virtual Machine software patch. </summary>
     public partial class VirtualMachineSoftwarePatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineSoftwarePatchProperties"/>. </summary>
         internal VirtualMachineSoftwarePatchProperties()
@@ -62,8 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publishedOn"> The UTC timestamp when the repository published this patch. </param>
         /// <param name="lastModifiedOn"> The UTC timestamp of the last update to this patch record. </param>
         /// <param name="assessmentState"> Describes the availability of a given patch. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineSoftwarePatchProperties(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, VmGuestPatchRebootBehavior? rebootBehavior, string activityId, DateTimeOffset? publishedOn, DateTimeOffset? lastModifiedOn, PatchAssessmentState? assessmentState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineSoftwarePatchProperties(string patchId, string name, string version, string kbId, IReadOnlyList<string> classifications, VMGuestPatchRebootBehavior? rebootBehavior, string activityId, DateTimeOffset? publishedOn, DateTimeOffset? lastModifiedOn, PatchAssessmentState? assessmentState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PatchId = patchId;
             Name = name;
@@ -75,27 +47,36 @@ namespace Azure.ResourceManager.Compute.Models
             PublishedOn = publishedOn;
             LastModifiedOn = lastModifiedOn;
             AssessmentState = assessmentState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A unique identifier for the patch. </summary>
         public string PatchId { get; }
+
         /// <summary> The friendly name of the patch. </summary>
         public string Name { get; }
+
         /// <summary> The version number of the patch. This property applies only to Linux patches. </summary>
         public string Version { get; }
+
         /// <summary> The KBID of the patch. Only applies to Windows patches. </summary>
         public string KbId { get; }
+
         /// <summary> The classification(s) of the patch as provided by the patch publisher. </summary>
         public IReadOnlyList<string> Classifications { get; }
+
         /// <summary> Describes the reboot requirements of the patch. </summary>
-        public VmGuestPatchRebootBehavior? RebootBehavior { get; }
+        public VMGuestPatchRebootBehavior? RebootBehavior { get; }
+
         /// <summary> The activity ID of the operation that produced this result. It is used to correlate across CRP and extension logs. </summary>
         public string ActivityId { get; }
+
         /// <summary> The UTC timestamp when the repository published this patch. </summary>
         public DateTimeOffset? PublishedOn { get; }
+
         /// <summary> The UTC timestamp of the last update to this patch record. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
+
         /// <summary> Describes the availability of a given patch. </summary>
         public PatchAssessmentState? AssessmentState { get; }
     }

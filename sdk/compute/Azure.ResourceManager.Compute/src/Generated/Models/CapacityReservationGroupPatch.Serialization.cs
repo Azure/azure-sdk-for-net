@@ -8,17 +8,69 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class CapacityReservationGroupPatch : IUtf8JsonSerializable, IJsonModel<CapacityReservationGroupPatch>
+    /// <summary> Specifies information about the capacity reservation group. Only tags can be updated. </summary>
+    public partial class CapacityReservationGroupPatch : ComputeResourcePatch, IJsonModel<CapacityReservationGroupPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityReservationGroupPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ComputeResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCapacityReservationGroupPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CapacityReservationGroupPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CapacityReservationGroupPatch IPersistableModel<CapacityReservationGroupPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (CapacityReservationGroupPatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CapacityReservationGroupPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="capacityReservationGroupPatch"> The <see cref="CapacityReservationGroupPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CapacityReservationGroupPatch capacityReservationGroupPatch)
+        {
+            if (capacityReservationGroupPatch == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(capacityReservationGroupPatch, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CapacityReservationGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,209 +82,85 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(CapacityReservations))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("capacityReservations"u8);
-                writer.WriteStartArray();
-                foreach (var item in CapacityReservations)
-                {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociated))
-            {
-                writer.WritePropertyName("virtualMachinesAssociated"u8);
-                writer.WriteStartArray();
-                foreach (var item in VirtualMachinesAssociated)
-                {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(InstanceView))
-            {
-                writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView, options);
-            }
-            if (Optional.IsDefined(SharingProfile))
-            {
-                writer.WritePropertyName("sharingProfile"u8);
-                writer.WriteObjectValue(SharingProfile, options);
-            }
-            if (Optional.IsDefined(ReservationType))
-            {
-                writer.WritePropertyName("reservationType"u8);
-                writer.WriteStringValue(ReservationType.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        CapacityReservationGroupPatch IJsonModel<CapacityReservationGroupPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CapacityReservationGroupPatch IJsonModel<CapacityReservationGroupPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CapacityReservationGroupPatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ComputeResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCapacityReservationGroupPatch(document.RootElement, options);
         }
 
-        internal static CapacityReservationGroupPatch DeserializeCapacityReservationGroupPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CapacityReservationGroupPatch DeserializeCapacityReservationGroupPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
-            IReadOnlyList<SubResource> capacityReservations = default;
-            IReadOnlyList<SubResource> virtualMachinesAssociated = default;
-            CapacityReservationGroupInstanceView instanceView = default;
-            ResourceSharingProfile sharingProfile = default;
-            CapacityReservationType? reservationType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            CapacityReservationGroupProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("capacityReservations"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SubResource> array = new List<SubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
-                            }
-                            capacityReservations = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("virtualMachinesAssociated"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SubResource> array = new List<SubResource>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
-                            }
-                            virtualMachinesAssociated = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("instanceView"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            instanceView = CapacityReservationGroupInstanceView.DeserializeCapacityReservationGroupInstanceView(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("sharingProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sharingProfile = ResourceSharingProfile.DeserializeResourceSharingProfile(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("reservationType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reservationType = new CapacityReservationType(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = CapacityReservationGroupProperties.DeserializeCapacityReservationGroupProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CapacityReservationGroupPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                capacityReservations ?? new ChangeTrackingList<SubResource>(),
-                virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
-                instanceView,
-                sharingProfile,
-                reservationType);
+            return new CapacityReservationGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
-
-        BinaryData IPersistableModel<CapacityReservationGroupPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CapacityReservationGroupPatch IPersistableModel<CapacityReservationGroupPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCapacityReservationGroupPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CapacityReservationGroupPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CapacityReservationGroupPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

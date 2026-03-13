@@ -7,21 +7,29 @@
 
 using System;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     internal static partial class VirtualMachineScaleSetSkuScaleTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this VirtualMachineScaleSetSkuScaleType value) => value switch
         {
-            VirtualMachineScaleSetSkuScaleType.None => "None",
             VirtualMachineScaleSetSkuScaleType.Automatic => "Automatic",
+            VirtualMachineScaleSetSkuScaleType.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown VirtualMachineScaleSetSkuScaleType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static VirtualMachineScaleSetSkuScaleType ToVirtualMachineScaleSetSkuScaleType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return VirtualMachineScaleSetSkuScaleType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic")) return VirtualMachineScaleSetSkuScaleType.Automatic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic"))
+            {
+                return VirtualMachineScaleSetSkuScaleType.Automatic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return VirtualMachineScaleSetSkuScaleType.None;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown VirtualMachineScaleSetSkuScaleType value.");
         }
     }

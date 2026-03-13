@@ -6,67 +6,68 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager;
+using Compute;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
     /// <summary>
     /// A class representing a collection of <see cref="RestorePointResource"/> and their operations.
-    /// Each <see cref="RestorePointResource"/> in the collection will belong to the same instance of <see cref="RestorePointGroupResource"/>.
-    /// To get a <see cref="RestorePointCollection"/> instance call the GetRestorePoints method from an instance of <see cref="RestorePointGroupResource"/>.
+    /// Each <see cref="RestorePointResource"/> in the collection will belong to the same instance of <see cref="RestorePointCollectionResource"/>.
+    /// To get a <see cref="RestorePointCollection"/> instance call the GetRestorePoints method from an instance of <see cref="RestorePointCollectionResource"/>.
     /// </summary>
     public partial class RestorePointCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _restorePointClientDiagnostics;
-        private readonly RestorePointsRestOperations _restorePointRestClient;
+        private readonly ClientDiagnostics _restorePointsClientDiagnostics;
+        private readonly RestorePoints _restorePointsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="RestorePointCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RestorePointCollection for mocking. </summary>
         protected RestorePointCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RestorePointCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorePointCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RestorePointCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _restorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", RestorePointResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(RestorePointResource.ResourceType, out string restorePointApiVersion);
-            _restorePointRestClient = new RestorePointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, restorePointApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _restorePointsClientDiagnostics = new ClientDiagnostics("ComputeCombine", RestorePointResource.ResourceType.Namespace, Diagnostics);
+            _restorePointsRestClient = new RestorePoints(_restorePointsClientDiagnostics, Pipeline, Endpoint, restorePointApiVersion ?? "2025-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != RestorePointGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, RestorePointGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != RestorePointCollectionResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, RestorePointCollectionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// The operation to create the restore point. Updating properties of an existing restore point is not allowed
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorePoints_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePoints_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -74,21 +75,34 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="data"> Parameters supplied to the Create restore point operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<RestorePointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string restorePointName, RestorePointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _restorePointsClientDiagnostics.CreateScope("RestorePointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _restorePointRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<RestorePointResource>(new RestorePointOperationSource(Client), _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, RestorePointData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeCombineArmOperation<RestorePointResource> operation = new ComputeCombineArmOperation<RestorePointResource>(
+                    new RestorePointOperationSource(Client),
+                    _restorePointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -102,20 +116,16 @@ namespace Azure.ResourceManager.Compute
         /// The operation to create the restore point. Updating properties of an existing restore point is not allowed
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorePoints_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePoints_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,21 +133,34 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="data"> Parameters supplied to the Create restore point operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<RestorePointResource> CreateOrUpdate(WaitUntil waitUntil, string restorePointName, RestorePointData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _restorePointsClientDiagnostics.CreateScope("RestorePointCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _restorePointRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, data, cancellationToken);
-                var operation = new ComputeArmOperation<RestorePointResource>(new RestorePointOperationSource(Client), _restorePointClientDiagnostics, Pipeline, _restorePointRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _restorePointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, RestorePointData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeCombineArmOperation<RestorePointResource> operation = new ComputeCombineArmOperation<RestorePointResource>(
+                    new RestorePointOperationSource(Client),
+                    _restorePointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -151,39 +174,43 @@ namespace Azure.ResourceManager.Compute
         /// The operation to get the restore point.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorePoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual async Task<Response<RestorePointResource>> GetAsync(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<RestorePointResource>> GetAsync(string restorePointName, RestorePointExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Get");
+            using DiagnosticScope scope = _restorePointsClientDiagnostics.CreateScope("RestorePointCollection.Get");
             scope.Start();
             try
             {
-                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _restorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand?.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RestorePointData> response = Response.FromValue(RestorePointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -197,39 +224,43 @@ namespace Azure.ResourceManager.Compute
         /// The operation to get the restore point.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorePoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual Response<RestorePointResource> Get(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<RestorePointResource> Get(string restorePointName, RestorePointExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Get");
+            using DiagnosticScope scope = _restorePointsClientDiagnostics.CreateScope("RestorePointCollection.Get");
             scope.Start();
             try
             {
-                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _restorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand?.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RestorePointData> response = Response.FromValue(RestorePointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,37 +274,51 @@ namespace Azure.ResourceManager.Compute
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorePoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string restorePointName, RestorePointExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Exists");
+            using DiagnosticScope scope = _restorePointsClientDiagnostics.CreateScope("RestorePointCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _restorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand?.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RestorePointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RestorePointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RestorePointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -287,37 +332,51 @@ namespace Azure.ResourceManager.Compute
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorePoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual Response<bool> Exists(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string restorePointName, RestorePointExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.Exists");
+            using DiagnosticScope scope = _restorePointsClientDiagnostics.CreateScope("RestorePointCollection.Exists");
             scope.Start();
             try
             {
-                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _restorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand?.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RestorePointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RestorePointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RestorePointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -331,39 +390,55 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorePoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual async Task<NullableResponse<RestorePointResource>> GetIfExistsAsync(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<RestorePointResource>> GetIfExistsAsync(string restorePointName, RestorePointExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            using DiagnosticScope scope = _restorePointsClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _restorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _restorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand?.ToString(), context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<RestorePointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RestorePointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RestorePointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RestorePointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -377,39 +452,55 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{restorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>RestorePoints_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> RestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RestorePointResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
-        public virtual NullableResponse<RestorePointResource> GetIfExists(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<RestorePointResource> GetIfExists(string restorePointName, RestorePointExpandOptions? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
 
-            using var scope = _restorePointClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
+            using DiagnosticScope scope = _restorePointsClientDiagnostics.CreateScope("RestorePointCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _restorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _restorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorePointName, expand?.ToString(), context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<RestorePointData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(RestorePointData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((RestorePointData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<RestorePointResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new RestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

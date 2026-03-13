@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes the data disk to be attached. </summary>
     public partial class DataDisksToAttach
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataDisksToAttach"/>. </summary>
         /// <param name="diskId"> ID of the managed data disk. </param>
@@ -60,12 +30,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DataDisksToAttach"/>. </summary>
         /// <param name="diskId"> ID of the managed data disk. </param>
         /// <param name="lun"> The logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. If not specified, lun would be auto assigned. </param>
-        /// <param name="caching"> Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The defaulting behavior is: **None for Standard storage. ReadOnly for Premium storage.**. </param>
-        /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: **Delete.** If this value is used, the data disk is deleted when VM is deleted. **Detach.** If this value is used, the data disk is retained after VM is deleted. The default value is set to **Detach**. </param>
+        /// <param name="caching"> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The defaulting behavior is: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </param>
+        /// <param name="deleteOption"> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: <b>Delete.</b> If this value is used, the data disk is deleted when VM is deleted. <b>Detach.</b> If this value is used, the data disk is retained after VM is deleted. The default value is set to <b>Detach</b>. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. </param>
         /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataDisksToAttach(string diskId, int? lun, CachingType? caching, DiskDeleteOptionType? deleteOption, WritableSubResource diskEncryptionSet, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataDisksToAttach(string diskId, int? lun, CachingType? caching, DiskDeleteOptionType? deleteOption, DiskEncryptionSetParameters diskEncryptionSet, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             Lun = lun;
@@ -73,37 +43,42 @@ namespace Azure.ResourceManager.Compute.Models
             DeleteOption = deleteOption;
             DiskEncryptionSet = diskEncryptionSet;
             WriteAcceleratorEnabled = writeAcceleratorEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataDisksToAttach"/> for deserialization. </summary>
-        internal DataDisksToAttach()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> ID of the managed data disk. </summary>
         public string DiskId { get; }
+
         /// <summary> The logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. If not specified, lun would be auto assigned. </summary>
         public int? Lun { get; set; }
-        /// <summary> Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The defaulting behavior is: **None for Standard storage. ReadOnly for Premium storage.**. </summary>
+
+        /// <summary> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The defaulting behavior is: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </summary>
         public CachingType? Caching { get; set; }
-        /// <summary> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: **Delete.** If this value is used, the data disk is deleted when VM is deleted. **Detach.** If this value is used, the data disk is retained after VM is deleted. The default value is set to **Detach**. </summary>
+
+        /// <summary> Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: <b>Delete.</b> If this value is used, the data disk is deleted when VM is deleted. <b>Detach.</b> If this value is used, the data disk is retained after VM is deleted. The default value is set to <b>Detach</b>. </summary>
         public DiskDeleteOptionType? DeleteOption { get; set; }
+
         /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk. </summary>
-        internal WritableSubResource DiskEncryptionSet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId
-        {
-            get => DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
-            set
-            {
-                if (DiskEncryptionSet is null)
-                    DiskEncryptionSet = new WritableSubResource();
-                DiskEncryptionSet.Id = value;
-            }
-        }
+        internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
         public bool? WriteAcceleratorEnabled { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public string DiskEncryptionSetId
+        {
+            get
+            {
+                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            }
+            set
+            {
+                if (DiskEncryptionSet is null)
+                {
+                    DiskEncryptionSet = new DiskEncryptionSetParameters();
+                }
+                DiskEncryptionSet.Id = value;
+            }
+        }
     }
 }

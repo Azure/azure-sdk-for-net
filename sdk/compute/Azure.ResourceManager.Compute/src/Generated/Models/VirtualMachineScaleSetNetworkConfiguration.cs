@@ -7,14 +7,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
-    public partial class VirtualMachineScaleSetNetworkConfiguration : ComputeWriteableSubResourceData
+    public partial class VirtualMachineScaleSetNetworkConfiguration
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/>. </summary>
         /// <param name="name"> The network configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -24,95 +26,207 @@ namespace Azure.ResourceManager.Compute.Models
 
             Name = name;
             Tags = new ChangeTrackingDictionary<string, string>();
-            IPConfigurations = new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The network configuration name. </param>
+        /// <param name="properties"> Describes a virtual machine scale set network profile's IP configuration. </param>
         /// <param name="tags"> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
-        /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
-        /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
-        /// <param name="networkSecurityGroup"> The network security group. </param>
-        /// <param name="dnsSettings"> The dns settings to be applied on the network interfaces. </param>
-        /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
-        /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
-        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
-        /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
-        /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
-        internal VirtualMachineScaleSetNetworkConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, IDictionary<string, string> tags, bool? primary, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? enableIPForwarding, ComputeDeleteOption? deleteOption, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku) : base(id, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetNetworkConfiguration(string name, VirtualMachineScaleSetNetworkConfigurationProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            Properties = properties;
             Tags = tags;
-            Primary = primary;
-            EnableAcceleratedNetworking = enableAcceleratedNetworking;
-            IsTcpStateTrackingDisabled = isTcpStateTrackingDisabled;
-            EnableFpga = enableFpga;
-            NetworkSecurityGroup = networkSecurityGroup;
-            DnsSettings = dnsSettings;
-            IPConfigurations = ipConfigurations;
-            EnableIPForwarding = enableIPForwarding;
-            DeleteOption = deleteOption;
-            AuxiliaryMode = auxiliaryMode;
-            AuxiliarySku = auxiliarySku;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/> for deserialization. </summary>
-        internal VirtualMachineScaleSetNetworkConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The network configuration name. </summary>
         public string Name { get; set; }
+
+        /// <summary> Describes a virtual machine scale set network profile's IP configuration. </summary>
+        internal VirtualMachineScaleSetNetworkConfigurationProperties Properties { get; set; }
+
         /// <summary> Resource tags applied to the networkInterface address created by this NetworkInterfaceConfiguration. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
-        public bool? Primary { get; set; }
-        /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
-        public bool? EnableAcceleratedNetworking { get; set; }
-        /// <summary> Specifies whether the network interface is disabled for tcp state tracking. </summary>
-        public bool? IsTcpStateTrackingDisabled { get; set; }
-        /// <summary> Specifies whether the network interface is FPGA networking-enabled. </summary>
-        public bool? EnableFpga { get; set; }
-        /// <summary> The network security group. </summary>
-        internal WritableSubResource NetworkSecurityGroup { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier NetworkSecurityGroupId
+        public bool? Primary
         {
-            get => NetworkSecurityGroup is null ? default : NetworkSecurityGroup.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
             set
             {
-                if (NetworkSecurityGroup is null)
-                    NetworkSecurityGroup = new WritableSubResource();
-                NetworkSecurityGroup.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                Properties.Primary = value.Value;
             }
         }
 
-        /// <summary> The dns settings to be applied on the network interfaces. </summary>
-        internal VirtualMachineScaleSetNetworkConfigurationDnsSettings DnsSettings { get; set; }
+        /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
+        public bool? EnableAcceleratedNetworking
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableAcceleratedNetworking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                Properties.EnableAcceleratedNetworking = value.Value;
+            }
+        }
+
+        /// <summary> Specifies whether the network interface is disabled for tcp state tracking. </summary>
+        public bool? DisableTcpStateTracking
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisableTcpStateTracking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                Properties.DisableTcpStateTracking = value.Value;
+            }
+        }
+
+        /// <summary> Specifies whether the network interface is FPGA networking-enabled. </summary>
+        public bool? EnableFpga
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableFpga;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                Properties.EnableFpga = value.Value;
+            }
+        }
+
+        /// <summary> Specifies the IP configurations of the network interface. </summary>
+        public IList<VirtualMachineScaleSetIPConfiguration> IpConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                return Properties.IpConfigurations;
+            }
+        }
+
+        /// <summary> Whether IP forwarding enabled on this NIC. </summary>
+        public bool? EnableIPForwarding
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableIPForwarding;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                Properties.EnableIPForwarding = value.Value;
+            }
+        }
+
+        /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
+        public DeleteOptions? DeleteOption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeleteOption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                Properties.DeleteOption = value.Value;
+            }
+        }
+
+        /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
+        public NetworkInterfaceAuxiliaryMode? AuxiliaryMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuxiliaryMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                Properties.AuxiliaryMode = value.Value;
+            }
+        }
+
+        /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
+        public NetworkInterfaceAuxiliarySku? AuxiliarySku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuxiliarySku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                Properties.AuxiliarySku = value.Value;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public string NetworkSecurityGroupId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkSecurityGroupId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                Properties.NetworkSecurityGroupId = value;
+            }
+        }
+
         /// <summary> List of DNS servers IP addresses. </summary>
         public IList<string> DnsServers
         {
             get
             {
-                if (DnsSettings is null)
-                    DnsSettings = new VirtualMachineScaleSetNetworkConfigurationDnsSettings();
-                return DnsSettings.DnsServers;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetNetworkConfigurationProperties();
+                }
+                return Properties.DnsServers;
             }
         }
-
-        /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<VirtualMachineScaleSetIPConfiguration> IPConfigurations { get; }
-        /// <summary> Whether IP forwarding enabled on this NIC. </summary>
-        public bool? EnableIPForwarding { get; set; }
-        /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
-        public ComputeDeleteOption? DeleteOption { get; set; }
-        /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
-        public ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
-        /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
-        public ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
     }
 }

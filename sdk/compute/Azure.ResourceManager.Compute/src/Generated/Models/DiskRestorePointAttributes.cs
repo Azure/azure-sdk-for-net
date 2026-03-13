@@ -8,12 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Disk Restore Point details. </summary>
-    public partial class DiskRestorePointAttributes : ComputeSubResourceData
+    public partial class DiskRestorePointAttributes : SubResourceReadOnly
     {
         /// <summary> Initializes a new instance of <see cref="DiskRestorePointAttributes"/>. </summary>
         public DiskRestorePointAttributes()
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="DiskRestorePointAttributes"/>. </summary>
         /// <param name="id"> Resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="encryption"> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </param>
         /// <param name="sourceDiskRestorePoint"> Resource Id of the source disk restore point. </param>
-        internal DiskRestorePointAttributes(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, RestorePointEncryption encryption, WritableSubResource sourceDiskRestorePoint) : base(id, serializedAdditionalRawData)
+        internal DiskRestorePointAttributes(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, RestorePointEncryption encryption, ApiEntityReference sourceDiskRestorePoint) : base(id, additionalBinaryDataProperties)
         {
             Encryption = encryption;
             SourceDiskRestorePoint = sourceDiskRestorePoint;
@@ -33,16 +33,23 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Encryption at rest settings for disk restore point. It is an optional property that can be specified in the input while creating a restore point. </summary>
         public RestorePointEncryption Encryption { get; set; }
+
         /// <summary> Resource Id of the source disk restore point. </summary>
-        internal WritableSubResource SourceDiskRestorePoint { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SourceDiskRestorePointId
+        internal ApiEntityReference SourceDiskRestorePoint { get; set; }
+
+        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public string SourceDiskRestorePointId
         {
-            get => SourceDiskRestorePoint is null ? default : SourceDiskRestorePoint.Id;
+            get
+            {
+                return SourceDiskRestorePoint is null ? default : SourceDiskRestorePoint.Id;
+            }
             set
             {
                 if (SourceDiskRestorePoint is null)
-                    SourceDiskRestorePoint = new WritableSubResource();
+                {
+                    SourceDiskRestorePoint = new ApiEntityReference();
+                }
                 SourceDiskRestorePoint.Id = value;
             }
         }

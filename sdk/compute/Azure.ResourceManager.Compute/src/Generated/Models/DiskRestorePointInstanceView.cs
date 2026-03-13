@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The instance view of a disk restore point. </summary>
     public partial class DiskRestorePointInstanceView
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiskRestorePointInstanceView"/>. </summary>
         internal DiskRestorePointInstanceView()
@@ -54,19 +26,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="id"> Disk restore point Id. </param>
         /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
         /// <param name="replicationStatus"> The disk restore point replication status information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskRestorePointInstanceView(string id, SnapshotAccessState? snapshotAccessState, DiskRestorePointReplicationStatus replicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiskRestorePointInstanceView(string id, SnapshotAccessState? snapshotAccessState, DiskRestorePointReplicationStatus replicationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SnapshotAccessState = snapshotAccessState;
             ReplicationStatus = replicationStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Disk restore point Id. </summary>
         public string Id { get; }
+
         /// <summary> The state of snapshot which determines the access availability of the snapshot. </summary>
         public SnapshotAccessState? SnapshotAccessState { get; }
+
         /// <summary> The disk restore point replication status information. </summary>
         public DiskRestorePointReplicationStatus ReplicationStatus { get; }
     }

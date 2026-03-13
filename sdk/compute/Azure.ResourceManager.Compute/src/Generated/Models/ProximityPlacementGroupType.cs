@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    /// <summary> Specifies the type of the proximity placement group. Possible values are: **Standard** : Co-locate resources within an Azure region or Availability Zone. **Ultra** : For future use. </summary>
+    /// <summary> Specifies the type of the proximity placement group. Possible values are: <b>Standard</b> : Co-locate resources within an Azure region or Availability Zone. <b>Ultra</b> : For future use. </summary>
     public readonly partial struct ProximityPlacementGroupType : IEquatable<ProximityPlacementGroupType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ProximityPlacementGroupType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StandardValue = "Standard";
         private const string UltraValue = "Ultra";
 
-        /// <summary> Standard. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ProximityPlacementGroupType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Standard. </summary>
         public static ProximityPlacementGroupType Standard { get; } = new ProximityPlacementGroupType(StandardValue);
-        /// <summary> Ultra. </summary>
+
+        /// <summary> Gets the Ultra. </summary>
         public static ProximityPlacementGroupType Ultra { get; } = new ProximityPlacementGroupType(UltraValue);
+
         /// <summary> Determines if two <see cref="ProximityPlacementGroupType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProximityPlacementGroupType left, ProximityPlacementGroupType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProximityPlacementGroupType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProximityPlacementGroupType left, ProximityPlacementGroupType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProximityPlacementGroupType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProximityPlacementGroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProximityPlacementGroupType(string value) => new ProximityPlacementGroupType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProximityPlacementGroupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProximityPlacementGroupType?(string value) => value == null ? null : new ProximityPlacementGroupType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProximityPlacementGroupType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProximityPlacementGroupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

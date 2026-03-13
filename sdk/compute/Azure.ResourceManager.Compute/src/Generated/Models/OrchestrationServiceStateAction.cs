@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The action to be performed. </summary>
     public readonly partial struct OrchestrationServiceStateAction : IEquatable<OrchestrationServiceStateAction>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="OrchestrationServiceStateAction"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OrchestrationServiceStateAction(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ResumeValue = "Resume";
         private const string SuspendValue = "Suspend";
 
-        /// <summary> Resume. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrchestrationServiceStateAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public OrchestrationServiceStateAction(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Resume. </summary>
         public static OrchestrationServiceStateAction Resume { get; } = new OrchestrationServiceStateAction(ResumeValue);
-        /// <summary> Suspend. </summary>
+
+        /// <summary> Gets the Suspend. </summary>
         public static OrchestrationServiceStateAction Suspend { get; } = new OrchestrationServiceStateAction(SuspendValue);
+
         /// <summary> Determines if two <see cref="OrchestrationServiceStateAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OrchestrationServiceStateAction left, OrchestrationServiceStateAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OrchestrationServiceStateAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OrchestrationServiceStateAction left, OrchestrationServiceStateAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OrchestrationServiceStateAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OrchestrationServiceStateAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OrchestrationServiceStateAction(string value) => new OrchestrationServiceStateAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OrchestrationServiceStateAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OrchestrationServiceStateAction?(string value) => value == null ? null : new OrchestrationServiceStateAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OrchestrationServiceStateAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OrchestrationServiceStateAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

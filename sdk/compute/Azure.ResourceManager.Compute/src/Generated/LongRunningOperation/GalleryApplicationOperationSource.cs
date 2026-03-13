@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    internal class GalleryApplicationOperationSource : IOperationSource<GalleryApplicationResource>
+    /// <summary></summary>
+    internal partial class GalleryApplicationOperationSource : IOperationSource<GalleryApplicationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal GalleryApplicationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         GalleryApplicationResource IOperationSource<GalleryApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GalleryApplicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            GalleryApplicationData data = GalleryApplicationData.DeserializeGalleryApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new GalleryApplicationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<GalleryApplicationResource> IOperationSource<GalleryApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GalleryApplicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
-            return await Task.FromResult(new GalleryApplicationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            GalleryApplicationData data = GalleryApplicationData.DeserializeGalleryApplicationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryApplicationResource(_client, data);
         }
     }
 }

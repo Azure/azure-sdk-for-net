@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    internal class VirtualMachineScaleSetVmOperationSource : IOperationSource<VirtualMachineScaleSetVmResource>
+    /// <summary></summary>
+    internal partial class VirtualMachineScaleSetVMOperationSource : IOperationSource<VirtualMachineScaleSetVMResource>
     {
         private readonly ArmClient _client;
 
-        internal VirtualMachineScaleSetVmOperationSource(ArmClient client)
+        /// <summary></summary>
+        /// <param name="client"></param>
+        internal VirtualMachineScaleSetVMOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        VirtualMachineScaleSetVmResource IOperationSource<VirtualMachineScaleSetVmResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        VirtualMachineScaleSetVMResource IOperationSource<VirtualMachineScaleSetVMResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualMachineScaleSetVmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
-            return new VirtualMachineScaleSetVmResource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            VirtualMachineScaleSetVMData data = VirtualMachineScaleSetVMData.DeserializeVirtualMachineScaleSetVMData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualMachineScaleSetVMResource(_client, data);
         }
 
-        async ValueTask<VirtualMachineScaleSetVmResource> IOperationSource<VirtualMachineScaleSetVmResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<VirtualMachineScaleSetVMResource> IOperationSource<VirtualMachineScaleSetVMResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualMachineScaleSetVmData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
-            return await Task.FromResult(new VirtualMachineScaleSetVmResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            VirtualMachineScaleSetVMData data = VirtualMachineScaleSetVMData.DeserializeVirtualMachineScaleSetVMData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new VirtualMachineScaleSetVMResource(_client, data);
         }
     }
 }

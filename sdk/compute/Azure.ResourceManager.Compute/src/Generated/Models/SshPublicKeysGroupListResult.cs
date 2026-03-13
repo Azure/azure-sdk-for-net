@@ -8,72 +8,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The list SSH public keys operation response. </summary>
     internal partial class SshPublicKeysGroupListResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SshPublicKeysGroupListResult"/>. </summary>
         /// <param name="value"> The list of SSH public keys. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal SshPublicKeysGroupListResult(IEnumerable<SshPublicKeyData> value)
+        internal SshPublicKeysGroupListResult(IEnumerable<SshPublicKeyResourceData> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SshPublicKeysGroupListResult"/>. </summary>
         /// <param name="value"> The list of SSH public keys. </param>
         /// <param name="nextLink"> The URI to fetch the next page of SSH public keys. Call ListNext() with this URI to fetch the next page of SSH public keys. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SshPublicKeysGroupListResult(IReadOnlyList<SshPublicKeyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SshPublicKeysGroupListResult(IList<SshPublicKeyResourceData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SshPublicKeysGroupListResult"/> for deserialization. </summary>
-        internal SshPublicKeysGroupListResult()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of SSH public keys. </summary>
-        public IReadOnlyList<SshPublicKeyData> Value { get; }
+        public IList<SshPublicKeyResourceData> Value { get; }
+
         /// <summary> The URI to fetch the next page of SSH public keys. Call ListNext() with this URI to fetch the next page of SSH public keys. </summary>
         public Uri NextLink { get; }
     }

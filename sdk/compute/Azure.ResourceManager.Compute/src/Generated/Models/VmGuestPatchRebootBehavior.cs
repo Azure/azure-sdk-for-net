@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes the reboot requirements of the patch. </summary>
-    public readonly partial struct VmGuestPatchRebootBehavior : IEquatable<VmGuestPatchRebootBehavior>
+    public readonly partial struct VMGuestPatchRebootBehavior : IEquatable<VMGuestPatchRebootBehavior>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VmGuestPatchRebootBehavior"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VmGuestPatchRebootBehavior(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string NeverRebootsValue = "NeverReboots";
         private const string AlwaysRequiresRebootValue = "AlwaysRequiresReboot";
         private const string CanRequestRebootValue = "CanRequestReboot";
 
-        /// <summary> Unknown. </summary>
-        public static VmGuestPatchRebootBehavior Unknown { get; } = new VmGuestPatchRebootBehavior(UnknownValue);
-        /// <summary> NeverReboots. </summary>
-        public static VmGuestPatchRebootBehavior NeverReboots { get; } = new VmGuestPatchRebootBehavior(NeverRebootsValue);
-        /// <summary> AlwaysRequiresReboot. </summary>
-        public static VmGuestPatchRebootBehavior AlwaysRequiresReboot { get; } = new VmGuestPatchRebootBehavior(AlwaysRequiresRebootValue);
-        /// <summary> CanRequestReboot. </summary>
-        public static VmGuestPatchRebootBehavior CanRequestReboot { get; } = new VmGuestPatchRebootBehavior(CanRequestRebootValue);
-        /// <summary> Determines if two <see cref="VmGuestPatchRebootBehavior"/> values are the same. </summary>
-        public static bool operator ==(VmGuestPatchRebootBehavior left, VmGuestPatchRebootBehavior right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="VmGuestPatchRebootBehavior"/> values are not the same. </summary>
-        public static bool operator !=(VmGuestPatchRebootBehavior left, VmGuestPatchRebootBehavior right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VmGuestPatchRebootBehavior"/>. </summary>
-        public static implicit operator VmGuestPatchRebootBehavior(string value) => new VmGuestPatchRebootBehavior(value);
+        /// <summary> Initializes a new instance of <see cref="VMGuestPatchRebootBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VMGuestPatchRebootBehavior(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        /// <inheritdoc />
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
+        public static VMGuestPatchRebootBehavior Unknown { get; } = new VMGuestPatchRebootBehavior(UnknownValue);
+
+        /// <summary> Gets the NeverReboots. </summary>
+        public static VMGuestPatchRebootBehavior NeverReboots { get; } = new VMGuestPatchRebootBehavior(NeverRebootsValue);
+
+        /// <summary> Gets the AlwaysRequiresReboot. </summary>
+        public static VMGuestPatchRebootBehavior AlwaysRequiresReboot { get; } = new VMGuestPatchRebootBehavior(AlwaysRequiresRebootValue);
+
+        /// <summary> Gets the CanRequestReboot. </summary>
+        public static VMGuestPatchRebootBehavior CanRequestReboot { get; } = new VMGuestPatchRebootBehavior(CanRequestRebootValue);
+
+        /// <summary> Determines if two <see cref="VMGuestPatchRebootBehavior"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(VMGuestPatchRebootBehavior left, VMGuestPatchRebootBehavior right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="VMGuestPatchRebootBehavior"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(VMGuestPatchRebootBehavior left, VMGuestPatchRebootBehavior right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="VMGuestPatchRebootBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VMGuestPatchRebootBehavior(string value) => new VMGuestPatchRebootBehavior(value);
+
+        /// <summary> Converts a string to a <see cref="VMGuestPatchRebootBehavior"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VMGuestPatchRebootBehavior?(string value) => value == null ? null : new VMGuestPatchRebootBehavior(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VmGuestPatchRebootBehavior other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(VmGuestPatchRebootBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is VMGuestPatchRebootBehavior other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(VMGuestPatchRebootBehavior other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,136 +8,199 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using Common.Models;
+using ComputeDisk.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the DiskRestorePoint data model.
-    /// Properties of disk restore point
-    /// </summary>
+    /// <summary> Properties of disk restore point. </summary>
     public partial class DiskRestorePointData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiskRestorePointData"/>. </summary>
-        public DiskRestorePointData()
+        internal DiskRestorePointData()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskRestorePointData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="timeCreated"> The timestamp of restorePoint creation. </param>
-        /// <param name="sourceResourceId"> arm id of source disk or source disk restore point. </param>
-        /// <param name="osType"> The Operating System type. </param>
-        /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
-        /// <param name="purchasePlan"> Purchase plan information for the the image from which the OS disk was created. </param>
-        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
-        /// <param name="familyId"> id of the backing snapshot's MIS family. </param>
-        /// <param name="sourceUniqueId"> unique incarnation id of the source disk. </param>
-        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
-        /// <param name="supportsHibernation"> Indicates the OS on a disk supports hibernation. </param>
-        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
-        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
-        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
-        /// <param name="completionPercent"> Percentage complete for the background copy of disk restore point when source resource is from a different region. </param>
-        /// <param name="replicationState"> Replication state of disk restore point when source resource is from a different region. </param>
-        /// <param name="sourceResourceLocation"> Location of source disk or source disk restore point when source resource is from a different region. </param>
-        /// <param name="securityProfile"> Contains the security related information for the resource. </param>
-        /// <param name="logicalSectorSize"> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskRestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeCreated, ResourceIdentifier sourceResourceId, SupportedOperatingSystemType? osType, HyperVGeneration? hyperVGeneration, DiskPurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, string familyId, string sourceUniqueId, DiskEncryption encryption, bool? supportsHibernation, NetworkAccessPolicy? networkAccessPolicy, DiskPublicNetworkAccess? publicNetworkAccess, ResourceIdentifier diskAccessId, float? completionPercent, string replicationState, AzureLocation? sourceResourceLocation, DiskSecurityProfile securityProfile, int? logicalSectorSize, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of an incremental disk restore point. </param>
+        internal DiskRestorePointData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DiskRestorePointProperties properties) : base(id, name, resourceType, systemData)
         {
-            TimeCreated = timeCreated;
-            SourceResourceId = sourceResourceId;
-            OSType = osType;
-            HyperVGeneration = hyperVGeneration;
-            PurchasePlan = purchasePlan;
-            SupportedCapabilities = supportedCapabilities;
-            FamilyId = familyId;
-            SourceUniqueId = sourceUniqueId;
-            Encryption = encryption;
-            SupportsHibernation = supportsHibernation;
-            NetworkAccessPolicy = networkAccessPolicy;
-            PublicNetworkAccess = publicNetworkAccess;
-            DiskAccessId = diskAccessId;
-            CompletionPercent = completionPercent;
-            ReplicationState = replicationState;
-            SourceResourceLocation = sourceResourceLocation;
-            SecurityProfile = securityProfile;
-            LogicalSectorSize = logicalSectorSize;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
+
+        /// <summary> Properties of an incremental disk restore point. </summary>
+        internal DiskRestorePointProperties Properties { get; }
 
         /// <summary> The timestamp of restorePoint creation. </summary>
-        public DateTimeOffset? TimeCreated { get; }
+        public DateTimeOffset? TimeCreated
+        {
+            get
+            {
+                return Properties.TimeCreated;
+            }
+        }
+
         /// <summary> arm id of source disk or source disk restore point. </summary>
-        public ResourceIdentifier SourceResourceId { get; }
+        public string SourceResourceId
+        {
+            get
+            {
+                return Properties.SourceResourceId;
+            }
+        }
+
         /// <summary> The Operating System type. </summary>
-        public SupportedOperatingSystemType? OSType { get; }
+        public OperatingSystemTypes? OsType
+        {
+            get
+            {
+                return Properties.OsType;
+            }
+        }
+
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
-        public HyperVGeneration? HyperVGeneration { get; set; }
+        public HyperVGeneration? HyperVGeneration
+        {
+            get
+            {
+                return Properties.HyperVGeneration;
+            }
+        }
+
         /// <summary> Purchase plan information for the the image from which the OS disk was created. </summary>
-        public DiskPurchasePlan PurchasePlan { get; set; }
+        public DiskPurchasePlan PurchasePlan
+        {
+            get
+            {
+                return Properties.PurchasePlan;
+            }
+        }
+
         /// <summary> List of supported capabilities for the image from which the OS disk was created. </summary>
-        public SupportedCapabilities SupportedCapabilities { get; set; }
+        public SupportedCapabilities SupportedCapabilities
+        {
+            get
+            {
+                return Properties.SupportedCapabilities;
+            }
+        }
+
         /// <summary> id of the backing snapshot's MIS family. </summary>
-        public string FamilyId { get; }
+        public string FamilyId
+        {
+            get
+            {
+                return Properties.FamilyId;
+            }
+        }
+
         /// <summary> unique incarnation id of the source disk. </summary>
-        public string SourceUniqueId { get; }
+        public string SourceUniqueId
+        {
+            get
+            {
+                return Properties.SourceUniqueId;
+            }
+        }
+
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public DiskEncryption Encryption { get; }
+        public Encryption Encryption
+        {
+            get
+            {
+                return Properties.Encryption;
+            }
+        }
+
         /// <summary> Indicates the OS on a disk supports hibernation. </summary>
-        public bool? SupportsHibernation { get; set; }
+        public bool? SupportsHibernation
+        {
+            get
+            {
+                return Properties.SupportsHibernation;
+            }
+        }
+
         /// <summary> Policy for accessing the disk via network. </summary>
-        public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
+        public NetworkAccessPolicy? NetworkAccessPolicy
+        {
+            get
+            {
+                return Properties.NetworkAccessPolicy;
+            }
+        }
+
         /// <summary> Policy for controlling export on the disk. </summary>
-        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public PublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties.PublicNetworkAccess;
+            }
+        }
+
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public ResourceIdentifier DiskAccessId { get; set; }
+        public string DiskAccessId
+        {
+            get
+            {
+                return Properties.DiskAccessId;
+            }
+        }
+
         /// <summary> Percentage complete for the background copy of disk restore point when source resource is from a different region. </summary>
-        public float? CompletionPercent { get; set; }
+        public float? CompletionPercent
+        {
+            get
+            {
+                return Properties.CompletionPercent;
+            }
+        }
+
         /// <summary> Replication state of disk restore point when source resource is from a different region. </summary>
-        public string ReplicationState { get; }
+        public string ReplicationState
+        {
+            get
+            {
+                return Properties.ReplicationState;
+            }
+        }
+
         /// <summary> Location of source disk or source disk restore point when source resource is from a different region. </summary>
-        public AzureLocation? SourceResourceLocation { get; }
+        public string SourceResourceLocation
+        {
+            get
+            {
+                return Properties.SourceResourceLocation;
+            }
+        }
+
         /// <summary> Contains the security related information for the resource. </summary>
-        public DiskSecurityProfile SecurityProfile { get; set; }
+        public DiskSecurityProfile SecurityProfile
+        {
+            get
+            {
+                return Properties.SecurityProfile;
+            }
+        }
+
         /// <summary> Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default. </summary>
-        public int? LogicalSectorSize { get; }
+        public int? LogicalSectorSize
+        {
+            get
+            {
+                return Properties.LogicalSectorSize;
+            }
+        }
     }
 }

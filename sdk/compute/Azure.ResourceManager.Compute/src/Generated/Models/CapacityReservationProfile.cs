@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The parameters of a capacity reservation Profile. </summary>
     internal partial class CapacityReservationProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProfile"/>. </summary>
         public CapacityReservationProfile()
@@ -54,23 +24,29 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationProfile"/>. </summary>
         /// <param name="capacityReservationGroup"> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine or scaleset vm instances provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationProfile(WritableSubResource capacityReservationGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CapacityReservationProfile(SubResource capacityReservationGroup, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CapacityReservationGroup = capacityReservationGroup;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the capacity reservation group resource id that should be used for allocating the virtual machine or scaleset vm instances provided enough capacity has been reserved. Please refer to https://aka.ms/CapacityReservation for more details. </summary>
-        internal WritableSubResource CapacityReservationGroup { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier CapacityReservationGroupId
+        internal SubResource CapacityReservationGroup { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public string CapacityReservationGroupId
         {
-            get => CapacityReservationGroup is null ? default : CapacityReservationGroup.Id;
+            get
+            {
+                return CapacityReservationGroup is null ? default : CapacityReservationGroup.Id;
+            }
             set
             {
                 if (CapacityReservationGroup is null)
-                    CapacityReservationGroup = new WritableSubResource();
+                {
+                    CapacityReservationGroup = new SubResource();
+                }
                 CapacityReservationGroup.Id = value;
             }
         }

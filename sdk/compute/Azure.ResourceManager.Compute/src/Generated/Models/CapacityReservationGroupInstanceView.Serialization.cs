@@ -8,17 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class CapacityReservationGroupInstanceView : IUtf8JsonSerializable, IJsonModel<CapacityReservationGroupInstanceView>
+    /// <summary> The CapacityReservationGroupInstanceView. </summary>
+    public partial class CapacityReservationGroupInstanceView : IJsonModel<CapacityReservationGroupInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapacityReservationGroupInstanceView>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CapacityReservationGroupInstanceView PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCapacityReservationGroupInstanceView(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CapacityReservationGroupInstanceView>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CapacityReservationGroupInstanceView IPersistableModel<CapacityReservationGroupInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CapacityReservationGroupInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CapacityReservationGroupInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,17 +70,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsCollectionDefined(CapacityReservations))
             {
                 writer.WritePropertyName("capacityReservations"u8);
                 writer.WriteStartArray();
-                foreach (var item in CapacityReservations)
+                foreach (CapacityReservationInstanceViewWithName item in CapacityReservations)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -50,21 +89,21 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("sharedSubscriptionIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in SharedSubscriptionIds)
+                foreach (SubResourceReadOnly item in SharedSubscriptionIds)
                 {
-                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,98 +112,70 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        CapacityReservationGroupInstanceView IJsonModel<CapacityReservationGroupInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CapacityReservationGroupInstanceView IJsonModel<CapacityReservationGroupInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CapacityReservationGroupInstanceView JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCapacityReservationGroupInstanceView(document.RootElement, options);
         }
 
-        internal static CapacityReservationGroupInstanceView DeserializeCapacityReservationGroupInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CapacityReservationGroupInstanceView DeserializeCapacityReservationGroupInstanceView(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<CapacityReservationInstanceViewWithName> capacityReservations = default;
-            IReadOnlyList<SubResource> sharedSubscriptionIds = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IReadOnlyList<SubResourceReadOnly> sharedSubscriptionIds = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("capacityReservations"u8))
+                if (prop.NameEquals("capacityReservations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<CapacityReservationInstanceViewWithName> array = new List<CapacityReservationInstanceViewWithName>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(CapacityReservationInstanceViewWithName.DeserializeCapacityReservationInstanceViewWithName(item, options));
                     }
                     capacityReservations = array;
                     continue;
                 }
-                if (property.NameEquals("sharedSubscriptionIds"u8))
+                if (prop.NameEquals("sharedSubscriptionIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<SubResource> array = new List<SubResource>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    List<SubResourceReadOnly> array = new List<SubResourceReadOnly>();
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerComputeContext.Default));
+                        array.Add(SubResourceReadOnly.DeserializeSubResourceReadOnly(item, options));
                     }
                     sharedSubscriptionIds = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CapacityReservationGroupInstanceView(capacityReservations ?? new ChangeTrackingList<CapacityReservationInstanceViewWithName>(), sharedSubscriptionIds ?? new ChangeTrackingList<SubResource>(), serializedAdditionalRawData);
+            return new CapacityReservationGroupInstanceView(capacityReservations ?? new ChangeTrackingList<CapacityReservationInstanceViewWithName>(), sharedSubscriptionIds ?? new ChangeTrackingList<SubResourceReadOnly>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<CapacityReservationGroupInstanceView>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CapacityReservationGroupInstanceView IPersistableModel<CapacityReservationGroupInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationGroupInstanceView>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCapacityReservationGroupInstanceView(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CapacityReservationGroupInstanceView)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CapacityReservationGroupInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

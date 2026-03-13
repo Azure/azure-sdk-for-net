@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
-    public partial class TargetRegion : IUtf8JsonSerializable, IJsonModel<TargetRegion>
+    /// <summary> Describes the target region information. </summary>
+    public partial class TargetRegion : IJsonModel<TargetRegion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetRegion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TargetRegion"/> for deserialization. </summary>
+        internal TargetRegion()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TargetRegion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TargetRegion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTargetRegion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TargetRegion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TargetRegion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TargetRegion)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TargetRegion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TargetRegion IPersistableModel<TargetRegion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TargetRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TargetRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetRegion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TargetRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetRegion)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(RegionalReplicaCount))
@@ -51,30 +96,30 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (Optional.IsDefined(IsExcludedFromLatest))
+            if (Optional.IsDefined(ExcludeFromLatest))
             {
                 writer.WritePropertyName("excludeFromLatest"u8);
-                writer.WriteBooleanValue(IsExcludedFromLatest.Value);
+                writer.WriteBooleanValue(ExcludeFromLatest.Value);
             }
             if (Optional.IsCollectionDefined(AdditionalReplicaSets))
             {
                 writer.WritePropertyName("additionalReplicaSets"u8);
                 writer.WriteStartArray();
-                foreach (var item in AdditionalReplicaSets)
+                foreach (AdditionalReplicaSet item in AdditionalReplicaSets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -83,85 +128,89 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        TargetRegion IJsonModel<TargetRegion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TargetRegion IJsonModel<TargetRegion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TargetRegion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetRegion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TargetRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetRegion)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTargetRegion(document.RootElement, options);
         }
 
-        internal static TargetRegion DeserializeTargetRegion(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TargetRegion DeserializeTargetRegion(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             int? regionalReplicaCount = default;
-            ImageStorageAccountType? storageAccountType = default;
+            StorageAccountType? storageAccountType = default;
             EncryptionImages encryption = default;
             bool? excludeFromLatest = default;
             IList<AdditionalReplicaSet> additionalReplicaSets = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("regionalReplicaCount"u8))
+                if (prop.NameEquals("regionalReplicaCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    regionalReplicaCount = property.Value.GetInt32();
+                    regionalReplicaCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"u8))
+                if (prop.NameEquals("storageAccountType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountType = new ImageStorageAccountType(property.Value.GetString());
+                    storageAccountType = new StorageAccountType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("encryption"u8))
+                if (prop.NameEquals("encryption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryption = EncryptionImages.DeserializeEncryptionImages(property.Value, options);
+                    encryption = EncryptionImages.DeserializeEncryptionImages(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("excludeFromLatest"u8))
+                if (prop.NameEquals("excludeFromLatest"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    excludeFromLatest = property.Value.GetBoolean();
+                    excludeFromLatest = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("additionalReplicaSets"u8))
+                if (prop.NameEquals("additionalReplicaSets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<AdditionalReplicaSet> array = new List<AdditionalReplicaSet>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(AdditionalReplicaSet.DeserializeAdditionalReplicaSet(item, options));
                     }
@@ -170,10 +219,9 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TargetRegion(
                 name,
                 regionalReplicaCount,
@@ -181,38 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                 encryption,
                 excludeFromLatest,
                 additionalReplicaSets ?? new ChangeTrackingList<AdditionalReplicaSet>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<TargetRegion>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetRegion>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TargetRegion)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TargetRegion IPersistableModel<TargetRegion>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetRegion>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTargetRegion(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TargetRegion)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TargetRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

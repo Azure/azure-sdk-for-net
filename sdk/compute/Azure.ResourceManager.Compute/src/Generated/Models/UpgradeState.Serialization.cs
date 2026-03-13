@@ -7,10 +7,11 @@
 
 using System;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     internal static partial class UpgradeStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this UpgradeState value) => value switch
         {
             UpgradeState.RollingForward => "RollingForward",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UpgradeState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static UpgradeState ToUpgradeState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingForward")) return UpgradeState.RollingForward;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return UpgradeState.Cancelled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Completed")) return UpgradeState.Completed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Faulted")) return UpgradeState.Faulted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingForward"))
+            {
+                return UpgradeState.RollingForward;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled"))
+            {
+                return UpgradeState.Cancelled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Completed"))
+            {
+                return UpgradeState.Completed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Faulted"))
+            {
+                return UpgradeState.Faulted;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UpgradeState value.");
         }
     }

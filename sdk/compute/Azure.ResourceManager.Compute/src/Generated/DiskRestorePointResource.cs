@@ -6,48 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager;
+using ComputeDisk;
+using ComputeDisk.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
     /// <summary>
-    /// A Class representing a DiskRestorePoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiskRestorePointResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDiskRestorePointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RestorePointResource"/> using the GetDiskRestorePoint method.
+    /// A class representing a DiskRestorePoint along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiskRestorePointResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RestorePointResource"/> using the GetDiskRestorePoints method.
     /// </summary>
     public partial class DiskRestorePointResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DiskRestorePointResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="restorePointGroupName"> The restorePointGroupName. </param>
-        /// <param name="vmRestorePointName"> The vmRestorePointName. </param>
-        /// <param name="diskRestorePointName"> The diskRestorePointName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _diskRestorePointClientDiagnostics;
-        private readonly DiskRestorePointRestOperations _diskRestorePointRestClient;
+        private readonly ClientDiagnostics _diskRestorePointsClientDiagnostics;
+        private readonly DiskRestorePoints _diskRestorePointsRestClient;
         private readonly DiskRestorePointData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/restorePointCollections/restorePoints/diskRestorePoints";
 
-        /// <summary> Initializes a new instance of the <see cref="DiskRestorePointResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DiskRestorePointResource for mocking. </summary>
         protected DiskRestorePointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiskRestorePointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiskRestorePointResource(ArmClient client, DiskRestorePointData data) : this(client, data.Id)
@@ -56,71 +45,94 @@ namespace Azure.ResourceManager.Compute
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DiskRestorePointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskRestorePointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiskRestorePointResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _diskRestorePointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string diskRestorePointApiVersion);
-            _diskRestorePointRestClient = new DiskRestorePointRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, diskRestorePointApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _diskRestorePointsClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _diskRestorePointsRestClient = new DiskRestorePoints(_diskRestorePointsClientDiagnostics, Pipeline, Endpoint, diskRestorePointApiVersion ?? "2025-01-02");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DiskRestorePointData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="restorePointCollectionName"> The restorePointCollectionName. </param>
+        /// <param name="vmRestorePointName"> The vmRestorePointName. </param>
+        /// <param name="diskRestorePointName"> The diskRestorePointName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointCollectionName, string vmRestorePointName, string diskRestorePointName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get disk restorePoint resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiskRestorePointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DiskRestorePointResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointResource.Get");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointResource.Get");
             scope.Start();
             try
             {
-                var response = await _diskRestorePointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DiskRestorePointData> response = Response.FromValue(DiskRestorePointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiskRestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +146,41 @@ namespace Azure.ResourceManager.Compute
         /// Get disk restorePoint resource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiskRestorePointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DiskRestorePointResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointResource.Get");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointResource.Get");
             scope.Start();
             try
             {
-                var response = _diskRestorePointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DiskRestorePointData> response = Response.FromValue(DiskRestorePointData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DiskRestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -174,20 +194,20 @@ namespace Azure.ResourceManager.Compute
         /// Grants access to a diskRestorePoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}/beginGetAccess</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}/beginGetAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_GrantAccess</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_GrantAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiskRestorePointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,14 +219,27 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointResource.GrantAccess");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointResource.GrantAccess");
             scope.Start();
             try
             {
-                var response = await _diskRestorePointRestClient.GrantAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<AccessUri>(new AccessUriOperationSource(), _diskRestorePointClientDiagnostics, Pipeline, _diskRestorePointRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GrantAccessData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeCombineArmOperation<AccessUri> operation = new ComputeCombineArmOperation<AccessUri>(
+                    new AccessUriOperationSource(),
+                    _diskRestorePointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -220,20 +253,20 @@ namespace Azure.ResourceManager.Compute
         /// Grants access to a diskRestorePoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}/beginGetAccess</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}/beginGetAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_GrantAccess</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_GrantAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiskRestorePointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,14 +278,27 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointResource.GrantAccess");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointResource.GrantAccess");
             scope.Start();
             try
             {
-                var response = _diskRestorePointRestClient.GrantAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new ComputeArmOperation<AccessUri>(new AccessUriOperationSource(), _diskRestorePointClientDiagnostics, Pipeline, _diskRestorePointRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateGrantAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, GrantAccessData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeCombineArmOperation<AccessUri> operation = new ComputeCombineArmOperation<AccessUri>(
+                    new AccessUriOperationSource(),
+                    _diskRestorePointsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -266,20 +312,20 @@ namespace Azure.ResourceManager.Compute
         /// Revokes access to a diskRestorePoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}/endGetAccess</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}/endGetAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_RevokeAccess</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_RevokeAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiskRestorePointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,14 +333,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RevokeAccessAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointResource.RevokeAccess");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointResource.RevokeAccess");
             scope.Start();
             try
             {
-                var response = await _diskRestorePointRestClient.RevokeAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_diskRestorePointClientDiagnostics, Pipeline, _diskRestorePointRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_diskRestorePointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -308,20 +361,20 @@ namespace Azure.ResourceManager.Compute
         /// Revokes access to a diskRestorePoint.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}/endGetAccess</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointCollectionName}/restorePoints/{vmRestorePointName}/diskRestorePoints/{diskRestorePointName}/endGetAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiskRestorePoint_RevokeAccess</description>
+        /// <term> Operation Id. </term>
+        /// <description> DiskRestorePoints_RevokeAccess. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-01-02</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-01-02. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DiskRestorePointResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DiskRestorePointResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,14 +382,21 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation RevokeAccess(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _diskRestorePointClientDiagnostics.CreateScope("DiskRestorePointResource.RevokeAccess");
+            using DiagnosticScope scope = _diskRestorePointsClientDiagnostics.CreateScope("DiskRestorePointResource.RevokeAccess");
             scope.Start();
             try
             {
-                var response = _diskRestorePointRestClient.RevokeAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ComputeArmOperation(_diskRestorePointClientDiagnostics, Pipeline, _diskRestorePointRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _diskRestorePointsRestClient.CreateRevokeAccessRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ComputeCombineArmOperation operation = new ComputeCombineArmOperation(_diskRestorePointsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
