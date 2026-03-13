@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SharedSearchServicePrivateLinkResourceProperties : IUtf8JsonSerializable, IJsonModel<SharedSearchServicePrivateLinkResourceProperties>
+    /// <summary> Describes the properties of an existing shared private link resource managed by the Azure AI Search service. </summary>
+    public partial class SharedSearchServicePrivateLinkResourceProperties : IJsonModel<SharedSearchServicePrivateLinkResourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedSearchServicePrivateLinkResourceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SharedSearchServicePrivateLinkResourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSharedSearchServicePrivateLinkResourceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SharedSearchServicePrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SharedSearchServicePrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SharedSearchServicePrivateLinkResourceProperties IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SharedSearchServicePrivateLinkResourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SharedSearchServicePrivateLinkResourceProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
@@ -53,27 +92,27 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(ResourceRegion))
             {
                 writer.WritePropertyName("resourceRegion"u8);
-                writer.WriteStringValue(ResourceRegion.Value);
+                writer.WriteStringValue(ResourceRegion);
             }
-            if (Optional.IsDefined(SharedPrivateLinkResourceStatus))
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(SharedPrivateLinkResourceStatus.Value.ToString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(SharedPrivateLinkResourceProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(SharedPrivateLinkResourceProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,88 +121,83 @@ namespace Azure.ResourceManager.Search.Models
             }
         }
 
-        SharedSearchServicePrivateLinkResourceProperties IJsonModel<SharedSearchServicePrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SharedSearchServicePrivateLinkResourceProperties IJsonModel<SharedSearchServicePrivateLinkResourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SharedSearchServicePrivateLinkResourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SharedSearchServicePrivateLinkResourceProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSharedSearchServicePrivateLinkResourceProperties(document.RootElement, options);
         }
 
-        internal static SharedSearchServicePrivateLinkResourceProperties DeserializeSharedSearchServicePrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SharedSearchServicePrivateLinkResourceProperties DeserializeSharedSearchServicePrivateLinkResourceProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier privateLinkResourceId = default;
+            string privateLinkResourceId = default;
             string groupId = default;
             string requestMessage = default;
-            AzureLocation? resourceRegion = default;
+            string resourceRegion = default;
             SearchServiceSharedPrivateLinkResourceStatus? status = default;
             SearchServiceSharedPrivateLinkResourceProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("privateLinkResourceId"u8))
+                if (prop.NameEquals("privateLinkResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    privateLinkResourceId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("groupId"u8))
+                {
+                    groupId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("requestMessage"u8))
+                {
+                    requestMessage = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("resourceRegion"u8))
+                {
+                    resourceRegion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateLinkResourceId = new ResourceIdentifier(property.Value.GetString());
+                    status = new SearchServiceSharedPrivateLinkResourceStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groupId"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    groupId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("requestMessage"u8))
-                {
-                    requestMessage = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceRegion"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceRegion = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("status"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = new SearchServiceSharedPrivateLinkResourceStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new SearchServiceSharedPrivateLinkResourceProvisioningState(property.Value.GetString());
+                    provisioningState = new SearchServiceSharedPrivateLinkResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SharedSearchServicePrivateLinkResourceProperties(
                 privateLinkResourceId,
                 groupId,
@@ -171,161 +205,7 @@ namespace Azure.ResourceManager.Search.Models
                 resourceRegion,
                 status,
                 provisioningState,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  privateLinkResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrivateLinkResourceId))
-                {
-                    builder.Append("  privateLinkResourceId: ");
-                    builder.AppendLine($"'{PrivateLinkResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  groupId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(GroupId))
-                {
-                    builder.Append("  groupId: ");
-                    if (GroupId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{GroupId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{GroupId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestMessage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestMessage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestMessage))
-                {
-                    builder.Append("  requestMessage: ");
-                    if (RequestMessage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RequestMessage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RequestMessage}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceRegion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resourceRegion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceRegion))
-                {
-                    builder.Append("  resourceRegion: ");
-                    builder.AppendLine($"'{ResourceRegion.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedPrivateLinkResourceStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  status: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SharedPrivateLinkResourceStatus))
-                {
-                    builder.Append("  status: ");
-                    builder.AppendLine($"'{SharedPrivateLinkResourceStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedPrivateLinkResourceProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SharedPrivateLinkResourceProvisioningState))
-                {
-                    builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{SharedPrivateLinkResourceProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SharedSearchServicePrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SharedSearchServicePrivateLinkResourceProperties IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSharedSearchServicePrivateLinkResourceProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SharedSearchServicePrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SharedSearchServicePrivateLinkResourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

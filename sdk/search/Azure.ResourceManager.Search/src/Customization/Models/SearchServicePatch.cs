@@ -9,8 +9,8 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The parameters used to update a search service. </summary>
-    public partial class SearchServicePatch : TrackedResourceData
+    // Backward-compat wrapper properties for SearchServicePatch
+    public partial class SearchServicePatch
     {
         /// <summary> A list of IP restriction rules used for an IP firewall. Any IPs that do not match the rules are blocked by the firewall. These rules are only applied when the 'publicNetworkAccess' of the search service is 'enabled'. </summary>
         [WirePath("properties.networkRuleSet.ipRules")]
