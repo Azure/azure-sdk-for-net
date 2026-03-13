@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(neonDatabase, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(neonDatabase, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NeonDatabase"/> from. </param>

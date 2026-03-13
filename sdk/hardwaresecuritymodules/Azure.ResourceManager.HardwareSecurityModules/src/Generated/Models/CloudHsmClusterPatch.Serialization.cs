@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cloudHsmClusterPatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(cloudHsmClusterPatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

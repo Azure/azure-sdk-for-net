@@ -638,6 +638,46 @@ ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponses
 ResponseResult response = await responseClient.CreateResponseAsync("I need to solve the equation sin(x) + x^2 = 42");
 ```
 
+Code interpreter can also be used to generate files. In this case files will be saved to the container and
+their IDs will be returned in `ContainerFileCitationMessageAnnotation` objects.
+
+```C# Snippet:Sample_GetCitation_CodeInterpreter_File_Generation
+ContainerFileCitationMessageAnnotation containerAnnotation = null;
+foreach (ResponseItem item in response.OutputItems)
+{
+    if (item is MessageResponseItem messageItem)
+    {
+        foreach (ResponseContentPart content in messageItem.Content)
+        {
+            foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+            {
+                if (annotation is ContainerFileCitationMessageAnnotation cntrAnnotation)
+                {
+                    containerAnnotation = cntrAnnotation;
+                }
+            }
+        }
+    }
+}
+if (containerAnnotation is null)
+{
+    throw new InvalidOperationException("The file was not generated.");
+}
+Console.WriteLine($"Container: {containerAnnotation.ContainerId}, fileID: {containerAnnotation.FileId}");
+```
+
+The files can be downloaded using `DownloadContainerFileAsync` or `DownloadContainerFile` methods of `ContainerClient`.
+
+```C# Snippet:Sample_Download_CodeInterpreter_File_Generation_Async
+ContainerClient containerClient = projectClient.OpenAI.GetContainerClient();
+BinaryData fileData = await containerClient.DownloadContainerFileAsync(containerId: containerAnnotation.ContainerId, fileId: containerAnnotation.FileId);
+File.WriteAllBytes(
+    path: "./results.pdf",
+    bytes: fileData.ToArray()
+);
+Console.WriteLine($"PDF downloaded and saved to: {Path.GetFullPath("results.pdf")}");
+```
+
 ### Computer use
 
 `ComputerTool` allows Agents to assist customer in computer related tasks. Its constructor is provided with description of an operation system and screen resolution.
@@ -962,6 +1002,23 @@ PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Tools = { ResponseTool.CreateWebSearchTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
 };
 AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+The Web search tool also can use the custom Bing instances to perform more specific search.
+**Note:** Please do not set `userLocation` parameter in the `CreateWebSearchTool` method as it will result in regular Web search.
+
+```C# Snippet:Sample_CreateAgent_WebSearchCustomStreaming_Sync
+AIProjectConnection bingConnection = projectClient.Connections.GetConnection(connectionName: connectionName);
+WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
+webSearchTool.CustomSearchConfiguration = new(bingConnection.Id, customInstanceName);
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful agent.",
+    Tools = { webSearchTool }
+};
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SelfHelpTroubleshooterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string troubleshooterName, SelfHelpTroubleshooterData data = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SelfHelpTroubleshooterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string troubleshooterName, SelfHelpTroubleshooterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SelfHelpTroubleshooterResource> CreateOrUpdate(WaitUntil waitUntil, string troubleshooterName, SelfHelpTroubleshooterData data = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SelfHelpTroubleshooterResource> CreateOrUpdate(WaitUntil waitUntil, string troubleshooterName, SelfHelpTroubleshooterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
 

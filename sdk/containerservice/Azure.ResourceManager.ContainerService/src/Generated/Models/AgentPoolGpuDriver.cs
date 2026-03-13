@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct AgentPoolGpuDriver : IEquatable<AgentPoolGpuDriver>
     {
         private readonly string _value;
+        /// <summary> Install driver. </summary>
+        private const string InstallValue = "Install";
+        /// <summary> Skip driver install. </summary>
+        private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolGpuDriver"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AgentPoolGpuDriver(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InstallValue = "Install";
-        private const string NoneValue = "None";
+            _value = value;
+        }
 
         /// <summary> Install driver. </summary>
         public static AgentPoolGpuDriver Install { get; } = new AgentPoolGpuDriver(InstallValue);
+
         /// <summary> Skip driver install. </summary>
         public static AgentPoolGpuDriver None { get; } = new AgentPoolGpuDriver(NoneValue);
+
         /// <summary> Determines if two <see cref="AgentPoolGpuDriver"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AgentPoolGpuDriver left, AgentPoolGpuDriver right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AgentPoolGpuDriver"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AgentPoolGpuDriver left, AgentPoolGpuDriver right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AgentPoolGpuDriver"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AgentPoolGpuDriver"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AgentPoolGpuDriver(string value) => new AgentPoolGpuDriver(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AgentPoolGpuDriver"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AgentPoolGpuDriver?(string value) => value == null ? null : new AgentPoolGpuDriver(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AgentPoolGpuDriver other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AgentPoolGpuDriver other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
