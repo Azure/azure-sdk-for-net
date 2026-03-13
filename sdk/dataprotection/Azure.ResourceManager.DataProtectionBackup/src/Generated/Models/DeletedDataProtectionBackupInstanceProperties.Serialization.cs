@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IList<string> resourceGuardOperationRequests = default;
             BackupInstanceProtectionStatusDetails protectionStatus = default;
             CurrentProtectionState? currentProtectionState = default;
-            UserFacingError resourceProtectionErrorDetails = default;
+            DataProtectionBackupUserFacingError resourceProtectionErrorDetails = default;
             string provisioningState = default;
             DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default;
             BackupValidationType? validationType = default;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    resourceProtectionErrorDetails = UserFacingError.DeserializeUserFacingError(prop.Value, options);
+                    resourceProtectionErrorDetails = DataProtectionBackupUserFacingError.DeserializeDataProtectionBackupUserFacingError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

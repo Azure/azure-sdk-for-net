@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             string resourceName = default;
-            UserFacingError warningDetails = default;
+            DataProtectionBackupUserFacingError warningDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("warning"u8))
                 {
-                    warningDetails = UserFacingError.DeserializeUserFacingError(prop.Value, options);
+                    warningDetails = DataProtectionBackupUserFacingError.DeserializeDataProtectionBackupUserFacingError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

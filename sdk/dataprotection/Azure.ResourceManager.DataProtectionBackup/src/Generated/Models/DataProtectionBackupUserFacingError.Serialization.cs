@@ -14,51 +14,51 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Error object used by layers that have access to localized content, and propagate that to user. </summary>
-    public partial class UserFacingError : IJsonModel<UserFacingError>
+    public partial class DataProtectionBackupUserFacingError : IJsonModel<DataProtectionBackupUserFacingError>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserFacingError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DataProtectionBackupUserFacingError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserFacingError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupUserFacingError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUserFacingError(document.RootElement, options);
+                        return DeserializeDataProtectionBackupUserFacingError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserFacingError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupUserFacingError)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserFacingError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupUserFacingError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserFacingError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupUserFacingError)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UserFacingError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataProtectionBackupUserFacingError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserFacingError IPersistableModel<UserFacingError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataProtectionBackupUserFacingError IPersistableModel<DataProtectionBackupUserFacingError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UserFacingError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataProtectionBackupUserFacingError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UserFacingError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataProtectionBackupUserFacingError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserFacingError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupUserFacingError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserFacingError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupUserFacingError)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Code))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
-                foreach (UserFacingError item in Details)
+                foreach (DataProtectionBackupUserFacingError item in Details)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -164,32 +164,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserFacingError IJsonModel<UserFacingError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataProtectionBackupUserFacingError IJsonModel<DataProtectionBackupUserFacingError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserFacingError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DataProtectionBackupUserFacingError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserFacingError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupUserFacingError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserFacingError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupUserFacingError)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserFacingError(document.RootElement, options);
+            return DeserializeDataProtectionBackupUserFacingError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UserFacingError DeserializeUserFacingError(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataProtectionBackupUserFacingError DeserializeDataProtectionBackupUserFacingError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string code = default;
-            IList<UserFacingError> details = default;
-            InnerError innerError = default;
+            IList<DataProtectionBackupUserFacingError> details = default;
+            DataProtectionBackupInnerError innerError = default;
             bool? isRetryable = default;
             bool? isUserError = default;
             IDictionary<string, string> properties = default;
@@ -210,10 +210,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    List<UserFacingError> array = new List<UserFacingError>();
+                    List<DataProtectionBackupUserFacingError> array = new List<DataProtectionBackupUserFacingError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeUserFacingError(item, options));
+                        array.Add(DeserializeDataProtectionBackupUserFacingError(item, options));
                     }
                     details = array;
                     continue;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    innerError = InnerError.DeserializeInnerError(prop.Value, options);
+                    innerError = DataProtectionBackupInnerError.DeserializeDataProtectionBackupInnerError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("isRetryable"u8))
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserFacingError(
+            return new DataProtectionBackupUserFacingError(
                 code,
-                details ?? new ChangeTrackingList<UserFacingError>(),
+                details ?? new ChangeTrackingList<DataProtectionBackupUserFacingError>(),
                 innerError,
                 isRetryable,
                 isUserError,

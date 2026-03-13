@@ -12,23 +12,23 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Inner Error. </summary>
-    public partial class InnerError
+    public partial class DataProtectionBackupInnerError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
-        public InnerError()
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInnerError"/>. </summary>
+        public DataProtectionBackupInnerError()
         {
             AdditionalInfo = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="InnerError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupInnerError"/>. </summary>
         /// <param name="additionalInfo"> Any Key value pairs that can be provided to the client for additional  verbose information. </param>
         /// <param name="code"> Unique code for this error. </param>
         /// <param name="embeddedInnerError"> Child Inner Error, to allow Nesting. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InnerError(IDictionary<string, string> additionalInfo, string code, InnerError embeddedInnerError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupInnerError(IDictionary<string, string> additionalInfo, string code, DataProtectionBackupInnerError embeddedInnerError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AdditionalInfo = additionalInfo;
             Code = code;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string Code { get; set; }
 
         /// <summary> Child Inner Error, to allow Nesting. </summary>
-        public InnerError EmbeddedInnerError { get; set; }
+        public DataProtectionBackupInnerError EmbeddedInnerError { get; set; }
     }
 }

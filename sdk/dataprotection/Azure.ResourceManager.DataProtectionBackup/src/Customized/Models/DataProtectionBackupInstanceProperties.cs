@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Specifies the protection error of the resource. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and will be removed in a future release. Please use ResourceProtectionErrorDetails instead.")]
-        public Azure.ResponseError ProtectionErrorDetails { get; }
+        public Azure.ResponseError ProtectionErrorDetails { get => DataProtectionBackupUserFacingError.ToResponseError(ResourceProtectionErrorDetails); }
     }
 }

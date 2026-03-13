@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            UserFacingError protectionStatusErrorDetails = default;
+            DataProtectionBackupUserFacingError protectionStatusErrorDetails = default;
             BackupInstanceProtectionStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    protectionStatusErrorDetails = UserFacingError.DeserializeUserFacingError(prop.Value, options);
+                    protectionStatusErrorDetails = DataProtectionBackupUserFacingError.DeserializeDataProtectionBackupUserFacingError(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))

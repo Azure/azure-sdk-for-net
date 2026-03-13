@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Initializes a new instance of <see cref="UserFacingWarningDetail"/>. </summary>
         /// <param name="warningDetails"> Error details for the warning. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="warningDetails"/> is null. </exception>
-        public UserFacingWarningDetail(UserFacingError warningDetails)
+        public UserFacingWarningDetail(DataProtectionBackupUserFacingError warningDetails)
         {
             Argument.AssertNotNull(warningDetails, nameof(warningDetails));
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceName"> Name of resource for which warning is raised. </param>
         /// <param name="warningDetails"> Error details for the warning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserFacingWarningDetail(string resourceName, UserFacingError warningDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserFacingWarningDetail(string resourceName, DataProtectionBackupUserFacingError warningDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceName = resourceName;
             WarningDetails = warningDetails;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string ResourceName { get; set; }
 
         /// <summary> Error details for the warning. </summary>
-        public UserFacingError WarningDetails { get; set; }
+        public DataProtectionBackupUserFacingError WarningDetails { get; set; }
     }
 }

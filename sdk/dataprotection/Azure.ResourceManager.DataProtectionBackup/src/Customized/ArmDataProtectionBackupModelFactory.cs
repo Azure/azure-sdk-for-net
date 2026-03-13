@@ -17,11 +17,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="errorDetails"> Specifies the protection status error of the resource. </param>
         /// <param name="status"> Specifies the protection status of the resource. </param>
         /// <returns> A new <see cref="Models.BackupInstanceProtectionStatusDetails"/> instance for mocking. </returns>
-        [Obsolete("This method is deprecated and will be removed in a future release. Please use the constructor of the model class instead.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static BackupInstanceProtectionStatusDetails BackupInstanceProtectionStatusDetails(ResponseError errorDetails, BackupInstanceProtectionStatus? status)
         {
-            throw new NotSupportedException($"This method is deprecated and will be removed in a future release. Please use the constructor of the model class instead.");
+            return new BackupInstanceProtectionStatusDetails
+            {
+                ProtectionStatusErrorDetails = Models.DataProtectionBackupUserFacingError.ToUserFacingError(errorDetails),
+                Status = status
+            };
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataProtectionBackup.Models.BackupRestoreContent" />. </summary>

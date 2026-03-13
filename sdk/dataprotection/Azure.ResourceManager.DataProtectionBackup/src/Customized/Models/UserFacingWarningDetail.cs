@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Error details for the warning. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is deprecated and will be removed in a future release. Please use WarningDetails instead.")]
-        public Azure.ResponseError Warning { get; set; }
+        public Azure.ResponseError Warning { get => DataProtectionBackupUserFacingError.ToResponseError(WarningDetails); set => WarningDetails = DataProtectionBackupUserFacingError.ToUserFacingError(value); }
     }
 }

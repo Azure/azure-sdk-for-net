@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="objectType"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IList<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, UserFacingError resourceProtectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, IList<string> resourceGuardOperationRequests, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, DataProtectionBackupUserFacingError resourceProtectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, DataProtectionIdentityDetails identityDetails, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             DataSourceInfo = dataSourceInfo;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public CurrentProtectionState? CurrentProtectionState { get; }
 
         /// <summary> Specifies the protection error of the resource. </summary>
-        public UserFacingError ResourceProtectionErrorDetails { get; }
+        public DataProtectionBackupUserFacingError ResourceProtectionErrorDetails { get; }
 
         /// <summary> Specifies the provisioning state of the resource i.e. provisioning/updating/Succeeded/Failed. </summary>
         public string ProvisioningState { get; }

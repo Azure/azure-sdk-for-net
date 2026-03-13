@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// </param>
         /// <param name="objectType"></param>
         /// <returns> A new <see cref="Models.DataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName = default, DataSourceInfo dataSourceInfo = default, DataSourceSetInfo dataSourceSetInfo = default, BackupInstancePolicyInfo policyInfo = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupInstanceProtectionStatusDetails protectionStatus = default, CurrentProtectionState? currentProtectionState = default, UserFacingError resourceProtectionErrorDetails = default, string provisioningState = default, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default, BackupValidationType? validationType = default, DataProtectionIdentityDetails identityDetails = default, string objectType = default)
+        public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName = default, DataSourceInfo dataSourceInfo = default, DataSourceSetInfo dataSourceSetInfo = default, BackupInstancePolicyInfo policyInfo = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupInstanceProtectionStatusDetails protectionStatus = default, CurrentProtectionState? currentProtectionState = default, DataProtectionBackupUserFacingError resourceProtectionErrorDetails = default, string provisioningState = default, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default, BackupValidationType? validationType = default, DataProtectionIdentityDetails identityDetails = default, string objectType = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
@@ -168,14 +168,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="message"></param>
         /// <param name="recommendedAction"> RecommendedAction � localized. </param>
         /// <param name="target"> Target of the error. </param>
-        /// <returns> A new <see cref="Models.UserFacingError"/> instance for mocking. </returns>
-        public static UserFacingError UserFacingError(string code = default, IEnumerable<UserFacingError> details = default, InnerError innerError = default, bool? isRetryable = default, bool? isUserError = default, IDictionary<string, string> properties = default, string message = default, IEnumerable<string> recommendedAction = default, string target = default)
+        /// <returns> A new <see cref="Models.DataProtectionBackupUserFacingError"/> instance for mocking. </returns>
+        public static DataProtectionBackupUserFacingError DataProtectionBackupUserFacingError(string code = default, IEnumerable<DataProtectionBackupUserFacingError> details = default, DataProtectionBackupInnerError innerError = default, bool? isRetryable = default, bool? isUserError = default, IDictionary<string, string> properties = default, string message = default, IEnumerable<string> recommendedAction = default, string target = default)
         {
-            details ??= new ChangeTrackingList<UserFacingError>();
+            details ??= new ChangeTrackingList<DataProtectionBackupUserFacingError>();
             properties ??= new ChangeTrackingDictionary<string, string>();
             recommendedAction ??= new ChangeTrackingList<string>();
 
-            return new UserFacingError(
+            return new DataProtectionBackupUserFacingError(
                 code,
                 details.ToList(),
                 innerError,
@@ -192,12 +192,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="additionalInfo"> Any Key value pairs that can be provided to the client for additional  verbose information. </param>
         /// <param name="code"> Unique code for this error. </param>
         /// <param name="embeddedInnerError"> Child Inner Error, to allow Nesting. </param>
-        /// <returns> A new <see cref="Models.InnerError"/> instance for mocking. </returns>
-        public static InnerError InnerError(IDictionary<string, string> additionalInfo = default, string code = default, InnerError embeddedInnerError = default)
+        /// <returns> A new <see cref="Models.DataProtectionBackupInnerError"/> instance for mocking. </returns>
+        public static DataProtectionBackupInnerError DataProtectionBackupInnerError(IDictionary<string, string> additionalInfo = default, string code = default, DataProtectionBackupInnerError embeddedInnerError = default)
         {
             additionalInfo ??= new ChangeTrackingDictionary<string, string>();
 
-            return new InnerError(additionalInfo, code, embeddedInnerError, additionalBinaryDataProperties: null);
+            return new DataProtectionBackupInnerError(additionalInfo, code, embeddedInnerError, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1057,9 +1057,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
         /// <returns> A new <see cref="Models.DataProtectionBackupJobProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId = default, string backupInstanceFriendlyName = default, ResourceIdentifier backupInstanceId = default, ResourceIdentifier dataSourceId = default, AzureLocation dataSourceLocation = default, string dataSourceName = default, string dataSourceSetName = default, string dataSourceType = default, TimeSpan? duration = default, DateTimeOffset? endOn = default, IEnumerable<UserFacingError> jobErrorDetails = default, BackupJobExtendedInfo extendedInfo = default, bool isUserTriggered = default, string operation = default, string operationCategory = default, ResourceIdentifier policyId = default, string policyName = default, bool isProgressEnabled = default, Uri progressUri = default, string rehydrationPriority = default, string restoreType = default, string sourceResourceGroup = default, string sourceSubscriptionId = default, DateTimeOffset startOn = default, string status = default, string subscriptionId = default, IEnumerable<string> supportedActions = default, string vaultName = default, ETag? etag = default, string sourceDataStoreName = default, string destinationDataStoreName = default)
+        public static DataProtectionBackupJobProperties DataProtectionBackupJobProperties(string activityId = default, string backupInstanceFriendlyName = default, ResourceIdentifier backupInstanceId = default, ResourceIdentifier dataSourceId = default, AzureLocation dataSourceLocation = default, string dataSourceName = default, string dataSourceSetName = default, string dataSourceType = default, TimeSpan? duration = default, DateTimeOffset? endOn = default, IEnumerable<DataProtectionBackupUserFacingError> jobErrorDetails = default, BackupJobExtendedInfo extendedInfo = default, bool isUserTriggered = default, string operation = default, string operationCategory = default, ResourceIdentifier policyId = default, string policyName = default, bool isProgressEnabled = default, Uri progressUri = default, string rehydrationPriority = default, string restoreType = default, string sourceResourceGroup = default, string sourceSubscriptionId = default, DateTimeOffset startOn = default, string status = default, string subscriptionId = default, IEnumerable<string> supportedActions = default, string vaultName = default, ETag? etag = default, string sourceDataStoreName = default, string destinationDataStoreName = default)
         {
-            jobErrorDetails ??= new ChangeTrackingList<UserFacingError>();
+            jobErrorDetails ??= new ChangeTrackingList<DataProtectionBackupUserFacingError>();
             supportedActions ??= new ChangeTrackingList<string>();
 
             return new DataProtectionBackupJobProperties(
@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"></param>
         /// <param name="deletionInfo"> Deletion info of Backup Instance. </param>
         /// <returns> A new <see cref="Models.DeletedDataProtectionBackupInstanceProperties"/> instance for mocking. </returns>
-        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = default, DataSourceInfo dataSourceInfo = default, DataSourceSetInfo dataSourceSetInfo = default, BackupInstancePolicyInfo policyInfo = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupInstanceProtectionStatusDetails protectionStatus = default, CurrentProtectionState? currentProtectionState = default, UserFacingError resourceProtectionErrorDetails = default, string provisioningState = default, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default, BackupValidationType? validationType = default, DataProtectionIdentityDetails identityDetails = default, string objectType = default, BackupInstanceDeletionInfo deletionInfo = default)
+        public static DeletedDataProtectionBackupInstanceProperties DeletedDataProtectionBackupInstanceProperties(string friendlyName = default, DataSourceInfo dataSourceInfo = default, DataSourceSetInfo dataSourceSetInfo = default, BackupInstancePolicyInfo policyInfo = default, IEnumerable<string> resourceGuardOperationRequests = default, BackupInstanceProtectionStatusDetails protectionStatus = default, CurrentProtectionState? currentProtectionState = default, DataProtectionBackupUserFacingError resourceProtectionErrorDetails = default, string provisioningState = default, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default, BackupValidationType? validationType = default, DataProtectionIdentityDetails identityDetails = default, string objectType = default, BackupInstanceDeletionInfo deletionInfo = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 

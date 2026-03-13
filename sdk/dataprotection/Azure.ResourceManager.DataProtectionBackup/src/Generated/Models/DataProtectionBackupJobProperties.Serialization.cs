@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
-                foreach (UserFacingError item in JobErrorDetails)
+                foreach (DataProtectionBackupUserFacingError item in JobErrorDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string dataSourceType = default;
             TimeSpan? duration = default;
             DateTimeOffset? endOn = default;
-            IReadOnlyList<UserFacingError> jobErrorDetails = default;
+            IReadOnlyList<DataProtectionBackupUserFacingError> jobErrorDetails = default;
             BackupJobExtendedInfo extendedInfo = default;
             bool isUserTriggered = default;
             string operation = default;
@@ -344,10 +344,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    List<UserFacingError> array = new List<UserFacingError>();
+                    List<DataProtectionBackupUserFacingError> array = new List<DataProtectionBackupUserFacingError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UserFacingError.DeserializeUserFacingError(item, options));
+                        array.Add(DataProtectionBackupUserFacingError.DeserializeDataProtectionBackupUserFacingError(item, options));
                     }
                     jobErrorDetails = array;
                     continue;
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceType,
                 duration,
                 endOn,
-                jobErrorDetails ?? new ChangeTrackingList<UserFacingError>(),
+                jobErrorDetails ?? new ChangeTrackingList<DataProtectionBackupUserFacingError>(),
                 extendedInfo,
                 isUserTriggered,
                 operation,

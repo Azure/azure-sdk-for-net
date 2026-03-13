@@ -14,51 +14,51 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Inner Error. </summary>
-    public partial class InnerError : IJsonModel<InnerError>
+    public partial class DataProtectionBackupInnerError : IJsonModel<DataProtectionBackupInnerError>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InnerError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DataProtectionBackupInnerError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupInnerError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeInnerError(document.RootElement, options);
+                        return DeserializeDataProtectionBackupInnerError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InnerError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupInnerError)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupInnerError>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(InnerError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupInnerError)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<InnerError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataProtectionBackupInnerError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InnerError IPersistableModel<InnerError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataProtectionBackupInnerError IPersistableModel<DataProtectionBackupInnerError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<InnerError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataProtectionBackupInnerError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<InnerError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataProtectionBackupInnerError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupInnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InnerError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupInnerError)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(AdditionalInfo))
             {
@@ -119,24 +119,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        InnerError IJsonModel<InnerError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataProtectionBackupInnerError IJsonModel<DataProtectionBackupInnerError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual InnerError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DataProtectionBackupInnerError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<InnerError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupInnerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InnerError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupInnerError)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeInnerError(document.RootElement, options);
+            return DeserializeDataProtectionBackupInnerError(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static InnerError DeserializeInnerError(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataProtectionBackupInnerError DeserializeDataProtectionBackupInnerError(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             IDictionary<string, string> additionalInfo = default;
             string code = default;
-            InnerError embeddedInnerError = default;
+            DataProtectionBackupInnerError embeddedInnerError = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    embeddedInnerError = DeserializeInnerError(prop.Value, options);
+                    embeddedInnerError = DeserializeDataProtectionBackupInnerError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InnerError(additionalInfo ?? new ChangeTrackingDictionary<string, string>(), code, embeddedInnerError, additionalBinaryDataProperties);
+            return new DataProtectionBackupInnerError(additionalInfo ?? new ChangeTrackingDictionary<string, string>(), code, embeddedInnerError, additionalBinaryDataProperties);
         }
     }
 }

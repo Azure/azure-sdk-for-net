@@ -12,20 +12,20 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Error object used by layers that have access to localized content, and propagate that to user. </summary>
-    public partial class UserFacingError
+    public partial class DataProtectionBackupUserFacingError
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UserFacingError"/>. </summary>
-        public UserFacingError()
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupUserFacingError"/>. </summary>
+        public DataProtectionBackupUserFacingError()
         {
-            Details = new ChangeTrackingList<UserFacingError>();
+            Details = new ChangeTrackingList<DataProtectionBackupUserFacingError>();
             Properties = new ChangeTrackingDictionary<string, string>();
             RecommendedAction = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="UserFacingError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupUserFacingError"/>. </summary>
         /// <param name="code"> Unique code for this error. </param>
         /// <param name="details"> Additional related Errors. </param>
         /// <param name="innerError"> Inner Error. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="recommendedAction"> RecommendedAction � localized. </param>
         /// <param name="target"> Target of the error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserFacingError(string code, IList<UserFacingError> details, InnerError innerError, bool? isRetryable, bool? isUserError, IDictionary<string, string> properties, string message, IList<string> recommendedAction, string target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupUserFacingError(string code, IList<DataProtectionBackupUserFacingError> details, DataProtectionBackupInnerError innerError, bool? isRetryable, bool? isUserError, IDictionary<string, string> properties, string message, IList<string> recommendedAction, string target, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Details = details;
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string Code { get; set; }
 
         /// <summary> Additional related Errors. </summary>
-        public IList<UserFacingError> Details { get; }
+        public IList<DataProtectionBackupUserFacingError> Details { get; }
 
         /// <summary> Inner Error. </summary>
-        public InnerError InnerError { get; set; }
+        public DataProtectionBackupInnerError InnerError { get; set; }
 
         /// <summary> Whether the operation will be retryable or not. </summary>
         public bool? IsRetryable { get; set; }
