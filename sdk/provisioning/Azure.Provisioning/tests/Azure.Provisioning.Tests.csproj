@@ -17,6 +17,6 @@
 
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
-    <Compile Include="..\..\common\ProvisioningTestShared\*.cs" LinkBase="Shared\ProvisioningTestShared" />
+    <Compile Include="..\..\..\..\common\ProvisioningTestShared\*.cs" LinkBase="Shared\ProvisioningTestShared" />
   </ItemGroup>
 </Project>
