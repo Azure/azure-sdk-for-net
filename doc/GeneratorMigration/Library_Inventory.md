@@ -20,8 +20,8 @@
   - Old TypeSpec: 0
 - Data Plane (DPG): 145
   - Autorest/Swagger: 54
-  - New Emitter (TypeSpec): 38
-  - Old TypeSpec: 4
+  - New Emitter (TypeSpec): 39
+  - Old TypeSpec: 3
 - Provisioning: 31
   - Reflection-based generator: 31
   - TypeSpec-based generator: 0
@@ -32,7 +32,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 38 / 42 (90.5%)
+**Migration Status**: 39 / 42 (92.9%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -74,7 +74,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | search | Azure.Search.Documents | ✅ |  |
 | template | Azure.Template | ✅ |  |
 | transcription | Azure.AI.Speech.Transcription | ✅ | ✅ |
-| translation | Azure.AI.Translation.Document |  |  |
+| translation | Azure.AI.Translation.Document | ✅ |  |
 | translation | Azure.AI.Translation.Text | ✅ |  |
 | vision | Azure.AI.Vision.ImageAnalysis | ✅ |  |
 | voicelive | Azure.AI.VoiceLive | ✅ |  |
