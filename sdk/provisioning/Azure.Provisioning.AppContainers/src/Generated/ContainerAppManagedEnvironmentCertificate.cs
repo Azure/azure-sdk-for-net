@@ -98,7 +98,7 @@ public partial class ContainerAppManagedEnvironmentCertificate : ProvisionableRe
     /// </param>
     /// <param name="resourceVersion">Version of the ContainerAppManagedEnvironmentCertificate.</param>
     public ContainerAppManagedEnvironmentCertificate(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/certificates", resourceVersion ?? "2026-01-01")
+        : base(bicepIdentifier, "Microsoft.App/managedEnvironments/certificates", resourceVersion ?? "2025-07-01")
     {
     }
 
@@ -123,11 +123,6 @@ public partial class ContainerAppManagedEnvironmentCertificate : ProvisionableRe
     /// </summary>
     public static class ResourceVersions
     {
-        /// <summary>
-        /// 2026-01-01.
-        /// </summary>
-        public static readonly string V2026_01_01 = "2026-01-01";
-
         /// <summary>
         /// 2025-07-01.
         /// </summary>

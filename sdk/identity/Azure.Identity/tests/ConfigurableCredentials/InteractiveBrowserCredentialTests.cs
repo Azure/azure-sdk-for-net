@@ -199,14 +199,5 @@ namespace Azure.Identity.Tests.ConfigurableCredentials.InteractiveBrowser
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await cred.GetTokenAsync(expTokenRequestContext, default).ConfigureAwait(false));
             Assert.IsNotNull(ex);
         }
-
-        public override async Task InteractiveBrowserAcquireTokenInteractiveException()
-            => Assert.Ignore("MSAL-specific test does not apply to configurable credential");
-        public override async Task InteractiveBrowserAcquireTokenSilentException()
-            => Assert.Ignore("MSAL-specific test does not apply to configurable credential");
-        public override async Task InteractiveBrowserRefreshException()
-            => Assert.Ignore("MSAL-specific test does not apply to configurable credential");
-        public override async Task InteractiveBrowserValidateSyncWorkaroundCompatSwitch()
-            => Assert.Ignore("Compat switch test does not apply to configurable credential");
     }
 }

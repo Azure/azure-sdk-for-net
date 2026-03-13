@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.ImpactReporting
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(impactConnectorData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(impactConnectorData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ImpactConnectorData"/> from. </param>

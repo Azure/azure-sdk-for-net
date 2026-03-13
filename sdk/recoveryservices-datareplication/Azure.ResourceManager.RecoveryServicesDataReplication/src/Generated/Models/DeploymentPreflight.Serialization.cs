@@ -65,9 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(deploymentPreflight, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(deploymentPreflight, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeploymentPreflight"/> from. </param>

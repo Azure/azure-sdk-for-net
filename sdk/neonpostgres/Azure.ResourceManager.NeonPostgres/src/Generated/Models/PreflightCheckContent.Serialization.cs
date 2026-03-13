@@ -74,9 +74,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(preflightCheckContent, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(preflightCheckContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>

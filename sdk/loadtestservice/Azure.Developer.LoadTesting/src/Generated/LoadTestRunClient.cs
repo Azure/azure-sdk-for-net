@@ -1276,8 +1276,8 @@ namespace Azure.Developer.LoadTesting
         /// </list>
         /// </summary>
         /// <param name="orderby">
-        /// Sort on the supported fields in (field asc/desc) format. eg: executedDateTime
-        /// asc. Supported fields - executedDateTime
+        /// Sort on the supported fields in (field asc/desc) format. eg: createdDateTime asc.
+        /// Supported fields - createdDateTime, executedDateTime (legacy)
         /// </param>
         /// <param name="search">
         /// Prefix based, case sensitive search on searchable fields - description,
@@ -1319,8 +1319,8 @@ namespace Azure.Developer.LoadTesting
         /// </list>
         /// </summary>
         /// <param name="orderby">
-        /// Sort on the supported fields in (field asc/desc) format. eg: executedDateTime
-        /// asc. Supported fields - executedDateTime
+        /// Sort on the supported fields in (field asc/desc) format. eg: createdDateTime asc.
+        /// Supported fields - createdDateTime, executedDateTime (legacy)
         /// </param>
         /// <param name="search">
         /// Prefix based, case sensitive search on searchable fields - description,
@@ -1355,8 +1355,8 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Get all test runs for the given filters. </summary>
         /// <param name="orderby">
-        /// Sort on the supported fields in (field asc/desc) format. eg: executedDateTime
-        /// asc. Supported fields - executedDateTime
+        /// Sort on the supported fields in (field asc/desc) format. eg: createdDateTime asc.
+        /// Supported fields - createdDateTime, executedDateTime (legacy)
         /// </param>
         /// <param name="search">
         /// Prefix based, case sensitive search on searchable fields - description,
@@ -1390,8 +1390,8 @@ namespace Azure.Developer.LoadTesting
 
         /// <summary> Get all test runs for the given filters. </summary>
         /// <param name="orderby">
-        /// Sort on the supported fields in (field asc/desc) format. eg: executedDateTime
-        /// asc. Supported fields - executedDateTime
+        /// Sort on the supported fields in (field asc/desc) format. eg: createdDateTime asc.
+        /// Supported fields - createdDateTime, executedDateTime (legacy)
         /// </param>
         /// <param name="search">
         /// Prefix based, case sensitive search on searchable fields - description,
@@ -1949,6 +1949,80 @@ namespace Azure.Developer.LoadTesting
 
             Response result = await GetLatestTestRunInsightsAsync(testRunId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TestRunInsights)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update the latest insights for the test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testRunId">
+        /// Unique name for the load test run, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpdateLatestTestRunInsights(string testRunId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.UpdateLatestTestRunInsights");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUpdateLatestTestRunInsightsRequest(testRunId, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Update the latest insights for the test run.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testRunId">
+        /// Unique name for the load test run, must contain only lower-case alphabetic,
+        /// numeric, underscore or hyphen characters.
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpdateLatestTestRunInsightsAsync(string testRunId, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LoadTestRunClient.UpdateLatestTestRunInsights");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUpdateLatestTestRunInsightsRequest(testRunId, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Generate insights for the test run. </summary>

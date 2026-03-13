@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerService.Models
     public readonly partial struct NamespaceDeletePolicy : IEquatable<NamespaceDeletePolicy>
     {
         private readonly string _value;
+        /// <summary> Only delete the ARM resource, keep the Kubernetes namespace. Also delete the ManagedByARM label. </summary>
+        private const string KeepValue = "Keep";
+        /// <summary> Delete both the ARM resource and the Kubernetes namespace together. </summary>
+        private const string DeleteValue = "Delete";
 
         /// <summary> Initializes a new instance of <see cref="NamespaceDeletePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NamespaceDeletePolicy(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string KeepValue = "Keep";
-        private const string DeleteValue = "Delete";
+            _value = value;
+        }
 
         /// <summary> Only delete the ARM resource, keep the Kubernetes namespace. Also delete the ManagedByARM label. </summary>
         public static NamespaceDeletePolicy Keep { get; } = new NamespaceDeletePolicy(KeepValue);
+
         /// <summary> Delete both the ARM resource and the Kubernetes namespace together. </summary>
         public static NamespaceDeletePolicy Delete { get; } = new NamespaceDeletePolicy(DeleteValue);
+
         /// <summary> Determines if two <see cref="NamespaceDeletePolicy"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NamespaceDeletePolicy left, NamespaceDeletePolicy right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NamespaceDeletePolicy"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NamespaceDeletePolicy left, NamespaceDeletePolicy right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NamespaceDeletePolicy"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NamespaceDeletePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NamespaceDeletePolicy(string value) => new NamespaceDeletePolicy(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NamespaceDeletePolicy"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NamespaceDeletePolicy?(string value) => value == null ? null : new NamespaceDeletePolicy(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NamespaceDeletePolicy other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NamespaceDeletePolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
