@@ -8,5 +8,7 @@
     <ProjectReference Include="..\src\Azure.Provisioning.Storage.csproj" />
     <ProjectReference Include="..\..\..\provisioning\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Compile Include="..\..\..\provisioning\common\ProvisioningTestShared\*.cs" LinkBase="Shared\ProvisioningTestShared" />
+  </ItemGroup>
 </Project>
