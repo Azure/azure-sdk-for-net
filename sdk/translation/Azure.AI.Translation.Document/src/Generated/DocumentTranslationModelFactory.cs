@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 using Azure;
 
 namespace Azure.AI.Translation.Document
@@ -37,20 +36,6 @@ namespace Azure.AI.Translation.Document
             targets ??= new ChangeTrackingList<TranslationTarget>();
 
             return new DocumentTranslationInput(source, targets.ToList(), storageUriKind, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Source of the input documents. </summary>
-        /// <param name="sourceUri"> Location of the folder / container or single file with your documents. </param>
-        /// <param name="filter"> Document filter. </param>
-        /// <param name="languageCode">
-        /// Language code
-        /// If none is specified, we will perform auto detect on the document
-        /// </param>
-        /// <param name="storageSource"> Storage Source. </param>
-        /// <returns> A new <see cref="Document.TranslationSource"/> instance for mocking. </returns>
-        public static TranslationSource TranslationSource(Uri sourceUri = default, DocumentFilter filter = default, string languageCode = default, TranslationStorageSource? storageSource = default)
-        {
-            return new TranslationSource(sourceUri, filter, languageCode, storageSource, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Destination for the finished translated documents. </summary>
@@ -96,64 +81,6 @@ namespace Azure.AI.Translation.Document
         public static BatchOptions BatchOptions(bool? translateTextWithinImage = default)
         {
             return new BatchOptions(translateTextWithinImage, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Translation job status response. </summary>
-        /// <param name="id"> Id of the translation operation. </param>
-        /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
-        /// <param name="status"> List of possible statuses for job or document. </param>
-        /// <param name="summary"> Status Summary. </param>
-        /// <param name="error">
-        /// This contains an outer error with error code, message, details, target and an
-        /// inner error with more descriptive details.
-        /// </param>
-        /// <returns> A new <see cref="Document.TranslationStatusResult"/> instance for mocking. </returns>
-        public static TranslationStatusResult TranslationStatusResult(string id = default, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default, DocumentTranslationStatus status = default, TranslationStatusSummary summary = default, JsonElement error = default)
-        {
-            return new TranslationStatusResult(
-                id,
-                createdOn,
-                lastModified,
-                status,
-                summary,
-                error,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Document Status Response. </summary>
-        /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
-        /// <param name="sourceDocumentUri"> Location of the source document. </param>
-        /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
-        /// <param name="status"> List of possible statuses for job or document. </param>
-        /// <param name="translatedToLanguageCode"> To language. </param>
-        /// <param name="progress"> Progress of the translation if available. </param>
-        /// <param name="id"> Document Id. </param>
-        /// <param name="charactersCharged"> Character charged by the API. </param>
-        /// <param name="totalImageScansSucceeded"> Total image scans charged by the API. </param>
-        /// <param name="totalImageScansFailed"> Total image scans failed. </param>
-        /// <param name="error">
-        /// This contains an outer error with error code, message, details, target and an
-        /// inner error with more descriptive details.
-        /// </param>
-        /// <returns> A new <see cref="Document.DocumentStatusResult"/> instance for mocking. </returns>
-        public static DocumentStatusResult DocumentStatusResult(Uri translatedDocumentUri = default, Uri sourceDocumentUri = default, DateTimeOffset createdOn = default, DateTimeOffset lastModified = default, DocumentTranslationStatus status = default, string translatedToLanguageCode = default, float progress = default, string id = default, long charactersCharged = default, int? totalImageScansSucceeded = default, int? totalImageScansFailed = default, JsonElement error = default)
-        {
-            return new DocumentStatusResult(
-                translatedDocumentUri,
-                sourceDocumentUri,
-                createdOn,
-                lastModified,
-                status,
-                translatedToLanguageCode,
-                progress,
-                id,
-                charactersCharged,
-                totalImageScansSucceeded,
-                totalImageScansFailed,
-                error,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> List of supported file formats. </summary>

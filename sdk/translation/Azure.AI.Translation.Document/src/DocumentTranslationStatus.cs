@@ -14,10 +14,10 @@ namespace Azure.AI.Translation.Document
     {
         /// <summary> Canceled. </summary>
         [CodeGenMember("Cancelled")]
-        public static DocumentTranslationStatus Canceled { get; } = new DocumentTranslationStatus(CanceledValue);
+        public static DocumentTranslationStatus Canceled { get; } = new DocumentTranslationStatus(CancelledValue);
 
         /// <summary> Canceling. </summary>
         [CodeGenMember("Cancelling")]
-        public static DocumentTranslationStatus Canceling { get; } = new DocumentTranslationStatus(CancelingValue);
+        public static DocumentTranslationStatus Canceling { get; } = new DocumentTranslationStatus(CancellingValue);
     }
 }

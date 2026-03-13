@@ -135,61 +135,419 @@ namespace Azure.AI.Translation.Document
         }
 
         /// <summary>
-        /// Use this API to submit a bulk (batch) translation request to the Document
-        /// Translation service.
-        /// Each request can contain multiple documents and must
-        /// contain a source and destination container for each document.            
-        /// The
-        /// prefix and suffix filter (if supplied) are used to filter folders. The prefix
-        /// is applied to the subpath after the container name.            
-        /// Glossaries /
-        /// Translation memory can be included in the request and are applied by the
-        /// service when the document is translated.            
-        /// If the glossary is
-        /// invalid or unreachable during translation, an error is indicated in the
-        /// document status.
-        /// If a file with the same name already exists at the
-        /// destination, it will be overwritten. The targetUrl for each target language
-        /// must be unique.
+        /// [Protocol Method] Returns a list of batch requests submitted and the status for each
+        /// request.
+        /// This list only contains batch requests submitted by the user (based on
+        /// the resource).            
+        /// If the number of requests exceeds our paging limit,
+        /// server-side paging is used. Paginated responses indicate a partial result and
+        /// include a continuation token in the response.
+        /// The absence of a continuation
+        /// token means that no additional pages are available.            
+        /// top, skip
+        /// and maxpagesize query parameters can be used to specify a number of results to
+        /// return and an offset for the collection.            
+        /// top indicates the total
+        /// number of records the user wants to be returned across all pages.
+        /// skip
+        /// indicates the number of records to skip from the list of batches based on the
+        /// sorting method specified.  By default, we sort by descending start
+        /// time.
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
+        /// returned), @nextLink will contain the link to the next page.           
+        /// orderby query parameter can be used to sort the returned list (ex
+        /// "orderby=createdDateTimeUtc asc" or "orderby=createdDateTimeUtc
+        /// desc").
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query
+        /// parameters can be used to filter the returned list (ex:
+        /// "status=Succeeded,Cancelled") will only return succeeded and cancelled
+        /// operations.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used
+        /// combined or separately to specify a range of datetime to filter the returned
+        /// list by.
+        /// The supported filtering query parameters are (status, ids,
+        /// createdDateTimeUtcStart, createdDateTimeUtcEnd).            
+        /// The server honors
+        /// the values specified by the client. However, clients must be prepared to handle
+        /// responses that contain a different page size or contain a continuation token.           
+        /// When both top and skip are included, the server should first apply
+        /// skip and then top on the collection.
+        /// Note: If the server can't honor top
+        /// and/or skip, the server must return an error to the client informing about it
+        /// instead of just ignoring the query options.
+        /// This reduces the risk of the client
+        /// making assumptions about the data returned.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Translation job submission batch request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Operation<TranslationStatusResult> StartTranslation(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
+        /// <param name="maxCount">
+        /// top indicates the total number of records the user wants to be returned across
+        /// all pages.            
+        /// Clients MAY use top and skip query parameters to
+        /// specify a number of results to return and an offset into the collection.
+        /// When
+        /// both top and skip are given by a client, the server SHOULD first apply skip
+        /// and then top on the collection.            
+        /// Note: If the server can't honor
+        /// top and/or skip, the server MUST return an error to the client informing
+        /// about it instead of just ignoring the query options.
+        /// </param>
+        /// <param name="skip">
+        /// skip indicates the number of records to skip from the list of records held by
+        /// the server based on the sorting method specified.  By default, we sort by
+        /// descending start time.            
+        /// Clients MAY use top and skip query
+        /// parameters to specify a number of results to return and an offset into the
+        /// collection.
+        /// When both top and skip are given by a client, the server SHOULD
+        /// first apply skip and then top on the collection.            
+        /// Note: If the
+        /// server can't honor top and/or skip, the server MUST return an error to the
+        /// client informing about it instead of just ignoring the query options.
+        /// </param>
+        /// <param name="maxpagesize">
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
+        /// returned), @nextLink will contain the link to the next page.            
+        /// Clients MAY request server-driven paging with a specific page size by
+        /// specifying a maxpagesize preference. The server SHOULD honor this preference
+        /// if the specified page size is smaller than the server's default page size.
+        /// </param>
+        /// <param name="translationIds"> Ids to use in filtering. </param>
+        /// <param name="statuses"> Statuses to use in filtering. </param>
+        /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
+        /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
+        /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetTranslationsStatus(int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
-            return StartTranslation(waitUntil, body, cancellationToken.ToRequestContext());
+            return new DocumentTranslationClientGetTranslationsStatusCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxpagesize,
+                translationIds,
+                statuses,
+                createdDateTimeUtcStart,
+                createdDateTimeUtcEnd,
+                @orderby,
+                context);
         }
 
         /// <summary>
-        /// Use this API to submit a bulk (batch) translation request to the Document
-        /// Translation service.
-        /// Each request can contain multiple documents and must
-        /// contain a source and destination container for each document.            
-        /// The
-        /// prefix and suffix filter (if supplied) are used to filter folders. The prefix
-        /// is applied to the subpath after the container name.            
-        /// Glossaries /
-        /// Translation memory can be included in the request and are applied by the
-        /// service when the document is translated.            
-        /// If the glossary is
-        /// invalid or unreachable during translation, an error is indicated in the
-        /// document status.
-        /// If a file with the same name already exists at the
-        /// destination, it will be overwritten. The targetUrl for each target language
-        /// must be unique.
+        /// [Protocol Method] Returns a list of batch requests submitted and the status for each
+        /// request.
+        /// This list only contains batch requests submitted by the user (based on
+        /// the resource).            
+        /// If the number of requests exceeds our paging limit,
+        /// server-side paging is used. Paginated responses indicate a partial result and
+        /// include a continuation token in the response.
+        /// The absence of a continuation
+        /// token means that no additional pages are available.            
+        /// top, skip
+        /// and maxpagesize query parameters can be used to specify a number of results to
+        /// return and an offset for the collection.            
+        /// top indicates the total
+        /// number of records the user wants to be returned across all pages.
+        /// skip
+        /// indicates the number of records to skip from the list of batches based on the
+        /// sorting method specified.  By default, we sort by descending start
+        /// time.
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
+        /// returned), @nextLink will contain the link to the next page.           
+        /// orderby query parameter can be used to sort the returned list (ex
+        /// "orderby=createdDateTimeUtc asc" or "orderby=createdDateTimeUtc
+        /// desc").
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query
+        /// parameters can be used to filter the returned list (ex:
+        /// "status=Succeeded,Cancelled") will only return succeeded and cancelled
+        /// operations.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used
+        /// combined or separately to specify a range of datetime to filter the returned
+        /// list by.
+        /// The supported filtering query parameters are (status, ids,
+        /// createdDateTimeUtcStart, createdDateTimeUtcEnd).            
+        /// The server honors
+        /// the values specified by the client. However, clients must be prepared to handle
+        /// responses that contain a different page size or contain a continuation token.           
+        /// When both top and skip are included, the server should first apply
+        /// skip and then top on the collection.
+        /// Note: If the server can't honor top
+        /// and/or skip, the server must return an error to the client informing about it
+        /// instead of just ignoring the query options.
+        /// This reduces the risk of the client
+        /// making assumptions about the data returned.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Translation job submission batch request. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Operation<TranslationStatusResult>> StartTranslationAsync(WaitUntil waitUntil, TranslationBatch body, CancellationToken cancellationToken = default)
+        /// <param name="maxCount">
+        /// top indicates the total number of records the user wants to be returned across
+        /// all pages.            
+        /// Clients MAY use top and skip query parameters to
+        /// specify a number of results to return and an offset into the collection.
+        /// When
+        /// both top and skip are given by a client, the server SHOULD first apply skip
+        /// and then top on the collection.            
+        /// Note: If the server can't honor
+        /// top and/or skip, the server MUST return an error to the client informing
+        /// about it instead of just ignoring the query options.
+        /// </param>
+        /// <param name="skip">
+        /// skip indicates the number of records to skip from the list of records held by
+        /// the server based on the sorting method specified.  By default, we sort by
+        /// descending start time.            
+        /// Clients MAY use top and skip query
+        /// parameters to specify a number of results to return and an offset into the
+        /// collection.
+        /// When both top and skip are given by a client, the server SHOULD
+        /// first apply skip and then top on the collection.            
+        /// Note: If the
+        /// server can't honor top and/or skip, the server MUST return an error to the
+        /// client informing about it instead of just ignoring the query options.
+        /// </param>
+        /// <param name="maxpagesize">
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
+        /// returned), @nextLink will contain the link to the next page.            
+        /// Clients MAY request server-driven paging with a specific page size by
+        /// specifying a maxpagesize preference. The server SHOULD honor this preference
+        /// if the specified page size is smaller than the server's default page size.
+        /// </param>
+        /// <param name="translationIds"> Ids to use in filtering. </param>
+        /// <param name="statuses"> Statuses to use in filtering. </param>
+        /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
+        /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
+        /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetTranslationsStatusAsync(int? maxCount, int? skip, int? maxpagesize, IEnumerable<Guid> translationIds, IEnumerable<string> statuses, DateTimeOffset? createdDateTimeUtcStart, DateTimeOffset? createdDateTimeUtcEnd, IEnumerable<string> @orderby, RequestContext context)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            return new DocumentTranslationClientGetTranslationsStatusAsyncCollectionResult(
+                this,
+                maxCount,
+                skip,
+                maxpagesize,
+                translationIds,
+                statuses,
+                createdDateTimeUtcStart,
+                createdDateTimeUtcEnd,
+                @orderby,
+                context);
+        }
 
-            return await StartTranslationAsync(waitUntil, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        /// <summary>
+        /// Returns a list of batch requests submitted and the status for each
+        /// request.
+        /// This list only contains batch requests submitted by the user (based on
+        /// the resource).            
+        /// If the number of requests exceeds our paging limit,
+        /// server-side paging is used. Paginated responses indicate a partial result and
+        /// include a continuation token in the response.
+        /// The absence of a continuation
+        /// token means that no additional pages are available.            
+        /// top, skip
+        /// and maxpagesize query parameters can be used to specify a number of results to
+        /// return and an offset for the collection.            
+        /// top indicates the total
+        /// number of records the user wants to be returned across all pages.
+        /// skip
+        /// indicates the number of records to skip from the list of batches based on the
+        /// sorting method specified.  By default, we sort by descending start
+        /// time.
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
+        /// returned), @nextLink will contain the link to the next page.           
+        /// orderby query parameter can be used to sort the returned list (ex
+        /// "orderby=createdDateTimeUtc asc" or "orderby=createdDateTimeUtc
+        /// desc").
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query
+        /// parameters can be used to filter the returned list (ex:
+        /// "status=Succeeded,Cancelled") will only return succeeded and cancelled
+        /// operations.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used
+        /// combined or separately to specify a range of datetime to filter the returned
+        /// list by.
+        /// The supported filtering query parameters are (status, ids,
+        /// createdDateTimeUtcStart, createdDateTimeUtcEnd).            
+        /// The server honors
+        /// the values specified by the client. However, clients must be prepared to handle
+        /// responses that contain a different page size or contain a continuation token.           
+        /// When both top and skip are included, the server should first apply
+        /// skip and then top on the collection.
+        /// Note: If the server can't honor top
+        /// and/or skip, the server must return an error to the client informing about it
+        /// instead of just ignoring the query options.
+        /// This reduces the risk of the client
+        /// making assumptions about the data returned.
+        /// </summary>
+        /// <param name="maxCount">
+        /// top indicates the total number of records the user wants to be returned across
+        /// all pages.            
+        /// Clients MAY use top and skip query parameters to
+        /// specify a number of results to return and an offset into the collection.
+        /// When
+        /// both top and skip are given by a client, the server SHOULD first apply skip
+        /// and then top on the collection.            
+        /// Note: If the server can't honor
+        /// top and/or skip, the server MUST return an error to the client informing
+        /// about it instead of just ignoring the query options.
+        /// </param>
+        /// <param name="skip">
+        /// skip indicates the number of records to skip from the list of records held by
+        /// the server based on the sorting method specified.  By default, we sort by
+        /// descending start time.            
+        /// Clients MAY use top and skip query
+        /// parameters to specify a number of results to return and an offset into the
+        /// collection.
+        /// When both top and skip are given by a client, the server SHOULD
+        /// first apply skip and then top on the collection.            
+        /// Note: If the
+        /// server can't honor top and/or skip, the server MUST return an error to the
+        /// client informing about it instead of just ignoring the query options.
+        /// </param>
+        /// <param name="maxpagesize">
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
+        /// returned), @nextLink will contain the link to the next page.            
+        /// Clients MAY request server-driven paging with a specific page size by
+        /// specifying a maxpagesize preference. The server SHOULD honor this preference
+        /// if the specified page size is smaller than the server's default page size.
+        /// </param>
+        /// <param name="translationIds"> Ids to use in filtering. </param>
+        /// <param name="statuses"> Statuses to use in filtering. </param>
+        /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
+        /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
+        /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<TranslationStatusResult> GetTranslationsStatus(int? maxCount = default, int? skip = default, int? maxpagesize = default, IEnumerable<Guid> translationIds = default, IEnumerable<string> statuses = default, DateTimeOffset? createdDateTimeUtcStart = default, DateTimeOffset? createdDateTimeUtcEnd = default, IEnumerable<string> @orderby = default, CancellationToken cancellationToken = default)
+        {
+            return new DocumentTranslationClientGetTranslationsStatusCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxpagesize,
+                translationIds,
+                statuses,
+                createdDateTimeUtcStart,
+                createdDateTimeUtcEnd,
+                @orderby,
+                cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// Returns a list of batch requests submitted and the status for each
+        /// request.
+        /// This list only contains batch requests submitted by the user (based on
+        /// the resource).            
+        /// If the number of requests exceeds our paging limit,
+        /// server-side paging is used. Paginated responses indicate a partial result and
+        /// include a continuation token in the response.
+        /// The absence of a continuation
+        /// token means that no additional pages are available.            
+        /// top, skip
+        /// and maxpagesize query parameters can be used to specify a number of results to
+        /// return and an offset for the collection.            
+        /// top indicates the total
+        /// number of records the user wants to be returned across all pages.
+        /// skip
+        /// indicates the number of records to skip from the list of batches based on the
+        /// sorting method specified.  By default, we sort by descending start
+        /// time.
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
+        /// returned), @nextLink will contain the link to the next page.           
+        /// orderby query parameter can be used to sort the returned list (ex
+        /// "orderby=createdDateTimeUtc asc" or "orderby=createdDateTimeUtc
+        /// desc").
+        /// The default sorting is descending by createdDateTimeUtc.
+        /// Some query
+        /// parameters can be used to filter the returned list (ex:
+        /// "status=Succeeded,Cancelled") will only return succeeded and cancelled
+        /// operations.
+        /// createdDateTimeUtcStart and createdDateTimeUtcEnd can be used
+        /// combined or separately to specify a range of datetime to filter the returned
+        /// list by.
+        /// The supported filtering query parameters are (status, ids,
+        /// createdDateTimeUtcStart, createdDateTimeUtcEnd).            
+        /// The server honors
+        /// the values specified by the client. However, clients must be prepared to handle
+        /// responses that contain a different page size or contain a continuation token.           
+        /// When both top and skip are included, the server should first apply
+        /// skip and then top on the collection.
+        /// Note: If the server can't honor top
+        /// and/or skip, the server must return an error to the client informing about it
+        /// instead of just ignoring the query options.
+        /// This reduces the risk of the client
+        /// making assumptions about the data returned.
+        /// </summary>
+        /// <param name="maxCount">
+        /// top indicates the total number of records the user wants to be returned across
+        /// all pages.            
+        /// Clients MAY use top and skip query parameters to
+        /// specify a number of results to return and an offset into the collection.
+        /// When
+        /// both top and skip are given by a client, the server SHOULD first apply skip
+        /// and then top on the collection.            
+        /// Note: If the server can't honor
+        /// top and/or skip, the server MUST return an error to the client informing
+        /// about it instead of just ignoring the query options.
+        /// </param>
+        /// <param name="skip">
+        /// skip indicates the number of records to skip from the list of records held by
+        /// the server based on the sorting method specified.  By default, we sort by
+        /// descending start time.            
+        /// Clients MAY use top and skip query
+        /// parameters to specify a number of results to return and an offset into the
+        /// collection.
+        /// When both top and skip are given by a client, the server SHOULD
+        /// first apply skip and then top on the collection.            
+        /// Note: If the
+        /// server can't honor top and/or skip, the server MUST return an error to the
+        /// client informing about it instead of just ignoring the query options.
+        /// </param>
+        /// <param name="maxpagesize">
+        /// maxpagesize is the maximum items returned in a page.  If more items are
+        /// requested via top (or top is not specified and there are more items to be
+        /// returned), @nextLink will contain the link to the next page.            
+        /// Clients MAY request server-driven paging with a specific page size by
+        /// specifying a maxpagesize preference. The server SHOULD honor this preference
+        /// if the specified page size is smaller than the server's default page size.
+        /// </param>
+        /// <param name="translationIds"> Ids to use in filtering. </param>
+        /// <param name="statuses"> Statuses to use in filtering. </param>
+        /// <param name="createdDateTimeUtcStart"> the start datetime to get items after. </param>
+        /// <param name="createdDateTimeUtcEnd"> the end datetime to get items before. </param>
+        /// <param name="orderby"> the sorting query for the collection (ex: 'CreatedDateTimeUtc asc','CreatedDateTimeUtc desc'). </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<TranslationStatusResult> GetTranslationsStatusAsync(int? maxCount = default, int? skip = default, int? maxpagesize = default, IEnumerable<Guid> translationIds = default, IEnumerable<string> statuses = default, DateTimeOffset? createdDateTimeUtcStart = default, DateTimeOffset? createdDateTimeUtcEnd = default, IEnumerable<string> @orderby = default, CancellationToken cancellationToken = default)
+        {
+            return new DocumentTranslationClientGetTranslationsStatusAsyncCollectionResultOfT(
+                this,
+                maxCount,
+                skip,
+                maxpagesize,
+                translationIds,
+                statuses,
+                createdDateTimeUtcStart,
+                createdDateTimeUtcEnd,
+                @orderby,
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
