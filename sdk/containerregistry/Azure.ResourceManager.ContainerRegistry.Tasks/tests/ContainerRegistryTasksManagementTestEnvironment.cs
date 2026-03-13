@@ -3,7 +3,7 @@
 
 using Azure.Core.TestFramework;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Tests
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Tests
 {
     public class ContainerRegistryTasksManagementTestEnvironment : TestEnvironment
     {

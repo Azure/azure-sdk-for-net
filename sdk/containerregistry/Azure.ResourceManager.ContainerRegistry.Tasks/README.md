@@ -1,4 +1,4 @@
-# Microsoft Azure containerregistrytasks management client library for .NET
+# Microsoft Azure ContainerRegistry.Tasks management client library for .NET
 
 The Azure Container Registry Tasks .NET client library enables you to manage Azure Container Registry task resources, including task definitions, runs, triggers, and related configuration.
 
@@ -17,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure containerregistrytasks management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.containerregistrytasks --prerelease
+dotnet add package Azure.ResourceManager.ContainerRegistry.Tasks --prerelease
 ```
 
 ### Prerequisites

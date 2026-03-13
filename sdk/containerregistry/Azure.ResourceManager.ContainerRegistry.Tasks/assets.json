@@ -2,6 +2,6 @@
 {
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/containerregistrytasks/Azure.ResourceManager.containerregistrytasks",
+  "TagPrefix": "net/containerregistrytasks/Azure.ResourceManager.ContainerRegistry.Tasks",
   "Tag": ""
 }

@@ -4,5 +4,5 @@
 
 ### Features Added
 
-- Initial release of `Azure.ResourceManager.ContainerRegistryTasks` for managing Container Registry Tasks resources (Tasks, Runs, TaskRuns, and Agent Pools).
+- Initial release of `Azure.ResourceManager.ContainerRegistry.Tasks` for managing Container Registry Tasks resources (Tasks, Runs, TaskRuns, and Agent Pools).
 - This package provides dedicated management of the `Microsoft.ContainerRegistry/RegistryTasks` resource provider, separated from the `Azure.ResourceManager.ContainerRegistry` package where these resources were previously included.

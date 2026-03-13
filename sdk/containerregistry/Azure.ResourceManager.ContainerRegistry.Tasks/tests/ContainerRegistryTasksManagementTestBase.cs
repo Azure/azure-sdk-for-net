@@ -10,7 +10,7 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ContainerRegistryTasks.Tests
+namespace Azure.ResourceManager.ContainerRegistry.Tasks.Tests
 {
     public class ContainerRegistryTasksManagementTestBase : ManagementRecordedTestBase<ContainerRegistryTasksManagementTestEnvironment>
     {
