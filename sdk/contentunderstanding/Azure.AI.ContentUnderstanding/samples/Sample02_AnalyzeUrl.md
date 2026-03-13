@@ -185,6 +185,31 @@ foreach (AnalysisContent rangeMedia in rangeResult.Contents!)
 }
 ```
 
+You can also pass a range string directly to the `ContentRange` constructor. Time ranges use milliseconds on the wire. This is equivalent to using the factory methods and is useful for dynamically constructed or user-supplied ranges:
+
+```C# Snippet:ContentUnderstandingAnalyzeVideoUrlWithRawContentRangeAsync
+// Analyze the first 5 seconds using a raw range string (milliseconds).
+// This is equivalent to: ContentRange.TimeRange(TimeSpan.Zero, TimeSpan.FromSeconds(5))
+Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeAsync(
+    WaitUntil.Completed,
+    "prebuilt-videoSearch",
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource,
+            ContentRange = new ContentRange("0-5000")
+        }
+    });
+
+AnalysisResult rawRangeResult = rawRangeOperation.Value;
+foreach (AnalysisContent rawMedia in rawRangeResult.Contents!)
+{
+    AudioVisualContent rawVideoContent = (AudioVisualContent)rawMedia;
+    Console.WriteLine($"Raw ContentRange segment: {rawVideoContent.StartTime.TotalMilliseconds} ms - {rawVideoContent.EndTime.TotalMilliseconds} ms");
+}
+```
+
 ## Audio from a URL
 
 Analyze audio content with `prebuilt-audioSearch`. The returned markdown captures transcript and structure similar to video markdown, and you can read summaries.
@@ -251,6 +276,28 @@ AnalysisResult rangeResult = rangeOperation.Value;
 AudioVisualContent rangeAudioContent = (AudioVisualContent)rangeResult.Contents!.First();
 Console.WriteLine($"ContentRange audio analysis: {rangeAudioContent.StartTime.TotalMilliseconds} ms onward");
 Console.WriteLine($"Summary: {rangeAudioContent.Fields["Summary"].Value}");
+```
+
+You can also pass a range string directly for audio time ranges:
+
+```C# Snippet:ContentUnderstandingAnalyzeAudioUrlWithRawContentRangeAsync
+// Analyze audio from 5 seconds onward using a raw range string (milliseconds).
+// This is equivalent to: ContentRange.TimeRangeFrom(TimeSpan.FromSeconds(5))
+Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeAsync(
+    WaitUntil.Completed,
+    "prebuilt-audioSearch",
+    inputs: new[]
+    {
+        new AnalysisInput
+        {
+            Uri = uriSource,
+            ContentRange = new ContentRange("5000-")
+        }
+    });
+
+AnalysisResult rawRangeResult = rawRangeOperation.Value;
+AudioVisualContent rawAudioContent = (AudioVisualContent)rawRangeResult.Contents!.First();
+Console.WriteLine($"Raw ContentRange audio analysis: {rawAudioContent.StartTime.TotalMilliseconds} ms onward");
 ```
 
 ## Image from a URL

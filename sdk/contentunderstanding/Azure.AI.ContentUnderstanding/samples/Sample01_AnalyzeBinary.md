@@ -105,6 +105,20 @@ Operation<AnalysisResult> combineRangeOperation = await client.AnalyzeBinaryAsyn
 AnalysisResult combineRangeResult = combineRangeOperation.Value;
 ```
 
+You can also pass a range string directly to the `ContentRange` constructor. This is equivalent to using the factory methods and is useful for dynamically constructed or user-supplied ranges:
+
+```C# Snippet:ContentUnderstandingAnalyzeBinaryWithRawContentRangeAsync
+// Analyze pages 1–3, page 5, and pages 9 onward using a raw range string.
+// This is equivalent to: ContentRange.Combine(ContentRange.Pages(1, 3), ContentRange.Page(5), ContentRange.PagesFrom(9))
+Operation<AnalysisResult> rawRangeOperation = await client.AnalyzeBinaryAsync(
+    WaitUntil.Completed,
+    "prebuilt-documentSearch",
+    binaryData,
+    contentRange: new ContentRange("1-3,5,9-"));
+
+AnalysisResult rawRangeResult = rawRangeOperation.Value;
+```
+
 ## Extract markdown content
 
 The most common use case for document analysis is extracting markdown content, which is optimized for RAG (Retrieval-Augmented Generation) scenarios. Markdown provides a structured, searchable representation of the document that preserves layout, formatting, and hierarchy while being easily consumable by AI models and search systems.
