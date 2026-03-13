@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetLoadtest. </description>
+        /// <description> LoadTests_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> LoadTests_GetLoadtest. </description>
+        /// <description> LoadTests_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

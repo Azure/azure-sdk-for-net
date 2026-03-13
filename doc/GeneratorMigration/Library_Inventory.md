@@ -13,14 +13,14 @@
 
 ## Summary
 
-- Total libraries: 404
+- Total libraries: 405
 - Management Plane (MPG): 229
   - Autorest/Swagger: 131
   - New Emitter (TypeSpec): 98
   - Old TypeSpec: 0
-- Data Plane (DPG): 144
+- Data Plane (DPG): 145
   - Autorest/Swagger: 54
-  - New Emitter (TypeSpec): 37
+  - New Emitter (TypeSpec): 38
   - Old TypeSpec: 4
 - Provisioning: 31
   - Reflection-based generator: 31
@@ -32,13 +32,14 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 37 / 41 (90.2%)
+**Migration Status**: 38 / 42 (90.5%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
 | ai | Azure.AI.Agents.Persistent |  |  |
+| ai | Azure.AI.Extensions.OpenAI | ✅ | ✅ |
 | ai | Azure.AI.Projects | ✅ | ✅ |
-| ai | Azure.AI.Projects.OpenAI | ✅ | ✅ |
+| ai | Azure.AI.Projects.Agents | ✅ | ✅ |
 | anomalydetector | Azure.AI.AnomalyDetector | ✅ |  |
 | appconfiguration | Azure.Data.AppConfiguration | ✅ |  |
 | batch | Azure.Compute.Batch | ✅ |  |
@@ -46,7 +47,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |  |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference | ✅ |  |
-| cognitivelanguage | Azure.AI.Language.Text |  |  |
+| cognitivelanguage | Azure.AI.Language.Text | ✅ |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring | ✅ |  |
 | communication | Azure.Communication.JobRouter | ✅ |  |
 | communication | Azure.Communication.Messages |  |  |
@@ -73,7 +74,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | search | Azure.Search.Documents | ✅ |  |
 | template | Azure.Template | ✅ |  |
 | transcription | Azure.AI.Speech.Transcription | ✅ | ✅ |
-| translation | Azure.AI.Translation.Document | ✅ |  |
+| translation | Azure.AI.Translation.Document |  |  |
 | translation | Azure.AI.Translation.Text | ✅ |  |
 | vision | Azure.AI.Vision.ImageAnalysis | ✅ |  |
 | voicelive | Azure.AI.VoiceLive | ✅ |  |

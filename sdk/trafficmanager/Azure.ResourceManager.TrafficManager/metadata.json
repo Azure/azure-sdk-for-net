@@ -1,3 +1,5 @@
 {
-  "apiVersion": "2022-04-01"
+  "apiVersions": {
+    "Microsoft.Network": "2022-04-01"
+  }
 }
