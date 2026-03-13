@@ -154,7 +154,7 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
-        public void InternalAuthenticationPolicyConstructorIsRemoved()
+        public void InternalConstructorDoesNotHaveAuthenticationPolicyParam()
         {
             var endpointParam = InputFactory.EndpointParameter(
                 "endpoint",
@@ -173,11 +173,13 @@ namespace Azure.Generator.Tests.Visitors
                 .OfType<ClientProvider>().FirstOrDefault();
             Assert.IsNotNull(clientProvider);
 
+            // No internal constructor should have an AuthenticationPolicy parameter —
+            // the visitor changes it to HttpPipelinePolicy for Azure.Core compatibility.
             var authPolicyCtor = clientProvider!.Constructors.FirstOrDefault(c =>
                 c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
                 c.Signature.Parameters.Any(p => p.Type.Equals(typeof(AuthenticationPolicy))));
             Assert.IsNull(authPolicyCtor,
-                "Internal AuthenticationPolicy constructor should be removed by ClientSettingsVisitor");
+                "Internal constructor should not have an AuthenticationPolicy parameter");
         }
 
         [Test]
@@ -214,8 +216,8 @@ namespace Azure.Generator.Tests.Visitors
 
             // The initializer should contain a TokenProvider as TokenCredential argument
             var display = string.Join(", ", initializer.Arguments.Select(a => a.ToDisplayString()));
-            Assert.IsTrue(display.Contains("TokenProvider"),
-                $"Settings constructor initializer should reference TokenProvider. Args: {display}");
+            Assert.IsTrue(display.Contains("CredentialProvider"),
+                $"Settings constructor initializer should reference CredentialProvider. Args: {display}");
             Assert.IsTrue(display.Contains("TokenCredential"),
                 $"Settings constructor initializer should cast to TokenCredential. Args: {display}");
         }
