@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Overrides for localDNS profile. </summary>
     public partial class LocalDnsOverride
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LocalDnsOverride"/>. </summary>
         public LocalDnsOverride()
@@ -59,8 +31,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="cacheDurationInSeconds"> Cache max TTL in seconds. See [cache plugin](https://coredns.io/plugins/cache) for more information. </param>
         /// <param name="serveStaleDurationInSeconds"> Serve stale duration in seconds. See [cache plugin](https://coredns.io/plugins/cache) for more information. </param>
         /// <param name="serveStale"> Policy for serving stale data. See [cache plugin](https://coredns.io/plugins/cache) for more information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LocalDnsOverride(LocalDnsQueryLogging? queryLogging, LocalDnsProtocol? protocol, LocalDnsForwardDestination? forwardDestination, LocalDnsForwardPolicy? forwardPolicy, int? maxConcurrent, int? cacheDurationInSeconds, int? serveStaleDurationInSeconds, LocalDnsServeStale? serveStale, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LocalDnsOverride(LocalDnsQueryLogging? queryLogging, LocalDnsProtocol? protocol, LocalDnsForwardDestination? forwardDestination, LocalDnsForwardPolicy? forwardPolicy, int? maxConcurrent, int? cacheDurationInSeconds, int? serveStaleDurationInSeconds, LocalDnsServeStale? serveStale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QueryLogging = queryLogging;
             Protocol = protocol;
@@ -70,30 +42,37 @@ namespace Azure.ResourceManager.ContainerService.Models
             CacheDurationInSeconds = cacheDurationInSeconds;
             ServeStaleDurationInSeconds = serveStaleDurationInSeconds;
             ServeStale = serveStale;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Log level for DNS queries in localDNS. </summary>
         [WirePath("queryLogging")]
         public LocalDnsQueryLogging? QueryLogging { get; set; }
+
         /// <summary> Enforce TCP or prefer UDP protocol for connections from localDNS to upstream DNS server. </summary>
         [WirePath("protocol")]
         public LocalDnsProtocol? Protocol { get; set; }
+
         /// <summary> Destination server for DNS queries to be forwarded from localDNS. </summary>
         [WirePath("forwardDestination")]
         public LocalDnsForwardDestination? ForwardDestination { get; set; }
+
         /// <summary> Forward policy for selecting upstream DNS server. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
         [WirePath("forwardPolicy")]
         public LocalDnsForwardPolicy? ForwardPolicy { get; set; }
+
         /// <summary> Maximum number of concurrent queries. See [forward plugin](https://coredns.io/plugins/forward) for more information. </summary>
         [WirePath("maxConcurrent")]
         public int? MaxConcurrent { get; set; }
+
         /// <summary> Cache max TTL in seconds. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
         [WirePath("cacheDurationInSeconds")]
         public int? CacheDurationInSeconds { get; set; }
+
         /// <summary> Serve stale duration in seconds. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
         [WirePath("serveStaleDurationInSeconds")]
         public int? ServeStaleDurationInSeconds { get; set; }
+
         /// <summary> Policy for serving stale data. See [cache plugin](https://coredns.io/plugins/cache) for more information. </summary>
         [WirePath("serveStale")]
         public LocalDnsServeStale? ServeStale { get; set; }
