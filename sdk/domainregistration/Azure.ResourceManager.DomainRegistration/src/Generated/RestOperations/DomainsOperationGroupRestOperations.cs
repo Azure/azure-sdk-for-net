@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DomainRegistration
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCheckAvailabilityRequest(string subscriptionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCheckAppServiceDomainRegistrationAvailabilityRequest(string subscriptionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

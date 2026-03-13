@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TopLevelDomainAgreementContent"/>. </summary>
-        /// <param name="includePrivacy"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isPrivacyIncluded"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isForTransfer"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TopLevelDomainAgreementContent(bool? includePrivacy, bool? isForTransfer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TopLevelDomainAgreementContent(bool? isPrivacyIncluded, bool? isForTransfer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IncludePrivacy = includePrivacy;
+            IsPrivacyIncluded = isPrivacyIncluded;
             IsForTransfer = isForTransfer;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? IncludePrivacy { get; set; }
+        public bool? IsPrivacyIncluded { get; set; }
 
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsForTransfer { get; set; }

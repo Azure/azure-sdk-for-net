@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 writer.WritePropertyName("autoRenew"u8);
                 writer.WriteBooleanValue(IsAutoRenew.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(IsReadyForDnsRecordManagement))
+            if (options.Format != "W" && Optional.IsDefined(IsDnsRecordManagementReady))
             {
                 writer.WritePropertyName("readyForDnsRecordManagement"u8);
-                writer.WriteBooleanValue(IsReadyForDnsRecordManagement.Value);
+                writer.WriteBooleanValue(IsDnsRecordManagementReady.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ManagedHostNames))
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             DateTimeOffset? expireOn = default;
             DateTimeOffset? lastRenewedOn = default;
             bool? isAutoRenew = default;
-            bool? isReadyForDnsRecordManagement = default;
+            bool? isDnsRecordManagementReady = default;
             IReadOnlyList<AppServiceHostName> managedHostNames = default;
             DomainPurchaseConsent consent = default;
             IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons = default;
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     {
                         continue;
                     }
-                    isReadyForDnsRecordManagement = prop.Value.GetBoolean();
+                    isDnsRecordManagementReady = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("managedHostNames"u8))
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 expireOn,
                 lastRenewedOn,
                 isAutoRenew,
-                isReadyForDnsRecordManagement,
+                isDnsRecordManagementReady,
                 managedHostNames ?? new ChangeTrackingList<AppServiceHostName>(),
                 consent,
                 domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>(),

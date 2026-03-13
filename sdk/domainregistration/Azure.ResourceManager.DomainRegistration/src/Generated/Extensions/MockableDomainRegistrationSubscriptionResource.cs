@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
         /// <param name="identifier"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public virtual async Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityAsync(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DomainAvailabilityCheckResult>> CheckAppServiceDomainRegistrationAvailabilityAsync(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(identifier, nameof(identifier));
 
-            using DiagnosticScope scope = DomainsOperationGroupClientDiagnostics.CreateScope("MockableDomainRegistrationSubscriptionResource.CheckAvailability");
+            using DiagnosticScope scope = DomainsOperationGroupClientDiagnostics.CreateScope("MockableDomainRegistrationSubscriptionResource.CheckAppServiceDomainRegistrationAvailability");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DomainsOperationGroupRestClient.CreateCheckAvailabilityRequest(Id.SubscriptionId, AppServiceDomainNameIdentifier.ToRequestContent(identifier), context);
+                HttpMessage message = DomainsOperationGroupRestClient.CreateCheckAppServiceDomainRegistrationAvailabilityRequest(Id.SubscriptionId, AppServiceDomainNameIdentifier.ToRequestContent(identifier), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DomainAvailabilityCheckResult> response = Response.FromValue(DomainAvailabilityCheckResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -235,11 +235,11 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
         /// <param name="identifier"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public virtual Response<DomainAvailabilityCheckResult> CheckAvailability(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
+        public virtual Response<DomainAvailabilityCheckResult> CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(identifier, nameof(identifier));
 
-            using DiagnosticScope scope = DomainsOperationGroupClientDiagnostics.CreateScope("MockableDomainRegistrationSubscriptionResource.CheckAvailability");
+            using DiagnosticScope scope = DomainsOperationGroupClientDiagnostics.CreateScope("MockableDomainRegistrationSubscriptionResource.CheckAppServiceDomainRegistrationAvailability");
             scope.Start();
             try
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DomainRegistration.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = DomainsOperationGroupRestClient.CreateCheckAvailabilityRequest(Id.SubscriptionId, AppServiceDomainNameIdentifier.ToRequestContent(identifier), context);
+                HttpMessage message = DomainsOperationGroupRestClient.CreateCheckAppServiceDomainRegistrationAvailabilityRequest(Id.SubscriptionId, AppServiceDomainNameIdentifier.ToRequestContent(identifier), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DomainAvailabilityCheckResult> response = Response.FromValue(DomainAvailabilityCheckResult.FromResponse(result), result);
                 if (response.Value == null)

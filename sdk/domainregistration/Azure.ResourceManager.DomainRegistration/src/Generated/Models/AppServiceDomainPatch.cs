@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and \n it is hosted on name servers Azure has programmatic access to. </summary>
-        public bool? IsReadyForDnsRecordManagement
+        public bool? IsDnsRecordManagementReady
         {
             get
             {
-                return Properties is null ? default : Properties.IsReadyForDnsRecordManagement;
+                return Properties is null ? default : Properties.IsDnsRecordManagementReady;
             }
         }
 

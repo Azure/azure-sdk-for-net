@@ -14,56 +14,56 @@ using Azure.ResourceManager.DomainRegistration;
 namespace Azure.ResourceManager.DomainRegistration.Models
 {
     /// <summary> Legal agreement for a top level domain. </summary>
-    public partial class TldLegalAgreement : IJsonModel<TldLegalAgreement>
+    public partial class TopLevelDomainLegalAgreement : IJsonModel<TopLevelDomainLegalAgreement>
     {
-        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/> for deserialization. </summary>
-        internal TldLegalAgreement()
+        /// <summary> Initializes a new instance of <see cref="TopLevelDomainLegalAgreement"/> for deserialization. </summary>
+        internal TopLevelDomainLegalAgreement()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TldLegalAgreement PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TopLevelDomainLegalAgreement PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TldLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTldLegalAgreement(document.RootElement, options);
+                        return DeserializeTopLevelDomainLegalAgreement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopLevelDomainLegalAgreement)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TldLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDomainRegistrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopLevelDomainLegalAgreement)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TldLegalAgreement>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TopLevelDomainLegalAgreement>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TldLegalAgreement IPersistableModel<TldLegalAgreement>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TopLevelDomainLegalAgreement IPersistableModel<TopLevelDomainLegalAgreement>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TldLegalAgreement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TopLevelDomainLegalAgreement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TldLegalAgreement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TopLevelDomainLegalAgreement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TldLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TopLevelDomainLegalAgreement)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("agreementKey"u8);
             writer.WriteStringValue(AgreementKey);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.DomainRegistration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TldLegalAgreement IJsonModel<TldLegalAgreement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TopLevelDomainLegalAgreement IJsonModel<TopLevelDomainLegalAgreement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TldLegalAgreement JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TopLevelDomainLegalAgreement JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TldLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TopLevelDomainLegalAgreement)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTldLegalAgreement(document.RootElement, options);
+            return DeserializeTopLevelDomainLegalAgreement(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TldLegalAgreement DeserializeTldLegalAgreement(JsonElement element, ModelReaderWriterOptions options)
+        internal static TopLevelDomainLegalAgreement DeserializeTopLevelDomainLegalAgreement(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             string agreementKey = default;
             string title = default;
             string content = default;
-            string uri = default;
+            Uri uri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,7 +156,11 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TldLegalAgreement(agreementKey, title, content, uri, additionalBinaryDataProperties);
+            return new TopLevelDomainLegalAgreement(agreementKey, title, content, uri, additionalBinaryDataProperties);
         }
     }
 }

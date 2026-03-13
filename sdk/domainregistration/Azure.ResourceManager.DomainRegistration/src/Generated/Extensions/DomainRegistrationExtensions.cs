@@ -242,36 +242,36 @@ namespace Azure.ResourceManager.DomainRegistration
         /// Description for Check if a domain is available for registration.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDomainRegistrationSubscriptionResource.CheckAvailabilityAsync(AppServiceDomainNameIdentifier, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDomainRegistrationSubscriptionResource.CheckAppServiceDomainRegistrationAvailabilityAsync(AppServiceDomainNameIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="identifier"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityAsync(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
+        public static async Task<Response<DomainAvailabilityCheckResult>> CheckAppServiceDomainRegistrationAvailabilityAsync(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableDomainRegistrationSubscriptionResource(subscriptionResource).CheckAvailabilityAsync(identifier, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDomainRegistrationSubscriptionResource(subscriptionResource).CheckAppServiceDomainRegistrationAvailabilityAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Description for Check if a domain is available for registration.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableDomainRegistrationSubscriptionResource.CheckAvailability(AppServiceDomainNameIdentifier, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableDomainRegistrationSubscriptionResource.CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="identifier"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<DomainAvailabilityCheckResult> CheckAvailability(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
+        public static Response<DomainAvailabilityCheckResult> CheckAppServiceDomainRegistrationAvailability(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableDomainRegistrationSubscriptionResource(subscriptionResource).CheckAvailability(identifier, cancellationToken);
+            return GetMockableDomainRegistrationSubscriptionResource(subscriptionResource).CheckAppServiceDomainRegistrationAvailability(identifier, cancellationToken);
         }
 
         /// <summary>

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="expireOn"> Domain expiration timestamp. </param>
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="isReadyForDnsRecordManagement"> &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and \n it is hosted on name servers Azure has programmatic access to. </param>
+        /// <param name="isDnsRecordManagementReady"> &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and \n it is hosted on name servers Azure has programmatic access to. </param>
         /// <param name="managedHostNames"> All hostnames derived from the domain and assigned to Azure resources. </param>
         /// <param name="consent"> Legal agreement consent. </param>
         /// <param name="domainNotRenewableReasons"> Reasons why domain is not renewable. </param>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.AppServiceDomainPatch"/> instance for mocking. </returns>
-        public static AppServiceDomainPatch AppServiceDomainPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isReadyForDnsRecordManagement = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, string dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string kind = default, IDictionary<string, string> tags = default)
+        public static AppServiceDomainPatch AppServiceDomainPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isDnsRecordManagementReady = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, string dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string kind = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expireOn is null && lastRenewedOn is null && isAutoRenew is null && isReadyForDnsRecordManagement is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainPatchResourceProperties(
+                contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expireOn is null && lastRenewedOn is null && isAutoRenew is null && isDnsRecordManagementReady is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainPatchResourceProperties(
                     contactAdmin,
                     contactBilling,
                     contactRegistrant,
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     expireOn,
                     lastRenewedOn,
                     isAutoRenew,
-                    isReadyForDnsRecordManagement,
+                    isDnsRecordManagementReady,
                     (managedHostNames ?? new ChangeTrackingList<AppServiceHostName>()).ToList(),
                     consent,
                     (domainNotRenewableReasons ?? new ChangeTrackingList<DomainNotRenewableReason>()).ToList(),
@@ -224,10 +224,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
         /// <param name="uri"> URL where a copy of the agreement details is hosted. </param>
-        /// <returns> A new <see cref="Models.TldLegalAgreement"/> instance for mocking. </returns>
-        public static TldLegalAgreement TldLegalAgreement(string agreementKey = default, string title = default, string content = default, string uri = default)
+        /// <returns> A new <see cref="Models.TopLevelDomainLegalAgreement"/> instance for mocking. </returns>
+        public static TopLevelDomainLegalAgreement TopLevelDomainLegalAgreement(string agreementKey = default, string title = default, string content = default, Uri uri = default)
         {
-            return new TldLegalAgreement(agreementKey, title, content, uri, additionalBinaryDataProperties: null);
+            return new TopLevelDomainLegalAgreement(agreementKey, title, content, uri, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Domain availability check result. </summary>

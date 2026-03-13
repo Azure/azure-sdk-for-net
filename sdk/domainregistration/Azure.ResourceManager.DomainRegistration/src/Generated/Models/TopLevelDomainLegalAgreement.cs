@@ -11,29 +11,29 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DomainRegistration.Models
 {
     /// <summary> Legal agreement for a top level domain. </summary>
-    public partial class TldLegalAgreement
+    public partial class TopLevelDomainLegalAgreement
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopLevelDomainLegalAgreement"/>. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
-        internal TldLegalAgreement(string agreementKey, string title, string content)
+        internal TopLevelDomainLegalAgreement(string agreementKey, string title, string content)
         {
             AgreementKey = agreementKey;
             Title = title;
             Content = content;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TldLegalAgreement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="TopLevelDomainLegalAgreement"/>. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
         /// <param name="uri"> URL where a copy of the agreement details is hosted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TldLegalAgreement(string agreementKey, string title, string content, string uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TopLevelDomainLegalAgreement(string agreementKey, string title, string content, Uri uri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgreementKey = agreementKey;
             Title = title;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         public string Content { get; }
 
         /// <summary> URL where a copy of the agreement details is hosted. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
     }
 }

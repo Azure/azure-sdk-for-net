@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (TldLegalAgreement item in Value)
+            foreach (TopLevelDomainLegalAgreement item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             {
                 return null;
             }
-            IList<TldLegalAgreement> value = default;
+            IList<TopLevelDomainLegalAgreement> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<TldLegalAgreement> array = new List<TldLegalAgreement>();
+                    List<TopLevelDomainLegalAgreement> array = new List<TopLevelDomainLegalAgreement>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(TldLegalAgreement.DeserializeTldLegalAgreement(item, options));
+                        array.Add(TopLevelDomainLegalAgreement.DeserializeTopLevelDomainLegalAgreement(item, options));
                     }
                     value = array;
                     continue;

@@ -211,8 +211,8 @@ namespace Azure.ResourceManager.DomainRegistration
         /// <param name="content"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="TldLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TldLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TopLevelDomainLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<TopLevelDomainLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.DomainRegistration
         /// <param name="content"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="TldLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TldLegalAgreement> GetAgreements(TopLevelDomainAgreementContent content, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="TopLevelDomainLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<TopLevelDomainLegalAgreement> GetAgreements(TopLevelDomainAgreementContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

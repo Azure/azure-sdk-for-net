@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             {
                 throw new FormatException($"The model {nameof(TopLevelDomainAgreementContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IncludePrivacy))
+            if (Optional.IsDefined(IsPrivacyIncluded))
             {
                 writer.WritePropertyName("includePrivacy"u8);
-                writer.WriteBooleanValue(IncludePrivacy.Value);
+                writer.WriteBooleanValue(IsPrivacyIncluded.Value);
             }
             if (Optional.IsDefined(IsForTransfer))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             {
                 return null;
             }
-            bool? includePrivacy = default;
+            bool? isPrivacyIncluded = default;
             bool? isForTransfer = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     {
                         continue;
                     }
-                    includePrivacy = prop.Value.GetBoolean();
+                    isPrivacyIncluded = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("forTransfer"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TopLevelDomainAgreementContent(includePrivacy, isForTransfer, additionalBinaryDataProperties);
+            return new TopLevelDomainAgreementContent(isPrivacyIncluded, isForTransfer, additionalBinaryDataProperties);
         }
     }
 }

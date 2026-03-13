@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
 
         /// <summary> Initializes a new instance of <see cref="TldLegalAgreementCollection"/>. </summary>
         /// <param name="value"> The TldLegalAgreement items on this page. </param>
-        internal TldLegalAgreementCollection(IEnumerable<TldLegalAgreement> value)
+        internal TldLegalAgreementCollection(IEnumerable<TopLevelDomainLegalAgreement> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="value"> The TldLegalAgreement items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TldLegalAgreementCollection(IList<TldLegalAgreement> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TldLegalAgreementCollection(IList<TopLevelDomainLegalAgreement> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         }
 
         /// <summary> The TldLegalAgreement items on this page. </summary>
-        public IList<TldLegalAgreement> Value { get; }
+        public IList<TopLevelDomainLegalAgreement> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

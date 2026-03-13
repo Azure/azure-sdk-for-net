@@ -15,7 +15,7 @@ using Azure.ResourceManager.DomainRegistration.Models;
 
 namespace Azure.ResourceManager.DomainRegistration
 {
-    internal partial class TopLevelDomainsGetAgreementsAsyncCollectionResultOfT : AsyncPageable<TldLegalAgreement>
+    internal partial class TopLevelDomainsGetAgreementsAsyncCollectionResultOfT : AsyncPageable<TopLevelDomainLegalAgreement>
     {
         private readonly TopLevelDomains _client;
         private readonly string _subscriptionId;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DomainRegistration
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of TopLevelDomainsGetAgreementsAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<TldLegalAgreement>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<TopLevelDomainLegalAgreement>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DomainRegistration
                     yield break;
                 }
                 TldLegalAgreementCollection result = TldLegalAgreementCollection.FromResponse(response);
-                yield return Page<TldLegalAgreement>.FromValues((IReadOnlyList<TldLegalAgreement>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<TopLevelDomainLegalAgreement>.FromValues((IReadOnlyList<TopLevelDomainLegalAgreement>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
