@@ -67,10 +67,10 @@ namespace Azure.Generator.Visitors
                 // so that Azure policy types (AzureKeyCredentialPolicy, BearerTokenAuthenticationPolicy)
                 // can be passed to it from the "with options" constructors.
                 if (ctor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
-                    ctor.Signature.Parameters.Any(p => p.Type.Name == nameof(AuthenticationPolicy)))
+                    ctor.Signature.Parameters.Any(p => p.Type.Name == "AuthenticationPolicy"))
                 {
                     var authPolicyParam = ctor.Signature.Parameters.First(
-                        p => p.Type.Name == nameof(AuthenticationPolicy));
+                        p => p.Type.Name == "AuthenticationPolicy");
                     authPolicyParam.Type = HttpPipelinePolicyType;
                 }
 

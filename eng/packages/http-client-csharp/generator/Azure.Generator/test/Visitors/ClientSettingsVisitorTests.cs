@@ -11,7 +11,6 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
 using System.Linq;
 
 namespace Azure.Generator.Tests.Visitors
@@ -177,7 +176,7 @@ namespace Azure.Generator.Tests.Visitors
             // the visitor changes it to HttpPipelinePolicy for Azure.Core compatibility.
             var authPolicyCtor = clientProvider!.Constructors.FirstOrDefault(c =>
                 c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
-                c.Signature.Parameters.Any(p => p.Type.Equals(typeof(AuthenticationPolicy))));
+                c.Signature.Parameters.Any(p => p.Type.Name == "AuthenticationPolicy"));
             Assert.IsNull(authPolicyCtor,
                 "Internal constructor should not have an AuthenticationPolicy parameter");
         }
