@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.ClientModel.Primitives;
 using System.Linq;
 
 namespace Azure.Generator.Tests.Visitors
@@ -149,6 +151,73 @@ namespace Azure.Generator.Tests.Visitors
                 "Sub-clients should not have ClientSettings");
             Assert.IsNull(subClientProvider.ClientOptions,
                 "Sub-clients should not have ClientOptions");
+        }
+
+        [Test]
+        public void InternalAuthenticationPolicyConstructorIsRemoved()
+        {
+            var endpointParam = InputFactory.EndpointParameter(
+                "endpoint",
+                InputPrimitiveType.String,
+                isRequired: true,
+                isEndpoint: true);
+            var client = InputFactory.Client(
+                "TestClient",
+                parameters: [endpointParam]);
+
+            MockHelpers.LoadMockGenerator(
+                apiKeyAuth: () => new InputApiKeyAuth("mock", null),
+                clients: () => [client]);
+
+            var clientProvider = AzureClientGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ClientProvider>().FirstOrDefault();
+            Assert.IsNotNull(clientProvider);
+
+            var authPolicyCtor = clientProvider!.Constructors.FirstOrDefault(c =>
+                c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
+                c.Signature.Parameters.Any(p => p.Type.Equals(typeof(AuthenticationPolicy))));
+            Assert.IsNull(authPolicyCtor,
+                "Internal AuthenticationPolicy constructor should be removed by ClientSettingsVisitor");
+        }
+
+        [Test]
+        public void SettingsConstructorChainsToTokenCredentialConstructor()
+        {
+            var endpointParam = InputFactory.EndpointParameter(
+                "endpoint",
+                InputPrimitiveType.String,
+                isRequired: true,
+                isEndpoint: true);
+            var client = InputFactory.Client(
+                "TestClient",
+                parameters: [endpointParam]);
+
+            MockHelpers.LoadMockGenerator(
+                oauth2Auth: () => new InputOAuth2Auth([new InputOAuth2Flow(["https://test.azure.com/.default"], null, null, null)]),
+                clients: () => [client]);
+
+            var clientProvider = AzureClientGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ClientProvider>().FirstOrDefault();
+            Assert.IsNotNull(clientProvider);
+            Assert.IsNotNull(clientProvider!.ClientSettings,
+                "Client should have ClientSettings");
+
+            var settingsCtor = clientProvider.Constructors.FirstOrDefault(c =>
+                c.Signature.Parameters.Count == 1 &&
+                c.Signature.Parameters[0].Type.Equals(clientProvider.ClientSettings!.Type));
+            Assert.IsNotNull(settingsCtor,
+                "Client should have a Settings constructor");
+
+            var initializer = settingsCtor!.Signature.Initializer;
+            Assert.IsNotNull(initializer, "Settings constructor should have an initializer");
+            Assert.IsFalse(initializer!.IsBase, "Settings constructor should use this(), not base()");
+
+            // The initializer should contain a TokenProvider as TokenCredential argument
+            var display = string.Join(", ", initializer.Arguments.Select(a => a.ToDisplayString()));
+            Assert.IsTrue(display.Contains("TokenProvider"),
+                $"Settings constructor initializer should reference TokenProvider. Args: {display}");
+            Assert.IsTrue(display.Contains("TokenCredential"),
+                $"Settings constructor initializer should cast to TokenCredential. Args: {display}");
         }
     }
 }

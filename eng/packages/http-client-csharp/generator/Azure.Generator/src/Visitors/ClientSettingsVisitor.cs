@@ -1,15 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -17,15 +20,27 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Visitors
 {
     /// <summary>
-    /// Visitor that applies Azure-specific modifications to the ClientOptions provider.
-    /// Modifies the IConfigurationSection constructor to use base(section, null)
-    /// (Azure.Core.ClientOptions takes IConfigurationSection, DiagnosticsOptions?) instead of base(section).
-    /// Adds a partial void ConfigureLogging() method and calls it from all constructors.
+    /// Visitor that applies Azure-specific modifications to ClientOptions and ClientProvider constructors.
+    /// <list type="bullet">
+    /// <item>ClientOptions: Changes IConfigurationSection constructor to use base(section, null)
+    /// and adds a partial void ConfigureLogging() method called from all constructors.</item>
+    /// <item>ClientProvider: Removes the internal AuthenticationPolicy constructor, modifies the
+    /// Settings constructor to chain to the TokenCredential constructor using
+    /// settings.TokenProvider as TokenCredential, and inlines the pipeline building body
+    /// into the credential-based constructors that previously chained to the internal one.</item>
+    /// </list>
     /// </summary>
     internal class ClientSettingsVisitor : ScmLibraryVisitor
     {
         private const string ConfigureLoggingMethodName = "ConfigureLogging";
         private static readonly CSharpType IConfigurationSectionType = typeof(IConfigurationSection);
+        private static readonly CSharpType AuthenticationPolicyType = typeof(AuthenticationPolicy);
+        private static readonly CSharpType TokenCredentialType = typeof(TokenCredential);
+
+        // Tracks the internal AuthenticationPolicy constructor body per client,
+        // so we can inline it into the "with options" constructors.
+        private MethodBodyStatement? _internalCtorBody;
+        private int _internalCtorParamCount;
 
         protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)
         {
@@ -39,7 +54,112 @@ namespace Azure.Generator.Visitors
                 UpdateClientOptions(clientProvider.ClientOptions);
             }
 
+            // Pre-scan: find the internal AuthenticationPolicy constructor and save its body
+            // before VisitConstructor is called on each constructor individually.
+            _internalCtorBody = null;
+            _internalCtorParamCount = 0;
+            if (clientProvider.ClientSettings != null)
+            {
+                var authPolicyCtor = clientProvider.Constructors.FirstOrDefault(c =>
+                    c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
+                    c.Signature.Parameters.Any(p => p.Type.Name == nameof(AuthenticationPolicy)));
+
+                if (authPolicyCtor != null)
+                {
+                    _internalCtorBody = authPolicyCtor.BodyStatements;
+                    _internalCtorParamCount = authPolicyCtor.Signature.Parameters.Count;
+                }
+            }
+
             return clientProvider;
+        }
+
+        protected override ConstructorProvider? VisitConstructor(ConstructorProvider constructor)
+        {
+            if (constructor.EnclosingType is not ClientProvider clientProvider ||
+                clientProvider.ClientSettings == null ||
+                _internalCtorBody == null)
+            {
+                return constructor;
+            }
+
+            // Remove the internal AuthenticationPolicy constructor
+            if (constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal) &&
+                constructor.Signature.Parameters.Any(p => p.Type.Name == nameof(AuthenticationPolicy)))
+            {
+                return null;
+            }
+
+            // Modify the Settings constructor to chain to the TokenCredential constructor
+            if (constructor.Signature.Parameters.Count == 1 &&
+                constructor.Signature.Parameters[0].Type.Name.EndsWith("Settings"))
+            {
+                // Check if there's a TokenCredential constructor to chain to
+                bool hasTokenCredCtor = clientProvider.Constructors.Any(c =>
+                    c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                    c.Signature.Parameters.Any(p => p.Type.Name == nameof(TokenCredential)) &&
+                    c.Signature.Parameters.Count >= 3);
+
+                if (!hasTokenCredCtor)
+                {
+                    // No TokenCredential constructor — remove the Settings constructor entirely
+                    return null;
+                }
+
+                UpdateSettingsConstructor(constructor);
+                return constructor;
+            }
+
+            // Inline body into "with options" constructors that chained to the removed internal constructor
+            if (constructor.Signature.Initializer is { IsBase: false } init &&
+                init.Arguments.Count == _internalCtorParamCount)
+            {
+                InlineConstructorBody(constructor, init.Arguments[0], _internalCtorBody);
+            }
+
+            return constructor;
+        }
+
+        private static void UpdateSettingsConstructor(ConstructorProvider settingsCtor)
+        {
+            // The base generator produces a Settings constructor like:
+            //   this(AuthenticationPolicy.Create(settings), settings?.Endpoint, ...otherParams, settings?.Options)
+            //
+            // We change it to chain to the TokenCredential constructor:
+            //   this(settings?.Endpoint, settings?.TokenProvider as TokenCredential, ...otherParams, settings?.Options)
+            var existingArgs = settingsCtor.Signature.Initializer!.Arguments;
+            var settingsParam = settingsCtor.Signature.Parameters[0];
+
+            // Build: settings?.TokenProvider as TokenCredential
+            var tokenProviderAccess = new MemberExpression(new NullConditionalExpression(settingsParam), "TokenProvider");
+            var tokenCredentialArg = tokenProviderAccess.As(TokenCredentialType);
+
+            // New args: endpoint, tokenCredential, ...otherParams, options
+            var newArgs = new List<ValueExpression>();
+            newArgs.Add(existingArgs[1]); // endpoint
+            newArgs.Add(tokenCredentialArg); // credential
+            for (int i = 2; i < existingArgs.Count; i++) // other params + options
+            {
+                newArgs.Add(existingArgs[i]);
+            }
+
+            settingsCtor.Signature.Update(initializer: new ConstructorInitializer(false, newArgs));
+        }
+
+        private static void InlineConstructorBody(
+            ConstructorProvider ctor,
+            ValueExpression authPolicyExpr,
+            MethodBodyStatement internalBody)
+        {
+            // Declare a local variable named "authenticationPolicy" with the auth policy expression
+            // from the old this() initializer (e.g., new AzureKeyCredentialPolicy(credential, AuthorizationHeader)).
+            // The internal constructor's body references "authenticationPolicy" by name, so the local
+            // variable satisfies those references in the generated C# output.
+            var authPolicyDecl = Declare("authenticationPolicy", AuthenticationPolicyType, authPolicyExpr, out _);
+
+            // Remove the this() initializer and set the inlined body
+            ctor.Signature.Update(initializer: null);
+            ctor.Update(bodyStatements: new MethodBodyStatement[] { authPolicyDecl, internalBody });
         }
 
         private static void UpdateClientOptions(ClientOptionsProvider options)
