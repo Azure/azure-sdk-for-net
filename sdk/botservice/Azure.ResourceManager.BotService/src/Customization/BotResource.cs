@@ -11,6 +11,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.BotService
 {
+    // Backward compatibility: GetBotChannel/GetBotChannelAsync are suppressed because the generated
+    // versions accept `string` but the old API used `BotChannelName`. GetBotChannelWithRegenerateKeys
+    // preserves the old API that took `RegenerateKeysBotChannelName` and mapped it to the correct
+    // channel resource for the regenerate-keys action.
     [CodeGenSuppress("GetBotChannelAsync", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetBotChannel", typeof(string), typeof(CancellationToken))]
     public partial class BotResource

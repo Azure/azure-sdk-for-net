@@ -11,6 +11,11 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.BotService
 {
+    // Backward compatibility: The generated methods accept `string channelName` but the old API
+    // used `BotChannelName` (a strongly-typed enum). These hand-written overloads preserve the
+    // `BotChannelName` parameter type for backward compatibility. @@alternateType cannot be used
+    // here because the parameter is a path segment and alternateType does not support enum-to-string
+    // conversion for path parameters.
     [CodeGenSuppress("GetAsync", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("Get", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("ExistsAsync", typeof(string), typeof(CancellationToken))]

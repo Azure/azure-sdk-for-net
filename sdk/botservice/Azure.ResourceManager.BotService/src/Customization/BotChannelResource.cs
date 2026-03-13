@@ -8,6 +8,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.BotService
 {
+    // Backward compatibility: The generated CreateResourceIdentifier accepts `string channelName`
+    // but the old API used `BotChannelName`. This customization preserves the `BotChannelName`
+    // parameter for backward compatibility.
     [CodeGenSuppress("CreateResourceIdentifier", typeof(string), typeof(string), typeof(string), typeof(string))]
     public partial class BotChannelResource
     {
