@@ -67,9 +67,7 @@ namespace Azure.ResourceManager.Communication
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(communicationSmtpUsernameData, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(communicationSmtpUsernameData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CommunicationSmtpUsernameData"/> from. </param>

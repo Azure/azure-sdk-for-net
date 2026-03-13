@@ -66,9 +66,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(communicationServiceResourcePatch, ModelSerializationExtensions.WireOptions);
-            return content;
+            return RequestContent.Create(communicationServiceResourcePatch, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
