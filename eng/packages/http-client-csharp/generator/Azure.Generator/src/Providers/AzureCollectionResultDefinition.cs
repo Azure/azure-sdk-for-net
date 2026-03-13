@@ -37,8 +37,27 @@ namespace Azure.Generator.Providers
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
 
         private readonly bool _isProtocol;
+        private int? _disambiguationSuffix;
 
         protected override string RequestOptionsFieldName => "_context";
+
+        // Returns the base name without any disambiguation suffix applied.
+        internal string GetBaseName() => base.BuildName();
+
+        // Sets a numeric suffix to disambiguate this type when its base name collides
+        // with another CollectionResult in the same library.
+        internal void SetDisambiguationSuffix(int suffix)
+        {
+            _disambiguationSuffix = suffix;
+            // Reset the cached CSharpType so that Name is recomputed using the suffix.
+            Reset();
+        }
+
+        protected override string BuildName()
+        {
+            var baseName = base.BuildName();
+            return _disambiguationSuffix.HasValue ? $"{baseName}{_disambiguationSuffix.Value}" : baseName;
+        }
 
         public AzureCollectionResultDefinition(ClientProvider client, InputPagingServiceMethod serviceMethod, CSharpType? itemModelType, bool isAsync) : base(client, serviceMethod, itemModelType, isAsync)
         {
