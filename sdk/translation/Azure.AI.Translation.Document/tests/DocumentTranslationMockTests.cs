@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
-using Microsoft.TypeSpec.Generator.Customizations;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -42,7 +42,7 @@ namespace Azure.AI.Translation.Document.Tests
             input.AddTarget(new Uri("http://target2"), "es", categoryId: "myCategoryId");
 
             var startTranslationDetails = new TranslationBatch(new List<DocumentTranslationInput> { input });
-            using RequestContent content = startTranslationDetails.ToRequestContent();
+            using RequestContent content = (RequestContent)startTranslationDetails;
 
             var contentString = GetString(content);
             string category = contentString.Substring(contentString.IndexOf("category"), 23);
