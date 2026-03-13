@@ -4,11 +4,23 @@
 
 ### Features Added
 
+- Upgraded API version to 2025-05-25-preview.
+- Added tenant-level alert operations: `GetAllTenant`, `GetByIdTenant`, `GetHistoryTenant`, `ChangeStateTenant`.
+- Added alert enrichments support via `GetEnrichments` operation.
+- Added `customProperties` field to Alert type.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Migrated from AutoRest/Swagger to TypeSpec-based code generation using Azure Management Generator.
+- Removed `AlertProcessingRule*` types and operations (moved to separate TypeSpec project).
+- Removed `SmartGroup*` types and operations (deprecated, moved to Legacy).
+- Renamed `ServiceAlertResource` to `AlertResource`.
+- Renamed `ServiceAlertCollection` remains but `GetServiceAlerts()` extension method replaced by `GetAlerts()` on `ArmClient`.
+- The `GetServiceAlertSummary` extension methods moved from `SubscriptionResource` to `ArmClient` as `GetSummary`.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to latest.
 
 ## 1.1.1 (2025-03-11)
 

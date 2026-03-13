@@ -13,40 +13,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Alert modification item. </summary>
     public partial class ServiceAlertModificationItemInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationItemInfo"/>. </summary>
-        public ServiceAlertModificationItemInfo()
+        internal ServiceAlertModificationItemInfo()
         {
         }
 
@@ -58,8 +29,9 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="modifiedBy"> Modified user details (Principal client name). </param>
         /// <param name="comments"> Modification comments. </param>
         /// <param name="description"> Description of the modification. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent, string oldValue, string newValue, string modifiedAt, string modifiedBy, string comments, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="details"> Base details class. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent, string oldValue, string newValue, string modifiedAt, string modifiedBy, string comments, string description, BaseDetails details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModificationEvent = modificationEvent;
             OldValue = oldValue;
@@ -68,22 +40,32 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             ModifiedBy = modifiedBy;
             Comments = comments;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Details = details;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Reason for the modification. </summary>
-        public ServiceAlertModificationEvent? ModificationEvent { get; set; }
+        public ServiceAlertModificationEvent? ModificationEvent { get; }
+
         /// <summary> Old value. </summary>
-        public string OldValue { get; set; }
+        public string OldValue { get; }
+
         /// <summary> New value. </summary>
-        public string NewValue { get; set; }
+        public string NewValue { get; }
+
         /// <summary> Modified date and time. </summary>
-        public string ModifiedAt { get; set; }
+        public string ModifiedAt { get; }
+
         /// <summary> Modified user details (Principal client name). </summary>
-        public string ModifiedBy { get; set; }
+        public string ModifiedBy { get; }
+
         /// <summary> Modification comments. </summary>
-        public string Comments { get; set; }
+        public string Comments { get; }
+
         /// <summary> Description of the modification. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
+
+        /// <summary> Base details class. </summary>
+        public BaseDetails Details { get; }
     }
 }

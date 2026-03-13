@@ -8,84 +8,82 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.AlertsManagement.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceAlertResource"/> and their operations.
-    /// Each <see cref="ServiceAlertResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="ServiceAlertCollection"/> instance call the GetServiceAlerts method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="AlertResource"/> and their operations.
+    /// Each <see cref="AlertResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ServiceAlertCollection"/> instance call the GetAlerts method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class ServiceAlertCollection : ArmCollection, IEnumerable<ServiceAlertResource>, IAsyncEnumerable<ServiceAlertResource>
+    public partial class ServiceAlertCollection : ArmCollection, IEnumerable<AlertResource>, IAsyncEnumerable<AlertResource>
     {
-        private readonly ClientDiagnostics _serviceAlertAlertsClientDiagnostics;
-        private readonly AlertsRestOperations _serviceAlertAlertsRestClient;
+        private readonly ClientDiagnostics _alertsClientDiagnostics;
+        private readonly Alerts _alertsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceAlertCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ServiceAlertCollection for mocking. </summary>
         protected ServiceAlertCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ServiceAlertCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServiceAlertCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _serviceAlertAlertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", ServiceAlertResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ServiceAlertResource.ResourceType, out string serviceAlertAlertsApiVersion);
-            _serviceAlertAlertsRestClient = new AlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceAlertAlertsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            this.TryGetApiVersion(AlertResource.ResourceType, out string alertApiVersion);
+            _alertsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AlertsManagement", AlertResource.ResourceType.Namespace, Diagnostics);
+            _alertsRestClient = new Alerts(_alertsClientDiagnostics, Pipeline, Endpoint, alertApiVersion ?? "2025-05-25-preview");
         }
 
         /// <summary>
-        /// Get information related to a specific alert
+        /// Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceAlertResource>> GetAsync(Guid alertId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<AlertResource>> GetAsync(string alertId, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.Get");
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serviceAlertAlertsRestClient.GetByIdAsync(Id.SubscriptionId, alertId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id, alertId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+                }
+                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -95,38 +93,46 @@ namespace Azure.ResourceManager.AlertsManagement
         }
 
         /// <summary>
-        /// Get information related to a specific alert
+        /// Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceAlertResource> Get(Guid alertId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<AlertResource> Get(string alertId, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.Get");
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.Get");
             scope.Start();
             try
             {
-                var response = _serviceAlertAlertsRestClient.GetById(Id.SubscriptionId, alertId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id, alertId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceAlertData> response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+                }
+                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -139,98 +145,180 @@ namespace Azure.ResourceManager.AlertsManagement
         /// List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
+        /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
+        /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
+        /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
+        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
+        /// <param name="severity"> Filter by severity.  Default value is select all. </param>
+        /// <param name="alertState"> Filter by state of the alert instance. Default value is to select all. </param>
+        /// <param name="alertRule"> Filter by specific alert rule.  Default value is to select all. </param>
+        /// <param name="smartGroupId"> Filter the alerts list by the Smart Group Id. Default value is none. </param>
+        /// <param name="includeContext"> Include context which has contextual data specific to the monitor service. Default value is false'. </param>
+        /// <param name="includeEgressConfig"> Include egress config which would be used for displaying the content in portal.  Default value is 'false'. </param>
+        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the "includeContent"  filter is selected, maximum value allowed is 25. Default value is 25. </param>
+        /// <param name="sortBy"> Sort the query results by input field,  Default value is 'lastModifiedDateTime'. </param>
+        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others. </param>
+        /// <param name="select"> This filter allows to selection of the fields(comma separated) which would  be part of the essential section. This would allow to project only the  required fields rather than getting entire content.  Default is to fetch all the fields in the essentials section. </param>
+        /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
+        /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceAlertResource> GetAllAsync(ServiceAlertCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AlertResource> GetAllAsync(string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, string smartGroupId = default, bool? includeContext = default, bool? includeEgressConfig = default, long? pageCount = default, ListServiceAlertsSortByField? sortBy = default, AlertsManagementQuerySortOrder? sortOrder = default, string @select = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
         {
-            options ??= new ServiceAlertCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAlertAlertsRestClient.CreateGetAllRequest(Id.SubscriptionId, options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.SmartGroupId, options.IncludeContext, options.IncludeEgressConfig, options.PageCount, options.SortBy, options.SortOrder, options.Select, options.TimeRange, options.CustomTimeRange);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceAlertAlertsRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.SmartGroupId, options.IncludeContext, options.IncludeEgressConfig, options.PageCount, options.SortBy, options.SortOrder, options.Select, options.TimeRange, options.CustomTimeRange);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceAlertResource(Client, ServiceAlertData.DeserializeServiceAlertData(e)), _serviceAlertAlertsClientDiagnostics, Pipeline, "ServiceAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ServiceAlertData, AlertResource>(new AlertsGetAllAsyncCollectionResultOfT(
+                _alertsRestClient,
+                Id,
+                targetResource,
+                targetResourceType,
+                targetResourceGroup,
+                monitorService?.ToString(),
+                monitorCondition?.ToString(),
+                severity?.ToString(),
+                alertState?.ToString(),
+                alertRule,
+                smartGroupId,
+                includeContext,
+                includeEgressConfig,
+                pageCount,
+                sortBy?.ToString(),
+                sortOrder?.ToString(),
+                @select,
+                timeRange?.ToString(),
+                customTimeRange,
+                context), data => new AlertResource(Client, data));
         }
 
         /// <summary>
         /// List all existing alerts, where the results can be filtered on the basis of multiple parameters (e.g. time range). The results can then be sorted on the basis specific fields, with the default being lastModifiedDateTime.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetAll</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetAll. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
+        /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
+        /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
+        /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
+        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
+        /// <param name="severity"> Filter by severity.  Default value is select all. </param>
+        /// <param name="alertState"> Filter by state of the alert instance. Default value is to select all. </param>
+        /// <param name="alertRule"> Filter by specific alert rule.  Default value is to select all. </param>
+        /// <param name="smartGroupId"> Filter the alerts list by the Smart Group Id. Default value is none. </param>
+        /// <param name="includeContext"> Include context which has contextual data specific to the monitor service. Default value is false'. </param>
+        /// <param name="includeEgressConfig"> Include egress config which would be used for displaying the content in portal.  Default value is 'false'. </param>
+        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the "includeContent"  filter is selected, maximum value allowed is 25. Default value is 25. </param>
+        /// <param name="sortBy"> Sort the query results by input field,  Default value is 'lastModifiedDateTime'. </param>
+        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others. </param>
+        /// <param name="select"> This filter allows to selection of the fields(comma separated) which would  be part of the essential section. This would allow to project only the  required fields rather than getting entire content.  Default is to fetch all the fields in the essentials section. </param>
+        /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
+        /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceAlertResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceAlertResource> GetAll(ServiceAlertCollectionGetAllOptions options, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AlertResource> GetAll(string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, string smartGroupId = default, bool? includeContext = default, bool? includeEgressConfig = default, long? pageCount = default, ListServiceAlertsSortByField? sortBy = default, AlertsManagementQuerySortOrder? sortOrder = default, string @select = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
         {
-            options ??= new ServiceAlertCollectionGetAllOptions();
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceAlertAlertsRestClient.CreateGetAllRequest(Id.SubscriptionId, options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.SmartGroupId, options.IncludeContext, options.IncludeEgressConfig, options.PageCount, options.SortBy, options.SortOrder, options.Select, options.TimeRange, options.CustomTimeRange);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceAlertAlertsRestClient.CreateGetAllNextPageRequest(nextLink, Id.SubscriptionId, options.TargetResource, options.TargetResourceType, options.TargetResourceGroup, options.MonitorService, options.MonitorCondition, options.Severity, options.AlertState, options.AlertRule, options.SmartGroupId, options.IncludeContext, options.IncludeEgressConfig, options.PageCount, options.SortBy, options.SortOrder, options.Select, options.TimeRange, options.CustomTimeRange);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceAlertResource(Client, ServiceAlertData.DeserializeServiceAlertData(e)), _serviceAlertAlertsClientDiagnostics, Pipeline, "ServiceAlertCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ServiceAlertData, AlertResource>(new AlertsGetAllCollectionResultOfT(
+                _alertsRestClient,
+                Id,
+                targetResource,
+                targetResourceType,
+                targetResourceGroup,
+                monitorService?.ToString(),
+                monitorCondition?.ToString(),
+                severity?.ToString(),
+                alertState?.ToString(),
+                alertRule,
+                smartGroupId,
+                includeContext,
+                includeEgressConfig,
+                pageCount,
+                sortBy?.ToString(),
+                sortOrder?.ToString(),
+                @select,
+                timeRange?.ToString(),
+                customTimeRange,
+                context), data => new AlertResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(Guid alertId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string alertId, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.Exists");
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serviceAlertAlertsRestClient.GetByIdAsync(Id.SubscriptionId, alertId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id, alertId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ServiceAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,32 +332,50 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(Guid alertId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string alertId, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.Exists");
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serviceAlertAlertsRestClient.GetById(Id.SubscriptionId, alertId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id, alertId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ServiceAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,35 +389,55 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<ServiceAlertResource>> GetIfExistsAsync(Guid alertId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<AlertResource>> GetIfExistsAsync(string alertId, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serviceAlertAlertsRestClient.GetByIdAsync(Id.SubscriptionId, alertId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id, alertId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ServiceAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
-                    return new NoValueResponse<ServiceAlertResource>(response.GetRawResponse());
-                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+                {
+                    return new NoValueResponse<AlertResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -324,35 +450,55 @@ namespace Azure.ResourceManager.AlertsManagement
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/alerts/{alertId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alerts/{alertId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Alerts_GetById</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertOperationGroup_GetById. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2019-05-05-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ServiceAlertResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertId"> Unique ID of an alert instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<ServiceAlertResource> GetIfExists(Guid alertId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<AlertResource> GetIfExists(string alertId, CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceAlertAlertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            using DiagnosticScope scope = _alertsClientDiagnostics.CreateScope("ServiceAlertCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serviceAlertAlertsRestClient.GetById(Id.SubscriptionId, alertId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertsRestClient.CreateGetByIdRequest(Id, alertId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ServiceAlertData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ServiceAlertData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ServiceAlertData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
-                    return new NoValueResponse<ServiceAlertResource>(response.GetRawResponse());
-                return Response.FromValue(new ServiceAlertResource(Client, response.Value), response.GetRawResponse());
+                {
+                    return new NoValueResponse<AlertResource>(response.GetRawResponse());
+                }
+                return Response.FromValue(new AlertResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -361,19 +507,20 @@ namespace Azure.ResourceManager.AlertsManagement
             }
         }
 
-        IEnumerator<ServiceAlertResource> IEnumerable<ServiceAlertResource>.GetEnumerator()
+        IEnumerator<AlertResource> IEnumerable<AlertResource>.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll(options: null).GetEnumerator();
+            return this.GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ServiceAlertResource> IAsyncEnumerable<ServiceAlertResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<AlertResource> IAsyncEnumerable<AlertResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return this.GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

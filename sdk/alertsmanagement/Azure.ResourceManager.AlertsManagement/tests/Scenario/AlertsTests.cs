@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
 
-            ServiceAlertResource alertWithStateNew = null;
-            AsyncPageable<ServiceAlertResource> alertsWithStateNew = subscription.GetServiceAlerts().GetAllAsync(alertState: new ServiceAlertState("New"));
-            await foreach (ServiceAlertResource alert in alertsWithStateNew)
+            AlertResource alertWithStateNew = null;
+            AsyncPageable<AlertResource> alertsWithStateNew = Client.GetAlerts(subscription.Id).GetAllAsync(alertState: new ServiceAlertState("New"));
+            await foreach (AlertResource alert in alertsWithStateNew)
             {
                 Console.WriteLine(alert.Data.Name);
                 // Perform state change operation
@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             // Get alerts filtered
             ServiceAlertSeverity severityFilter = ServiceAlertSeverity.Sev3;
             MonitorServiceSourceForAlert monitorServiceFilter = MonitorServiceSourceForAlert.LogAnalytics;
-            AsyncPageable<ServiceAlertResource> alerts = subscription.GetServiceAlerts().GetAllAsync(alertState: new ServiceAlertState("New"), monitorService: monitorServiceFilter, severity: severityFilter);
-            await foreach (ServiceAlertResource alert in alerts)
+            AsyncPageable<AlertResource> alerts = Client.GetAlerts(subscription.Id).GetAllAsync(alertState: new ServiceAlertState("New"), monitorService: monitorServiceFilter, severity: severityFilter);
+            await foreach (AlertResource alert in alerts)
             {
                 // Verify the state change operation was successful
                 Assert.AreEqual(alert.Data.Properties.Essentials.MonitorService, monitorServiceFilter);
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.AlertsManagement.Tests.Scenario
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             // Get alerts summary grouped by severity and state
             string groupBy = "severity,alertState";
-            var summary = await subscription.GetServiceAlertSummaryAsync(groupBy);
+            var summary = await Client.GetSummaryAsync(subscription.Id, new GetServiceAlertSummaryGroupByField(groupBy));
             //summary.GetRawResponse().Content
             Assert.NotNull(summary.Value.Properties.Total);
-            Assert.AreEqual("severity", summary.Value.Properties.GroupedBy);
+            Assert.AreEqual("severity", summary.Value.Properties.Groupedby);
             IEnumerator<ServiceAlertSummaryGroupItemInfo> enumerator = summary.Value.Properties.Values.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 ServiceAlertSummaryGroupItemInfo current = enumerator.Current;
                 IsValidSeverity(current.Name);
                 Assert.NotNull(current.Count);
-                Assert.AreEqual("alertState", current.GroupedBy);
+                Assert.AreEqual("alertState", current.Groupedby);
                 IEnumerator<ServiceAlertSummaryGroupItemInfo> stateEnumerator = current.Values.GetEnumerator();
                 while (stateEnumerator.MoveNext())
                 {

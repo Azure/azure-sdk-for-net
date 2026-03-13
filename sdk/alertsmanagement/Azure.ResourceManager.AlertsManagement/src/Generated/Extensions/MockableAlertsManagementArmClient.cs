@@ -5,69 +5,196 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.AlertsManagement;
+using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableAlertsManagementArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableAlertsManagementArmClient"/> class for mocking. </summary>
+        private ClientDiagnostics _alertsClientDiagnostics;
+        private Alerts _alertsRestClient;
+
+        /// <summary> Initializes a new instance of MockableAlertsManagementArmClient for mocking. </summary>
         protected MockableAlertsManagementArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAlertsManagementArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAlertsManagementArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAlertsManagementArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableAlertsManagementArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
+        private ClientDiagnostics AlertsClientDiagnostics => _alertsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AlertsManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Alerts AlertsRestClient => _alertsRestClient ??= new Alerts(AlertsClientDiagnostics, Pipeline, Endpoint, "2025-05-25-preview");
+
+        /// <summary> Gets a collection of <see cref="ServiceAlertCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="AlertResource"/> objects. </returns>
+        public virtual ServiceAlertCollection GetAlerts(ResourceIdentifier scope)
         {
+            return new ServiceAlertCollection(Client, scope);
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        /// <summary> Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertId"> Unique ID of an alert instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AlertResource> GetAlert(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            return GetAlerts(scope).Get(alertId, cancellationToken);
+        }
+
+        /// <summary> Get information related to a specific alert. If scope is a deleted resource then please use scope as parent resource of the delete resource. For example if my alert id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/virtualMachines/vm1/providers/Microsoft.AlertsManagement/alerts/{alertId}' and 'vm1' is deleted then if you want to get alert by id then use parent resource of scope. So in this example get alert by id call will look like this: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.AlertsManagement/alerts/{alertId}'. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="alertId"> Unique ID of an alert instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AlertResource>> GetAlertAsync(ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertId, nameof(alertId));
+
+            return await GetAlerts(scope).GetAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AlertProcessingRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AlertProcessingRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertProcessingRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by 'Severity' returns the count of alerts for each severity).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alertsSummary. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertsOperationGroup_GetSummary. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertProcessingRuleResource"/> object. </returns>
-        public virtual AlertProcessingRuleResource GetAlertProcessingRuleResource(ResourceIdentifier id)
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="groupby"> This parameter allows the result set to be grouped by input fields. For example, groupby=severity,alertstate. </param>
+        /// <param name="includeSmartGroupsCount"> Include count of the SmartGroups as part of the summary. Default value is 'false'. </param>
+        /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
+        /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
+        /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
+        /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
+        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
+        /// <param name="severity"> Filter by severity.  Default value is select all. </param>
+        /// <param name="alertState"> Filter by state of the alert instance. Default value is to select all. </param>
+        /// <param name="alertRule"> Filter by specific alert rule.  Default value is to select all. </param>
+        /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
+        /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ServiceAlertSummary>> GetSummaryAsync(ResourceIdentifier scope, GetServiceAlertSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
         {
-            AlertProcessingRuleResource.ValidateResourceId(id);
-            return new AlertProcessingRuleResource(Client, id);
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = AlertsClientDiagnostics.CreateScope("MockableAlertsManagementArmClient.GetSummary");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AlertsRestClient.CreateGetSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ServiceAlertSummary> response = Response.FromValue(ServiceAlertSummary.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceAlertResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceAlertResource.CreateResourceIdentifier" /> to create a <see cref="ServiceAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by 'Severity' returns the count of alerts for each severity).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.AlertsManagement/alertsSummary. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertsOperationGroup_GetSummary. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-25-preview. </description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceAlertResource"/> object. </returns>
-        public virtual ServiceAlertResource GetServiceAlertResource(ResourceIdentifier id)
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="groupby"> This parameter allows the result set to be grouped by input fields. For example, groupby=severity,alertstate. </param>
+        /// <param name="includeSmartGroupsCount"> Include count of the SmartGroups as part of the summary. Default value is 'false'. </param>
+        /// <param name="targetResource"> Filter by target resource( which is full ARM ID) Default value is select all. </param>
+        /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
+        /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
+        /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
+        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
+        /// <param name="severity"> Filter by severity.  Default value is select all. </param>
+        /// <param name="alertState"> Filter by state of the alert instance. Default value is to select all. </param>
+        /// <param name="alertRule"> Filter by specific alert rule.  Default value is to select all. </param>
+        /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
+        /// <param name="customTimeRange"> Filter by custom time range in the format &lt;start-time&gt;/&lt;end-time&gt;  where time is in (ISO-8601 format)'. Permissible values is within 30 days from  query time. Either timeRange or customTimeRange could be used but not both. Default is none. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ServiceAlertSummary> GetSummary(ResourceIdentifier scope, GetServiceAlertSummaryGroupByField groupby, bool? includeSmartGroupsCount = default, string targetResource = default, string targetResourceType = default, string targetResourceGroup = default, MonitorServiceSourceForAlert? monitorService = default, MonitorCondition? monitorCondition = default, ServiceAlertSeverity? severity = default, ServiceAlertState? alertState = default, string alertRule = default, TimeRangeFilter? timeRange = default, string customTimeRange = default, CancellationToken cancellationToken = default)
         {
-            ServiceAlertResource.ValidateResourceId(id);
-            return new ServiceAlertResource(Client, id);
-        }
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SmartGroupResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SmartGroupResource.CreateResourceIdentifier" /> to create a <see cref="SmartGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SmartGroupResource"/> object. </returns>
-        public virtual SmartGroupResource GetSmartGroupResource(ResourceIdentifier id)
-        {
-            SmartGroupResource.ValidateResourceId(id);
-            return new SmartGroupResource(Client, id);
+            using DiagnosticScope scope0 = AlertsClientDiagnostics.CreateScope("MockableAlertsManagementArmClient.GetSummary");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = AlertsRestClient.CreateGetSummaryRequest(scope.ToString(), groupby.ToString(), includeSmartGroupsCount, targetResource, targetResourceType, targetResourceGroup, monitorService?.ToString(), monitorCondition?.ToString(), severity?.ToString(), alertState?.ToString(), alertRule, timeRange?.ToString(), customTimeRange, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ServiceAlertSummary> response = Response.FromValue(ServiceAlertSummary.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }

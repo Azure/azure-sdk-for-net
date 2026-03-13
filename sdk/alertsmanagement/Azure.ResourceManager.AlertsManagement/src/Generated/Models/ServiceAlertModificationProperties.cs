@@ -7,64 +7,37 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Properties of the alert modification item. </summary>
+    /// <summary> Alert modification history properties. </summary>
     public partial class ServiceAlertModificationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationProperties"/>. </summary>
-        public ServiceAlertModificationProperties()
+        internal ServiceAlertModificationProperties()
         {
             Modifications = new ChangeTrackingList<ServiceAlertModificationItemInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationProperties"/>. </summary>
-        /// <param name="alertId"> Unique Id of the alert for which the history is being retrieved. </param>
-        /// <param name="modifications"> Modification details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAlertModificationProperties(Guid? alertId, IList<ServiceAlertModificationItemInfo> modifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="alertId"> Unique identifier of the alert. </param>
+        /// <param name="modifications"> Array of alert modification events. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertModificationProperties(string alertId, IList<ServiceAlertModificationItemInfo> modifications, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AlertId = alertId;
             Modifications = modifications;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Unique Id of the alert for which the history is being retrieved. </summary>
-        public Guid? AlertId { get; }
-        /// <summary> Modification details. </summary>
+        /// <summary> Unique identifier of the alert. </summary>
+        public string AlertId { get; }
+
+        /// <summary> Array of alert modification events. </summary>
         public IList<ServiceAlertModificationItemInfo> Modifications { get; }
     }
 }

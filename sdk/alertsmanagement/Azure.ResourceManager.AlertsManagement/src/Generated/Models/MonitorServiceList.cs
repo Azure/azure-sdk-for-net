@@ -16,31 +16,21 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         /// <summary> Initializes a new instance of <see cref="MonitorServiceList"/>. </summary>
         /// <param name="data"> Array of operations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        internal MonitorServiceList(IEnumerable<MonitorServiceDetails> data)
+        internal MonitorServiceList(IEnumerable<MonitorServiceDetails> data) : base(ServiceAlertMetadataIdentifier.MonitorServiceList)
         {
-            Argument.AssertNotNull(data, nameof(data));
-
             Data = data.ToList();
-            MetadataIdentifier = ServiceAlertMetadataIdentifier.MonitorServiceList;
         }
 
         /// <summary> Initializes a new instance of <see cref="MonitorServiceList"/>. </summary>
         /// <param name="metadataIdentifier"> Identification of the information to be retrieved by API call. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="data"> Array of operations. </param>
-        internal MonitorServiceList(ServiceAlertMetadataIdentifier metadataIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<MonitorServiceDetails> data) : base(metadataIdentifier, serializedAdditionalRawData)
+        internal MonitorServiceList(ServiceAlertMetadataIdentifier metadataIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<MonitorServiceDetails> data) : base(metadataIdentifier, additionalBinaryDataProperties)
         {
             Data = data;
-            MetadataIdentifier = metadataIdentifier;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MonitorServiceList"/> for deserialization. </summary>
-        internal MonitorServiceList()
-        {
         }
 
         /// <summary> Array of operations. </summary>
-        public IReadOnlyList<MonitorServiceDetails> Data { get; }
+        public IList<MonitorServiceDetails> Data { get; }
     }
 }

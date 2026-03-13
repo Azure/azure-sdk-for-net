@@ -13,40 +13,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> This object contains consistent fields across different monitor services. </summary>
     public partial class ServiceAlertEssentials
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertEssentials"/>. </summary>
-        public ServiceAlertEssentials()
+        internal ServiceAlertEssentials()
         {
         }
 
@@ -54,7 +25,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="severity"> Severity of alert Sev0 being highest and Sev4 being lowest. </param>
         /// <param name="signalType"> The type of signal the alert is based on, which could be metrics, logs or activity logs. </param>
         /// <param name="alertState"> Alert object state, which can be modified by the user. </param>
-        /// <param name="monitorCondition"> Condition of the rule at the monitor service. It represents whether the underlying conditions have crossed the defined alert rule thresholds. </param>
+        /// <param name="monitorCondition"> Can be 'Fired' or 'Resolved', which represents whether the underlying conditions have crossed the defined alert rule thresholds. </param>
         /// <param name="targetResource"> Target ARM resource, on which alert got created. </param>
         /// <param name="targetResourceName"> Name of the target ARM resource name, on which alert got created. </param>
         /// <param name="targetResourceGroup"> Resource group of target ARM resource, on which alert got created. </param>
@@ -70,8 +41,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="lastModifiedBy"> User who last modified the alert, in case of monitor service updates user would be 'system', otherwise name of the user. </param>
         /// <param name="actionStatus"> Action status. </param>
         /// <param name="description"> Alert description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, ServiceAlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, Guid? smartGroupId, string smartGroupingReason, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, ServiceAlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, string smartGroupId, string smartGroupingReason, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Severity = severity;
             SignalType = signalType;
@@ -92,58 +63,73 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             LastModifiedBy = lastModifiedBy;
             ActionStatus = actionStatus;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Severity of alert Sev0 being highest and Sev4 being lowest. </summary>
         public ServiceAlertSeverity? Severity { get; }
+
         /// <summary> The type of signal the alert is based on, which could be metrics, logs or activity logs. </summary>
         public ServiceAlertSignalType? SignalType { get; }
+
         /// <summary> Alert object state, which can be modified by the user. </summary>
         public ServiceAlertState? AlertState { get; }
-        /// <summary> Condition of the rule at the monitor service. It represents whether the underlying conditions have crossed the defined alert rule thresholds. </summary>
+
+        /// <summary> Can be 'Fired' or 'Resolved', which represents whether the underlying conditions have crossed the defined alert rule thresholds. </summary>
         public MonitorCondition? MonitorCondition { get; }
+
         /// <summary> Target ARM resource, on which alert got created. </summary>
-        public string TargetResource { get; set; }
+        public string TargetResource { get; }
+
         /// <summary> Name of the target ARM resource name, on which alert got created. </summary>
-        public string TargetResourceName { get; set; }
+        public string TargetResourceName { get; }
+
         /// <summary> Resource group of target ARM resource, on which alert got created. </summary>
-        public string TargetResourceGroup { get; set; }
+        public string TargetResourceGroup { get; }
+
         /// <summary> Resource type of target ARM resource, on which alert got created. </summary>
-        public string TargetResourceType { get; set; }
+        public string TargetResourceType { get; }
+
         /// <summary> Monitor service on which the rule(monitor) is set. </summary>
         public MonitorServiceSourceForAlert? MonitorService { get; }
+
         /// <summary> Rule(monitor) which fired alert instance. Depending on the monitor service,  this would be ARM id or name of the rule. </summary>
         public string AlertRule { get; }
+
         /// <summary> Unique Id created by monitor service for each alert instance. This could be used to track the issue at the monitor service, in case of Nagios, Zabbix, SCOM etc. </summary>
         public string SourceCreatedId { get; }
+
         /// <summary> Unique Id of the smart group. </summary>
-        public Guid? SmartGroupId { get; }
+        public string SmartGroupId { get; }
+
         /// <summary> Verbose reason describing the reason why this alert instance is added to a smart group. </summary>
         public string SmartGroupingReason { get; }
+
         /// <summary> Creation time(ISO-8601 format) of alert instance. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> Last modification time(ISO-8601 format) of alert instance. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
+
         /// <summary> Resolved time(ISO-8601 format) of alert instance. This will be updated when monitor service resolves the alert instance because the rule condition is no longer met. </summary>
         public DateTimeOffset? MonitorConditionResolvedOn { get; }
+
         /// <summary> User who last modified the alert, in case of monitor service updates user would be 'system', otherwise name of the user. </summary>
         public string LastModifiedBy { get; }
+
         /// <summary> Action status. </summary>
-        internal ServiceAlertActionStatus ActionStatus { get; set; }
+        internal ServiceAlertActionStatus ActionStatus { get; }
+
+        /// <summary> Alert description. </summary>
+        public string Description { get; }
+
         /// <summary> Value indicating whether alert is suppressed. </summary>
         public bool? IsSuppressed
         {
-            get => ActionStatus is null ? default : ActionStatus.IsSuppressed;
-            set
+            get
             {
-                if (ActionStatus is null)
-                    ActionStatus = new ServiceAlertActionStatus();
-                ActionStatus.IsSuppressed = value;
+                return ActionStatus.IsSuppressed;
             }
         }
-
-        /// <summary> Alert description. </summary>
-        public string Description { get; set; }
     }
 }

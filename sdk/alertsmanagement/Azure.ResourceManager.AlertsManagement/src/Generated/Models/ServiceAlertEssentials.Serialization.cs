@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class ServiceAlertEssentials : IUtf8JsonSerializable, IJsonModel<ServiceAlertEssentials>
+    /// <summary> This object contains consistent fields across different monitor services. </summary>
+    public partial class ServiceAlertEssentials : IJsonModel<ServiceAlertEssentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAlertEssentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceAlertEssentials PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertEssentials>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeServiceAlertEssentials(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAlertEssentials)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertEssentials>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAlertEssentials)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ServiceAlertEssentials>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceAlertEssentials IPersistableModel<ServiceAlertEssentials>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceAlertEssentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceAlertEssentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertEssentials>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertEssentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceAlertEssentials)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Severity))
             {
                 writer.WritePropertyName("severity"u8);
@@ -92,7 +132,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             if (options.Format != "W" && Optional.IsDefined(SmartGroupId))
             {
                 writer.WritePropertyName("smartGroupId"u8);
-                writer.WriteStringValue(SmartGroupId.Value);
+                writer.WriteStringValue(SmartGroupId);
             }
             if (options.Format != "W" && Optional.IsDefined(SmartGroupingReason))
             {
@@ -129,15 +169,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -146,22 +186,27 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
         }
 
-        ServiceAlertEssentials IJsonModel<ServiceAlertEssentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceAlertEssentials IJsonModel<ServiceAlertEssentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ServiceAlertEssentials JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertEssentials>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ServiceAlertEssentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ServiceAlertEssentials)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeServiceAlertEssentials(document.RootElement, options);
         }
 
-        internal static ServiceAlertEssentials DeserializeServiceAlertEssentials(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ServiceAlertEssentials DeserializeServiceAlertEssentials(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -177,159 +222,153 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             MonitorServiceSourceForAlert? monitorService = default;
             string alertRule = default;
             string sourceCreatedId = default;
-            Guid? smartGroupId = default;
+            string smartGroupId = default;
             string smartGroupingReason = default;
-            DateTimeOffset? startDateTime = default;
-            DateTimeOffset? lastModifiedDateTime = default;
-            DateTimeOffset? monitorConditionResolvedDateTime = default;
-            string lastModifiedUserName = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? lastModifiedOn = default;
+            DateTimeOffset? monitorConditionResolvedOn = default;
+            string lastModifiedBy = default;
             ServiceAlertActionStatus actionStatus = default;
             string description = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("severity"u8))
+                if (prop.NameEquals("severity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    severity = new ServiceAlertSeverity(property.Value.GetString());
+                    severity = new ServiceAlertSeverity(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("signalType"u8))
+                if (prop.NameEquals("signalType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    signalType = new ServiceAlertSignalType(property.Value.GetString());
+                    signalType = new ServiceAlertSignalType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("alertState"u8))
+                if (prop.NameEquals("alertState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    alertState = new ServiceAlertState(property.Value.GetString());
+                    alertState = new ServiceAlertState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("monitorCondition"u8))
+                if (prop.NameEquals("monitorCondition"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monitorCondition = new MonitorCondition(property.Value.GetString());
+                    monitorCondition = new MonitorCondition(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetResource"u8))
+                if (prop.NameEquals("targetResource"u8))
                 {
-                    targetResource = property.Value.GetString();
+                    targetResource = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceName"u8))
+                if (prop.NameEquals("targetResourceName"u8))
                 {
-                    targetResourceName = property.Value.GetString();
+                    targetResourceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceGroup"u8))
+                if (prop.NameEquals("targetResourceGroup"u8))
                 {
-                    targetResourceGroup = property.Value.GetString();
+                    targetResourceGroup = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("targetResourceType"u8))
+                if (prop.NameEquals("targetResourceType"u8))
                 {
-                    targetResourceType = property.Value.GetString();
+                    targetResourceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("monitorService"u8))
+                if (prop.NameEquals("monitorService"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monitorService = new MonitorServiceSourceForAlert(property.Value.GetString());
+                    monitorService = new MonitorServiceSourceForAlert(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("alertRule"u8))
+                if (prop.NameEquals("alertRule"u8))
                 {
-                    alertRule = property.Value.GetString();
+                    alertRule = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceCreatedId"u8))
+                if (prop.NameEquals("sourceCreatedId"u8))
                 {
-                    sourceCreatedId = property.Value.GetString();
+                    sourceCreatedId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("smartGroupId"u8))
+                if (prop.NameEquals("smartGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    smartGroupId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("smartGroupingReason"u8))
+                {
+                    smartGroupingReason = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("startDateTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    smartGroupId = property.Value.GetGuid();
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("smartGroupingReason"u8))
+                if (prop.NameEquals("lastModifiedDateTime"u8))
                 {
-                    smartGroupingReason = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("startDateTime"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startDateTime = property.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedDateTime"u8))
+                if (prop.NameEquals("monitorConditionResolvedDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastModifiedDateTime = property.Value.GetDateTimeOffset("O");
+                    monitorConditionResolvedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("monitorConditionResolvedDateTime"u8))
+                if (prop.NameEquals("lastModifiedUserName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    lastModifiedBy = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("actionStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    monitorConditionResolvedDateTime = property.Value.GetDateTimeOffset("O");
+                    actionStatus = ServiceAlertActionStatus.DeserializeServiceAlertActionStatus(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("lastModifiedUserName"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    lastModifiedUserName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("actionStatus"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    actionStatus = ServiceAlertActionStatus.DeserializeServiceAlertActionStatus(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ServiceAlertEssentials(
                 severity,
                 signalType,
@@ -344,44 +383,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 sourceCreatedId,
                 smartGroupId,
                 smartGroupingReason,
-                startDateTime,
-                lastModifiedDateTime,
-                monitorConditionResolvedDateTime,
-                lastModifiedUserName,
+                startOn,
+                lastModifiedOn,
+                monitorConditionResolvedOn,
+                lastModifiedBy,
                 actionStatus,
                 description,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ServiceAlertEssentials>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertEssentials>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceAlertEssentials)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ServiceAlertEssentials IPersistableModel<ServiceAlertEssentials>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertEssentials>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeServiceAlertEssentials(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ServiceAlertEssentials)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ServiceAlertEssentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

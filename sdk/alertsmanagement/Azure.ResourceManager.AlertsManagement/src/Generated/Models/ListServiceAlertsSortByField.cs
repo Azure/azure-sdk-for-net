@@ -7,69 +7,105 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The ListServiceAlertsSortByField. </summary>
+    /// <summary></summary>
     public readonly partial struct ListServiceAlertsSortByField : IEquatable<ListServiceAlertsSortByField>
     {
         private readonly string _value;
+        /// <summary> name. </summary>
+        private const string NameValue = "name";
+        /// <summary> severity. </summary>
+        private const string SeverityValue = "severity";
+        /// <summary> alertState. </summary>
+        private const string AlertStateValue = "alertState";
+        /// <summary> monitorCondition. </summary>
+        private const string MonitorConditionValue = "monitorCondition";
+        /// <summary> targetResource. </summary>
+        private const string TargetResourceValue = "targetResource";
+        /// <summary> targetResourceName. </summary>
+        private const string TargetResourceNameValue = "targetResourceName";
+        /// <summary> targetResourceGroup. </summary>
+        private const string TargetResourceGroupValue = "targetResourceGroup";
+        /// <summary> targetResourceType. </summary>
+        private const string TargetResourceTypeValue = "targetResourceType";
+        /// <summary> startDateTime. </summary>
+        private const string StartDateTimeValue = "startDateTime";
+        /// <summary> lastModifiedDateTime. </summary>
+        private const string LastModifiedDateTimeValue = "lastModifiedDateTime";
 
         /// <summary> Initializes a new instance of <see cref="ListServiceAlertsSortByField"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ListServiceAlertsSortByField(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NameValue = "name";
-        private const string SeverityValue = "severity";
-        private const string AlertStateValue = "alertState";
-        private const string MonitorConditionValue = "monitorCondition";
-        private const string TargetResourceValue = "targetResource";
-        private const string TargetResourceNameValue = "targetResourceName";
-        private const string TargetResourceGroupValue = "targetResourceGroup";
-        private const string TargetResourceTypeValue = "targetResourceType";
-        private const string StartOnValue = "startDateTime";
-        private const string LastModifiedOnValue = "lastModifiedDateTime";
+            _value = value;
+        }
 
         /// <summary> name. </summary>
         public static ListServiceAlertsSortByField Name { get; } = new ListServiceAlertsSortByField(NameValue);
+
         /// <summary> severity. </summary>
         public static ListServiceAlertsSortByField Severity { get; } = new ListServiceAlertsSortByField(SeverityValue);
+
         /// <summary> alertState. </summary>
         public static ListServiceAlertsSortByField AlertState { get; } = new ListServiceAlertsSortByField(AlertStateValue);
+
         /// <summary> monitorCondition. </summary>
         public static ListServiceAlertsSortByField MonitorCondition { get; } = new ListServiceAlertsSortByField(MonitorConditionValue);
+
         /// <summary> targetResource. </summary>
         public static ListServiceAlertsSortByField TargetResource { get; } = new ListServiceAlertsSortByField(TargetResourceValue);
+
         /// <summary> targetResourceName. </summary>
         public static ListServiceAlertsSortByField TargetResourceName { get; } = new ListServiceAlertsSortByField(TargetResourceNameValue);
+
         /// <summary> targetResourceGroup. </summary>
         public static ListServiceAlertsSortByField TargetResourceGroup { get; } = new ListServiceAlertsSortByField(TargetResourceGroupValue);
+
         /// <summary> targetResourceType. </summary>
         public static ListServiceAlertsSortByField TargetResourceType { get; } = new ListServiceAlertsSortByField(TargetResourceTypeValue);
+
         /// <summary> startDateTime. </summary>
-        public static ListServiceAlertsSortByField StartOn { get; } = new ListServiceAlertsSortByField(StartOnValue);
+        public static ListServiceAlertsSortByField StartDateTime { get; } = new ListServiceAlertsSortByField(StartDateTimeValue);
+
         /// <summary> lastModifiedDateTime. </summary>
-        public static ListServiceAlertsSortByField LastModifiedOn { get; } = new ListServiceAlertsSortByField(LastModifiedOnValue);
+        public static ListServiceAlertsSortByField LastModifiedDateTime { get; } = new ListServiceAlertsSortByField(LastModifiedDateTimeValue);
+
         /// <summary> Determines if two <see cref="ListServiceAlertsSortByField"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ListServiceAlertsSortByField left, ListServiceAlertsSortByField right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ListServiceAlertsSortByField"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ListServiceAlertsSortByField left, ListServiceAlertsSortByField right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ListServiceAlertsSortByField"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ListServiceAlertsSortByField"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ListServiceAlertsSortByField(string value) => new ListServiceAlertsSortByField(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ListServiceAlertsSortByField"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ListServiceAlertsSortByField?(string value) => value == null ? null : new ListServiceAlertsSortByField(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ListServiceAlertsSortByField other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ListServiceAlertsSortByField other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

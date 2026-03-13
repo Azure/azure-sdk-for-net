@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The MonitorCondition. </summary>
+    /// <summary></summary>
     public readonly partial struct MonitorCondition : IEquatable<MonitorCondition>
     {
         private readonly string _value;
+        /// <summary> Fired. </summary>
+        private const string FiredValue = "Fired";
+        /// <summary> Resolved. </summary>
+        private const string ResolvedValue = "Resolved";
 
         /// <summary> Initializes a new instance of <see cref="MonitorCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorCondition(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string FiredValue = "Fired";
-        private const string ResolvedValue = "Resolved";
+            _value = value;
+        }
 
         /// <summary> Fired. </summary>
         public static MonitorCondition Fired { get; } = new MonitorCondition(FiredValue);
+
         /// <summary> Resolved. </summary>
         public static MonitorCondition Resolved { get; } = new MonitorCondition(ResolvedValue);
+
         /// <summary> Determines if two <see cref="MonitorCondition"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorCondition left, MonitorCondition right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorCondition"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorCondition left, MonitorCondition right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorCondition"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorCondition(string value) => new MonitorCondition(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorCondition?(string value) => value == null ? null : new MonitorCondition(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorCondition other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorCondition other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

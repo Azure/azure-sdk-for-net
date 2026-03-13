@@ -8,83 +8,52 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.AlertsManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAlertsManagementModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="AlertsManagement.AlertProcessingRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> Alert processing rule properties. </param>
-        /// <returns> A new <see cref="AlertsManagement.AlertProcessingRuleData"/> instance for mocking. </returns>
-        public static AlertProcessingRuleData AlertProcessingRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, AlertProcessingRuleProperties properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
 
-            return new AlertProcessingRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertMetadata"/>. </summary>
-        /// <param name="properties">
-        /// alert meta data property bag
-        /// Please note <see cref="ServiceAlertMetadataProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.MonitorServiceList"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.ServiceAlertMetadata"/> instance for mocking. </returns>
-        public static ServiceAlertMetadata ServiceAlertMetadata(ServiceAlertMetadataProperties properties = null)
-        {
-            return new ServiceAlertMetadata(properties, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AlertsManagement.ServiceAlertData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> An alert created in alert management service. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Alert property bag. </param>
         /// <returns> A new <see cref="AlertsManagement.ServiceAlertData"/> instance for mocking. </returns>
-        public static ServiceAlertData ServiceAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceAlertProperties properties = null)
+        public static ServiceAlertData ServiceAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceAlertProperties properties = default)
         {
             return new ServiceAlertData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertProperties"/>. </summary>
+        /// <summary> Alert property bag. </summary>
         /// <param name="essentials"> This object contains consistent fields across different monitor services. </param>
         /// <param name="context"> Information specific to the monitor service that gives more contextual details about the alert. </param>
         /// <param name="egressConfig"> Config which would be used for displaying the data in portal. </param>
+        /// <param name="customProperties"> Custom properties that can hold any user defined key-value pairs. </param>
         /// <returns> A new <see cref="Models.ServiceAlertProperties"/> instance for mocking. </returns>
-        public static ServiceAlertProperties ServiceAlertProperties(ServiceAlertEssentials essentials = null, BinaryData context = null, BinaryData egressConfig = null)
+        public static ServiceAlertProperties ServiceAlertProperties(ServiceAlertEssentials essentials = default, BinaryData context = default, BinaryData egressConfig = default, IDictionary<string, string> customProperties = default)
         {
-            return new ServiceAlertProperties(essentials, context, egressConfig, serializedAdditionalRawData: null);
+            customProperties ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ServiceAlertProperties(essentials, context, egressConfig, customProperties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertEssentials"/>. </summary>
         /// <param name="severity"> Severity of alert Sev0 being highest and Sev4 being lowest. </param>
         /// <param name="signalType"> The type of signal the alert is based on, which could be metrics, logs or activity logs. </param>
         /// <param name="alertState"> Alert object state, which can be modified by the user. </param>
-        /// <param name="monitorCondition"> Condition of the rule at the monitor service. It represents whether the underlying conditions have crossed the defined alert rule thresholds. </param>
+        /// <param name="monitorCondition"> Can be 'Fired' or 'Resolved', which represents whether the underlying conditions have crossed the defined alert rule thresholds. </param>
         /// <param name="targetResource"> Target ARM resource, on which alert got created. </param>
         /// <param name="targetResourceName"> Name of the target ARM resource name, on which alert got created. </param>
         /// <param name="targetResourceGroup"> Resource group of target ARM resource, on which alert got created. </param>
@@ -98,10 +67,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="lastModifiedOn"> Last modification time(ISO-8601 format) of alert instance. </param>
         /// <param name="monitorConditionResolvedOn"> Resolved time(ISO-8601 format) of alert instance. This will be updated when monitor service resolves the alert instance because the rule condition is no longer met. </param>
         /// <param name="lastModifiedBy"> User who last modified the alert, in case of monitor service updates user would be 'system', otherwise name of the user. </param>
-        /// <param name="isSuppressed"> Action status. </param>
+        /// <param name="isSuppressed"> Value indicating whether alert is suppressed. </param>
         /// <param name="description"> Alert description. </param>
         /// <returns> A new <see cref="Models.ServiceAlertEssentials"/> instance for mocking. </returns>
-        public static ServiceAlertEssentials ServiceAlertEssentials(ServiceAlertSeverity? severity = null, ServiceAlertSignalType? signalType = null, ServiceAlertState? alertState = null, MonitorCondition? monitorCondition = null, string targetResource = null, string targetResourceName = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, string alertRule = null, string sourceCreatedId = null, Guid? smartGroupId = null, string smartGroupingReason = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? monitorConditionResolvedOn = null, string lastModifiedBy = null, bool? isSuppressed = null, string description = null)
+        public static ServiceAlertEssentials ServiceAlertEssentials(ServiceAlertSeverity? severity = default, ServiceAlertSignalType? signalType = default, ServiceAlertState? alertState = default, MonitorCondition? monitorCondition = default, string targetResource = default, string targetResourceName = default, string targetResourceGroup = default, string targetResourceType = default, MonitorServiceSourceForAlert? monitorService = default, string alertRule = default, string sourceCreatedId = default, string smartGroupId = default, string smartGroupingReason = default, DateTimeOffset? startOn = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? monitorConditionResolvedOn = default, string lastModifiedBy = default, bool? isSuppressed = default, string description = default)
         {
             return new ServiceAlertEssentials(
                 severity,
@@ -121,157 +90,318 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 lastModifiedOn,
                 monitorConditionResolvedOn,
                 lastModifiedBy,
-                isSuppressed != null ? new ServiceAlertActionStatus(isSuppressed, serializedAdditionalRawData: null) : null,
+                isSuppressed is null ? default : new ServiceAlertActionStatus(isSuppressed, null),
                 description,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertModification"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the alert modification item. </param>
+        /// <summary> Alert Modification details. </summary>
+        /// <param name="id"> Azure resource Id. </param>
+        /// <param name="type"> Azure resource type. </param>
+        /// <param name="name"> Azure resource name. </param>
+        /// <param name="properties"> Alert modification history properties. </param>
         /// <returns> A new <see cref="Models.ServiceAlertModification"/> instance for mocking. </returns>
-        public static ServiceAlertModification ServiceAlertModification(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceAlertModificationProperties properties = null)
+        public static ServiceAlertModification ServiceAlertModification(string id = default, string @type = default, string name = default, ServiceAlertModificationProperties properties = default)
         {
-            return new ServiceAlertModification(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
+            return new ServiceAlertModification(id, @type, name, additionalBinaryDataProperties: null, properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertModificationProperties"/>. </summary>
-        /// <param name="alertId"> Unique Id of the alert for which the history is being retrieved. </param>
-        /// <param name="modifications"> Modification details. </param>
+        /// <summary> Alert modification history properties. </summary>
+        /// <param name="alertId"> Unique identifier of the alert. </param>
+        /// <param name="modifications"> Array of alert modification events. </param>
         /// <returns> A new <see cref="Models.ServiceAlertModificationProperties"/> instance for mocking. </returns>
-        public static ServiceAlertModificationProperties ServiceAlertModificationProperties(Guid? alertId = null, IEnumerable<ServiceAlertModificationItemInfo> modifications = null)
+        public static ServiceAlertModificationProperties ServiceAlertModificationProperties(string alertId = default, IEnumerable<ServiceAlertModificationItemInfo> modifications = default)
         {
-            modifications ??= new List<ServiceAlertModificationItemInfo>();
+            modifications ??= new ChangeTrackingList<ServiceAlertModificationItemInfo>();
 
-            return new ServiceAlertModificationProperties(alertId, modifications?.ToList(), serializedAdditionalRawData: null);
+            return new ServiceAlertModificationProperties(alertId, modifications.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertSummary"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Group the result set. </param>
-        /// <returns> A new <see cref="Models.ServiceAlertSummary"/> instance for mocking. </returns>
-        public static ServiceAlertSummary ServiceAlertSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceAlertSummaryGroup properties = null)
+        /// <summary> Alert modification item. </summary>
+        /// <param name="modificationEvent"> Reason for the modification. </param>
+        /// <param name="oldValue"> Old value. </param>
+        /// <param name="newValue"> New value. </param>
+        /// <param name="modifiedAt"> Modified date and time. </param>
+        /// <param name="modifiedBy"> Modified user details (Principal client name). </param>
+        /// <param name="comments"> Modification comments. </param>
+        /// <param name="description"> Description of the modification. </param>
+        /// <param name="details"> Base details class. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertModificationItemInfo"/> instance for mocking. </returns>
+        public static ServiceAlertModificationItemInfo ServiceAlertModificationItemInfo(ServiceAlertModificationEvent? modificationEvent = default, string oldValue = default, string newValue = default, string modifiedAt = default, string modifiedBy = default, string comments = default, string description = default, BaseDetails details = default)
         {
-            return new ServiceAlertSummary(
+            return new ServiceAlertModificationItemInfo(
+                modificationEvent,
+                oldValue,
+                newValue,
+                modifiedAt,
+                modifiedBy,
+                comments,
+                description,
+                details,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The PropertyChangeDetails. </summary>
+        /// <param name="oldValue"> The value before the change. </param>
+        /// <param name="newValue"> The value after the change. </param>
+        /// <param name="comment"> The comment. </param>
+        /// <returns> A new <see cref="Models.PropertyChangeDetails"/> instance for mocking. </returns>
+        public static PropertyChangeDetails PropertyChangeDetails(string oldValue = default, string newValue = default, string comment = default)
+        {
+            return new PropertyChangeDetails(AlertModificationType.PropertyChange, additionalBinaryDataProperties: null, oldValue, newValue, comment);
+        }
+
+        /// <summary> The ActionSuppressedDetails. </summary>
+        /// <param name="suppressionActionRules"> List of suppression action rules. </param>
+        /// <param name="suppressedActionGroups"> List of suppressed action groups. </param>
+        /// <returns> A new <see cref="Models.ActionSuppressedDetails"/> instance for mocking. </returns>
+        public static ActionSuppressedDetails ActionSuppressedDetails(IEnumerable<string> suppressionActionRules = default, IEnumerable<TriggeredRule> suppressedActionGroups = default)
+        {
+            suppressionActionRules ??= new ChangeTrackingList<string>();
+            suppressedActionGroups ??= new ChangeTrackingList<TriggeredRule>();
+
+            return new ActionSuppressedDetails(AlertModificationType.ActionsSuppressed, additionalBinaryDataProperties: null, suppressionActionRules.ToList(), suppressedActionGroups.ToList());
+        }
+
+        /// <summary> The TriggeredRule. </summary>
+        /// <param name="actionGroupId"> The action group ID. </param>
+        /// <param name="ruleId"> The rule ID. </param>
+        /// <param name="ruleType"> The rule type. </param>
+        /// <returns> A new <see cref="Models.TriggeredRule"/> instance for mocking. </returns>
+        public static TriggeredRule TriggeredRule(string actionGroupId = default, string ruleId = default, RuleType? ruleType = default)
+        {
+            return new TriggeredRule(actionGroupId, ruleId, ruleType, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ActionTriggeredDetails. </summary>
+        /// <param name="actionGroup"> The action group that was triggered. </param>
+        /// <param name="notificationResult"> The result of the notification delivery. </param>
+        /// <returns> A new <see cref="Models.ActionTriggeredDetails"/> instance for mocking. </returns>
+        public static ActionTriggeredDetails ActionTriggeredDetails(TriggeredRule actionGroup = default, NotificationResult notificationResult = default)
+        {
+            return new ActionTriggeredDetails(AlertModificationType.ActionsTriggered, additionalBinaryDataProperties: null, actionGroup, notificationResult);
+        }
+
+        /// <summary> The NotificationResult. </summary>
+        /// <param name="statusURL"> URL endpoint for checking notification delivery status. Only populated when status is 'Inline'. </param>
+        /// <param name="status"> The status of the notification. </param>
+        /// <returns> A new <see cref="Models.NotificationResult"/> instance for mocking. </returns>
+        public static NotificationResult NotificationResult(string statusURL = default, ResultStatus? status = default)
+        {
+            return new NotificationResult(statusURL, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An azure resource object. </summary>
+        /// <param name="id"> Azure resource Id. </param>
+        /// <param name="type"> Azure resource type. </param>
+        /// <param name="name"> Azure resource name. </param>
+        /// <returns> A new <see cref="Models.AlertsManagementProxyResource"/> instance for mocking. </returns>
+        public static AlertsManagementProxyResource AlertsManagementProxyResource(string id = default, string @type = default, string name = default)
+        {
+            return new AlertsManagementProxyResource(id, @type, name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The alert's enrichments. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the alert enrichment item. </param>
+        /// <returns> A new <see cref="Models.AlertEnrichmentResult"/> instance for mocking. </returns>
+        public static AlertEnrichmentResult AlertEnrichmentResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertEnrichmentProperties properties = default)
+        {
+            return new AlertEnrichmentResult(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertsManagement.SmartGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="alertsCount"> Total number of alerts in smart group. </param>
-        /// <param name="smartGroupState"> Smart group state. </param>
-        /// <param name="severity"> Severity of smart group is the highest(Sev0 &gt;... &gt; Sev4) severity of all the alerts in the group. </param>
-        /// <param name="startOn"> Creation time of smart group. Date-Time in ISO-8601 format. </param>
-        /// <param name="lastModifiedOn"> Last updated time of smart group. Date-Time in ISO-8601 format. </param>
-        /// <param name="lastModifiedBy"> Last modified by user name. </param>
-        /// <param name="resources"> Summary of target resources in the smart group. </param>
-        /// <param name="resourceTypes"> Summary of target resource types in the smart group. </param>
-        /// <param name="resourceGroups"> Summary of target resource groups in the smart group. </param>
-        /// <param name="monitorServices"> Summary of monitorServices in the smart group. </param>
-        /// <param name="monitorConditions"> Summary of monitorConditions in the smart group. </param>
-        /// <param name="alertStates"> Summary of alertStates in the smart group. </param>
-        /// <param name="alertSeverities"> Summary of alertSeverities in the smart group. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of alerts. Call ListNext() with this URI to fetch the next page alerts. </param>
-        /// <returns> A new <see cref="AlertsManagement.SmartGroupData"/> instance for mocking. </returns>
-        public static SmartGroupData SmartGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, long? alertsCount = null, SmartGroupState? smartGroupState = null, ServiceAlertSeverity? severity = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, string lastModifiedBy = null, IEnumerable<SmartGroupAggregatedProperty> resources = null, IEnumerable<SmartGroupAggregatedProperty> resourceTypes = null, IEnumerable<SmartGroupAggregatedProperty> resourceGroups = null, IEnumerable<SmartGroupAggregatedProperty> monitorServices = null, IEnumerable<SmartGroupAggregatedProperty> monitorConditions = null, IEnumerable<SmartGroupAggregatedProperty> alertStates = null, IEnumerable<SmartGroupAggregatedProperty> alertSeverities = null, string nextLink = null)
+        /// <summary> Properties of the alert enrichment item. </summary>
+        /// <param name="alertId"> Unique Id (GUID) of the alert for which the enrichments are being retrieved. </param>
+        /// <param name="enrichments"> Enrichment details. </param>
+        /// <returns> A new <see cref="Models.AlertEnrichmentProperties"/> instance for mocking. </returns>
+        public static AlertEnrichmentProperties AlertEnrichmentProperties(string alertId = default, IEnumerable<AlertEnrichmentItem> enrichments = default)
         {
-            resources ??= new List<SmartGroupAggregatedProperty>();
-            resourceTypes ??= new List<SmartGroupAggregatedProperty>();
-            resourceGroups ??= new List<SmartGroupAggregatedProperty>();
-            monitorServices ??= new List<SmartGroupAggregatedProperty>();
-            monitorConditions ??= new List<SmartGroupAggregatedProperty>();
-            alertStates ??= new List<SmartGroupAggregatedProperty>();
-            alertSeverities ??= new List<SmartGroupAggregatedProperty>();
+            enrichments ??= new ChangeTrackingList<AlertEnrichmentItem>();
 
-            return new SmartGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                alertsCount,
-                smartGroupState,
-                severity,
-                startOn,
-                lastModifiedOn,
-                lastModifiedBy,
-                resources?.ToList(),
-                resourceTypes?.ToList(),
-                resourceGroups?.ToList(),
-                monitorServices?.ToList(),
-                monitorConditions?.ToList(),
-                alertStates?.ToList(),
-                alertSeverities?.ToList(),
-                nextLink,
-                serializedAdditionalRawData: null);
+            return new AlertEnrichmentProperties(alertId, enrichments.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SmartGroupModification"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Properties of the smartGroup modification item. </param>
-        /// <returns> A new <see cref="Models.SmartGroupModification"/> instance for mocking. </returns>
-        public static SmartGroupModification SmartGroupModification(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SmartGroupModificationProperties properties = null)
+        /// <summary>
+        /// Alert enrichment item.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.PrometheusEnrichmentItem"/>, <see cref="Models.PrometheusInstantQuery"/>, and <see cref="Models.PrometheusRangeQuery"/>.
+        /// </summary>
+        /// <param name="title"> The enrichment title. </param>
+        /// <param name="description"> The enrichment description. </param>
+        /// <param name="status"> The status of the evaluation of the enrichment. </param>
+        /// <param name="errorMessage"> The error message. Will be present only if the status is 'Failed'. </param>
+        /// <param name="type"> The enrichment type. </param>
+        /// <returns> A new <see cref="Models.AlertEnrichmentItem"/> instance for mocking. </returns>
+        public static AlertEnrichmentItem AlertEnrichmentItem(string title = default, string description = default, Status status = default, string errorMessage = default, string @type = default)
         {
-            return new SmartGroupModification(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
+            return new UnknownAlertEnrichmentItem(
+                title,
+                description,
+                status,
+                errorMessage,
+                new Type(@type),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SmartGroupModificationProperties"/>. </summary>
-        /// <param name="smartGroupId"> Unique Id of the smartGroup for which the history is being retrieved. </param>
-        /// <param name="modifications"> Modification details. </param>
-        /// <param name="nextLink"> URL to fetch the next set of results. </param>
-        /// <returns> A new <see cref="Models.SmartGroupModificationProperties"/> instance for mocking. </returns>
-        public static SmartGroupModificationProperties SmartGroupModificationProperties(Guid? smartGroupId = null, IEnumerable<SmartGroupModificationItemInfo> modifications = null, string nextLink = null)
+        /// <summary> Prometheus enrichment object. </summary>
+        /// <param name="title"> The enrichment title. </param>
+        /// <param name="description"> The enrichment description. </param>
+        /// <param name="status"> The status of the evaluation of the enrichment. </param>
+        /// <param name="errorMessage"> The error message. Will be present only if the status is 'Failed'. </param>
+        /// <param name="linkToApi"> Link to Prometheus query API (Url format). </param>
+        /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
+        /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
+        /// <param name="query"> The Prometheus expression query. </param>
+        /// <returns> A new <see cref="Models.PrometheusEnrichmentItem"/> instance for mocking. </returns>
+        public static PrometheusEnrichmentItem PrometheusEnrichmentItem(string title = default, string description = default, Status status = default, string errorMessage = default, string linkToApi = default, IEnumerable<string> datasources = default, string grafanaExplorePath = default, string query = default)
         {
-            modifications ??= new List<SmartGroupModificationItemInfo>();
+            datasources ??= new ChangeTrackingList<string>();
 
-            return new SmartGroupModificationProperties(smartGroupId, modifications?.ToList(), nextLink, serializedAdditionalRawData: null);
+            return new PrometheusEnrichmentItem(
+                title,
+                description,
+                status,
+                errorMessage,
+                Type.PrometheusEnrichmentItem,
+                additionalBinaryDataProperties: null,
+                linkToApi,
+                datasources.ToList(),
+                grafanaExplorePath,
+                query);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MonitorServiceList"/>. </summary>
+        /// <summary> Prometheus instant query enrichment object. </summary>
+        /// <param name="title"> The enrichment title. </param>
+        /// <param name="description"> The enrichment description. </param>
+        /// <param name="status"> The status of the evaluation of the enrichment. </param>
+        /// <param name="errorMessage"> The error message. Will be present only if the status is 'Failed'. </param>
+        /// <param name="linkToApi"> Link to Prometheus query API (Url format). </param>
+        /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
+        /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
+        /// <param name="query"> The Prometheus expression query. </param>
+        /// <param name="time"> The date and the time of the evaluation. </param>
+        /// <returns> A new <see cref="Models.PrometheusInstantQuery"/> instance for mocking. </returns>
+        public static PrometheusInstantQuery PrometheusInstantQuery(string title = default, string description = default, Status status = default, string errorMessage = default, string linkToApi = default, IEnumerable<string> datasources = default, string grafanaExplorePath = default, string query = default, string time = default)
+        {
+            datasources ??= new ChangeTrackingList<string>();
+
+            return new PrometheusInstantQuery(
+                title,
+                description,
+                status,
+                errorMessage,
+                Type.PrometheusInstantQuery,
+                additionalBinaryDataProperties: null,
+                linkToApi,
+                datasources.ToList(),
+                grafanaExplorePath,
+                query,
+                time);
+        }
+
+        /// <summary> Prometheus instant query enrichment object. </summary>
+        /// <param name="title"> The enrichment title. </param>
+        /// <param name="description"> The enrichment description. </param>
+        /// <param name="status"> The status of the evaluation of the enrichment. </param>
+        /// <param name="errorMessage"> The error message. Will be present only if the status is 'Failed'. </param>
+        /// <param name="linkToApi"> Link to Prometheus query API (Url format). </param>
+        /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
+        /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
+        /// <param name="query"> The Prometheus expression query. </param>
+        /// <param name="start"> The start evaluation date and time in ISO8601 format. </param>
+        /// <param name="end"> The end evaluation date and time in ISO8601 format. </param>
+        /// <param name="step"> Query resolution step width in ISO8601 format. </param>
+        /// <returns> A new <see cref="Models.PrometheusRangeQuery"/> instance for mocking. </returns>
+        public static PrometheusRangeQuery PrometheusRangeQuery(string title = default, string description = default, Status status = default, string errorMessage = default, string linkToApi = default, IEnumerable<string> datasources = default, string grafanaExplorePath = default, string query = default, DateTimeOffset start = default, DateTimeOffset end = default, string step = default)
+        {
+            datasources ??= new ChangeTrackingList<string>();
+
+            return new PrometheusRangeQuery(
+                title,
+                description,
+                status,
+                errorMessage,
+                Type.PrometheusRangeQuery,
+                additionalBinaryDataProperties: null,
+                linkToApi,
+                datasources.ToList(),
+                grafanaExplorePath,
+                query,
+                start,
+                end,
+                step);
+        }
+
+        /// <summary> alert meta data information. </summary>
+        /// <param name="properties"> alert meta data property bag. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertMetadata"/> instance for mocking. </returns>
+        public static ServiceAlertMetadata ServiceAlertMetadata(ServiceAlertMetadataProperties properties = default)
+        {
+            return new ServiceAlertMetadata(properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Monitor service details. </summary>
         /// <param name="data"> Array of operations. </param>
         /// <returns> A new <see cref="Models.MonitorServiceList"/> instance for mocking. </returns>
-        public static MonitorServiceList MonitorServiceList(IEnumerable<MonitorServiceDetails> data = null)
+        public static MonitorServiceList MonitorServiceList(IEnumerable<MonitorServiceDetails> data = default)
         {
-            data ??= new List<MonitorServiceDetails>();
+            data ??= new ChangeTrackingList<MonitorServiceDetails>();
 
-            return new MonitorServiceList(ServiceAlertMetadataIdentifier.MonitorServiceList, serializedAdditionalRawData: null, data?.ToList());
+            return new MonitorServiceList(ServiceAlertMetadataIdentifier.MonitorServiceList, additionalBinaryDataProperties: null, data.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MonitorServiceDetails"/>. </summary>
+        /// <summary> Details of a monitor service. </summary>
         /// <param name="name"> Monitor service name. </param>
         /// <param name="displayName"> Monitor service display name. </param>
         /// <returns> A new <see cref="Models.MonitorServiceDetails"/> instance for mocking. </returns>
-        public static MonitorServiceDetails MonitorServiceDetails(string name = null, string displayName = null)
+        public static MonitorServiceDetails MonitorServiceDetails(string name = default, string displayName = default)
         {
-            return new MonitorServiceDetails(name, displayName, serializedAdditionalRawData: null);
+            return new MonitorServiceDetails(name, displayName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Summary of alerts based on the input filters and 'groupby' parameters. </summary>
+        /// <param name="id"> Azure resource Id. </param>
+        /// <param name="type"> Azure resource type. </param>
+        /// <param name="name"> Azure resource name. </param>
+        /// <param name="properties"> Group the result set. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertSummary"/> instance for mocking. </returns>
+        public static ServiceAlertSummary ServiceAlertSummary(string id = default, string @type = default, string name = default, ServiceAlertSummaryGroup properties = default)
+        {
+            return new ServiceAlertSummary(id, @type, name, additionalBinaryDataProperties: null, properties);
+        }
+
+        /// <summary> Group the result set. </summary>
+        /// <param name="total"> Total count of the result set. </param>
+        /// <param name="smartGroupsCount"> Total count of the smart groups. </param>
+        /// <param name="groupedby"> Name of the field aggregated. </param>
+        /// <param name="values"> List of the items. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertSummaryGroup"/> instance for mocking. </returns>
+        public static ServiceAlertSummaryGroup ServiceAlertSummaryGroup(long? total = default, long? smartGroupsCount = default, string groupedby = default, IEnumerable<ServiceAlertSummaryGroupItemInfo> values = default)
+        {
+            values ??= new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
+
+            return new ServiceAlertSummaryGroup(total, smartGroupsCount, groupedby, values.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Alerts summary group item. </summary>
+        /// <param name="name"> Value of the aggregated field. </param>
+        /// <param name="count"> Count of the aggregated field. </param>
+        /// <param name="groupedby"> Name of the field aggregated. </param>
+        /// <param name="values"> List of the items. </param>
+        /// <returns> A new <see cref="Models.ServiceAlertSummaryGroupItemInfo"/> instance for mocking. </returns>
+        public static ServiceAlertSummaryGroupItemInfo ServiceAlertSummaryGroupItemInfo(string name = default, long? count = default, string groupedby = default, IEnumerable<ServiceAlertSummaryGroupItemInfo> values = default)
+        {
+            values ??= new ChangeTrackingList<ServiceAlertSummaryGroupItemInfo>();
+
+            return new ServiceAlertSummaryGroupItemInfo(name, count, groupedby, values.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }

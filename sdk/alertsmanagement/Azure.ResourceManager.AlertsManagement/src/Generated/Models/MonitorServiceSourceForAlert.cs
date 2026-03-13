@@ -7,81 +7,130 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The MonitorServiceSourceForAlert. </summary>
+    /// <summary></summary>
     public readonly partial struct MonitorServiceSourceForAlert : IEquatable<MonitorServiceSourceForAlert>
     {
         private readonly string _value;
+        /// <summary> Application Insights. </summary>
+        private const string ApplicationInsightsValue = "Application Insights";
+        /// <summary> ActivityLog Administrative. </summary>
+        private const string ActivityLogAdministrativeValue = "ActivityLog Administrative";
+        /// <summary> ActivityLog Security. </summary>
+        private const string ActivityLogSecurityValue = "ActivityLog Security";
+        /// <summary> ActivityLog Recommendation. </summary>
+        private const string ActivityLogRecommendationValue = "ActivityLog Recommendation";
+        /// <summary> ActivityLog Policy. </summary>
+        private const string ActivityLogPolicyValue = "ActivityLog Policy";
+        /// <summary> ActivityLog Autoscale. </summary>
+        private const string ActivityLogAutoscaleValue = "ActivityLog Autoscale";
+        /// <summary> Log Analytics. </summary>
+        private const string LogAnalyticsValue = "Log Analytics";
+        /// <summary> Nagios. </summary>
+        private const string NagiosValue = "Nagios";
+        /// <summary> Platform. </summary>
+        private const string PlatformValue = "Platform";
+        /// <summary> SCOM. </summary>
+        private const string SCOMValue = "SCOM";
+        /// <summary> ServiceHealth. </summary>
+        private const string ServiceHealthValue = "ServiceHealth";
+        /// <summary> SmartDetector. </summary>
+        private const string SmartDetectorValue = "SmartDetector";
+        /// <summary> VM Insights. </summary>
+        private const string VMInsightsValue = "VM Insights";
+        /// <summary> Zabbix. </summary>
+        private const string ZabbixValue = "Zabbix";
+        /// <summary> Resource Health. </summary>
+        private const string ResourceHealthValue = "Resource Health";
 
         /// <summary> Initializes a new instance of <see cref="MonitorServiceSourceForAlert"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorServiceSourceForAlert(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ApplicationInsightsValue = "Application Insights";
-        private const string ActivityLogAdministrativeValue = "ActivityLog Administrative";
-        private const string ActivityLogSecurityValue = "ActivityLog Security";
-        private const string ActivityLogRecommendationValue = "ActivityLog Recommendation";
-        private const string ActivityLogPolicyValue = "ActivityLog Policy";
-        private const string ActivityLogAutoscaleValue = "ActivityLog Autoscale";
-        private const string LogAnalyticsValue = "Log Analytics";
-        private const string NagiosValue = "Nagios";
-        private const string PlatformValue = "Platform";
-        private const string ScomValue = "SCOM";
-        private const string ServiceHealthValue = "ServiceHealth";
-        private const string SmartDetectorValue = "SmartDetector";
-        private const string VmInsightsValue = "VM Insights";
-        private const string ZabbixValue = "Zabbix";
+            _value = value;
+        }
 
         /// <summary> Application Insights. </summary>
         public static MonitorServiceSourceForAlert ApplicationInsights { get; } = new MonitorServiceSourceForAlert(ApplicationInsightsValue);
+
         /// <summary> ActivityLog Administrative. </summary>
         public static MonitorServiceSourceForAlert ActivityLogAdministrative { get; } = new MonitorServiceSourceForAlert(ActivityLogAdministrativeValue);
+
         /// <summary> ActivityLog Security. </summary>
         public static MonitorServiceSourceForAlert ActivityLogSecurity { get; } = new MonitorServiceSourceForAlert(ActivityLogSecurityValue);
+
         /// <summary> ActivityLog Recommendation. </summary>
         public static MonitorServiceSourceForAlert ActivityLogRecommendation { get; } = new MonitorServiceSourceForAlert(ActivityLogRecommendationValue);
+
         /// <summary> ActivityLog Policy. </summary>
         public static MonitorServiceSourceForAlert ActivityLogPolicy { get; } = new MonitorServiceSourceForAlert(ActivityLogPolicyValue);
+
         /// <summary> ActivityLog Autoscale. </summary>
         public static MonitorServiceSourceForAlert ActivityLogAutoscale { get; } = new MonitorServiceSourceForAlert(ActivityLogAutoscaleValue);
+
         /// <summary> Log Analytics. </summary>
         public static MonitorServiceSourceForAlert LogAnalytics { get; } = new MonitorServiceSourceForAlert(LogAnalyticsValue);
+
         /// <summary> Nagios. </summary>
         public static MonitorServiceSourceForAlert Nagios { get; } = new MonitorServiceSourceForAlert(NagiosValue);
+
         /// <summary> Platform. </summary>
         public static MonitorServiceSourceForAlert Platform { get; } = new MonitorServiceSourceForAlert(PlatformValue);
+
         /// <summary> SCOM. </summary>
-        public static MonitorServiceSourceForAlert Scom { get; } = new MonitorServiceSourceForAlert(ScomValue);
+        public static MonitorServiceSourceForAlert SCOM { get; } = new MonitorServiceSourceForAlert(SCOMValue);
+
         /// <summary> ServiceHealth. </summary>
         public static MonitorServiceSourceForAlert ServiceHealth { get; } = new MonitorServiceSourceForAlert(ServiceHealthValue);
+
         /// <summary> SmartDetector. </summary>
         public static MonitorServiceSourceForAlert SmartDetector { get; } = new MonitorServiceSourceForAlert(SmartDetectorValue);
+
         /// <summary> VM Insights. </summary>
-        public static MonitorServiceSourceForAlert VmInsights { get; } = new MonitorServiceSourceForAlert(VmInsightsValue);
+        public static MonitorServiceSourceForAlert VMInsights { get; } = new MonitorServiceSourceForAlert(VMInsightsValue);
+
         /// <summary> Zabbix. </summary>
         public static MonitorServiceSourceForAlert Zabbix { get; } = new MonitorServiceSourceForAlert(ZabbixValue);
+
+        /// <summary> Resource Health. </summary>
+        public static MonitorServiceSourceForAlert ResourceHealth { get; } = new MonitorServiceSourceForAlert(ResourceHealthValue);
+
         /// <summary> Determines if two <see cref="MonitorServiceSourceForAlert"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorServiceSourceForAlert left, MonitorServiceSourceForAlert right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorServiceSourceForAlert"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorServiceSourceForAlert left, MonitorServiceSourceForAlert right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorServiceSourceForAlert"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorServiceSourceForAlert"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorServiceSourceForAlert(string value) => new MonitorServiceSourceForAlert(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorServiceSourceForAlert"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorServiceSourceForAlert?(string value) => value == null ? null : new MonitorServiceSourceForAlert(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorServiceSourceForAlert other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorServiceSourceForAlert other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

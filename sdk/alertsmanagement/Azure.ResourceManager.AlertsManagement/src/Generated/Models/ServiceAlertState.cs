@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> The ServiceAlertState. </summary>
+    /// <summary></summary>
     public readonly partial struct ServiceAlertState : IEquatable<ServiceAlertState>
     {
         private readonly string _value;
+        /// <summary> New. </summary>
+        private const string NewValue = "New";
+        /// <summary> Acknowledged. </summary>
+        private const string AcknowledgedValue = "Acknowledged";
+        /// <summary> Closed. </summary>
+        private const string ClosedValue = "Closed";
 
         /// <summary> Initializes a new instance of <see cref="ServiceAlertState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceAlertState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NewValue = "New";
-        private const string AcknowledgedValue = "Acknowledged";
-        private const string ClosedValue = "Closed";
+            _value = value;
+        }
 
         /// <summary> New. </summary>
         public static ServiceAlertState New { get; } = new ServiceAlertState(NewValue);
+
         /// <summary> Acknowledged. </summary>
         public static ServiceAlertState Acknowledged { get; } = new ServiceAlertState(AcknowledgedValue);
+
         /// <summary> Closed. </summary>
         public static ServiceAlertState Closed { get; } = new ServiceAlertState(ClosedValue);
+
         /// <summary> Determines if two <see cref="ServiceAlertState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceAlertState left, ServiceAlertState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceAlertState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceAlertState left, ServiceAlertState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAlertState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceAlertState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceAlertState(string value) => new ServiceAlertState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceAlertState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceAlertState?(string value) => value == null ? null : new ServiceAlertState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceAlertState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceAlertState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
