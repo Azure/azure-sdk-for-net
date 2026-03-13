@@ -15,61 +15,61 @@ using Azure.ResourceManager.DomainRegistration;
 namespace Azure.ResourceManager.DomainRegistration.Models
 {
     /// <summary> Options for retrieving the list of top level domain legal agreements. </summary>
-    public partial class TopLevelDomainAgreementOption : IJsonModel<TopLevelDomainAgreementOption>
+    public partial class TopLevelDomainAgreementContent : IJsonModel<TopLevelDomainAgreementContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TopLevelDomainAgreementOption PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual TopLevelDomainAgreementContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainAgreementOption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainAgreementContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTopLevelDomainAgreementOption(document.RootElement, options);
+                        return DeserializeTopLevelDomainAgreementContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopLevelDomainAgreementContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainAgreementOption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainAgreementContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDomainRegistrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopLevelDomainAgreementContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TopLevelDomainAgreementOption>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TopLevelDomainAgreementContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TopLevelDomainAgreementOption IPersistableModel<TopLevelDomainAgreementOption>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        TopLevelDomainAgreementContent IPersistableModel<TopLevelDomainAgreementContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TopLevelDomainAgreementOption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TopLevelDomainAgreementContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="topLevelDomainAgreementOption"> The <see cref="TopLevelDomainAgreementOption"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TopLevelDomainAgreementOption topLevelDomainAgreementOption)
+        /// <param name="topLevelDomainAgreementContent"> The <see cref="TopLevelDomainAgreementContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TopLevelDomainAgreementContent topLevelDomainAgreementContent)
         {
-            if (topLevelDomainAgreementOption == null)
+            if (topLevelDomainAgreementContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(topLevelDomainAgreementOption, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(topLevelDomainAgreementContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TopLevelDomainAgreementOption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TopLevelDomainAgreementContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainAgreementOption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainAgreementContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TopLevelDomainAgreementContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(IncludePrivacy))
             {
@@ -114,24 +114,24 @@ namespace Azure.ResourceManager.DomainRegistration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TopLevelDomainAgreementOption IJsonModel<TopLevelDomainAgreementOption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        TopLevelDomainAgreementContent IJsonModel<TopLevelDomainAgreementContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TopLevelDomainAgreementOption JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual TopLevelDomainAgreementContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainAgreementOption>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TopLevelDomainAgreementContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopLevelDomainAgreementOption)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TopLevelDomainAgreementContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTopLevelDomainAgreementOption(document.RootElement, options);
+            return DeserializeTopLevelDomainAgreementContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TopLevelDomainAgreementOption DeserializeTopLevelDomainAgreementOption(JsonElement element, ModelReaderWriterOptions options)
+        internal static TopLevelDomainAgreementContent DeserializeTopLevelDomainAgreementContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TopLevelDomainAgreementOption(includePrivacy, isForTransfer, additionalBinaryDataProperties);
+            return new TopLevelDomainAgreementContent(includePrivacy, isForTransfer, additionalBinaryDataProperties);
         }
     }
 }

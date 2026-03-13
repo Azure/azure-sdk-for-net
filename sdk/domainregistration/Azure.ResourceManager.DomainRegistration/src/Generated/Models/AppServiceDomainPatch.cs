@@ -7,31 +7,49 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.DomainRegistration;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DomainRegistration.Models
 {
-    /// <summary> ARM resource for a domain. </summary>
-    public partial class AppServiceDomainPatch : ProxyOnlyResource
+    /// <summary> ARM resource for a domain patch operation. </summary>
+    public partial class AppServiceDomainPatch : ResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="AppServiceDomainPatch"/>. </summary>
         public AppServiceDomainPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceDomainPatch"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> DomainPatchResource resource specific properties. </param>
-        internal AppServiceDomainPatch(string id, string name, string kind, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DomainPatchResourceProperties properties) : base(id, name, kind, @type, additionalBinaryDataProperties)
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        internal AppServiceDomainPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DomainPatchResourceProperties properties, string kind, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            Kind = kind;
+            Tags = tags;
         }
 
         /// <summary> DomainPatchResource resource specific properties. </summary>
         internal DomainPatchResourceProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
+
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
 
         /// <summary> Administrative contact. </summary>
         public RegistrationContactInfo ContactAdmin

@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             return new DomainPurchaseConsent(agreementKeys.ToList(), agreedBy, agreedOn, additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="contactAdmin"> Administrative contact. </param>
         /// <param name="contactBilling"> Billing contact. </param>
         /// <param name="contactRegistrant"> Registrant contact. </param>
@@ -142,14 +142,18 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="dnsZoneId"> Azure DNS Zone to use. </param>
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"> Authorization code for the domain. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.AppServiceDomainPatch"/> instance for mocking. </returns>
-        public static AppServiceDomainPatch AppServiceDomainPatch(string id = default, string name = default, string kind = default, string @type = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isReadyForDnsRecordManagement = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, string dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default)
+        public static AppServiceDomainPatch AppServiceDomainPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isReadyForDnsRecordManagement = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, string dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string kind = default, IDictionary<string, string> tags = default)
         {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
             return new AppServiceDomainPatch(
                 id,
                 name,
-                kind,
-                @type,
+                resourceType,
+                systemData,
                 additionalBinaryDataProperties: null,
                 contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expireOn is null && lastRenewedOn is null && isAutoRenew is null && isReadyForDnsRecordManagement is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainPatchResourceProperties(
                     contactAdmin,
@@ -172,18 +176,9 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     dnsZoneId,
                     targetDnsType,
                     authCode,
-                    null));
-        }
-
-        /// <summary> Azure proxy only resource. This resource is not tracked by Azure Resource Manager. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="name"> Resource Name. </param>
-        /// <param name="kind"> Kind of resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <returns> A new <see cref="Models.ProxyOnlyResource"/> instance for mocking. </returns>
-        public static ProxyOnlyResource ProxyOnlyResource(string id = default, string name = default, string kind = default, string @type = default)
-        {
-            return new ProxyOnlyResource(id, name, kind, @type, additionalBinaryDataProperties: null);
+                    null),
+                kind,
+                tags);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

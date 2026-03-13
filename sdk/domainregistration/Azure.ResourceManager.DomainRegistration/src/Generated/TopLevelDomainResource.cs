@@ -208,19 +208,19 @@ namespace Azure.ResourceManager.DomainRegistration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agreementOption"> Domain agreement options. </param>
+        /// <param name="content"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="TldLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<TldLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TldLegalAgreement> GetAgreementsAsync(TopLevelDomainAgreementContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(agreementOption, nameof(agreementOption));
+            Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TopLevelDomainsGetAgreementsAsyncCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, Id.Name, TopLevelDomainAgreementOption.ToRequestContent(agreementOption), context);
+            return new TopLevelDomainsGetAgreementsAsyncCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, Id.Name, TopLevelDomainAgreementContent.ToRequestContent(content), context);
         }
 
         /// <summary>
@@ -244,19 +244,19 @@ namespace Azure.ResourceManager.DomainRegistration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="agreementOption"> Domain agreement options. </param>
+        /// <param name="content"> Domain agreement options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agreementOption"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="TldLegalAgreement"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<TldLegalAgreement> GetAgreements(TopLevelDomainAgreementOption agreementOption, CancellationToken cancellationToken = default)
+        public virtual Pageable<TldLegalAgreement> GetAgreements(TopLevelDomainAgreementContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(agreementOption, nameof(agreementOption));
+            Argument.AssertNotNull(content, nameof(content));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new TopLevelDomainsGetAgreementsCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, Id.Name, TopLevelDomainAgreementOption.ToRequestContent(agreementOption), context);
+            return new TopLevelDomainsGetAgreementsCollectionResultOfT(_topLevelDomainsRestClient, Id.SubscriptionId, Id.Name, TopLevelDomainAgreementContent.ToRequestContent(content), context);
         }
     }
 }
