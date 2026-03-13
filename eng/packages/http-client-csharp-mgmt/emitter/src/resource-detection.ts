@@ -282,7 +282,8 @@ export function buildArmProviderSchema(
           parentResourceId: undefined, // this will be populated later
           parentResourceModelId: undefined,
           // Use model name as default; will be updated later if multiple paths exist
-          resourceName: model?.name ?? "Unknown"
+          resourceName: model?.name ?? "Unknown",
+          nameConstraints: {}
         } as ResourceMetadata;
         resourcePathToMetadataMap.set(metadataKey, entry);
       }

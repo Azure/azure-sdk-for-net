@@ -39,6 +39,7 @@ import {
 import {
   ArmProviderSchema,
   ArmResourceSchema,
+  NameConstraints,
   NonResourceMethod,
   ResourceMetadata,
   ResourceMethod,

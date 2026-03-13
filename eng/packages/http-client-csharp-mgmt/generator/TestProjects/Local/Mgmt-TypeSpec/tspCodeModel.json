@@ -21795,7 +21795,8 @@
                 ],
                 "resourceScope": "ResourceGroup",
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/storageSyncServices/{storageSyncServiceName}",
-                "resourceName": "PrivateEndpointConnection"
+                "resourceName": "PrivateEndpointConnection",
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.StorageSyncService",
@@ -21813,9 +21814,7 @@
                 ],
                 "resourceScope": "ResourceGroup",
                 "resourceName": "StorageSyncService",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.Foo",
@@ -22278,9 +22277,7 @@
                 ],
                 "resourceScope": "Extension",
                 "resourceName": "EndpointResource",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.SelfHelpResource",
@@ -22298,9 +22295,7 @@
                 ],
                 "resourceScope": "Extension",
                 "resourceName": "SelfHelpResource",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.PlaywrightQuota",
@@ -22410,9 +22405,7 @@
                 ],
                 "resourceScope": "ManagementGroup",
                 "resourceName": "GroupQuotaSubscriptionRequestStatus",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.GroupQuotaLimitList",
@@ -22446,9 +22439,7 @@
                 ],
                 "resourceScope": "ManagementGroup",
                 "resourceName": "GroupQuotaLimitList",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.SubscriptionQuotaAllocationsList",
@@ -22466,9 +22457,7 @@
                 ],
                 "resourceScope": "ManagementGroup",
                 "resourceName": "SubscriptionQuotaAllocationsList",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.Joo",
@@ -22581,9 +22570,7 @@
                 ],
                 "resourceScope": "Tenant",
                 "resourceName": "BestPractice",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.BestPractice",
@@ -22634,9 +22621,7 @@
                 "resourceScope": "Tenant",
                 "parentResourceId": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
                 "resourceName": "BestPracticeVersion",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.ResourceTypeTestResource",
@@ -23071,7 +23056,8 @@
                   }
                 ],
                 "resourceScope": "ResourceGroup",
-                "resourceName": "TrafficProfile"
+                "resourceName": "TrafficProfile",
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.TrafficEndpoint",
@@ -23105,7 +23091,8 @@
                 ],
                 "resourceScope": "ResourceGroup",
                 "parentResourceId": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/trafficProfiles/{profileName}",
-                "resourceName": "TrafficEndpoint"
+                "resourceName": "TrafficEndpoint",
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.VmConfigurationAssignment",
@@ -23123,9 +23110,7 @@
                 ],
                 "resourceScope": "Extension",
                 "resourceName": "VmConfigurationAssignment",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.HcrpConfigurationAssignment",
@@ -23143,9 +23128,7 @@
                 ],
                 "resourceScope": "Extension",
                 "resourceName": "HcrpConfigurationAssignment",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.MultiFlattenTest",
@@ -23298,9 +23281,7 @@
                 ],
                 "resourceScope": "ResourceGroup",
                 "resourceName": "TestCertificate",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.SharedConfig",
@@ -23325,9 +23306,7 @@
                 ],
                 "resourceScope": "Subscription",
                 "resourceName": "PublicSharedConfig",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               },
               {
                 "resourceModelId": "MgmtTypeSpec.SharedConfig",
@@ -23368,9 +23347,7 @@
                 ],
                 "resourceScope": "ResourceGroup",
                 "resourceName": "SharedConfig",
-                "nameConstraints": {
-                  "pattern": ""
-                }
+                "nameConstraints": {}
               }
             ],
             "nonResourceMethods": [
