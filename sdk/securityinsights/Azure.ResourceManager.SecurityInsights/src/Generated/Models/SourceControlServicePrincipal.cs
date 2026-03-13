@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Service principal metadata. </summary>
     public partial class SourceControlServicePrincipal
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlServicePrincipal"/>. </summary>
         public SourceControlServicePrincipal()
@@ -55,27 +26,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="tenantId"> Tenant id of service principal. </param>
         /// <param name="appId"> App id of service principal. </param>
         /// <param name="credentialsExpireOn"> Expiration time of service principal credentials. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlServicePrincipal(string id, Guid? tenantId, string appId, DateTimeOffset? credentialsExpireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SourceControlServicePrincipal(string id, string tenantId, string appId, DateTimeOffset? credentialsExpireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             TenantId = tenantId;
             AppId = appId;
             CredentialsExpireOn = credentialsExpireOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of service principal. </summary>
-        [WirePath("id")]
         public string Id { get; }
+
         /// <summary> Tenant id of service principal. </summary>
-        [WirePath("tenantId")]
-        public Guid? TenantId { get; }
+        public string TenantId { get; }
+
         /// <summary> App id of service principal. </summary>
-        [WirePath("appId")]
         public string AppId { get; }
+
         /// <summary> Expiration time of service principal credentials. </summary>
-        [WirePath("credentialsExpireOn")]
         public DateTimeOffset? CredentialsExpireOn { get; set; }
     }
 }

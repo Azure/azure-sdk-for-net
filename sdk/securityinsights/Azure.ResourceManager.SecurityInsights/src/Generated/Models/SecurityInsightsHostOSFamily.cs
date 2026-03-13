@@ -19,6 +19,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Host with Android operating system. </summary>
         Android,
         /// <summary> Host with IOS operating system. </summary>
-        Ios
+        IOS
     }
 }

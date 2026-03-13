@@ -15,29 +15,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookAction"/>. </summary>
         /// <param name="order"></param>
-        public AutomationRuleRunPlaybookAction(int order) : base(order)
+        public AutomationRuleRunPlaybookAction(int order) : base(order, ActionType.RunPlaybook)
         {
-            ActionType = ActionType.RunPlaybook;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookAction"/>. </summary>
         /// <param name="order"></param>
         /// <param name="actionType"> The type of the automation rule action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionConfiguration"></param>
-        internal AutomationRuleRunPlaybookAction(int order, ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, AutomationRuleRunPlaybookActionProperties actionConfiguration) : base(order, actionType, serializedAdditionalRawData)
+        internal AutomationRuleRunPlaybookAction(int order, ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AutomationRuleRunPlaybookActionProperties actionConfiguration) : base(order, actionType, additionalBinaryDataProperties)
         {
             ActionConfiguration = actionConfiguration;
-            ActionType = actionType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomationRuleRunPlaybookAction"/> for deserialization. </summary>
-        internal AutomationRuleRunPlaybookAction()
-        {
-        }
-
-        /// <summary> Gets or sets the action configuration. </summary>
-        [WirePath("actionConfiguration")]
+        /// <summary> Gets or sets the ActionConfiguration. </summary>
         public AutomationRuleRunPlaybookActionProperties ActionConfiguration { get; set; }
     }
 }

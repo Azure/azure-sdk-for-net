@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,92 +17,124 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ActivityEntityQuery : SecurityInsightsEntityQueryData
     {
         /// <summary> Initializes a new instance of <see cref="ActivityEntityQuery"/>. </summary>
-        public ActivityEntityQuery()
+        internal ActivityEntityQuery() : base(EntityQueryKind.Activity)
         {
-            RequiredInputFieldsSets = new ChangeTrackingList<IList<string>>();
-            EntitiesFilter = new ChangeTrackingDictionary<string, IList<string>>();
-            Kind = EntityQueryKind.Activity;
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivityEntityQuery"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> the entity query kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="title"> The entity query title. </param>
-        /// <param name="content"> The entity query content to display in timeline. </param>
-        /// <param name="description"> The entity query description. </param>
-        /// <param name="queryDefinitions"> The Activity query definitions. </param>
-        /// <param name="inputEntityType"> The type of the query's source entity. </param>
-        /// <param name="requiredInputFieldsSets"> List of the fields of the source entity that are required to run the query. </param>
-        /// <param name="entitiesFilter"> The query applied only to entities matching to all filters. </param>
-        /// <param name="templateName"> The template id this activity was created from. </param>
-        /// <param name="isEnabled"> Determines whether this activity is enabled or disabled. </param>
-        /// <param name="createdOn"> The time the activity was created. </param>
-        /// <param name="lastModifiedOn"> The last time the activity was updated. </param>
-        internal ActivityEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string title, string content, string description, ActivityEntityQueriesPropertiesQueryDefinitions queryDefinitions, SecurityInsightsEntityType? inputEntityType, IList<IList<string>> requiredInputFieldsSets, IDictionary<string, IList<string>> entitiesFilter, string templateName, bool? isEnabled, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> Activity entity query properties. </param>
+        internal ActivityEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntityQueryKind kind, string eTag, ActivityEntityQueriesProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            Title = title;
-            Content = content;
-            Description = description;
-            QueryDefinitions = queryDefinitions;
-            InputEntityType = inputEntityType;
-            RequiredInputFieldsSets = requiredInputFieldsSets;
-            EntitiesFilter = entitiesFilter;
-            TemplateName = templateName;
-            IsEnabled = isEnabled;
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Activity entity query properties. </summary>
+        internal ActivityEntityQueriesProperties Properties { get; }
+
         /// <summary> The entity query title. </summary>
-        [WirePath("properties.title")]
-        public string Title { get; set; }
-        /// <summary> The entity query content to display in timeline. </summary>
-        [WirePath("properties.content")]
-        public string Content { get; set; }
-        /// <summary> The entity query description. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> The Activity query definitions. </summary>
-        internal ActivityEntityQueriesPropertiesQueryDefinitions QueryDefinitions { get; set; }
-        /// <summary> The Activity query to run on a given entity. </summary>
-        [WirePath("properties.queryDefinitions.query")]
-        public string Query
+        public string Title
         {
-            get => QueryDefinitions is null ? default : QueryDefinitions.Query;
-            set
+            get
             {
-                if (QueryDefinitions is null)
-                    QueryDefinitions = new ActivityEntityQueriesPropertiesQueryDefinitions();
-                QueryDefinitions.Query = value;
+                return Properties.Title;
+            }
+        }
+
+        /// <summary> The entity query content to display in timeline. </summary>
+        public string Content
+        {
+            get
+            {
+                return Properties.Content;
+            }
+        }
+
+        /// <summary> The entity query description. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties.Description;
             }
         }
 
         /// <summary> The type of the query's source entity. </summary>
-        [WirePath("properties.inputEntityType")]
-        public SecurityInsightsEntityType? InputEntityType { get; set; }
+        public SecurityInsightsEntityType? InputEntityType
+        {
+            get
+            {
+                return Properties.InputEntityType;
+            }
+        }
+
         /// <summary> List of the fields of the source entity that are required to run the query. </summary>
-        [WirePath("properties.requiredInputFieldsSets")]
-        public IList<IList<string>> RequiredInputFieldsSets { get; }
+        public IList<IList<string>> RequiredInputFieldsSets
+        {
+            get
+            {
+                return Properties.RequiredInputFieldsSets;
+            }
+        }
+
         /// <summary> The query applied only to entities matching to all filters. </summary>
-        [WirePath("properties.entitiesFilter")]
-        public IDictionary<string, IList<string>> EntitiesFilter { get; }
+        public IDictionary<string, IList<string>> EntitiesFilter
+        {
+            get
+            {
+                return Properties.EntitiesFilter;
+            }
+        }
+
         /// <summary> The template id this activity was created from. </summary>
-        [WirePath("properties.templateName")]
-        public string TemplateName { get; set; }
+        public string TemplateName
+        {
+            get
+            {
+                return Properties.TemplateName;
+            }
+        }
+
         /// <summary> Determines whether this activity is enabled or disabled. </summary>
-        [WirePath("properties.enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool? Enabled
+        {
+            get
+            {
+                return Properties.Enabled;
+            }
+        }
+
         /// <summary> The time the activity was created. </summary>
-        [WirePath("properties.createdTimeUtc")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedTimeUtc
+        {
+            get
+            {
+                return Properties.CreatedTimeUtc;
+            }
+        }
+
         /// <summary> The last time the activity was updated. </summary>
-        [WirePath("properties.lastModifiedTimeUtc")]
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedTimeUtc
+        {
+            get
+            {
+                return Properties.LastModifiedTimeUtc;
+            }
+        }
+
+        /// <summary> The Activity query to run on a given entity. </summary>
+        public string Query
+        {
+            get
+            {
+                return Properties.Query;
+            }
+        }
     }
 }

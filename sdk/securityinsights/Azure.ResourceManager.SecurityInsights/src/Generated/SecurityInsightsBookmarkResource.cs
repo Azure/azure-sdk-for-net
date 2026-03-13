@@ -6,47 +6,39 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a SecurityInsightsBookmark along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsBookmarkResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsBookmarkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsBookmark method.
+    /// A class representing a SecurityInsightsBookmark along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsBookmarkResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityInsightsBookmarks method.
     /// </summary>
     public partial class SecurityInsightsBookmarkResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsBookmarkResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="bookmarkId"> The bookmarkId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _securityInsightsBookmarkBookmarksClientDiagnostics;
-        private readonly BookmarksRestOperations _securityInsightsBookmarkBookmarksRestClient;
+        private readonly ClientDiagnostics _bookmarksClientDiagnostics;
+        private readonly Bookmarks _bookmarksRestClient;
+        private readonly ClientDiagnostics _bookmarkClientDiagnostics;
+        private readonly Bookmark _bookmarkRestClient;
         private readonly SecurityInsightsBookmarkData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/bookmarks";
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsBookmarkResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsBookmarkResource for mocking. </summary>
         protected SecurityInsightsBookmarkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsBookmarkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsBookmarkResource(ArmClient client, SecurityInsightsBookmarkData data) : this(client, data.Id)
@@ -55,140 +47,95 @@ namespace Azure.ResourceManager.SecurityInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsBookmarkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsBookmarkResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsBookmarkBookmarksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securityInsightsBookmarkBookmarksApiVersion);
-            _securityInsightsBookmarkBookmarksRestClient = new BookmarksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsBookmarkBookmarksApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string securityInsightsBookmarkApiVersion);
+            _bookmarksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _bookmarksRestClient = new Bookmarks(_bookmarksClientDiagnostics, Pipeline, Endpoint, securityInsightsBookmarkApiVersion ?? "2025-07-01-preview");
+            _bookmarkClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _bookmarkRestClient = new Bookmark(_bookmarkClientDiagnostics, Pipeline, Endpoint, securityInsightsBookmarkApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecurityInsightsBookmarkData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="bookmarkId"> The bookmarkId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string bookmarkId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of SecurityInsightsBookmarkRelationResources in the SecurityInsightsBookmark. </summary>
-        /// <returns> An object representing collection of SecurityInsightsBookmarkRelationResources and their operations over a SecurityInsightsBookmarkRelationResource. </returns>
-        public virtual SecurityInsightsBookmarkRelationCollection GetSecurityInsightsBookmarkRelations()
-        {
-            return GetCachedClient(client => new SecurityInsightsBookmarkRelationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a bookmark relation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/relations/{relationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BookmarkRelations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="relationName"> Relation Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityInsightsBookmarkRelationResource>> GetSecurityInsightsBookmarkRelationAsync(string relationName, CancellationToken cancellationToken = default)
-        {
-            return await GetSecurityInsightsBookmarkRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a bookmark relation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/relations/{relationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>BookmarkRelations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsBookmarkRelationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="relationName"> Relation Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityInsightsBookmarkRelationResource> GetSecurityInsightsBookmarkRelation(string relationName, CancellationToken cancellationToken = default)
-        {
-            return GetSecurityInsightsBookmarkRelations().Get(relationName, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets a bookmark.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bookmarks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Bookmarks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsBookmarkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsBookmarkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityInsightsBookmarkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Get");
+            using DiagnosticScope scope = _bookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsBookmarkBookmarksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bookmarksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsBookmarkData> response = Response.FromValue(SecurityInsightsBookmarkData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsBookmarkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,33 +149,41 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a bookmark.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bookmarks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Bookmarks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsBookmarkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsBookmarkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityInsightsBookmarkResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Get");
+            using DiagnosticScope scope = _bookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsBookmarkBookmarksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bookmarksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsBookmarkData> response = Response.FromValue(SecurityInsightsBookmarkData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsBookmarkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,20 +197,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete the bookmark.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bookmarks_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Bookmarks_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsBookmarkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsBookmarkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,16 +218,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Delete");
+            using DiagnosticScope scope = _bookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Delete");
             scope.Start();
             try
             {
-                var response = await _securityInsightsBookmarkBookmarksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsBookmarkBookmarksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bookmarksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -286,20 +248,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete the bookmark.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bookmarks_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Bookmarks_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsBookmarkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsBookmarkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -307,16 +269,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Delete");
+            using DiagnosticScope scope = _bookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Delete");
             scope.Start();
             try
             {
-                var response = _securityInsightsBookmarkBookmarksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _securityInsightsBookmarkBookmarksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bookmarksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -327,23 +296,127 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates the bookmark.
+        /// Expand an bookmark
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/expand. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bookmarks_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Bookmarks_Expand. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsBookmarkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsBookmarkResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BookmarkExpandResult>> ExpandAsync(BookmarkExpandContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _bookmarkClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Expand");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bookmarkRestClient.CreateExpandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BookmarkExpandContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<BookmarkExpandResult> response = Response.FromValue(BookmarkExpandResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Expand an bookmark
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/expand. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bookmarks_Expand. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsBookmarkResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<BookmarkExpandResult> Expand(BookmarkExpandContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = _bookmarkClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Expand");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bookmarkRestClient.CreateExpandRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, BookmarkExpandContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<BookmarkExpandResult> response = Response.FromValue(BookmarkExpandResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a SecurityInsightsBookmark.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bookmarks_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsBookmarkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -355,16 +428,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Update");
+            using DiagnosticScope scope = _bookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Update");
             scope.Start();
             try
             {
-                var response = await _securityInsightsBookmarkBookmarksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsBookmarkBookmarksRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsBookmarkResource>(Response.FromValue(new SecurityInsightsBookmarkResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bookmarksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsBookmarkData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsBookmarkData> response = Response.FromValue(SecurityInsightsBookmarkData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsBookmarkResource> operation = new SecurityInsightsArmOperation<SecurityInsightsBookmarkResource>(Response.FromValue(new SecurityInsightsBookmarkResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -375,23 +456,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates the bookmark.
+        /// Update a SecurityInsightsBookmark.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bookmarks_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Bookmarks_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsBookmarkResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsBookmarkResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,16 +484,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Update");
+            using DiagnosticScope scope = _bookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Update");
             scope.Start();
             try
             {
-                var response = _securityInsightsBookmarkBookmarksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _securityInsightsBookmarkBookmarksRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsBookmarkResource>(Response.FromValue(new SecurityInsightsBookmarkResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _bookmarksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsBookmarkData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsBookmarkData> response = Response.FromValue(SecurityInsightsBookmarkData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsBookmarkResource> operation = new SecurityInsightsArmOperation<SecurityInsightsBookmarkResource>(Response.FromValue(new SecurityInsightsBookmarkResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -422,88 +511,37 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
-        /// <summary>
-        /// Expand an bookmark
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/expand</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bookmarks_Expand</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsBookmarkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The parameters required to execute an expand operation on the given bookmark. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BookmarkExpandResult>> ExpandAsync(BookmarkExpandContent content, CancellationToken cancellationToken = default)
+        /// <summary> Gets a collection of BookmarkRelations in the <see cref="SecurityInsightsBookmarkResource"/>. </summary>
+        /// <returns> An object representing collection of BookmarkRelations and their operations over a BookmarkRelationResource. </returns>
+        public virtual BookmarkRelationCollection GetBookmarkRelations()
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Expand");
-            scope.Start();
-            try
-            {
-                var response = await _securityInsightsBookmarkBookmarksRestClient.ExpandAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GetCachedClient(client => new BookmarkRelationCollection(client, Id));
         }
 
-        /// <summary>
-        /// Expand an bookmark
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}/expand</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Bookmarks_Expand</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsBookmarkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The parameters required to execute an expand operation on the given bookmark. </param>
+        /// <summary> Gets a bookmark relation. </summary>
+        /// <param name="relationName"> Relation Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BookmarkExpandResult> Expand(BookmarkExpandContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BookmarkRelationResource>> GetBookmarkRelationAsync(string relationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
 
-            using var scope = _securityInsightsBookmarkBookmarksClientDiagnostics.CreateScope("SecurityInsightsBookmarkResource.Expand");
-            scope.Start();
-            try
-            {
-                var response = _securityInsightsBookmarkBookmarksRestClient.Expand(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetBookmarkRelations().GetAsync(relationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets a bookmark relation. </summary>
+        /// <param name="relationName"> Relation Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BookmarkRelationResource> GetBookmarkRelation(string relationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(relationName, nameof(relationName));
+
+            return GetBookmarkRelations().Get(relationName, cancellationToken);
         }
     }
 }

@@ -6,51 +6,43 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a SecurityInsightsRecommendation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsRecommendationResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsRecommendationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsRecommendation method.
+    /// A class representing a SecurityInsightsRecommendation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsRecommendationResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityInsightsRecommendations method.
     /// </summary>
     public partial class SecurityInsightsRecommendationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsRecommendationResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="recommendationId"> The recommendationId. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, Guid recommendationId)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _securityInsightsRecommendationGetClientDiagnostics;
-        private readonly GetRestOperations _securityInsightsRecommendationGetRestClient;
-        private readonly ClientDiagnostics _securityInsightsRecommendationUpdateClientDiagnostics;
-        private readonly UpdateRestOperations _securityInsightsRecommendationUpdateRestClient;
+        private readonly ClientDiagnostics _getClientDiagnostics;
+        private readonly Get _getRestClient;
+        private readonly ClientDiagnostics _updateClientDiagnostics;
+        private readonly Update _updateRestClient;
+        private readonly ClientDiagnostics _getRecommendationsClientDiagnostics;
+        private readonly GetRecommendations _getRecommendationsRestClient;
         private readonly ClientDiagnostics _reevaluateClientDiagnostics;
-        private readonly ReevaluateRestOperations _reevaluateRestClient;
+        private readonly Reevaluate _reevaluateRestClient;
         private readonly SecurityInsightsRecommendationData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/recommendations";
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsRecommendationResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsRecommendationResource for mocking. </summary>
         protected SecurityInsightsRecommendationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsRecommendationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRecommendationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsRecommendationResource(ArmClient client, SecurityInsightsRecommendationData data) : this(client, data.Id)
@@ -59,76 +51,99 @@ namespace Azure.ResourceManager.SecurityInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsRecommendationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsRecommendationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsRecommendationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsRecommendationGetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securityInsightsRecommendationGetApiVersion);
-            _securityInsightsRecommendationGetRestClient = new GetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsRecommendationGetApiVersion);
-            _securityInsightsRecommendationUpdateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securityInsightsRecommendationUpdateApiVersion);
-            _securityInsightsRecommendationUpdateRestClient = new UpdateRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsRecommendationUpdateApiVersion);
-            _reevaluateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _reevaluateRestClient = new ReevaluateRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string securityInsightsRecommendationApiVersion);
+            _getClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _getRestClient = new Get(_getClientDiagnostics, Pipeline, Endpoint, securityInsightsRecommendationApiVersion ?? "2025-07-01-preview");
+            _updateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _updateRestClient = new Update(_updateClientDiagnostics, Pipeline, Endpoint, securityInsightsRecommendationApiVersion ?? "2025-07-01-preview");
+            _getRecommendationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _getRecommendationsRestClient = new GetRecommendations(_getRecommendationsClientDiagnostics, Pipeline, Endpoint, securityInsightsRecommendationApiVersion ?? "2025-07-01-preview");
+            _reevaluateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _reevaluateRestClient = new Reevaluate(_reevaluateClientDiagnostics, Pipeline, Endpoint, securityInsightsRecommendationApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecurityInsightsRecommendationData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="recommendationId"> The recommendationId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string recommendationId)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets a recommendation by its id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Get_SingleRecommendation</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_SingleRecommendation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsRecommendationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityInsightsRecommendationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsRecommendationGetClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.Get");
+            using DiagnosticScope scope = _getClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsRecommendationGetRestClient.SingleRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsRecommendationData> response = Response.FromValue(SecurityInsightsRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,33 +157,41 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a recommendation by its id.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Get_SingleRecommendation</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_SingleRecommendation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsRecommendationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityInsightsRecommendationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsRecommendationGetClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.Get");
+            using DiagnosticScope scope = _getClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsRecommendationGetRestClient.SingleRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _getRestClient.CreateSingleRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsRecommendationData> response = Response.FromValue(SecurityInsightsRecommendationData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -182,20 +205,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Patch a recommendation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Update_Recommendation</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_Recommendation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsRecommendationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,11 +229,21 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _securityInsightsRecommendationUpdateClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.Update");
+            using DiagnosticScope scope = _updateClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.Update");
             scope.Start();
             try
             {
-                var response = await _securityInsightsRecommendationUpdateRestClient.RecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), patch, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRestClient.CreateRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsRecommendationPatch.ToRequestContent(patch), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsRecommendationData> response = Response.FromValue(SecurityInsightsRecommendationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,20 +257,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Patch a recommendation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Update_Recommendation</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_Recommendation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsRecommendationResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsRecommendationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -248,11 +281,21 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _securityInsightsRecommendationUpdateClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.Update");
+            using DiagnosticScope scope = _updateClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.Update");
             scope.Start();
             try
             {
-                var response = _securityInsightsRecommendationUpdateRestClient.Recommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), patch, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _updateRestClient.CreateRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsRecommendationPatch.ToRequestContent(patch), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsRecommendationData> response = Response.FromValue(SecurityInsightsRecommendationData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsRecommendationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -266,27 +309,41 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Reevaluate a recommendation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}/triggerEvaluation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}/triggerEvaluation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Reevaluate_Recommendation</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_ReevaluateRecommendation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsRecommendationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReevaluateResult>> RecommendationReevaluateAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReevaluateResult>> RecommendationAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _reevaluateClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.RecommendationReevaluate");
+            using DiagnosticScope scope = _reevaluateClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.Recommendation");
             scope.Start();
             try
             {
-                var response = await _reevaluateRestClient.RecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reevaluateRestClient.CreateRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ReevaluateResult> response = Response.FromValue(ReevaluateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -300,27 +357,41 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Reevaluate a recommendation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}/triggerEvaluation</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}/triggerEvaluation. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Reevaluate_Recommendation</description>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_ReevaluateRecommendation. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsRecommendationResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReevaluateResult> RecommendationReevaluate(CancellationToken cancellationToken = default)
+        public virtual Response<ReevaluateResult> Recommendation(CancellationToken cancellationToken = default)
         {
-            using var scope = _reevaluateClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.RecommendationReevaluate");
+            using DiagnosticScope scope = _reevaluateClientDiagnostics.CreateScope("SecurityInsightsRecommendationResource.Recommendation");
             scope.Start();
             try
             {
-                var response = _reevaluateRestClient.Recommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Guid.Parse(Id.Name), cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _reevaluateRestClient.CreateRecommendationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ReevaluateResult> response = Response.FromValue(ReevaluateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

@@ -8,73 +8,38 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> List of all the workspace manager assignments. </summary>
     internal partial class WorkspaceManagerAssignmentList
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentList"/>. </summary>
-        /// <param name="value"> Array of workspace manager assignments. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        /// <param name="value"> The WorkspaceManagerAssignment items on this page. </param>
         internal WorkspaceManagerAssignmentList(IEnumerable<WorkspaceManagerAssignmentData> value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentList"/>. </summary>
-        /// <param name="nextLink"> URL to fetch the next set of workspace manager assignments. </param>
-        /// <param name="value"> Array of workspace manager assignments. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerAssignmentList(string nextLink, IReadOnlyList<WorkspaceManagerAssignmentData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="value"> The WorkspaceManagerAssignment items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkspaceManagerAssignmentList(IList<WorkspaceManagerAssignmentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NextLink = nextLink;
             Value = value;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NextLink = nextLink;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentList"/> for deserialization. </summary>
-        internal WorkspaceManagerAssignmentList()
-        {
-        }
+        /// <summary> The WorkspaceManagerAssignment items on this page. </summary>
+        public IList<WorkspaceManagerAssignmentData> Value { get; }
 
-        /// <summary> URL to fetch the next set of workspace manager assignments. </summary>
-        public string NextLink { get; }
-        /// <summary> Array of workspace manager assignments. </summary>
-        public IReadOnlyList<WorkspaceManagerAssignmentData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

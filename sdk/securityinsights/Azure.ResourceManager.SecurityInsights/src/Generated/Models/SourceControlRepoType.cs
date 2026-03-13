@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SourceControlRepoType : IEquatable<SourceControlRepoType>
     {
         private readonly string _value;
+        /// <summary> Github. </summary>
+        private const string GithubValue = "Github";
+        /// <summary> AzureDevOps. </summary>
+        private const string AzureDevOpsValue = "AzureDevOps";
 
         /// <summary> Initializes a new instance of <see cref="SourceControlRepoType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SourceControlRepoType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GithubValue = "Github";
-        private const string AzureDevOpsValue = "AzureDevOps";
+            _value = value;
+        }
 
         /// <summary> Github. </summary>
         public static SourceControlRepoType Github { get; } = new SourceControlRepoType(GithubValue);
+
         /// <summary> AzureDevOps. </summary>
         public static SourceControlRepoType AzureDevOps { get; } = new SourceControlRepoType(AzureDevOpsValue);
+
         /// <summary> Determines if two <see cref="SourceControlRepoType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SourceControlRepoType left, SourceControlRepoType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SourceControlRepoType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SourceControlRepoType left, SourceControlRepoType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SourceControlRepoType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SourceControlRepoType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SourceControlRepoType(string value) => new SourceControlRepoType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SourceControlRepoType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SourceControlRepoType?(string value) => value == null ? null : new SourceControlRepoType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SourceControlRepoType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SourceControlRepoType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

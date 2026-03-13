@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,43 +17,93 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class GcpDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="GcpDataConnector"/>. </summary>
-        public GcpDataConnector()
+        public GcpDataConnector() : base(DataConnectorKind.GCP)
         {
-            Kind = DataConnectorKind.GCP;
         }
 
         /// <summary> Initializes a new instance of <see cref="GcpDataConnector"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="connectorDefinitionName"> The name of the connector definition that represents the UI config. </param>
-        /// <param name="auth"> The auth section of the connector. </param>
-        /// <param name="request"> The request section of the connector. </param>
-        /// <param name="dcrConfig"> The configuration of the destination of the data. </param>
-        internal GcpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string connectorDefinitionName, GcpAuthProperties auth, GcpRequestProperties request, DcrConfiguration dcrConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> Google Cloud Platform data connector properties. </param>
+        internal GcpDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataConnectorKind kind, string eTag, GCPDataConnectorProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            ConnectorDefinitionName = connectorDefinitionName;
-            Auth = auth;
-            Request = request;
-            DcrConfig = dcrConfig;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Google Cloud Platform data connector properties. </summary>
+        internal GCPDataConnectorProperties Properties { get; set; }
+
         /// <summary> The name of the connector definition that represents the UI config. </summary>
-        [WirePath("properties.connectorDefinitionName")]
-        public string ConnectorDefinitionName { get; set; }
+        public string ConnectorDefinitionName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectorDefinitionName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GCPDataConnectorProperties();
+                }
+                Properties.ConnectorDefinitionName = value;
+            }
+        }
+
         /// <summary> The auth section of the connector. </summary>
-        [WirePath("properties.auth")]
-        public GcpAuthProperties Auth { get; set; }
+        public GcpAuthProperties Auth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Auth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GCPDataConnectorProperties();
+                }
+                Properties.Auth = value;
+            }
+        }
+
         /// <summary> The request section of the connector. </summary>
-        [WirePath("properties.request")]
-        public GcpRequestProperties Request { get; set; }
+        public GcpRequestProperties Request
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Request;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GCPDataConnectorProperties();
+                }
+                Properties.Request = value;
+            }
+        }
+
         /// <summary> The configuration of the destination of the data. </summary>
-        [WirePath("properties.dcrConfig")]
-        public DcrConfiguration DcrConfig { get; set; }
+        public DcrConfiguration DcrConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DcrConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GCPDataConnectorProperties();
+                }
+                Properties.DcrConfig = value;
+            }
+        }
     }
 }

@@ -9,129 +9,158 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents an account entity. </summary>
-    public partial class SecurityInsightsAccountEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsAccountEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAccountEntity"/>. </summary>
-        public SecurityInsightsAccountEntity()
+        internal SecurityInsightsAccountEntity() : base(SecurityInsightsEntityKind.Account)
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = SecurityInsightsEntityKind.Account;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAccountEntity"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="aadTenantId"> The Azure Active Directory tenant id. </param>
-        /// <param name="aadUserId"> The Azure Active Directory user id. </param>
-        /// <param name="accountName"> The name of the account. This field should hold only the name without any domain added to it, i.e. administrator. </param>
-        /// <param name="displayName"> The display name of the account. </param>
-        /// <param name="hostEntityId"> The Host entity id that contains the account in case it is a local account (not domain joined). </param>
-        /// <param name="isDomainJoined"> Determines whether this is a domain account. </param>
-        /// <param name="ntDomain"> The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY. </param>
-        /// <param name="objectGuid"> The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory. </param>
-        /// <param name="puid"> The Azure Active Directory Passport User ID. </param>
-        /// <param name="sid"> The account security identifier, e.g. S-1-5-18. </param>
-        /// <param name="upnSuffix"> The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com. </param>
-        /// <param name="dnsDomain"> The fully qualified domain DNS name. </param>
-        internal SecurityInsightsAccountEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string aadTenantId, string aadUserId, string accountName, string displayName, string hostEntityId, bool? isDomainJoined, string ntDomain, Guid? objectGuid, string puid, string sid, string upnSuffix, string dnsDomain) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="properties"> Account entity properties. </param>
+        internal SecurityInsightsAccountEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityInsightsEntityKind kind, AccountEntityProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            AdditionalData = additionalData;
-            FriendlyName = friendlyName;
-            AadTenantId = aadTenantId;
-            AadUserId = aadUserId;
-            AccountName = accountName;
-            DisplayName = displayName;
-            HostEntityId = hostEntityId;
-            IsDomainJoined = isDomainJoined;
-            NtDomain = ntDomain;
-            ObjectGuid = objectGuid;
-            Puid = puid;
-            Sid = sid;
-            UpnSuffix = upnSuffix;
-            DnsDomain = dnsDomain;
-            Kind = kind;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.additionalData")]
-        public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
+        /// <summary> Account entity properties. </summary>
+        internal AccountEntityProperties Properties { get; }
+
+        /// <summary> A bag of custom fields that should be part of the entity and will be presented to the user. </summary>
+        public IReadOnlyDictionary<string, BinaryData> AdditionalData
+        {
+            get
+            {
+                return Properties.AdditionalData;
+            }
+        }
+
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
-        [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties.FriendlyName;
+            }
+        }
+
         /// <summary> The Azure Active Directory tenant id. </summary>
-        [WirePath("properties.aadTenantId")]
-        public string AadTenantId { get; }
+        public string AadTenantId
+        {
+            get
+            {
+                return Properties.AadTenantId;
+            }
+        }
+
         /// <summary> The Azure Active Directory user id. </summary>
-        [WirePath("properties.aadUserId")]
-        public string AadUserId { get; }
+        public string AadUserId
+        {
+            get
+            {
+                return Properties.AadUserId;
+            }
+        }
+
         /// <summary> The name of the account. This field should hold only the name without any domain added to it, i.e. administrator. </summary>
-        [WirePath("properties.accountName")]
-        public string AccountName { get; }
+        public string AccountName
+        {
+            get
+            {
+                return Properties.AccountName;
+            }
+        }
+
         /// <summary> The display name of the account. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties.DisplayName;
+            }
+        }
+
         /// <summary> The Host entity id that contains the account in case it is a local account (not domain joined). </summary>
-        [WirePath("properties.hostEntityId")]
-        public string HostEntityId { get; }
+        public string HostEntityId
+        {
+            get
+            {
+                return Properties.HostEntityId;
+            }
+        }
+
         /// <summary> Determines whether this is a domain account. </summary>
-        [WirePath("properties.isDomainJoined")]
-        public bool? IsDomainJoined { get; }
+        public bool? IsDomainJoined
+        {
+            get
+            {
+                return Properties.IsDomainJoined;
+            }
+        }
+
         /// <summary> The NetBIOS domain name as it appears in the alert format domain/username. Examples: NT AUTHORITY. </summary>
-        [WirePath("properties.ntDomain")]
-        public string NtDomain { get; }
+        public string NtDomain
+        {
+            get
+            {
+                return Properties.NtDomain;
+            }
+        }
+
         /// <summary> The objectGUID attribute is a single-value attribute that is the unique identifier for the object, assigned by active directory. </summary>
-        [WirePath("properties.objectGuid")]
-        public Guid? ObjectGuid { get; }
+        public Guid? ObjectGuid
+        {
+            get
+            {
+                return Properties.ObjectGuid;
+            }
+        }
+
         /// <summary> The Azure Active Directory Passport User ID. </summary>
-        [WirePath("properties.puid")]
-        public string Puid { get; }
+        public string Puid
+        {
+            get
+            {
+                return Properties.Puid;
+            }
+        }
+
         /// <summary> The account security identifier, e.g. S-1-5-18. </summary>
-        [WirePath("properties.sid")]
-        public string Sid { get; }
+        public string Sid
+        {
+            get
+            {
+                return Properties.Sid;
+            }
+        }
+
         /// <summary> The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com. </summary>
-        [WirePath("properties.upnSuffix")]
-        public string UpnSuffix { get; }
+        public string UpnSuffix
+        {
+            get
+            {
+                return Properties.UpnSuffix;
+            }
+        }
+
         /// <summary> The fully qualified domain DNS name. </summary>
-        [WirePath("properties.dnsDomain")]
-        public string DnsDomain { get; }
+        public string DnsDomain
+        {
+            get
+            {
+                return Properties.DnsDomain;
+            }
+        }
     }
 }

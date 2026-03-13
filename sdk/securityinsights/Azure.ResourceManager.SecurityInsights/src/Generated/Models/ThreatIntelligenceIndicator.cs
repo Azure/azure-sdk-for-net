@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,38 +17,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ThreatIntelligenceIndicator : ThreatIntelligenceObject
     {
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceIndicator"/>. </summary>
-        public ThreatIntelligenceIndicator()
+        internal ThreatIntelligenceIndicator() : base(TIObjectKind.Indicator)
         {
             Observables = new ChangeTrackingList<IndicatorObservablesItem>();
-            Kind = TIObjectKind.Indicator;
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceIndicator"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the TI object. </param>
         /// <param name="kind"> The kind of the TI object. </param>
-        /// <param name="data"> The core STIX object that this TI object represents. </param>
-        /// <param name="createdBy"> The UserInfo of the user/entity which originally created this TI object. </param>
-        /// <param name="source"> The source name for this TI object. </param>
-        /// <param name="firstIngestedOn"> The timestamp for the first time this object was ingested. </param>
-        /// <param name="lastIngestedOn"> The timestamp for the last time this object was ingested. </param>
-        /// <param name="ingestionRulesVersion"> The ID of the rules version that was active when this TI object was last ingested. </param>
-        /// <param name="lastUpdateMethod"> The name of the method/application that initiated the last write to this TI object. </param>
-        /// <param name="lastModifiedBy"> The UserInfo of the user/entity which last modified this TI object. </param>
-        /// <param name="lastUpdatedOn"> The timestamp for the last time this TI object was updated. </param>
-        /// <param name="relationshipHints"> A dictionary used to help follow relationships from this object to other STIX objects. The keys are field names from the STIX object (in the 'data' field), and the values are lists of sources that can be prepended to the object ID in order to efficiently locate the target TI object. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="observables"> The observables of this indicator. </param>
-        internal ThreatIntelligenceIndicator(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TIObjectKind kind, IReadOnlyDictionary<string, BinaryData> data, ThreatIntelligenceUserInfo createdBy, string source, DateTimeOffset? firstIngestedOn, DateTimeOffset? lastIngestedOn, Guid? ingestionRulesVersion, string lastUpdateMethod, ThreatIntelligenceUserInfo lastModifiedBy, DateTimeOffset? lastUpdatedOn, IReadOnlyList<RelationshipHint> relationshipHints, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<IndicatorObservablesItem> observables) : base(id, name, resourceType, systemData, kind, data, createdBy, source, firstIngestedOn, lastIngestedOn, ingestionRulesVersion, lastUpdateMethod, lastModifiedBy, lastUpdatedOn, relationshipHints, serializedAdditionalRawData)
+        internal ThreatIntelligenceIndicator(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TIObjectCommonProperties properties, TIObjectKind kind, IList<IndicatorObservablesItem> observables) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, properties, kind)
         {
             Observables = observables;
-            Kind = kind;
         }
 
         /// <summary> The observables of this indicator. </summary>
-        [WirePath("observables")]
         public IList<IndicatorObservablesItem> Observables { get; }
     }
 }

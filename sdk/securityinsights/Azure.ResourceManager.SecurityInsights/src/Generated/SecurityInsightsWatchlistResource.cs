@@ -6,46 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a SecurityInsightsWatchlist along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsWatchlistResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsWatchlistResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsWatchlist method.
+    /// A class representing a SecurityInsightsWatchlist along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsWatchlistResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityInsightsWatchlists method.
     /// </summary>
     public partial class SecurityInsightsWatchlistResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsWatchlistResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="watchlistAlias"> The watchlistAlias. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _securityInsightsWatchlistWatchlistsClientDiagnostics;
-        private readonly WatchlistsRestOperations _securityInsightsWatchlistWatchlistsRestClient;
+        private readonly ClientDiagnostics _watchlistsClientDiagnostics;
+        private readonly Watchlists _watchlistsRestClient;
         private readonly SecurityInsightsWatchlistData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/watchlists";
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsWatchlistResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsWatchlistResource for mocking. </summary>
         protected SecurityInsightsWatchlistResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsWatchlistResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsWatchlistResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsWatchlistResource(ArmClient client, SecurityInsightsWatchlistData data) : this(client, data.Id)
@@ -54,140 +44,93 @@ namespace Azure.ResourceManager.SecurityInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsWatchlistResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsWatchlistResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsWatchlistResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsWatchlistWatchlistsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securityInsightsWatchlistWatchlistsApiVersion);
-            _securityInsightsWatchlistWatchlistsRestClient = new WatchlistsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsWatchlistWatchlistsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string securityInsightsWatchlistApiVersion);
+            _watchlistsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _watchlistsRestClient = new Watchlists(_watchlistsClientDiagnostics, Pipeline, Endpoint, securityInsightsWatchlistApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecurityInsightsWatchlistData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="watchlistAlias"> The watchlistAlias. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of SecurityInsightsWatchlistItemResources in the SecurityInsightsWatchlist. </summary>
-        /// <returns> An object representing collection of SecurityInsightsWatchlistItemResources and their operations over a SecurityInsightsWatchlistItemResource. </returns>
-        public virtual SecurityInsightsWatchlistItemCollection GetSecurityInsightsWatchlistItems()
-        {
-            return GetCachedClient(client => new SecurityInsightsWatchlistItemCollection(client, Id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
-        /// Gets a watchlist, without its watchlist items.
+        /// Get a watchlist, without its watchlist items.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WatchlistItems_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Watchlists_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsWatchlistItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="watchlistItemId"> Watchlist Item Id (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityInsightsWatchlistItemResource>> GetSecurityInsightsWatchlistItemAsync(string watchlistItemId, CancellationToken cancellationToken = default)
-        {
-            return await GetSecurityInsightsWatchlistItems().GetAsync(watchlistItemId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a watchlist, without its watchlist items.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WatchlistItems_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsWatchlistItemResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="watchlistItemId"> Watchlist Item Id (GUID). </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityInsightsWatchlistItemResource> GetSecurityInsightsWatchlistItem(string watchlistItemId, CancellationToken cancellationToken = default)
-        {
-            return GetSecurityInsightsWatchlistItems().Get(watchlistItemId, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a watchlist, without its watchlist items.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watchlists_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsWatchlistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityInsightsWatchlistResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Get");
+            using DiagnosticScope scope = _watchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsWatchlistWatchlistsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _watchlistsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsWatchlistData> response = Response.FromValue(SecurityInsightsWatchlistData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsWatchlistResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,36 +141,44 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Gets a watchlist, without its watchlist items.
+        /// Get a watchlist, without its watchlist items.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watchlists_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Watchlists_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsWatchlistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityInsightsWatchlistResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Get");
+            using DiagnosticScope scope = _watchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsWatchlistWatchlistsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _watchlistsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsWatchlistData> response = Response.FromValue(SecurityInsightsWatchlistData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsWatchlistResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -241,20 +192,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete a watchlist.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watchlists_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Watchlists_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsWatchlistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,16 +213,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Delete");
+            using DiagnosticScope scope = _watchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Delete");
             scope.Start();
             try
             {
-                var response = await _securityInsightsWatchlistWatchlistsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsWatchlistWatchlistsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _watchlistsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(_watchlistsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -285,20 +241,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete a watchlist.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watchlists_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Watchlists_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsWatchlistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,16 +262,21 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Delete");
+            using DiagnosticScope scope = _watchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Delete");
             scope.Start();
             try
             {
-                var response = _securityInsightsWatchlistWatchlistsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _securityInsightsWatchlistWatchlistsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _watchlistsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(_watchlistsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -326,23 +287,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Create or update a Watchlist and its Watchlist Items (bulk creation, e.g. through text/csv content type). To create a Watchlist and its Items, we should call this endpoint with either rawContent or a valid SAR URI and contentType properties. The rawContent is mainly used for small watchlist (content size below 3.8 MB). The SAS URI enables the creation of large watchlist, where the content size can go up to 500 MB. The status of processing such large file can be polled through the URL returned in Azure-AsyncOperation header.
+        /// Update a SecurityInsightsWatchlist.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watchlists_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Watchlists_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsWatchlistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -354,16 +315,27 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Update");
+            using DiagnosticScope scope = _watchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Update");
             scope.Start();
             try
             {
-                var response = await _securityInsightsWatchlistWatchlistsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsWatchlistWatchlistsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistResource>(Response.FromValue(new SecurityInsightsWatchlistResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _watchlistsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsWatchlistData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                SecurityInsightsArmOperation<SecurityInsightsWatchlistResource> operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistResource>(
+                    new SecurityInsightsWatchlistOperationSource(Client),
+                    _watchlistsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -374,23 +346,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Create or update a Watchlist and its Watchlist Items (bulk creation, e.g. through text/csv content type). To create a Watchlist and its Items, we should call this endpoint with either rawContent or a valid SAR URI and contentType properties. The rawContent is mainly used for small watchlist (content size below 3.8 MB). The SAS URI enables the creation of large watchlist, where the content size can go up to 500 MB. The status of processing such large file can be polled through the URL returned in Azure-AsyncOperation header.
+        /// Update a SecurityInsightsWatchlist.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Watchlists_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> Watchlists_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsWatchlistResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsWatchlistResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -402,16 +374,27 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Update");
+            using DiagnosticScope scope = _watchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistResource.Update");
             scope.Start();
             try
             {
-                var response = _securityInsightsWatchlistWatchlistsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _securityInsightsWatchlistWatchlistsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistResource>(Response.FromValue(new SecurityInsightsWatchlistResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _watchlistsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsWatchlistData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                SecurityInsightsArmOperation<SecurityInsightsWatchlistResource> operation = new SecurityInsightsArmOperation<SecurityInsightsWatchlistResource>(
+                    new SecurityInsightsWatchlistOperationSource(Client),
+                    _watchlistsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -419,6 +402,39 @@ namespace Azure.ResourceManager.SecurityInsights
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsWatchlistItems in the <see cref="SecurityInsightsWatchlistResource"/>. </summary>
+        /// <returns> An object representing collection of SecurityInsightsWatchlistItems and their operations over a SecurityInsightsWatchlistItemResource. </returns>
+        public virtual SecurityInsightsWatchlistItemCollection GetSecurityInsightsWatchlistItems()
+        {
+            return GetCachedClient(client => new SecurityInsightsWatchlistItemCollection(client, Id));
+        }
+
+        /// <summary> Get a watchlist item. </summary>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsWatchlistItemResource>> GetSecurityInsightsWatchlistItemAsync(string watchlistItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
+
+            return await GetSecurityInsightsWatchlistItems().GetAsync(watchlistItemId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a watchlist item. </summary>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsWatchlistItemResource> GetSecurityInsightsWatchlistItem(string watchlistItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
+
+            return GetSecurityInsightsWatchlistItems().Get(watchlistItemId, cancellationToken);
         }
     }
 }

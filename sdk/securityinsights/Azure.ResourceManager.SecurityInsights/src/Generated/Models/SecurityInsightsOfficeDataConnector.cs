@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,33 +17,59 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsOfficeDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnector"/>. </summary>
-        public SecurityInsightsOfficeDataConnector()
+        public SecurityInsightsOfficeDataConnector() : base(DataConnectorKind.Office365)
         {
-            Kind = DataConnectorKind.Office365;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsOfficeDataConnector"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
-        internal SecurityInsightsOfficeDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, SecurityInsightsOfficeDataConnectorDataTypes dataTypes) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> Office data connector properties. </param>
+        internal SecurityInsightsOfficeDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataConnectorKind kind, string eTag, OfficeDataConnectorProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            TenantId = tenantId;
-            DataTypes = dataTypes;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Office data connector properties. </summary>
+        internal OfficeDataConnectorProperties Properties { get; set; }
+
         /// <summary> The tenant id to connect to, and get the data from. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public string TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OfficeDataConnectorProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
+
         /// <summary> The available data types for the connector. </summary>
-        [WirePath("properties.dataTypes")]
-        public SecurityInsightsOfficeDataConnectorDataTypes DataTypes { get; set; }
+        public SecurityInsightsOfficeDataConnectorDataTypes DataTypes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataTypes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OfficeDataConnectorProperties();
+                }
+                Properties.DataTypes = value;
+            }
+        }
     }
 }

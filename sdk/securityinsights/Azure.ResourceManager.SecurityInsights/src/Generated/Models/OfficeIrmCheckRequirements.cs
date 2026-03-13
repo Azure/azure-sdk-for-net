@@ -14,23 +14,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class OfficeIrmCheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="OfficeIrmCheckRequirements"/>. </summary>
-        public OfficeIrmCheckRequirements()
+        public OfficeIrmCheckRequirements() : base(DataConnectorKind.OfficeIRM)
         {
-            Kind = DataConnectorKind.OfficeIRM;
         }
 
         /// <summary> Initializes a new instance of <see cref="OfficeIrmCheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        internal OfficeIrmCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> OfficeIRM (Microsoft Insider Risk Management) requirements check properties. </param>
+        internal OfficeIrmCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficeIRMCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
-            TenantId = tenantId;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> OfficeIRM (Microsoft Insider Risk Management) requirements check properties. </summary>
+        internal OfficeIRMCheckRequirementsProperties Properties { get; set; }
+
         /// <summary> The tenant id to connect to, and get the data from. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public string TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OfficeIRMCheckRequirementsProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
     }
 }

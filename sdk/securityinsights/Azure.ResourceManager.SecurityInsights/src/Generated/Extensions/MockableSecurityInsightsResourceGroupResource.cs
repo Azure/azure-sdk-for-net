@@ -8,72 +8,2223 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.SecurityInsights;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableSecurityInsightsResourceGroupResource : ArmResource
     {
-        private ClientDiagnostics _ipGeodataClientDiagnostics;
-        private IPGeodataRestOperations _ipGeodataRestClient;
-        private ClientDiagnostics _domainWhoisClientDiagnostics;
-        private DomainWhoisRestOperations _domainWhoisRestClient;
+        private ClientDiagnostics _securityInsightsClientClientDiagnostics;
+        private SecurityInsightsClient _securityInsightsClientRestClient;
+        private ClientDiagnostics _threatIntelligenceIndicatorClientDiagnostics;
+        private ThreatIntelligenceIndicator _threatIntelligenceIndicatorRestClient;
+        private ClientDiagnostics _dataConnectorsCheckRequirementsClientDiagnostics;
+        private DataConnectorsCheckRequirements _dataConnectorsCheckRequirementsRestClient;
+        private ClientDiagnostics _sourceControlClientDiagnostics;
+        private SourceControl _sourceControlRestClient;
+        private ClientDiagnostics _threatIntelligenceIndicatorMetricsClientDiagnostics;
+        private ThreatIntelligenceIndicatorMetrics _threatIntelligenceIndicatorMetricsRestClient;
+        private ClientDiagnostics _threatIntelligenceClientDiagnostics;
+        private ThreatIntelligence _threatIntelligenceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSecurityInsightsResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSecurityInsightsResourceGroupResource for mocking. </summary>
         protected MockableSecurityInsightsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSecurityInsightsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSecurityInsightsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSecurityInsightsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics IPGeodataClientDiagnostics => _ipGeodataClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private IPGeodataRestOperations IPGeodataRestClient => _ipGeodataRestClient ??= new IPGeodataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics DomainWhoisClientDiagnostics => _domainWhoisClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private DomainWhoisRestOperations DomainWhoisRestClient => _domainWhoisRestClient ??= new DomainWhoisRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics SecurityInsightsClientClientDiagnostics => _securityInsightsClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
+        private SecurityInsightsClient SecurityInsightsClientRestClient => _securityInsightsClientRestClient ??= new SecurityInsightsClient(SecurityInsightsClientClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+
+        private ClientDiagnostics ThreatIntelligenceIndicatorClientDiagnostics => _threatIntelligenceIndicatorClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ThreatIntelligenceIndicator ThreatIntelligenceIndicatorRestClient => _threatIntelligenceIndicatorRestClient ??= new ThreatIntelligenceIndicator(ThreatIntelligenceIndicatorClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+
+        private ClientDiagnostics DataConnectorsCheckRequirementsClientDiagnostics => _dataConnectorsCheckRequirementsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private DataConnectorsCheckRequirements DataConnectorsCheckRequirementsRestClient => _dataConnectorsCheckRequirementsRestClient ??= new DataConnectorsCheckRequirements(DataConnectorsCheckRequirementsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+
+        private ClientDiagnostics SourceControlClientDiagnostics => _sourceControlClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SourceControl SourceControlRestClient => _sourceControlRestClient ??= new SourceControl(SourceControlClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+
+        private ClientDiagnostics ThreatIntelligenceIndicatorMetricsClientDiagnostics => _threatIntelligenceIndicatorMetricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ThreatIntelligenceIndicatorMetrics ThreatIntelligenceIndicatorMetricsRestClient => _threatIntelligenceIndicatorMetricsRestClient ??= new ThreatIntelligenceIndicatorMetrics(ThreatIntelligenceIndicatorMetricsClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+
+        private ClientDiagnostics ThreatIntelligenceClientDiagnostics => _threatIntelligenceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SecurityInsights.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ThreatIntelligence ThreatIntelligenceRestClient => _threatIntelligenceRestClient ??= new ThreatIntelligence(ThreatIntelligenceClientDiagnostics, Pipeline, Endpoint, "2025-07-01-preview");
+
+        /// <summary> Gets a collection of SecurityInsightsAlertRules in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsAlertRules and their operations over a SecurityInsightsAlertRuleResource. </returns>
+        public virtual SecurityInsightsAlertRuleCollection GetSecurityInsightsAlertRules(string workspaceName)
         {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
+            return GetCachedClient(client => new SecurityInsightsAlertRuleCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets the alert rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRules_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="ruleId"> Alert rule ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsAlertRuleResource>> GetSecurityInsightsAlertRuleAsync(string workspaceName, string ruleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+
+            return await GetSecurityInsightsAlertRules(workspaceName).GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the alert rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRules/{ruleId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRules_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="ruleId"> Alert rule ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsAlertRuleResource> GetSecurityInsightsAlertRule(string workspaceName, string ruleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleId, nameof(ruleId));
+
+            return GetSecurityInsightsAlertRules(workspaceName).Get(ruleId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsAlertRuleTemplates in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsAlertRuleTemplates and their operations over a SecurityInsightsAlertRuleTemplateResource. </returns>
+        public virtual SecurityInsightsAlertRuleTemplateCollection GetSecurityInsightsAlertRuleTemplates(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsAlertRuleTemplateCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets the alert rule template.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleTemplates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertRuleTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsAlertRuleTemplateResource>> GetSecurityInsightsAlertRuleTemplateAsync(string workspaceName, string alertRuleTemplateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertRuleTemplateId, nameof(alertRuleTemplateId));
+
+            return await GetSecurityInsightsAlertRuleTemplates(workspaceName).GetAsync(alertRuleTemplateId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the alert rule template.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleTemplates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="alertRuleTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsAlertRuleTemplateResource> GetSecurityInsightsAlertRuleTemplate(string workspaceName, string alertRuleTemplateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(alertRuleTemplateId, nameof(alertRuleTemplateId));
+
+            return GetSecurityInsightsAlertRuleTemplates(workspaceName).Get(alertRuleTemplateId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsAutomationRules in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsAutomationRules and their operations over a SecurityInsightsAutomationRuleResource. </returns>
+        public virtual SecurityInsightsAutomationRuleCollection GetSecurityInsightsAutomationRules(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsAutomationRuleCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets the automation rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationRules_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="automationRuleId"> Automation rule ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationRuleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="automationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsAutomationRuleResource>> GetSecurityInsightsAutomationRuleAsync(string workspaceName, string automationRuleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(automationRuleId, nameof(automationRuleId));
+
+            return await GetSecurityInsightsAutomationRules(workspaceName).GetAsync(automationRuleId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the automation rule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/automationRules/{automationRuleId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AutomationRules_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="automationRuleId"> Automation rule ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationRuleId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="automationRuleId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsAutomationRuleResource> GetSecurityInsightsAutomationRule(string workspaceName, string automationRuleId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(automationRuleId, nameof(automationRuleId));
+
+            return GetSecurityInsightsAutomationRules(workspaceName).Get(automationRuleId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsIncidents in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsIncidents and their operations over a SecurityInsightsIncidentResource. </returns>
+        public virtual SecurityInsightsIncidentCollection GetSecurityInsightsIncidents(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsIncidentCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a given incident.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="incidentId"> Incident ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsIncidentResource>> GetSecurityInsightsIncidentAsync(string workspaceName, string incidentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
+
+            return await GetSecurityInsightsIncidents(workspaceName).GetAsync(incidentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a given incident.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Incidents_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="incidentId"> Incident ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="incidentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsIncidentResource> GetSecurityInsightsIncident(string workspaceName, string incidentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(incidentId, nameof(incidentId));
+
+            return GetSecurityInsightsIncidents(workspaceName).Get(incidentId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsBookmarks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsBookmarks and their operations over a SecurityInsightsBookmarkResource. </returns>
+        public virtual SecurityInsightsBookmarkCollection GetSecurityInsightsBookmarks(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsBookmarkCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a bookmark.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bookmarks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="bookmarkId"> Bookmark ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bookmarkId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsBookmarkResource>> GetSecurityInsightsBookmarkAsync(string workspaceName, string bookmarkId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
+
+            return await GetSecurityInsightsBookmarks(workspaceName).GetAsync(bookmarkId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a bookmark.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/bookmarks/{bookmarkId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Bookmarks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="bookmarkId"> Bookmark ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bookmarkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bookmarkId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsBookmarkResource> GetSecurityInsightsBookmark(string workspaceName, string bookmarkId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(bookmarkId, nameof(bookmarkId));
+
+            return GetSecurityInsightsBookmarks(workspaceName).Get(bookmarkId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsDataConnectorDefinitions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsDataConnectorDefinitions and their operations over a SecurityInsightsDataConnectorDefinitionResource. </returns>
+        public virtual SecurityInsightsDataConnectorDefinitionCollection GetSecurityInsightsDataConnectorDefinitions(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsDataConnectorDefinitionCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a data connector definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectorDefinitions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="dataConnectorDefinitionName"> The data connector definition name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectorDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsDataConnectorDefinitionResource>> GetSecurityInsightsDataConnectorDefinitionAsync(string workspaceName, string dataConnectorDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectorDefinitionName, nameof(dataConnectorDefinitionName));
+
+            return await GetSecurityInsightsDataConnectorDefinitions(workspaceName).GetAsync(dataConnectorDefinitionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a data connector definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectorDefinitions_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="dataConnectorDefinitionName"> The data connector definition name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectorDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsDataConnectorDefinitionResource> GetSecurityInsightsDataConnectorDefinition(string workspaceName, string dataConnectorDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectorDefinitionName, nameof(dataConnectorDefinitionName));
+
+            return GetSecurityInsightsDataConnectorDefinitions(workspaceName).Get(dataConnectorDefinitionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsDataConnectors in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsDataConnectors and their operations over a SecurityInsightsDataConnectorResource. </returns>
+        public virtual SecurityInsightsDataConnectorCollection GetSecurityInsightsDataConnectors(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsDataConnectorCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a data connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectors_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="dataConnectorId"> Connector ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsDataConnectorResource>> GetSecurityInsightsDataConnectorAsync(string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
+
+            return await GetSecurityInsightsDataConnectors(workspaceName).GetAsync(dataConnectorId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a data connector.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectors/{dataConnectorId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectors_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="dataConnectorId"> Connector ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataConnectorId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectorId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsDataConnectorResource> GetSecurityInsightsDataConnector(string workspaceName, string dataConnectorId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataConnectorId, nameof(dataConnectorId));
+
+            return GetSecurityInsightsDataConnectors(workspaceName).Get(dataConnectorId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsSentinelOnboardingStates in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsSentinelOnboardingStates and their operations over a SecurityInsightsSentinelOnboardingStateResource. </returns>
+        public virtual SecurityInsightsSentinelOnboardingStateCollection GetSecurityInsightsSentinelOnboardingStates(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsSentinelOnboardingStateCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Get Sentinel onboarding state
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SentinelOnboardingStates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="sentinelOnboardingStateName"> The Sentinel onboarding state name. Supports - default. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sentinelOnboardingStateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sentinelOnboardingStateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsSentinelOnboardingStateResource>> GetSecurityInsightsSentinelOnboardingStateAsync(string workspaceName, string sentinelOnboardingStateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sentinelOnboardingStateName, nameof(sentinelOnboardingStateName));
+
+            return await GetSecurityInsightsSentinelOnboardingStates(workspaceName).GetAsync(sentinelOnboardingStateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get Sentinel onboarding state
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/onboardingStates/{sentinelOnboardingStateName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SentinelOnboardingStates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="sentinelOnboardingStateName"> The Sentinel onboarding state name. Supports - default. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sentinelOnboardingStateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sentinelOnboardingStateName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsSentinelOnboardingStateResource> GetSecurityInsightsSentinelOnboardingState(string workspaceName, string sentinelOnboardingStateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sentinelOnboardingStateName, nameof(sentinelOnboardingStateName));
+
+            return GetSecurityInsightsSentinelOnboardingStates(workspaceName).Get(sentinelOnboardingStateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityMLAnalyticsSettings in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityMLAnalyticsSettings and their operations over a SecurityMLAnalyticsSettingResource. </returns>
+        public virtual SecurityMLAnalyticsSettingCollection GetSecurityMLAnalyticsSettings(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityMLAnalyticsSettingCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets the Security ML Analytics Settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityMLAnalyticsSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="settingsResourceName"> Security ML Analytics Settings resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityMLAnalyticsSettingResource>> GetSecurityMLAnalyticsSettingAsync(string workspaceName, string settingsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
+
+            return await GetSecurityMLAnalyticsSettings(workspaceName).GetAsync(settingsResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the Security ML Analytics Settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/securityMLAnalyticsSettings/{settingsResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityMLAnalyticsSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="settingsResourceName"> Security ML Analytics Settings resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityMLAnalyticsSettingResource> GetSecurityMLAnalyticsSetting(string workspaceName, string settingsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingsResourceName, nameof(settingsResourceName));
+
+            return GetSecurityMLAnalyticsSettings(workspaceName).Get(settingsResourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsSourceControls in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsSourceControls and their operations over a SecurityInsightsSourceControlResource. </returns>
+        public virtual SecurityInsightsSourceControlCollection GetSecurityInsightsSourceControls(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsSourceControlCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a source control byt its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="sourceControlId"> Source control Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsSourceControlResource>> GetSecurityInsightsSourceControlAsync(string workspaceName, string sourceControlId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlId, nameof(sourceControlId));
+
+            return await GetSecurityInsightsSourceControls(workspaceName).GetAsync(sourceControlId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a source control byt its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/sourcecontrols/{sourceControlId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControls_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="sourceControlId"> Source control Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceControlId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsSourceControlResource> GetSecurityInsightsSourceControl(string workspaceName, string sourceControlId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceControlId, nameof(sourceControlId));
+
+            return GetSecurityInsightsSourceControls(workspaceName).Get(sourceControlId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsWatchlists in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsWatchlists and their operations over a SecurityInsightsWatchlistResource. </returns>
+        public virtual SecurityInsightsWatchlistCollection GetSecurityInsightsWatchlists(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsWatchlistCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Get a watchlist, without its watchlist items.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Watchlists_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="watchlistAlias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watchlistAlias"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsWatchlistResource>> GetSecurityInsightsWatchlistAsync(string workspaceName, string watchlistAlias, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watchlistAlias, nameof(watchlistAlias));
+
+            return await GetSecurityInsightsWatchlists(workspaceName).GetAsync(watchlistAlias, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a watchlist, without its watchlist items.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Watchlists_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="watchlistAlias"> The watchlist alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="watchlistAlias"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watchlistAlias"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsWatchlistResource> GetSecurityInsightsWatchlist(string workspaceName, string watchlistAlias, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watchlistAlias, nameof(watchlistAlias));
+
+            return GetSecurityInsightsWatchlists(workspaceName).Get(watchlistAlias, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsBillingStatistics in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsBillingStatistics and their operations over a SecurityInsightsBillingStatisticResource. </returns>
+        public virtual SecurityInsightsBillingStatisticCollection GetSecurityInsightsBillingStatistics(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsBillingStatisticCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a billing statistic
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/billingStatistics/{billingStatisticName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingStatistics_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="billingStatisticName"> The name of the billing statistic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingStatisticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingStatisticName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsBillingStatisticResource>> GetSecurityInsightsBillingStatisticAsync(string workspaceName, string billingStatisticName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingStatisticName, nameof(billingStatisticName));
+
+            return await GetSecurityInsightsBillingStatistics(workspaceName).GetAsync(billingStatisticName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a billing statistic
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/billingStatistics/{billingStatisticName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BillingStatistics_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="billingStatisticName"> The name of the billing statistic. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="billingStatisticName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="billingStatisticName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsBillingStatisticResource> GetSecurityInsightsBillingStatistic(string workspaceName, string billingStatisticName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(billingStatisticName, nameof(billingStatisticName));
+
+            return GetSecurityInsightsBillingStatistics(workspaceName).Get(billingStatisticName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsEntities in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsEntities and their operations over a SecurityInsightsEntityResource. </returns>
+        public virtual SecurityInsightsEntityCollection GetSecurityInsightsEntities(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsEntityCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets an entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="entityId"> entity ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsEntityResource>> GetSecurityInsightsEntityAsync(string workspaceName, string entityId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entityId, nameof(entityId));
+
+            return await GetSecurityInsightsEntities(workspaceName).GetAsync(entityId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an entity.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="entityId"> entity ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsEntityResource> GetSecurityInsightsEntity(string workspaceName, string entityId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entityId, nameof(entityId));
+
+            return GetSecurityInsightsEntities(workspaceName).Get(entityId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsEntityQueries in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsEntityQueries and their operations over a SecurityInsightsEntityQueryResource. </returns>
+        public virtual SecurityInsightsEntityQueryCollection GetSecurityInsightsEntityQueries(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsEntityQueryCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets an entity query.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueries/{entityQueryId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="entityQueryId"> entity query ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityQueryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsEntityQueryResource>> GetSecurityInsightsEntityQueryAsync(string workspaceName, string entityQueryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entityQueryId, nameof(entityQueryId));
+
+            return await GetSecurityInsightsEntityQueries(workspaceName).GetAsync(entityQueryId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an entity query.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueries/{entityQueryId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueries_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="entityQueryId"> entity query ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityQueryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsEntityQueryResource> GetSecurityInsightsEntityQuery(string workspaceName, string entityQueryId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entityQueryId, nameof(entityQueryId));
+
+            return GetSecurityInsightsEntityQueries(workspaceName).Get(entityQueryId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsEntityQueryTemplates in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsEntityQueryTemplates and their operations over a SecurityInsightsEntityQueryTemplateResource. </returns>
+        public virtual SecurityInsightsEntityQueryTemplateCollection GetSecurityInsightsEntityQueryTemplates(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsEntityQueryTemplateCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets an entity query.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueryTemplates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="entityQueryTemplateId"> entity query template ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsEntityQueryTemplateResource>> GetSecurityInsightsEntityQueryTemplateAsync(string workspaceName, string entityQueryTemplateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entityQueryTemplateId, nameof(entityQueryTemplateId));
+
+            return await GetSecurityInsightsEntityQueryTemplates(workspaceName).GetAsync(entityQueryTemplateId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an entity query.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entityQueryTemplates/{entityQueryTemplateId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EntityQueryTemplates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="entityQueryTemplateId"> entity query template ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="entityQueryTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityQueryTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsEntityQueryTemplateResource> GetSecurityInsightsEntityQueryTemplate(string workspaceName, string entityQueryTemplateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(entityQueryTemplateId, nameof(entityQueryTemplateId));
+
+            return GetSecurityInsightsEntityQueryTemplates(workspaceName).Get(entityQueryTemplateId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsFileImports in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsFileImports and their operations over a SecurityInsightsFileImportResource. </returns>
+        public virtual SecurityInsightsFileImportCollection GetSecurityInsightsFileImports(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsFileImportCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a file import.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="fileImportId"> File import ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsFileImportResource>> GetSecurityInsightsFileImportAsync(string workspaceName, string fileImportId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileImportId, nameof(fileImportId));
+
+            return await GetSecurityInsightsFileImports(workspaceName).GetAsync(fileImportId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a file import.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/fileImports/{fileImportId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FileImports_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="fileImportId"> File import ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileImportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileImportId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsFileImportResource> GetSecurityInsightsFileImport(string workspaceName, string fileImportId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileImportId, nameof(fileImportId));
+
+            return GetSecurityInsightsFileImports(workspaceName).Get(fileImportId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsHunts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsHunts and their operations over a SecurityInsightsHuntResource. </returns>
+        public virtual SecurityInsightsHuntCollection GetSecurityInsightsHunts(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsHuntCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a hunt, without relations and comments.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Hunts_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="huntId"> The hunt id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="huntId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="huntId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsHuntResource>> GetSecurityInsightsHuntAsync(string workspaceName, string huntId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(huntId, nameof(huntId));
+
+            return await GetSecurityInsightsHunts(workspaceName).GetAsync(huntId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a hunt, without relations and comments.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/hunts/{huntId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Hunts_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="huntId"> The hunt id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="huntId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="huntId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsHuntResource> GetSecurityInsightsHunt(string workspaceName, string huntId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(huntId, nameof(huntId));
+
+            return GetSecurityInsightsHunts(workspaceName).Get(huntId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsOfficeConsents in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsOfficeConsents and their operations over a SecurityInsightsOfficeConsentResource. </returns>
+        public virtual SecurityInsightsOfficeConsentCollection GetSecurityInsightsOfficeConsents(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsOfficeConsentCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets an office365 consent.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/officeConsents/{consentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OfficeConsents_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="consentId"> consent ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="consentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="consentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsOfficeConsentResource>> GetSecurityInsightsOfficeConsentAsync(string workspaceName, string consentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(consentId, nameof(consentId));
+
+            return await GetSecurityInsightsOfficeConsents(workspaceName).GetAsync(consentId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an office365 consent.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/officeConsents/{consentId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> OfficeConsents_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="consentId"> consent ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="consentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="consentId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsOfficeConsentResource> GetSecurityInsightsOfficeConsent(string workspaceName, string consentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(consentId, nameof(consentId));
+
+            return GetSecurityInsightsOfficeConsents(workspaceName).Get(consentId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsSettings in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsSettings and their operations over a SecurityInsightsSettingsResource. </returns>
+        public virtual SecurityInsightsSettingsCollection GetAllSecurityInsightsSettings(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsSettingsCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a setting.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProductSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="settingsName"> The setting name. Supports - Anomalies, EyesOn, EntityAnalytics, Ueba. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsSettingsResource>> GetSecurityInsightsSettingsAsync(string workspaceName, string settingsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingsName, nameof(settingsName));
+
+            return await GetAllSecurityInsightsSettings(workspaceName).GetAsync(settingsName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a setting.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/settings/{settingsName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProductSettings_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="settingsName"> The setting name. Supports - Anomalies, EyesOn, EntityAnalytics, Ueba. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingsName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsSettingsResource> GetSecurityInsightsSettings(string workspaceName, string settingsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingsName, nameof(settingsName));
+
+            return GetAllSecurityInsightsSettings(workspaceName).Get(settingsName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TriggeredAnalyticsRuleRuns in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of TriggeredAnalyticsRuleRuns and their operations over a TriggeredAnalyticsRuleRunResource. </returns>
+        public virtual TriggeredAnalyticsRuleRunCollection GetTriggeredAnalyticsRuleRuns(string workspaceName)
+        {
+            return GetCachedClient(client => new TriggeredAnalyticsRuleRunCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets the triggered analytics rule run.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> triggeredAnalyticsRuleRun_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="ruleRunId"> the triggered rule id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleRunId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<TriggeredAnalyticsRuleRunResource>> GetTriggeredAnalyticsRuleRunAsync(string workspaceName, string ruleRunId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleRunId, nameof(ruleRunId));
+
+            return await GetTriggeredAnalyticsRuleRuns(workspaceName).GetAsync(ruleRunId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the triggered analytics rule run.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/triggeredAnalyticsRuleRuns/{ruleRunId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> triggeredAnalyticsRuleRun_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="ruleRunId"> the triggered rule id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleRunId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<TriggeredAnalyticsRuleRunResource> GetTriggeredAnalyticsRuleRun(string workspaceName, string ruleRunId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleRunId, nameof(ruleRunId));
+
+            return GetTriggeredAnalyticsRuleRuns(workspaceName).Get(ruleRunId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WorkspaceManagerAssignments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of WorkspaceManagerAssignments and their operations over a WorkspaceManagerAssignmentResource. </returns>
+        public virtual WorkspaceManagerAssignmentCollection GetWorkspaceManagerAssignments(string workspaceName)
+        {
+            return GetCachedClient(client => new WorkspaceManagerAssignmentCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a workspace manager assignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/{workspaceManagerAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerAssignments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkspaceManagerAssignmentResource>> GetWorkspaceManagerAssignmentAsync(string workspaceName, string workspaceManagerAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
+
+            return await GetWorkspaceManagerAssignments(workspaceName).GetAsync(workspaceManagerAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a workspace manager assignment
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerAssignments/{workspaceManagerAssignmentName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerAssignments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="workspaceManagerAssignmentName"> The name of the workspace manager assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkspaceManagerAssignmentResource> GetWorkspaceManagerAssignment(string workspaceName, string workspaceManagerAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceManagerAssignmentName, nameof(workspaceManagerAssignmentName));
+
+            return GetWorkspaceManagerAssignments(workspaceName).Get(workspaceManagerAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WorkspaceManagerConfigurations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of WorkspaceManagerConfigurations and their operations over a WorkspaceManagerConfigurationResource. </returns>
+        public virtual WorkspaceManagerConfigurationCollection GetWorkspaceManagerConfigurations(string workspaceName)
+        {
+            return GetCachedClient(client => new WorkspaceManagerConfigurationCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a workspace manager configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerConfigurations/{workspaceManagerConfigurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="workspaceManagerConfigurationName"> The name of the workspace manager configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkspaceManagerConfigurationResource>> GetWorkspaceManagerConfigurationAsync(string workspaceName, string workspaceManagerConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceManagerConfigurationName, nameof(workspaceManagerConfigurationName));
+
+            return await GetWorkspaceManagerConfigurations(workspaceName).GetAsync(workspaceManagerConfigurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a workspace manager configuration
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerConfigurations/{workspaceManagerConfigurationName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerConfigurations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="workspaceManagerConfigurationName"> The name of the workspace manager configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkspaceManagerConfigurationResource> GetWorkspaceManagerConfiguration(string workspaceName, string workspaceManagerConfigurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceManagerConfigurationName, nameof(workspaceManagerConfigurationName));
+
+            return GetWorkspaceManagerConfigurations(workspaceName).Get(workspaceManagerConfigurationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WorkspaceManagerGroups in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of WorkspaceManagerGroups and their operations over a WorkspaceManagerGroupResource. </returns>
+        public virtual WorkspaceManagerGroupCollection GetWorkspaceManagerGroups(string workspaceName)
+        {
+            return GetCachedClient(client => new WorkspaceManagerGroupCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a workspace manager group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="workspaceManagerGroupName"> The name of the workspace manager group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkspaceManagerGroupResource>> GetWorkspaceManagerGroupAsync(string workspaceName, string workspaceManagerGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceManagerGroupName, nameof(workspaceManagerGroupName));
+
+            return await GetWorkspaceManagerGroups(workspaceName).GetAsync(workspaceManagerGroupName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a workspace manager group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="workspaceManagerGroupName"> The name of the workspace manager group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkspaceManagerGroupResource> GetWorkspaceManagerGroup(string workspaceName, string workspaceManagerGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceManagerGroupName, nameof(workspaceManagerGroupName));
+
+            return GetWorkspaceManagerGroups(workspaceName).Get(workspaceManagerGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of WorkspaceManagerMembers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of WorkspaceManagerMembers and their operations over a WorkspaceManagerMemberResource. </returns>
+        public virtual WorkspaceManagerMemberCollection GetWorkspaceManagerMembers(string workspaceName)
+        {
+            return GetCachedClient(client => new WorkspaceManagerMemberCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a workspace manager member
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerMembers/{workspaceManagerMemberName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerMembers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="workspaceManagerMemberName"> The name of the workspace manager member. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<WorkspaceManagerMemberResource>> GetWorkspaceManagerMemberAsync(string workspaceName, string workspaceManagerMemberName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceManagerMemberName, nameof(workspaceManagerMemberName));
+
+            return await GetWorkspaceManagerMembers(workspaceName).GetAsync(workspaceManagerMemberName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a workspace manager member
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerMembers/{workspaceManagerMemberName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerMembers_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="workspaceManagerMemberName"> The name of the workspace manager member. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerMemberName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<WorkspaceManagerMemberResource> GetWorkspaceManagerMember(string workspaceName, string workspaceManagerMemberName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceManagerMemberName, nameof(workspaceManagerMemberName));
+
+            return GetWorkspaceManagerMembers(workspaceName).Get(workspaceManagerMemberName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PackageModels in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of PackageModels and their operations over a packageModelResource. </returns>
+        public virtual packageModelCollection GetPackageModels(string workspaceName)
+        {
+            return GetCachedClient(client => new packageModelCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets an installed packages by its id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="packageId"> package Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<packageModelResource>> GetpackageModelAsync(string workspaceName, string packageId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
+
+            return await GetPackageModels(workspaceName).GetAsync(packageId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an installed packages by its id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentPackages/{packageId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PackageModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="packageId"> package Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<packageModelResource> GetpackageModel(string workspaceName, string packageId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
+
+            return GetPackageModels(workspaceName).Get(packageId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ProductPackageModels in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of ProductPackageModels and their operations over a productPackageModelResource. </returns>
+        public virtual productPackageModelCollection GetProductPackageModels(string workspaceName)
+        {
+            return GetCachedClient(client => new productPackageModelCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a package by its identifier from the catalog.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProductPackageModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="packageId"> package Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<productPackageModelResource>> GetproductPackageModelAsync(string workspaceName, string packageId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
+
+            return await GetProductPackageModels(workspaceName).GetAsync(packageId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a package by its identifier from the catalog.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentProductPackages/{packageId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProductPackageModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="packageId"> package Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="packageId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<productPackageModelResource> GetproductPackageModel(string workspaceName, string packageId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packageId, nameof(packageId));
+
+            return GetProductPackageModels(workspaceName).Get(packageId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ProductTemplateModels in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of ProductTemplateModels and their operations over a productTemplateModelResource. </returns>
+        public virtual productTemplateModelCollection GetProductTemplateModels(string workspaceName)
+        {
+            return GetCachedClient(client => new productTemplateModelCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a template by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProductTemplateModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="templateId"> template Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<productTemplateModelResource>> GetproductTemplateModelAsync(string workspaceName, string templateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+
+            return await GetProductTemplateModels(workspaceName).GetAsync(templateId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a template by its identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentproducttemplates/{templateId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProductTemplateModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="templateId"> template Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<productTemplateModelResource> GetproductTemplateModel(string workspaceName, string templateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+
+            return GetProductTemplateModels(workspaceName).Get(templateId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TemplateModels in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of TemplateModels and their operations over a templateModelResource. </returns>
+        public virtual templateModelCollection GetTemplateModels(string workspaceName)
+        {
+            return GetCachedClient(client => new templateModelCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a template byt its identifier.
+        /// Expandable properties:
+        /// <list type="bullet"><item><description>properties/mainTemplate</description></item><item><description>properties/dependantTemplates</description></item></list>
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TemplateModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="templateId"> template Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<templateModelResource>> GettemplateModelAsync(string workspaceName, string templateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+
+            return await GetTemplateModels(workspaceName).GetAsync(templateId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a template byt its identifier.
+        /// Expandable properties:
+        /// <list type="bullet"><item><description>properties/mainTemplate</description></item><item><description>properties/dependantTemplates</description></item></list>
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/contentTemplates/{templateId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> TemplateModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="templateId"> template Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="templateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="templateId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<templateModelResource> GettemplateModel(string workspaceName, string templateId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(templateId, nameof(templateId));
+
+            return GetTemplateModels(workspaceName).Get(templateId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsMetadata in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsMetadata and their operations over a SecurityInsightsMetadataResource. </returns>
+        public virtual SecurityInsightsMetadataCollection GetAllSecurityInsightsMetadata(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsMetadataCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Get a Metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/metadata/{metadataName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="metadataName"> The Metadata name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsMetadataResource>> GetSecurityInsightsMetadataAsync(string workspaceName, string metadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
+
+            return await GetAllSecurityInsightsMetadata(workspaceName).GetAsync(metadataName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/metadata/{metadataName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MetadataModels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="metadataName"> The Metadata name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="metadataName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsMetadataResource> GetSecurityInsightsMetadata(string workspaceName, string metadataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(metadataName, nameof(metadataName));
+
+            return GetAllSecurityInsightsMetadata(workspaceName).Get(metadataName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsThreatIntelligenceIndicatorBases in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsThreatIntelligenceIndicatorBases and their operations over a SecurityInsightsThreatIntelligenceIndicatorBaseResource. </returns>
+        public virtual SecurityInsightsThreatIntelligenceIndicatorBaseCollection GetSecurityInsightsThreatIntelligenceIndicatorBases(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsThreatIntelligenceIndicatorBaseCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// View a threat intelligence indicator by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceInformationOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="name"> Threat intelligence indicator name field. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsThreatIntelligenceIndicatorBaseResource>> GetSecurityInsightsThreatIntelligenceIndicatorBaseAsync(string workspaceName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetSecurityInsightsThreatIntelligenceIndicatorBases(workspaceName).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// View a threat intelligence indicator by name.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceInformationOperations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="name"> Threat intelligence indicator name field. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsThreatIntelligenceIndicatorBaseResource> GetSecurityInsightsThreatIntelligenceIndicatorBase(string workspaceName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetSecurityInsightsThreatIntelligenceIndicatorBases(workspaceName).Get(name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SecurityInsightsRecommendations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <returns> An object representing collection of SecurityInsightsRecommendations and their operations over a SecurityInsightsRecommendationResource. </returns>
+        public virtual SecurityInsightsRecommendationCollection GetSecurityInsightsRecommendations(string workspaceName)
+        {
+            return GetCachedClient(client => new SecurityInsightsRecommendationCollection(client, Id, workspaceName));
+        }
+
+        /// <summary>
+        /// Gets a recommendation by its id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_SingleRecommendation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="recommendationId"> Recommendation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SecurityInsightsRecommendationResource>> GetSecurityInsightsRecommendationAsync(string workspaceName, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            return await GetSecurityInsightsRecommendations(workspaceName).GetAsync(recommendationId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a recommendation by its id.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/recommendations/{recommendationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Recommendations_SingleRecommendation. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        /// <param name="recommendationId"> Recommendation Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recommendationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendationId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SecurityInsightsRecommendationResource> GetSecurityInsightsRecommendation(string workspaceName, string recommendationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recommendationId, nameof(recommendationId));
+
+            return GetSecurityInsightsRecommendations(workspaceName).Get(recommendationId, cancellationToken);
         }
 
         /// <summary>
         /// Get geodata for a single IP address
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/enrichment/{enrichmentType}/listGeodataByIp. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPGeodata_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityInsights_ListGeodataByIp. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="enrichmentType"> Enrichment type. </param>
+        /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public virtual async Task<Response<EnrichmentIPGeodata>> GetIPGeodatumAsync(string ipAddress, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<EnrichmentIpGeodata>> GetGeodataByIpAsync(string workspaceName, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = IPGeodataClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetIPGeodatum");
+            using DiagnosticScope scope = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetGeodataByIp");
             scope.Start();
             try
             {
-                var response = await IPGeodataRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ipAddress, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SecurityInsightsClientRestClient.CreateGetGeodataByIpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, enrichmentType.ToString(), EnrichmentIPAddressContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EnrichmentIpGeodata> response = Response.FromValue(EnrichmentIpGeodata.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -87,31 +2238,45 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// Get geodata for a single IP address
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/ip/geodata</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/enrichment/{enrichmentType}/listGeodataByIp. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>IPGeodata_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityInsights_ListGeodataByIp. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ipAddress"> IP address (v4 or v6) to be enriched. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="enrichmentType"> Enrichment type. </param>
+        /// <param name="content"> IP address (v4 or v6) to be enriched. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public virtual Response<EnrichmentIPGeodata> GetIPGeodatum(string ipAddress, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<EnrichmentIpGeodata> GetGeodataByIp(string workspaceName, EnrichmentType enrichmentType, EnrichmentIPAddressContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ipAddress, nameof(ipAddress));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = IPGeodataClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetIPGeodatum");
+            using DiagnosticScope scope = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetGeodataByIp");
             scope.Start();
             try
             {
-                var response = IPGeodataRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ipAddress, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SecurityInsightsClientRestClient.CreateGetGeodataByIpRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, enrichmentType.ToString(), EnrichmentIPAddressContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EnrichmentIpGeodata> response = Response.FromValue(EnrichmentIpGeodata.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -125,31 +2290,45 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// Get whois information for a single domain name
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/enrichment/{enrichmentType}/listWhoisByDomain. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainWhois_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityInsights_ListWhoisByDomain. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="domain"> Domain name to be enriched. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="enrichmentType"> Enrichment type. </param>
+        /// <param name="content"> Domain name to be enriched. Only domain name is accepted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
-        public virtual async Task<Response<EnrichmentDomainWhois>> GetDomainWhoisInformationAsync(string domain, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<EnrichmentDomainWhois>> GetWhoisByDomainAsync(string workspaceName, EnrichmentType enrichmentType, EnrichmentDomainContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(domain, nameof(domain));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DomainWhoisClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetDomainWhoisInformation");
+            using DiagnosticScope scope = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetWhoisByDomain");
             scope.Start();
             try
             {
-                var response = await DomainWhoisRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, domain, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SecurityInsightsClientRestClient.CreateGetWhoisByDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, enrichmentType.ToString(), EnrichmentDomainContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EnrichmentDomainWhois> response = Response.FromValue(EnrichmentDomainWhois.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -163,31 +2342,45 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         /// Get whois information for a single domain name
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityInsights/enrichment/domain/whois</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/enrichment/{enrichmentType}/listWhoisByDomain. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DomainWhois_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SecurityInsights_ListWhoisByDomain. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="domain"> Domain name to be enriched. </param>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="enrichmentType"> Enrichment type. </param>
+        /// <param name="content"> Domain name to be enriched. Only domain name is accepted. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domain"/> is null. </exception>
-        public virtual Response<EnrichmentDomainWhois> GetDomainWhoisInformation(string domain, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<EnrichmentDomainWhois> GetWhoisByDomain(string workspaceName, EnrichmentType enrichmentType, EnrichmentDomainContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(domain, nameof(domain));
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = DomainWhoisClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetDomainWhoisInformation");
+            using DiagnosticScope scope = SecurityInsightsClientClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetWhoisByDomain");
             scope.Start();
             try
             {
-                var response = DomainWhoisRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, domain, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SecurityInsightsClientRestClient.CreateGetWhoisByDomainRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, enrichmentType.ToString(), EnrichmentDomainContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EnrichmentDomainWhois> response = Response.FromValue(EnrichmentDomainWhois.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -195,6 +2388,658 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Create a new threat intelligence indicator.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/createIndicator. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceIndicatorOperationGroup_CreateIndicator. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the monitor workspace. </param>
+        /// <param name="data"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SecurityInsightsThreatIntelligenceIndicatorBaseResource>> CreateIndicatorAsync(string workspaceName, SecurityInsightsThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = ThreatIntelligenceIndicatorClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.CreateIndicator");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ThreatIntelligenceIndicatorRestClient.CreateCreateIndicatorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsThreatIntelligenceIndicatorBaseData> response = Response.FromValue(SecurityInsightsThreatIntelligenceIndicatorBaseData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SecurityInsightsThreatIntelligenceIndicatorBaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Create a new threat intelligence indicator.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/createIndicator. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceIndicatorOperationGroup_CreateIndicator. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the monitor workspace. </param>
+        /// <param name="data"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SecurityInsightsThreatIntelligenceIndicatorBaseResource> CreateIndicator(string workspaceName, SecurityInsightsThreatIntelligenceIndicatorData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = ThreatIntelligenceIndicatorClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.CreateIndicator");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ThreatIntelligenceIndicatorRestClient.CreateCreateIndicatorRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, SecurityInsightsThreatIntelligenceIndicatorData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsThreatIntelligenceIndicatorBaseData> response = Response.FromValue(SecurityInsightsThreatIntelligenceIndicatorBaseData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new SecurityInsightsThreatIntelligenceIndicatorBaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Query threat intelligence indicators as per filtering criteria.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/queryIndicators. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceIndicatorOperationGroup_QueryIndicators. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the monitor workspace. </param>
+        /// <param name="threatIntelligenceFilteringCriteria"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorBaseResource> QueryIndicatorsAsync(string workspaceName, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorBaseResource>(new ThreatIntelligenceIndicatorQueryIndicatorsAsyncCollectionResultOfT(
+                ThreatIntelligenceIndicatorRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                workspaceName,
+                ThreatIntelligenceFilteringCriteria.ToRequestContent(threatIntelligenceFilteringCriteria),
+                context), data => new SecurityInsightsThreatIntelligenceIndicatorBaseResource(Client, data));
+        }
+
+        /// <summary>
+        /// Query threat intelligence indicators as per filtering criteria.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/queryIndicators. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceIndicatorOperationGroup_QueryIndicators. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the monitor workspace. </param>
+        /// <param name="threatIntelligenceFilteringCriteria"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="threatIntelligenceFilteringCriteria"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorBaseResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SecurityInsightsThreatIntelligenceIndicatorBaseResource> QueryIndicators(string workspaceName, ThreatIntelligenceFilteringCriteria threatIntelligenceFilteringCriteria, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(threatIntelligenceFilteringCriteria, nameof(threatIntelligenceFilteringCriteria));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityInsightsThreatIntelligenceIndicatorBaseData, SecurityInsightsThreatIntelligenceIndicatorBaseResource>(new ThreatIntelligenceIndicatorQueryIndicatorsCollectionResultOfT(
+                ThreatIntelligenceIndicatorRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                workspaceName,
+                ThreatIntelligenceFilteringCriteria.ToRequestContent(threatIntelligenceFilteringCriteria),
+                context), data => new SecurityInsightsThreatIntelligenceIndicatorBaseResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get requirements state for a data connector type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorsCheckRequirements. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectorsCheckRequirementsOperationGroup_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorsCheckRequirements"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DataConnectorRequirementsState>> PostAsync(string workspaceName, Models.DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(dataConnectorsCheckRequirements, nameof(dataConnectorsCheckRequirements));
+
+            using DiagnosticScope scope = DataConnectorsCheckRequirementsClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.Post");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DataConnectorsCheckRequirementsRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, Models.DataConnectorsCheckRequirements.ToRequestContent(dataConnectorsCheckRequirements), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DataConnectorRequirementsState> response = Response.FromValue(DataConnectorRequirementsState.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get requirements state for a data connector type.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorsCheckRequirements. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectorsCheckRequirementsOperationGroup_Post. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="dataConnectorsCheckRequirements"> The parameters for requirements check message. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="dataConnectorsCheckRequirements"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DataConnectorRequirementsState> Post(string workspaceName, Models.DataConnectorsCheckRequirements dataConnectorsCheckRequirements, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(dataConnectorsCheckRequirements, nameof(dataConnectorsCheckRequirements));
+
+            using DiagnosticScope scope = DataConnectorsCheckRequirementsClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.Post");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = DataConnectorsCheckRequirementsRestClient.CreatePostRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, Models.DataConnectorsCheckRequirements.ToRequestContent(dataConnectorsCheckRequirements), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DataConnectorRequirementsState> response = Response.FromValue(DataConnectorRequirementsState.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of repositories metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/listRepositories. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControlOperationGroup_ListRepositories. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="repositoryAccess"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="repositoryAccess"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="SourceControlRepo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SourceControlRepo> GetRepositoriesAsync(string workspaceName, RepositoryAccessProperties repositoryAccess, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(repositoryAccess, nameof(repositoryAccess));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SourceControlGetRepositoriesAsyncCollectionResultOfT(
+                SourceControlRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                workspaceName,
+                RepositoryAccessProperties.ToRequestContent(repositoryAccess),
+                context);
+        }
+
+        /// <summary>
+        /// Gets a list of repositories metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/listRepositories. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SourceControlOperationGroup_ListRepositories. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="repositoryAccess"> The content of the action request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> or <paramref name="repositoryAccess"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="SourceControlRepo"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SourceControlRepo> GetRepositories(string workspaceName, RepositoryAccessProperties repositoryAccess, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+            Argument.AssertNotNull(repositoryAccess, nameof(repositoryAccess));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SourceControlGetRepositoriesCollectionResultOfT(
+                SourceControlRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                workspaceName,
+                RepositoryAccessProperties.ToRequestContent(repositoryAccess),
+                context);
+        }
+
+        /// <summary>
+        /// Get threat intelligence indicators metrics (Indicators counts by Type, Threat Type, Source).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/metrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceIndicatorMetricsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the monitor workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ThreatIntelligenceMetricsList>> GetAllAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using DiagnosticScope scope = ThreatIntelligenceIndicatorMetricsClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ThreatIntelligenceIndicatorMetricsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ThreatIntelligenceMetricsList> response = Response.FromValue(ThreatIntelligenceMetricsList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get threat intelligence indicators metrics (Indicators counts by Type, Threat Type, Source).
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/metrics. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceIndicatorMetricsOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the monitor workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ThreatIntelligenceMetricsList> GetAll(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using DiagnosticScope scope = ThreatIntelligenceIndicatorMetricsClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.GetAll");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ThreatIntelligenceIndicatorMetricsRestClient.CreateGetAllRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ThreatIntelligenceMetricsList> response = Response.FromValue(ThreatIntelligenceMetricsList.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the count of all TI objects for the workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/{tiType}/count. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceOperationGroup_Count. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="tiType"> TI type. </param>
+        /// <param name="query"> The query to run on the TI objects in the workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<ThreatIntelligenceCount>> CountAsync(string workspaceName, ThreatIntelligenceType tiType, CountQuery query = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using DiagnosticScope scope = ThreatIntelligenceClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.Count");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ThreatIntelligenceRestClient.CreateCountRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, tiType.ToString(), CountQuery.ToRequestContent(query), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ThreatIntelligenceCount> response = Response.FromValue(ThreatIntelligenceCount.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the count of all TI objects for the workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/{tiType}/count. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceOperationGroup_Count. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="tiType"> TI type. </param>
+        /// <param name="query"> The query to run on the TI objects in the workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<ThreatIntelligenceCount> Count(string workspaceName, ThreatIntelligenceType tiType, CountQuery query = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using DiagnosticScope scope = ThreatIntelligenceClientDiagnostics.CreateScope("MockableSecurityInsightsResourceGroupResource.Count");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ThreatIntelligenceRestClient.CreateCountRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, workspaceName, tiType.ToString(), CountQuery.ToRequestContent(query), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ThreatIntelligenceCount> response = Response.FromValue(ThreatIntelligenceCount.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all TI objects for the workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/{tiType}/query. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceOperationGroup_Query. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="tiType"> TI type. </param>
+        /// <param name="query"> The query to run on the TI objects in the workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ThreatIntelligenceObject"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ThreatIntelligenceObject> QueryAsync(string workspaceName, ThreatIntelligenceType tiType, Query query = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ThreatIntelligenceQueryAsyncCollectionResultOfT(
+                ThreatIntelligenceRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                workspaceName,
+                tiType.ToString(),
+                Models.Query.ToRequestContent(query),
+                context);
+        }
+
+        /// <summary>
+        /// Gets all TI objects for the workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/{tiType}/query. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ThreatIntelligenceOperationGroup_Query. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="tiType"> TI type. </param>
+        /// <param name="query"> The query to run on the TI objects in the workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ThreatIntelligenceObject"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ThreatIntelligenceObject> Query(string workspaceName, ThreatIntelligenceType tiType, Query query = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ThreatIntelligenceQueryCollectionResultOfT(
+                ThreatIntelligenceRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                workspaceName,
+                tiType.ToString(),
+                Models.Query.ToRequestContent(query),
+                context);
         }
     }
 }

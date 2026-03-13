@@ -15,29 +15,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Initializes a new instance of <see cref="AutomationRuleAddIncidentTaskAction"/>. </summary>
         /// <param name="order"></param>
-        public AutomationRuleAddIncidentTaskAction(int order) : base(order)
+        public AutomationRuleAddIncidentTaskAction(int order) : base(order, ActionType.AddIncidentTask)
         {
-            ActionType = ActionType.AddIncidentTask;
         }
 
         /// <summary> Initializes a new instance of <see cref="AutomationRuleAddIncidentTaskAction"/>. </summary>
         /// <param name="order"></param>
         /// <param name="actionType"> The type of the automation rule action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionConfiguration"></param>
-        internal AutomationRuleAddIncidentTaskAction(int order, ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, AddIncidentTaskActionProperties actionConfiguration) : base(order, actionType, serializedAdditionalRawData)
+        internal AutomationRuleAddIncidentTaskAction(int order, ActionType actionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AddIncidentTaskActionProperties actionConfiguration) : base(order, actionType, additionalBinaryDataProperties)
         {
             ActionConfiguration = actionConfiguration;
-            ActionType = actionType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutomationRuleAddIncidentTaskAction"/> for deserialization. </summary>
-        internal AutomationRuleAddIncidentTaskAction()
-        {
-        }
-
-        /// <summary> Gets or sets the action configuration. </summary>
-        [WirePath("actionConfiguration")]
+        /// <summary> Gets or sets the ActionConfiguration. </summary>
         public AddIncidentTaskActionProperties ActionConfiguration { get; set; }
     }
 }

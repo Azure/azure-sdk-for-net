@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,46 +17,75 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsTIDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsTIDataConnector"/>. </summary>
-        public SecurityInsightsTIDataConnector()
+        public SecurityInsightsTIDataConnector() : base(DataConnectorKind.ThreatIntelligence)
         {
-            Kind = DataConnectorKind.ThreatIntelligence;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsTIDataConnector"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="tipLookbackOn"> The lookback period for the feed to be imported. </param>
-        /// <param name="indicators"> Data type for indicators connection. </param>
-        internal SecurityInsightsTIDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId, DateTimeOffset? tipLookbackOn, TIDataConnectorDataTypesIndicators indicators) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> TI (Threat Intelligence) data connector properties. </param>
+        internal SecurityInsightsTIDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataConnectorKind kind, string eTag, TIDataConnectorProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            TenantId = tenantId;
-            TipLookbackOn = tipLookbackOn;
-            Indicators = indicators;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> TI (Threat Intelligence) data connector properties. </summary>
+        internal TIDataConnectorProperties Properties { get; set; }
+
         /// <summary> The tenant id to connect to, and get the data from. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
-        /// <summary> The lookback period for the feed to be imported. </summary>
-        [WirePath("properties.tipLookbackPeriod")]
-        public DateTimeOffset? TipLookbackOn { get; set; }
-        /// <summary> Data type for indicators connection. </summary>
-        internal TIDataConnectorDataTypesIndicators Indicators { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        [WirePath("properties.indicators.state")]
-        public SecurityInsightsDataTypeConnectionState? IndicatorsState
+        public string TenantId
         {
-            get => Indicators is null ? default(SecurityInsightsDataTypeConnectionState?) : Indicators.State;
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
             set
             {
-                Indicators = value.HasValue ? new TIDataConnectorDataTypesIndicators(value.Value) : null;
+                if (Properties is null)
+                {
+                    Properties = new TIDataConnectorProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
+
+        /// <summary> The lookback period for the feed to be imported. </summary>
+        public DateTimeOffset? TipLookbackPeriod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TipLookbackPeriod;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TIDataConnectorProperties();
+                }
+                Properties.TipLookbackPeriod = value.Value;
+            }
+        }
+
+        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        public SecurityInsightsDataTypeConnectionState? DataTypesIndicatorsState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataTypesIndicatorsState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TIDataConnectorProperties();
+                }
+                Properties.DataTypesIndicatorsState = value.Value;
             }
         }
     }

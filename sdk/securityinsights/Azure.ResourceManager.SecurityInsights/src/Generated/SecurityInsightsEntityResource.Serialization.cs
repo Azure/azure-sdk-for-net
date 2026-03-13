@@ -8,23 +8,32 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsEntityResource : IJsonModel<SecurityInsightsEntity>
+    /// <summary></summary>
+    public partial class SecurityInsightsEntityResource : IJsonModel<SecurityInsightsEntityData>
     {
-        private static SecurityInsightsEntity s_dataDeserializationInstance;
-        private static SecurityInsightsEntity DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityInsightsEntityData> s_dataDeserializationInstance;
 
-        void IJsonModel<SecurityInsightsEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsEntity>)Data).Write(writer, options);
+        private static IJsonModel<SecurityInsightsEntityData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityInsights.SecurityInsightsEntityData();
 
-        SecurityInsightsEntity IJsonModel<SecurityInsightsEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsEntity>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<SecurityInsightsEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsEntityData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<SecurityInsightsEntity>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsEntity>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsEntityData IJsonModel<SecurityInsightsEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        SecurityInsightsEntity IPersistableModel<SecurityInsightsEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsEntity>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecurityInsightsEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsEntityData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsEntity>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsEntityData IPersistableModel<SecurityInsightsEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsEntityData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

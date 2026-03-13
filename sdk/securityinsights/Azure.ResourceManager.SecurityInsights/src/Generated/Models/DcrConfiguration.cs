@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The configuration of the destination of the data. </summary>
     public partial class DcrConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DcrConfiguration"/>. </summary>
         /// <param name="dataCollectionEndpoint"> Represents the data collection ingestion endpoint in log analytics. </param>
@@ -65,28 +37,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="dataCollectionEndpoint"> Represents the data collection ingestion endpoint in log analytics. </param>
         /// <param name="dataCollectionRuleImmutableId"> The data collection rule immutable id, the rule defines the transformation and data destination. </param>
         /// <param name="streamName"> The stream we are sending the data to. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DcrConfiguration(string dataCollectionEndpoint, string dataCollectionRuleImmutableId, string streamName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DcrConfiguration(string dataCollectionEndpoint, string dataCollectionRuleImmutableId, string streamName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataCollectionEndpoint = dataCollectionEndpoint;
             DataCollectionRuleImmutableId = dataCollectionRuleImmutableId;
             StreamName = streamName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DcrConfiguration"/> for deserialization. </summary>
-        internal DcrConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Represents the data collection ingestion endpoint in log analytics. </summary>
-        [WirePath("dataCollectionEndpoint")]
         public string DataCollectionEndpoint { get; set; }
+
         /// <summary> The data collection rule immutable id, the rule defines the transformation and data destination. </summary>
-        [WirePath("dataCollectionRuleImmutableId")]
         public string DataCollectionRuleImmutableId { get; set; }
+
         /// <summary> The stream we are sending the data to. </summary>
-        [WirePath("streamName")]
         public string StreamName { get; set; }
     }
 }

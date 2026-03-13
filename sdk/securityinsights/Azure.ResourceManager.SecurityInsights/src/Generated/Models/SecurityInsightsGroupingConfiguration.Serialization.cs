@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsGroupingConfiguration : IUtf8JsonSerializable, IJsonModel<SecurityInsightsGroupingConfiguration>
+    /// <summary> Grouping configuration property bag. </summary>
+    public partial class SecurityInsightsGroupingConfiguration : IJsonModel<SecurityInsightsGroupingConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsGroupingConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupingConfiguration"/> for deserialization. </summary>
+        internal SecurityInsightsGroupingConfiguration()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecurityInsightsGroupingConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsGroupingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecurityInsightsGroupingConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsGroupingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecurityInsightsGroupingConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsGroupingConfiguration IPersistableModel<SecurityInsightsGroupingConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsGroupingConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsGroupingConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,16 +74,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsGroupingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsGroupingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("enabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
+            writer.WriteBooleanValue(Enabled);
             writer.WritePropertyName("reopenClosedIncident"u8);
-            writer.WriteBooleanValue(IsClosedIncidentReopened);
+            writer.WriteBooleanValue(ReopenClosedIncident);
             writer.WritePropertyName("lookbackDuration"u8);
             writer.WriteStringValue(LookbackDuration, "P");
             writer.WritePropertyName("matchingMethod"u8);
@@ -48,7 +91,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("groupByEntities"u8);
                 writer.WriteStartArray();
-                foreach (var item in GroupByEntities)
+                foreach (SecurityInsightsAlertRuleEntityMappingType item in GroupByEntities)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -58,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("groupByAlertDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in GroupByAlertDetails)
+                foreach (SecurityInsightsAlertDetail item in GroupByAlertDetails)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -68,21 +111,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("groupByCustomDetails"u8);
                 writer.WriteStartArray();
-                foreach (var item in GroupByCustomDetails)
+                foreach (string item in GroupByCustomDetails)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -91,22 +139,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        SecurityInsightsGroupingConfiguration IJsonModel<SecurityInsightsGroupingConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsGroupingConfiguration IJsonModel<SecurityInsightsGroupingConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecurityInsightsGroupingConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsGroupingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsGroupingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityInsightsGroupingConfiguration(document.RootElement, options);
         }
 
-        internal static SecurityInsightsGroupingConfiguration DeserializeSecurityInsightsGroupingConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecurityInsightsGroupingConfiguration DeserializeSecurityInsightsGroupingConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -118,78 +171,83 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IList<SecurityInsightsAlertRuleEntityMappingType> groupByEntities = default;
             IList<SecurityInsightsAlertDetail> groupByAlertDetails = default;
             IList<string> groupByCustomDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("enabled"u8))
+                if (prop.NameEquals("enabled"u8))
                 {
-                    enabled = property.Value.GetBoolean();
+                    enabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("reopenClosedIncident"u8))
+                if (prop.NameEquals("reopenClosedIncident"u8))
                 {
-                    reopenClosedIncident = property.Value.GetBoolean();
+                    reopenClosedIncident = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("lookbackDuration"u8))
+                if (prop.NameEquals("lookbackDuration"u8))
                 {
-                    lookbackDuration = property.Value.GetTimeSpan("P");
+                    lookbackDuration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("matchingMethod"u8))
+                if (prop.NameEquals("matchingMethod"u8))
                 {
-                    matchingMethod = new SecurityInsightsGroupingMatchingMethod(property.Value.GetString());
+                    matchingMethod = new SecurityInsightsGroupingMatchingMethod(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("groupByEntities"u8))
+                if (prop.NameEquals("groupByEntities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SecurityInsightsAlertRuleEntityMappingType> array = new List<SecurityInsightsAlertRuleEntityMappingType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new SecurityInsightsAlertRuleEntityMappingType(item.GetString()));
                     }
                     groupByEntities = array;
                     continue;
                 }
-                if (property.NameEquals("groupByAlertDetails"u8))
+                if (prop.NameEquals("groupByAlertDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SecurityInsightsAlertDetail> array = new List<SecurityInsightsAlertDetail>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new SecurityInsightsAlertDetail(item.GetString()));
                     }
                     groupByAlertDetails = array;
                     continue;
                 }
-                if (property.NameEquals("groupByCustomDetails"u8))
+                if (prop.NameEquals("groupByCustomDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     groupByCustomDetails = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsGroupingConfiguration(
                 enabled,
                 reopenClosedIncident,
@@ -198,188 +256,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 groupByEntities ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMappingType>(),
                 groupByAlertDetails ?? new ChangeTrackingList<SecurityInsightsAlertDetail>(),
                 groupByCustomDetails ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  enabled: ");
-                var boolValue = IsEnabled == true ? "true" : "false";
-                builder.AppendLine($"{boolValue}");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClosedIncidentReopened), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  reopenClosedIncident: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  reopenClosedIncident: ");
-                var boolValue = IsClosedIncidentReopened == true ? "true" : "false";
-                builder.AppendLine($"{boolValue}");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LookbackDuration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lookbackDuration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  lookbackDuration: ");
-                var formattedTimeSpan = TypeFormatters.ToString(LookbackDuration, "P");
-                builder.AppendLine($"'{formattedTimeSpan}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MatchingMethod), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  matchingMethod: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  matchingMethod: ");
-                builder.AppendLine($"'{MatchingMethod.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupByEntities), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  groupByEntities: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(GroupByEntities))
-                {
-                    if (GroupByEntities.Any())
-                    {
-                        builder.Append("  groupByEntities: ");
-                        builder.AppendLine("[");
-                        foreach (var item in GroupByEntities)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupByAlertDetails), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  groupByAlertDetails: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(GroupByAlertDetails))
-                {
-                    if (GroupByAlertDetails.Any())
-                    {
-                        builder.Append("  groupByAlertDetails: ");
-                        builder.AppendLine("[");
-                        foreach (var item in GroupByAlertDetails)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupByCustomDetails), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  groupByCustomDetails: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(GroupByCustomDetails))
-                {
-                    if (GroupByCustomDetails.Any())
-                    {
-                        builder.Append("  groupByCustomDetails: ");
-                        builder.AppendLine("[");
-                        foreach (var item in GroupByCustomDetails)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SecurityInsightsGroupingConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsGroupingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecurityInsightsGroupingConfiguration IPersistableModel<SecurityInsightsGroupingConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsGroupingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecurityInsightsGroupingConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsGroupingConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecurityInsightsGroupingConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

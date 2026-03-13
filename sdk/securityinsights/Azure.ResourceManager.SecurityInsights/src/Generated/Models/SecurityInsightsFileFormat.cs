@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsFileFormat : IEquatable<SecurityInsightsFileFormat>
     {
         private readonly string _value;
+        /// <summary> A CSV file. </summary>
+        private const string CSVValue = "CSV";
+        /// <summary> A JSON file. </summary>
+        private const string JSONValue = "JSON";
+        /// <summary> A file of other format. </summary>
+        private const string UnspecifiedValue = "Unspecified";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsFileFormat(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string CsvValue = "CSV";
-        private const string JsonValue = "JSON";
-        private const string UnspecifiedValue = "Unspecified";
-
         /// <summary> A CSV file. </summary>
-        public static SecurityInsightsFileFormat Csv { get; } = new SecurityInsightsFileFormat(CsvValue);
+        public static SecurityInsightsFileFormat CSV { get; } = new SecurityInsightsFileFormat(CSVValue);
+
         /// <summary> A JSON file. </summary>
-        public static SecurityInsightsFileFormat Json { get; } = new SecurityInsightsFileFormat(JsonValue);
+        public static SecurityInsightsFileFormat JSON { get; } = new SecurityInsightsFileFormat(JSONValue);
+
         /// <summary> A file of other format. </summary>
         public static SecurityInsightsFileFormat Unspecified { get; } = new SecurityInsightsFileFormat(UnspecifiedValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileFormat"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsFileFormat left, SecurityInsightsFileFormat right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileFormat"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsFileFormat left, SecurityInsightsFileFormat right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsFileFormat"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsFileFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsFileFormat(string value) => new SecurityInsightsFileFormat(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsFileFormat"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsFileFormat?(string value) => value == null ? null : new SecurityInsightsFileFormat(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsFileFormat other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsFileFormat other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

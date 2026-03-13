@@ -13,125 +13,184 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the SecurityInsightsFileImport data model.
-    /// Represents a file import in Azure Security Insights.
-    /// </summary>
+    /// <summary> Represents a file import in Azure Security Insights. </summary>
     public partial class SecurityInsightsFileImportData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileImportData"/>. </summary>
         public SecurityInsightsFileImportData()
         {
-            ErrorsPreview = new ChangeTrackingList<SecurityInsightsFileValidationError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileImportData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="ingestionMode"> Describes how to ingest the records in the file. </param>
-        /// <param name="contentType"> The content type of this file. </param>
-        /// <param name="createdOn"> The time the file was imported. </param>
-        /// <param name="errorFile"> Represents the error file (if the import was ingested with errors or failed the validation). </param>
-        /// <param name="errorsPreview"> An ordered list of some of the errors that were encountered during validation. </param>
-        /// <param name="importFile"> Represents the imported file. </param>
-        /// <param name="ingestedRecordCount"> The number of records that have been successfully ingested. </param>
-        /// <param name="source"> The source for the data in the file. </param>
-        /// <param name="state"> The state of the file import. </param>
-        /// <param name="totalRecordCount"> The number of records in the file. </param>
-        /// <param name="validRecordCount"> The number of records that have passed validation. </param>
-        /// <param name="filesValidUntil"> The time the files associated with this import are deleted from the storage account. </param>
-        /// <param name="importValidUntil"> The time the file import record is soft deleted from the database and history. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsFileImportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IngestionMode? ingestionMode, SecurityInsightsFileImportContentType? contentType, DateTimeOffset? createdOn, SecurityInsightsFileMetadata errorFile, IReadOnlyList<SecurityInsightsFileValidationError> errorsPreview, SecurityInsightsFileMetadata importFile, int? ingestedRecordCount, string source, SecurityInsightsFileImportState? state, int? totalRecordCount, int? validRecordCount, DateTimeOffset? filesValidUntil, DateTimeOffset? importValidUntil, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> File import properties. </param>
+        internal SecurityInsightsFileImportData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, FileImportProperties properties) : base(id, name, resourceType, systemData)
         {
-            IngestionMode = ingestionMode;
-            ContentType = contentType;
-            CreatedOn = createdOn;
-            ErrorFile = errorFile;
-            ErrorsPreview = errorsPreview;
-            ImportFile = importFile;
-            IngestedRecordCount = ingestedRecordCount;
-            Source = source;
-            State = state;
-            TotalRecordCount = totalRecordCount;
-            ValidRecordCount = validRecordCount;
-            FilesValidUntil = filesValidUntil;
-            ImportValidUntil = importValidUntil;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> File import properties. </summary>
+        internal FileImportProperties Properties { get; set; }
+
         /// <summary> Describes how to ingest the records in the file. </summary>
-        [WirePath("properties.ingestionMode")]
-        public IngestionMode? IngestionMode { get; set; }
+        public IngestionMode IngestionMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngestionMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileImportProperties();
+                }
+                Properties.IngestionMode = value;
+            }
+        }
+
         /// <summary> The content type of this file. </summary>
-        [WirePath("properties.contentType")]
-        public SecurityInsightsFileImportContentType? ContentType { get; set; }
+        public SecurityInsightsFileImportContentType ContentType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContentType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileImportProperties();
+                }
+                Properties.ContentType = value;
+            }
+        }
+
         /// <summary> The time the file was imported. </summary>
-        [WirePath("properties.createdTimeUTC")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedTimeUTC;
+            }
+        }
+
         /// <summary> Represents the error file (if the import was ingested with errors or failed the validation). </summary>
-        [WirePath("properties.errorFile")]
-        public SecurityInsightsFileMetadata ErrorFile { get; }
+        public SecurityInsightsFileMetadata ErrorFile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorFile;
+            }
+        }
+
         /// <summary> An ordered list of some of the errors that were encountered during validation. </summary>
-        [WirePath("properties.errorsPreview")]
-        public IReadOnlyList<SecurityInsightsFileValidationError> ErrorsPreview { get; }
+        public IReadOnlyList<SecurityInsightsFileValidationError> ErrorsPreview
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileImportProperties();
+                }
+                return Properties.ErrorsPreview;
+            }
+        }
+
         /// <summary> Represents the imported file. </summary>
-        [WirePath("properties.importFile")]
-        public SecurityInsightsFileMetadata ImportFile { get; set; }
+        public SecurityInsightsFileMetadata ImportFile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportFile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileImportProperties();
+                }
+                Properties.ImportFile = value;
+            }
+        }
+
         /// <summary> The number of records that have been successfully ingested. </summary>
-        [WirePath("properties.ingestedRecordCount")]
-        public int? IngestedRecordCount { get; }
+        public int? IngestedRecordCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngestedRecordCount;
+            }
+        }
+
         /// <summary> The source for the data in the file. </summary>
-        [WirePath("properties.source")]
-        public string Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FileImportProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> The state of the file import. </summary>
-        [WirePath("properties.state")]
-        public SecurityInsightsFileImportState? State { get; }
+        public SecurityInsightsFileImportState? State
+        {
+            get
+            {
+                return Properties is null ? default : Properties.State;
+            }
+        }
+
         /// <summary> The number of records in the file. </summary>
-        [WirePath("properties.totalRecordCount")]
-        public int? TotalRecordCount { get; }
+        public int? TotalRecordCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TotalRecordCount;
+            }
+        }
+
         /// <summary> The number of records that have passed validation. </summary>
-        [WirePath("properties.validRecordCount")]
-        public int? ValidRecordCount { get; }
+        public int? ValidRecordCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidRecordCount;
+            }
+        }
+
         /// <summary> The time the files associated with this import are deleted from the storage account. </summary>
-        [WirePath("properties.filesValidUntilTimeUTC")]
-        public DateTimeOffset? FilesValidUntil { get; }
+        public DateTimeOffset? FilesValidUntilTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FilesValidUntilTimeUTC;
+            }
+        }
+
         /// <summary> The time the file import record is soft deleted from the database and history. </summary>
-        [WirePath("properties.importValidUntilTimeUTC")]
-        public DateTimeOffset? ImportValidUntil { get; }
+        public DateTimeOffset? ImportValidUntilTimeUTC
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportValidUntilTimeUTC;
+            }
+        }
     }
 }

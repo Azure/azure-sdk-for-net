@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,56 +17,79 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ExpansionEntityQuery : SecurityInsightsEntityQueryData
     {
         /// <summary> Initializes a new instance of <see cref="ExpansionEntityQuery"/>. </summary>
-        public ExpansionEntityQuery()
+        internal ExpansionEntityQuery() : base(EntityQueryKind.Expansion)
         {
-            DataSources = new ChangeTrackingList<string>();
-            InputFields = new ChangeTrackingList<string>();
-            OutputEntityTypes = new ChangeTrackingList<SecurityInsightsEntityType>();
-            Kind = EntityQueryKind.Expansion;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExpansionEntityQuery"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> the entity query kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="dataSources"> List of the data sources that are required to run the query. </param>
-        /// <param name="displayName"> The query display name. </param>
-        /// <param name="inputEntityType"> The type of the query's source entity. </param>
-        /// <param name="inputFields"> List of the fields of the source entity that are required to run the query. </param>
-        /// <param name="outputEntityTypes"> List of the desired output types to be constructed from the result. </param>
-        /// <param name="queryTemplate"> The template query string to be parsed and formatted. </param>
-        internal ExpansionEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EntityQueryKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> dataSources, string displayName, SecurityInsightsEntityType? inputEntityType, IList<string> inputFields, IList<SecurityInsightsEntityType> outputEntityTypes, string queryTemplate) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> Expansion entity query properties. </param>
+        internal ExpansionEntityQuery(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, EntityQueryKind kind, string eTag, ExpansionEntityQueriesProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            DataSources = dataSources;
-            DisplayName = displayName;
-            InputEntityType = inputEntityType;
-            InputFields = inputFields;
-            OutputEntityTypes = outputEntityTypes;
-            QueryTemplate = queryTemplate;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Expansion entity query properties. </summary>
+        internal ExpansionEntityQueriesProperties Properties { get; }
+
         /// <summary> List of the data sources that are required to run the query. </summary>
-        [WirePath("properties.dataSources")]
-        public IList<string> DataSources { get; }
+        public IList<string> DataSources
+        {
+            get
+            {
+                return Properties.DataSources;
+            }
+        }
+
         /// <summary> The query display name. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties.DisplayName;
+            }
+        }
+
         /// <summary> The type of the query's source entity. </summary>
-        [WirePath("properties.inputEntityType")]
-        public SecurityInsightsEntityType? InputEntityType { get; set; }
+        public SecurityInsightsEntityType? InputEntityType
+        {
+            get
+            {
+                return Properties.InputEntityType;
+            }
+        }
+
         /// <summary> List of the fields of the source entity that are required to run the query. </summary>
-        [WirePath("properties.inputFields")]
-        public IList<string> InputFields { get; }
+        public IList<string> InputFields
+        {
+            get
+            {
+                return Properties.InputFields;
+            }
+        }
+
         /// <summary> List of the desired output types to be constructed from the result. </summary>
-        [WirePath("properties.outputEntityTypes")]
-        public IList<SecurityInsightsEntityType> OutputEntityTypes { get; }
+        public IList<SecurityInsightsEntityType> OutputEntityTypes
+        {
+            get
+            {
+                return Properties.OutputEntityTypes;
+            }
+        }
+
         /// <summary> The template query string to be parsed and formatted. </summary>
-        [WirePath("properties.queryTemplate")]
-        public string QueryTemplate { get; set; }
+        public string QueryTemplate
+        {
+            get
+            {
+                return Properties.QueryTemplate;
+            }
+        }
     }
 }

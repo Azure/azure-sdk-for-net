@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct ConnectAuthKind : IEquatable<ConnectAuthKind>
     {
         private readonly string _value;
+        /// <summary> Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> OAuth2. </summary>
+        private const string OAuth2Value = "OAuth2";
+        /// <summary> APIKey. </summary>
+        private const string APIKeyValue = "APIKey";
 
         /// <summary> Initializes a new instance of <see cref="ConnectAuthKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ConnectAuthKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string OAuth2Value = "OAuth2";
-        private const string APIKeyValue = "APIKey";
+            _value = value;
+        }
 
         /// <summary> Basic. </summary>
         public static ConnectAuthKind Basic { get; } = new ConnectAuthKind(BasicValue);
+
         /// <summary> OAuth2. </summary>
         public static ConnectAuthKind OAuth2 { get; } = new ConnectAuthKind(OAuth2Value);
+
         /// <summary> APIKey. </summary>
         public static ConnectAuthKind APIKey { get; } = new ConnectAuthKind(APIKeyValue);
+
         /// <summary> Determines if two <see cref="ConnectAuthKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ConnectAuthKind left, ConnectAuthKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ConnectAuthKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ConnectAuthKind left, ConnectAuthKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ConnectAuthKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ConnectAuthKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ConnectAuthKind(string value) => new ConnectAuthKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ConnectAuthKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ConnectAuthKind?(string value) => value == null ? null : new ConnectAuthKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ConnectAuthKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ConnectAuthKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

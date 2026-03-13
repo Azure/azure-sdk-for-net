@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsOfficeDataConnectorDataTypes : IUtf8JsonSerializable, IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>
+    /// <summary> The available data types for office data connector. </summary>
+    public partial class SecurityInsightsOfficeDataConnectorDataTypes : IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecurityInsightsOfficeDataConnectorDataTypes PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecurityInsightsOfficeDataConnectorDataTypes(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsOfficeDataConnectorDataTypes IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,27 +69,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("exchange"u8);
             writer.WriteObjectValue(Exchange, options);
             writer.WritePropertyName("sharePoint"u8);
             writer.WriteObjectValue(SharePoint, options);
             writer.WritePropertyName("teams"u8);
             writer.WriteObjectValue(Teams, options);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,157 +97,58 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        SecurityInsightsOfficeDataConnectorDataTypes IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsOfficeDataConnectorDataTypes IJsonModel<SecurityInsightsOfficeDataConnectorDataTypes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecurityInsightsOfficeDataConnectorDataTypes JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityInsightsOfficeDataConnectorDataTypes(document.RootElement, options);
         }
 
-        internal static SecurityInsightsOfficeDataConnectorDataTypes DeserializeSecurityInsightsOfficeDataConnectorDataTypes(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecurityInsightsOfficeDataConnectorDataTypes DeserializeSecurityInsightsOfficeDataConnectorDataTypes(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataConnectorDataTypeCommon exchange = default;
-            DataConnectorDataTypeCommon sharePoint = default;
-            DataConnectorDataTypeCommon teams = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            OfficeDataConnectorDataTypesExchange exchange = default;
+            OfficeDataConnectorDataTypesSharePoint sharePoint = default;
+            OfficeDataConnectorDataTypesTeams teams = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("exchange"u8))
+                if (prop.NameEquals("exchange"u8))
                 {
-                    exchange = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
+                    exchange = OfficeDataConnectorDataTypesExchange.DeserializeOfficeDataConnectorDataTypesExchange(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sharePoint"u8))
+                if (prop.NameEquals("sharePoint"u8))
                 {
-                    sharePoint = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
+                    sharePoint = OfficeDataConnectorDataTypesSharePoint.DeserializeOfficeDataConnectorDataTypesSharePoint(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("teams"u8))
+                if (prop.NameEquals("teams"u8))
                 {
-                    teams = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
+                    teams = OfficeDataConnectorDataTypesTeams.DeserializeOfficeDataConnectorDataTypesTeams(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SecurityInsightsOfficeDataConnectorDataTypes(exchange, sharePoint, teams, serializedAdditionalRawData);
+            return new SecurityInsightsOfficeDataConnectorDataTypes(exchange, sharePoint, teams, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ExchangeState", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  exchange: ");
-                builder.AppendLine("{");
-                builder.Append("    state: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Exchange))
-                {
-                    builder.Append("  exchange: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Exchange, options, 2, false, "  exchange: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SharePointState", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sharePoint: ");
-                builder.AppendLine("{");
-                builder.Append("    state: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(SharePoint))
-                {
-                    builder.Append("  sharePoint: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, SharePoint, options, 2, false, "  sharePoint: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("TeamsState", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  teams: ");
-                builder.AppendLine("{");
-                builder.Append("    state: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Teams))
-                {
-                    builder.Append("  teams: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Teams, options, 2, false, "  teams: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecurityInsightsOfficeDataConnectorDataTypes IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecurityInsightsOfficeDataConnectorDataTypes(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsOfficeDataConnectorDataTypes)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecurityInsightsOfficeDataConnectorDataTypes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

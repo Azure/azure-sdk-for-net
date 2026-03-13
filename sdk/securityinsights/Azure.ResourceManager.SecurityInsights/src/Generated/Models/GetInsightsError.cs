@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> the query kind. </summary>
-    internal readonly partial struct GetInsightsError : IEquatable<GetInsightsError>
+    public readonly partial struct GetInsightsError : IEquatable<GetInsightsError>
     {
         private readonly string _value;
+        /// <summary> Insight. </summary>
+        private const string InsightValue = "Insight";
 
         /// <summary> Initializes a new instance of <see cref="GetInsightsError"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GetInsightsError(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InsightValue = "Insight";
+            _value = value;
+        }
 
         /// <summary> Insight. </summary>
         public static GetInsightsError Insight { get; } = new GetInsightsError(InsightValue);
+
         /// <summary> Determines if two <see cref="GetInsightsError"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GetInsightsError left, GetInsightsError right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GetInsightsError"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GetInsightsError left, GetInsightsError right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GetInsightsError"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GetInsightsError"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GetInsightsError(string value) => new GetInsightsError(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GetInsightsError"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GetInsightsError?(string value) => value == null ? null : new GetInsightsError(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GetInsightsError other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GetInsightsError other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

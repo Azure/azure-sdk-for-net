@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsFileHashAlgorithm : IEquatable<SecurityInsightsFileHashAlgorithm>
     {
         private readonly string _value;
+        /// <summary> Unknown hash algorithm. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> MD5 hash type. </summary>
+        private const string MD5Value = "MD5";
+        /// <summary> SHA1 hash type. </summary>
+        private const string SHA1Value = "SHA1";
+        /// <summary> SHA256 hash type. </summary>
+        private const string SHA256Value = "SHA256";
+        /// <summary> SHA256 Authenticode hash type. </summary>
+        private const string SHA256ACValue = "SHA256AC";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileHashAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsFileHashAlgorithm(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string MD5Value = "MD5";
-        private const string Sha1Value = "SHA1";
-        private const string Sha256Value = "SHA256";
-        private const string Sha256ACValue = "SHA256AC";
+            _value = value;
+        }
 
         /// <summary> Unknown hash algorithm. </summary>
         public static SecurityInsightsFileHashAlgorithm Unknown { get; } = new SecurityInsightsFileHashAlgorithm(UnknownValue);
+
         /// <summary> MD5 hash type. </summary>
         public static SecurityInsightsFileHashAlgorithm MD5 { get; } = new SecurityInsightsFileHashAlgorithm(MD5Value);
+
         /// <summary> SHA1 hash type. </summary>
-        public static SecurityInsightsFileHashAlgorithm Sha1 { get; } = new SecurityInsightsFileHashAlgorithm(Sha1Value);
+        public static SecurityInsightsFileHashAlgorithm SHA1 { get; } = new SecurityInsightsFileHashAlgorithm(SHA1Value);
+
         /// <summary> SHA256 hash type. </summary>
-        public static SecurityInsightsFileHashAlgorithm Sha256 { get; } = new SecurityInsightsFileHashAlgorithm(Sha256Value);
+        public static SecurityInsightsFileHashAlgorithm SHA256 { get; } = new SecurityInsightsFileHashAlgorithm(SHA256Value);
+
         /// <summary> SHA256 Authenticode hash type. </summary>
-        public static SecurityInsightsFileHashAlgorithm Sha256AC { get; } = new SecurityInsightsFileHashAlgorithm(Sha256ACValue);
+        public static SecurityInsightsFileHashAlgorithm SHA256AC { get; } = new SecurityInsightsFileHashAlgorithm(SHA256ACValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileHashAlgorithm"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsFileHashAlgorithm left, SecurityInsightsFileHashAlgorithm right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileHashAlgorithm"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsFileHashAlgorithm left, SecurityInsightsFileHashAlgorithm right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsFileHashAlgorithm"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsFileHashAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsFileHashAlgorithm(string value) => new SecurityInsightsFileHashAlgorithm(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsFileHashAlgorithm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsFileHashAlgorithm?(string value) => value == null ? null : new SecurityInsightsFileHashAlgorithm(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsFileHashAlgorithm other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsFileHashAlgorithm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a Fusion scenario exclusion patterns in Fusion detection. </summary>
     public partial class FusionScenarioExclusionPattern
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FusionScenarioExclusionPattern"/>. </summary>
         /// <param name="exclusionPattern"> Scenario exclusion pattern. </param>
@@ -61,24 +33,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="FusionScenarioExclusionPattern"/>. </summary>
         /// <param name="exclusionPattern"> Scenario exclusion pattern. </param>
         /// <param name="dateAddedInUTC"> DateTime when scenario exclusion pattern is added in UTC. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FusionScenarioExclusionPattern(string exclusionPattern, string dateAddedInUTC, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FusionScenarioExclusionPattern(string exclusionPattern, string dateAddedInUTC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExclusionPattern = exclusionPattern;
             DateAddedInUTC = dateAddedInUTC;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FusionScenarioExclusionPattern"/> for deserialization. </summary>
-        internal FusionScenarioExclusionPattern()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Scenario exclusion pattern. </summary>
-        [WirePath("exclusionPattern")]
         public string ExclusionPattern { get; set; }
+
         /// <summary> DateTime when scenario exclusion pattern is added in UTC. </summary>
-        [WirePath("dateAddedInUTC")]
         public string DateAddedInUTC { get; set; }
     }
 }

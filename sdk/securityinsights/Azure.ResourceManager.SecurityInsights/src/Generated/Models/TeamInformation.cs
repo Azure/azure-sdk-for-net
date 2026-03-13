@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Describes team information. </summary>
     public partial class TeamInformation
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TeamInformation"/>. </summary>
         public TeamInformation()
@@ -56,31 +27,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="teamCreationTimeUtc"> The time the team was created. </param>
         /// <param name="name"> The name of the team. </param>
         /// <param name="description"> The description of the team. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TeamInformation(string teamId, Uri primaryChannelUri, DateTimeOffset? teamCreationTimeUtc, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TeamInformation(string teamId, string primaryChannelUri, DateTimeOffset? teamCreationTimeUtc, string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TeamId = teamId;
             PrimaryChannelUri = primaryChannelUri;
             TeamCreationTimeUtc = teamCreationTimeUtc;
             Name = name;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Team ID. </summary>
-        [WirePath("teamId")]
         public string TeamId { get; }
+
         /// <summary> The primary channel URL of the team. </summary>
-        [WirePath("primaryChannelUrl")]
-        public Uri PrimaryChannelUri { get; }
+        public string PrimaryChannelUri { get; }
+
         /// <summary> The time the team was created. </summary>
-        [WirePath("teamCreationTimeUtc")]
         public DateTimeOffset? TeamCreationTimeUtc { get; }
+
         /// <summary> The name of the team. </summary>
-        [WirePath("name")]
         public string Name { get; }
+
         /// <summary> The description of the team. </summary>
-        [WirePath("description")]
         public string Description { get; }
     }
 }

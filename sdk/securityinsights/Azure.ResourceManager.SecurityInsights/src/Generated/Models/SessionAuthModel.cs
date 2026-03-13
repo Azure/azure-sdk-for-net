@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -17,7 +19,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="userName"> The user name attribute key value. </param>
         /// <param name="password"> The password attribute name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public SessionAuthModel(IDictionary<string, string> userName, IDictionary<string, string> password)
+        public SessionAuthModel(IDictionary<string, string> userName, IDictionary<string, string> password) : base(CcpAuthType.Session)
         {
             Argument.AssertNotNull(userName, nameof(userName));
             Argument.AssertNotNull(password, nameof(password));
@@ -26,12 +28,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Password = password;
             QueryParameters = new ChangeTrackingDictionary<string, BinaryData>();
             Headers = new ChangeTrackingDictionary<string, string>();
-            AuthType = CcpAuthType.Session;
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The auth type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="userName"> The user name attribute key value. </param>
         /// <param name="password"> The password attribute name. </param>
         /// <param name="queryParameters"> Query parameters to session service endpoint. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="sessionTimeoutInMinutes"> Session timeout in minutes. </param>
         /// <param name="sessionIdName"> Session id attribute name from HTTP response header. </param>
         /// <param name="sessionLoginRequestUri"> HTTP request URL to session service endpoint. </param>
-        internal SessionAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, string> userName, IDictionary<string, string> password, IDictionary<string, BinaryData> queryParameters, bool? isPostPayloadJson, IDictionary<string, string> headers, int? sessionTimeoutInMinutes, string sessionIdName, Uri sessionLoginRequestUri) : base(authType, serializedAdditionalRawData)
+        internal SessionAuthModel(CcpAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> userName, IDictionary<string, string> password, IDictionary<string, BinaryData> queryParameters, bool? isPostPayloadJson, IDictionary<string, string> headers, int? sessionTimeoutInMinutes, string sessionIdName, string sessionLoginRequestUri) : base(@type, additionalBinaryDataProperties)
         {
             UserName = userName;
             Password = password;
@@ -50,66 +51,55 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             SessionTimeoutInMinutes = sessionTimeoutInMinutes;
             SessionIdName = sessionIdName;
             SessionLoginRequestUri = sessionLoginRequestUri;
-            AuthType = authType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SessionAuthModel"/> for deserialization. </summary>
-        internal SessionAuthModel()
-        {
         }
 
         /// <summary> The user name attribute key value. </summary>
-        [WirePath("userName")]
         public IDictionary<string, string> UserName { get; }
+
         /// <summary> The password attribute name. </summary>
-        [WirePath("password")]
         public IDictionary<string, string> Password { get; }
+
         /// <summary>
         /// Query parameters to session service endpoint.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("queryParameters")]
         public IDictionary<string, BinaryData> QueryParameters { get; }
+
         /// <summary> Indicating whether API key is set in HTTP POST payload. </summary>
-        [WirePath("isPostPayloadJson")]
         public bool? IsPostPayloadJson { get; set; }
+
         /// <summary> HTTP request headers to session service endpoint. </summary>
-        [WirePath("headers")]
         public IDictionary<string, string> Headers { get; }
+
         /// <summary> Session timeout in minutes. </summary>
-        [WirePath("sessionTimeoutInMinutes")]
         public int? SessionTimeoutInMinutes { get; set; }
+
         /// <summary> Session id attribute name from HTTP response header. </summary>
-        [WirePath("sessionIdName")]
         public string SessionIdName { get; set; }
+
         /// <summary> HTTP request URL to session service endpoint. </summary>
-        [WirePath("sessionLoginRequestUri")]
-        public Uri SessionLoginRequestUri { get; set; }
+        public string SessionLoginRequestUri { get; set; }
     }
 }

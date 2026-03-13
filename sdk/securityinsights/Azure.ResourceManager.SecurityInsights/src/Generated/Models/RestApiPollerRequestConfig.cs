@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The request configuration. </summary>
     public partial class RestApiPollerRequestConfig
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestApiPollerRequestConfig"/>. </summary>
         /// <param name="apiEndpoint"> The API endpoint. </param>
@@ -74,8 +47,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="queryTimeIntervalAttributeName"> The query parameter name which we need to send the server for query logs in time interval. Should be defined with `queryTimeIntervalPrepend` and `queryTimeIntervalDelimiter`. </param>
         /// <param name="queryTimeIntervalPrepend"> The string prepend to the value of the query parameter in `queryTimeIntervalAttributeName`. </param>
         /// <param name="queryTimeIntervalDelimiter"> The delimiter string between 2 QueryTimeFormat in the query parameter `queryTimeIntervalAttributeName`. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestApiPollerRequestConfig(string apiEndpoint, int? rateLimitQPS, int? queryWindowInMin, ConnectorHttpMethodVerb? httpMethod, string queryTimeFormat, int? retryCount, int? timeoutInSeconds, bool? isPostPayloadJson, IDictionary<string, string> headers, IDictionary<string, BinaryData> queryParameters, string queryParametersTemplate, string startTimeAttributeName, string endTimeAttributeName, string queryTimeIntervalAttributeName, string queryTimeIntervalPrepend, string queryTimeIntervalDelimiter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestApiPollerRequestConfig(string apiEndpoint, int? rateLimitQPS, int? queryWindowInMin, ConnectorHttpMethodVerb? httpMethod, string queryTimeFormat, int? retryCount, int? timeoutInSeconds, bool? isPostPayloadJson, IDictionary<string, string> headers, IDictionary<string, BinaryData> queryParameters, string queryParametersTemplate, string startTimeAttributeName, string endTimeAttributeName, string queryTimeIntervalAttributeName, string queryTimeIntervalPrepend, string queryTimeIntervalDelimiter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApiEndpoint = apiEndpoint;
             RateLimitQPS = rateLimitQPS;
@@ -93,90 +66,80 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             QueryTimeIntervalAttributeName = queryTimeIntervalAttributeName;
             QueryTimeIntervalPrepend = queryTimeIntervalPrepend;
             QueryTimeIntervalDelimiter = queryTimeIntervalDelimiter;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="RestApiPollerRequestConfig"/> for deserialization. </summary>
-        internal RestApiPollerRequestConfig()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The API endpoint. </summary>
-        [WirePath("apiEndpoint")]
         public string ApiEndpoint { get; set; }
+
         /// <summary> The Rate limit queries per second for the request.. </summary>
-        [WirePath("rateLimitQPS")]
         public int? RateLimitQPS { get; set; }
+
         /// <summary> The query window in minutes for the request. </summary>
-        [WirePath("queryWindowInMin")]
         public int? QueryWindowInMin { get; set; }
+
         /// <summary> The HTTP method, default value GET. </summary>
-        [WirePath("httpMethod")]
         public ConnectorHttpMethodVerb? HttpMethod { get; set; }
+
         /// <summary> The query time format. A remote server can have a query to pull data from range 'start' to 'end'. This property indicate what is the expected time format the remote server know to parse. </summary>
-        [WirePath("queryTimeFormat")]
         public string QueryTimeFormat { get; set; }
+
         /// <summary> The retry count. </summary>
-        [WirePath("retryCount")]
         public int? RetryCount { get; set; }
+
         /// <summary> The timeout in seconds. </summary>
-        [WirePath("timeoutInSeconds")]
         public int? TimeoutInSeconds { get; set; }
+
         /// <summary> Flag to indicate if HTTP POST payload is in JSON format (vs form-urlencoded). </summary>
-        [WirePath("isPostPayloadJson")]
         public bool? IsPostPayloadJson { get; set; }
+
         /// <summary> The header for the request for the remote server. </summary>
-        [WirePath("headers")]
         public IDictionary<string, string> Headers { get; }
+
         /// <summary>
         /// The HTTP query parameters to RESTful API.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("queryParameters")]
         public IDictionary<string, BinaryData> QueryParameters { get; }
+
         /// <summary> the query parameters template. Defines the query parameters template to use when passing query parameters in advanced scenarios. </summary>
-        [WirePath("queryParametersTemplate")]
         public string QueryParametersTemplate { get; set; }
+
         /// <summary> The query parameter name which the remote server expect to start query. This property goes hand to hand with `endTimeAttributeName`. </summary>
-        [WirePath("startTimeAttributeName")]
         public string StartTimeAttributeName { get; set; }
+
         /// <summary> The query parameter name which the remote server expect to end query. This property goes hand to hand with `startTimeAttributeName`. </summary>
-        [WirePath("endTimeAttributeName")]
         public string EndTimeAttributeName { get; set; }
+
         /// <summary> The query parameter name which we need to send the server for query logs in time interval. Should be defined with `queryTimeIntervalPrepend` and `queryTimeIntervalDelimiter`. </summary>
-        [WirePath("queryTimeIntervalAttributeName")]
         public string QueryTimeIntervalAttributeName { get; set; }
+
         /// <summary> The string prepend to the value of the query parameter in `queryTimeIntervalAttributeName`. </summary>
-        [WirePath("queryTimeIntervalPrepend")]
         public string QueryTimeIntervalPrepend { get; set; }
+
         /// <summary> The delimiter string between 2 QueryTimeFormat in the query parameter `queryTimeIntervalAttributeName`. </summary>
-        [WirePath("queryTimeIntervalDelimiter")]
         public string QueryTimeIntervalDelimiter { get; set; }
     }
 }

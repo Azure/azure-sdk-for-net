@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Google Cloud Platform auth section properties. </summary>
     public partial class GcpAuthProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GcpAuthProperties"/>. </summary>
         /// <param name="serviceAccountEmail"> The service account that is used to access the GCP project. </param>
@@ -65,28 +37,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="serviceAccountEmail"> The service account that is used to access the GCP project. </param>
         /// <param name="projectNumber"> The GCP project number. </param>
         /// <param name="workloadIdentityProviderId"> The workload identity provider id that is used to gain access to the GCP project. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GcpAuthProperties(string serviceAccountEmail, string projectNumber, string workloadIdentityProviderId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GcpAuthProperties(string serviceAccountEmail, string projectNumber, string workloadIdentityProviderId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceAccountEmail = serviceAccountEmail;
             ProjectNumber = projectNumber;
             WorkloadIdentityProviderId = workloadIdentityProviderId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GcpAuthProperties"/> for deserialization. </summary>
-        internal GcpAuthProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The service account that is used to access the GCP project. </summary>
-        [WirePath("serviceAccountEmail")]
         public string ServiceAccountEmail { get; set; }
+
         /// <summary> The GCP project number. </summary>
-        [WirePath("projectNumber")]
         public string ProjectNumber { get; set; }
+
         /// <summary> The workload identity provider id that is used to gain access to the GCP project. </summary>
-        [WirePath("workloadIdentityProviderId")]
         public string WorkloadIdentityProviderId { get; set; }
     }
 }

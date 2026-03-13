@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Query results for table insights query. </summary>
     public partial class InsightsTableResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InsightsTableResult"/>. </summary>
         internal InsightsTableResult()
@@ -55,19 +27,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="InsightsTableResult"/>. </summary>
         /// <param name="columns"> Columns Metadata of the table. </param>
         /// <param name="rows"> Rows data of the table. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InsightsTableResult(IReadOnlyList<InsightsTableResultColumnsItem> columns, IReadOnlyList<IList<string>> rows, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InsightsTableResult(IList<InsightsTableResultColumnsItem> columns, IList<IList<string>> rows, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Columns = columns;
             Rows = rows;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Columns Metadata of the table. </summary>
-        [WirePath("columns")]
-        public IReadOnlyList<InsightsTableResultColumnsItem> Columns { get; }
+        public IList<InsightsTableResultColumnsItem> Columns { get; }
+
         /// <summary> Rows data of the table. </summary>
-        [WirePath("rows")]
-        public IReadOnlyList<IList<string>> Rows { get; }
+        public IList<IList<string>> Rows { get; }
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The whois record for a given domain. </summary>
     public partial class EnrichmentDomainWhoisDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EnrichmentDomainWhoisDetails"/>. </summary>
         internal EnrichmentDomainWhoisDetails()
@@ -57,27 +29,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="contacts"> The set of contacts associated with this domain. </param>
         /// <param name="nameServers"> A list of name servers associated with this domain. </param>
         /// <param name="statuses"> The set of status flags for this whois record. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EnrichmentDomainWhoisDetails(EnrichmentDomainWhoisRegistrarDetails registrar, EnrichmentDomainWhoisContacts contacts, IReadOnlyList<string> nameServers, IReadOnlyList<string> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EnrichmentDomainWhoisDetails(EnrichmentDomainWhoisRegistrarDetails registrar, EnrichmentDomainWhoisContacts contacts, IList<string> nameServers, IList<string> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Registrar = registrar;
             Contacts = contacts;
             NameServers = nameServers;
             Statuses = statuses;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The registrar associated with this domain. </summary>
-        [WirePath("registrar")]
         public EnrichmentDomainWhoisRegistrarDetails Registrar { get; }
+
         /// <summary> The set of contacts associated with this domain. </summary>
-        [WirePath("contacts")]
         public EnrichmentDomainWhoisContacts Contacts { get; }
+
         /// <summary> A list of name servers associated with this domain. </summary>
-        [WirePath("nameServers")]
-        public IReadOnlyList<string> NameServers { get; }
+        public IList<string> NameServers { get; }
+
         /// <summary> The set of status flags for this whois record. </summary>
-        [WirePath("statuses")]
-        public IReadOnlyList<string> Statuses { get; }
+        public IList<string> Statuses { get; }
     }
 }

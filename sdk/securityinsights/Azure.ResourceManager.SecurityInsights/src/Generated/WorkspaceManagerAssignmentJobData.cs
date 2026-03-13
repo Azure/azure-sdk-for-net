@@ -13,90 +13,81 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the WorkspaceManagerAssignmentJob data model.
-    /// The assignment job
-    /// </summary>
+    /// <summary> The assignment job. </summary>
     public partial class WorkspaceManagerAssignmentJobData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentJobData"/>. </summary>
-        public WorkspaceManagerAssignmentJobData()
+        internal WorkspaceManagerAssignmentJobData()
         {
-            Items = new ChangeTrackingList<JobItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkspaceManagerAssignmentJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="endOn"> The time the job completed. </param>
-        /// <param name="items"> List of items published by the job. </param>
-        /// <param name="provisioningState"> State of the job. </param>
-        /// <param name="startOn"> The time the job started. </param>
-        /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkspaceManagerAssignmentJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? endOn, IList<JobItem> items, TriggeredAnalyticsRuleRunProvisioningState? provisioningState, DateTimeOffset? startOn, string errorMessage, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The job object. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        internal WorkspaceManagerAssignmentJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, JobProperties properties, string eTag) : base(id, name, resourceType, systemData)
         {
-            EndOn = endOn;
-            Items = items;
-            ProvisioningState = provisioningState;
-            StartOn = startOn;
-            ErrorMessage = errorMessage;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> The job object. </summary>
+        internal JobProperties Properties { get; }
+
+        /// <summary> Etag of the azure resource. </summary>
+        public string ETag { get; }
 
         /// <summary> The time the job completed. </summary>
-        [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties.EndOn;
+            }
+        }
+
         /// <summary> List of items published by the job. </summary>
-        [WirePath("properties.items")]
-        public IList<JobItem> Items { get; }
+        public IList<JobItem> Items
+        {
+            get
+            {
+                return Properties.Items;
+            }
+        }
+
         /// <summary> State of the job. </summary>
-        [WirePath("properties.provisioningState")]
-        public TriggeredAnalyticsRuleRunProvisioningState? ProvisioningState { get; }
+        public TriggeredAnalyticsRuleRunProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The time the job started. </summary>
-        [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties.StartOn;
+            }
+        }
+
         /// <summary> Message to describe error, if an error exists. </summary>
-        [WirePath("properties.errorMessage")]
-        public string ErrorMessage { get; }
-        /// <summary> Etag of the azure resource. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public string ErrorMessage
+        {
+            get
+            {
+                return Properties.ErrorMessage;
+            }
+        }
     }
 }

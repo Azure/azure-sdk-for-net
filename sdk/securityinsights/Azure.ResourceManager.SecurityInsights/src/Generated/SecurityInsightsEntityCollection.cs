@@ -8,86 +8,101 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.SecurityInsights.Models;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsEntityResource"/> and their operations.
-    /// Each <see cref="SecurityInsightsEntityResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="SecurityInsightsEntityCollection"/> instance call the GetSecurityInsightsEntities method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// Each <see cref="SecurityInsightsEntityResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SecurityInsightsEntityCollection"/> instance call the GetSecurityInsightsEntities method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SecurityInsightsEntityCollection : ArmCollection, IEnumerable<SecurityInsightsEntityResource>, IAsyncEnumerable<SecurityInsightsEntityResource>
     {
-        private readonly ClientDiagnostics _securityInsightsEntityEntitiesClientDiagnostics;
-        private readonly EntitiesRestOperations _securityInsightsEntityEntitiesRestClient;
+        private readonly ClientDiagnostics _entitiesClientDiagnostics;
+        private readonly Entities _entitiesRestClient;
+        private readonly ClientDiagnostics _entitiesGetTimelineClientDiagnostics;
+        private readonly EntitiesGetTimeline _entitiesGetTimelineRestClient;
+        /// <summary> The workspaceName. </summary>
+        private readonly string _workspaceName;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsEntityCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsEntityCollection for mocking. </summary>
         protected SecurityInsightsEntityCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsEntityCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsEntityCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SecurityInsightsEntityCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        internal SecurityInsightsEntityCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
-            _securityInsightsEntityEntitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsEntityResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsEntityResource.ResourceType, out string securityInsightsEntityEntitiesApiVersion);
-            _securityInsightsEntityEntitiesRestClient = new EntitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsEntityEntitiesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityInsightsEntityResource.ResourceType, out string securityInsightsEntityApiVersion);
+            _workspaceName = workspaceName;
+            _entitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsEntityResource.ResourceType.Namespace, Diagnostics);
+            _entitiesRestClient = new Entities(_entitiesClientDiagnostics, Pipeline, Endpoint, securityInsightsEntityApiVersion ?? "2025-07-01-preview");
+            _entitiesGetTimelineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsEntityResource.ResourceType.Namespace, Diagnostics);
+            _entitiesGetTimelineRestClient = new EntitiesGetTimeline(_entitiesGetTimelineClientDiagnostics, Pipeline, Endpoint, securityInsightsEntityApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets an entity.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityId"> entity ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityInsightsEntityResource>> GetAsync(string entityId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityId, nameof(entityId));
 
-            using var scope = _securityInsightsEntityEntitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.Get");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsEntityEntitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsEntityData> response = Response.FromValue(SecurityInsightsEntityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -101,38 +116,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets an entity.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityId"> entity ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityInsightsEntityResource> Get(string entityId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityId, nameof(entityId));
 
-            using var scope = _securityInsightsEntityEntitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.Get");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsEntityEntitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsEntityData> response = Response.FromValue(SecurityInsightsEntityData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -146,50 +165,44 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets all entities.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entities_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsEntityResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsEntityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsEntityEntitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsEntityEntitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsEntityResource(Client, SecurityInsightsEntity.DeserializeSecurityInsightsEntity(e)), _securityInsightsEntityEntitiesClientDiagnostics, Pipeline, "SecurityInsightsEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityInsightsEntityData, SecurityInsightsEntityResource>(new EntitiesGetAllAsyncCollectionResultOfT(_entitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, context), data => new SecurityInsightsEntityResource(Client, data));
         }
 
         /// <summary>
         /// Gets all entities.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entities_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,45 +210,61 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="SecurityInsightsEntityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsEntityResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsEntityEntitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsEntityEntitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsEntityResource(Client, SecurityInsightsEntity.DeserializeSecurityInsightsEntity(e)), _securityInsightsEntityEntitiesClientDiagnostics, Pipeline, "SecurityInsightsEntityCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityInsightsEntityData, SecurityInsightsEntityResource>(new EntitiesGetAllCollectionResultOfT(_entitiesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, context), data => new SecurityInsightsEntityResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityId"> entity ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string entityId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityId, nameof(entityId));
 
-            using var scope = _securityInsightsEntityEntitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.Exists");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsEntityEntitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -249,36 +278,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityId"> entity ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string entityId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityId, nameof(entityId));
 
-            using var scope = _securityInsightsEntityEntitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.Exists");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityInsightsEntityEntitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -292,38 +335,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityId"> entity ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsEntityResource>> GetIfExistsAsync(string entityId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityId, nameof(entityId));
 
-            using var scope = _securityInsightsEntityEntitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.GetIfExists");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsEntityEntitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsEntityResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -337,38 +396,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Entities_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Entities_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsEntityResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="entityId"> entity ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="entityId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="entityId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityInsightsEntityResource> GetIfExists(string entityId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entityId, nameof(entityId));
 
-            using var scope = _securityInsightsEntityEntitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.GetIfExists");
+            using DiagnosticScope scope = _entitiesClientDiagnostics.CreateScope("SecurityInsightsEntityCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityInsightsEntityEntitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, entityId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _entitiesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, entityId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsEntityData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsEntityData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsEntityData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsEntityResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsEntityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -388,6 +463,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityInsightsEntityResource> IAsyncEnumerable<SecurityInsightsEntityResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

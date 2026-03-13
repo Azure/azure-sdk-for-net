@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     internal static partial class SecurityInsightsAlertRuleTriggerOperatorExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this SecurityInsightsAlertRuleTriggerOperator value) => value switch
         {
             SecurityInsightsAlertRuleTriggerOperator.GreaterThan => "GreaterThan",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsAlertRuleTriggerOperator value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static SecurityInsightsAlertRuleTriggerOperator ToSecurityInsightsAlertRuleTriggerOperator(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThan")) return SecurityInsightsAlertRuleTriggerOperator.GreaterThan;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThan")) return SecurityInsightsAlertRuleTriggerOperator.LessThan;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Equal")) return SecurityInsightsAlertRuleTriggerOperator.Equal;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotEqual")) return SecurityInsightsAlertRuleTriggerOperator.NotEqual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GreaterThan"))
+            {
+                return SecurityInsightsAlertRuleTriggerOperator.GreaterThan;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LessThan"))
+            {
+                return SecurityInsightsAlertRuleTriggerOperator.LessThan;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Equal"))
+            {
+                return SecurityInsightsAlertRuleTriggerOperator.Equal;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotEqual"))
+            {
+                return SecurityInsightsAlertRuleTriggerOperator.NotEqual;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsAlertRuleTriggerOperator value.");
         }
     }

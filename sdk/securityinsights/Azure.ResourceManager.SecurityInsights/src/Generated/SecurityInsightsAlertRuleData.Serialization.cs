@@ -7,18 +7,81 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsAlertRuleData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAlertRuleData>
+    /// <summary> Alert rule. </summary>
+    public partial class SecurityInsightsAlertRuleData : ResourceData, IJsonModel<SecurityInsightsAlertRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAlertRuleData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleData"/> for deserialization. </summary>
+        internal SecurityInsightsAlertRuleData()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecurityInsightsAlertRuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlertRuleData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlertRuleData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecurityInsightsAlertRuleData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsAlertRuleData IPersistableModel<SecurityInsightsAlertRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityInsightsAlertRuleData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsAlertRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="securityInsightsAlertRuleData"> The <see cref="SecurityInsightsAlertRuleData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SecurityInsightsAlertRuleData securityInsightsAlertRuleData)
+        {
+            if (securityInsightsAlertRuleData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(securityInsightsAlertRuleData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SecurityInsightsAlertRuleData"/> from. </param>
+        internal static SecurityInsightsAlertRuleData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSecurityInsightsAlertRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsAlertRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,183 +93,65 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsAlertRuleData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag);
             }
         }
 
-        SecurityInsightsAlertRuleData IJsonModel<SecurityInsightsAlertRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsAlertRuleData IJsonModel<SecurityInsightsAlertRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityInsightsAlertRuleData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsAlertRuleData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityInsightsAlertRuleData(document.RootElement, options);
         }
 
-        internal static SecurityInsightsAlertRuleData DeserializeSecurityInsightsAlertRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecurityInsightsAlertRuleData DeserializeSecurityInsightsAlertRuleData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Fusion": return SecurityInsightsFusionAlertRule.DeserializeSecurityInsightsFusionAlertRule(element, options);
-                    case "MicrosoftSecurityIncidentCreation": return MicrosoftSecurityIncidentCreationAlertRule.DeserializeMicrosoftSecurityIncidentCreationAlertRule(element, options);
-                    case "MLBehaviorAnalytics": return MLBehaviorAnalyticsAlertRule.DeserializeMLBehaviorAnalyticsAlertRule(element, options);
-                    case "NRT": return NrtAlertRule.DeserializeNrtAlertRule(element, options);
-                    case "Scheduled": return SecurityInsightsScheduledAlertRule.DeserializeSecurityInsightsScheduledAlertRule(element, options);
-                    case "ThreatIntelligence": return ThreatIntelligenceAlertRule.DeserializeThreatIntelligenceAlertRule(element, options);
+                    case "MLBehaviorAnalytics":
+                        return MLBehaviorAnalyticsAlertRule.DeserializeMLBehaviorAnalyticsAlertRule(element, options);
+                    case "Fusion":
+                        return SecurityInsightsFusionAlertRule.DeserializeSecurityInsightsFusionAlertRule(element, options);
+                    case "ThreatIntelligence":
+                        return ThreatIntelligenceAlertRule.DeserializeThreatIntelligenceAlertRule(element, options);
+                    case "MicrosoftSecurityIncidentCreation":
+                        return MicrosoftSecurityIncidentCreationAlertRule.DeserializeMicrosoftSecurityIncidentCreationAlertRule(element, options);
+                    case "Scheduled":
+                        return SecurityInsightsScheduledAlertRule.DeserializeSecurityInsightsScheduledAlertRule(element, options);
+                    case "NRT":
+                        return NrtAlertRule.DeserializeNrtAlertRule(element, options);
                 }
             }
-            return UnknownAlertRule.DeserializeUnknownAlertRule(element, options);
+            return UnknownSecurityInsightsAlertRule.DeserializeUnknownSecurityInsightsAlertRule(element, options);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine($"'{Kind.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SecurityInsightsAlertRuleData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlertRuleData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecurityInsightsAlertRuleData IPersistableModel<SecurityInsightsAlertRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertRuleData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecurityInsightsAlertRuleData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlertRuleData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecurityInsightsAlertRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

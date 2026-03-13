@@ -8,16 +8,64 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class EnrichmentDomainWhois : IUtf8JsonSerializable, IJsonModel<EnrichmentDomainWhois>
+    /// <summary> Whois information for a given domain and associated metadata. </summary>
+    public partial class EnrichmentDomainWhois : IJsonModel<EnrichmentDomainWhois>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EnrichmentDomainWhois>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EnrichmentDomainWhois PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainWhois>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEnrichmentDomainWhois(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EnrichmentDomainWhois)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainWhois>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EnrichmentDomainWhois)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EnrichmentDomainWhois>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnrichmentDomainWhois IPersistableModel<EnrichmentDomainWhois>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EnrichmentDomainWhois>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EnrichmentDomainWhois"/> from. </param>
+        internal static EnrichmentDomainWhois FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeEnrichmentDomainWhois(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EnrichmentDomainWhois>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +77,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainWhois>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainWhois>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnrichmentDomainWhois)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
@@ -50,30 +97,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(Created.Value, "O");
             }
-            if (Optional.IsDefined(UpdatedOn))
+            if (Optional.IsDefined(Updated))
             {
                 writer.WritePropertyName("updated"u8);
-                writer.WriteStringValue(UpdatedOn.Value, "O");
+                writer.WriteStringValue(Updated.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(Expires))
             {
                 writer.WritePropertyName("expires"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(Expires.Value, "O");
             }
             if (Optional.IsDefined(ParsedWhois))
             {
                 writer.WritePropertyName("parsedWhois"u8);
                 writer.WriteObjectValue(ParsedWhois, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,22 +129,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        EnrichmentDomainWhois IJsonModel<EnrichmentDomainWhois>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EnrichmentDomainWhois IJsonModel<EnrichmentDomainWhois>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EnrichmentDomainWhois JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainWhois>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainWhois>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EnrichmentDomainWhois)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEnrichmentDomainWhois(document.RootElement, options);
         }
 
-        internal static EnrichmentDomainWhois DeserializeEnrichmentDomainWhois(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EnrichmentDomainWhois DeserializeEnrichmentDomainWhois(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,62 +160,60 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             DateTimeOffset? updated = default;
             DateTimeOffset? expires = default;
             EnrichmentDomainWhoisDetails parsedWhois = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("domain"u8))
+                if (prop.NameEquals("domain"u8))
                 {
-                    domain = property.Value.GetString();
+                    domain = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("server"u8))
+                if (prop.NameEquals("server"u8))
                 {
-                    server = property.Value.GetString();
+                    server = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("created"u8))
+                if (prop.NameEquals("created"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    created = property.Value.GetDateTimeOffset("O");
+                    created = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("updated"u8))
+                if (prop.NameEquals("updated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    updated = property.Value.GetDateTimeOffset("O");
+                    updated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("expires"u8))
+                if (prop.NameEquals("expires"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expires = property.Value.GetDateTimeOffset("O");
+                    expires = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("parsedWhois"u8))
+                if (prop.NameEquals("parsedWhois"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    parsedWhois = EnrichmentDomainWhoisDetails.DeserializeEnrichmentDomainWhoisDetails(property.Value, options);
+                    parsedWhois = EnrichmentDomainWhoisDetails.DeserializeEnrichmentDomainWhoisDetails(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new EnrichmentDomainWhois(
                 domain,
                 server,
@@ -171,164 +221,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 updated,
                 expires,
                 parsedWhois,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Domain), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  domain: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Domain))
-                {
-                    builder.Append("  domain: ");
-                    if (Domain.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Domain}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Domain}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Server), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  server: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Server))
-                {
-                    builder.Append("  server: ");
-                    if (Server.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Server}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Server}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Created), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  created: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Created))
-                {
-                    builder.Append("  created: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(Created.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  updated: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UpdatedOn))
-                {
-                    builder.Append("  updated: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(UpdatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  expires: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExpireOn))
-                {
-                    builder.Append("  expires: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParsedWhois), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  parsedWhois: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ParsedWhois))
-                {
-                    builder.Append("  parsedWhois: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ParsedWhois, options, 2, false, "  parsedWhois: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EnrichmentDomainWhois>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainWhois>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EnrichmentDomainWhois)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EnrichmentDomainWhois IPersistableModel<EnrichmentDomainWhois>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EnrichmentDomainWhois>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEnrichmentDomainWhois(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EnrichmentDomainWhois)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EnrichmentDomainWhois>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

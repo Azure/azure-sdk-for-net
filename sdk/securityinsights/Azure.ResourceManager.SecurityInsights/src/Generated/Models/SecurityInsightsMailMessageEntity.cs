@@ -7,201 +7,277 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a mail message entity. </summary>
-    public partial class SecurityInsightsMailMessageEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsMailMessageEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailMessageEntity"/>. </summary>
-        public SecurityInsightsMailMessageEntity()
+        internal SecurityInsightsMailMessageEntity() : base(SecurityInsightsEntityKind.MailMessage)
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            FileEntityIds = new ChangeTrackingList<string>();
-            Uris = new ChangeTrackingList<Uri>();
-            Threats = new ChangeTrackingList<string>();
-            ThreatDetectionMethods = new ChangeTrackingList<string>();
-            Kind = SecurityInsightsEntityKind.MailMessage;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailMessageEntity"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="fileEntityIds"> The File entity ids of this mail message's attachments. </param>
-        /// <param name="recipient"> The recipient of this mail message. Note that in case of multiple recipients the mail message is forked and each copy has one recipient. </param>
-        /// <param name="uris"> The Urls contained in this mail message. </param>
-        /// <param name="threats"> The threats of this mail message. </param>
-        /// <param name="p1Sender"> The p1 sender's email address. </param>
-        /// <param name="p1SenderDisplayName"> The p1 sender's display name. </param>
-        /// <param name="p1SenderDomain"> The p1 sender's domain. </param>
-        /// <param name="senderIP"> The sender's IP address. </param>
-        /// <param name="p2Sender"> The p2 sender's email address. </param>
-        /// <param name="p2SenderDisplayName"> The p2 sender's display name. </param>
-        /// <param name="p2SenderDomain"> The p2 sender's domain. </param>
-        /// <param name="receiveOn"> The receive date of this message. </param>
-        /// <param name="networkMessageId"> The network message id of this mail message. </param>
-        /// <param name="internetMessageId"> The internet message id of this mail message. </param>
-        /// <param name="subject"> The subject of this mail message. </param>
-        /// <param name="language"> The language of this mail message. </param>
-        /// <param name="threatDetectionMethods"> The threat detection methods. </param>
-        /// <param name="bodyFingerprintBin1"> The bodyFingerprintBin1. </param>
-        /// <param name="bodyFingerprintBin2"> The bodyFingerprintBin2. </param>
-        /// <param name="bodyFingerprintBin3"> The bodyFingerprintBin3. </param>
-        /// <param name="bodyFingerprintBin4"> The bodyFingerprintBin4. </param>
-        /// <param name="bodyFingerprintBin5"> The bodyFingerprintBin5. </param>
-        /// <param name="antispamDirection"> The directionality of this mail message. </param>
-        /// <param name="deliveryAction"> The delivery action of this mail message like Delivered, Blocked, Replaced etc. </param>
-        /// <param name="deliveryLocation"> The delivery location of this mail message like Inbox, JunkFolder etc. </param>
-        internal SecurityInsightsMailMessageEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> fileEntityIds, string recipient, IReadOnlyList<Uri> uris, IReadOnlyList<string> threats, string p1Sender, string p1SenderDisplayName, string p1SenderDomain, IPAddress senderIP, string p2Sender, string p2SenderDisplayName, string p2SenderDomain, DateTimeOffset? receiveOn, Guid? networkMessageId, string internetMessageId, string subject, string language, IReadOnlyList<string> threatDetectionMethods, int? bodyFingerprintBin1, int? bodyFingerprintBin2, int? bodyFingerprintBin3, int? bodyFingerprintBin4, int? bodyFingerprintBin5, AntispamMailDirection? antispamDirection, SecurityInsightsMailMessageDeliveryAction? deliveryAction, SecurityInsightsMailMessageDeliveryLocation? deliveryLocation) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="properties"> Mail message entity properties. </param>
+        internal SecurityInsightsMailMessageEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityInsightsEntityKind kind, MailMessageEntityProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            AdditionalData = additionalData;
-            FriendlyName = friendlyName;
-            FileEntityIds = fileEntityIds;
-            Recipient = recipient;
-            Uris = uris;
-            Threats = threats;
-            P1Sender = p1Sender;
-            P1SenderDisplayName = p1SenderDisplayName;
-            P1SenderDomain = p1SenderDomain;
-            SenderIP = senderIP;
-            P2Sender = p2Sender;
-            P2SenderDisplayName = p2SenderDisplayName;
-            P2SenderDomain = p2SenderDomain;
-            ReceiveOn = receiveOn;
-            NetworkMessageId = networkMessageId;
-            InternetMessageId = internetMessageId;
-            Subject = subject;
-            Language = language;
-            ThreatDetectionMethods = threatDetectionMethods;
-            BodyFingerprintBin1 = bodyFingerprintBin1;
-            BodyFingerprintBin2 = bodyFingerprintBin2;
-            BodyFingerprintBin3 = bodyFingerprintBin3;
-            BodyFingerprintBin4 = bodyFingerprintBin4;
-            BodyFingerprintBin5 = bodyFingerprintBin5;
-            AntispamDirection = antispamDirection;
-            DeliveryAction = deliveryAction;
-            DeliveryLocation = deliveryLocation;
-            Kind = kind;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.additionalData")]
-        public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
+        /// <summary> Mail message entity properties. </summary>
+        internal MailMessageEntityProperties Properties { get; }
+
+        /// <summary> A bag of custom fields that should be part of the entity and will be presented to the user. </summary>
+        public IReadOnlyDictionary<string, BinaryData> AdditionalData
+        {
+            get
+            {
+                return Properties.AdditionalData;
+            }
+        }
+
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
-        [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties.FriendlyName;
+            }
+        }
+
         /// <summary> The File entity ids of this mail message's attachments. </summary>
-        [WirePath("properties.fileEntityIds")]
-        public IReadOnlyList<string> FileEntityIds { get; }
+        public IReadOnlyList<string> FileEntityIds
+        {
+            get
+            {
+                return Properties.FileEntityIds;
+            }
+        }
+
         /// <summary> The recipient of this mail message. Note that in case of multiple recipients the mail message is forked and each copy has one recipient. </summary>
-        [WirePath("properties.recipient")]
-        public string Recipient { get; }
+        public string Recipient
+        {
+            get
+            {
+                return Properties.Recipient;
+            }
+        }
+
         /// <summary> The Urls contained in this mail message. </summary>
-        [WirePath("properties.urls")]
-        public IReadOnlyList<Uri> Uris { get; }
+        public IReadOnlyList<string> Urls
+        {
+            get
+            {
+                return Properties.Urls;
+            }
+        }
+
         /// <summary> The threats of this mail message. </summary>
-        [WirePath("properties.threats")]
-        public IReadOnlyList<string> Threats { get; }
+        public IReadOnlyList<string> Threats
+        {
+            get
+            {
+                return Properties.Threats;
+            }
+        }
+
         /// <summary> The p1 sender's email address. </summary>
-        [WirePath("properties.p1Sender")]
-        public string P1Sender { get; }
+        public string P1Sender
+        {
+            get
+            {
+                return Properties.P1Sender;
+            }
+        }
+
         /// <summary> The p1 sender's display name. </summary>
-        [WirePath("properties.p1SenderDisplayName")]
-        public string P1SenderDisplayName { get; }
+        public string P1SenderDisplayName
+        {
+            get
+            {
+                return Properties.P1SenderDisplayName;
+            }
+        }
+
         /// <summary> The p1 sender's domain. </summary>
-        [WirePath("properties.p1SenderDomain")]
-        public string P1SenderDomain { get; }
+        public string P1SenderDomain
+        {
+            get
+            {
+                return Properties.P1SenderDomain;
+            }
+        }
+
         /// <summary> The sender's IP address. </summary>
-        [WirePath("properties.senderIP")]
-        public IPAddress SenderIP { get; }
+        public string SenderIP
+        {
+            get
+            {
+                return Properties.SenderIP;
+            }
+        }
+
         /// <summary> The p2 sender's email address. </summary>
-        [WirePath("properties.p2Sender")]
-        public string P2Sender { get; }
+        public string P2Sender
+        {
+            get
+            {
+                return Properties.P2Sender;
+            }
+        }
+
         /// <summary> The p2 sender's display name. </summary>
-        [WirePath("properties.p2SenderDisplayName")]
-        public string P2SenderDisplayName { get; }
+        public string P2SenderDisplayName
+        {
+            get
+            {
+                return Properties.P2SenderDisplayName;
+            }
+        }
+
         /// <summary> The p2 sender's domain. </summary>
-        [WirePath("properties.p2SenderDomain")]
-        public string P2SenderDomain { get; }
+        public string P2SenderDomain
+        {
+            get
+            {
+                return Properties.P2SenderDomain;
+            }
+        }
+
         /// <summary> The receive date of this message. </summary>
-        [WirePath("properties.receiveDate")]
-        public DateTimeOffset? ReceiveOn { get; }
+        public DateTimeOffset? ReceiveOn
+        {
+            get
+            {
+                return Properties.ReceiveOn;
+            }
+        }
+
         /// <summary> The network message id of this mail message. </summary>
-        [WirePath("properties.networkMessageId")]
-        public Guid? NetworkMessageId { get; }
+        public Guid? NetworkMessageId
+        {
+            get
+            {
+                return Properties.NetworkMessageId;
+            }
+        }
+
         /// <summary> The internet message id of this mail message. </summary>
-        [WirePath("properties.internetMessageId")]
-        public string InternetMessageId { get; }
+        public string InternetMessageId
+        {
+            get
+            {
+                return Properties.InternetMessageId;
+            }
+        }
+
         /// <summary> The subject of this mail message. </summary>
-        [WirePath("properties.subject")]
-        public string Subject { get; }
+        public string Subject
+        {
+            get
+            {
+                return Properties.Subject;
+            }
+        }
+
         /// <summary> The language of this mail message. </summary>
-        [WirePath("properties.language")]
-        public string Language { get; }
+        public string Language
+        {
+            get
+            {
+                return Properties.Language;
+            }
+        }
+
         /// <summary> The threat detection methods. </summary>
-        [WirePath("properties.threatDetectionMethods")]
-        public IReadOnlyList<string> ThreatDetectionMethods { get; }
+        public IReadOnlyList<string> ThreatDetectionMethods
+        {
+            get
+            {
+                return Properties.ThreatDetectionMethods;
+            }
+        }
+
         /// <summary> The bodyFingerprintBin1. </summary>
-        [WirePath("properties.bodyFingerprintBin1")]
-        public int? BodyFingerprintBin1 { get; set; }
+        public int? BodyFingerprintBin1
+        {
+            get
+            {
+                return Properties.BodyFingerprintBin1;
+            }
+        }
+
         /// <summary> The bodyFingerprintBin2. </summary>
-        [WirePath("properties.bodyFingerprintBin2")]
-        public int? BodyFingerprintBin2 { get; set; }
+        public int? BodyFingerprintBin2
+        {
+            get
+            {
+                return Properties.BodyFingerprintBin2;
+            }
+        }
+
         /// <summary> The bodyFingerprintBin3. </summary>
-        [WirePath("properties.bodyFingerprintBin3")]
-        public int? BodyFingerprintBin3 { get; set; }
+        public int? BodyFingerprintBin3
+        {
+            get
+            {
+                return Properties.BodyFingerprintBin3;
+            }
+        }
+
         /// <summary> The bodyFingerprintBin4. </summary>
-        [WirePath("properties.bodyFingerprintBin4")]
-        public int? BodyFingerprintBin4 { get; set; }
+        public int? BodyFingerprintBin4
+        {
+            get
+            {
+                return Properties.BodyFingerprintBin4;
+            }
+        }
+
         /// <summary> The bodyFingerprintBin5. </summary>
-        [WirePath("properties.bodyFingerprintBin5")]
-        public int? BodyFingerprintBin5 { get; set; }
+        public int? BodyFingerprintBin5
+        {
+            get
+            {
+                return Properties.BodyFingerprintBin5;
+            }
+        }
+
         /// <summary> The directionality of this mail message. </summary>
-        [WirePath("properties.antispamDirection")]
-        public AntispamMailDirection? AntispamDirection { get; set; }
+        public AntispamMailDirection? AntispamDirection
+        {
+            get
+            {
+                return Properties.AntispamDirection;
+            }
+        }
+
         /// <summary> The delivery action of this mail message like Delivered, Blocked, Replaced etc. </summary>
-        [WirePath("properties.deliveryAction")]
-        public SecurityInsightsMailMessageDeliveryAction? DeliveryAction { get; set; }
+        public SecurityInsightsMailMessageDeliveryAction? DeliveryAction
+        {
+            get
+            {
+                return Properties.DeliveryAction;
+            }
+        }
+
         /// <summary> The delivery location of this mail message like Inbox, JunkFolder etc. </summary>
-        [WirePath("properties.deliveryLocation")]
-        public SecurityInsightsMailMessageDeliveryLocation? DeliveryLocation { get; set; }
+        public SecurityInsightsMailMessageDeliveryLocation? DeliveryLocation
+        {
+            get
+            {
+                return Properties.DeliveryLocation;
+            }
+        }
     }
 }

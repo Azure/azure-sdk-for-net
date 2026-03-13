@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class CustomizableConnectorUiConfig : IUtf8JsonSerializable, IJsonModel<CustomizableConnectorUiConfig>
+    /// <summary> The UiConfig for 'Customizable' connector definition kind. </summary>
+    public partial class CustomizableConnectorUiConfig : IJsonModel<CustomizableConnectorUiConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomizableConnectorUiConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CustomizableConnectorUiConfig"/> for deserialization. </summary>
+        internal CustomizableConnectorUiConfig()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CustomizableConnectorUiConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorUiConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCustomizableConnectorUiConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomizableConnectorUiConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorUiConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CustomizableConnectorUiConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CustomizableConnectorUiConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomizableConnectorUiConfig IPersistableModel<CustomizableConnectorUiConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CustomizableConnectorUiConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CustomizableConnectorUiConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +74,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorUiConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorUiConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomizableConnectorUiConfig)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -49,21 +92,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStringValue(DescriptionMarkdown);
             writer.WritePropertyName("graphQueries"u8);
             writer.WriteStartArray();
-            foreach (var item in GraphQueries)
+            foreach (ConnectorGraphQuery item in GraphQueries)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("dataTypes"u8);
             writer.WriteStartArray();
-            foreach (var item in DataTypes)
+            foreach (ConnectorDataType item in DataTypes)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("connectivityCriteria"u8);
             writer.WriteStartArray();
-            foreach (var item in ConnectivityCriteria)
+            foreach (ConnectorConnectivityCriterion item in ConnectivityCriteria)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -77,7 +120,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteObjectValue(Permissions, options);
             writer.WritePropertyName("instructionSteps"u8);
             writer.WriteStartArray();
-            foreach (var item in InstructionSteps)
+            foreach (InstructionStep item in InstructionSteps)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -92,15 +135,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("isConnectivityCriteriasMatchSome"u8);
                 writer.WriteBooleanValue(IsConnectivityCriteriasMatchSome.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -109,22 +152,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        CustomizableConnectorUiConfig IJsonModel<CustomizableConnectorUiConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CustomizableConnectorUiConfig IJsonModel<CustomizableConnectorUiConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CustomizableConnectorUiConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorUiConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorUiConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CustomizableConnectorUiConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCustomizableConnectorUiConfig(document.RootElement, options);
         }
 
-        internal static CustomizableConnectorUiConfig DeserializeCustomizableConnectorUiConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CustomizableConnectorUiConfig DeserializeCustomizableConnectorUiConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -141,104 +189,102 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IList<InstructionStep> instructionSteps = default;
             string logo = default;
             bool? isConnectivityCriteriasMatchSome = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("title"u8))
+                if (prop.NameEquals("title"u8))
                 {
-                    title = property.Value.GetString();
+                    title = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("publisher"u8))
+                if (prop.NameEquals("publisher"u8))
                 {
-                    publisher = property.Value.GetString();
+                    publisher = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("descriptionMarkdown"u8))
+                if (prop.NameEquals("descriptionMarkdown"u8))
                 {
-                    descriptionMarkdown = property.Value.GetString();
+                    descriptionMarkdown = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("graphQueries"u8))
+                if (prop.NameEquals("graphQueries"u8))
                 {
                     List<ConnectorGraphQuery> array = new List<ConnectorGraphQuery>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ConnectorGraphQuery.DeserializeConnectorGraphQuery(item, options));
                     }
                     graphQueries = array;
                     continue;
                 }
-                if (property.NameEquals("dataTypes"u8))
+                if (prop.NameEquals("dataTypes"u8))
                 {
                     List<ConnectorDataType> array = new List<ConnectorDataType>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ConnectorDataType.DeserializeConnectorDataType(item, options));
                     }
                     dataTypes = array;
                     continue;
                 }
-                if (property.NameEquals("connectivityCriteria"u8))
+                if (prop.NameEquals("connectivityCriteria"u8))
                 {
                     List<ConnectorConnectivityCriterion> array = new List<ConnectorConnectivityCriterion>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ConnectorConnectivityCriterion.DeserializeConnectorConnectivityCriterion(item, options));
                     }
                     connectivityCriteria = array;
                     continue;
                 }
-                if (property.NameEquals("availability"u8))
+                if (prop.NameEquals("availability"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    availability = ConnectorDefinitionsAvailability.DeserializeConnectorDefinitionsAvailability(property.Value, options);
+                    availability = ConnectorDefinitionsAvailability.DeserializeConnectorDefinitionsAvailability(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("permissions"u8))
+                if (prop.NameEquals("permissions"u8))
                 {
-                    permissions = ConnectorDefinitionsPermissions.DeserializeConnectorDefinitionsPermissions(property.Value, options);
+                    permissions = ConnectorDefinitionsPermissions.DeserializeConnectorDefinitionsPermissions(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("instructionSteps"u8))
+                if (prop.NameEquals("instructionSteps"u8))
                 {
                     List<InstructionStep> array = new List<InstructionStep>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InstructionStep.DeserializeInstructionStep(item, options));
                     }
                     instructionSteps = array;
                     continue;
                 }
-                if (property.NameEquals("logo"u8))
+                if (prop.NameEquals("logo"u8))
                 {
-                    logo = property.Value.GetString();
+                    logo = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isConnectivityCriteriasMatchSome"u8))
+                if (prop.NameEquals("isConnectivityCriteriasMatchSome"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isConnectivityCriteriasMatchSome = property.Value.GetBoolean();
+                    isConnectivityCriteriasMatchSome = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CustomizableConnectorUiConfig(
                 id,
                 title,
@@ -252,308 +298,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 instructionSteps,
                 logo,
                 isConnectivityCriteriasMatchSome,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Title), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  title: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Title))
-                {
-                    builder.Append("  title: ");
-                    if (Title.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Title}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Title}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Publisher), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  publisher: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Publisher))
-                {
-                    builder.Append("  publisher: ");
-                    if (Publisher.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Publisher}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Publisher}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DescriptionMarkdown), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  descriptionMarkdown: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DescriptionMarkdown))
-                {
-                    builder.Append("  descriptionMarkdown: ");
-                    if (DescriptionMarkdown.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DescriptionMarkdown}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DescriptionMarkdown}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GraphQueries), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  graphQueries: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(GraphQueries))
-                {
-                    if (GraphQueries.Any())
-                    {
-                        builder.Append("  graphQueries: ");
-                        builder.AppendLine("[");
-                        foreach (var item in GraphQueries)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  graphQueries: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataTypes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dataTypes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DataTypes))
-                {
-                    if (DataTypes.Any())
-                    {
-                        builder.Append("  dataTypes: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DataTypes)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dataTypes: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectivityCriteria), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  connectivityCriteria: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ConnectivityCriteria))
-                {
-                    if (ConnectivityCriteria.Any())
-                    {
-                        builder.Append("  connectivityCriteria: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ConnectivityCriteria)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  connectivityCriteria: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Availability), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  availability: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Availability))
-                {
-                    builder.Append("  availability: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Availability, options, 2, false, "  availability: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  permissions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Permissions))
-                {
-                    builder.Append("  permissions: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Permissions, options, 2, false, "  permissions: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstructionSteps), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  instructionSteps: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(InstructionSteps))
-                {
-                    if (InstructionSteps.Any())
-                    {
-                        builder.Append("  instructionSteps: ");
-                        builder.AppendLine("[");
-                        foreach (var item in InstructionSteps)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  instructionSteps: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Logo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  logo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Logo))
-                {
-                    builder.Append("  logo: ");
-                    if (Logo.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Logo}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Logo}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsConnectivityCriteriasMatchSome), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isConnectivityCriteriasMatchSome: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsConnectivityCriteriasMatchSome))
-                {
-                    builder.Append("  isConnectivityCriteriasMatchSome: ");
-                    var boolValue = IsConnectivityCriteriasMatchSome.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CustomizableConnectorUiConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorUiConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CustomizableConnectorUiConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CustomizableConnectorUiConfig IPersistableModel<CustomizableConnectorUiConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CustomizableConnectorUiConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCustomizableConnectorUiConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CustomizableConnectorUiConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CustomizableConnectorUiConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

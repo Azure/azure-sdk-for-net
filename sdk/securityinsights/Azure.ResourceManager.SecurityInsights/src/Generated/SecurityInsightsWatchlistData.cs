@@ -13,170 +13,381 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the SecurityInsightsWatchlist data model.
-    /// Represents a Watchlist in Azure Security Insights.
-    /// </summary>
+    /// <summary> Represents a Watchlist in Azure Security Insights. </summary>
     public partial class SecurityInsightsWatchlistData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsWatchlistData"/>. </summary>
         public SecurityInsightsWatchlistData()
         {
-            Labels = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsWatchlistData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="watchlistId"> The id (a Guid) of the watchlist. </param>
-        /// <param name="displayName"> The display name of the watchlist. </param>
-        /// <param name="provider"> The provider of the watchlist. </param>
-        /// <param name="sourceString"> The filename of the watchlist, called 'source'. </param>
-        /// <param name="sourceType"> The sourceType of the watchlist. </param>
-        /// <param name="createdOn"> The time the watchlist was created. </param>
-        /// <param name="updatedOn"> The last time the watchlist was updated. </param>
-        /// <param name="createdBy"> Describes a user that created the watchlist. </param>
-        /// <param name="updatedBy"> Describes a user that updated the watchlist. </param>
-        /// <param name="description"> A description of the watchlist. </param>
-        /// <param name="watchlistType"> The type of the watchlist. </param>
-        /// <param name="watchlistAlias"> The alias of the watchlist. </param>
-        /// <param name="isDeleted"> A flag that indicates if the watchlist is deleted or not. </param>
-        /// <param name="labels"> List of labels relevant to this watchlist. </param>
-        /// <param name="defaultDuration"> The default duration of a watchlist (in ISO 8601 duration format). </param>
-        /// <param name="tenantId"> The tenantId where the watchlist belongs to. </param>
-        /// <param name="numberOfLinesToSkip"> The number of lines in a csv/tsv content to skip before the header. </param>
-        /// <param name="rawContent"> The raw content that represents to watchlist items to create. In case of csv/tsv content type, it's the content of the file that will parsed by the endpoint. </param>
-        /// <param name="itemsSearchKey"> The search key is used to optimize query performance when using watchlists for joins with other data. For example, enable a column with IP addresses to be the designated SearchKey field, then use this field as the key field when joining to other event data by IP address. </param>
-        /// <param name="contentType"> The content type of the raw content. Example : text/csv or text/tsv. </param>
-        /// <param name="uploadStatus"> The status of the Watchlist upload : New, InProgress or Complete. Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsWatchlistData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? watchlistId, string displayName, string provider, string sourceString, WatchlistSourceType? sourceType, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, SecurityInsightsUserInfo createdBy, SecurityInsightsUserInfo updatedBy, string description, string watchlistType, string watchlistAlias, bool? isDeleted, IList<string> labels, TimeSpan? defaultDuration, Guid? tenantId, int? numberOfLinesToSkip, string rawContent, string itemsSearchKey, string contentType, string uploadStatus, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Watchlist properties. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        internal SecurityInsightsWatchlistData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WatchlistProperties properties, string eTag) : base(id, name, resourceType, systemData)
         {
-            WatchlistId = watchlistId;
-            DisplayName = displayName;
-            Provider = provider;
-            SourceString = sourceString;
-            SourceType = sourceType;
-            CreatedOn = createdOn;
-            UpdatedOn = updatedOn;
-            CreatedBy = createdBy;
-            UpdatedBy = updatedBy;
-            Description = description;
-            WatchlistType = watchlistType;
-            WatchlistAlias = watchlistAlias;
-            IsDeleted = isDeleted;
-            Labels = labels;
-            DefaultDuration = defaultDuration;
-            TenantId = tenantId;
-            NumberOfLinesToSkip = numberOfLinesToSkip;
-            RawContent = rawContent;
-            ItemsSearchKey = itemsSearchKey;
-            ContentType = contentType;
-            UploadStatus = uploadStatus;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> The id (a Guid) of the watchlist. </summary>
-        [WirePath("properties.watchlistId")]
-        public Guid? WatchlistId { get; set; }
-        /// <summary> The display name of the watchlist. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
-        /// <summary> The provider of the watchlist. </summary>
-        [WirePath("properties.provider")]
-        public string Provider { get; set; }
-        /// <summary> The filename of the watchlist, called 'source'. </summary>
-        [WirePath("properties.source")]
-        public string SourceString { get; set; }
-        /// <summary> The sourceType of the watchlist. </summary>
-        [WirePath("properties.sourceType")]
-        public WatchlistSourceType? SourceType { get; set; }
-        /// <summary> The time the watchlist was created. </summary>
-        [WirePath("properties.created")]
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> The last time the watchlist was updated. </summary>
-        [WirePath("properties.updated")]
-        public DateTimeOffset? UpdatedOn { get; set; }
-        /// <summary> Describes a user that created the watchlist. </summary>
-        [WirePath("properties.createdBy")]
-        public SecurityInsightsUserInfo CreatedBy { get; set; }
-        /// <summary> Describes a user that updated the watchlist. </summary>
-        [WirePath("properties.updatedBy")]
-        public SecurityInsightsUserInfo UpdatedBy { get; set; }
-        /// <summary> A description of the watchlist. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
-        /// <summary> The type of the watchlist. </summary>
-        [WirePath("properties.watchlistType")]
-        public string WatchlistType { get; set; }
-        /// <summary> The alias of the watchlist. </summary>
-        [WirePath("properties.watchlistAlias")]
-        public string WatchlistAlias { get; set; }
-        /// <summary> A flag that indicates if the watchlist is deleted or not. </summary>
-        [WirePath("properties.isDeleted")]
-        public bool? IsDeleted { get; set; }
-        /// <summary> List of labels relevant to this watchlist. </summary>
-        [WirePath("properties.labels")]
-        public IList<string> Labels { get; }
-        /// <summary> The default duration of a watchlist (in ISO 8601 duration format). </summary>
-        [WirePath("properties.defaultDuration")]
-        public TimeSpan? DefaultDuration { get; set; }
-        /// <summary> The tenantId where the watchlist belongs to. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
-        /// <summary> The number of lines in a csv/tsv content to skip before the header. </summary>
-        [WirePath("properties.numberOfLinesToSkip")]
-        public int? NumberOfLinesToSkip { get; set; }
-        /// <summary> The raw content that represents to watchlist items to create. In case of csv/tsv content type, it's the content of the file that will parsed by the endpoint. </summary>
-        [WirePath("properties.rawContent")]
-        public string RawContent { get; set; }
-        /// <summary> The search key is used to optimize query performance when using watchlists for joins with other data. For example, enable a column with IP addresses to be the designated SearchKey field, then use this field as the key field when joining to other event data by IP address. </summary>
-        [WirePath("properties.itemsSearchKey")]
-        public string ItemsSearchKey { get; set; }
-        /// <summary> The content type of the raw content. Example : text/csv or text/tsv. </summary>
-        [WirePath("properties.contentType")]
-        public string ContentType { get; set; }
-        /// <summary> The status of the Watchlist upload : New, InProgress or Complete. Pls note : When a Watchlist upload status is equal to InProgress, the Watchlist cannot be deleted. </summary>
-        [WirePath("properties.uploadStatus")]
-        public string UploadStatus { get; set; }
+        /// <summary> Watchlist properties. </summary>
+        internal WatchlistProperties Properties { get; set; }
+
         /// <summary> Etag of the azure resource. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public string ETag { get; set; }
+
+        /// <summary> The id (a Guid) of the watchlist. </summary>
+        public string WatchlistId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WatchlistId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.WatchlistId = value;
+            }
+        }
+
+        /// <summary> The display name of the watchlist. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> The provider of the watchlist. </summary>
+        public string Provider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Provider;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.Provider = value;
+            }
+        }
+
+        /// <summary> The sourceType of the watchlist. </summary>
+        public WatchlistSourceType? SourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.SourceType = value.Value;
+            }
+        }
+
+        /// <summary> The time the watchlist was created. </summary>
+        public DateTimeOffset? Created
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Created;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.Created = value.Value;
+            }
+        }
+
+        /// <summary> The last time the watchlist was updated. </summary>
+        public DateTimeOffset? Updated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Updated;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.Updated = value.Value;
+            }
+        }
+
+        /// <summary> Describes a user that created the watchlist. </summary>
+        public SecurityInsightsUserInfo CreatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.CreatedBy = value;
+            }
+        }
+
+        /// <summary> Describes a user that updated the watchlist. </summary>
+        public SecurityInsightsUserInfo UpdatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.UpdatedBy = value;
+            }
+        }
+
+        /// <summary> A description of the watchlist. </summary>
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> The type of the watchlist. </summary>
+        public string WatchlistType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WatchlistType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.WatchlistType = value;
+            }
+        }
+
+        /// <summary> The alias of the watchlist. </summary>
+        public string WatchlistAlias
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WatchlistAlias;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.WatchlistAlias = value;
+            }
+        }
+
+        /// <summary> A flag that indicates if the watchlist is deleted or not. </summary>
+        public bool? IsDeleted
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDeleted;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.IsDeleted = value.Value;
+            }
+        }
+
+        /// <summary> List of labels relevant to this watchlist. </summary>
+        public IList<string> Labels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                return Properties.Labels;
+            }
+        }
+
+        /// <summary> The default duration of a watchlist (in ISO 8601 duration format). </summary>
+        public TimeSpan? DefaultDuration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultDuration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.DefaultDuration = value.Value;
+            }
+        }
+
+        /// <summary> The tenantId where the watchlist belongs to. </summary>
+        public string TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
+
+        /// <summary> The number of lines in a csv/tsv content to skip before the header. </summary>
+        public int? NumberOfLinesToSkip
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberOfLinesToSkip;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.NumberOfLinesToSkip = value.Value;
+            }
+        }
+
+        /// <summary> The raw content that represents to watchlist items to create. In case of csv/tsv content type, it's the content of the file that will parsed by the endpoint. </summary>
+        public string RawContent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RawContent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.RawContent = value;
+            }
+        }
+
+        /// <summary> The search key is used to optimize query performance when using watchlists for joins with other data. For example, enable a column with IP addresses to be the designated SearchKey field, then use this field as the key field when joining to other event data by IP address. </summary>
+        public string ItemsSearchKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ItemsSearchKey;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.ItemsSearchKey = value;
+            }
+        }
+
+        /// <summary> The content type of the raw content. Example : text/csv or text/tsv. </summary>
+        public string ContentType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContentType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.ContentType = value;
+            }
+        }
+
+        /// <summary> The status of the Watchlist upload : New, InProgress or Complete. <b>Note</b> : When a Watchlist upload status is InProgress, the Watchlist cannot be deleted. </summary>
+        public string UploadStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UploadStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WatchlistProperties();
+                }
+                Properties.UploadStatus = value;
+            }
+        }
+
+        /// <summary> Describes provisioning state. </summary>
+        public TriggeredAnalyticsRuleRunProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

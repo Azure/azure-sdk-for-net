@@ -8,85 +8,97 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="SecurityInsightsAlertRuleTemplateResource"/> and their operations.
-    /// Each <see cref="SecurityInsightsAlertRuleTemplateResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="SecurityInsightsAlertRuleTemplateCollection"/> instance call the GetSecurityInsightsAlertRuleTemplates method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// Each <see cref="SecurityInsightsAlertRuleTemplateResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SecurityInsightsAlertRuleTemplateCollection"/> instance call the GetSecurityInsightsAlertRuleTemplates method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SecurityInsightsAlertRuleTemplateCollection : ArmCollection, IEnumerable<SecurityInsightsAlertRuleTemplateResource>, IAsyncEnumerable<SecurityInsightsAlertRuleTemplateResource>
     {
-        private readonly ClientDiagnostics _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics;
-        private readonly AlertRuleTemplatesRestOperations _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient;
+        private readonly ClientDiagnostics _alertRuleTemplatesClientDiagnostics;
+        private readonly AlertRuleTemplates _alertRuleTemplatesRestClient;
+        /// <summary> The workspaceName. </summary>
+        private readonly string _workspaceName;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAlertRuleTemplateCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsAlertRuleTemplateCollection for mocking. </summary>
         protected SecurityInsightsAlertRuleTemplateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsAlertRuleTemplateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleTemplateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SecurityInsightsAlertRuleTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        internal SecurityInsightsAlertRuleTemplateCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
-            _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsAlertRuleTemplateResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityInsightsAlertRuleTemplateResource.ResourceType, out string securityInsightsAlertRuleTemplateAlertRuleTemplatesApiVersion);
-            _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient = new AlertRuleTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsAlertRuleTemplateAlertRuleTemplatesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(SecurityInsightsAlertRuleTemplateResource.ResourceType, out string securityInsightsAlertRuleTemplateApiVersion);
+            _workspaceName = workspaceName;
+            _alertRuleTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", SecurityInsightsAlertRuleTemplateResource.ResourceType.Namespace, Diagnostics);
+            _alertRuleTemplatesRestClient = new AlertRuleTemplates(_alertRuleTemplatesClientDiagnostics, Pipeline, Endpoint, securityInsightsAlertRuleTemplateApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets the alert rule template.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SecurityInsightsAlertRuleTemplateResource>> GetAsync(string alertRuleTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertRuleTemplateId, nameof(alertRuleTemplateId));
 
-            using var scope = _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.Get");
+            using DiagnosticScope scope = _alertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alertRuleTemplateId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, alertRuleTemplateId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsAlertRuleTemplateData> response = Response.FromValue(SecurityInsightsAlertRuleTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsAlertRuleTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +112,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets the alert rule template.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SecurityInsightsAlertRuleTemplateResource> Get(string alertRuleTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertRuleTemplateId, nameof(alertRuleTemplateId));
 
-            using var scope = _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.Get");
+            using DiagnosticScope scope = _alertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alertRuleTemplateId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, alertRuleTemplateId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsAlertRuleTemplateData> response = Response.FromValue(SecurityInsightsAlertRuleTemplateData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsAlertRuleTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +161,44 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets all alert rule templates.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleTemplates_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleTemplates_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsAlertRuleTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsAlertRuleTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsAlertRuleTemplateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleTemplateResource(Client, SecurityInsightsAlertRuleTemplateData.DeserializeSecurityInsightsAlertRuleTemplateData(e)), _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SecurityInsightsAlertRuleTemplateData, SecurityInsightsAlertRuleTemplateResource>(new AlertRuleTemplatesGetAllAsyncCollectionResultOfT(_alertRuleTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, context), data => new SecurityInsightsAlertRuleTemplateResource(Client, data));
         }
 
         /// <summary>
         /// Gets all alert rule templates.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleTemplates_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleTemplates_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +206,61 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> A collection of <see cref="SecurityInsightsAlertRuleTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsAlertRuleTemplateResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsAlertRuleTemplateResource(Client, SecurityInsightsAlertRuleTemplateData.DeserializeSecurityInsightsAlertRuleTemplateData(e)), _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics, Pipeline, "SecurityInsightsAlertRuleTemplateCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SecurityInsightsAlertRuleTemplateData, SecurityInsightsAlertRuleTemplateResource>(new AlertRuleTemplatesGetAllCollectionResultOfT(_alertRuleTemplatesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, context), data => new SecurityInsightsAlertRuleTemplateResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string alertRuleTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertRuleTemplateId, nameof(alertRuleTemplateId));
 
-            using var scope = _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.Exists");
+            using DiagnosticScope scope = _alertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alertRuleTemplateId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, alertRuleTemplateId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsAlertRuleTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsAlertRuleTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsAlertRuleTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +274,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string alertRuleTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertRuleTemplateId, nameof(alertRuleTemplateId));
 
-            using var scope = _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.Exists");
+            using DiagnosticScope scope = _alertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alertRuleTemplateId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, alertRuleTemplateId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsAlertRuleTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsAlertRuleTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsAlertRuleTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +331,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsAlertRuleTemplateResource>> GetIfExistsAsync(string alertRuleTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertRuleTemplateId, nameof(alertRuleTemplateId));
 
-            using var scope = _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _alertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alertRuleTemplateId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, alertRuleTemplateId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SecurityInsightsAlertRuleTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsAlertRuleTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsAlertRuleTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsAlertRuleTemplateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsAlertRuleTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +392,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/alertRuleTemplates/{alertRuleTemplateId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AlertRuleTemplates_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> AlertRuleTemplates_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsAlertRuleTemplateResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="alertRuleTemplateId"> Alert rule template ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertRuleTemplateId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertRuleTemplateId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SecurityInsightsAlertRuleTemplateResource> GetIfExists(string alertRuleTemplateId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertRuleTemplateId, nameof(alertRuleTemplateId));
 
-            using var scope = _securityInsightsAlertRuleTemplateAlertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _alertRuleTemplatesClientDiagnostics.CreateScope("SecurityInsightsAlertRuleTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityInsightsAlertRuleTemplateAlertRuleTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, alertRuleTemplateId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _alertRuleTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, alertRuleTemplateId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SecurityInsightsAlertRuleTemplateData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SecurityInsightsAlertRuleTemplateData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SecurityInsightsAlertRuleTemplateData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SecurityInsightsAlertRuleTemplateResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsAlertRuleTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +459,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SecurityInsightsAlertRuleTemplateResource> IAsyncEnumerable<SecurityInsightsAlertRuleTemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

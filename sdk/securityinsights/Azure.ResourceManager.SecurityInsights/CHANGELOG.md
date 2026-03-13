@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Migrated from Swagger/AutoRest to TypeSpec-based generation using the Azure Management Generator
+- Updated to API version `2025-07-01-preview`
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct RepositoryAccessKind : IEquatable<RepositoryAccessKind>
     {
         private readonly string _value;
+        /// <summary> OAuth. </summary>
+        private const string OAuthValue = "OAuth";
+        /// <summary> PAT. </summary>
+        private const string PATValue = "PAT";
+        /// <summary> App. </summary>
+        private const string AppValue = "App";
 
         /// <summary> Initializes a new instance of <see cref="RepositoryAccessKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RepositoryAccessKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OAuthValue = "OAuth";
-        private const string PATValue = "PAT";
-        private const string AppValue = "App";
+            _value = value;
+        }
 
         /// <summary> OAuth. </summary>
         public static RepositoryAccessKind OAuth { get; } = new RepositoryAccessKind(OAuthValue);
+
         /// <summary> PAT. </summary>
         public static RepositoryAccessKind PAT { get; } = new RepositoryAccessKind(PATValue);
+
         /// <summary> App. </summary>
         public static RepositoryAccessKind App { get; } = new RepositoryAccessKind(AppValue);
+
         /// <summary> Determines if two <see cref="RepositoryAccessKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RepositoryAccessKind left, RepositoryAccessKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RepositoryAccessKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RepositoryAccessKind left, RepositoryAccessKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RepositoryAccessKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RepositoryAccessKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RepositoryAccessKind(string value) => new RepositoryAccessKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RepositoryAccessKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RepositoryAccessKind?(string value) => value == null ? null : new RepositoryAccessKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RepositoryAccessKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RepositoryAccessKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

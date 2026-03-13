@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class CcpResponseConfig : IUtf8JsonSerializable, IJsonModel<CcpResponseConfig>
+    /// <summary> A custom response configuration for a rule. </summary>
+    public partial class CcpResponseConfig : IJsonModel<CcpResponseConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CcpResponseConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="CcpResponseConfig"/> for deserialization. </summary>
+        internal CcpResponseConfig()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CcpResponseConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CcpResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCcpResponseConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CcpResponseConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CcpResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CcpResponseConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CcpResponseConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CcpResponseConfig IPersistableModel<CcpResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CcpResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CcpResponseConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,16 +74,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CcpResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CcpResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CcpResponseConfig)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("eventsJsonPaths"u8);
             writer.WriteStartArray();
-            foreach (var item in EventsJsonPaths)
+            foreach (string item in EventsJsonPaths)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -50,15 +98,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(SuccessStatusValue))
             {
-                if (SuccessStatusValue != null)
-                {
-                    writer.WritePropertyName("successStatusValue"u8);
-                    writer.WriteStringValue(SuccessStatusValue);
-                }
-                else
-                {
-                    writer.WriteNull("successStatusValue");
-                }
+                writer.WritePropertyName("successStatusValue"u8);
+                writer.WriteStringValue(SuccessStatusValue);
             }
             if (Optional.IsDefined(IsGzipCompressed))
             {
@@ -82,61 +123,33 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             if (Optional.IsDefined(HasCsvBoundary))
             {
-                if (HasCsvBoundary != null)
-                {
-                    writer.WritePropertyName("hasCsvBoundary"u8);
-                    writer.WriteBooleanValue(HasCsvBoundary.Value);
-                }
-                else
-                {
-                    writer.WriteNull("hasCsvBoundary");
-                }
+                writer.WritePropertyName("hasCsvBoundary"u8);
+                writer.WriteBooleanValue(HasCsvBoundary.Value);
             }
             if (Optional.IsDefined(HasCsvHeader))
             {
-                if (HasCsvHeader != null)
-                {
-                    writer.WritePropertyName("hasCsvHeader"u8);
-                    writer.WriteBooleanValue(HasCsvHeader.Value);
-                }
-                else
-                {
-                    writer.WriteNull("hasCsvHeader");
-                }
+                writer.WritePropertyName("hasCsvHeader"u8);
+                writer.WriteBooleanValue(HasCsvHeader.Value);
             }
-            if (Optional.IsDefined(IsConvertChildPropertiesToArray))
+            if (Optional.IsDefined(ConvertChildPropertiesToArray))
             {
-                if (IsConvertChildPropertiesToArray != null)
-                {
-                    writer.WritePropertyName("convertChildPropertiesToArray"u8);
-                    writer.WriteBooleanValue(IsConvertChildPropertiesToArray.Value);
-                }
-                else
-                {
-                    writer.WriteNull("convertChildPropertiesToArray");
-                }
+                writer.WritePropertyName("convertChildPropertiesToArray"u8);
+                writer.WriteBooleanValue(ConvertChildPropertiesToArray.Value);
             }
             if (Optional.IsDefined(CsvEscape))
             {
-                if (CsvEscape != null)
-                {
-                    writer.WritePropertyName("csvEscape"u8);
-                    writer.WriteStringValue(CsvEscape);
-                }
-                else
-                {
-                    writer.WriteNull("csvEscape");
-                }
+                writer.WritePropertyName("csvEscape"u8);
+                writer.WriteStringValue(CsvEscape);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -145,22 +158,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        CcpResponseConfig IJsonModel<CcpResponseConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CcpResponseConfig IJsonModel<CcpResponseConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CcpResponseConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CcpResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CcpResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CcpResponseConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCcpResponseConfig(document.RootElement, options);
         }
 
-        internal static CcpResponseConfig DeserializeCcpResponseConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CcpResponseConfig DeserializeCcpResponseConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -176,105 +194,110 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             bool? hasCsvHeader = default;
             bool? convertChildPropertiesToArray = default;
             string csvEscape = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("eventsJsonPaths"u8))
+                if (prop.NameEquals("eventsJsonPaths"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     eventsJsonPaths = array;
                     continue;
                 }
-                if (property.NameEquals("successStatusJsonPath"u8))
+                if (prop.NameEquals("successStatusJsonPath"u8))
                 {
-                    successStatusJsonPath = property.Value.GetString();
+                    successStatusJsonPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("successStatusValue"u8))
+                if (prop.NameEquals("successStatusValue"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         successStatusValue = null;
                         continue;
                     }
-                    successStatusValue = property.Value.GetString();
+                    successStatusValue = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isGzipCompressed"u8))
+                if (prop.NameEquals("isGzipCompressed"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isGzipCompressed = property.Value.GetBoolean();
+                    isGzipCompressed = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("compressionAlgo"u8))
+                if (prop.NameEquals("compressionAlgo"u8))
                 {
-                    compressionAlgo = property.Value.GetString();
+                    compressionAlgo = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("format"u8))
+                if (prop.NameEquals("format"u8))
                 {
-                    format = property.Value.GetString();
+                    format = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("csvDelimiter"u8))
+                if (prop.NameEquals("csvDelimiter"u8))
                 {
-                    csvDelimiter = property.Value.GetString();
+                    csvDelimiter = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("hasCsvBoundary"u8))
+                if (prop.NameEquals("hasCsvBoundary"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         hasCsvBoundary = null;
                         continue;
                     }
-                    hasCsvBoundary = property.Value.GetBoolean();
+                    hasCsvBoundary = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("hasCsvHeader"u8))
+                if (prop.NameEquals("hasCsvHeader"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         hasCsvHeader = null;
                         continue;
                     }
-                    hasCsvHeader = property.Value.GetBoolean();
+                    hasCsvHeader = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("convertChildPropertiesToArray"u8))
+                if (prop.NameEquals("convertChildPropertiesToArray"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         convertChildPropertiesToArray = null;
                         continue;
                     }
-                    convertChildPropertiesToArray = property.Value.GetBoolean();
+                    convertChildPropertiesToArray = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("csvEscape"u8))
+                if (prop.NameEquals("csvEscape"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         csvEscape = null;
                         continue;
                     }
-                    csvEscape = property.Value.GetString();
+                    csvEscape = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CcpResponseConfig(
                 eventsJsonPaths,
                 successStatusJsonPath,
@@ -287,293 +310,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 hasCsvHeader,
                 convertChildPropertiesToArray,
                 csvEscape,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventsJsonPaths), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  eventsJsonPaths: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(EventsJsonPaths))
-                {
-                    if (EventsJsonPaths.Any())
-                    {
-                        builder.Append("  eventsJsonPaths: ");
-                        builder.AppendLine("[");
-                        foreach (var item in EventsJsonPaths)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessStatusJsonPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  successStatusJsonPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SuccessStatusJsonPath))
-                {
-                    builder.Append("  successStatusJsonPath: ");
-                    if (SuccessStatusJsonPath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SuccessStatusJsonPath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SuccessStatusJsonPath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuccessStatusValue), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  successStatusValue: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SuccessStatusValue))
-                {
-                    builder.Append("  successStatusValue: ");
-                    if (SuccessStatusValue.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SuccessStatusValue}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SuccessStatusValue}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGzipCompressed), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isGzipCompressed: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsGzipCompressed))
-                {
-                    builder.Append("  isGzipCompressed: ");
-                    var boolValue = IsGzipCompressed.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CompressionAlgo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  compressionAlgo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CompressionAlgo))
-                {
-                    builder.Append("  compressionAlgo: ");
-                    if (CompressionAlgo.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CompressionAlgo}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CompressionAlgo}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Format), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  format: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Format))
-                {
-                    builder.Append("  format: ");
-                    if (Format.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Format}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Format}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CsvDelimiter), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  csvDelimiter: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CsvDelimiter))
-                {
-                    builder.Append("  csvDelimiter: ");
-                    if (CsvDelimiter.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CsvDelimiter}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CsvDelimiter}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasCsvBoundary), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hasCsvBoundary: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HasCsvBoundary))
-                {
-                    builder.Append("  hasCsvBoundary: ");
-                    var boolValue = HasCsvBoundary.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasCsvHeader), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  hasCsvHeader: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HasCsvHeader))
-                {
-                    builder.Append("  hasCsvHeader: ");
-                    var boolValue = HasCsvHeader.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsConvertChildPropertiesToArray), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  convertChildPropertiesToArray: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsConvertChildPropertiesToArray))
-                {
-                    builder.Append("  convertChildPropertiesToArray: ");
-                    var boolValue = IsConvertChildPropertiesToArray.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CsvEscape), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  csvEscape: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CsvEscape))
-                {
-                    builder.Append("  csvEscape: ");
-                    if (CsvEscape.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CsvEscape}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CsvEscape}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<CcpResponseConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CcpResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(CcpResponseConfig)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CcpResponseConfig IPersistableModel<CcpResponseConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CcpResponseConfig>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCcpResponseConfig(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CcpResponseConfig)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CcpResponseConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,242 +17,483 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsThreatIntelligenceIndicatorData : SecurityInsightsThreatIntelligenceIndicatorBaseData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>. </summary>
-        public SecurityInsightsThreatIntelligenceIndicatorData()
+        public SecurityInsightsThreatIntelligenceIndicatorData() : base(ThreatIntelligenceResourceInnerKind.Indicator)
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            ThreatIntelligenceTags = new ChangeTrackingList<string>();
-            IndicatorTypes = new ChangeTrackingList<string>();
-            KillChainPhases = new ChangeTrackingList<ThreatIntelligenceKillChainPhase>();
-            ParsedPattern = new ChangeTrackingList<ThreatIntelligenceParsedPattern>();
-            ExternalReferences = new ChangeTrackingList<ThreatIntelligenceExternalReference>();
-            GranularMarkings = new ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity>();
-            Labels = new ChangeTrackingList<string>();
-            ObjectMarkingRefs = new ChangeTrackingList<string>();
-            ThreatTypes = new ChangeTrackingList<string>();
-            Extensions = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = ThreatIntelligenceResourceInnerKind.Indicator;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligenceIndicatorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="threatIntelligenceTags"> List of tags. </param>
-        /// <param name="lastUpdatedOn"> Last updated time in UTC. </param>
-        /// <param name="source"> Source of a threat intelligence entity. </param>
-        /// <param name="displayName"> Display name of a threat intelligence entity. </param>
-        /// <param name="description"> Description of a threat intelligence entity. </param>
-        /// <param name="indicatorTypes"> Indicator types of threat intelligence entities. </param>
-        /// <param name="pattern"> Pattern of a threat intelligence entity. </param>
-        /// <param name="patternType"> Pattern type of a threat intelligence entity. </param>
-        /// <param name="patternVersion"> Pattern version of a threat intelligence entity. </param>
-        /// <param name="killChainPhases"> Kill chain phases. </param>
-        /// <param name="parsedPattern"> Parsed patterns. </param>
-        /// <param name="externalId"> External ID of threat intelligence entity. </param>
-        /// <param name="createdByRef"> Created by reference of threat intelligence entity. </param>
-        /// <param name="isDefanged"> Is threat intelligence entity defanged. </param>
-        /// <param name="externalLastUpdatedOn"> External last updated time in UTC. </param>
-        /// <param name="externalReferences"> External References. </param>
-        /// <param name="granularMarkings"> Granular Markings. </param>
-        /// <param name="labels"> Labels  of threat intelligence entity. </param>
-        /// <param name="isRevoked"> Is threat intelligence entity revoked. </param>
-        /// <param name="confidence"> Confidence of threat intelligence entity. </param>
-        /// <param name="objectMarkingRefs"> Threat intelligence entity object marking references. </param>
-        /// <param name="language"> Language of threat intelligence entity. </param>
-        /// <param name="threatTypes"> Threat types. </param>
-        /// <param name="validFrom"> Valid from. </param>
-        /// <param name="validUntil"> Valid until. </param>
-        /// <param name="createdOn"> Created by. </param>
-        /// <param name="modified"> Modified by. </param>
-        /// <param name="extensions"> Extensions map. </param>
-        internal SecurityInsightsThreatIntelligenceIndicatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IList<string> threatIntelligenceTags, DateTimeOffset? lastUpdatedOn, string source, string displayName, string description, IList<string> indicatorTypes, string pattern, string patternType, string patternVersion, IList<ThreatIntelligenceKillChainPhase> killChainPhases, IList<ThreatIntelligenceParsedPattern> parsedPattern, string externalId, string createdByRef, bool? isDefanged, DateTimeOffset? externalLastUpdatedOn, IList<ThreatIntelligenceExternalReference> externalReferences, IList<ThreatIntelligenceGranularMarkingEntity> granularMarkings, IList<string> labels, bool? isRevoked, int? confidence, IList<string> objectMarkingRefs, string language, IList<string> threatTypes, DateTimeOffset? validFrom, DateTimeOffset? validUntil, DateTimeOffset? createdOn, string modified, IDictionary<string, BinaryData> extensions) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> Threat Intelligence Entity properties. </param>
+        internal SecurityInsightsThreatIntelligenceIndicatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ThreatIntelligenceResourceInnerKind kind, string eTag, ThreatIntelligenceIndicatorProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            AdditionalData = additionalData;
-            FriendlyName = friendlyName;
-            ThreatIntelligenceTags = threatIntelligenceTags;
-            LastUpdatedOn = lastUpdatedOn;
-            Source = source;
-            DisplayName = displayName;
-            Description = description;
-            IndicatorTypes = indicatorTypes;
-            Pattern = pattern;
-            PatternType = patternType;
-            PatternVersion = patternVersion;
-            KillChainPhases = killChainPhases;
-            ParsedPattern = parsedPattern;
-            ExternalId = externalId;
-            CreatedByRef = createdByRef;
-            IsDefanged = isDefanged;
-            ExternalLastUpdatedOn = externalLastUpdatedOn;
-            ExternalReferences = externalReferences;
-            GranularMarkings = granularMarkings;
-            Labels = labels;
-            IsRevoked = isRevoked;
-            Confidence = confidence;
-            ObjectMarkingRefs = objectMarkingRefs;
-            Language = language;
-            ThreatTypes = threatTypes;
-            ValidFrom = validFrom;
-            ValidUntil = validUntil;
-            CreatedOn = createdOn;
-            Modified = modified;
-            Extensions = extensions;
-            Kind = kind;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.additionalData")]
-        public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
+        /// <summary> Threat Intelligence Entity properties. </summary>
+        internal ThreatIntelligenceIndicatorProperties Properties { get; set; }
+
+        /// <summary> A bag of custom fields that should be part of the entity and will be presented to the user. </summary>
+        public IReadOnlyDictionary<string, BinaryData> AdditionalData
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.AdditionalData;
+            }
+        }
+
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
-        [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FriendlyName;
+            }
+        }
+
         /// <summary> List of tags. </summary>
-        [WirePath("properties.threatIntelligenceTags")]
-        public IList<string> ThreatIntelligenceTags { get; }
+        public IList<string> ThreatIntelligenceTags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.ThreatIntelligenceTags;
+            }
+        }
+
         /// <summary> Last updated time in UTC. </summary>
-        [WirePath("properties.lastUpdatedTimeUtc")]
-        public DateTimeOffset? LastUpdatedOn { get; set; }
+        public string LastUpdatedTimeUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastUpdatedTimeUtc;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.LastUpdatedTimeUtc = value;
+            }
+        }
+
         /// <summary> Source of a threat intelligence entity. </summary>
-        [WirePath("properties.source")]
-        public string Source { get; set; }
+        public string Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> Display name of a threat intelligence entity. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Description of a threat intelligence entity. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> Indicator types of threat intelligence entities. </summary>
-        [WirePath("properties.indicatorTypes")]
-        public IList<string> IndicatorTypes { get; }
+        public IList<string> IndicatorTypes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.IndicatorTypes;
+            }
+        }
+
         /// <summary> Pattern of a threat intelligence entity. </summary>
-        [WirePath("properties.pattern")]
-        public string Pattern { get; set; }
+        public string Pattern
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Pattern;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.Pattern = value;
+            }
+        }
+
         /// <summary> Pattern type of a threat intelligence entity. </summary>
-        [WirePath("properties.patternType")]
-        public string PatternType { get; set; }
+        public string PatternType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PatternType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.PatternType = value;
+            }
+        }
+
         /// <summary> Pattern version of a threat intelligence entity. </summary>
-        [WirePath("properties.patternVersion")]
-        public string PatternVersion { get; set; }
+        public string PatternVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PatternVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.PatternVersion = value;
+            }
+        }
+
         /// <summary> Kill chain phases. </summary>
-        [WirePath("properties.killChainPhases")]
-        public IList<ThreatIntelligenceKillChainPhase> KillChainPhases { get; }
+        public IList<ThreatIntelligenceKillChainPhase> KillChainPhases
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.KillChainPhases;
+            }
+        }
+
         /// <summary> Parsed patterns. </summary>
-        [WirePath("properties.parsedPattern")]
-        public IList<ThreatIntelligenceParsedPattern> ParsedPattern { get; }
+        public IList<ThreatIntelligenceParsedPattern> ParsedPattern
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.ParsedPattern;
+            }
+        }
+
         /// <summary> External ID of threat intelligence entity. </summary>
-        [WirePath("properties.externalId")]
-        public string ExternalId { get; set; }
+        public string ExternalId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.ExternalId = value;
+            }
+        }
+
         /// <summary> Created by reference of threat intelligence entity. </summary>
-        [WirePath("properties.createdByRef")]
-        public string CreatedByRef { get; set; }
+        public string CreatedByRef
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedByRef;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.CreatedByRef = value;
+            }
+        }
+
         /// <summary> Is threat intelligence entity defanged. </summary>
-        [WirePath("properties.defanged")]
-        public bool? IsDefanged { get; set; }
+        public bool? Defanged
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Defanged;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.Defanged = value.Value;
+            }
+        }
+
         /// <summary> External last updated time in UTC. </summary>
-        [WirePath("properties.externalLastUpdatedTimeUtc")]
-        public DateTimeOffset? ExternalLastUpdatedOn { get; set; }
+        public string ExternalLastUpdatedTimeUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExternalLastUpdatedTimeUtc;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.ExternalLastUpdatedTimeUtc = value;
+            }
+        }
+
         /// <summary> External References. </summary>
-        [WirePath("properties.externalReferences")]
-        public IList<ThreatIntelligenceExternalReference> ExternalReferences { get; }
+        public IList<ThreatIntelligenceExternalReference> ExternalReferences
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.ExternalReferences;
+            }
+        }
+
         /// <summary> Granular Markings. </summary>
-        [WirePath("properties.granularMarkings")]
-        public IList<ThreatIntelligenceGranularMarkingEntity> GranularMarkings { get; }
+        public IList<ThreatIntelligenceGranularMarkingEntity> GranularMarkings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.GranularMarkings;
+            }
+        }
+
         /// <summary> Labels  of threat intelligence entity. </summary>
-        [WirePath("properties.labels")]
-        public IList<string> Labels { get; }
+        public IList<string> Labels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.Labels;
+            }
+        }
+
         /// <summary> Is threat intelligence entity revoked. </summary>
-        [WirePath("properties.revoked")]
-        public bool? IsRevoked { get; set; }
+        public bool? Revoked
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Revoked;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.Revoked = value.Value;
+            }
+        }
+
         /// <summary> Confidence of threat intelligence entity. </summary>
-        [WirePath("properties.confidence")]
-        public int? Confidence { get; set; }
+        public int? Confidence
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Confidence;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.Confidence = value.Value;
+            }
+        }
+
         /// <summary> Threat intelligence entity object marking references. </summary>
-        [WirePath("properties.objectMarkingRefs")]
-        public IList<string> ObjectMarkingRefs { get; }
+        public IList<string> ObjectMarkingRefs
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.ObjectMarkingRefs;
+            }
+        }
+
         /// <summary> Language of threat intelligence entity. </summary>
-        [WirePath("properties.language")]
-        public string Language { get; set; }
+        public string Language
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Language;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.Language = value;
+            }
+        }
+
         /// <summary> Threat types. </summary>
-        [WirePath("properties.threatTypes")]
-        public IList<string> ThreatTypes { get; }
+        public IList<string> ThreatTypes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.ThreatTypes;
+            }
+        }
+
         /// <summary> Valid from. </summary>
-        [WirePath("properties.validFrom")]
-        public DateTimeOffset? ValidFrom { get; set; }
+        public string ValidFrom
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidFrom;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.ValidFrom = value;
+            }
+        }
+
         /// <summary> Valid until. </summary>
-        [WirePath("properties.validUntil")]
-        public DateTimeOffset? ValidUntil { get; set; }
+        public string ValidUntil
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidUntil;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.ValidUntil = value;
+            }
+        }
+
         /// <summary> Created by. </summary>
-        [WirePath("properties.created")]
-        public DateTimeOffset? CreatedOn { get; set; }
+        public string Created
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Created;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.Created = value;
+            }
+        }
+
         /// <summary> Modified by. </summary>
-        [WirePath("properties.modified")]
-        public string Modified { get; set; }
-        /// <summary>
-        /// Extensions map
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.extensions")]
-        public IDictionary<string, BinaryData> Extensions { get; }
+        public string Modified
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Modified;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                Properties.Modified = value;
+            }
+        }
+
+        /// <summary> Extensions map. </summary>
+        public IDictionary<string, BinaryData> Extensions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ThreatIntelligenceIndicatorProperties();
+                }
+                return Properties.Extensions;
+            }
+        }
     }
 }

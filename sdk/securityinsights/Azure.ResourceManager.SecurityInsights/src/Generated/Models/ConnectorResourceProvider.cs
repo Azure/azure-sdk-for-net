@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Resource provider permissions required for the connector. </summary>
     public partial class ConnectorResourceProvider
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectorResourceProvider"/>. </summary>
         public ConnectorResourceProvider()
@@ -56,31 +27,30 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="providerDisplayName"> Permission provider display name. </param>
         /// <param name="scope"> Permission provider scope. </param>
         /// <param name="requiredPermissions"> Required permissions for the connector. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectorResourceProvider(ConnectorProviderName? provider, string permissionsDisplayText, string providerDisplayName, PermissionProviderScope? scope, ConnectorRequiredPermissions requiredPermissions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorResourceProvider(ConnectorProviderName? provider, string permissionsDisplayText, string providerDisplayName, PermissionProviderScope? scope, ConnectorRequiredPermissions requiredPermissions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
             PermissionsDisplayText = permissionsDisplayText;
             ProviderDisplayName = providerDisplayName;
             Scope = scope;
             RequiredPermissions = requiredPermissions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Provider name. </summary>
-        [WirePath("provider")]
         public ConnectorProviderName? Provider { get; set; }
+
         /// <summary> Permission description text. </summary>
-        [WirePath("permissionsDisplayText")]
         public string PermissionsDisplayText { get; set; }
+
         /// <summary> Permission provider display name. </summary>
-        [WirePath("providerDisplayName")]
         public string ProviderDisplayName { get; set; }
+
         /// <summary> Permission provider scope. </summary>
-        [WirePath("scope")]
         public PermissionProviderScope? Scope { get; set; }
+
         /// <summary> Required permissions for the connector. </summary>
-        [WirePath("requiredPermissions")]
         public ConnectorRequiredPermissions RequiredPermissions { get; set; }
     }
 }

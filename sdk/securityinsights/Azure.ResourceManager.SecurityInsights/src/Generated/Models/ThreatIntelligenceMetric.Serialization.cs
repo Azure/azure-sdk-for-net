@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceMetric : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceMetric>
+    /// <summary> Describes threat intelligence metric. </summary>
+    public partial class ThreatIntelligenceMetric : IJsonModel<ThreatIntelligenceMetric>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceMetric>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ThreatIntelligenceMetric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetric>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeThreatIntelligenceMetric(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetric>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ThreatIntelligenceMetric>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreatIntelligenceMetric IPersistableModel<ThreatIntelligenceMetric>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ThreatIntelligenceMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ThreatIntelligenceMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,22 +69,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(LastUpdatedOn))
+            if (Optional.IsDefined(LastUpdatedTimeUtc))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
-                writer.WriteStringValue(LastUpdatedOn);
+                writer.WriteStringValue(LastUpdatedTimeUtc);
             }
             if (Optional.IsCollectionDefined(ThreatTypeMetrics))
             {
                 writer.WritePropertyName("threatTypeMetrics"u8);
                 writer.WriteStartArray();
-                foreach (var item in ThreatTypeMetrics)
+                foreach (ThreatIntelligenceMetricEntity item in ThreatTypeMetrics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -55,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("patternTypeMetrics"u8);
                 writer.WriteStartArray();
-                foreach (var item in PatternTypeMetrics)
+                foreach (ThreatIntelligenceMetricEntity item in PatternTypeMetrics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -65,21 +103,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("sourceMetrics"u8);
                 writer.WriteStartArray();
-                foreach (var item in SourceMetrics)
+                foreach (ThreatIntelligenceMetricEntity item in SourceMetrics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,22 +126,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        ThreatIntelligenceMetric IJsonModel<ThreatIntelligenceMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreatIntelligenceMetric IJsonModel<ThreatIntelligenceMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ThreatIntelligenceMetric JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetric>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetric>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeThreatIntelligenceMetric(document.RootElement, options);
         }
 
-        internal static ThreatIntelligenceMetric DeserializeThreatIntelligenceMetric(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ThreatIntelligenceMetric DeserializeThreatIntelligenceMetric(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -112,51 +155,50 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             IReadOnlyList<ThreatIntelligenceMetricEntity> threatTypeMetrics = default;
             IReadOnlyList<ThreatIntelligenceMetricEntity> patternTypeMetrics = default;
             IReadOnlyList<ThreatIntelligenceMetricEntity> sourceMetrics = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("lastUpdatedTimeUtc"u8))
+                if (prop.NameEquals("lastUpdatedTimeUtc"u8))
                 {
-                    lastUpdatedTimeUtc = property.Value.GetString();
+                    lastUpdatedTimeUtc = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("threatTypeMetrics"u8))
+                if (prop.NameEquals("threatTypeMetrics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item, options));
                     }
                     threatTypeMetrics = array;
                     continue;
                 }
-                if (property.NameEquals("patternTypeMetrics"u8))
+                if (prop.NameEquals("patternTypeMetrics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item, options));
                     }
                     patternTypeMetrics = array;
                     continue;
                 }
-                if (property.NameEquals("sourceMetrics"u8))
+                if (prop.NameEquals("sourceMetrics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ThreatIntelligenceMetricEntity> array = new List<ThreatIntelligenceMetricEntity>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ThreatIntelligenceMetricEntity.DeserializeThreatIntelligenceMetricEntity(item, options));
                     }
@@ -165,151 +207,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ThreatIntelligenceMetric(lastUpdatedTimeUtc, threatTypeMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), patternTypeMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), sourceMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), serializedAdditionalRawData);
+            return new ThreatIntelligenceMetric(lastUpdatedTimeUtc, threatTypeMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), patternTypeMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), sourceMetrics ?? new ChangeTrackingList<ThreatIntelligenceMetricEntity>(), additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastUpdatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lastUpdatedTimeUtc: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastUpdatedOn))
-                {
-                    builder.Append("  lastUpdatedTimeUtc: ");
-                    if (LastUpdatedOn.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LastUpdatedOn}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LastUpdatedOn}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreatTypeMetrics), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  threatTypeMetrics: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ThreatTypeMetrics))
-                {
-                    if (ThreatTypeMetrics.Any())
-                    {
-                        builder.Append("  threatTypeMetrics: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ThreatTypeMetrics)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  threatTypeMetrics: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PatternTypeMetrics), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  patternTypeMetrics: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PatternTypeMetrics))
-                {
-                    if (PatternTypeMetrics.Any())
-                    {
-                        builder.Append("  patternTypeMetrics: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PatternTypeMetrics)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  patternTypeMetrics: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceMetrics), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourceMetrics: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SourceMetrics))
-                {
-                    if (SourceMetrics.Any())
-                    {
-                        builder.Append("  sourceMetrics: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SourceMetrics)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  sourceMetrics: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ThreatIntelligenceMetric>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetric>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ThreatIntelligenceMetric IPersistableModel<ThreatIntelligenceMetric>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceMetric>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeThreatIntelligenceMetric(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceMetric)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ThreatIntelligenceMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

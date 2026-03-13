@@ -14,23 +14,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class GitHubAuthModel : CcpAuthConfig
     {
         /// <summary> Initializes a new instance of <see cref="GitHubAuthModel"/>. </summary>
-        public GitHubAuthModel()
+        public GitHubAuthModel() : base(CcpAuthType.GitHub)
         {
-            AuthType = CcpAuthType.GitHub;
         }
 
         /// <summary> Initializes a new instance of <see cref="GitHubAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The auth type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="installationId"> The GitHubApp auth installation id. </param>
-        internal GitHubAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string installationId) : base(authType, serializedAdditionalRawData)
+        internal GitHubAuthModel(CcpAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string installationId) : base(@type, additionalBinaryDataProperties)
         {
             InstallationId = installationId;
-            AuthType = authType;
         }
 
         /// <summary> The GitHubApp auth installation id. </summary>
-        [WirePath("installationId")]
         public string InstallationId { get; set; }
     }
 }

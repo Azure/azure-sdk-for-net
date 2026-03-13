@@ -6,46 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A Class representing a SecurityInsightsDataConnectorDefinition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsDataConnectorDefinitionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecurityInsightsDataConnectorDefinitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/> using the GetSecurityInsightsDataConnectorDefinition method.
+    /// A class representing a SecurityInsightsDataConnectorDefinition along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityInsightsDataConnectorDefinitionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetSecurityInsightsDataConnectorDefinitions method.
     /// </summary>
     public partial class SecurityInsightsDataConnectorDefinitionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsDataConnectorDefinitionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="workspaceName"> The workspaceName. </param>
-        /// <param name="dataConnectorDefinitionName"> The dataConnectorDefinitionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsClientDiagnostics;
-        private readonly DataConnectorDefinitionsRestOperations _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient;
+        private readonly ClientDiagnostics _dataConnectorDefinitionsClientDiagnostics;
+        private readonly DataConnectorDefinitions _dataConnectorDefinitionsRestClient;
         private readonly SecurityInsightsDataConnectorDefinitionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.SecurityInsights/dataConnectorDefinitions";
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsDataConnectorDefinitionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SecurityInsightsDataConnectorDefinitionResource for mocking. </summary>
         protected SecurityInsightsDataConnectorDefinitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsDataConnectorDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsDataConnectorDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityInsightsDataConnectorDefinitionResource(ArmClient client, SecurityInsightsDataConnectorDefinitionData data) : this(client, data.Id)
@@ -54,71 +44,93 @@ namespace Azure.ResourceManager.SecurityInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityInsightsDataConnectorDefinitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsDataConnectorDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityInsightsDataConnectorDefinitionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securityInsightsDataConnectorDefinitionDataConnectorDefinitionsApiVersion);
-            _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient = new DataConnectorDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityInsightsDataConnectorDefinitionDataConnectorDefinitionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string securityInsightsDataConnectorDefinitionApiVersion);
+            _dataConnectorDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", ResourceType.Namespace, Diagnostics);
+            _dataConnectorDefinitionsRestClient = new DataConnectorDefinitions(_dataConnectorDefinitionsClientDiagnostics, Pipeline, Endpoint, securityInsightsDataConnectorDefinitionApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual SecurityInsightsDataConnectorDefinitionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="dataConnectorDefinitionName"> The dataConnectorDefinitionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string dataConnectorDefinitionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets a data connector definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnectorDefinitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectorDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsDataConnectorDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsDataConnectorDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<SecurityInsightsDataConnectorDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Get");
+            using DiagnosticScope scope = _dataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = await _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsDataConnectorDefinitionData> response = Response.FromValue(SecurityInsightsDataConnectorDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsDataConnectorDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -132,33 +144,41 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a data connector definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnectorDefinitions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectorDefinitions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsDataConnectorDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsDataConnectorDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<SecurityInsightsDataConnectorDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Get");
+            using DiagnosticScope scope = _dataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Get");
             scope.Start();
             try
             {
-                var response = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsDataConnectorDefinitionData> response = Response.FromValue(SecurityInsightsDataConnectorDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SecurityInsightsDataConnectorDefinitionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -172,20 +192,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete the data connector definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnectorDefinitions_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectorDefinitions_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsDataConnectorDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsDataConnectorDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,16 +213,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Delete");
+            using DiagnosticScope scope = _dataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,20 +243,20 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Delete the data connector definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnectorDefinitions_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectorDefinitions_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsDataConnectorDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsDataConnectorDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,16 +264,23 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Delete");
+            using DiagnosticScope scope = _dataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Delete");
             scope.Start();
             try
             {
-                var response = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation operation = new SecurityInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -257,23 +291,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates the data connector definition.
+        /// Update a SecurityInsightsDataConnectorDefinition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnectorDefinitions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectorDefinitions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsDataConnectorDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsDataConnectorDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,16 +319,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Update");
+            using DiagnosticScope scope = _dataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Update");
             scope.Start();
             try
             {
-                var response = await _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsDataConnectorDefinitionResource>(Response.FromValue(new SecurityInsightsDataConnectorDefinitionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsDataConnectorDefinitionData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SecurityInsightsDataConnectorDefinitionData> response = Response.FromValue(SecurityInsightsDataConnectorDefinitionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsDataConnectorDefinitionResource> operation = new SecurityInsightsArmOperation<SecurityInsightsDataConnectorDefinitionResource>(Response.FromValue(new SecurityInsightsDataConnectorDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -305,23 +347,23 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// Creates or updates the data connector definition.
+        /// Update a SecurityInsightsDataConnectorDefinition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/dataConnectorDefinitions/{dataConnectorDefinitionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DataConnectorDefinitions_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> DataConnectorDefinitions_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SecurityInsightsDataConnectorDefinitionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SecurityInsightsDataConnectorDefinitionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,16 +375,24 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Update");
+            using DiagnosticScope scope = _dataConnectorDefinitionsClientDiagnostics.CreateScope("SecurityInsightsDataConnectorDefinitionResource.Update");
             scope.Start();
             try
             {
-                var response = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _securityInsightsDataConnectorDefinitionDataConnectorDefinitionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsDataConnectorDefinitionResource>(Response.FromValue(new SecurityInsightsDataConnectorDefinitionResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _dataConnectorDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SecurityInsightsDataConnectorDefinitionData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SecurityInsightsDataConnectorDefinitionData> response = Response.FromValue(SecurityInsightsDataConnectorDefinitionData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<SecurityInsightsDataConnectorDefinitionResource> operation = new SecurityInsightsArmOperation<SecurityInsightsDataConnectorDefinitionResource>(Response.FromValue(new SecurityInsightsDataConnectorDefinitionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

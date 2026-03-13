@@ -14,23 +14,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsPropertyChangedConditionProperties : SecurityInsightsAutomationRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsPropertyChangedConditionProperties"/>. </summary>
-        public SecurityInsightsPropertyChangedConditionProperties()
+        public SecurityInsightsPropertyChangedConditionProperties() : base(ConditionType.PropertyChanged)
         {
-            ConditionType = ConditionType.PropertyChanged;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsPropertyChangedConditionProperties"/>. </summary>
         /// <param name="conditionType"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="conditionProperties"></param>
-        internal SecurityInsightsPropertyChangedConditionProperties(ConditionType conditionType, IDictionary<string, BinaryData> serializedAdditionalRawData, AutomationRulePropertyValuesChangedCondition conditionProperties) : base(conditionType, serializedAdditionalRawData)
+        internal SecurityInsightsPropertyChangedConditionProperties(ConditionType conditionType, IDictionary<string, BinaryData> additionalBinaryDataProperties, AutomationRulePropertyValuesChangedCondition conditionProperties) : base(conditionType, additionalBinaryDataProperties)
         {
             ConditionProperties = conditionProperties;
-            ConditionType = conditionType;
         }
 
-        /// <summary> Gets or sets the condition properties. </summary>
-        [WirePath("conditionProperties")]
+        /// <summary> Gets or sets the ConditionProperties. </summary>
         public AutomationRulePropertyValuesChangedCondition ConditionProperties { get; set; }
     }
 }

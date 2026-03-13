@@ -3,10 +3,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
@@ -15,6 +11,55 @@ namespace Azure.ResourceManager.SecurityInsights
     public partial class SecurityInsightsWatchlistData
     {
         /// <summary> The source of the watchlist. </summary>
-        public Source? Source { get; set; }
+        public Source? Source
+        {
+            get
+            {
+                if (Properties?.SourceType is null)
+                {
+                    return null;
+                }
+
+                var sourceType = Properties.SourceType.Value;
+                if (sourceType == WatchlistSourceType.Local)
+                {
+                    return Azure.ResourceManager.SecurityInsights.Models.Source.LocalFile;
+                }
+
+                if (sourceType == WatchlistSourceType.AzureStorage)
+                {
+                    return Azure.ResourceManager.SecurityInsights.Models.Source.RemoteStorage;
+                }
+
+                return new Azure.ResourceManager.SecurityInsights.Models.Source(sourceType.ToString());
+            }
+            set
+            {
+                if (value is null)
+                {
+                    if (Properties is not null)
+                    {
+                        Properties.SourceType = null;
+                    }
+
+                    return;
+                }
+
+                Properties ??= new WatchlistProperties();
+                var source = value.Value;
+                if (source == Azure.ResourceManager.SecurityInsights.Models.Source.LocalFile)
+                {
+                    Properties.SourceType = WatchlistSourceType.Local;
+                }
+                else if (source == Azure.ResourceManager.SecurityInsights.Models.Source.RemoteStorage)
+                {
+                    Properties.SourceType = WatchlistSourceType.AzureStorage;
+                }
+                else
+                {
+                    Properties.SourceType = new WatchlistSourceType(source.ToString());
+                }
+            }
+        }
     }
 }

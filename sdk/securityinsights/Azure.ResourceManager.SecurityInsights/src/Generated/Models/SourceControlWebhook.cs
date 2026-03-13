@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Detail about the webhook object. </summary>
     public partial class SourceControlWebhook
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlWebhook"/>. </summary>
         public SourceControlWebhook()
@@ -54,28 +25,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="webhookId"> Unique identifier for the webhook. </param>
         /// <param name="webhookUri"> URL that gets invoked by the webhook. </param>
         /// <param name="webhookSecretUpdateOn"> Time when the webhook secret was updated. </param>
-        /// <param name="isWebhookSecretRotated"> A flag to instruct the backend service to rotate webhook secret. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlWebhook(string webhookId, Uri webhookUri, DateTimeOffset? webhookSecretUpdateOn, bool? isWebhookSecretRotated, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="rotateWebhookSecret"> A flag to instruct the backend service to rotate webhook secret. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SourceControlWebhook(string webhookId, string webhookUri, DateTimeOffset? webhookSecretUpdateOn, bool? rotateWebhookSecret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WebhookId = webhookId;
             WebhookUri = webhookUri;
             WebhookSecretUpdateOn = webhookSecretUpdateOn;
-            IsWebhookSecretRotated = isWebhookSecretRotated;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            RotateWebhookSecret = rotateWebhookSecret;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique identifier for the webhook. </summary>
-        [WirePath("webhookId")]
         public string WebhookId { get; }
+
         /// <summary> URL that gets invoked by the webhook. </summary>
-        [WirePath("webhookUrl")]
-        public Uri WebhookUri { get; }
+        public string WebhookUri { get; }
+
         /// <summary> Time when the webhook secret was updated. </summary>
-        [WirePath("webhookSecretUpdateTime")]
         public DateTimeOffset? WebhookSecretUpdateOn { get; }
+
         /// <summary> A flag to instruct the backend service to rotate webhook secret. </summary>
-        [WirePath("rotateWebhookSecret")]
-        public bool? IsWebhookSecretRotated { get; set; }
+        public bool? RotateWebhookSecret { get; set; }
     }
 }

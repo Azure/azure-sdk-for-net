@@ -7,42 +7,90 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The kind of the entity query template. </summary>
-    internal readonly partial struct EntityQueryTemplateKind : IEquatable<EntityQueryTemplateKind>
+    /// <summary></summary>
+    public readonly partial struct EntityQueryTemplateKind : IEquatable<EntityQueryTemplateKind>
     {
         private readonly string _value;
+        /// <summary> Activity. </summary>
+        private const string ActivityValue = "Activity";
+        /// <summary> Insight. </summary>
+        private const string InsightValue = "Insight";
+        /// <summary> SecurityAlert. </summary>
+        private const string SecurityAlertValue = "SecurityAlert";
+        /// <summary> Bookmark. </summary>
+        private const string BookmarkValue = "Bookmark";
+        /// <summary> Expansion. </summary>
+        private const string ExpansionValue = "Expansion";
+        /// <summary> GuidedInsight. </summary>
+        private const string GuidedInsightValue = "GuidedInsight";
+        /// <summary> Anomaly. </summary>
+        private const string AnomalyValue = "Anomaly";
 
         /// <summary> Initializes a new instance of <see cref="EntityQueryTemplateKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntityQueryTemplateKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActivityValue = "Activity";
+            _value = value;
+        }
 
         /// <summary> Activity. </summary>
         public static EntityQueryTemplateKind Activity { get; } = new EntityQueryTemplateKind(ActivityValue);
+
+        /// <summary> Insight. </summary>
+        public static EntityQueryTemplateKind Insight { get; } = new EntityQueryTemplateKind(InsightValue);
+
+        /// <summary> SecurityAlert. </summary>
+        public static EntityQueryTemplateKind SecurityAlert { get; } = new EntityQueryTemplateKind(SecurityAlertValue);
+
+        /// <summary> Bookmark. </summary>
+        public static EntityQueryTemplateKind Bookmark { get; } = new EntityQueryTemplateKind(BookmarkValue);
+
+        /// <summary> Expansion. </summary>
+        public static EntityQueryTemplateKind Expansion { get; } = new EntityQueryTemplateKind(ExpansionValue);
+
+        /// <summary> GuidedInsight. </summary>
+        public static EntityQueryTemplateKind GuidedInsight { get; } = new EntityQueryTemplateKind(GuidedInsightValue);
+
+        /// <summary> Anomaly. </summary>
+        public static EntityQueryTemplateKind Anomaly { get; } = new EntityQueryTemplateKind(AnomalyValue);
+
         /// <summary> Determines if two <see cref="EntityQueryTemplateKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntityQueryTemplateKind left, EntityQueryTemplateKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntityQueryTemplateKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntityQueryTemplateKind left, EntityQueryTemplateKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntityQueryTemplateKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntityQueryTemplateKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntityQueryTemplateKind(string value) => new EntityQueryTemplateKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntityQueryTemplateKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntityQueryTemplateKind?(string value) => value == null ? null : new EntityQueryTemplateKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntityQueryTemplateKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntityQueryTemplateKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

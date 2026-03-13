@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,28 +17,34 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SapSolutionUsageStatistic : SecurityInsightsBillingStatisticData
     {
         /// <summary> Initializes a new instance of <see cref="SapSolutionUsageStatistic"/>. </summary>
-        public SapSolutionUsageStatistic()
+        internal SapSolutionUsageStatistic() : base(BillingStatisticKind.SapSolutionUsage)
         {
-            Kind = BillingStatisticKind.SapSolutionUsage;
         }
 
         /// <summary> Initializes a new instance of <see cref="SapSolutionUsageStatistic"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the billing statistic. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="activeSystemIdCount"> The latest count of active SAP system IDs under the Microsoft Sentinel solution for SAP Usage. </param>
-        internal SapSolutionUsageStatistic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingStatisticKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, long? activeSystemIdCount) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Resource Etag. </param>
+        /// <param name="properties"> The SAP solution usage object. </param>
+        internal SapSolutionUsageStatistic(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BillingStatisticKind kind, string eTag, SapSolutionUsageStatisticProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            ActiveSystemIdCount = activeSystemIdCount;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> The SAP solution usage object. </summary>
+        internal SapSolutionUsageStatisticProperties Properties { get; }
+
         /// <summary> The latest count of active SAP system IDs under the Microsoft Sentinel solution for SAP Usage. </summary>
-        [WirePath("properties.activeSystemIdCount")]
-        public long? ActiveSystemIdCount { get; }
+        public long? ActiveSystemIdCount
+        {
+            get
+            {
+                return Properties.ActiveSystemIdCount;
+            }
+        }
     }
 }

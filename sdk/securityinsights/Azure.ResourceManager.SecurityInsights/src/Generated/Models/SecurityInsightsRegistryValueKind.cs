@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsRegistryValueKind : IEquatable<SecurityInsightsRegistryValueKind>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Unknown value type. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> String value type. </summary>
+        private const string StringValue = "String";
+        /// <summary> ExpandString value type. </summary>
+        private const string ExpandStringValue = "ExpandString";
+        /// <summary> Binary value type. </summary>
+        private const string BinaryValue = "Binary";
+        /// <summary> DWord value type. </summary>
+        private const string DWordValue = "DWord";
+        /// <summary> MultiString value type. </summary>
+        private const string MultiStringValue = "MultiString";
+        /// <summary> QWord value type. </summary>
+        private const string QWordValue = "QWord";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsRegistryValueKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsRegistryValueKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string UnknownValue = "Unknown";
-        private const string StringValue = "String";
-        private const string ExpandStringValue = "ExpandString";
-        private const string BinaryValue = "Binary";
-        private const string DWordValue = "DWord";
-        private const string MultiStringValue = "MultiString";
-        private const string QWordValue = "QWord";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SecurityInsightsRegistryValueKind None { get; } = new SecurityInsightsRegistryValueKind(NoneValue);
+
         /// <summary> Unknown value type. </summary>
         public static SecurityInsightsRegistryValueKind Unknown { get; } = new SecurityInsightsRegistryValueKind(UnknownValue);
+
         /// <summary> String value type. </summary>
         public static SecurityInsightsRegistryValueKind String { get; } = new SecurityInsightsRegistryValueKind(StringValue);
+
         /// <summary> ExpandString value type. </summary>
         public static SecurityInsightsRegistryValueKind ExpandString { get; } = new SecurityInsightsRegistryValueKind(ExpandStringValue);
+
         /// <summary> Binary value type. </summary>
         public static SecurityInsightsRegistryValueKind Binary { get; } = new SecurityInsightsRegistryValueKind(BinaryValue);
+
         /// <summary> DWord value type. </summary>
         public static SecurityInsightsRegistryValueKind DWord { get; } = new SecurityInsightsRegistryValueKind(DWordValue);
+
         /// <summary> MultiString value type. </summary>
         public static SecurityInsightsRegistryValueKind MultiString { get; } = new SecurityInsightsRegistryValueKind(MultiStringValue);
+
         /// <summary> QWord value type. </summary>
         public static SecurityInsightsRegistryValueKind QWord { get; } = new SecurityInsightsRegistryValueKind(QWordValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsRegistryValueKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsRegistryValueKind left, SecurityInsightsRegistryValueKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsRegistryValueKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsRegistryValueKind left, SecurityInsightsRegistryValueKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsRegistryValueKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsRegistryValueKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsRegistryValueKind(string value) => new SecurityInsightsRegistryValueKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsRegistryValueKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsRegistryValueKind?(string value) => value == null ? null : new SecurityInsightsRegistryValueKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsRegistryValueKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsRegistryValueKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

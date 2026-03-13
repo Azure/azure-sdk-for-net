@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Get Insights result metadata. </summary>
-    internal partial class GetInsightsResultsMetadata
+    public partial class GetInsightsResultsMetadata
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GetInsightsResultsMetadata"/>. </summary>
         /// <param name="totalCount"> the total items found for the insights request. </param>
@@ -56,24 +28,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="GetInsightsResultsMetadata"/>. </summary>
         /// <param name="totalCount"> the total items found for the insights request. </param>
         /// <param name="errors"> information about the failed queries. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GetInsightsResultsMetadata(int totalCount, IReadOnlyList<GetInsightsErrorKind> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GetInsightsResultsMetadata(int totalCount, IList<GetInsightsErrorKind> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TotalCount = totalCount;
             Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GetInsightsResultsMetadata"/> for deserialization. </summary>
-        internal GetInsightsResultsMetadata()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> the total items found for the insights request. </summary>
-        [WirePath("totalCount")]
         public int TotalCount { get; }
+
         /// <summary> information about the failed queries. </summary>
-        [WirePath("errors")]
-        public IReadOnlyList<GetInsightsErrorKind> Errors { get; }
+        public IList<GetInsightsErrorKind> Errors { get; }
     }
 }

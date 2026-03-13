@@ -14,23 +14,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class ThreatIntelligenceTaxiiCheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceTaxiiCheckRequirements"/>. </summary>
-        public ThreatIntelligenceTaxiiCheckRequirements()
+        public ThreatIntelligenceTaxiiCheckRequirements() : base(DataConnectorKind.ThreatIntelligenceTaxii)
         {
-            Kind = DataConnectorKind.ThreatIntelligenceTaxii;
         }
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceTaxiiCheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        internal ThreatIntelligenceTaxiiCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Threat Intelligence TAXII check required properties. </param>
+        internal ThreatIntelligenceTaxiiCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, TiTaxiiCheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
-            TenantId = tenantId;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Threat Intelligence TAXII check required properties. </summary>
+        internal TiTaxiiCheckRequirementsProperties Properties { get; set; }
+
         /// <summary> The tenant id to connect to, and get the data from. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public string TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new TiTaxiiCheckRequirementsProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
     }
 }

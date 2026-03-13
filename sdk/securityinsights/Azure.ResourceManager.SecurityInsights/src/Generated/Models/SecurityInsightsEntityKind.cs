@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,98 +15,157 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsEntityKind : IEquatable<SecurityInsightsEntityKind>
     {
         private readonly string _value;
+        /// <summary> Entity represents account in the system. </summary>
+        private const string AccountValue = "Account";
+        /// <summary> Entity represents host in the system. </summary>
+        private const string HostValue = "Host";
+        /// <summary> Entity represents file in the system. </summary>
+        private const string FileValue = "File";
+        /// <summary> Entity represents azure resource in the system. </summary>
+        private const string AzureResourceValue = "AzureResource";
+        /// <summary> Entity represents cloud application in the system. </summary>
+        private const string CloudApplicationValue = "CloudApplication";
+        /// <summary> Entity represents dns resolution in the system. </summary>
+        private const string DnsResolutionValue = "DnsResolution";
+        /// <summary> Entity represents file hash in the system. </summary>
+        private const string FileHashValue = "FileHash";
+        /// <summary> Entity represents ip in the system. </summary>
+        private const string IpValue = "Ip";
+        /// <summary> Entity represents malware in the system. </summary>
+        private const string MalwareValue = "Malware";
+        /// <summary> Entity represents process in the system. </summary>
+        private const string ProcessValue = "Process";
+        /// <summary> Entity represents registry key in the system. </summary>
+        private const string RegistryKeyValue = "RegistryKey";
+        /// <summary> Entity represents registry value in the system. </summary>
+        private const string RegistryValueValue = "RegistryValue";
+        /// <summary> Entity represents security group in the system. </summary>
+        private const string SecurityGroupValue = "SecurityGroup";
+        /// <summary> Entity represents url in the system. </summary>
+        private const string UrlValue = "Url";
+        /// <summary> Entity represents IoT device in the system. </summary>
+        private const string IoTDeviceValue = "IoTDevice";
+        /// <summary> Entity represents security alert in the system. </summary>
+        private const string SecurityAlertValue = "SecurityAlert";
+        /// <summary> Entity represents bookmark in the system. </summary>
+        private const string BookmarkValue = "Bookmark";
+        /// <summary> Entity represents mail cluster in the system. </summary>
+        private const string MailClusterValue = "MailCluster";
+        /// <summary> Entity represents mail message in the system. </summary>
+        private const string MailMessageValue = "MailMessage";
+        /// <summary> Entity represents mailbox in the system. </summary>
+        private const string MailboxValue = "Mailbox";
+        /// <summary> Entity represents submission mail in the system. </summary>
+        private const string SubmissionMailValue = "SubmissionMail";
+        /// <summary> Entity represents network interface in the system. </summary>
+        private const string NicValue = "Nic";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsEntityKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsEntityKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AccountValue = "Account";
-        private const string HostValue = "Host";
-        private const string FileValue = "File";
-        private const string AzureResourceValue = "AzureResource";
-        private const string CloudApplicationValue = "CloudApplication";
-        private const string DnsResolutionValue = "DnsResolution";
-        private const string FileHashValue = "FileHash";
-        private const string IPValue = "Ip";
-        private const string MalwareValue = "Malware";
-        private const string ProcessValue = "Process";
-        private const string RegistryKeyValue = "RegistryKey";
-        private const string RegistryValueValue = "RegistryValue";
-        private const string SecurityGroupValue = "SecurityGroup";
-        private const string UriValue = "Url";
-        private const string IotDeviceValue = "IoTDevice";
-        private const string SecurityAlertValue = "SecurityAlert";
-        private const string BookmarkValue = "Bookmark";
-        private const string MailClusterValue = "MailCluster";
-        private const string MailMessageValue = "MailMessage";
-        private const string MailboxValue = "Mailbox";
-        private const string SubmissionMailValue = "SubmissionMail";
-        private const string NicValue = "Nic";
+            _value = value;
+        }
 
         /// <summary> Entity represents account in the system. </summary>
         public static SecurityInsightsEntityKind Account { get; } = new SecurityInsightsEntityKind(AccountValue);
+
         /// <summary> Entity represents host in the system. </summary>
         public static SecurityInsightsEntityKind Host { get; } = new SecurityInsightsEntityKind(HostValue);
+
         /// <summary> Entity represents file in the system. </summary>
         public static SecurityInsightsEntityKind File { get; } = new SecurityInsightsEntityKind(FileValue);
+
         /// <summary> Entity represents azure resource in the system. </summary>
         public static SecurityInsightsEntityKind AzureResource { get; } = new SecurityInsightsEntityKind(AzureResourceValue);
+
         /// <summary> Entity represents cloud application in the system. </summary>
         public static SecurityInsightsEntityKind CloudApplication { get; } = new SecurityInsightsEntityKind(CloudApplicationValue);
+
         /// <summary> Entity represents dns resolution in the system. </summary>
         public static SecurityInsightsEntityKind DnsResolution { get; } = new SecurityInsightsEntityKind(DnsResolutionValue);
+
         /// <summary> Entity represents file hash in the system. </summary>
         public static SecurityInsightsEntityKind FileHash { get; } = new SecurityInsightsEntityKind(FileHashValue);
+
         /// <summary> Entity represents ip in the system. </summary>
-        public static SecurityInsightsEntityKind IP { get; } = new SecurityInsightsEntityKind(IPValue);
+        public static SecurityInsightsEntityKind Ip { get; } = new SecurityInsightsEntityKind(IpValue);
+
         /// <summary> Entity represents malware in the system. </summary>
         public static SecurityInsightsEntityKind Malware { get; } = new SecurityInsightsEntityKind(MalwareValue);
+
         /// <summary> Entity represents process in the system. </summary>
         public static SecurityInsightsEntityKind Process { get; } = new SecurityInsightsEntityKind(ProcessValue);
+
         /// <summary> Entity represents registry key in the system. </summary>
         public static SecurityInsightsEntityKind RegistryKey { get; } = new SecurityInsightsEntityKind(RegistryKeyValue);
+
         /// <summary> Entity represents registry value in the system. </summary>
         public static SecurityInsightsEntityKind RegistryValue { get; } = new SecurityInsightsEntityKind(RegistryValueValue);
+
         /// <summary> Entity represents security group in the system. </summary>
         public static SecurityInsightsEntityKind SecurityGroup { get; } = new SecurityInsightsEntityKind(SecurityGroupValue);
+
         /// <summary> Entity represents url in the system. </summary>
-        public static SecurityInsightsEntityKind Uri { get; } = new SecurityInsightsEntityKind(UriValue);
+        public static SecurityInsightsEntityKind Url { get; } = new SecurityInsightsEntityKind(UrlValue);
+
         /// <summary> Entity represents IoT device in the system. </summary>
-        public static SecurityInsightsEntityKind IotDevice { get; } = new SecurityInsightsEntityKind(IotDeviceValue);
+        public static SecurityInsightsEntityKind IoTDevice { get; } = new SecurityInsightsEntityKind(IoTDeviceValue);
+
         /// <summary> Entity represents security alert in the system. </summary>
         public static SecurityInsightsEntityKind SecurityAlert { get; } = new SecurityInsightsEntityKind(SecurityAlertValue);
+
         /// <summary> Entity represents bookmark in the system. </summary>
         public static SecurityInsightsEntityKind Bookmark { get; } = new SecurityInsightsEntityKind(BookmarkValue);
+
         /// <summary> Entity represents mail cluster in the system. </summary>
         public static SecurityInsightsEntityKind MailCluster { get; } = new SecurityInsightsEntityKind(MailClusterValue);
+
         /// <summary> Entity represents mail message in the system. </summary>
         public static SecurityInsightsEntityKind MailMessage { get; } = new SecurityInsightsEntityKind(MailMessageValue);
+
         /// <summary> Entity represents mailbox in the system. </summary>
         public static SecurityInsightsEntityKind Mailbox { get; } = new SecurityInsightsEntityKind(MailboxValue);
+
         /// <summary> Entity represents submission mail in the system. </summary>
         public static SecurityInsightsEntityKind SubmissionMail { get; } = new SecurityInsightsEntityKind(SubmissionMailValue);
+
         /// <summary> Entity represents network interface in the system. </summary>
         public static SecurityInsightsEntityKind Nic { get; } = new SecurityInsightsEntityKind(NicValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsEntityKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsEntityKind left, SecurityInsightsEntityKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsEntityKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsEntityKind left, SecurityInsightsEntityKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsEntityKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsEntityKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsEntityKind(string value) => new SecurityInsightsEntityKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsEntityKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsEntityKind?(string value) => value == null ? null : new SecurityInsightsEntityKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsEntityKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsEntityKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

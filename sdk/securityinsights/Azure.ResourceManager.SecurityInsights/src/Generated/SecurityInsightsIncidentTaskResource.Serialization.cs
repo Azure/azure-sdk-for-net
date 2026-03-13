@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class SecurityInsightsIncidentTaskResource : IJsonModel<SecurityInsightsIncidentTaskData>
     {
-        private static SecurityInsightsIncidentTaskData s_dataDeserializationInstance;
-        private static SecurityInsightsIncidentTaskData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityInsightsIncidentTaskData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityInsightsIncidentTaskData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityInsightsIncidentTaskData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsIncidentTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentTaskData>)Data).Write(writer, options);
 
-        SecurityInsightsIncidentTaskData IJsonModel<SecurityInsightsIncidentTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentTaskData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsIncidentTaskData IJsonModel<SecurityInsightsIncidentTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityInsightsIncidentTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsIncidentTaskData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityInsightsIncidentTaskData IPersistableModel<SecurityInsightsIncidentTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsIncidentTaskData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsIncidentTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsIncidentTaskData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsIncidentTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

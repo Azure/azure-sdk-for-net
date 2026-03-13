@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsIncidentClassificationReason : IEquatable<SecurityInsightsIncidentClassificationReason>
     {
         private readonly string _value;
+        /// <summary> Classification reason was suspicious activity. </summary>
+        private const string SuspiciousActivityValue = "SuspiciousActivity";
+        /// <summary> Classification reason was suspicious but expected. </summary>
+        private const string SuspiciousButExpectedValue = "SuspiciousButExpected";
+        /// <summary> Classification reason was incorrect alert logic. </summary>
+        private const string IncorrectAlertLogicValue = "IncorrectAlertLogic";
+        /// <summary> Classification reason was inaccurate data. </summary>
+        private const string InaccurateDataValue = "InaccurateData";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentClassificationReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsIncidentClassificationReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SuspiciousActivityValue = "SuspiciousActivity";
-        private const string SuspiciousButExpectedValue = "SuspiciousButExpected";
-        private const string IncorrectAlertLogicValue = "IncorrectAlertLogic";
-        private const string InaccurateDataValue = "InaccurateData";
+            _value = value;
+        }
 
         /// <summary> Classification reason was suspicious activity. </summary>
         public static SecurityInsightsIncidentClassificationReason SuspiciousActivity { get; } = new SecurityInsightsIncidentClassificationReason(SuspiciousActivityValue);
+
         /// <summary> Classification reason was suspicious but expected. </summary>
         public static SecurityInsightsIncidentClassificationReason SuspiciousButExpected { get; } = new SecurityInsightsIncidentClassificationReason(SuspiciousButExpectedValue);
+
         /// <summary> Classification reason was incorrect alert logic. </summary>
         public static SecurityInsightsIncidentClassificationReason IncorrectAlertLogic { get; } = new SecurityInsightsIncidentClassificationReason(IncorrectAlertLogicValue);
+
         /// <summary> Classification reason was inaccurate data. </summary>
         public static SecurityInsightsIncidentClassificationReason InaccurateData { get; } = new SecurityInsightsIncidentClassificationReason(InaccurateDataValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentClassificationReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsIncidentClassificationReason left, SecurityInsightsIncidentClassificationReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsIncidentClassificationReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsIncidentClassificationReason left, SecurityInsightsIncidentClassificationReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsIncidentClassificationReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentClassificationReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsIncidentClassificationReason(string value) => new SecurityInsightsIncidentClassificationReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsIncidentClassificationReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsIncidentClassificationReason?(string value) => value == null ? null : new SecurityInsightsIncidentClassificationReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsIncidentClassificationReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsIncidentClassificationReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

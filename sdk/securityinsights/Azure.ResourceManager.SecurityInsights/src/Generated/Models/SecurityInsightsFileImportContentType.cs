@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsFileImportContentType : IEquatable<SecurityInsightsFileImportContentType>
     {
         private readonly string _value;
+        /// <summary> File containing records with the core fields of an indicator, plus the observables to construct the STIX pattern. </summary>
+        private const string BasicIndicatorValue = "BasicIndicator";
+        /// <summary> File containing STIX indicators. </summary>
+        private const string StixIndicatorValue = "StixIndicator";
+        /// <summary> File containing other records. </summary>
+        private const string UnspecifiedValue = "Unspecified";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsFileImportContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsFileImportContentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicIndicatorValue = "BasicIndicator";
-        private const string StixIndicatorValue = "StixIndicator";
-        private const string UnspecifiedValue = "Unspecified";
+            _value = value;
+        }
 
         /// <summary> File containing records with the core fields of an indicator, plus the observables to construct the STIX pattern. </summary>
         public static SecurityInsightsFileImportContentType BasicIndicator { get; } = new SecurityInsightsFileImportContentType(BasicIndicatorValue);
+
         /// <summary> File containing STIX indicators. </summary>
         public static SecurityInsightsFileImportContentType StixIndicator { get; } = new SecurityInsightsFileImportContentType(StixIndicatorValue);
+
         /// <summary> File containing other records. </summary>
         public static SecurityInsightsFileImportContentType Unspecified { get; } = new SecurityInsightsFileImportContentType(UnspecifiedValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileImportContentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsFileImportContentType left, SecurityInsightsFileImportContentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsFileImportContentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsFileImportContentType left, SecurityInsightsFileImportContentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsFileImportContentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsFileImportContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsFileImportContentType(string value) => new SecurityInsightsFileImportContentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsFileImportContentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsFileImportContentType?(string value) => value == null ? null : new SecurityInsightsFileImportContentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsFileImportContentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsFileImportContentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

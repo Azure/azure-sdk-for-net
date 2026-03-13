@@ -13,148 +13,292 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary>
-    /// A class representing the SecurityInsightsBookmark data model.
-    /// Represents a bookmark in Azure Security Insights.
-    /// </summary>
+    /// <summary> Represents a bookmark in Azure Security Insights. </summary>
     public partial class SecurityInsightsBookmarkData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkData"/>. </summary>
         public SecurityInsightsBookmarkData()
         {
-            Labels = new ChangeTrackingList<string>();
-            EntityMappings = new ChangeTrackingList<BookmarkEntityMappings>();
-            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
-            Techniques = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsBookmarkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> The time the bookmark was created. </param>
-        /// <param name="createdBy"> Describes a user that created the bookmark. </param>
-        /// <param name="displayName"> The display name of the bookmark. </param>
-        /// <param name="labels"> List of labels relevant to this bookmark. </param>
-        /// <param name="notes"> The notes of the bookmark. </param>
-        /// <param name="query"> The query of the bookmark. </param>
-        /// <param name="queryResult"> The query result of the bookmark. </param>
-        /// <param name="updatedOn"> The last time the bookmark was updated. </param>
-        /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
-        /// <param name="eventOn"> The bookmark event time. </param>
-        /// <param name="queryStartOn"> The start time for the query. </param>
-        /// <param name="queryEndOn"> The end time for the query. </param>
-        /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
-        /// <param name="entityMappings"> Describes the entity mappings of the bookmark. </param>
-        /// <param name="tactics"> A list of relevant mitre attacks. </param>
-        /// <param name="techniques"> A list of relevant mitre techniques. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsBookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, SecurityInsightsBookmarkIncidentInfo incidentInfo, IList<BookmarkEntityMappings> entityMappings, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Bookmark properties. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        internal SecurityInsightsBookmarkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BookmarkProperties properties, string eTag) : base(id, name, resourceType, systemData)
         {
-            CreatedOn = createdOn;
-            CreatedBy = createdBy;
-            DisplayName = displayName;
-            Labels = labels;
-            Notes = notes;
-            Query = query;
-            QueryResult = queryResult;
-            UpdatedOn = updatedOn;
-            UpdatedBy = updatedBy;
-            EventOn = eventOn;
-            QueryStartOn = queryStartOn;
-            QueryEndOn = queryEndOn;
-            IncidentInfo = incidentInfo;
-            EntityMappings = entityMappings;
-            Tactics = tactics;
-            Techniques = techniques;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> The time the bookmark was created. </summary>
-        [WirePath("properties.created")]
-        public DateTimeOffset? CreatedOn { get; set; }
-        /// <summary> Describes a user that created the bookmark. </summary>
-        [WirePath("properties.createdBy")]
-        public SecurityInsightsUserInfo CreatedBy { get; set; }
-        /// <summary> The display name of the bookmark. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
-        /// <summary> List of labels relevant to this bookmark. </summary>
-        [WirePath("properties.labels")]
-        public IList<string> Labels { get; }
-        /// <summary> The notes of the bookmark. </summary>
-        [WirePath("properties.notes")]
-        public string Notes { get; set; }
-        /// <summary> The query of the bookmark. </summary>
-        [WirePath("properties.query")]
-        public string Query { get; set; }
-        /// <summary> The query result of the bookmark. </summary>
-        [WirePath("properties.queryResult")]
-        public string QueryResult { get; set; }
-        /// <summary> The last time the bookmark was updated. </summary>
-        [WirePath("properties.updated")]
-        public DateTimeOffset? UpdatedOn { get; set; }
-        /// <summary> Describes a user that updated the bookmark. </summary>
-        [WirePath("properties.updatedBy")]
-        public SecurityInsightsUserInfo UpdatedBy { get; set; }
-        /// <summary> The bookmark event time. </summary>
-        [WirePath("properties.eventTime")]
-        public DateTimeOffset? EventOn { get; set; }
-        /// <summary> The start time for the query. </summary>
-        [WirePath("properties.queryStartTime")]
-        public DateTimeOffset? QueryStartOn { get; set; }
-        /// <summary> The end time for the query. </summary>
-        [WirePath("properties.queryEndTime")]
-        public DateTimeOffset? QueryEndOn { get; set; }
-        /// <summary> Describes an incident that relates to bookmark. </summary>
-        [WirePath("properties.incidentInfo")]
-        public SecurityInsightsBookmarkIncidentInfo IncidentInfo { get; set; }
-        /// <summary> Describes the entity mappings of the bookmark. </summary>
-        [WirePath("properties.entityMappings")]
-        public IList<BookmarkEntityMappings> EntityMappings { get; }
-        /// <summary> A list of relevant mitre attacks. </summary>
-        [WirePath("properties.tactics")]
-        public IList<SecurityInsightsAttackTactic> Tactics { get; }
-        /// <summary> A list of relevant mitre techniques. </summary>
-        [WirePath("properties.techniques")]
-        public IList<string> Techniques { get; }
+        /// <summary> Bookmark properties. </summary>
+        internal BookmarkProperties Properties { get; set; }
+
         /// <summary> Etag of the azure resource. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; set; }
+        public string ETag { get; set; }
+
+        /// <summary> The time the bookmark was created. </summary>
+        public DateTimeOffset? Created
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Created;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.Created = value.Value;
+            }
+        }
+
+        /// <summary> Describes a user that created the bookmark. </summary>
+        public SecurityInsightsUserInfo CreatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.CreatedBy = value;
+            }
+        }
+
+        /// <summary> The display name of the bookmark. </summary>
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> List of labels relevant to this bookmark. </summary>
+        public IList<string> Labels
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                return Properties.Labels;
+            }
+        }
+
+        /// <summary> The notes of the bookmark. </summary>
+        public string Notes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Notes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.Notes = value;
+            }
+        }
+
+        /// <summary> The query of the bookmark. </summary>
+        public string Query
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Query;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.Query = value;
+            }
+        }
+
+        /// <summary> The query result of the bookmark. </summary>
+        public string QueryResult
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QueryResult;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.QueryResult = value;
+            }
+        }
+
+        /// <summary> The last time the bookmark was updated. </summary>
+        public DateTimeOffset? Updated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Updated;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.Updated = value.Value;
+            }
+        }
+
+        /// <summary> Describes a user that updated the bookmark. </summary>
+        public SecurityInsightsUserInfo UpdatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UpdatedBy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.UpdatedBy = value;
+            }
+        }
+
+        /// <summary> The bookmark event time. </summary>
+        public DateTimeOffset? EventOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.EventOn = value.Value;
+            }
+        }
+
+        /// <summary> The start time for the query. </summary>
+        public DateTimeOffset? QueryStartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QueryStartOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.QueryStartOn = value.Value;
+            }
+        }
+
+        /// <summary> The end time for the query. </summary>
+        public DateTimeOffset? QueryEndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.QueryEndOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.QueryEndOn = value.Value;
+            }
+        }
+
+        /// <summary> Describes an incident that relates to bookmark. </summary>
+        public SecurityInsightsBookmarkIncidentInfo IncidentInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncidentInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                Properties.IncidentInfo = value;
+            }
+        }
+
+        /// <summary> Describes the entity mappings of the bookmark. </summary>
+        public IList<BookmarkEntityMappings> EntityMappings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                return Properties.EntityMappings;
+            }
+        }
+
+        /// <summary> A list of relevant mitre attacks. </summary>
+        public IList<SecurityInsightsAttackTactic> Tactics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                return Properties.Tactics;
+            }
+        }
+
+        /// <summary> A list of relevant mitre techniques. </summary>
+        public IList<string> Techniques
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new BookmarkProperties();
+                }
+                return Properties.Techniques;
+            }
+        }
     }
 }

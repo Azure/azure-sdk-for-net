@@ -8,18 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsMailClusterEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsMailClusterEntity>
+    /// <summary> Represents a mail cluster entity. </summary>
+    public partial class SecurityInsightsMailClusterEntity : SecurityInsightsEntityData, IJsonModel<SecurityInsightsMailClusterEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsMailClusterEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecurityInsightsMailClusterEntity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecurityInsightsMailClusterEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsMailClusterEntity IPersistableModel<SecurityInsightsMailClusterEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityInsightsMailClusterEntity)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsMailClusterEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsMailClusterEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,899 +72,112 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("additionalData"u8);
-                writer.WriteStartObject();
-                foreach (var item in AdditionalData)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkMessageIds))
-            {
-                writer.WritePropertyName("networkMessageIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in NetworkMessageIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(CountByDeliveryStatus))
-            {
-                writer.WritePropertyName("countByDeliveryStatus"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CountByDeliveryStatus);
-#else
-                using (JsonDocument document = JsonDocument.Parse(CountByDeliveryStatus, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (options.Format != "W" && Optional.IsDefined(CountByThreatType))
-            {
-                writer.WritePropertyName("countByThreatType"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CountByThreatType);
-#else
-                using (JsonDocument document = JsonDocument.Parse(CountByThreatType, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (options.Format != "W" && Optional.IsDefined(CountByProtectionStatus))
-            {
-                writer.WritePropertyName("countByProtectionStatus"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CountByProtectionStatus);
-#else
-                using (JsonDocument document = JsonDocument.Parse(CountByProtectionStatus, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Threats))
-            {
-                writer.WritePropertyName("threats"u8);
-                writer.WriteStartArray();
-                foreach (var item in Threats)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(Query))
-            {
-                writer.WritePropertyName("query"u8);
-                writer.WriteStringValue(Query);
-            }
-            if (options.Format != "W" && Optional.IsDefined(QueryOn))
-            {
-                writer.WritePropertyName("queryTime"u8);
-                writer.WriteStringValue(QueryOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(MailCount))
-            {
-                writer.WritePropertyName("mailCount"u8);
-                writer.WriteNumberValue(MailCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsVolumeAnomaly))
-            {
-                writer.WritePropertyName("isVolumeAnomaly"u8);
-                writer.WriteBooleanValue(IsVolumeAnomaly.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterSourceIdentifier))
-            {
-                writer.WritePropertyName("clusterSourceIdentifier"u8);
-                writer.WriteStringValue(ClusterSourceIdentifier);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterSourceType))
-            {
-                writer.WritePropertyName("clusterSourceType"u8);
-                writer.WriteStringValue(ClusterSourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterQueryStartOn))
-            {
-                writer.WritePropertyName("clusterQueryStartTime"u8);
-                writer.WriteStringValue(ClusterQueryStartOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterQueryEndOn))
-            {
-                writer.WritePropertyName("clusterQueryEndTime"u8);
-                writer.WriteStringValue(ClusterQueryEndOn.Value, "O");
-            }
-            if (options.Format != "W" && Optional.IsDefined(ClusterGroup))
-            {
-                writer.WritePropertyName("clusterGroup"u8);
-                writer.WriteStringValue(ClusterGroup);
-            }
-            writer.WriteEndObject();
         }
 
-        SecurityInsightsMailClusterEntity IJsonModel<SecurityInsightsMailClusterEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsMailClusterEntity IJsonModel<SecurityInsightsMailClusterEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityInsightsMailClusterEntity)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityInsightsMailClusterEntity(document.RootElement, options);
         }
 
-        internal static SecurityInsightsMailClusterEntity DeserializeSecurityInsightsMailClusterEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecurityInsightsMailClusterEntity DeserializeSecurityInsightsMailClusterEntity(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SecurityInsightsEntityKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            string friendlyName = default;
-            IReadOnlyList<string> networkMessageIds = default;
-            BinaryData countByDeliveryStatus = default;
-            BinaryData countByThreatType = default;
-            BinaryData countByProtectionStatus = default;
-            IReadOnlyList<string> threats = default;
-            string query = default;
-            DateTimeOffset? queryTime = default;
-            int? mailCount = default;
-            bool? isVolumeAnomaly = default;
-            string source = default;
-            string clusterSourceIdentifier = default;
-            string clusterSourceType = default;
-            DateTimeOffset? clusterQueryStartTime = default;
-            DateTimeOffset? clusterQueryEndTime = default;
-            string clusterGroup = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SecurityInsightsEntityKind kind = default;
+            MailClusterEntityProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    kind = new SecurityInsightsEntityKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityInsightsContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("additionalData"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                                }
-                            }
-                            additionalData = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("friendlyName"u8))
-                        {
-                            friendlyName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("networkMessageIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            networkMessageIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("countByDeliveryStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            countByDeliveryStatus = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("countByThreatType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            countByThreatType = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("countByProtectionStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            countByProtectionStatus = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("threats"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            threats = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("query"u8))
-                        {
-                            query = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("queryTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            queryTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("mailCount"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            mailCount = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("isVolumeAnomaly"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isVolumeAnomaly = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("source"u8))
-                        {
-                            source = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterSourceIdentifier"u8))
-                        {
-                            clusterSourceIdentifier = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterSourceType"u8))
-                        {
-                            clusterSourceType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterQueryStartTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterQueryStartTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterQueryEndTime"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clusterQueryEndTime = property0.Value.GetDateTimeOffset("O");
-                            continue;
-                        }
-                        if (property0.NameEquals("clusterGroup"u8))
-                        {
-                            clusterGroup = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityInsightsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new SecurityInsightsEntityKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = MailClusterEntityProperties.DeserializeMailClusterEntityProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties0.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsMailClusterEntity(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 kind,
-                serializedAdditionalRawData,
-                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName,
-                networkMessageIds ?? new ChangeTrackingList<string>(),
-                countByDeliveryStatus,
-                countByThreatType,
-                countByProtectionStatus,
-                threats ?? new ChangeTrackingList<string>(),
-                query,
-                queryTime,
-                mailCount,
-                isVolumeAnomaly,
-                source,
-                clusterSourceIdentifier,
-                clusterSourceType,
-                clusterQueryStartTime,
-                clusterQueryEndTime,
-                clusterGroup);
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine($"'{Kind.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    additionalData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AdditionalData))
-                {
-                    if (AdditionalData.Any())
-                    {
-                        builder.Append("    additionalData: ");
-                        builder.AppendLine("{");
-                        foreach (var item in AdditionalData)
-                        {
-                            builder.Append($"        '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"'{item.Value.ToString()}'");
-                        }
-                        builder.AppendLine("    }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FriendlyName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    friendlyName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FriendlyName))
-                {
-                    builder.Append("    friendlyName: ");
-                    if (FriendlyName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FriendlyName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FriendlyName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkMessageIds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    networkMessageIds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NetworkMessageIds))
-                {
-                    if (NetworkMessageIds.Any())
-                    {
-                        builder.Append("    networkMessageIds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NetworkMessageIds)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountByDeliveryStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    countByDeliveryStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CountByDeliveryStatus))
-                {
-                    builder.Append("    countByDeliveryStatus: ");
-                    builder.AppendLine($"'{CountByDeliveryStatus.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountByThreatType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    countByThreatType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CountByThreatType))
-                {
-                    builder.Append("    countByThreatType: ");
-                    builder.AppendLine($"'{CountByThreatType.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountByProtectionStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    countByProtectionStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CountByProtectionStatus))
-                {
-                    builder.Append("    countByProtectionStatus: ");
-                    builder.AppendLine($"'{CountByProtectionStatus.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Threats), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    threats: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Threats))
-                {
-                    if (Threats.Any())
-                    {
-                        builder.Append("    threats: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Threats)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Query), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    query: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Query))
-                {
-                    builder.Append("    query: ");
-                    if (Query.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Query}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Query}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    queryTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(QueryOn))
-                {
-                    builder.Append("    queryTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(QueryOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MailCount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    mailCount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MailCount))
-                {
-                    builder.Append("    mailCount: ");
-                    builder.AppendLine($"{MailCount.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVolumeAnomaly), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isVolumeAnomaly: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsVolumeAnomaly))
-                {
-                    builder.Append("    isVolumeAnomaly: ");
-                    var boolValue = IsVolumeAnomaly.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    source: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Source))
-                {
-                    builder.Append("    source: ");
-                    if (Source.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Source}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Source}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterSourceIdentifier), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    clusterSourceIdentifier: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterSourceIdentifier))
-                {
-                    builder.Append("    clusterSourceIdentifier: ");
-                    if (ClusterSourceIdentifier.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClusterSourceIdentifier}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClusterSourceIdentifier}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterSourceType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    clusterSourceType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterSourceType))
-                {
-                    builder.Append("    clusterSourceType: ");
-                    if (ClusterSourceType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClusterSourceType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClusterSourceType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterQueryStartOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    clusterQueryStartTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterQueryStartOn))
-                {
-                    builder.Append("    clusterQueryStartTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ClusterQueryStartOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterQueryEndOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    clusterQueryEndTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterQueryEndOn))
-                {
-                    builder.Append("    clusterQueryEndTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ClusterQueryEndOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterGroup), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    clusterGroup: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ClusterGroup))
-                {
-                    builder.Append("    clusterGroup: ");
-                    if (ClusterGroup.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ClusterGroup}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ClusterGroup}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SecurityInsightsMailClusterEntity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecurityInsightsMailClusterEntity IPersistableModel<SecurityInsightsMailClusterEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecurityInsightsMailClusterEntity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecurityInsightsMailClusterEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

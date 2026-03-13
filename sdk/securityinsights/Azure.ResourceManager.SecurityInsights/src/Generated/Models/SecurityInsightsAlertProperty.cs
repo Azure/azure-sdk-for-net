@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,62 +15,97 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsAlertProperty : IEquatable<SecurityInsightsAlertProperty>
     {
         private readonly string _value;
+        /// <summary> Alert's link. </summary>
+        private const string AlertLinkValue = "AlertLink";
+        /// <summary> Confidence level property. </summary>
+        private const string ConfidenceLevelValue = "ConfidenceLevel";
+        /// <summary> Confidence score. </summary>
+        private const string ConfidenceScoreValue = "ConfidenceScore";
+        /// <summary> Extended links to the alert. </summary>
+        private const string ExtendedLinksValue = "ExtendedLinks";
+        /// <summary> Product name alert property. </summary>
+        private const string ProductNameValue = "ProductName";
+        /// <summary> Provider name alert property. </summary>
+        private const string ProviderNameValue = "ProviderName";
+        /// <summary> Product component name alert property. </summary>
+        private const string ProductComponentNameValue = "ProductComponentName";
+        /// <summary> Remediation steps alert property. </summary>
+        private const string RemediationStepsValue = "RemediationSteps";
+        /// <summary> Techniques alert property. </summary>
+        private const string TechniquesValue = "Techniques";
+        /// <summary> SubTechniques alert property. </summary>
+        private const string SubTechniquesValue = "SubTechniques";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertProperty"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsAlertProperty(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AlertLinkValue = "AlertLink";
-        private const string ConfidenceLevelValue = "ConfidenceLevel";
-        private const string ConfidenceScoreValue = "ConfidenceScore";
-        private const string ExtendedLinksValue = "ExtendedLinks";
-        private const string ProductNameValue = "ProductName";
-        private const string ProviderNameValue = "ProviderName";
-        private const string ProductComponentNameValue = "ProductComponentName";
-        private const string RemediationStepsValue = "RemediationSteps";
-        private const string TechniquesValue = "Techniques";
-        private const string SubTechniquesValue = "SubTechniques";
+            _value = value;
+        }
 
         /// <summary> Alert's link. </summary>
         public static SecurityInsightsAlertProperty AlertLink { get; } = new SecurityInsightsAlertProperty(AlertLinkValue);
+
         /// <summary> Confidence level property. </summary>
         public static SecurityInsightsAlertProperty ConfidenceLevel { get; } = new SecurityInsightsAlertProperty(ConfidenceLevelValue);
+
         /// <summary> Confidence score. </summary>
         public static SecurityInsightsAlertProperty ConfidenceScore { get; } = new SecurityInsightsAlertProperty(ConfidenceScoreValue);
+
         /// <summary> Extended links to the alert. </summary>
         public static SecurityInsightsAlertProperty ExtendedLinks { get; } = new SecurityInsightsAlertProperty(ExtendedLinksValue);
+
         /// <summary> Product name alert property. </summary>
         public static SecurityInsightsAlertProperty ProductName { get; } = new SecurityInsightsAlertProperty(ProductNameValue);
+
         /// <summary> Provider name alert property. </summary>
         public static SecurityInsightsAlertProperty ProviderName { get; } = new SecurityInsightsAlertProperty(ProviderNameValue);
+
         /// <summary> Product component name alert property. </summary>
         public static SecurityInsightsAlertProperty ProductComponentName { get; } = new SecurityInsightsAlertProperty(ProductComponentNameValue);
+
         /// <summary> Remediation steps alert property. </summary>
         public static SecurityInsightsAlertProperty RemediationSteps { get; } = new SecurityInsightsAlertProperty(RemediationStepsValue);
+
         /// <summary> Techniques alert property. </summary>
         public static SecurityInsightsAlertProperty Techniques { get; } = new SecurityInsightsAlertProperty(TechniquesValue);
+
         /// <summary> SubTechniques alert property. </summary>
         public static SecurityInsightsAlertProperty SubTechniques { get; } = new SecurityInsightsAlertProperty(SubTechniquesValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertProperty"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsAlertProperty left, SecurityInsightsAlertProperty right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertProperty"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsAlertProperty left, SecurityInsightsAlertProperty right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsAlertProperty"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertProperty"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsAlertProperty(string value) => new SecurityInsightsAlertProperty(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertProperty"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsAlertProperty?(string value) => value == null ? null : new SecurityInsightsAlertProperty(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsAlertProperty other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsAlertProperty other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

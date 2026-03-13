@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The AutomationRulePropertyChangedConditionSupportedPropertyType. </summary>
+    /// <summary></summary>
     public readonly partial struct AutomationRulePropertyChangedConditionSupportedPropertyType : IEquatable<AutomationRulePropertyChangedConditionSupportedPropertyType>
     {
         private readonly string _value;
+        /// <summary> Evaluate the condition on the incident severity. </summary>
+        private const string IncidentSeverityValue = "IncidentSeverity";
+        /// <summary> Evaluate the condition on the incident status. </summary>
+        private const string IncidentStatusValue = "IncidentStatus";
+        /// <summary> Evaluate the condition on the incident owner. </summary>
+        private const string IncidentOwnerValue = "IncidentOwner";
 
         /// <summary> Initializes a new instance of <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationRulePropertyChangedConditionSupportedPropertyType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string IncidentSeverityValue = "IncidentSeverity";
-        private const string IncidentStatusValue = "IncidentStatus";
-        private const string IncidentOwnerValue = "IncidentOwner";
+            _value = value;
+        }
 
         /// <summary> Evaluate the condition on the incident severity. </summary>
         public static AutomationRulePropertyChangedConditionSupportedPropertyType IncidentSeverity { get; } = new AutomationRulePropertyChangedConditionSupportedPropertyType(IncidentSeverityValue);
+
         /// <summary> Evaluate the condition on the incident status. </summary>
         public static AutomationRulePropertyChangedConditionSupportedPropertyType IncidentStatus { get; } = new AutomationRulePropertyChangedConditionSupportedPropertyType(IncidentStatusValue);
+
         /// <summary> Evaluate the condition on the incident owner. </summary>
         public static AutomationRulePropertyChangedConditionSupportedPropertyType IncidentOwner { get; } = new AutomationRulePropertyChangedConditionSupportedPropertyType(IncidentOwnerValue);
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationRulePropertyChangedConditionSupportedPropertyType left, AutomationRulePropertyChangedConditionSupportedPropertyType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationRulePropertyChangedConditionSupportedPropertyType left, AutomationRulePropertyChangedConditionSupportedPropertyType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationRulePropertyChangedConditionSupportedPropertyType(string value) => new AutomationRulePropertyChangedConditionSupportedPropertyType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationRulePropertyChangedConditionSupportedPropertyType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationRulePropertyChangedConditionSupportedPropertyType?(string value) => value == null ? null : new AutomationRulePropertyChangedConditionSupportedPropertyType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationRulePropertyChangedConditionSupportedPropertyType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationRulePropertyChangedConditionSupportedPropertyType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

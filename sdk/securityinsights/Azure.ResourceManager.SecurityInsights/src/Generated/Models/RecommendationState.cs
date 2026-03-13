@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct RecommendationState : IEquatable<RecommendationState>
     {
         private readonly string _value;
+        /// <summary> Recommendation is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Recommendation is in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> Recommendation has been dismissed. </summary>
+        private const string DismissedValue = "Dismissed";
+        /// <summary> Recommendation has been completed by user. </summary>
+        private const string CompletedByUserValue = "CompletedByUser";
+        /// <summary> Recommendation has been completed by the system. </summary>
+        private const string CompletedBySystemValue = "CompletedBySystem";
 
         /// <summary> Initializes a new instance of <see cref="RecommendationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RecommendationState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string InProgressValue = "InProgress";
-        private const string DismissedValue = "Dismissed";
-        private const string CompletedByUserValue = "CompletedByUser";
-        private const string CompletedBySystemValue = "CompletedBySystem";
+            _value = value;
+        }
 
         /// <summary> Recommendation is active. </summary>
         public static RecommendationState Active { get; } = new RecommendationState(ActiveValue);
+
         /// <summary> Recommendation is in progress. </summary>
         public static RecommendationState InProgress { get; } = new RecommendationState(InProgressValue);
+
         /// <summary> Recommendation has been dismissed. </summary>
         public static RecommendationState Dismissed { get; } = new RecommendationState(DismissedValue);
+
         /// <summary> Recommendation has been completed by user. </summary>
         public static RecommendationState CompletedByUser { get; } = new RecommendationState(CompletedByUserValue);
+
         /// <summary> Recommendation has been completed by the system. </summary>
         public static RecommendationState CompletedBySystem { get; } = new RecommendationState(CompletedBySystemValue);
+
         /// <summary> Determines if two <see cref="RecommendationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecommendationState left, RecommendationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RecommendationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecommendationState left, RecommendationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecommendationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RecommendationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RecommendationState(string value) => new RecommendationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RecommendationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecommendationState?(string value) => value == null ? null : new RecommendationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecommendationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RecommendationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

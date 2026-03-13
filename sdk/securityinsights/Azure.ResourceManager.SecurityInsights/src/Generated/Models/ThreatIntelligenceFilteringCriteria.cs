@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Filtering criteria for querying threat intelligence indicators. </summary>
     public partial class ThreatIntelligenceFilteringCriteria
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceFilteringCriteria"/>. </summary>
         public ThreatIntelligenceFilteringCriteria()
@@ -62,7 +34,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="maxConfidence"> Maximum confidence. </param>
         /// <param name="minValidUntil"> Start time for ValidUntil filter. </param>
         /// <param name="maxValidUntil"> End time for ValidUntil filter. </param>
-        /// <param name="isIncludeDisabled"> Parameter to include/exclude disabled indicators. </param>
+        /// <param name="includeDisabled"> Parameter to include/exclude disabled indicators. </param>
         /// <param name="sortBy"> Columns to sort by and sorting order. </param>
         /// <param name="sources"> Sources of threat intelligence indicators. </param>
         /// <param name="patternTypes"> Pattern types. </param>
@@ -70,15 +42,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="ids"> Ids of threat intelligence indicators. </param>
         /// <param name="keywords"> Keywords for searching threat intelligence indicators. </param>
         /// <param name="skipToken"> Skip token. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThreatIntelligenceFilteringCriteria(int? pageSize, int? minConfidence, int? maxConfidence, DateTimeOffset? minValidUntil, DateTimeOffset? maxValidUntil, bool? isIncludeDisabled, IList<ThreatIntelligenceSortingCriteria> sortBy, IList<string> sources, IList<string> patternTypes, IList<string> threatTypes, IList<string> ids, IList<string> keywords, string skipToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceFilteringCriteria(int? pageSize, int? minConfidence, int? maxConfidence, string minValidUntil, string maxValidUntil, bool? includeDisabled, IList<ThreatIntelligenceSortingCriteria> sortBy, IList<string> sources, IList<string> patternTypes, IList<string> threatTypes, IList<string> ids, IList<string> keywords, string skipToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PageSize = pageSize;
             MinConfidence = minConfidence;
             MaxConfidence = maxConfidence;
             MinValidUntil = minValidUntil;
             MaxValidUntil = maxValidUntil;
-            IsIncludeDisabled = isIncludeDisabled;
+            IncludeDisabled = includeDisabled;
             SortBy = sortBy;
             Sources = sources;
             PatternTypes = patternTypes;
@@ -86,47 +58,46 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Ids = ids;
             Keywords = keywords;
             SkipToken = skipToken;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Page size. </summary>
-        [WirePath("pageSize")]
         public int? PageSize { get; set; }
+
         /// <summary> Minimum confidence. </summary>
-        [WirePath("minConfidence")]
         public int? MinConfidence { get; set; }
+
         /// <summary> Maximum confidence. </summary>
-        [WirePath("maxConfidence")]
         public int? MaxConfidence { get; set; }
+
         /// <summary> Start time for ValidUntil filter. </summary>
-        [WirePath("minValidUntil")]
-        public DateTimeOffset? MinValidUntil { get; set; }
+        public string MinValidUntil { get; set; }
+
         /// <summary> End time for ValidUntil filter. </summary>
-        [WirePath("maxValidUntil")]
-        public DateTimeOffset? MaxValidUntil { get; set; }
+        public string MaxValidUntil { get; set; }
+
         /// <summary> Parameter to include/exclude disabled indicators. </summary>
-        [WirePath("includeDisabled")]
-        public bool? IsIncludeDisabled { get; set; }
+        public bool? IncludeDisabled { get; set; }
+
         /// <summary> Columns to sort by and sorting order. </summary>
-        [WirePath("sortBy")]
         public IList<ThreatIntelligenceSortingCriteria> SortBy { get; }
+
         /// <summary> Sources of threat intelligence indicators. </summary>
-        [WirePath("sources")]
         public IList<string> Sources { get; }
+
         /// <summary> Pattern types. </summary>
-        [WirePath("patternTypes")]
         public IList<string> PatternTypes { get; }
+
         /// <summary> Threat types of threat intelligence indicators. </summary>
-        [WirePath("threatTypes")]
         public IList<string> ThreatTypes { get; }
+
         /// <summary> Ids of threat intelligence indicators. </summary>
-        [WirePath("ids")]
         public IList<string> Ids { get; }
+
         /// <summary> Keywords for searching threat intelligence indicators. </summary>
-        [WirePath("keywords")]
         public IList<string> Keywords { get; }
+
         /// <summary> Skip token. </summary>
-        [WirePath("skipToken")]
         public string SkipToken { get; set; }
     }
 }

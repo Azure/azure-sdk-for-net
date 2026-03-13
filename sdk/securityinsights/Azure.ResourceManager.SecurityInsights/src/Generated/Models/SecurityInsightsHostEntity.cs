@@ -9,114 +9,131 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a host entity. </summary>
-    public partial class SecurityInsightsHostEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsHostEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHostEntity"/>. </summary>
-        public SecurityInsightsHostEntity()
+        internal SecurityInsightsHostEntity() : base(SecurityInsightsEntityKind.Host)
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = SecurityInsightsEntityKind.Host;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsHostEntity"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="azureId"> The azure resource id of the VM. </param>
-        /// <param name="dnsDomain"> The DNS domain that this host belongs to. Should contain the compete DNS suffix for the domain. </param>
-        /// <param name="hostName"> The hostname without the domain suffix. </param>
-        /// <param name="isDomainJoined"> Determines whether this host belongs to a domain. </param>
-        /// <param name="netBiosName"> The host name (pre-windows2000). </param>
-        /// <param name="ntDomain"> The NT domain that this host belongs to. </param>
-        /// <param name="omsAgentId"> The OMS agent id, if the host has OMS agent installed. </param>
-        /// <param name="osFamily"> The operating system type. </param>
-        /// <param name="osVersion"> A free text representation of the operating system. This field is meant to hold specific versions the are more fine grained than OSFamily or future values not supported by OSFamily enumeration. </param>
-        internal SecurityInsightsHostEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, ResourceIdentifier azureId, string dnsDomain, string hostName, bool? isDomainJoined, string netBiosName, string ntDomain, string omsAgentId, SecurityInsightsHostOSFamily? osFamily, string osVersion) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="properties"> Host entity properties. </param>
+        internal SecurityInsightsHostEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityInsightsEntityKind kind, HostEntityProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            AdditionalData = additionalData;
-            FriendlyName = friendlyName;
-            AzureId = azureId;
-            DnsDomain = dnsDomain;
-            HostName = hostName;
-            IsDomainJoined = isDomainJoined;
-            NetBiosName = netBiosName;
-            NtDomain = ntDomain;
-            OmsAgentId = omsAgentId;
-            OSFamily = osFamily;
-            OSVersion = osVersion;
-            Kind = kind;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.additionalData")]
-        public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
+        /// <summary> Host entity properties. </summary>
+        internal HostEntityProperties Properties { get; }
+
+        /// <summary> A bag of custom fields that should be part of the entity and will be presented to the user. </summary>
+        public IReadOnlyDictionary<string, BinaryData> AdditionalData
+        {
+            get
+            {
+                return Properties.AdditionalData;
+            }
+        }
+
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
-        [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties.FriendlyName;
+            }
+        }
+
         /// <summary> The azure resource id of the VM. </summary>
-        [WirePath("properties.azureID")]
-        public ResourceIdentifier AzureId { get; }
+        public string AzureID
+        {
+            get
+            {
+                return Properties.AzureID;
+            }
+        }
+
         /// <summary> The DNS domain that this host belongs to. Should contain the compete DNS suffix for the domain. </summary>
-        [WirePath("properties.dnsDomain")]
-        public string DnsDomain { get; }
+        public string DnsDomain
+        {
+            get
+            {
+                return Properties.DnsDomain;
+            }
+        }
+
         /// <summary> The hostname without the domain suffix. </summary>
-        [WirePath("properties.hostName")]
-        public string HostName { get; }
+        public string HostName
+        {
+            get
+            {
+                return Properties.HostName;
+            }
+        }
+
         /// <summary> Determines whether this host belongs to a domain. </summary>
-        [WirePath("properties.isDomainJoined")]
-        public bool? IsDomainJoined { get; }
+        public bool? IsDomainJoined
+        {
+            get
+            {
+                return Properties.IsDomainJoined;
+            }
+        }
+
         /// <summary> The host name (pre-windows2000). </summary>
-        [WirePath("properties.netBiosName")]
-        public string NetBiosName { get; }
+        public string NetBiosName
+        {
+            get
+            {
+                return Properties.NetBiosName;
+            }
+        }
+
         /// <summary> The NT domain that this host belongs to. </summary>
-        [WirePath("properties.ntDomain")]
-        public string NtDomain { get; }
+        public string NtDomain
+        {
+            get
+            {
+                return Properties.NtDomain;
+            }
+        }
+
         /// <summary> The OMS agent id, if the host has OMS agent installed. </summary>
-        [WirePath("properties.omsAgentID")]
-        public string OmsAgentId { get; }
+        public string OmsAgentID
+        {
+            get
+            {
+                return Properties.OmsAgentID;
+            }
+        }
+
         /// <summary> The operating system type. </summary>
-        [WirePath("properties.osFamily")]
-        public SecurityInsightsHostOSFamily? OSFamily { get; set; }
+        public SecurityInsightsHostOSFamily? OsFamily
+        {
+            get
+            {
+                return Properties.OsFamily;
+            }
+        }
+
         /// <summary> A free text representation of the operating system. This field is meant to hold specific versions the are more fine grained than OSFamily or future values not supported by OSFamily enumeration. </summary>
-        [WirePath("properties.osVersion")]
-        public string OSVersion { get; }
+        public string OsVersion
+        {
+            get
+            {
+                return Properties.OsVersion;
+            }
+        }
     }
 }

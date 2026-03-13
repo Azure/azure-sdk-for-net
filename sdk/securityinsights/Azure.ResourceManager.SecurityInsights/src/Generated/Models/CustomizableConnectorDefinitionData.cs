@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,43 +17,93 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class CustomizableConnectorDefinitionData : SecurityInsightsDataConnectorDefinitionData
     {
         /// <summary> Initializes a new instance of <see cref="CustomizableConnectorDefinitionData"/>. </summary>
-        public CustomizableConnectorDefinitionData()
+        public CustomizableConnectorDefinitionData() : base(DataConnectorDefinitionKind.Customizable)
         {
-            Kind = DataConnectorDefinitionKind.Customizable;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomizableConnectorDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="createdOn"> Gets or sets the connector definition created date in UTC format. </param>
-        /// <param name="lastModifiedOn"> Gets or sets the connector definition last modified date in UTC format. </param>
-        /// <param name="connectorUiConfig"> The UiConfig for 'Customizable' connector definition kind. </param>
-        /// <param name="connectionsConfig"> The UiConfig for 'Customizable' connector definition kind. </param>
-        internal CustomizableConnectorDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorDefinitionKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, CustomizableConnectorUiConfig connectorUiConfig, CustomizableConnectionsConfig connectionsConfig) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> Customizable properties. </param>
+        internal CustomizableConnectorDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataConnectorDefinitionKind kind, string eTag, CustomizableConnectorDefinitionProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            CreatedOn = createdOn;
-            LastModifiedOn = lastModifiedOn;
-            ConnectorUiConfig = connectorUiConfig;
-            ConnectionsConfig = connectionsConfig;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Customizable properties. </summary>
+        internal CustomizableConnectorDefinitionProperties Properties { get; set; }
+
         /// <summary> Gets or sets the connector definition created date in UTC format. </summary>
-        [WirePath("properties.createdTimeUtc")]
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedTimeUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedTimeUtc;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomizableConnectorDefinitionProperties();
+                }
+                Properties.CreatedTimeUtc = value.Value;
+            }
+        }
+
         /// <summary> Gets or sets the connector definition last modified date in UTC format. </summary>
-        [WirePath("properties.lastModifiedUtc")]
-        public DateTimeOffset? LastModifiedOn { get; set; }
+        public DateTimeOffset? LastModifiedUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedUtc;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomizableConnectorDefinitionProperties();
+                }
+                Properties.LastModifiedUtc = value.Value;
+            }
+        }
+
         /// <summary> The UiConfig for 'Customizable' connector definition kind. </summary>
-        [WirePath("properties.connectorUiConfig")]
-        public CustomizableConnectorUiConfig ConnectorUiConfig { get; set; }
+        public CustomizableConnectorUiConfig ConnectorUiConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectorUiConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomizableConnectorDefinitionProperties();
+                }
+                Properties.ConnectorUiConfig = value;
+            }
+        }
+
         /// <summary> The UiConfig for 'Customizable' connector definition kind. </summary>
-        [WirePath("properties.connectionsConfig")]
-        public CustomizableConnectionsConfig ConnectionsConfig { get; set; }
+        public CustomizableConnectionsConfig ConnectionsConfig
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionsConfig;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomizableConnectorDefinitionProperties();
+                }
+                Properties.ConnectionsConfig = value;
+            }
+        }
     }
 }

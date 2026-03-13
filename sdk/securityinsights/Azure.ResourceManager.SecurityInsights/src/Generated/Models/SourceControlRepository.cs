@@ -7,49 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> metadata of a repository. </summary>
     public partial class SourceControlRepository
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SourceControlRepository"/>. </summary>
         /// <param name="uri"> Url of repository. </param>
         /// <param name="branch"> Branch name of repository. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> or <paramref name="branch"/> is null. </exception>
-        public SourceControlRepository(Uri uri, string branch)
+        public SourceControlRepository(string uri, string branch)
         {
             Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(branch, nameof(branch));
@@ -63,32 +35,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="branch"> Branch name of repository. </param>
         /// <param name="displayUri"> Display url of repository. </param>
         /// <param name="deploymentLogsUri"> Url to access repository action logs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceControlRepository(Uri uri, string branch, Uri displayUri, Uri deploymentLogsUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SourceControlRepository(string uri, string branch, string displayUri, string deploymentLogsUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             Branch = branch;
             DisplayUri = displayUri;
             DeploymentLogsUri = deploymentLogsUri;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SourceControlRepository"/> for deserialization. </summary>
-        internal SourceControlRepository()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Url of repository. </summary>
-        [WirePath("url")]
-        public Uri Uri { get; set; }
+        public string Uri { get; set; }
+
         /// <summary> Branch name of repository. </summary>
-        [WirePath("branch")]
         public string Branch { get; set; }
+
         /// <summary> Display url of repository. </summary>
-        [WirePath("displayUrl")]
-        public Uri DisplayUri { get; set; }
+        public string DisplayUri { get; set; }
+
         /// <summary> Url to access repository action logs. </summary>
-        [WirePath("deploymentLogsUrl")]
-        public Uri DeploymentLogsUri { get; }
+        public string DeploymentLogsUri { get; }
     }
 }

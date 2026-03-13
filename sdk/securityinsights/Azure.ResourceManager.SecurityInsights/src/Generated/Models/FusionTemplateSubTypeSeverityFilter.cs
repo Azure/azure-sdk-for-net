@@ -7,47 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents severity configurations available for a source subtype consumed in Fusion detection. </summary>
     public partial class FusionTemplateSubTypeSeverityFilter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSubTypeSeverityFilter"/>. </summary>
         /// <param name="isSupported"> Determines whether severity configuration is supported for this source subtype consumed in Fusion detection. </param>
-        public FusionTemplateSubTypeSeverityFilter(bool isSupported)
+        internal FusionTemplateSubTypeSeverityFilter(bool isSupported)
         {
             IsSupported = isSupported;
             SeverityFilters = new ChangeTrackingList<SecurityInsightsAlertSeverity>();
@@ -56,24 +28,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSubTypeSeverityFilter"/>. </summary>
         /// <param name="isSupported"> Determines whether severity configuration is supported for this source subtype consumed in Fusion detection. </param>
         /// <param name="severityFilters"> List of all supported severities for this source subtype consumed in Fusion detection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FusionTemplateSubTypeSeverityFilter(bool isSupported, IList<SecurityInsightsAlertSeverity> severityFilters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FusionTemplateSubTypeSeverityFilter(bool isSupported, IList<SecurityInsightsAlertSeverity> severityFilters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsSupported = isSupported;
             SeverityFilters = severityFilters;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FusionTemplateSubTypeSeverityFilter"/> for deserialization. </summary>
-        internal FusionTemplateSubTypeSeverityFilter()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Determines whether severity configuration is supported for this source subtype consumed in Fusion detection. </summary>
-        [WirePath("isSupported")]
-        public bool IsSupported { get; set; }
+        public bool IsSupported { get; }
+
         /// <summary> List of all supported severities for this source subtype consumed in Fusion detection. </summary>
-        [WirePath("severityFilters")]
         public IList<SecurityInsightsAlertSeverity> SeverityFilters { get; }
     }
 }

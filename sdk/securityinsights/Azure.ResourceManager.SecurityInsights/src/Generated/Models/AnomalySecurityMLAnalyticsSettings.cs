@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,125 +17,243 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class AnomalySecurityMLAnalyticsSettings : SecurityMLAnalyticsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="AnomalySecurityMLAnalyticsSettings"/>. </summary>
-        public AnomalySecurityMLAnalyticsSettings()
+        public AnomalySecurityMLAnalyticsSettings() : base(SecurityMLAnalyticsSettingsKind.Anomaly)
         {
-            RequiredDataConnectors = new ChangeTrackingList<SecurityMLAnalyticsSettingsDataSource>();
-            Tactics = new ChangeTrackingList<SecurityInsightsAttackTactic>();
-            Techniques = new ChangeTrackingList<string>();
-            Kind = SecurityMLAnalyticsSettingsKind.Anomaly;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalySecurityMLAnalyticsSettings"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of security ML Analytics Settings. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="description"> The description of the SecurityMLAnalyticsSettings. </param>
-        /// <param name="displayName"> The display name for settings created by this SecurityMLAnalyticsSettings. </param>
-        /// <param name="isEnabled"> Determines whether this settings is enabled or disabled. </param>
-        /// <param name="lastModifiedOn"> The last time that this SecurityMLAnalyticsSettings has been modified. </param>
-        /// <param name="requiredDataConnectors"> The required data sources for this SecurityMLAnalyticsSettings. </param>
-        /// <param name="tactics"> The tactics of the SecurityMLAnalyticsSettings. </param>
-        /// <param name="techniques"> The techniques of the SecurityMLAnalyticsSettings. </param>
-        /// <param name="anomalyVersion"> The anomaly version of the AnomalySecurityMLAnalyticsSettings. </param>
-        /// <param name="customizableObservations"> The customizable observations of the AnomalySecurityMLAnalyticsSettings. </param>
-        /// <param name="frequency"> The frequency that this SecurityMLAnalyticsSettings will be run. </param>
-        /// <param name="settingsStatus"> The anomaly SecurityMLAnalyticsSettings status. </param>
-        /// <param name="isDefaultSettings"> Determines whether this anomaly security ml analytics settings is a default settings. </param>
-        /// <param name="anomalySettingsVersion"> The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not. </param>
-        /// <param name="settingsDefinitionId"> The anomaly settings definition Id. </param>
-        internal AnomalySecurityMLAnalyticsSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityMLAnalyticsSettingsKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn, IList<SecurityMLAnalyticsSettingsDataSource> requiredDataConnectors, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, string anomalyVersion, BinaryData customizableObservations, TimeSpan? frequency, AnomalySecurityMLAnalyticsSettingsStatus? settingsStatus, bool? isDefaultSettings, int? anomalySettingsVersion, Guid? settingsDefinitionId) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> Anomaly Security ML Analytics Settings properties. </param>
+        internal AnomalySecurityMLAnalyticsSettings(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityMLAnalyticsSettingsKind kind, string eTag, AnomalySecurityMLAnalyticsSettingsProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            Description = description;
-            DisplayName = displayName;
-            IsEnabled = isEnabled;
-            LastModifiedOn = lastModifiedOn;
-            RequiredDataConnectors = requiredDataConnectors;
-            Tactics = tactics;
-            Techniques = techniques;
-            AnomalyVersion = anomalyVersion;
-            CustomizableObservations = customizableObservations;
-            Frequency = frequency;
-            SettingsStatus = settingsStatus;
-            IsDefaultSettings = isDefaultSettings;
-            AnomalySettingsVersion = anomalySettingsVersion;
-            SettingsDefinitionId = settingsDefinitionId;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Anomaly Security ML Analytics Settings properties. </summary>
+        internal AnomalySecurityMLAnalyticsSettingsProperties Properties { get; set; }
+
         /// <summary> The description of the SecurityMLAnalyticsSettings. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The display name for settings created by this SecurityMLAnalyticsSettings. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Determines whether this settings is enabled or disabled. </summary>
-        [WirePath("properties.enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool Enabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                Properties.Enabled = value;
+            }
+        }
+
         /// <summary> The last time that this SecurityMLAnalyticsSettings has been modified. </summary>
-        [WirePath("properties.lastModifiedUtc")]
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedUtc;
+            }
+        }
+
         /// <summary> The required data sources for this SecurityMLAnalyticsSettings. </summary>
-        [WirePath("properties.requiredDataConnectors")]
-        public IList<SecurityMLAnalyticsSettingsDataSource> RequiredDataConnectors { get; }
+        public IList<SecurityMLAnalyticsSettingsDataSource> RequiredDataConnectors
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                return Properties.RequiredDataConnectors;
+            }
+        }
+
         /// <summary> The tactics of the SecurityMLAnalyticsSettings. </summary>
-        [WirePath("properties.tactics")]
-        public IList<SecurityInsightsAttackTactic> Tactics { get; }
+        public IList<SecurityInsightsAttackTactic> Tactics
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                return Properties.Tactics;
+            }
+        }
+
         /// <summary> The techniques of the SecurityMLAnalyticsSettings. </summary>
-        [WirePath("properties.techniques")]
-        public IList<string> Techniques { get; }
+        public IList<string> Techniques
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                return Properties.Techniques;
+            }
+        }
+
         /// <summary> The anomaly version of the AnomalySecurityMLAnalyticsSettings. </summary>
-        [WirePath("properties.anomalyVersion")]
-        public string AnomalyVersion { get; set; }
-        /// <summary>
-        /// The customizable observations of the AnomalySecurityMLAnalyticsSettings.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.customizableObservations")]
-        public BinaryData CustomizableObservations { get; set; }
+        public string AnomalyVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AnomalyVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                Properties.AnomalyVersion = value;
+            }
+        }
+
+        /// <summary> The customizable observations of the AnomalySecurityMLAnalyticsSettings. </summary>
+        public BinaryData CustomizableObservations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomizableObservations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                Properties.CustomizableObservations = value;
+            }
+        }
+
         /// <summary> The frequency that this SecurityMLAnalyticsSettings will be run. </summary>
-        [WirePath("properties.frequency")]
-        public TimeSpan? Frequency { get; set; }
+        public TimeSpan Frequency
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Frequency;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                Properties.Frequency = value;
+            }
+        }
+
         /// <summary> The anomaly SecurityMLAnalyticsSettings status. </summary>
-        [WirePath("properties.settingsStatus")]
-        public AnomalySecurityMLAnalyticsSettingsStatus? SettingsStatus { get; set; }
+        public AnomalySecurityMLAnalyticsSettingsStatus SettingsStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SettingsStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                Properties.SettingsStatus = value;
+            }
+        }
+
         /// <summary> Determines whether this anomaly security ml analytics settings is a default settings. </summary>
-        [WirePath("properties.isDefaultSettings")]
-        public bool? IsDefaultSettings { get; set; }
+        public bool IsDefaultSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDefaultSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                Properties.IsDefaultSettings = value;
+            }
+        }
+
         /// <summary> The anomaly settings version of the Anomaly security ml analytics settings that dictates whether job version gets updated or not. </summary>
-        [WirePath("properties.anomalySettingsVersion")]
-        public int? AnomalySettingsVersion { get; set; }
+        public int? AnomalySettingsVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AnomalySettingsVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                Properties.AnomalySettingsVersion = value.Value;
+            }
+        }
+
         /// <summary> The anomaly settings definition Id. </summary>
-        [WirePath("properties.settingsDefinitionId")]
-        public Guid? SettingsDefinitionId { get; set; }
+        public Guid? SettingsDefinitionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SettingsDefinitionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AnomalySecurityMLAnalyticsSettingsProperties();
+                }
+                Properties.SettingsDefinitionId = value.Value;
+            }
+        }
     }
 }

@@ -13,66 +13,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Incident Configuration property bag. </summary>
     public partial class SecurityInsightsIncidentConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentConfiguration"/>. </summary>
-        /// <param name="isIncidentCreated"> Create incidents from alerts triggered by this analytics rule. </param>
-        public SecurityInsightsIncidentConfiguration(bool isIncidentCreated)
+        /// <param name="createIncident"> Create incidents from alerts triggered by this analytics rule. </param>
+        public SecurityInsightsIncidentConfiguration(bool createIncident)
         {
-            IsIncidentCreated = isIncidentCreated;
+            CreateIncident = createIncident;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentConfiguration"/>. </summary>
-        /// <param name="isIncidentCreated"> Create incidents from alerts triggered by this analytics rule. </param>
+        /// <param name="createIncident"> Create incidents from alerts triggered by this analytics rule. </param>
         /// <param name="groupingConfiguration"> Set how the alerts that are triggered by this analytics rule, are grouped into incidents. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsIncidentConfiguration(bool isIncidentCreated, SecurityInsightsGroupingConfiguration groupingConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentConfiguration(bool createIncident, SecurityInsightsGroupingConfiguration groupingConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsIncidentCreated = isIncidentCreated;
+            CreateIncident = createIncident;
             GroupingConfiguration = groupingConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentConfiguration"/> for deserialization. </summary>
-        internal SecurityInsightsIncidentConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Create incidents from alerts triggered by this analytics rule. </summary>
-        [WirePath("createIncident")]
-        public bool IsIncidentCreated { get; set; }
+        public bool CreateIncident { get; set; }
+
         /// <summary> Set how the alerts that are triggered by this analytics rule, are grouped into incidents. </summary>
-        [WirePath("groupingConfiguration")]
         public SecurityInsightsGroupingConfiguration GroupingConfiguration { get; set; }
     }
 }

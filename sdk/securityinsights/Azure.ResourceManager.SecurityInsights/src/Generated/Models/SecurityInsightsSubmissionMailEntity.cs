@@ -7,122 +7,142 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a submission mail entity. </summary>
-    public partial class SecurityInsightsSubmissionMailEntity : SecurityInsightsEntity
+    public partial class SecurityInsightsSubmissionMailEntity : SecurityInsightsEntityData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsSubmissionMailEntity"/>. </summary>
-        public SecurityInsightsSubmissionMailEntity()
+        internal SecurityInsightsSubmissionMailEntity() : base(SecurityInsightsEntityKind.SubmissionMail)
         {
-            AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
-            Kind = SecurityInsightsEntityKind.SubmissionMail;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsSubmissionMailEntity"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the entity. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
-        /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="networkMessageId"> The network message id of email to which submission belongs. </param>
-        /// <param name="submissionId"> The submission id. </param>
-        /// <param name="submitter"> The submitter. </param>
-        /// <param name="submitOn"> The submission date. </param>
-        /// <param name="messageReceivedOn"> The Time stamp when the message is received (Mail). </param>
-        /// <param name="recipient"> The recipient of the mail. </param>
-        /// <param name="sender"> The sender of the mail. </param>
-        /// <param name="senderIP"> The sender's IP. </param>
-        /// <param name="subject"> The subject of submission mail. </param>
-        /// <param name="reportType"> The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk. </param>
-        internal SecurityInsightsSubmissionMailEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, Guid? networkMessageId, Guid? submissionId, string submitter, DateTimeOffset? submitOn, DateTimeOffset? messageReceivedOn, string recipient, string sender, IPAddress senderIP, string subject, string reportType) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="properties"> Submission mail entity properties. </param>
+        internal SecurityInsightsSubmissionMailEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SecurityInsightsEntityKind kind, SubmissionMailEntityProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind)
         {
-            AdditionalData = additionalData;
-            FriendlyName = friendlyName;
-            NetworkMessageId = networkMessageId;
-            SubmissionId = submissionId;
-            Submitter = submitter;
-            SubmitOn = submitOn;
-            MessageReceivedOn = messageReceivedOn;
-            Recipient = recipient;
-            Sender = sender;
-            SenderIP = senderIP;
-            Subject = subject;
-            ReportType = reportType;
-            Kind = kind;
+            Properties = properties;
         }
 
-        /// <summary>
-        /// A bag of custom fields that should be part of the entity and will be presented to the user.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        [WirePath("properties.additionalData")]
-        public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
+        /// <summary> Submission mail entity properties. </summary>
+        internal SubmissionMailEntityProperties Properties { get; }
+
+        /// <summary> A bag of custom fields that should be part of the entity and will be presented to the user. </summary>
+        public IReadOnlyDictionary<string, BinaryData> AdditionalData
+        {
+            get
+            {
+                return Properties.AdditionalData;
+            }
+        }
+
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
-        [WirePath("properties.friendlyName")]
-        public string FriendlyName { get; }
+        public string FriendlyName
+        {
+            get
+            {
+                return Properties.FriendlyName;
+            }
+        }
+
         /// <summary> The network message id of email to which submission belongs. </summary>
-        [WirePath("properties.networkMessageId")]
-        public Guid? NetworkMessageId { get; }
+        public Guid? NetworkMessageId
+        {
+            get
+            {
+                return Properties.NetworkMessageId;
+            }
+        }
+
         /// <summary> The submission id. </summary>
-        [WirePath("properties.submissionId")]
-        public Guid? SubmissionId { get; }
+        public Guid? SubmissionId
+        {
+            get
+            {
+                return Properties.SubmissionId;
+            }
+        }
+
         /// <summary> The submitter. </summary>
-        [WirePath("properties.submitter")]
-        public string Submitter { get; }
+        public string Submitter
+        {
+            get
+            {
+                return Properties.Submitter;
+            }
+        }
+
         /// <summary> The submission date. </summary>
-        [WirePath("properties.submissionDate")]
-        public DateTimeOffset? SubmitOn { get; }
+        public DateTimeOffset? SubmissionOn
+        {
+            get
+            {
+                return Properties.SubmissionOn;
+            }
+        }
+
         /// <summary> The Time stamp when the message is received (Mail). </summary>
-        [WirePath("properties.timestamp")]
-        public DateTimeOffset? MessageReceivedOn { get; }
+        public DateTimeOffset? Timestamp
+        {
+            get
+            {
+                return Properties.Timestamp;
+            }
+        }
+
         /// <summary> The recipient of the mail. </summary>
-        [WirePath("properties.recipient")]
-        public string Recipient { get; }
+        public string Recipient
+        {
+            get
+            {
+                return Properties.Recipient;
+            }
+        }
+
         /// <summary> The sender of the mail. </summary>
-        [WirePath("properties.sender")]
-        public string Sender { get; }
+        public string Sender
+        {
+            get
+            {
+                return Properties.Sender;
+            }
+        }
+
         /// <summary> The sender's IP. </summary>
-        [WirePath("properties.senderIp")]
-        public IPAddress SenderIP { get; }
+        public string SenderIp
+        {
+            get
+            {
+                return Properties.SenderIp;
+            }
+        }
+
         /// <summary> The subject of submission mail. </summary>
-        [WirePath("properties.subject")]
-        public string Subject { get; }
+        public string Subject
+        {
+            get
+            {
+                return Properties.Subject;
+            }
+        }
+
         /// <summary> The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk. </summary>
-        [WirePath("properties.reportType")]
-        public string ReportType { get; }
+        public string ReportType
+        {
+            get
+            {
+                return Properties.ReportType;
+            }
+        }
     }
 }

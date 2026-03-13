@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,71 +17,158 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class MicrosoftSecurityIncidentCreationAlertRule : SecurityInsightsAlertRuleData
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>. </summary>
-        public MicrosoftSecurityIncidentCreationAlertRule()
+        public MicrosoftSecurityIncidentCreationAlertRule() : base(AlertRuleKind.MicrosoftSecurityIncidentCreation)
         {
-            DisplayNamesFilter = new ChangeTrackingList<string>();
-            DisplayNamesExcludeFilter = new ChangeTrackingList<string>();
-            SeveritiesFilter = new ChangeTrackingList<SecurityInsightsAlertSeverity>();
-            Kind = AlertRuleKind.MicrosoftSecurityIncidentCreation;
         }
 
         /// <summary> Initializes a new instance of <see cref="MicrosoftSecurityIncidentCreationAlertRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The kind of the alert rule. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="displayNamesFilter"> the alerts' displayNames on which the cases will be generated. </param>
-        /// <param name="displayNamesExcludeFilter"> the alerts' displayNames on which the cases will not be generated. </param>
-        /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
-        /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
-        /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
-        /// <param name="description"> The description of the alert rule. </param>
-        /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
-        /// <param name="isEnabled"> Determines whether this alert rule is enabled or disabled. </param>
-        /// <param name="lastModifiedOn"> The last time that this alert has been modified. </param>
-        internal MicrosoftSecurityIncidentCreationAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<SecurityInsightsAlertSeverity> severitiesFilter, string alertRuleTemplateName, string description, string displayName, bool? isEnabled, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="properties"> MicrosoftSecurityIncidentCreation rule properties. </param>
+        internal MicrosoftSecurityIncidentCreationAlertRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AlertRuleKind kind, string eTag, MicrosoftSecurityIncidentCreationAlertRuleProperties properties) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, kind, eTag)
         {
-            DisplayNamesFilter = displayNamesFilter;
-            DisplayNamesExcludeFilter = displayNamesExcludeFilter;
-            ProductFilter = productFilter;
-            SeveritiesFilter = severitiesFilter;
-            AlertRuleTemplateName = alertRuleTemplateName;
-            Description = description;
-            DisplayName = displayName;
-            IsEnabled = isEnabled;
-            LastModifiedOn = lastModifiedOn;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> MicrosoftSecurityIncidentCreation rule properties. </summary>
+        internal MicrosoftSecurityIncidentCreationAlertRuleProperties Properties { get; set; }
+
         /// <summary> the alerts' displayNames on which the cases will be generated. </summary>
-        [WirePath("properties.displayNamesFilter")]
-        public IList<string> DisplayNamesFilter { get; }
+        public IList<string> DisplayNamesFilter
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MicrosoftSecurityIncidentCreationAlertRuleProperties();
+                }
+                return Properties.DisplayNamesFilter;
+            }
+        }
+
         /// <summary> the alerts' displayNames on which the cases will not be generated. </summary>
-        [WirePath("properties.displayNamesExcludeFilter")]
-        public IList<string> DisplayNamesExcludeFilter { get; }
+        public IList<string> DisplayNamesExcludeFilter
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MicrosoftSecurityIncidentCreationAlertRuleProperties();
+                }
+                return Properties.DisplayNamesExcludeFilter;
+            }
+        }
+
         /// <summary> The alerts' productName on which the cases will be generated. </summary>
-        [WirePath("properties.productFilter")]
-        public MicrosoftSecurityProductName? ProductFilter { get; set; }
+        public MicrosoftSecurityProductName ProductFilter
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProductFilter;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MicrosoftSecurityIncidentCreationAlertRuleProperties();
+                }
+                Properties.ProductFilter = value;
+            }
+        }
+
         /// <summary> the alerts' severities on which the cases will be generated. </summary>
-        [WirePath("properties.severitiesFilter")]
-        public IList<SecurityInsightsAlertSeverity> SeveritiesFilter { get; }
+        public IList<SecurityInsightsAlertSeverity> SeveritiesFilter
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MicrosoftSecurityIncidentCreationAlertRuleProperties();
+                }
+                return Properties.SeveritiesFilter;
+            }
+        }
+
         /// <summary> The Name of the alert rule template used to create this rule. </summary>
-        [WirePath("properties.alertRuleTemplateName")]
-        public string AlertRuleTemplateName { get; set; }
+        public string AlertRuleTemplateName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlertRuleTemplateName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MicrosoftSecurityIncidentCreationAlertRuleProperties();
+                }
+                Properties.AlertRuleTemplateName = value;
+            }
+        }
+
         /// <summary> The description of the alert rule. </summary>
-        [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MicrosoftSecurityIncidentCreationAlertRuleProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The display name for alerts created by this alert rule. </summary>
-        [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MicrosoftSecurityIncidentCreationAlertRuleProperties();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Determines whether this alert rule is enabled or disabled. </summary>
-        [WirePath("properties.enabled")]
-        public bool? IsEnabled { get; set; }
+        public bool Enabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MicrosoftSecurityIncidentCreationAlertRuleProperties();
+                }
+                Properties.Enabled = value;
+            }
+        }
+
         /// <summary> The last time that this alert has been modified. </summary>
-        [WirePath("properties.lastModifiedUtc")]
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedUtc
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedUtc;
+            }
+        }
     }
 }

@@ -12,55 +12,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Data connector requirements properties.
-    /// Please note <see cref="DataConnectorsCheckRequirements"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AwsCloudTrailCheckRequirements"/>, <see cref="AwsS3CheckRequirements"/>, <see cref="AadCheckRequirements"/>, <see cref="AatpCheckRequirements"/>, <see cref="AscCheckRequirements"/>, <see cref="Dynamics365CheckRequirements"/>, <see cref="IotCheckRequirements"/>, <see cref="McasCheckRequirements"/>, <see cref="MdatpCheckRequirements"/>, <see cref="MicrosoftPurviewInformationProtectionCheckRequirements"/>, <see cref="MstiCheckRequirements"/>, <see cref="MtpCheckRequirements"/>, <see cref="Office365ProjectCheckRequirements"/>, <see cref="OfficeAtpCheckRequirements"/>, <see cref="OfficeIrmCheckRequirements"/>, <see cref="OfficePowerBICheckRequirements"/>, <see cref="ThreatIntelligenceCheckRequirements"/> and <see cref="ThreatIntelligenceTaxiiCheckRequirements"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AADCheckRequirements"/>, <see cref="AATPCheckRequirements"/>, <see cref="AscCheckRequirements"/>, <see cref="AwsCloudTrailCheckRequirements"/>, <see cref="AwsS3CheckRequirements"/>, <see cref="Dynamics365CheckRequirements"/>, <see cref="MCASCheckRequirements"/>, <see cref="MDATPCheckRequirements"/>, <see cref="MSTICheckRequirements"/>, <see cref="MtpCheckRequirements"/>, <see cref="OfficeAtpCheckRequirements"/>, <see cref="OfficeIrmCheckRequirements"/>, <see cref="MicrosoftPurviewInformationProtectionCheckRequirements"/>, <see cref="Office365ProjectCheckRequirements"/>, <see cref="OfficePowerBICheckRequirements"/>, <see cref="PurviewAuditCheckRequirements"/>, <see cref="ThreatIntelligenceCheckRequirements"/>, <see cref="ThreatIntelligenceTaxiiCheckRequirements"/>, and <see cref="IoTCheckRequirements"/>.
     /// </summary>
     public abstract partial class DataConnectorsCheckRequirements
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataConnectorsCheckRequirements"/>. </summary>
-        protected DataConnectorsCheckRequirements()
+        /// <param name="kind"> Describes the kind of connector to be checked. </param>
+        private protected DataConnectorsCheckRequirements(DataConnectorKind kind)
         {
+            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataConnectorsCheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataConnectorsCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataConnectorsCheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the kind of connector to be checked. </summary>

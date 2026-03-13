@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceTaxiiCheckRequirements : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceTaxiiCheckRequirements>
+    /// <summary> Threat Intelligence TAXII data connector check requirements. </summary>
+    public partial class ThreatIntelligenceTaxiiCheckRequirements : DataConnectorsCheckRequirements, IJsonModel<ThreatIntelligenceTaxiiCheckRequirements>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceTaxiiCheckRequirements>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataConnectorsCheckRequirements PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeThreatIntelligenceTaxiiCheckRequirements(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiCheckRequirements)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiCheckRequirements)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreatIntelligenceTaxiiCheckRequirements IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>.Create(BinaryData data, ModelReaderWriterOptions options) => (ThreatIntelligenceTaxiiCheckRequirements)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ThreatIntelligenceTaxiiCheckRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,113 +69,69 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiCheckRequirements)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            writer.WriteEndObject();
         }
 
-        ThreatIntelligenceTaxiiCheckRequirements IJsonModel<ThreatIntelligenceTaxiiCheckRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ThreatIntelligenceTaxiiCheckRequirements IJsonModel<ThreatIntelligenceTaxiiCheckRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ThreatIntelligenceTaxiiCheckRequirements)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataConnectorsCheckRequirements JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiCheckRequirements)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeThreatIntelligenceTaxiiCheckRequirements(document.RootElement, options);
         }
 
-        internal static ThreatIntelligenceTaxiiCheckRequirements DeserializeThreatIntelligenceTaxiiCheckRequirements(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ThreatIntelligenceTaxiiCheckRequirements DeserializeThreatIntelligenceTaxiiCheckRequirements(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataConnectorKind kind = default;
-            Guid? tenantId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            TiTaxiiCheckRequirementsProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    kind = new DataConnectorKind(property.Value.GetString());
+                    kind = new DataConnectorKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("tenantId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            tenantId = property0.Value.GetGuid();
-                            continue;
-                        }
-                    }
+                    properties = TiTaxiiCheckRequirementsProperties.DeserializeTiTaxiiCheckRequirementsProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ThreatIntelligenceTaxiiCheckRequirements(kind, serializedAdditionalRawData, tenantId);
+            return new ThreatIntelligenceTaxiiCheckRequirements(kind, additionalBinaryDataProperties, properties);
         }
-
-        BinaryData IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiCheckRequirements)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ThreatIntelligenceTaxiiCheckRequirements IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeThreatIntelligenceTaxiiCheckRequirements(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceTaxiiCheckRequirements)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ThreatIntelligenceTaxiiCheckRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

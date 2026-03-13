@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Information of a specific aggregation in the incident related entities result. </summary>
     public partial class SecurityInsightsIncidentEntitiesMetadata
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentEntitiesMetadata"/>. </summary>
         /// <param name="entityKind"> The kind of the aggregated entity. </param>
@@ -57,24 +28,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentEntitiesMetadata"/>. </summary>
         /// <param name="entityKind"> The kind of the aggregated entity. </param>
         /// <param name="count"> Total number of aggregations of the given kind in the incident related entities result. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityInsightsIncidentEntitiesMetadata(SecurityInsightsEntityKind entityKind, int count, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentEntitiesMetadata(SecurityInsightsEntityKind entityKind, int count, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityKind = entityKind;
             Count = count;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentEntitiesMetadata"/> for deserialization. </summary>
-        internal SecurityInsightsIncidentEntitiesMetadata()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The kind of the aggregated entity. </summary>
-        [WirePath("entityKind")]
         public SecurityInsightsEntityKind EntityKind { get; }
+
         /// <summary> Total number of aggregations of the given kind in the incident related entities result. </summary>
-        [WirePath("count")]
         public int Count { get; }
     }
 }

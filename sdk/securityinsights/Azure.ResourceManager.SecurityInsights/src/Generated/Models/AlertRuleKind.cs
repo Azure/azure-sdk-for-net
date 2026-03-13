@@ -7,57 +7,85 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The kind of the alert rule. </summary>
-    internal readonly partial struct AlertRuleKind : IEquatable<AlertRuleKind>
+    public readonly partial struct AlertRuleKind : IEquatable<AlertRuleKind>
     {
         private readonly string _value;
+        /// <summary> Scheduled. </summary>
+        private const string ScheduledValue = "Scheduled";
+        /// <summary> MicrosoftSecurityIncidentCreation. </summary>
+        private const string MicrosoftSecurityIncidentCreationValue = "MicrosoftSecurityIncidentCreation";
+        /// <summary> Fusion. </summary>
+        private const string FusionValue = "Fusion";
+        /// <summary> MLBehaviorAnalytics. </summary>
+        private const string MLBehaviorAnalyticsValue = "MLBehaviorAnalytics";
+        /// <summary> ThreatIntelligence. </summary>
+        private const string ThreatIntelligenceValue = "ThreatIntelligence";
+        /// <summary> NRT. </summary>
+        private const string NRTValue = "NRT";
 
         /// <summary> Initializes a new instance of <see cref="AlertRuleKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AlertRuleKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ScheduledValue = "Scheduled";
-        private const string MicrosoftSecurityIncidentCreationValue = "MicrosoftSecurityIncidentCreation";
-        private const string FusionValue = "Fusion";
-        private const string MLBehaviorAnalyticsValue = "MLBehaviorAnalytics";
-        private const string ThreatIntelligenceValue = "ThreatIntelligence";
-        private const string NRTValue = "NRT";
+            _value = value;
+        }
 
         /// <summary> Scheduled. </summary>
         public static AlertRuleKind Scheduled { get; } = new AlertRuleKind(ScheduledValue);
+
         /// <summary> MicrosoftSecurityIncidentCreation. </summary>
         public static AlertRuleKind MicrosoftSecurityIncidentCreation { get; } = new AlertRuleKind(MicrosoftSecurityIncidentCreationValue);
+
         /// <summary> Fusion. </summary>
         public static AlertRuleKind Fusion { get; } = new AlertRuleKind(FusionValue);
+
         /// <summary> MLBehaviorAnalytics. </summary>
         public static AlertRuleKind MLBehaviorAnalytics { get; } = new AlertRuleKind(MLBehaviorAnalyticsValue);
+
         /// <summary> ThreatIntelligence. </summary>
         public static AlertRuleKind ThreatIntelligence { get; } = new AlertRuleKind(ThreatIntelligenceValue);
+
         /// <summary> NRT. </summary>
         public static AlertRuleKind NRT { get; } = new AlertRuleKind(NRTValue);
+
         /// <summary> Determines if two <see cref="AlertRuleKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AlertRuleKind left, AlertRuleKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AlertRuleKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AlertRuleKind left, AlertRuleKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertRuleKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AlertRuleKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AlertRuleKind(string value) => new AlertRuleKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AlertRuleKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AlertRuleKind?(string value) => value == null ? null : new AlertRuleKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AlertRuleKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AlertRuleKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

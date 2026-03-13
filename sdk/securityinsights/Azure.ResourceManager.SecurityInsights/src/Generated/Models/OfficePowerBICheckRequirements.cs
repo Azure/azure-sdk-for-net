@@ -14,23 +14,37 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class OfficePowerBICheckRequirements : DataConnectorsCheckRequirements
     {
         /// <summary> Initializes a new instance of <see cref="OfficePowerBICheckRequirements"/>. </summary>
-        public OfficePowerBICheckRequirements()
+        public OfficePowerBICheckRequirements() : base(DataConnectorKind.OfficePowerBI)
         {
-            Kind = DataConnectorKind.OfficePowerBI;
         }
 
         /// <summary> Initializes a new instance of <see cref="OfficePowerBICheckRequirements"/>. </summary>
         /// <param name="kind"> Describes the kind of connector to be checked. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        internal OfficePowerBICheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? tenantId) : base(kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Office Power BI requirements check properties. </param>
+        internal OfficePowerBICheckRequirements(DataConnectorKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, OfficePowerBICheckRequirementsProperties properties) : base(kind, additionalBinaryDataProperties)
         {
-            TenantId = tenantId;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> Office Power BI requirements check properties. </summary>
+        internal OfficePowerBICheckRequirementsProperties Properties { get; set; }
+
         /// <summary> The tenant id to connect to, and get the data from. </summary>
-        [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public string TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OfficePowerBICheckRequirementsProperties();
+                }
+                Properties.TenantId = value;
+            }
+        }
     }
 }

@@ -8,18 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsIotDeviceEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIotDeviceEntity>
+    /// <summary> Represents an IoT device entity. </summary>
+    public partial class SecurityInsightsIotDeviceEntity : SecurityInsightsEntityData, IJsonModel<SecurityInsightsIotDeviceEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIotDeviceEntity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecurityInsightsIotDeviceEntity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsIotDeviceEntity)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsIotDeviceEntity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecurityInsightsIotDeviceEntity>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsIotDeviceEntity IPersistableModel<SecurityInsightsIotDeviceEntity>.Create(BinaryData data, ModelReaderWriterOptions options) => (SecurityInsightsIotDeviceEntity)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsIotDeviceEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsIotDeviceEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,1385 +72,112 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsIotDeviceEntity)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("additionalData"u8);
-                writer.WriteStartObject();
-                foreach (var item in AdditionalData)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeviceId))
-            {
-                writer.WritePropertyName("deviceId"u8);
-                writer.WriteStringValue(DeviceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeviceName))
-            {
-                writer.WritePropertyName("deviceName"u8);
-                writer.WriteStringValue(DeviceName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Source))
-            {
-                writer.WritePropertyName("source"u8);
-                writer.WriteStringValue(Source);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IotSecurityAgentId))
-            {
-                writer.WritePropertyName("iotSecurityAgentId"u8);
-                writer.WriteStringValue(IotSecurityAgentId.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeviceType))
-            {
-                writer.WritePropertyName("deviceType"u8);
-                writer.WriteStringValue(DeviceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Vendor))
-            {
-                writer.WritePropertyName("vendor"u8);
-                writer.WriteStringValue(Vendor);
-            }
-            if (options.Format != "W" && Optional.IsDefined(EdgeId))
-            {
-                writer.WritePropertyName("edgeId"u8);
-                writer.WriteStringValue(EdgeId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(MacAddress))
-            {
-                writer.WritePropertyName("macAddress"u8);
-                writer.WriteStringValue(MacAddress);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Model))
-            {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
-            {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
-            }
-            if (options.Format != "W" && Optional.IsDefined(FirmwareVersion))
-            {
-                writer.WritePropertyName("firmwareVersion"u8);
-                writer.WriteStringValue(FirmwareVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(OperatingSystem))
-            {
-                writer.WritePropertyName("operatingSystem"u8);
-                writer.WriteStringValue(OperatingSystem);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IotHubEntityId))
-            {
-                writer.WritePropertyName("iotHubEntityId"u8);
-                writer.WriteStringValue(IotHubEntityId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(HostEntityId))
-            {
-                writer.WritePropertyName("hostEntityId"u8);
-                writer.WriteStringValue(HostEntityId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IPAddressEntityId))
-            {
-                writer.WritePropertyName("ipAddressEntityId"u8);
-                writer.WriteStringValue(IPAddressEntityId);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ThreatIntelligence))
-            {
-                writer.WritePropertyName("threatIntelligence"u8);
-                writer.WriteStartArray();
-                foreach (var item in ThreatIntelligence)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Protocols))
-            {
-                writer.WritePropertyName("protocols"u8);
-                writer.WriteStartArray();
-                foreach (var item in Protocols)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Owners))
-            {
-                writer.WritePropertyName("owners"u8);
-                writer.WriteStartArray();
-                foreach (var item in Owners)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(NicEntityIds))
-            {
-                writer.WritePropertyName("nicEntityIds"u8);
-                writer.WriteStartArray();
-                foreach (var item in NicEntityIds)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(Site))
-            {
-                writer.WritePropertyName("site"u8);
-                writer.WriteStringValue(Site);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Zone))
-            {
-                writer.WritePropertyName("zone"u8);
-                writer.WriteStringValue(Zone);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Sensor))
-            {
-                writer.WritePropertyName("sensor"u8);
-                writer.WriteStringValue(Sensor);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DeviceSubType))
-            {
-                writer.WritePropertyName("deviceSubType"u8);
-                writer.WriteStringValue(DeviceSubType);
-            }
-            if (Optional.IsDefined(Importance))
-            {
-                writer.WritePropertyName("importance"u8);
-                writer.WriteStringValue(Importance.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(PurdueLayer))
-            {
-                writer.WritePropertyName("purdueLayer"u8);
-                writer.WriteStringValue(PurdueLayer);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsAuthorized))
-            {
-                writer.WritePropertyName("isAuthorized"u8);
-                writer.WriteBooleanValue(IsAuthorized.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsProgramming))
-            {
-                writer.WritePropertyName("isProgramming"u8);
-                writer.WriteBooleanValue(IsProgramming.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsScanner))
-            {
-                writer.WritePropertyName("isScanner"u8);
-                writer.WriteBooleanValue(IsScanner.Value);
-            }
-            writer.WriteEndObject();
         }
 
-        SecurityInsightsIotDeviceEntity IJsonModel<SecurityInsightsIotDeviceEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsIotDeviceEntity IJsonModel<SecurityInsightsIotDeviceEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SecurityInsightsIotDeviceEntity)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecurityInsightsIotDeviceEntity)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecurityInsightsIotDeviceEntity(document.RootElement, options);
         }
 
-        internal static SecurityInsightsIotDeviceEntity DeserializeSecurityInsightsIotDeviceEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecurityInsightsIotDeviceEntity DeserializeSecurityInsightsIotDeviceEntity(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            SecurityInsightsEntityKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            IReadOnlyDictionary<string, BinaryData> additionalData = default;
-            string friendlyName = default;
-            string deviceId = default;
-            string deviceName = default;
-            string source = default;
-            Guid? iotSecurityAgentId = default;
-            string deviceType = default;
-            string vendor = default;
-            string edgeId = default;
-            string macAddress = default;
-            string model = default;
-            string serialNumber = default;
-            string firmwareVersion = default;
-            string operatingSystem = default;
-            string iotHubEntityId = default;
-            string hostEntityId = default;
-            string ipAddressEntityId = default;
-            IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence = default;
-            IReadOnlyList<string> protocols = default;
-            IReadOnlyList<string> owners = default;
-            IReadOnlyList<string> nicEntityIds = default;
-            string site = default;
-            string zone = default;
-            string sensor = default;
-            string deviceSubType = default;
-            DeviceImportance? importance = default;
-            string purdueLayer = default;
-            bool? isAuthorized = default;
-            bool? isProgramming = default;
-            bool? isScanner = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            SecurityInsightsEntityKind kind = default;
+            IoTDeviceEntityProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    kind = new SecurityInsightsEntityKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityInsightsContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("additionalData"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                                }
-                            }
-                            additionalData = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("friendlyName"u8))
-                        {
-                            friendlyName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("deviceId"u8))
-                        {
-                            deviceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("deviceName"u8))
-                        {
-                            deviceName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("source"u8))
-                        {
-                            source = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("iotSecurityAgentId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            iotSecurityAgentId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("deviceType"u8))
-                        {
-                            deviceType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vendor"u8))
-                        {
-                            vendor = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("edgeId"u8))
-                        {
-                            edgeId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("macAddress"u8))
-                        {
-                            macAddress = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("model"u8))
-                        {
-                            model = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serialNumber"u8))
-                        {
-                            serialNumber = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("firmwareVersion"u8))
-                        {
-                            firmwareVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("operatingSystem"u8))
-                        {
-                            operatingSystem = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("iotHubEntityId"u8))
-                        {
-                            iotHubEntityId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("hostEntityId"u8))
-                        {
-                            hostEntityId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipAddressEntityId"u8))
-                        {
-                            ipAddressEntityId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("threatIntelligence"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SecurityInsightsThreatIntelligence> array = new List<SecurityInsightsThreatIntelligence>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item, options));
-                            }
-                            threatIntelligence = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("protocols"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            protocols = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("owners"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            owners = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("nicEntityIds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            nicEntityIds = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("site"u8))
-                        {
-                            site = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("zone"u8))
-                        {
-                            zone = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sensor"u8))
-                        {
-                            sensor = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("deviceSubType"u8))
-                        {
-                            deviceSubType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("importance"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            importance = new DeviceImportance(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("purdueLayer"u8))
-                        {
-                            purdueLayer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isAuthorized"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isAuthorized = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isProgramming"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isProgramming = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isScanner"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isScanner = property0.Value.GetBoolean();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityInsightsContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new SecurityInsightsEntityKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = IoTDeviceEntityProperties.DeserializeIoTDeviceEntityProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties0.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SecurityInsightsIotDeviceEntity(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 kind,
-                serializedAdditionalRawData,
-                additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                friendlyName,
-                deviceId,
-                deviceName,
-                source,
-                iotSecurityAgentId,
-                deviceType,
-                vendor,
-                edgeId,
-                macAddress,
-                model,
-                serialNumber,
-                firmwareVersion,
-                operatingSystem,
-                iotHubEntityId,
-                hostEntityId,
-                ipAddressEntityId,
-                threatIntelligence ?? new ChangeTrackingList<SecurityInsightsThreatIntelligence>(),
-                protocols ?? new ChangeTrackingList<string>(),
-                owners ?? new ChangeTrackingList<string>(),
-                nicEntityIds ?? new ChangeTrackingList<string>(),
-                site,
-                zone,
-                sensor,
-                deviceSubType,
-                importance,
-                purdueLayer,
-                isAuthorized,
-                isProgramming,
-                isScanner);
+                properties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine($"'{Kind.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  systemData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SystemData))
-                {
-                    builder.Append("  systemData: ");
-                    builder.AppendLine($"'{SystemData.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalData), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    additionalData: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AdditionalData))
-                {
-                    if (AdditionalData.Any())
-                    {
-                        builder.Append("    additionalData: ");
-                        builder.AppendLine("{");
-                        foreach (var item in AdditionalData)
-                        {
-                            builder.Append($"        '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine($"'{item.Value.ToString()}'");
-                        }
-                        builder.AppendLine("    }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FriendlyName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    friendlyName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FriendlyName))
-                {
-                    builder.Append("    friendlyName: ");
-                    if (FriendlyName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FriendlyName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FriendlyName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deviceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeviceId))
-                {
-                    builder.Append("    deviceId: ");
-                    if (DeviceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DeviceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DeviceId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deviceName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeviceName))
-                {
-                    builder.Append("    deviceName: ");
-                    if (DeviceName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DeviceName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DeviceName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    source: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Source))
-                {
-                    builder.Append("    source: ");
-                    if (Source.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Source}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Source}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IotSecurityAgentId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    iotSecurityAgentId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IotSecurityAgentId))
-                {
-                    builder.Append("    iotSecurityAgentId: ");
-                    builder.AppendLine($"'{IotSecurityAgentId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deviceType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeviceType))
-                {
-                    builder.Append("    deviceType: ");
-                    if (DeviceType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DeviceType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DeviceType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Vendor), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vendor: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Vendor))
-                {
-                    builder.Append("    vendor: ");
-                    if (Vendor.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Vendor}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Vendor}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EdgeId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    edgeId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EdgeId))
-                {
-                    builder.Append("    edgeId: ");
-                    if (EdgeId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{EdgeId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{EdgeId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MacAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    macAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MacAddress))
-                {
-                    builder.Append("    macAddress: ");
-                    if (MacAddress.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MacAddress}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MacAddress}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Model), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    model: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Model))
-                {
-                    builder.Append("    model: ");
-                    if (Model.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Model}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Model}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SerialNumber), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    serialNumber: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SerialNumber))
-                {
-                    builder.Append("    serialNumber: ");
-                    if (SerialNumber.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SerialNumber}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SerialNumber}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirmwareVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    firmwareVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FirmwareVersion))
-                {
-                    builder.Append("    firmwareVersion: ");
-                    if (FirmwareVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{FirmwareVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{FirmwareVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OperatingSystem), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    operatingSystem: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(OperatingSystem))
-                {
-                    builder.Append("    operatingSystem: ");
-                    if (OperatingSystem.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{OperatingSystem}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{OperatingSystem}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IotHubEntityId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    iotHubEntityId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IotHubEntityId))
-                {
-                    builder.Append("    iotHubEntityId: ");
-                    if (IotHubEntityId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IotHubEntityId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IotHubEntityId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostEntityId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    hostEntityId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(HostEntityId))
-                {
-                    builder.Append("    hostEntityId: ");
-                    if (HostEntityId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{HostEntityId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{HostEntityId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddressEntityId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ipAddressEntityId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IPAddressEntityId))
-                {
-                    builder.Append("    ipAddressEntityId: ");
-                    if (IPAddressEntityId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IPAddressEntityId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IPAddressEntityId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreatIntelligence), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    threatIntelligence: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ThreatIntelligence))
-                {
-                    if (ThreatIntelligence.Any())
-                    {
-                        builder.Append("    threatIntelligence: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ThreatIntelligence)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    threatIntelligence: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Protocols), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    protocols: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Protocols))
-                {
-                    if (Protocols.Any())
-                    {
-                        builder.Append("    protocols: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Protocols)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Owners), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    owners: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Owners))
-                {
-                    if (Owners.Any())
-                    {
-                        builder.Append("    owners: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Owners)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NicEntityIds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    nicEntityIds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(NicEntityIds))
-                {
-                    if (NicEntityIds.Any())
-                    {
-                        builder.Append("    nicEntityIds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in NicEntityIds)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Site), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    site: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Site))
-                {
-                    builder.Append("    site: ");
-                    if (Site.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Site}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Site}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Zone), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    zone: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Zone))
-                {
-                    builder.Append("    zone: ");
-                    if (Zone.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Zone}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Zone}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sensor), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sensor: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Sensor))
-                {
-                    builder.Append("    sensor: ");
-                    if (Sensor.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Sensor}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Sensor}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeviceSubType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    deviceSubType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DeviceSubType))
-                {
-                    builder.Append("    deviceSubType: ");
-                    if (DeviceSubType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DeviceSubType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DeviceSubType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Importance), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    importance: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Importance))
-                {
-                    builder.Append("    importance: ");
-                    builder.AppendLine($"'{Importance.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PurdueLayer), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    purdueLayer: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PurdueLayer))
-                {
-                    builder.Append("    purdueLayer: ");
-                    if (PurdueLayer.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PurdueLayer}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PurdueLayer}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAuthorized), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isAuthorized: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsAuthorized))
-                {
-                    builder.Append("    isAuthorized: ");
-                    var boolValue = IsAuthorized.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsProgramming), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isProgramming: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsProgramming))
-                {
-                    builder.Append("    isProgramming: ");
-                    var boolValue = IsProgramming.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsScanner), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    isScanner: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsScanner))
-                {
-                    builder.Append("    isScanner: ");
-                    var boolValue = IsScanner.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SecurityInsightsIotDeviceEntity>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIotDeviceEntity)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecurityInsightsIotDeviceEntity IPersistableModel<SecurityInsightsIotDeviceEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIotDeviceEntity>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecurityInsightsIotDeviceEntity(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIotDeviceEntity)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecurityInsightsIotDeviceEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

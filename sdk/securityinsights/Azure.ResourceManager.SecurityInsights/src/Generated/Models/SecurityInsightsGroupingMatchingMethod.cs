@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsGroupingMatchingMethod : IEquatable<SecurityInsightsGroupingMatchingMethod>
     {
         private readonly string _value;
+        /// <summary> Grouping alerts into a single incident if all the entities match. </summary>
+        private const string AllEntitiesValue = "AllEntities";
+        /// <summary> Grouping any alerts triggered by this rule into a single incident. </summary>
+        private const string AnyAlertValue = "AnyAlert";
+        /// <summary> Grouping alerts into a single incident if the selected entities, custom details and alert details match. </summary>
+        private const string SelectedValue = "Selected";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsGroupingMatchingMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsGroupingMatchingMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllEntitiesValue = "AllEntities";
-        private const string AnyAlertValue = "AnyAlert";
-        private const string SelectedValue = "Selected";
+            _value = value;
+        }
 
         /// <summary> Grouping alerts into a single incident if all the entities match. </summary>
         public static SecurityInsightsGroupingMatchingMethod AllEntities { get; } = new SecurityInsightsGroupingMatchingMethod(AllEntitiesValue);
+
         /// <summary> Grouping any alerts triggered by this rule into a single incident. </summary>
         public static SecurityInsightsGroupingMatchingMethod AnyAlert { get; } = new SecurityInsightsGroupingMatchingMethod(AnyAlertValue);
+
         /// <summary> Grouping alerts into a single incident if the selected entities, custom details and alert details match. </summary>
         public static SecurityInsightsGroupingMatchingMethod Selected { get; } = new SecurityInsightsGroupingMatchingMethod(SelectedValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsGroupingMatchingMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsGroupingMatchingMethod left, SecurityInsightsGroupingMatchingMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsGroupingMatchingMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsGroupingMatchingMethod left, SecurityInsightsGroupingMatchingMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsGroupingMatchingMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsGroupingMatchingMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsGroupingMatchingMethod(string value) => new SecurityInsightsGroupingMatchingMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsGroupingMatchingMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsGroupingMatchingMethod?(string value) => value == null ? null : new SecurityInsightsGroupingMatchingMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsGroupingMatchingMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsGroupingMatchingMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

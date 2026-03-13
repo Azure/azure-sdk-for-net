@@ -15,76 +15,63 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Initializes a new instance of <see cref="ActivityTimelineItem"/>. </summary>
         /// <param name="queryId"> The activity query id. </param>
-        /// <param name="bucketStartOn"> The grouping bucket start time. </param>
-        /// <param name="bucketEndOn"> The grouping bucket end time. </param>
-        /// <param name="firstActivityOn"> The time of the first activity in the grouping bucket. </param>
-        /// <param name="lastActivityOn"> The time of the last activity in the grouping bucket. </param>
+        /// <param name="bucketStartTimeUTC"> The grouping bucket start time. </param>
+        /// <param name="bucketEndTimeUTC"> The grouping bucket end time. </param>
+        /// <param name="firstActivityTimeUTC"> The time of the first activity in the grouping bucket. </param>
+        /// <param name="lastActivityTimeUTC"> The time of the last activity in the grouping bucket. </param>
         /// <param name="content"> The activity timeline content. </param>
         /// <param name="title"> The activity timeline title. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryId"/>, <paramref name="content"/> or <paramref name="title"/> is null. </exception>
-        internal ActivityTimelineItem(string queryId, DateTimeOffset bucketStartOn, DateTimeOffset bucketEndOn, DateTimeOffset firstActivityOn, DateTimeOffset lastActivityOn, string content, string title)
+        internal ActivityTimelineItem(string queryId, DateTimeOffset bucketStartTimeUTC, DateTimeOffset bucketEndTimeUTC, DateTimeOffset firstActivityTimeUTC, DateTimeOffset lastActivityTimeUTC, string content, string title) : base(EntityTimelineKind.Activity)
         {
-            Argument.AssertNotNull(queryId, nameof(queryId));
-            Argument.AssertNotNull(content, nameof(content));
-            Argument.AssertNotNull(title, nameof(title));
-
             QueryId = queryId;
-            BucketStartOn = bucketStartOn;
-            BucketEndOn = bucketEndOn;
-            FirstActivityOn = firstActivityOn;
-            LastActivityOn = lastActivityOn;
+            BucketStartTimeUTC = bucketStartTimeUTC;
+            BucketEndTimeUTC = bucketEndTimeUTC;
+            FirstActivityTimeUTC = firstActivityTimeUTC;
+            LastActivityTimeUTC = lastActivityTimeUTC;
             Content = content;
             Title = title;
-            Kind = EntityTimelineKind.Activity;
         }
 
         /// <summary> Initializes a new instance of <see cref="ActivityTimelineItem"/>. </summary>
         /// <param name="kind"> The entity query kind type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="queryId"> The activity query id. </param>
-        /// <param name="bucketStartOn"> The grouping bucket start time. </param>
-        /// <param name="bucketEndOn"> The grouping bucket end time. </param>
-        /// <param name="firstActivityOn"> The time of the first activity in the grouping bucket. </param>
-        /// <param name="lastActivityOn"> The time of the last activity in the grouping bucket. </param>
+        /// <param name="bucketStartTimeUTC"> The grouping bucket start time. </param>
+        /// <param name="bucketEndTimeUTC"> The grouping bucket end time. </param>
+        /// <param name="firstActivityTimeUTC"> The time of the first activity in the grouping bucket. </param>
+        /// <param name="lastActivityTimeUTC"> The time of the last activity in the grouping bucket. </param>
         /// <param name="content"> The activity timeline content. </param>
         /// <param name="title"> The activity timeline title. </param>
-        internal ActivityTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string queryId, DateTimeOffset bucketStartOn, DateTimeOffset bucketEndOn, DateTimeOffset firstActivityOn, DateTimeOffset lastActivityOn, string content, string title) : base(kind, serializedAdditionalRawData)
+        internal ActivityTimelineItem(EntityTimelineKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queryId, DateTimeOffset bucketStartTimeUTC, DateTimeOffset bucketEndTimeUTC, DateTimeOffset firstActivityTimeUTC, DateTimeOffset lastActivityTimeUTC, string content, string title) : base(kind, additionalBinaryDataProperties)
         {
             QueryId = queryId;
-            BucketStartOn = bucketStartOn;
-            BucketEndOn = bucketEndOn;
-            FirstActivityOn = firstActivityOn;
-            LastActivityOn = lastActivityOn;
+            BucketStartTimeUTC = bucketStartTimeUTC;
+            BucketEndTimeUTC = bucketEndTimeUTC;
+            FirstActivityTimeUTC = firstActivityTimeUTC;
+            LastActivityTimeUTC = lastActivityTimeUTC;
             Content = content;
             Title = title;
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ActivityTimelineItem"/> for deserialization. </summary>
-        internal ActivityTimelineItem()
-        {
         }
 
         /// <summary> The activity query id. </summary>
-        [WirePath("queryId")]
         public string QueryId { get; }
+
         /// <summary> The grouping bucket start time. </summary>
-        [WirePath("bucketStartTimeUTC")]
-        public DateTimeOffset BucketStartOn { get; }
+        public DateTimeOffset BucketStartTimeUTC { get; }
+
         /// <summary> The grouping bucket end time. </summary>
-        [WirePath("bucketEndTimeUTC")]
-        public DateTimeOffset BucketEndOn { get; }
+        public DateTimeOffset BucketEndTimeUTC { get; }
+
         /// <summary> The time of the first activity in the grouping bucket. </summary>
-        [WirePath("firstActivityTimeUTC")]
-        public DateTimeOffset FirstActivityOn { get; }
+        public DateTimeOffset FirstActivityTimeUTC { get; }
+
         /// <summary> The time of the last activity in the grouping bucket. </summary>
-        [WirePath("lastActivityTimeUTC")]
-        public DateTimeOffset LastActivityOn { get; }
+        public DateTimeOffset LastActivityTimeUTC { get; }
+
         /// <summary> The activity timeline content. </summary>
-        [WirePath("content")]
         public string Content { get; }
+
         /// <summary> The activity timeline title. </summary>
-        [WirePath("title")]
         public string Title { get; }
     }
 }

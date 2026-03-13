@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="grantType"> The grant type, usually will be 'authorization code'. </param>
         /// <param name="tokenEndpoint"> The token endpoint. Defines the OAuth2 refresh token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientSecret"/>, <paramref name="clientId"/>, <paramref name="grantType"/> or <paramref name="tokenEndpoint"/> is null. </exception>
-        public OAuthModel(string clientSecret, string clientId, string grantType, string tokenEndpoint)
+        public OAuthModel(string clientSecret, string clientId, string grantType, string tokenEndpoint) : base(CcpAuthType.OAuth2)
         {
             Argument.AssertNotNull(clientSecret, nameof(clientSecret));
             Argument.AssertNotNull(clientId, nameof(clientId));
@@ -34,12 +35,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             TokenEndpointQueryParameters = new ChangeTrackingDictionary<string, string>();
             AuthorizationEndpointHeaders = new ChangeTrackingDictionary<string, string>();
             AuthorizationEndpointQueryParameters = new ChangeTrackingDictionary<string, string>();
-            AuthType = CcpAuthType.OAuth2;
         }
 
         /// <summary> Initializes a new instance of <see cref="OAuthModel"/>. </summary>
-        /// <param name="authType"> The auth type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> The auth type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="authorizationCode"> The user's authorization code. </param>
         /// <param name="clientSecret"> The Application (client) secret that the OAuth provider assigned to your app. </param>
         /// <param name="clientId"> The Application (client) ID that the OAuth provider assigned to your app. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="authorizationEndpointQueryParameters"> The authorization endpoint query parameters. </param>
         /// <param name="isJwtBearerFlow"> A value indicating whether it's a JWT flow. </param>
         /// <param name="accessTokenPrepend"> Access token prepend. Default is 'Bearer'. </param>
-        internal OAuthModel(CcpAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string authorizationCode, string clientSecret, string clientId, bool? isCredentialsInHeaders, string scope, Uri redirectUri, string grantType, string tokenEndpoint, IDictionary<string, string> tokenEndpointHeaders, IDictionary<string, string> tokenEndpointQueryParameters, string authorizationEndpoint, IDictionary<string, string> authorizationEndpointHeaders, IDictionary<string, string> authorizationEndpointQueryParameters, bool? isJwtBearerFlow, string accessTokenPrepend) : base(authType, serializedAdditionalRawData)
+        internal OAuthModel(CcpAuthType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string authorizationCode, string clientSecret, string clientId, bool? isCredentialsInHeaders, string scope, Uri redirectUri, string grantType, string tokenEndpoint, IDictionary<string, string> tokenEndpointHeaders, IDictionary<string, string> tokenEndpointQueryParameters, string authorizationEndpoint, IDictionary<string, string> authorizationEndpointHeaders, IDictionary<string, string> authorizationEndpointQueryParameters, bool? isJwtBearerFlow, string accessTokenPrepend) : base(@type, additionalBinaryDataProperties)
         {
             AuthorizationCode = authorizationCode;
             ClientSecret = clientSecret;
@@ -72,58 +72,51 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             AuthorizationEndpointQueryParameters = authorizationEndpointQueryParameters;
             IsJwtBearerFlow = isJwtBearerFlow;
             AccessTokenPrepend = accessTokenPrepend;
-            AuthType = authType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OAuthModel"/> for deserialization. </summary>
-        internal OAuthModel()
-        {
         }
 
         /// <summary> The user's authorization code. </summary>
-        [WirePath("authorizationCode")]
         public string AuthorizationCode { get; set; }
+
         /// <summary> The Application (client) secret that the OAuth provider assigned to your app. </summary>
-        [WirePath("clientSecret")]
         public string ClientSecret { get; set; }
+
         /// <summary> The Application (client) ID that the OAuth provider assigned to your app. </summary>
-        [WirePath("clientId")]
         public string ClientId { get; set; }
+
         /// <summary> Indicating whether we want to send the clientId and clientSecret to token endpoint in the headers. </summary>
-        [WirePath("isCredentialsInHeaders")]
         public bool? IsCredentialsInHeaders { get; set; }
+
         /// <summary> The Application (client) Scope that the OAuth provider assigned to your app. </summary>
-        [WirePath("scope")]
         public string Scope { get; set; }
+
         /// <summary> The Application redirect url that the user config in the OAuth provider. </summary>
-        [WirePath("redirectUri")]
         public Uri RedirectUri { get; set; }
+
         /// <summary> The grant type, usually will be 'authorization code'. </summary>
-        [WirePath("grantType")]
         public string GrantType { get; set; }
+
         /// <summary> The token endpoint. Defines the OAuth2 refresh token. </summary>
-        [WirePath("tokenEndpoint")]
         public string TokenEndpoint { get; set; }
+
         /// <summary> The token endpoint headers. </summary>
-        [WirePath("tokenEndpointHeaders")]
         public IDictionary<string, string> TokenEndpointHeaders { get; }
+
         /// <summary> The token endpoint query parameters. </summary>
-        [WirePath("tokenEndpointQueryParameters")]
         public IDictionary<string, string> TokenEndpointQueryParameters { get; }
+
         /// <summary> The authorization endpoint. </summary>
-        [WirePath("authorizationEndpoint")]
         public string AuthorizationEndpoint { get; set; }
+
         /// <summary> The authorization endpoint headers. </summary>
-        [WirePath("authorizationEndpointHeaders")]
         public IDictionary<string, string> AuthorizationEndpointHeaders { get; }
+
         /// <summary> The authorization endpoint query parameters. </summary>
-        [WirePath("authorizationEndpointQueryParameters")]
         public IDictionary<string, string> AuthorizationEndpointQueryParameters { get; }
+
         /// <summary> A value indicating whether it's a JWT flow. </summary>
-        [WirePath("isJwtBearerFlow")]
         public bool? IsJwtBearerFlow { get; set; }
+
         /// <summary> Access token prepend. Default is 'Bearer'. </summary>
-        [WirePath("accessTokenPrepend")]
         public string AccessTokenPrepend { get; set; }
     }
 }

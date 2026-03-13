@@ -7,51 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Represents a source signal consumed in Fusion detection. </summary>
     public partial class FusionTemplateSourceSetting
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSourceSetting"/>. </summary>
         /// <param name="sourceName"> The name of a source signal consumed in Fusion detection. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
-        public FusionTemplateSourceSetting(string sourceName)
+        internal FusionTemplateSourceSetting(string sourceName)
         {
-            Argument.AssertNotNull(sourceName, nameof(sourceName));
-
             SourceName = sourceName;
             SourceSubTypes = new ChangeTrackingList<FusionTemplateSourceSubType>();
         }
@@ -59,24 +28,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="FusionTemplateSourceSetting"/>. </summary>
         /// <param name="sourceName"> The name of a source signal consumed in Fusion detection. </param>
         /// <param name="sourceSubTypes"> All supported source subtypes under this source signal consumed in fusion detection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FusionTemplateSourceSetting(string sourceName, IList<FusionTemplateSourceSubType> sourceSubTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FusionTemplateSourceSetting(string sourceName, IList<FusionTemplateSourceSubType> sourceSubTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceName = sourceName;
             SourceSubTypes = sourceSubTypes;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="FusionTemplateSourceSetting"/> for deserialization. </summary>
-        internal FusionTemplateSourceSetting()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of a source signal consumed in Fusion detection. </summary>
-        [WirePath("sourceName")]
-        public string SourceName { get; set; }
+        public string SourceName { get; }
+
         /// <summary> All supported source subtypes under this source signal consumed in fusion detection. </summary>
-        [WirePath("sourceSubTypes")]
         public IList<FusionTemplateSourceSubType> SourceSubTypes { get; }
     }
 }

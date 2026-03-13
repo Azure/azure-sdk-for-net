@@ -8,67 +8,71 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="WorkspaceManagerGroupResource"/> and their operations.
-    /// Each <see cref="WorkspaceManagerGroupResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
-    /// To get a <see cref="WorkspaceManagerGroupCollection"/> instance call the GetWorkspaceManagerGroups method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// Each <see cref="WorkspaceManagerGroupResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="WorkspaceManagerGroupCollection"/> instance call the GetWorkspaceManagerGroups method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class WorkspaceManagerGroupCollection : ArmCollection, IEnumerable<WorkspaceManagerGroupResource>, IAsyncEnumerable<WorkspaceManagerGroupResource>
     {
-        private readonly ClientDiagnostics _workspaceManagerGroupClientDiagnostics;
-        private readonly WorkspaceManagerGroupsRestOperations _workspaceManagerGroupRestClient;
+        private readonly ClientDiagnostics _workspaceManagerGroupsClientDiagnostics;
+        private readonly WorkspaceManagerGroups _workspaceManagerGroupsRestClient;
+        /// <summary> The workspaceName. </summary>
+        private readonly string _workspaceName;
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceManagerGroupCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of WorkspaceManagerGroupCollection for mocking. </summary>
         protected WorkspaceManagerGroupCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="WorkspaceManagerGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceManagerGroupCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal WorkspaceManagerGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="workspaceName"> The workspaceName for the resource. </param>
+        internal WorkspaceManagerGroupCollection(ArmClient client, ResourceIdentifier id, string workspaceName) : base(client, id)
         {
-            _workspaceManagerGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", WorkspaceManagerGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(WorkspaceManagerGroupResource.ResourceType, out string workspaceManagerGroupApiVersion);
-            _workspaceManagerGroupRestClient = new WorkspaceManagerGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceManagerGroupApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _workspaceName = workspaceName;
+            _workspaceManagerGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityInsights", WorkspaceManagerGroupResource.ResourceType.Namespace, Diagnostics);
+            _workspaceManagerGroupsRestClient = new WorkspaceManagerGroups(_workspaceManagerGroupsClientDiagnostics, Pipeline, Endpoint, workspaceManagerGroupApiVersion ?? "2025-07-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, OperationalInsightsWorkspaceSecurityInsightsResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates or updates a workspace manager group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceManagerGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkspaceManagerGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,23 +80,31 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="workspaceManagerGroupName"> The name of the workspace manager group. </param>
         /// <param name="data"> The workspace manager group object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<WorkspaceManagerGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workspaceManagerGroupName, WorkspaceManagerGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceManagerGroupName, nameof(workspaceManagerGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceManagerGroupClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceManagerGroupsClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _workspaceManagerGroupRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _workspaceManagerGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<WorkspaceManagerGroupResource>(Response.FromValue(new WorkspaceManagerGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceManagerGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, workspaceManagerGroupName, WorkspaceManagerGroupData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkspaceManagerGroupData> response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<WorkspaceManagerGroupResource> operation = new SecurityInsightsArmOperation<WorkspaceManagerGroupResource>(Response.FromValue(new WorkspaceManagerGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -106,20 +118,16 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Creates or updates a workspace manager group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceManagerGroups_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkspaceManagerGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,23 +135,31 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="workspaceManagerGroupName"> The name of the workspace manager group. </param>
         /// <param name="data"> The workspace manager group object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerGroupName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<WorkspaceManagerGroupResource> CreateOrUpdate(WaitUntil waitUntil, string workspaceManagerGroupName, WorkspaceManagerGroupData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceManagerGroupName, nameof(workspaceManagerGroupName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _workspaceManagerGroupClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _workspaceManagerGroupsClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _workspaceManagerGroupRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, data, cancellationToken);
-                var uri = _workspaceManagerGroupRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new SecurityInsightsArmOperation<WorkspaceManagerGroupResource>(Response.FromValue(new WorkspaceManagerGroupResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceManagerGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, workspaceManagerGroupName, WorkspaceManagerGroupData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkspaceManagerGroupData> response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SecurityInsightsArmOperation<WorkspaceManagerGroupResource> operation = new SecurityInsightsArmOperation<WorkspaceManagerGroupResource>(Response.FromValue(new WorkspaceManagerGroupResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -157,38 +173,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a workspace manager group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceManagerGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkspaceManagerGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceManagerGroupName"> The name of the workspace manager group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<WorkspaceManagerGroupResource>> GetAsync(string workspaceManagerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceManagerGroupName, nameof(workspaceManagerGroupName));
 
-            using var scope = _workspaceManagerGroupClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.Get");
+            using DiagnosticScope scope = _workspaceManagerGroupsClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = await _workspaceManagerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, workspaceManagerGroupName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<WorkspaceManagerGroupData> response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkspaceManagerGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -202,38 +222,42 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets a workspace manager group
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceManagerGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkspaceManagerGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceManagerGroupName"> The name of the workspace manager group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<WorkspaceManagerGroupResource> Get(string workspaceManagerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceManagerGroupName, nameof(workspaceManagerGroupName));
 
-            using var scope = _workspaceManagerGroupClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.Get");
+            using DiagnosticScope scope = _workspaceManagerGroupsClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.Get");
             scope.Start();
             try
             {
-                var response = _workspaceManagerGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, workspaceManagerGroupName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<WorkspaceManagerGroupData> response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkspaceManagerGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -247,102 +271,128 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Gets all workspace manager groups in the Sentinel workspace manager
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceManagerGroups_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkspaceManagerGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
-        /// <param name="top"> Returns only the first n results. Optional. </param>
-        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkspaceManagerGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WorkspaceManagerGroupResource> GetAllAsync(string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagerGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceManagerGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new WorkspaceManagerGroupResource(Client, WorkspaceManagerGroupData.DeserializeWorkspaceManagerGroupData(e)), _workspaceManagerGroupClientDiagnostics, Pipeline, "WorkspaceManagerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets all workspace manager groups in the Sentinel workspace manager
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceManagerGroups_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkspaceManagerGroupResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="orderBy"> Sorts the results. Optional. </param>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
         /// <param name="top"> Returns only the first n results. Optional. </param>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="WorkspaceManagerGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WorkspaceManagerGroupResource> GetAll(string orderBy = null, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WorkspaceManagerGroupResource> GetAllAsync(string @orderby = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceManagerGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderBy, top, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceManagerGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, orderBy, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new WorkspaceManagerGroupResource(Client, WorkspaceManagerGroupData.DeserializeWorkspaceManagerGroupData(e)), _workspaceManagerGroupClientDiagnostics, Pipeline, "WorkspaceManagerGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<WorkspaceManagerGroupData, WorkspaceManagerGroupResource>(new WorkspaceManagerGroupsGetAllAsyncCollectionResultOfT(
+                _workspaceManagerGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _workspaceName,
+                @orderby,
+                top,
+                skipToken,
+                context), data => new WorkspaceManagerGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all workspace manager groups in the Sentinel workspace manager
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="orderby"> Sorts the results. Optional. </param>
+        /// <param name="top"> Returns only the first n results. Optional. </param>
+        /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="WorkspaceManagerGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<WorkspaceManagerGroupResource> GetAll(string @orderby = default, int? top = default, string skipToken = default, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<WorkspaceManagerGroupData, WorkspaceManagerGroupResource>(new WorkspaceManagerGroupsGetAllCollectionResultOfT(
+                _workspaceManagerGroupsRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                _workspaceName,
+                @orderby,
+                top,
+                skipToken,
+                context), data => new WorkspaceManagerGroupResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceManagerGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkspaceManagerGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceManagerGroupName"> The name of the workspace manager group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string workspaceManagerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceManagerGroupName, nameof(workspaceManagerGroupName));
 
-            using var scope = _workspaceManagerGroupClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.Exists");
+            using DiagnosticScope scope = _workspaceManagerGroupsClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _workspaceManagerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, workspaceManagerGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkspaceManagerGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkspaceManagerGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -356,36 +406,50 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceManagerGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkspaceManagerGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceManagerGroupName"> The name of the workspace manager group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string workspaceManagerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceManagerGroupName, nameof(workspaceManagerGroupName));
 
-            using var scope = _workspaceManagerGroupClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.Exists");
+            using DiagnosticScope scope = _workspaceManagerGroupsClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.Exists");
             scope.Start();
             try
             {
-                var response = _workspaceManagerGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, workspaceManagerGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkspaceManagerGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkspaceManagerGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -399,38 +463,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceManagerGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkspaceManagerGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceManagerGroupName"> The name of the workspace manager group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<WorkspaceManagerGroupResource>> GetIfExistsAsync(string workspaceManagerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceManagerGroupName, nameof(workspaceManagerGroupName));
 
-            using var scope = _workspaceManagerGroupClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceManagerGroupsClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _workspaceManagerGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, workspaceManagerGroupName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<WorkspaceManagerGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkspaceManagerGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WorkspaceManagerGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkspaceManagerGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -444,38 +524,54 @@ namespace Azure.ResourceManager.SecurityInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/workspaceManagerGroups/{workspaceManagerGroupName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WorkspaceManagerGroups_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkspaceManagerGroups_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="WorkspaceManagerGroupResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-07-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceManagerGroupName"> The name of the workspace manager group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workspaceManagerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceManagerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<WorkspaceManagerGroupResource> GetIfExists(string workspaceManagerGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workspaceManagerGroupName, nameof(workspaceManagerGroupName));
 
-            using var scope = _workspaceManagerGroupClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.GetIfExists");
+            using DiagnosticScope scope = _workspaceManagerGroupsClientDiagnostics.CreateScope("WorkspaceManagerGroupCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _workspaceManagerGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceManagerGroupName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workspaceManagerGroupsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _workspaceName, workspaceManagerGroupName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<WorkspaceManagerGroupData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(WorkspaceManagerGroupData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((WorkspaceManagerGroupData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<WorkspaceManagerGroupResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new WorkspaceManagerGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -495,6 +591,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<WorkspaceManagerGroupResource> IAsyncEnumerable<WorkspaceManagerGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

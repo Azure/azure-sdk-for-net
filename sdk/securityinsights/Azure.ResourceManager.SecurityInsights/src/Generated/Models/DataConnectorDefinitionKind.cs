@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal readonly partial struct DataConnectorDefinitionKind : IEquatable<DataConnectorDefinitionKind>
     {
         private readonly string _value;
+        /// <summary> Customizable. </summary>
+        private const string CustomizableValue = "Customizable";
 
         /// <summary> Initializes a new instance of <see cref="DataConnectorDefinitionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataConnectorDefinitionKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CustomizableValue = "Customizable";
+            _value = value;
+        }
 
         /// <summary> Customizable. </summary>
         public static DataConnectorDefinitionKind Customizable { get; } = new DataConnectorDefinitionKind(CustomizableValue);
+
         /// <summary> Determines if two <see cref="DataConnectorDefinitionKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataConnectorDefinitionKind left, DataConnectorDefinitionKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataConnectorDefinitionKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataConnectorDefinitionKind left, DataConnectorDefinitionKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataConnectorDefinitionKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataConnectorDefinitionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataConnectorDefinitionKind(string value) => new DataConnectorDefinitionKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataConnectorDefinitionKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataConnectorDefinitionKind?(string value) => value == null ? null : new DataConnectorDefinitionKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataConnectorDefinitionKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataConnectorDefinitionKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

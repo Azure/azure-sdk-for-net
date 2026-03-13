@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct DeviceImportance : IEquatable<DeviceImportance>
     {
         private readonly string _value;
+        /// <summary> Unknown - Default value. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Low. </summary>
+        private const string LowValue = "Low";
+        /// <summary> Normal. </summary>
+        private const string NormalValue = "Normal";
+        /// <summary> High. </summary>
+        private const string HighValue = "High";
 
         /// <summary> Initializes a new instance of <see cref="DeviceImportance"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DeviceImportance(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string LowValue = "Low";
-        private const string NormalValue = "Normal";
-        private const string HighValue = "High";
+            _value = value;
+        }
 
         /// <summary> Unknown - Default value. </summary>
         public static DeviceImportance Unknown { get; } = new DeviceImportance(UnknownValue);
+
         /// <summary> Low. </summary>
         public static DeviceImportance Low { get; } = new DeviceImportance(LowValue);
+
         /// <summary> Normal. </summary>
         public static DeviceImportance Normal { get; } = new DeviceImportance(NormalValue);
+
         /// <summary> High. </summary>
         public static DeviceImportance High { get; } = new DeviceImportance(HighValue);
+
         /// <summary> Determines if two <see cref="DeviceImportance"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceImportance left, DeviceImportance right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeviceImportance"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceImportance left, DeviceImportance right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceImportance"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeviceImportance"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeviceImportance(string value) => new DeviceImportance(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeviceImportance"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeviceImportance?(string value) => value == null ? null : new DeviceImportance(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceImportance other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeviceImportance other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

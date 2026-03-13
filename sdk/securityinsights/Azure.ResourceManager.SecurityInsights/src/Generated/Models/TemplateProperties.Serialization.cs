@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class TemplateProperties : IUtf8JsonSerializable, IJsonModel<TemplateProperties>
+    /// <summary> Template property bag. </summary>
+    public partial class TemplateProperties : IJsonModel<TemplateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TemplateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TemplateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTemplateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TemplateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TemplateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TemplateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TemplateProperties IPersistableModel<TemplateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TemplateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TemplateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,22 +67,195 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TemplateProperties)} does not support writing '{format}' format.");
             }
-
-            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ContentId))
+            {
+                writer.WritePropertyName("contentId"u8);
+                writer.WriteStringValue(ContentId);
+            }
+            if (Optional.IsDefined(ContentProductId))
+            {
+                writer.WritePropertyName("contentProductId"u8);
+                writer.WriteStringValue(ContentProductId);
+            }
+            if (Optional.IsDefined(PackageVersion))
+            {
+                writer.WritePropertyName("packageVersion"u8);
+                writer.WriteStringValue(PackageVersion);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(ContentKind))
+            {
+                writer.WritePropertyName("contentKind"u8);
+                writer.WriteStringValue(ContentKind.Value.ToString());
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteObjectValue(Source, options);
+            }
+            if (Optional.IsDefined(Author))
+            {
+                writer.WritePropertyName("author"u8);
+                writer.WriteObjectValue(Author, options);
+            }
+            if (Optional.IsDefined(Support))
+            {
+                writer.WritePropertyName("support"u8);
+                writer.WriteObjectValue(Support, options);
+            }
+            if (Optional.IsDefined(Dependencies))
+            {
+                writer.WritePropertyName("dependencies"u8);
+                writer.WriteObjectValue(Dependencies, options);
+            }
+            if (Optional.IsDefined(Categories))
+            {
+                writer.WritePropertyName("categories"u8);
+                writer.WriteObjectValue(Categories, options);
+            }
+            if (Optional.IsCollectionDefined(Providers))
+            {
+                writer.WritePropertyName("providers"u8);
+                writer.WriteStartArray();
+                foreach (string item in Providers)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FirstPublishOn))
+            {
+                writer.WritePropertyName("firstPublishDate"u8);
+                writer.WriteStringValue(FirstPublishOn.Value, "D");
+            }
+            if (Optional.IsDefined(LastPublishOn))
+            {
+                writer.WritePropertyName("lastPublishDate"u8);
+                writer.WriteStringValue(LastPublishOn.Value, "D");
+            }
+            if (Optional.IsDefined(CustomVersion))
+            {
+                writer.WritePropertyName("customVersion"u8);
+                writer.WriteStringValue(CustomVersion);
+            }
+            if (Optional.IsDefined(ContentSchemaVersion))
+            {
+                writer.WritePropertyName("contentSchemaVersion"u8);
+                writer.WriteStringValue(ContentSchemaVersion);
+            }
+            if (Optional.IsDefined(Icon))
+            {
+                writer.WritePropertyName("icon"u8);
+                writer.WriteStringValue(Icon);
+            }
+            if (Optional.IsCollectionDefined(ThreatAnalysisTactics))
+            {
+                writer.WritePropertyName("threatAnalysisTactics"u8);
+                writer.WriteStartArray();
+                foreach (string item in ThreatAnalysisTactics)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ThreatAnalysisTechniques))
+            {
+                writer.WritePropertyName("threatAnalysisTechniques"u8);
+                writer.WriteStartArray();
+                foreach (string item in ThreatAnalysisTechniques)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PreviewImages))
+            {
+                writer.WritePropertyName("previewImages"u8);
+                writer.WriteStartArray();
+                foreach (string item in PreviewImages)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PreviewImagesDark))
+            {
+                writer.WritePropertyName("previewImagesDark"u8);
+                writer.WriteStartArray();
+                foreach (string item in PreviewImagesDark)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PackageId))
+            {
+                writer.WritePropertyName("packageId"u8);
+                writer.WriteStringValue(PackageId);
+            }
+            if (Optional.IsDefined(PackageKind))
+            {
+                writer.WritePropertyName("packageKind"u8);
+                writer.WriteStringValue(PackageKind.Value.ToString());
+            }
+            if (Optional.IsDefined(PackageName))
+            {
+                writer.WritePropertyName("packageName"u8);
+                writer.WriteStringValue(PackageName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
+            {
+                writer.WritePropertyName("isDeprecated"u8);
+                writer.WriteStringValue(IsDeprecated.Value.ToString());
+            }
             if (Optional.IsDefined(MainTemplate))
             {
                 writer.WritePropertyName("mainTemplate"u8);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(MainTemplate);
+                writer.WriteRawValue(MainTemplate);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MainTemplate, ModelSerializationExtensions.JsonDocumentOptions))
+                using (JsonDocument document = JsonDocument.Parse(MainTemplate))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -53,304 +265,357 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 writer.WritePropertyName("dependantTemplates"u8);
                 writer.WriteStartArray();
-                foreach (var item in DependantTemplates)
+                foreach (TemplateProperties item in DependantTemplates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        TemplateProperties IJsonModel<TemplateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TemplateProperties IJsonModel<TemplateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TemplateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TemplateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTemplateProperties(document.RootElement, options);
         }
 
-        internal static TemplateProperties DeserializeTemplateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TemplateProperties DeserializeTemplateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            BinaryData mainTemplate = default;
-            IReadOnlyList<TemplateProperties> dependantTemplates = default;
             string contentId = default;
             string contentProductId = default;
             string packageVersion = default;
             string version = default;
             string displayName = default;
             SecurityInsightsKind? contentKind = default;
-            SecurityInsightsMetadataSource source = default;
-            SecurityInsightsMetadataAuthor author = default;
-            SecurityInsightsMetadataSupport support = default;
-            SecurityInsightsMetadataDependencies dependencies = default;
-            SecurityInsightsMetadataCategories categories = default;
-            IReadOnlyList<string> providers = default;
-            DateTimeOffset? firstPublishDate = default;
-            DateTimeOffset? lastPublishDate = default;
+            MetadataSource source = default;
+            MetadataAuthor author = default;
+            MetadataSupport support = default;
+            MetadataDependencies dependencies = default;
+            MetadataCategories categories = default;
+            IList<string> providers = default;
+            DateTimeOffset? firstPublishOn = default;
+            DateTimeOffset? lastPublishOn = default;
             string customVersion = default;
             string contentSchemaVersion = default;
             string icon = default;
-            IReadOnlyList<string> threatAnalysisTactics = default;
-            IReadOnlyList<string> threatAnalysisTechniques = default;
-            IReadOnlyList<string> previewImages = default;
-            IReadOnlyList<string> previewImagesDark = default;
+            IList<string> threatAnalysisTactics = default;
+            IList<string> threatAnalysisTechniques = default;
+            IList<string> previewImages = default;
+            IList<string> previewImagesDark = default;
             string packageId = default;
             SecurityInsightsMetadataPackageKind? packageKind = default;
             string packageName = default;
             SecurityInsightsMetadataFlag? isDeprecated = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            BinaryData mainTemplate = default;
+            IReadOnlyList<TemplateProperties> dependantTemplates = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("mainTemplate"u8))
+                if (prop.NameEquals("contentId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    contentId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("contentProductId"u8))
+                {
+                    contentProductId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("packageVersion"u8))
+                {
+                    packageVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("version"u8))
+                {
+                    version = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("contentKind"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mainTemplate = BinaryData.FromString(property.Value.GetRawText());
+                    contentKind = new SecurityInsightsKind(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("dependantTemplates"u8))
+                if (prop.NameEquals("source"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    source = MetadataSource.DeserializeMetadataSource(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("author"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    author = MetadataAuthor.DeserializeMetadataAuthor(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("support"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    support = MetadataSupport.DeserializeMetadataSupport(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("dependencies"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dependencies = MetadataDependencies.DeserializeMetadataDependencies(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("categories"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    categories = MetadataCategories.DeserializeMetadataCategories(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("providers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    providers = array;
+                    continue;
+                }
+                if (prop.NameEquals("firstPublishDate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    firstPublishOn = prop.Value.GetDateTimeOffset("D");
+                    continue;
+                }
+                if (prop.NameEquals("lastPublishDate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastPublishOn = prop.Value.GetDateTimeOffset("D");
+                    continue;
+                }
+                if (prop.NameEquals("customVersion"u8))
+                {
+                    customVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("contentSchemaVersion"u8))
+                {
+                    contentSchemaVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("icon"u8))
+                {
+                    icon = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("threatAnalysisTactics"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    threatAnalysisTactics = array;
+                    continue;
+                }
+                if (prop.NameEquals("threatAnalysisTechniques"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    threatAnalysisTechniques = array;
+                    continue;
+                }
+                if (prop.NameEquals("previewImages"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    previewImages = array;
+                    continue;
+                }
+                if (prop.NameEquals("previewImagesDark"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    previewImagesDark = array;
+                    continue;
+                }
+                if (prop.NameEquals("packageId"u8))
+                {
+                    packageId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("packageKind"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    packageKind = new SecurityInsightsMetadataPackageKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("packageName"u8))
+                {
+                    packageName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isDeprecated"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isDeprecated = new SecurityInsightsMetadataFlag(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("mainTemplate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mainTemplate = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
+                if (prop.NameEquals("dependantTemplates"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<TemplateProperties> array = new List<TemplateProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeserializeTemplateProperties(item, options));
                     }
                     dependantTemplates = array;
                     continue;
                 }
-                if (property.NameEquals("contentId"u8))
-                {
-                    contentId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("contentProductId"u8))
-                {
-                    contentProductId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("packageVersion"u8))
-                {
-                    packageVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("version"u8))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("displayName"u8))
-                {
-                    displayName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("contentKind"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    contentKind = new SecurityInsightsKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("source"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    source = SecurityInsightsMetadataSource.DeserializeSecurityInsightsMetadataSource(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("author"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    author = SecurityInsightsMetadataAuthor.DeserializeSecurityInsightsMetadataAuthor(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("support"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    support = SecurityInsightsMetadataSupport.DeserializeSecurityInsightsMetadataSupport(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("dependencies"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dependencies = SecurityInsightsMetadataDependencies.DeserializeSecurityInsightsMetadataDependencies(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("categories"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    categories = SecurityInsightsMetadataCategories.DeserializeSecurityInsightsMetadataCategories(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("providers"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    providers = array;
-                    continue;
-                }
-                if (property.NameEquals("firstPublishDate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    firstPublishDate = property.Value.GetDateTimeOffset("D");
-                    continue;
-                }
-                if (property.NameEquals("lastPublishDate"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    lastPublishDate = property.Value.GetDateTimeOffset("D");
-                    continue;
-                }
-                if (property.NameEquals("customVersion"u8))
-                {
-                    customVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("contentSchemaVersion"u8))
-                {
-                    contentSchemaVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("icon"u8))
-                {
-                    icon = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("threatAnalysisTactics"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    threatAnalysisTactics = array;
-                    continue;
-                }
-                if (property.NameEquals("threatAnalysisTechniques"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    threatAnalysisTechniques = array;
-                    continue;
-                }
-                if (property.NameEquals("previewImages"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    previewImages = array;
-                    continue;
-                }
-                if (property.NameEquals("previewImagesDark"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    previewImagesDark = array;
-                    continue;
-                }
-                if (property.NameEquals("packageId"u8))
-                {
-                    packageId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("packageKind"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    packageKind = new SecurityInsightsMetadataPackageKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("packageName"u8))
-                {
-                    packageName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("isDeprecated"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isDeprecated = new SecurityInsightsMetadataFlag(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TemplateProperties(
                 contentId,
                 contentProductId,
@@ -364,8 +629,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 dependencies,
                 categories,
                 providers ?? new ChangeTrackingList<string>(),
-                firstPublishDate,
-                lastPublishDate,
+                firstPublishOn,
+                lastPublishOn,
                 customVersion,
                 contentSchemaVersion,
                 icon,
@@ -377,657 +642,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 packageKind,
                 packageName,
                 isDeprecated,
-                serializedAdditionalRawData,
                 mainTemplate,
-                dependantTemplates ?? new ChangeTrackingList<TemplateProperties>());
+                dependantTemplates ?? new ChangeTrackingList<TemplateProperties>(),
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MainTemplate), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  mainTemplate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MainTemplate))
-                {
-                    builder.Append("  mainTemplate: ");
-                    builder.AppendLine($"'{MainTemplate.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DependantTemplates), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dependantTemplates: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(DependantTemplates))
-                {
-                    if (DependantTemplates.Any())
-                    {
-                        builder.Append("  dependantTemplates: ");
-                        builder.AppendLine("[");
-                        foreach (var item in DependantTemplates)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dependantTemplates: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentId))
-                {
-                    builder.Append("  contentId: ");
-                    if (ContentId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContentId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContentId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentProductId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentProductId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentProductId))
-                {
-                    builder.Append("  contentProductId: ");
-                    if (ContentProductId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContentProductId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContentProductId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  packageVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PackageVersion))
-                {
-                    builder.Append("  packageVersion: ");
-                    if (PackageVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PackageVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PackageVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  version: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Version))
-                {
-                    builder.Append("  version: ");
-                    if (Version.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Version}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Version}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  displayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DisplayName))
-                {
-                    builder.Append("  displayName: ");
-                    if (DisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DisplayName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentKind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentKind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentKind))
-                {
-                    builder.Append("  contentKind: ");
-                    builder.AppendLine($"'{ContentKind.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  source: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Source))
-                {
-                    builder.Append("  source: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Source, options, 2, false, "  source: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Author), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  author: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Author))
-                {
-                    builder.Append("  author: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Author, options, 2, false, "  author: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Support), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  support: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Support))
-                {
-                    builder.Append("  support: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Support, options, 2, false, "  support: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dependencies), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dependencies: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Dependencies))
-                {
-                    builder.Append("  dependencies: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Dependencies, options, 2, false, "  dependencies: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Categories), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  categories: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Categories))
-                {
-                    builder.Append("  categories: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Categories, options, 2, false, "  categories: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Providers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  providers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Providers))
-                {
-                    if (Providers.Any())
-                    {
-                        builder.Append("  providers: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Providers)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FirstPublishOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  firstPublishDate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FirstPublishOn))
-                {
-                    builder.Append("  firstPublishDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(FirstPublishOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastPublishOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  lastPublishDate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LastPublishOn))
-                {
-                    builder.Append("  lastPublishDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(LastPublishOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  customVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomVersion))
-                {
-                    builder.Append("  customVersion: ");
-                    if (CustomVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CustomVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CustomVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentSchemaVersion), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentSchemaVersion: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentSchemaVersion))
-                {
-                    builder.Append("  contentSchemaVersion: ");
-                    if (ContentSchemaVersion.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContentSchemaVersion}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContentSchemaVersion}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Icon), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  icon: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Icon))
-                {
-                    builder.Append("  icon: ");
-                    if (Icon.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Icon}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Icon}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreatAnalysisTactics), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  threatAnalysisTactics: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ThreatAnalysisTactics))
-                {
-                    if (ThreatAnalysisTactics.Any())
-                    {
-                        builder.Append("  threatAnalysisTactics: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ThreatAnalysisTactics)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreatAnalysisTechniques), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  threatAnalysisTechniques: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ThreatAnalysisTechniques))
-                {
-                    if (ThreatAnalysisTechniques.Any())
-                    {
-                        builder.Append("  threatAnalysisTechniques: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ThreatAnalysisTechniques)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreviewImages), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  previewImages: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PreviewImages))
-                {
-                    if (PreviewImages.Any())
-                    {
-                        builder.Append("  previewImages: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PreviewImages)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreviewImagesDark), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  previewImagesDark: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(PreviewImagesDark))
-                {
-                    if (PreviewImagesDark.Any())
-                    {
-                        builder.Append("  previewImagesDark: ");
-                        builder.AppendLine("[");
-                        foreach (var item in PreviewImagesDark)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  packageId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PackageId))
-                {
-                    builder.Append("  packageId: ");
-                    if (PackageId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PackageId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PackageId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageKind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  packageKind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PackageKind))
-                {
-                    builder.Append("  packageKind: ");
-                    builder.AppendLine($"'{PackageKind.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  packageName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PackageName))
-                {
-                    builder.Append("  packageName: ");
-                    if (PackageName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PackageName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PackageName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeprecated), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  isDeprecated: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsDeprecated))
-                {
-                    builder.Append("  isDeprecated: ");
-                    builder.AppendLine($"'{IsDeprecated.Value.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<TemplateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(TemplateProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TemplateProperties IPersistableModel<TemplateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TemplateProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTemplateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TemplateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TemplateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
