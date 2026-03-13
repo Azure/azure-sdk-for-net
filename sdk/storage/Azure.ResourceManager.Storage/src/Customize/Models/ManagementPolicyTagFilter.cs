@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden Operator alias for renamed Op property.
+// Could use @@clientName in spec but would lose the improved name.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models

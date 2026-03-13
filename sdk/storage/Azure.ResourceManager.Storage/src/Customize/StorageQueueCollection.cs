@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Backward-compat: Restores GetAll/GetAllAsync overloads and IEnumerable/IAsyncEnumerable
+// implementations matching prior GA surface.
+// TODO: Generator should support @@markAsPageable or custom return types for list operations.
+
 using System;
 using System.Collections;
 using System.Collections.Generic;

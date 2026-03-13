@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden aliases (IPRules, IPv6Rules) for renamed properties.
+// Could use @@clientName in spec but would lose improved names.
+
 using System.Collections.Generic;
 using System.ComponentModel;
 

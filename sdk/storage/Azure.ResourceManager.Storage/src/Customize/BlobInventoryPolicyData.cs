@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden PolicySchema alias for renamed Policy property.
+// Could use @@clientName in spec but would lose the improved name.
+
 using System.ComponentModel;
 using Azure.ResourceManager.Storage.Models;
 

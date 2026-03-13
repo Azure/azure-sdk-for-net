@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Preserves older endpoint properties returning Uri instead of string.
+// Could use @@alternateType in spec for Uri properties.
+
 using System;
 using System.ComponentModel;
 

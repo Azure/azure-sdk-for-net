@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: New extensible enum type with implicit conversions to/from old
+// StorageAccountFailoverType. Bridges the type rename from old GA to new generated type.
+
 using System;
 using System.ComponentModel;
 

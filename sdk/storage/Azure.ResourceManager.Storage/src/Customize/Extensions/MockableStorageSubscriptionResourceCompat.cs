@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds subscription-level method overloads matching prior GA surface
+// (CheckStorageAccountNameAvailability, GetDeletedAccounts with old signatures).
+
 using System;
 using System.ComponentModel;
 using System.Threading;

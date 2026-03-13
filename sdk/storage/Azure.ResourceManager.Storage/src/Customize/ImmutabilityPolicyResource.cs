@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds method overloads accepting ETag directly (prior GA used Azure.ETag type)
+// instead of string. The generated methods use string for If-Match headers.
+
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;

@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds method aliases (EnableVersionLevelImmutability -> ObjectLevelWorm)
+// to preserve prior GA method names. Could use @@clientName on operation but would lose new name.
+
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;

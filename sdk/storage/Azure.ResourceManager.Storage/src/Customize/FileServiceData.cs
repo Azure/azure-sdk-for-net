@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Backward-compat: Flattens ProtocolSmbSetting onto the data model directly.
+// Prior GA exposed SMB settings without going through ProtocolSettings envelope.
+// This is a structural difference from the TypeSpec model hierarchy.
+
 using System;
 using System.Collections.Generic;
 using Azure.Core;

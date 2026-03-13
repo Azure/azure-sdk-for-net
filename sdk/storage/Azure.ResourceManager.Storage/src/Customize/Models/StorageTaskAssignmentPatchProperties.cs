@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Preserves older property names and exposes ProvisioningState as
+// StorageProvisioningState (prior GA type) instead of generated type.
+
 using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 

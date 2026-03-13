@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Custom serialization for hand-authored ExecutionTriggerType enum
+// that replaces the generated string-backed extensible type.
+
 using System;
 
 namespace Azure.ResourceManager.Storage.Models

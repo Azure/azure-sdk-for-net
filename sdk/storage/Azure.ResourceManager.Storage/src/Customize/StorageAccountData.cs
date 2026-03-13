@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Backward-compat: Converts provisioning state from generated type to legacy enum/struct style
+// and adds aliases for renamed boolean properties (IsHnsEnabled, IsSftpEnabled, etc.).
+// The provisioning state change requires custom code; property renames could use @@clientName.
+
 using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;

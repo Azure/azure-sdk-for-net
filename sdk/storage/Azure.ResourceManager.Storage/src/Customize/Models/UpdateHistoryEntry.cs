@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden ImmutabilityPeriod alias for renamed property.
+// Could use @@clientName in spec but would lose the improved name.
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

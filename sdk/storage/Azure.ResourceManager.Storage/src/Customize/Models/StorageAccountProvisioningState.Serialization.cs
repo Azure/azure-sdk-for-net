@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat (Compile Remove replacement): Custom serialization for the hand-authored
+// StorageAccountProvisioningState struct that replaces the generated enum.
+
 namespace Azure.ResourceManager.Storage.Models
 {
     // Custom serialization extensions needed because StorageAccountProvisioningState was changed

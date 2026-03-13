@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Backward-compat (Compile Remove replacement): Replaces generated model to change Action
+// property type from StorageAccountVirtualNetworkRuleAction to StorageAccountNetworkRuleAction,
+// matching the prior GA unified action type. Could use @@alternateType in spec.
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

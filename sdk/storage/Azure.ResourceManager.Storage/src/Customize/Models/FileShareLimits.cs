@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden aliases for MaxProvisionedIops and MinProvisionedIops.
+// Could use @@clientName in spec but would lose improved names.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models

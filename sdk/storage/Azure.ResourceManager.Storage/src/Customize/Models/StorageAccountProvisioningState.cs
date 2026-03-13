@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Backward-compat (Compile Remove replacement): Hand-authored extensible struct replacing
+// generated enum to preserve older GA naming (e.g. 'Creating' not 'creating').
+// Could potentially use @@clientName on enum values in spec.
+
 using System;
 using System.ComponentModel;
 

@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds extension method shims on SubscriptionResource preserving
+// prior GA method names and signatures.
+
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;

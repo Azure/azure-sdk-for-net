@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Structural fix: Custom deserialization hook so Subscriptions is read correctly as
+// List<SubResource>. Generator deserializes this incorrectly.
+// TODO: Generator bug - incorrect deserialization of SubResource collections.
+
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;

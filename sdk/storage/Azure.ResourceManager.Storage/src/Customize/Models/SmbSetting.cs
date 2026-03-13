@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden aliases (IsMultiChannelEnabled, IsRequired) for renamed
+// SMB setting properties. Could use @@clientName in spec but would lose improved names.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models

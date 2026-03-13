@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Helper: Sync paging adapter wrapping an in-memory list as a single-page Pageable<T>.
+// Used by backward-compat GetKeys overload that wraps Response as Pageable.
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;

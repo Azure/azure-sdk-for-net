@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden enum aliases with old casing (Get->GET, Post->POST, etc.).
+// Could use @@clientName on enum values in spec.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models

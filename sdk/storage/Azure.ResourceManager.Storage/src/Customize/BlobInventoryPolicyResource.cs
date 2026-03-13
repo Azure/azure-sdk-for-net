@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds CreateOrUpdate overloads forwarding to Update to preserve prior GA method names.
+// Operation was renamed in TypeSpec spec.
+
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;

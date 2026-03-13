@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Structural fix (Compile Remove replacement): Hand-written JSON serialization replacing
+// broken generated serialization for StorageTaskAssignmentReport.
+// TODO: Generator bug - generated serialization is incorrect for this model.
+
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;

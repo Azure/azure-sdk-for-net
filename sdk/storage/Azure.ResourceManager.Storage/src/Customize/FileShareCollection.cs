@@ -3,6 +3,11 @@
 
 #nullable disable
 
+// Backward-compat: Restores GetAll/GetAllAsync overloads returning Pageable<FileShareItem>
+// that existed in prior GA. Generator now returns Pageable<FileShareResource>.
+// Also implements IEnumerable/IAsyncEnumerable (throwing) to match old interface surface.
+// TODO: Generator should support @@markAsPageable or custom return types for list operations.
+
 using System;
 using System.Collections;
 using System.Collections.Generic;

@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds typed TriggerType property preserving the older enum-based shape
+// over the generated string-backed member.
+
 using System;
 using System.ComponentModel;
 

@@ -1,6 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward-compat: Adds many method overloads/aliases to preserve prior GA surface:
+// - Failover overloads (old FailoverType enum -> new FailoverRequestFailoverType)
+// - SAS method casing (GetAccountSas -> GetAccountSAS)
+// - GetKeys/RegenerateKey Pageable overloads (old returned Pageable<StorageAccountKey>)
+// - GetPrivateLinkResources Pageable overloads
+// - RestoreBlobRanges custom LRO returning specialized operation type
+// - EnableHierarchicalNamespace (removed from API, throws NotSupportedException)
+// Most of these cannot be replaced by spec changes due to return type/parameter type changes.
+
 #nullable disable
 
 using System;

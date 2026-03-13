@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden Aad alias for generated AAD enum member (casing difference).
+// Could use @@clientName on enum value in spec.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models

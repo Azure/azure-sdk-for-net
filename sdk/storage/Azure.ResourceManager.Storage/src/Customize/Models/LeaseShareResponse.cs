@@ -3,6 +3,8 @@
 
 #nullable disable
 
+// Backward-compat: Preserves prior GA type name with 'Response' suffix via partial class.
+
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.ResourceManager.Storage.Models

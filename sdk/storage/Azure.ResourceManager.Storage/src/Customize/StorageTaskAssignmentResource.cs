@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Structural fix: Adds string-id constructor bridge needed by generated code and restores
+// old report-listing method names (GetStorageTaskAssignmentsInstancesReports -> GetAll).
+// TODO: Generator bug - should generate appropriate constructor for resource types.
+
 using System.ComponentModel;
 using System.Threading;
 using Azure.Core;

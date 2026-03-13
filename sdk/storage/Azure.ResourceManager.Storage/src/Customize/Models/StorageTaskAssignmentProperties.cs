@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward-compat: Adds constructor overload and property aliases matching prior GA surface.
+// Properties were renamed and constructor signature changed.
+
 #nullable disable
 
 using System.ComponentModel;

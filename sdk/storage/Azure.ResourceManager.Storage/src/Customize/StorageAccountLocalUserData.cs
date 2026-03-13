@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden alias properties for renamed ACL auth and NFSv3 booleans.
+// Could use @@clientName in spec but would lose improved names.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage

@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Helper: Async paging adapter that defers fetch until enumeration and exposes one page.
+// Used by backward-compat GetKeysAsync overload that wraps Response as AsyncPageable.
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

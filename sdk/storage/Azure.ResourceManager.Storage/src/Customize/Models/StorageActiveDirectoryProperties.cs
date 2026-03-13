@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds constructor overload preserving prior GA required-parameter shape
+// and restores DomainGuid property as non-nullable Guid (generated is Guid?).
+
 using System;
 using System.ComponentModel;
 

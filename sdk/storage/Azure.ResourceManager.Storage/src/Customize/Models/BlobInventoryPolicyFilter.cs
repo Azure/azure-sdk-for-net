@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden IncludePrefix alias for renamed PrefixMatch property.
+// Could use @@clientName in spec but would lose the improved name.
+
 using System.Collections.Generic;
 using System.ComponentModel;
 

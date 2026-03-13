@@ -1,6 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// Backward-compat: Adds constructor overload and shadows Name/ResourceType/Id properties
+// to match prior GA surface where these came from ResourceData base class.
+// The generator maps this to a non-ResourceData base (Resource), causing the shape difference.
+
 #nullable disable
 
 using System;

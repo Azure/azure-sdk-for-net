@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Preserves older date-typed aliases (StartedOn, FinishedOn) returning
+// DateTimeOffset? over generated string time values. Could use @@alternateType in spec.
+
 using System;
 using System.ComponentModel;
 

@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Backward-compat: Suppresses generated factory methods whose signatures changed (parameter types differ)
+// and provides overloads matching the prior GA API surface. Could not be replaced by spec changes
+// because the parameter type differences stem from model restructuring (e.g. flattened properties).
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

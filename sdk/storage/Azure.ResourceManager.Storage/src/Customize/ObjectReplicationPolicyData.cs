@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden alias properties for renamed metrics and priority flags.
+// Could use @@clientName in spec but would lose improved names.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage

@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Structural fix: Provides missing additionalBinaryDataProperties0 field that the generated
+// serialization code references but the generated model doesn't define.
+// TODO: Generator bug - generated serialization references nonexistent field.
+
 using System;
 using System.Collections.Generic;
 

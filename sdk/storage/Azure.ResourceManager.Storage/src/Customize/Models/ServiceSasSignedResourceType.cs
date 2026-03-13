@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden enum aliases (Blob, Container, File, Share) for
+// generated single-letter members (b, c, f, s). Could use @@clientName on enum values.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models

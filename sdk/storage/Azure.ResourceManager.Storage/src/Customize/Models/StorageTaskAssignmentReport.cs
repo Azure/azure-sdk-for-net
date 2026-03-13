@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat (Compile Remove replacement): Restores older public constructor shape
+// and additional binary data capture. Generated version has incompatible constructor.
+
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Storage;

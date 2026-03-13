@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden alias properties (IsDeleted, PreventEncryptionScopeOverride)
+// for renamed generated properties. Could use @@clientName in spec but would lose improved names.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage

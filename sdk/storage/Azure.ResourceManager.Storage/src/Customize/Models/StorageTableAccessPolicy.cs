@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden ExpireOn/ExpiresOn aliases for renamed expiry property.
+// Could use @@clientName in spec but would lose the improved name.
+
 using System;
 using System.ComponentModel;
 

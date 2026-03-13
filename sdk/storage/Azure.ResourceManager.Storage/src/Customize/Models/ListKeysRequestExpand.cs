@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: New extensible enum with implicit conversions to/from old
+// StorageListKeyExpand type. Bridges the type rename from prior GA.
+
 using System;
 using System.ComponentModel;
 

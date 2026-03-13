@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds hidden aliases for older boolean property names on routing preference.
+// Could use @@clientName in spec but would lose improved names.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models

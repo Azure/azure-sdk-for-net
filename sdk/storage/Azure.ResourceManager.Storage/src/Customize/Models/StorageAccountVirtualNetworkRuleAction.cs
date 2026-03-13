@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Adds implicit conversion from StorageAccountVirtualNetworkRuleAction to
+// StorageAccountNetworkRuleAction to support the unified action type from prior GA.
+
 namespace Azure.ResourceManager.Storage.Models
 {
     public readonly partial struct StorageAccountVirtualNetworkRuleAction

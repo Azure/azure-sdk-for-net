@@ -3,6 +3,9 @@
 
 #nullable disable
 
+// Backward-compat: Hand-authored enum replacing generated string-backed extensible type
+// to preserve the prior GA strongly-typed enum API surface.
+
 using System.ComponentModel;
 
 namespace Azure.ResourceManager.Storage.Models

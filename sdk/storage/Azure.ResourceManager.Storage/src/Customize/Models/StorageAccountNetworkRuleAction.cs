@@ -3,6 +3,10 @@
 
 #nullable disable
 
+// Backward-compat (Compile Remove replacement): Hand-authored extensible enum struct
+// preserving the unified StorageAccountNetworkRuleAction type from prior GA.
+// Generator splits into StorageAccountIPRuleAction and StorageAccountVirtualNetworkRuleAction.
+
 using System;
 using System.ComponentModel;
 

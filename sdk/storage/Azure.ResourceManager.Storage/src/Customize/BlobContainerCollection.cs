@@ -3,6 +3,11 @@
 
 #nullable disable
 
+// Backward-compat: Restores GetAll/GetAllAsync overloads returning Pageable<ListContainerItem>
+// that existed in prior GA. The generator now returns Pageable<BlobContainerResource> instead.
+// Also implements IEnumerable/IAsyncEnumerable (throwing) to match old interface surface.
+// TODO: Generator should support @@markAsPageable or custom return types for list operations.
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
