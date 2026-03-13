@@ -75,7 +75,7 @@ MyClient client = new(settings);
 > For details on the environment variable naming convention, see
 > [Environment variable configuration provider](https://learn.microsoft.com/dotnet/core/extensions/configuration-providers#environment-variable-configuration-provider).
 
-### 2. User Secrets (development)
+### 2. User secrets (development)
 
 During local development, use the .NET
 [Secret Manager](https://learn.microsoft.com/aspnet/core/security/app-secrets)
