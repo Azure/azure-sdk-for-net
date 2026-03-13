@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
+    /// <summary></summary>
     public partial class DiskAccessResource : IJsonModel<DiskAccessData>
     {
-        private static DiskAccessData s_dataDeserializationInstance;
-        private static DiskAccessData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DiskAccessData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DiskAccessData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DiskAccessData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiskAccessData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiskAccessData>)Data).Write(writer, options);
 
-        DiskAccessData IJsonModel<DiskAccessData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskAccessData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskAccessData IJsonModel<DiskAccessData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiskAccessData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskAccessData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DiskAccessData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskAccessData>(Data, options, ComputeCombineContext.Default);
 
-        DiskAccessData IPersistableModel<DiskAccessData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskAccessData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskAccessData IPersistableModel<DiskAccessData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskAccessData>(data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<DiskAccessData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskAccessData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DiskAccessData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

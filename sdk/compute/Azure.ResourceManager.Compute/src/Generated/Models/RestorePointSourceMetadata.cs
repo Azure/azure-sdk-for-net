@@ -7,44 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes the properties of the Virtual Machine for which the restore point was created. The properties provided are a subset and the snapshot of the overall Virtual Machine properties captured at the time of the restore point creation. </summary>
     public partial class RestorePointSourceMetadata
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RestorePointSourceMetadata"/>. </summary>
         public RestorePointSourceMetadata()
@@ -62,12 +32,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="location"> Location of the VM from which the restore point was created. </param>
         /// <param name="userData"> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </param>
         /// <param name="hyperVGeneration"> HyperVGeneration of the source VM for which restore point is captured. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile, RestorePointSourceVmStorageProfile storageProfile, VirtualMachineOSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, AzureLocation? location, string userData, HyperVGeneration? hyperVGeneration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RestorePointSourceMetadata(VirtualMachineHardwareProfile hardwareProfile, RestorePointSourceVMStorageProfile storageProfile, VirtualMachineOSProfile osProfile, DiagnosticsProfile diagnosticsProfile, string licenseType, string vmId, SecurityProfile securityProfile, string location, string userData, HyperVGenerationTypes? hyperVGeneration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
-            OSProfile = osProfile;
+            OsProfile = osProfile;
             DiagnosticsProfile = diagnosticsProfile;
             LicenseType = licenseType;
             VmId = vmId;
@@ -75,34 +45,46 @@ namespace Azure.ResourceManager.Compute.Models
             Location = location;
             UserData = userData;
             HyperVGeneration = hyperVGeneration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the hardware profile. </summary>
         public VirtualMachineHardwareProfile HardwareProfile { get; }
+
         /// <summary> Gets the storage profile. </summary>
-        public RestorePointSourceVmStorageProfile StorageProfile { get; set; }
+        public RestorePointSourceVMStorageProfile StorageProfile { get; set; }
+
         /// <summary> Gets the OS profile. </summary>
-        public VirtualMachineOSProfile OSProfile { get; }
+        public VirtualMachineOSProfile OsProfile { get; }
+
         /// <summary> Gets the diagnostics profile. </summary>
         internal DiagnosticsProfile DiagnosticsProfile { get; }
-        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. **NOTE**: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
-        public BootDiagnostics BootDiagnostics
-        {
-            get => DiagnosticsProfile?.BootDiagnostics;
-        }
 
         /// <summary> Gets the license type, which is for bring your own license scenario. </summary>
         public string LicenseType { get; }
+
         /// <summary> Gets the virtual machine unique id. </summary>
         public string VmId { get; }
+
         /// <summary> Gets the security profile. </summary>
         public SecurityProfile SecurityProfile { get; }
+
         /// <summary> Location of the VM from which the restore point was created. </summary>
-        public AzureLocation? Location { get; }
+        public string Location { get; }
+
         /// <summary> UserData associated with the source VM for which restore point is captured, which is a base-64 encoded value. </summary>
         public string UserData { get; }
+
         /// <summary> HyperVGeneration of the source VM for which restore point is captured. </summary>
-        public HyperVGeneration? HyperVGeneration { get; }
+        public HyperVGenerationTypes? HyperVGeneration { get; }
+
+        /// <summary> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. <b>NOTE</b>: If storageUri is being specified then ensure that the storage account is in the same region and subscription as the VM. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </summary>
+        public BootDiagnostics BootDiagnostics
+        {
+            get
+            {
+                return DiagnosticsProfile.BootDiagnostics;
+            }
+        }
     }
 }

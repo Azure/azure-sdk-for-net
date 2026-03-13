@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
+    /// <summary></summary>
     public partial class DiskRestorePointResource : IJsonModel<DiskRestorePointData>
     {
-        private static DiskRestorePointData s_dataDeserializationInstance;
-        private static DiskRestorePointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DiskRestorePointData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DiskRestorePointData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DiskRestorePointData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DiskRestorePointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiskRestorePointData>)Data).Write(writer, options);
 
-        DiskRestorePointData IJsonModel<DiskRestorePointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskRestorePointData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskRestorePointData IJsonModel<DiskRestorePointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiskRestorePointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskRestorePointData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DiskRestorePointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskRestorePointData>(Data, options, ComputeCombineContext.Default);
 
-        DiskRestorePointData IPersistableModel<DiskRestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskRestorePointData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DiskRestorePointData IPersistableModel<DiskRestorePointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskRestorePointData>(data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<DiskRestorePointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskRestorePointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DiskRestorePointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,9 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Specifies information about the dedicated host group that the dedicated host should be assigned to. Only tags may be updated. </summary>
     public partial class DedicatedHostGroupPatch : ComputeResourcePatch
@@ -18,55 +19,99 @@ namespace Azure.ResourceManager.Compute.Models
         public DedicatedHostGroupPatch()
         {
             Zones = new ChangeTrackingList<string>();
-            Hosts = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Dedicated Host Group Properties. </param>
         /// <param name="zones"> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </param>
-        /// <param name="platformFaultDomainCount"> Number of fault domains that the host group can span. </param>
-        /// <param name="hosts"> A list of references to all dedicated hosts in the dedicated host group. </param>
-        /// <param name="instanceView"> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </param>
-        /// <param name="supportAutomaticPlacement"> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to 'false' when not provided. Minimum api-version: 2020-06-01. </param>
-        /// <param name="additionalCapabilities"> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </param>
-        internal DedicatedHostGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, int? platformFaultDomainCount, IReadOnlyList<SubResource> hosts, DedicatedHostGroupInstanceView instanceView, bool? supportAutomaticPlacement, DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities) : base(tags, serializedAdditionalRawData)
+        internal DedicatedHostGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, DedicatedHostGroupProperties properties, IList<string> zones) : base(tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Zones = zones;
-            PlatformFaultDomainCount = platformFaultDomainCount;
-            Hosts = hosts;
-            InstanceView = instanceView;
-            SupportAutomaticPlacement = supportAutomaticPlacement;
-            AdditionalCapabilities = additionalCapabilities;
         }
+
+        /// <summary> Dedicated Host Group Properties. </summary>
+        internal DedicatedHostGroupProperties Properties { get; set; }
 
         /// <summary> Availability Zone to use for this host group. Only single zone is supported. The zone can be assigned only during creation. If not provided, the group supports all zones in the region. If provided, enforces each host in the group to be in the same zone. </summary>
         public IList<string> Zones { get; }
+
         /// <summary> Number of fault domains that the host group can span. </summary>
-        public int? PlatformFaultDomainCount { get; set; }
-        /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
-        public IReadOnlyList<SubResource> Hosts { get; }
-        /// <summary> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </summary>
-        internal DedicatedHostGroupInstanceView InstanceView { get; }
-        /// <summary> List of instance view of the dedicated hosts under the dedicated host group. </summary>
-        public IReadOnlyList<DedicatedHostInstanceViewWithName> InstanceViewHosts
+        public int PlatformFaultDomainCount
         {
-            get => InstanceView?.Hosts;
+            get
+            {
+                return Properties is null ? default : Properties.PlatformFaultDomainCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostGroupProperties();
+                }
+                Properties.PlatformFaultDomainCount = value;
+            }
+        }
+
+        /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
+        public IReadOnlyList<SubResourceReadOnly> Hosts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostGroupProperties();
+                }
+                return Properties.Hosts;
+            }
         }
 
         /// <summary> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to 'false' when not provided. Minimum api-version: 2020-06-01. </summary>
-        public bool? SupportAutomaticPlacement { get; set; }
-        /// <summary> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </summary>
-        internal DedicatedHostGroupPropertiesAdditionalCapabilities AdditionalCapabilities { get; set; }
-        /// <summary> The flag that enables or disables a capability to have UltraSSD Enabled Virtual Machines on Dedicated Hosts of the Dedicated Host Group. For the Virtual Machines to be UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be set true as well. The value is defaulted to 'false' when not provided. Please refer to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd for more details on Ultra SSD feature. **Note:** The ultraSSDEnabled setting can only be enabled for Host Groups that are created as zonal. Minimum api-version: 2022-03-01. </summary>
-        public bool? UltraSsdEnabled
+        public bool? SupportAutomaticPlacement
         {
-            get => AdditionalCapabilities is null ? default : AdditionalCapabilities.UltraSsdEnabled;
+            get
+            {
+                return Properties is null ? default : Properties.SupportAutomaticPlacement;
+            }
             set
             {
-                if (AdditionalCapabilities is null)
-                    AdditionalCapabilities = new DedicatedHostGroupPropertiesAdditionalCapabilities();
-                AdditionalCapabilities.UltraSsdEnabled = value;
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostGroupProperties();
+                }
+                Properties.SupportAutomaticPlacement = value.Value;
+            }
+        }
+
+        /// <summary> List of instance view of the dedicated hosts under the dedicated host group. </summary>
+        public IList<DedicatedHostInstanceViewWithName> InstanceViewHosts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostGroupProperties();
+                }
+                return Properties.InstanceViewHosts;
+            }
+        }
+
+        /// <summary> The flag that enables or disables a capability to have UltraSSD Enabled Virtual Machines on Dedicated Hosts of the Dedicated Host Group. For the Virtual Machines to be UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be set true as well. The value is defaulted to 'false' when not provided. Please refer to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd for more details on Ultra SSD feature. <b>Note:</b> The ultraSSDEnabled setting can only be enabled for Host Groups that are created as zonal. Minimum api-version: 2022-03-01. </summary>
+        public bool? UltraSSDEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UltraSSDEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostGroupProperties();
+                }
+                Properties.UltraSSDEnabled = value.Value;
             }
         }
     }

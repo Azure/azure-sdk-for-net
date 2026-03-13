@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
+    /// <summary></summary>
     public partial class GalleryApplicationVersionResource : IJsonModel<GalleryApplicationVersionData>
     {
-        private static GalleryApplicationVersionData s_dataDeserializationInstance;
-        private static GalleryApplicationVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GalleryApplicationVersionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GalleryApplicationVersionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GalleryApplicationVersionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GalleryApplicationVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GalleryApplicationVersionData>)Data).Write(writer, options);
 
-        GalleryApplicationVersionData IJsonModel<GalleryApplicationVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryApplicationVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryApplicationVersionData IJsonModel<GalleryApplicationVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<GalleryApplicationVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryApplicationVersionData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GalleryApplicationVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryApplicationVersionData>(Data, options, ComputeCombineContext.Default);
 
-        GalleryApplicationVersionData IPersistableModel<GalleryApplicationVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryApplicationVersionData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryApplicationVersionData IPersistableModel<GalleryApplicationVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryApplicationVersionData>(data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<GalleryApplicationVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryApplicationVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GalleryApplicationVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

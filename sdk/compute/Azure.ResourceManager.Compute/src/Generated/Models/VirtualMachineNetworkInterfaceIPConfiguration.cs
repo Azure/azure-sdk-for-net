@@ -7,45 +7,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes a virtual machine network profile's IP configuration. </summary>
     public partial class VirtualMachineNetworkInterfaceIPConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceIPConfiguration"/>. </summary>
         /// <param name="name"> The IP configuration name. </param>
@@ -55,66 +26,130 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ApplicationSecurityGroups = new ChangeTrackingList<WritableSubResource>();
-            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancerBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceIPConfiguration"/>. </summary>
         /// <param name="name"> The IP configuration name. </param>
-        /// <param name="subnet"> Specifies the identifier of the subnet. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
-        /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
-        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
-        /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
-        /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </param>
-        /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineNetworkInterfaceIPConfiguration(string name, WritableSubResource subnet, bool? primary, VirtualMachinePublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> loadBalancerBackendAddressPools, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Describes a virtual machine network interface IP configuration properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineNetworkInterfaceIPConfiguration(string name, VirtualMachineNetworkInterfaceIPConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Subnet = subnet;
-            Primary = primary;
-            PublicIPAddressConfiguration = publicIPAddressConfiguration;
-            PrivateIPAddressVersion = privateIPAddressVersion;
-            ApplicationSecurityGroups = applicationSecurityGroups;
-            ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
-            LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineNetworkInterfaceIPConfiguration"/> for deserialization. </summary>
-        internal VirtualMachineNetworkInterfaceIPConfiguration()
-        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IP configuration name. </summary>
         public string Name { get; set; }
-        /// <summary> Specifies the identifier of the subnet. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SubnetId
+
+        /// <summary> Describes a virtual machine network interface IP configuration properties. </summary>
+        internal VirtualMachineNetworkInterfaceIPConfigurationProperties Properties { get; set; }
+
+        /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
+        public bool? Primary
         {
-            get => Subnet is null ? default : Subnet.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
             set
             {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
+                }
+                Properties.Primary = value.Value;
             }
         }
 
-        /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
-        public bool? Primary { get; set; }
         /// <summary> The publicIPAddressConfiguration. </summary>
-        public VirtualMachinePublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
+        public VirtualMachinePublicIPAddressConfiguration PublicIPAddressConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddressConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
+                }
+                Properties.PublicIPAddressConfiguration = value;
+            }
+        }
+
         /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </summary>
-        public IPVersion? PrivateIPAddressVersion { get; set; }
+        public IPVersions? PrivateIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
+                }
+                Properties.PrivateIPAddressVersion = value.Value;
+            }
+        }
+
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<WritableSubResource> ApplicationSecurityGroups { get; }
+        public IList<SubResource> ApplicationSecurityGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
+                }
+                return Properties.ApplicationSecurityGroups;
+            }
+        }
+
         /// <summary> Specifies an array of references to backend address pools of application gateways. A virtual machine can reference backend address pools of multiple application gateways. Multiple virtual machines cannot use the same application gateway. </summary>
-        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; }
+        public IList<SubResource> ApplicationGatewayBackendAddressPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
+                }
+                return Properties.ApplicationGatewayBackendAddressPools;
+            }
+        }
+
         /// <summary> Specifies an array of references to backend address pools of load balancers. A virtual machine can reference backend address pools of one public and one internal load balancer. [Multiple virtual machines cannot use the same basic sku load balancer]. </summary>
-        public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; }
+        public IList<SubResource> LoadBalancerBackendAddressPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
+                }
+                return Properties.LoadBalancerBackendAddressPools;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public string SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineNetworkInterfaceIPConfigurationProperties();
+                }
+                Properties.SubnetId = value;
+            }
+        }
     }
 }

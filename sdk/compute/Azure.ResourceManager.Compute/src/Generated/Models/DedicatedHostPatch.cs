@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Specifies information about the dedicated host. Only tags, autoReplaceOnFailure and licenseType may be updated. </summary>
     public partial class DedicatedHostPatch : ComputeResourcePatch
@@ -17,55 +17,132 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="DedicatedHostPatch"/>. </summary>
         public DedicatedHostPatch()
         {
-            VirtualMachines = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Properties of the dedicated host. </param>
         /// <param name="sku"> [List all available dedicated host sizes for resizing] (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes). Resizing can be only used to scale up DedicatedHost. Only name is required to be set. </param>
-        /// <param name="platformFaultDomain"> Fault domain of the dedicated host within a dedicated host group. </param>
-        /// <param name="autoReplaceOnFailure"> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided. </param>
-        /// <param name="hostId"> A unique id generated and assigned to the dedicated host by the platform. Does not change throughout the lifetime of the host. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the Dedicated Host. </param>
-        /// <param name="licenseType"> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: **None,** **Windows_Server_Hybrid,** **Windows_Server_Perpetual.** The default value is: **None.**. </param>
-        /// <param name="provisioningOn"> The date when the host was first provisioned. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The dedicated host instance view. </param>
-        /// <param name="timeCreated"> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </param>
-        internal DedicatedHostPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ComputeSku sku, int? platformFaultDomain, bool? autoReplaceOnFailure, string hostId, IReadOnlyList<SubResource> virtualMachines, DedicatedHostLicenseType? licenseType, DateTimeOffset? provisioningOn, string provisioningState, DedicatedHostInstanceView instanceView, DateTimeOffset? timeCreated) : base(tags, serializedAdditionalRawData)
+        internal DedicatedHostPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, DedicatedHostProperties properties, ComputeCombineSku sku) : base(tags, additionalBinaryDataProperties)
         {
+            Properties = properties;
             Sku = sku;
-            PlatformFaultDomain = platformFaultDomain;
-            AutoReplaceOnFailure = autoReplaceOnFailure;
-            HostId = hostId;
-            VirtualMachines = virtualMachines;
-            LicenseType = licenseType;
-            ProvisioningOn = provisioningOn;
-            ProvisioningState = provisioningState;
-            InstanceView = instanceView;
-            TimeCreated = timeCreated;
         }
 
+        /// <summary> Properties of the dedicated host. </summary>
+        internal DedicatedHostProperties Properties { get; set; }
+
         /// <summary> [List all available dedicated host sizes for resizing] (https://docs.microsoft.com/rest/api/compute/dedicated-hosts/listavailablesizes). Resizing can be only used to scale up DedicatedHost. Only name is required to be set. </summary>
-        public ComputeSku Sku { get; set; }
+        public ComputeCombineSku Sku { get; set; }
+
         /// <summary> Fault domain of the dedicated host within a dedicated host group. </summary>
-        public int? PlatformFaultDomain { get; set; }
+        public int? PlatformFaultDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PlatformFaultDomain;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostProperties();
+                }
+                Properties.PlatformFaultDomain = value.Value;
+            }
+        }
+
         /// <summary> Specifies whether the dedicated host should be replaced automatically in case of a failure. The value is defaulted to 'true' when not provided. </summary>
-        public bool? AutoReplaceOnFailure { get; set; }
+        public bool? AutoReplaceOnFailure
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoReplaceOnFailure;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostProperties();
+                }
+                Properties.AutoReplaceOnFailure = value.Value;
+            }
+        }
+
         /// <summary> A unique id generated and assigned to the dedicated host by the platform. Does not change throughout the lifetime of the host. </summary>
-        public string HostId { get; }
+        public string HostId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostId;
+            }
+        }
+
         /// <summary> A list of references to all virtual machines in the Dedicated Host. </summary>
-        public IReadOnlyList<SubResource> VirtualMachines { get; }
-        /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: **None,** **Windows_Server_Hybrid,** **Windows_Server_Perpetual.** The default value is: **None.**. </summary>
-        public DedicatedHostLicenseType? LicenseType { get; set; }
+        public IReadOnlyList<SubResourceReadOnly> VirtualMachines
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostProperties();
+                }
+                return Properties.VirtualMachines;
+            }
+        }
+
+        /// <summary> Specifies the software license type that will be applied to the VMs deployed on the dedicated host. Possible values are: <b>None,</b> <b>Windows_Server_Hybrid,</b> <b>Windows_Server_Perpetual.</b> The default value is: <b>None.</b>. </summary>
+        public DedicatedHostLicenseTypes? LicenseType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LicenseType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostProperties();
+                }
+                Properties.LicenseType = value.Value;
+            }
+        }
+
         /// <summary> The date when the host was first provisioned. </summary>
-        public DateTimeOffset? ProvisioningOn { get; }
+        public DateTimeOffset? ProvisioningOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningOn;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The dedicated host instance view. </summary>
-        public DedicatedHostInstanceView InstanceView { get; }
+        public DedicatedHostInstanceView InstanceView
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceView;
+            }
+        }
+
         /// <summary> Specifies the time at which the Dedicated Host resource was created. Minimum api-version: 2021-11-01. </summary>
-        public DateTimeOffset? TimeCreated { get; }
+        public DateTimeOffset? TimeCreated
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeCreated;
+            }
+        }
     }
 }

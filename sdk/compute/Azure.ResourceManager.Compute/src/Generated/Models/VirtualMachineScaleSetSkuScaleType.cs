@@ -5,14 +5,14 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The scale type applicable to the sku. </summary>
     public enum VirtualMachineScaleSetSkuScaleType
     {
-        /// <summary> None. </summary>
-        None,
         /// <summary> Automatic. </summary>
-        Automatic
+        Automatic,
+        /// <summary> None. </summary>
+        None
     }
 }

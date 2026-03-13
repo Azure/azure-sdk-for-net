@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
+    /// <summary></summary>
     public partial class VirtualMachineRunCommandResource : IJsonModel<VirtualMachineRunCommandData>
     {
-        private static VirtualMachineRunCommandData s_dataDeserializationInstance;
-        private static VirtualMachineRunCommandData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<VirtualMachineRunCommandData> s_dataDeserializationInstance;
 
+        private static IJsonModel<VirtualMachineRunCommandData> DataDeserializationInstance => s_dataDeserializationInstance ??= new VirtualMachineRunCommandData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineRunCommandData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineRunCommandData>)Data).Write(writer, options);
 
-        VirtualMachineRunCommandData IJsonModel<VirtualMachineRunCommandData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineRunCommandData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineRunCommandData IJsonModel<VirtualMachineRunCommandData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualMachineRunCommandData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualMachineRunCommandData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineRunCommandData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualMachineRunCommandData>(Data, options, ComputeCombineContext.Default);
 
-        VirtualMachineRunCommandData IPersistableModel<VirtualMachineRunCommandData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineRunCommandData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineRunCommandData IPersistableModel<VirtualMachineRunCommandData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineRunCommandData>(data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<VirtualMachineRunCommandData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineRunCommandData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualMachineRunCommandData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

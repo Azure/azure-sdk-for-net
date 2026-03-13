@@ -8,183 +8,248 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the VirtualMachineExtension data model.
-    /// Describes a Virtual Machine Extension.
-    /// </summary>
+    /// <summary> Describes a Virtual Machine Extension. </summary>
     public partial class VirtualMachineExtensionData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public VirtualMachineExtensionData(AzureLocation location) : base(location)
         {
-            ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
-        /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="extensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
-        /// <param name="settings"> Json formatted public settings for the extension. </param>
-        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The virtual machine extension instance view. </param>
-        /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
-        /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, string provisioningState, VirtualMachineExtensionInstanceView instanceView, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings, IList<string> provisionAfterExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the properties of a Virtual Machine Extension. </param>
+        internal VirtualMachineExtensionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineExtensionProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ForceUpdateTag = forceUpdateTag;
-            Publisher = publisher;
-            ExtensionType = extensionType;
-            TypeHandlerVersion = typeHandlerVersion;
-            AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
-            EnableAutomaticUpgrade = enableAutomaticUpgrade;
-            Settings = settings;
-            ProtectedSettings = protectedSettings;
-            ProvisioningState = provisioningState;
-            InstanceView = instanceView;
-            SuppressFailures = suppressFailures;
-            KeyVaultProtectedSettings = keyVaultProtectedSettings;
-            ProvisionAfterExtensions = provisionAfterExtensions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionData"/> for deserialization. </summary>
-        internal VirtualMachineExtensionData()
-        {
-        }
+        /// <summary> Describes the properties of a Virtual Machine Extension. </summary>
+        internal VirtualMachineExtensionProperties Properties { get; set; }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
-        public string ForceUpdateTag { get; set; }
+        public string ForceUpdateTag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForceUpdateTag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.ForceUpdateTag = value;
+            }
+        }
+
         /// <summary> The name of the extension handler publisher. </summary>
-        public string Publisher { get; set; }
+        public string Publisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Publisher;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.Publisher = value;
+            }
+        }
+
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
-        public string ExtensionType { get; set; }
+        public string Type
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Type;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.Type = value;
+            }
+        }
+
         /// <summary> Specifies the version of the script handler. </summary>
-        public string TypeHandlerVersion { get; set; }
+        public string TypeHandlerVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypeHandlerVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.TypeHandlerVersion = value;
+            }
+        }
+
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
-        public bool? AutoUpgradeMinorVersion { get; set; }
+        public bool? AutoUpgradeMinorVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoUpgradeMinorVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.AutoUpgradeMinorVersion = value.Value;
+            }
+        }
+
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
-        public bool? EnableAutomaticUpgrade { get; set; }
-        /// <summary>
-        /// Json formatted public settings for the extension.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Settings { get; set; }
-        /// <summary>
-        /// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ProtectedSettings { get; set; }
+        public bool? EnableAutomaticUpgrade
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableAutomaticUpgrade;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.EnableAutomaticUpgrade = value.Value;
+            }
+        }
+
+        /// <summary> Json formatted public settings for the extension. </summary>
+        public BinaryData Settings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Settings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.Settings = value;
+            }
+        }
+
+        /// <summary> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </summary>
+        public BinaryData ProtectedSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProtectedSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.ProtectedSettings = value;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The virtual machine extension instance view. </summary>
-        public VirtualMachineExtensionInstanceView InstanceView { get; set; }
+        public VirtualMachineExtensionInstanceView InstanceView
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceView;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.InstanceView = value;
+            }
+        }
+
         /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
-        public bool? SuppressFailures { get; set; }
+        public bool? SuppressFailures
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SuppressFailures;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.SuppressFailures = value.Value;
+            }
+        }
+
         /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
-        public KeyVaultSecretReference KeyVaultProtectedSettings { get; set; }
+        public KeyVaultSecretReference ProtectedSettingsFromKeyVault
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProtectedSettingsFromKeyVault;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                Properties.ProtectedSettingsFromKeyVault = value;
+            }
+        }
+
         /// <summary> Collection of extension names after which this extension needs to be provisioned. </summary>
-        public IList<string> ProvisionAfterExtensions { get; }
+        public IList<string> ProvisionAfterExtensions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineExtensionProperties();
+                }
+                return Properties.ProvisionAfterExtensions;
+            }
+        }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    internal class SnapshotOperationSource : IOperationSource<SnapshotResource>
+    /// <summary></summary>
+    internal partial class SnapshotOperationSource : IOperationSource<SnapshotResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal SnapshotOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         SnapshotResource IOperationSource<SnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            SnapshotData data = SnapshotData.DeserializeSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new SnapshotResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<SnapshotResource> IOperationSource<SnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
-            return await Task.FromResult(new SnapshotResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            SnapshotData data = SnapshotData.DeserializeSnapshotData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new SnapshotResource(_client, data);
         }
     }
 }

@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> The provisioning state, which only appears in the response. </summary>
     public readonly partial struct GalleryProvisioningState : IEquatable<GalleryProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="GalleryProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public GalleryProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
         private const string FailedValue = "Failed";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.Compute.Models
         private const string DeletingValue = "Deleting";
         private const string MigratingValue = "Migrating";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public GalleryProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static GalleryProvisioningState Creating { get; } = new GalleryProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static GalleryProvisioningState Updating { get; } = new GalleryProvisioningState(UpdatingValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static GalleryProvisioningState Failed { get; } = new GalleryProvisioningState(FailedValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static GalleryProvisioningState Succeeded { get; } = new GalleryProvisioningState(SucceededValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static GalleryProvisioningState Deleting { get; } = new GalleryProvisioningState(DeletingValue);
-        /// <summary> Migrating. </summary>
+
+        /// <summary> Gets the Migrating. </summary>
         public static GalleryProvisioningState Migrating { get; } = new GalleryProvisioningState(MigratingValue);
+
         /// <summary> Determines if two <see cref="GalleryProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GalleryProvisioningState left, GalleryProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GalleryProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GalleryProvisioningState left, GalleryProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GalleryProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GalleryProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GalleryProvisioningState(string value) => new GalleryProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GalleryProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GalleryProvisioningState?(string value) => value == null ? null : new GalleryProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GalleryProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GalleryProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

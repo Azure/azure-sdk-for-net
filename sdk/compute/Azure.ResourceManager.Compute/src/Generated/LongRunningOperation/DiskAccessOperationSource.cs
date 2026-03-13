@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    internal class DiskAccessOperationSource : IOperationSource<DiskAccessResource>
+    /// <summary></summary>
+    internal partial class DiskAccessOperationSource : IOperationSource<DiskAccessResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DiskAccessOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DiskAccessResource IOperationSource<DiskAccessResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiskAccessData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DiskAccessData data = DiskAccessData.DeserializeDiskAccessData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DiskAccessResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DiskAccessResource> IOperationSource<DiskAccessResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DiskAccessData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
-            return await Task.FromResult(new DiskAccessResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DiskAccessData data = DiskAccessData.DeserializeDiskAccessData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DiskAccessResource(_client, data);
         }
     }
 }

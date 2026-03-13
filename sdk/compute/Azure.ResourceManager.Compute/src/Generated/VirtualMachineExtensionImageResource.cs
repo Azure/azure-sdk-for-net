@@ -6,48 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Compute;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
     /// <summary>
-    /// A Class representing a VirtualMachineExtensionImage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineExtensionImageResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetVirtualMachineExtensionImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetVirtualMachineExtensionImage method.
+    /// A class representing a VirtualMachineExtensionImage along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VirtualMachineExtensionImageResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetVirtualMachineExtensionImages method.
     /// </summary>
     public partial class VirtualMachineExtensionImageResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="VirtualMachineExtensionImageResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="publisherName"> The publisherName. </param>
-        /// <param name="type"> The type. </param>
-        /// <param name="version"> The version. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string publisherName, string type, string version)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _virtualMachineExtensionImageClientDiagnostics;
-        private readonly VirtualMachineExtensionImagesRestOperations _virtualMachineExtensionImageRestClient;
+        private readonly ClientDiagnostics _virtualMachineExtensionImagesClientDiagnostics;
+        private readonly VirtualMachineExtensionImages _virtualMachineExtensionImagesRestClient;
         private readonly VirtualMachineExtensionImageData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/publishers/artifacttypes/types/versions";
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionImageResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineExtensionImageResource for mocking. </summary>
         protected VirtualMachineExtensionImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VirtualMachineExtensionImageResource(ArmClient client, VirtualMachineExtensionImageData data) : this(client, data.Id)
@@ -56,71 +45,94 @@ namespace Azure.ResourceManager.Compute
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualMachineExtensionImageResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _virtualMachineExtensionImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string virtualMachineExtensionImageApiVersion);
-            _virtualMachineExtensionImageRestClient = new VirtualMachineExtensionImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineExtensionImageApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _virtualMachineExtensionImagesClientDiagnostics = new ClientDiagnostics("ComputeCombine", ResourceType.Namespace, Diagnostics);
+            _virtualMachineExtensionImagesRestClient = new VirtualMachineExtensionImages(_virtualMachineExtensionImagesClientDiagnostics, Pipeline, Endpoint, virtualMachineExtensionImageApiVersion ?? "2025-04-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual VirtualMachineExtensionImageData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="type"> The type. </param>
+        /// <param name="version"> The version. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string publisherName, string @type, string version)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{@type}/versions/{version}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets a virtual machine extension image.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualMachineExtensionImageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<VirtualMachineExtensionImageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineExtensionImageClientDiagnostics.CreateScope("VirtualMachineExtensionImageResource.Get");
+            using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageResource.Get");
             scope.Start();
             try
             {
-                var response = await _virtualMachineExtensionImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VirtualMachineExtensionImageData> response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,33 +146,41 @@ namespace Azure.ResourceManager.Compute
         /// Gets a virtual machine extension image.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="VirtualMachineExtensionImageResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<VirtualMachineExtensionImageResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineExtensionImageClientDiagnostics.CreateScope("VirtualMachineExtensionImageResource.Get");
+            using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageResource.Get");
             scope.Start();
             try
             {
-                var response = _virtualMachineExtensionImageRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Parent.Parent.Name), Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VirtualMachineExtensionImageData> response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

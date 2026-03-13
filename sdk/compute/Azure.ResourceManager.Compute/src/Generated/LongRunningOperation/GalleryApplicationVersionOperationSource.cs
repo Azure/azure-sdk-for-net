@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    internal class GalleryApplicationVersionOperationSource : IOperationSource<GalleryApplicationVersionResource>
+    /// <summary></summary>
+    internal partial class GalleryApplicationVersionOperationSource : IOperationSource<GalleryApplicationVersionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal GalleryApplicationVersionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         GalleryApplicationVersionResource IOperationSource<GalleryApplicationVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GalleryApplicationVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            GalleryApplicationVersionData data = GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new GalleryApplicationVersionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<GalleryApplicationVersionResource> IOperationSource<GalleryApplicationVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GalleryApplicationVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
-            return await Task.FromResult(new GalleryApplicationVersionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            GalleryApplicationVersionData data = GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new GalleryApplicationVersionResource(_client, data);
         }
     }
 }

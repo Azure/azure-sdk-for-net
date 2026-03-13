@@ -9,14 +9,69 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class RunCommandDocument : IUtf8JsonSerializable, IJsonModel<RunCommandDocument>
+    /// <summary> Describes the properties of a Run Command. </summary>
+    public partial class RunCommandDocument : RunCommandDocumentBase, IJsonModel<RunCommandDocument>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunCommandDocument>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RunCommandDocument"/> for deserialization. </summary>
+        internal RunCommandDocument()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RunCommandDocumentBase PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RunCommandDocument>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRunCommandDocument(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RunCommandDocument)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RunCommandDocument>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RunCommandDocument)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RunCommandDocument>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RunCommandDocument IPersistableModel<RunCommandDocument>.Create(BinaryData data, ModelReaderWriterOptions options) => (RunCommandDocument)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RunCommandDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="RunCommandDocument"/> from. </param>
+        internal static RunCommandDocument FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeRunCommandDocument(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RunCommandDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,17 +83,21 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunCommandDocument>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunCommandDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RunCommandDocument)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("script"u8);
             writer.WriteStartArray();
-            foreach (var item in Script)
+            foreach (string item in Script)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -46,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
-                foreach (var item in Parameters)
+                foreach (RunCommandParameterDefinition item in Parameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -54,132 +113,111 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        RunCommandDocument IJsonModel<RunCommandDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RunCommandDocument IJsonModel<RunCommandDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RunCommandDocument)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override RunCommandDocumentBase JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RunCommandDocument>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunCommandDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RunCommandDocument)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRunCommandDocument(document.RootElement, options);
         }
 
-        internal static RunCommandDocument DeserializeRunCommandDocument(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RunCommandDocument DeserializeRunCommandDocument(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<string> script = default;
-            IReadOnlyList<RunCommandParameterDefinition> parameters = default;
             string schema = default;
             string id = default;
-            SupportedOperatingSystemType osType = default;
+            OperatingSystemTypes osType = default;
             string label = default;
             string description = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<string> script = default;
+            IList<RunCommandParameterDefinition> parameters = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("script"u8))
+                if (prop.NameEquals("$schema"u8))
+                {
+                    schema = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("osType"u8))
+                {
+                    osType = prop.Value.GetString().ToOperatingSystemTypes();
+                    continue;
+                }
+                if (prop.NameEquals("label"u8))
+                {
+                    label = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("script"u8))
                 {
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     script = array;
                     continue;
                 }
-                if (property.NameEquals("parameters"u8))
+                if (prop.NameEquals("parameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RunCommandParameterDefinition> array = new List<RunCommandParameterDefinition>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RunCommandParameterDefinition.DeserializeRunCommandParameterDefinition(item, options));
                     }
                     parameters = array;
                     continue;
                 }
-                if (property.NameEquals("$schema"u8))
-                {
-                    schema = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("osType"u8))
-                {
-                    osType = property.Value.GetString().ToSupportedOperatingSystemType();
-                    continue;
-                }
-                if (property.NameEquals("label"u8))
-                {
-                    label = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    description = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RunCommandDocument(
                 schema,
                 id,
                 osType,
                 label,
                 description,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 script,
                 parameters ?? new ChangeTrackingList<RunCommandParameterDefinition>());
         }
-
-        BinaryData IPersistableModel<RunCommandDocument>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RunCommandDocument>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(RunCommandDocument)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RunCommandDocument IPersistableModel<RunCommandDocument>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RunCommandDocument>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRunCommandDocument(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RunCommandDocument)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RunCommandDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

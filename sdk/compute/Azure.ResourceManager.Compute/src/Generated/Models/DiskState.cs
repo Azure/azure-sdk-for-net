@@ -7,63 +7,95 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeDisk.Models
 {
     /// <summary> This enumerates the possible state of the disk. </summary>
     public readonly partial struct DiskState : IEquatable<DiskState>
     {
         private readonly string _value;
+        /// <summary> The disk is not being used and can be attached to a VM. </summary>
+        private const string UnattachedValue = "Unattached";
+        /// <summary> The disk is currently attached to a running VM. </summary>
+        private const string AttachedValue = "Attached";
+        /// <summary> The disk is attached to a stopped-deallocated VM. </summary>
+        private const string ReservedValue = "Reserved";
+        /// <summary> The disk is attached to a VM which is in hibernated state. </summary>
+        private const string FrozenValue = "Frozen";
+        /// <summary> The disk currently has an Active SAS Uri associated with it. </summary>
+        private const string ActiveSASValue = "ActiveSAS";
+        /// <summary> The disk is attached to a VM in hibernated state and has an active SAS URI associated with it. </summary>
+        private const string ActiveSASFrozenValue = "ActiveSASFrozen";
+        /// <summary> A disk is ready to be created by upload by requesting a write token. </summary>
+        private const string ReadyToUploadValue = "ReadyToUpload";
+        /// <summary> A disk is created for upload and a write token has been issued for uploading to it. </summary>
+        private const string ActiveUploadValue = "ActiveUpload";
 
         /// <summary> Initializes a new instance of <see cref="DiskState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DiskState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnattachedValue = "Unattached";
-        private const string AttachedValue = "Attached";
-        private const string ReservedValue = "Reserved";
-        private const string FrozenValue = "Frozen";
-        private const string ActiveSasValue = "ActiveSAS";
-        private const string ActiveSasFrozenValue = "ActiveSASFrozen";
-        private const string ReadyToUploadValue = "ReadyToUpload";
-        private const string ActiveUploadValue = "ActiveUpload";
+            _value = value;
+        }
 
         /// <summary> The disk is not being used and can be attached to a VM. </summary>
         public static DiskState Unattached { get; } = new DiskState(UnattachedValue);
+
         /// <summary> The disk is currently attached to a running VM. </summary>
         public static DiskState Attached { get; } = new DiskState(AttachedValue);
+
         /// <summary> The disk is attached to a stopped-deallocated VM. </summary>
         public static DiskState Reserved { get; } = new DiskState(ReservedValue);
+
         /// <summary> The disk is attached to a VM which is in hibernated state. </summary>
         public static DiskState Frozen { get; } = new DiskState(FrozenValue);
+
         /// <summary> The disk currently has an Active SAS Uri associated with it. </summary>
-        public static DiskState ActiveSas { get; } = new DiskState(ActiveSasValue);
+        public static DiskState ActiveSAS { get; } = new DiskState(ActiveSASValue);
+
         /// <summary> The disk is attached to a VM in hibernated state and has an active SAS URI associated with it. </summary>
-        public static DiskState ActiveSasFrozen { get; } = new DiskState(ActiveSasFrozenValue);
+        public static DiskState ActiveSASFrozen { get; } = new DiskState(ActiveSASFrozenValue);
+
         /// <summary> A disk is ready to be created by upload by requesting a write token. </summary>
         public static DiskState ReadyToUpload { get; } = new DiskState(ReadyToUploadValue);
+
         /// <summary> A disk is created for upload and a write token has been issued for uploading to it. </summary>
         public static DiskState ActiveUpload { get; } = new DiskState(ActiveUploadValue);
+
         /// <summary> Determines if two <see cref="DiskState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DiskState left, DiskState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DiskState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DiskState left, DiskState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DiskState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DiskState(string value) => new DiskState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DiskState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DiskState?(string value) => value == null ? null : new DiskState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DiskState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DiskState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

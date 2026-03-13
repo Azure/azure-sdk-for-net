@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
+    /// <summary></summary>
     public partial class CapacityReservationGroupResource : IJsonModel<CapacityReservationGroupData>
     {
-        private static CapacityReservationGroupData s_dataDeserializationInstance;
-        private static CapacityReservationGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CapacityReservationGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CapacityReservationGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CapacityReservationGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CapacityReservationGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CapacityReservationGroupData>)Data).Write(writer, options);
 
-        CapacityReservationGroupData IJsonModel<CapacityReservationGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CapacityReservationGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CapacityReservationGroupData IJsonModel<CapacityReservationGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<CapacityReservationGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CapacityReservationGroupData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CapacityReservationGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CapacityReservationGroupData>(Data, options, ComputeCombineContext.Default);
 
-        CapacityReservationGroupData IPersistableModel<CapacityReservationGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityReservationGroupData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CapacityReservationGroupData IPersistableModel<CapacityReservationGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityReservationGroupData>(data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<CapacityReservationGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CapacityReservationGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CapacityReservationGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

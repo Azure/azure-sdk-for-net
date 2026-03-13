@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> The name of the signature template that contains default UEFI keys. </summary>
     public readonly partial struct UefiSignatureTemplateName : IEquatable<UefiSignatureTemplateName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="UefiSignatureTemplateName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public UefiSignatureTemplateName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NoSignatureTemplateValue = "NoSignatureTemplate";
         private const string MicrosoftUefiCertificateAuthorityTemplateValue = "MicrosoftUefiCertificateAuthorityTemplate";
         private const string MicrosoftWindowsTemplateValue = "MicrosoftWindowsTemplate";
 
-        /// <summary> NoSignatureTemplate. </summary>
+        /// <summary> Initializes a new instance of <see cref="UefiSignatureTemplateName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public UefiSignatureTemplateName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NoSignatureTemplate. </summary>
         public static UefiSignatureTemplateName NoSignatureTemplate { get; } = new UefiSignatureTemplateName(NoSignatureTemplateValue);
-        /// <summary> MicrosoftUefiCertificateAuthorityTemplate. </summary>
+
+        /// <summary> Gets the MicrosoftUefiCertificateAuthorityTemplate. </summary>
         public static UefiSignatureTemplateName MicrosoftUefiCertificateAuthorityTemplate { get; } = new UefiSignatureTemplateName(MicrosoftUefiCertificateAuthorityTemplateValue);
-        /// <summary> MicrosoftWindowsTemplate. </summary>
+
+        /// <summary> Gets the MicrosoftWindowsTemplate. </summary>
         public static UefiSignatureTemplateName MicrosoftWindowsTemplate { get; } = new UefiSignatureTemplateName(MicrosoftWindowsTemplateValue);
+
         /// <summary> Determines if two <see cref="UefiSignatureTemplateName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(UefiSignatureTemplateName left, UefiSignatureTemplateName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="UefiSignatureTemplateName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(UefiSignatureTemplateName left, UefiSignatureTemplateName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="UefiSignatureTemplateName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="UefiSignatureTemplateName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator UefiSignatureTemplateName(string value) => new UefiSignatureTemplateName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="UefiSignatureTemplateName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator UefiSignatureTemplateName?(string value) => value == null ? null : new UefiSignatureTemplateName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is UefiSignatureTemplateName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(UefiSignatureTemplateName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

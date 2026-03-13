@@ -8,45 +8,16 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes image deprecation status properties on the image. </summary>
     public partial class ImageDeprecationStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImageDeprecationStatus"/>. </summary>
-        public ImageDeprecationStatus()
+        internal ImageDeprecationStatus()
         {
         }
 
@@ -54,20 +25,22 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="imageState"> Describes the state of the image. </param>
         /// <param name="scheduledDeprecationOn"> The time, in future, at which this image will be marked as deprecated. This scheduled time is chosen by the Publisher. </param>
         /// <param name="alternativeOption"> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageDeprecationStatus(ImageState? imageState, DateTimeOffset? scheduledDeprecationOn, ImageAlternativeOption alternativeOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImageDeprecationStatus(ImageState? imageState, DateTimeOffset? scheduledDeprecationOn, AlternativeOption alternativeOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageState = imageState;
             ScheduledDeprecationOn = scheduledDeprecationOn;
             AlternativeOption = alternativeOption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the state of the image. </summary>
-        public ImageState? ImageState { get; set; }
+        public ImageState? ImageState { get; }
+
         /// <summary> The time, in future, at which this image will be marked as deprecated. This scheduled time is chosen by the Publisher. </summary>
-        public DateTimeOffset? ScheduledDeprecationOn { get; set; }
+        public DateTimeOffset? ScheduledDeprecationOn { get; }
+
         /// <summary> Describes the alternative option specified by the Publisher for this image when this image is deprecated. </summary>
-        public ImageAlternativeOption AlternativeOption { get; set; }
+        public AlternativeOption AlternativeOption { get; }
     }
 }

@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    public partial class GalleryInVmAccessControlProfileResource : IJsonModel<GalleryInVmAccessControlProfileData>
+    /// <summary></summary>
+    public partial class GalleryInVMAccessControlProfileResource : IJsonModel<GalleryInVMAccessControlProfileData>
     {
-        private static GalleryInVmAccessControlProfileData s_dataDeserializationInstance;
-        private static GalleryInVmAccessControlProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GalleryInVMAccessControlProfileData> s_dataDeserializationInstance;
 
-        void IJsonModel<GalleryInVmAccessControlProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GalleryInVmAccessControlProfileData>)Data).Write(writer, options);
+        private static IJsonModel<GalleryInVMAccessControlProfileData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GalleryInVMAccessControlProfileData();
 
-        GalleryInVmAccessControlProfileData IJsonModel<GalleryInVmAccessControlProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryInVmAccessControlProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<GalleryInVMAccessControlProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GalleryInVMAccessControlProfileData>)Data).Write(writer, options);
 
-        BinaryData IPersistableModel<GalleryInVmAccessControlProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryInVmAccessControlProfileData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryInVMAccessControlProfileData IJsonModel<GalleryInVMAccessControlProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        GalleryInVmAccessControlProfileData IPersistableModel<GalleryInVmAccessControlProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryInVmAccessControlProfileData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GalleryInVMAccessControlProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryInVMAccessControlProfileData>(Data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<GalleryInVmAccessControlProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryInVmAccessControlProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryInVMAccessControlProfileData IPersistableModel<GalleryInVMAccessControlProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryInVMAccessControlProfileData>(data, options, ComputeCombineContext.Default);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GalleryInVMAccessControlProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

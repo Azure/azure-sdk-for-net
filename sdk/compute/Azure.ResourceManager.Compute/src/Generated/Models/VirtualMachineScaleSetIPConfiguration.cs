@@ -7,14 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes a virtual machine scale set network profile's IP configuration. </summary>
-    public partial class VirtualMachineScaleSetIPConfiguration : ComputeWriteableSubResourceData
+    public partial class VirtualMachineScaleSetIPConfiguration
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIPConfiguration"/>. </summary>
         /// <param name="name"> The IP configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -23,71 +26,143 @@ namespace Azure.ResourceManager.Compute.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            ApplicationGatewayBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
-            ApplicationSecurityGroups = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancerBackendAddressPools = new ChangeTrackingList<WritableSubResource>();
-            LoadBalancerInboundNatPools = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIPConfiguration"/>. </summary>
-        /// <param name="id"> Resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The IP configuration name. </param>
-        /// <param name="subnet"> Specifies the identifier of the subnet. </param>
-        /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
-        /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
-        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
-        /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </param>
-        /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
-        /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
-        /// <param name="loadBalancerInboundNatPools"> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
-        internal VirtualMachineScaleSetIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, WritableSubResource subnet, bool? primary, VirtualMachineScaleSetPublicIPAddressConfiguration publicIPAddressConfiguration, IPVersion? privateIPAddressVersion, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> applicationSecurityGroups, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools) : base(id, serializedAdditionalRawData)
+        /// <param name="properties"> Describes a virtual machine scale set network profile's IP configuration properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetIPConfiguration(string name, VirtualMachineScaleSetIPConfigurationProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Subnet = subnet;
-            Primary = primary;
-            PublicIPAddressConfiguration = publicIPAddressConfiguration;
-            PrivateIPAddressVersion = privateIPAddressVersion;
-            ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
-            ApplicationSecurityGroups = applicationSecurityGroups;
-            LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
-            LoadBalancerInboundNatPools = loadBalancerInboundNatPools;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetIPConfiguration"/> for deserialization. </summary>
-        internal VirtualMachineScaleSetIPConfiguration()
-        {
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IP configuration name. </summary>
         public string Name { get; set; }
-        /// <summary> Specifies the identifier of the subnet. </summary>
-        internal WritableSubResource Subnet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SubnetId
+
+        /// <summary> Describes a virtual machine scale set network profile's IP configuration properties. </summary>
+        internal VirtualMachineScaleSetIPConfigurationProperties Properties { get; set; }
+
+        /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
+        public bool? Primary
         {
-            get => Subnet is null ? default : Subnet.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
             set
             {
-                if (Subnet is null)
-                    Subnet = new WritableSubResource();
-                Subnet.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetIPConfigurationProperties();
+                }
+                Properties.Primary = value.Value;
             }
         }
 
-        /// <summary> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </summary>
-        public bool? Primary { get; set; }
         /// <summary> The publicIPAddressConfiguration. </summary>
-        public VirtualMachineScaleSetPublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
+        public VirtualMachineScaleSetPublicIPAddressConfiguration PublicIPAddressConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddressConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetIPConfigurationProperties();
+                }
+                Properties.PublicIPAddressConfiguration = value;
+            }
+        }
+
         /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </summary>
-        public IPVersion? PrivateIPAddressVersion { get; set; }
+        public IPVersion? PrivateIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetIPConfigurationProperties();
+                }
+                Properties.PrivateIPAddressVersion = value.Value;
+            }
+        }
+
         /// <summary> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </summary>
-        public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; }
+        public IList<SubResource> ApplicationGatewayBackendAddressPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetIPConfigurationProperties();
+                }
+                return Properties.ApplicationGatewayBackendAddressPools;
+            }
+        }
+
         /// <summary> Specifies an array of references to application security group. </summary>
-        public IList<WritableSubResource> ApplicationSecurityGroups { get; }
+        public IList<SubResource> ApplicationSecurityGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetIPConfigurationProperties();
+                }
+                return Properties.ApplicationSecurityGroups;
+            }
+        }
+
         /// <summary> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </summary>
-        public IList<WritableSubResource> LoadBalancerBackendAddressPools { get; }
+        public IList<SubResource> LoadBalancerBackendAddressPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetIPConfigurationProperties();
+                }
+                return Properties.LoadBalancerBackendAddressPools;
+            }
+        }
+
         /// <summary> Specifies an array of references to inbound Nat pools of the load balancers. A scale set can reference inbound nat pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </summary>
-        public IList<WritableSubResource> LoadBalancerInboundNatPools { get; }
+        public IList<SubResource> LoadBalancerInboundNatPools
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetIPConfigurationProperties();
+                }
+                return Properties.LoadBalancerInboundNatPools;
+            }
+        }
+
+        /// <summary> The ARM resource id in the form of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/... </summary>
+        public string SubnetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SubnetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetIPConfigurationProperties();
+                }
+                Properties.SubnetId = value;
+            }
+        }
     }
 }

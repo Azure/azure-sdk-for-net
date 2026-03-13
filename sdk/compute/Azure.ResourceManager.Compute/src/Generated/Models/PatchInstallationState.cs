@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The state of the patch after the installation operation completed. </summary>
     public readonly partial struct PatchInstallationState : IEquatable<PatchInstallationState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PatchInstallationState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PatchInstallationState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string InstalledValue = "Installed";
         private const string FailedValue = "Failed";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.Compute.Models
         private const string NotSelectedValue = "NotSelected";
         private const string PendingValue = "Pending";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="PatchInstallationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PatchInstallationState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static PatchInstallationState Unknown { get; } = new PatchInstallationState(UnknownValue);
-        /// <summary> Installed. </summary>
+
+        /// <summary> Gets the Installed. </summary>
         public static PatchInstallationState Installed { get; } = new PatchInstallationState(InstalledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static PatchInstallationState Failed { get; } = new PatchInstallationState(FailedValue);
-        /// <summary> Excluded. </summary>
+
+        /// <summary> Gets the Excluded. </summary>
         public static PatchInstallationState Excluded { get; } = new PatchInstallationState(ExcludedValue);
-        /// <summary> NotSelected. </summary>
+
+        /// <summary> Gets the NotSelected. </summary>
         public static PatchInstallationState NotSelected { get; } = new PatchInstallationState(NotSelectedValue);
-        /// <summary> Pending. </summary>
+
+        /// <summary> Gets the Pending. </summary>
         public static PatchInstallationState Pending { get; } = new PatchInstallationState(PendingValue);
+
         /// <summary> Determines if two <see cref="PatchInstallationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PatchInstallationState left, PatchInstallationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PatchInstallationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PatchInstallationState left, PatchInstallationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PatchInstallationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PatchInstallationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PatchInstallationState(string value) => new PatchInstallationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PatchInstallationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PatchInstallationState?(string value) => value == null ? null : new PatchInstallationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PatchInstallationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PatchInstallationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

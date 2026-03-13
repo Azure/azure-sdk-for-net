@@ -7,70 +7,38 @@
 
 using System;
 using System.Collections.Generic;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> Specifies information about the gallery sharing profile update. </summary>
     public partial class SharingUpdate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SharingUpdate"/>. </summary>
-        /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. Possible values are: **Add,** **Remove,** **Reset.**. </param>
-        public SharingUpdate(SharingUpdateOperationType operationType)
+        /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. Possible values are: <b>Add,</b> <b>Remove,</b> <b>Reset.</b>. </param>
+        public SharingUpdate(SharingUpdateOperationTypes operationType)
         {
             OperationType = operationType;
             Groups = new ChangeTrackingList<SharingProfileGroup>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SharingUpdate"/>. </summary>
-        /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. Possible values are: **Add,** **Remove,** **Reset.**. </param>
+        /// <param name="operationType"> This property allows you to specify the operation type of gallery sharing update. Possible values are: <b>Add,</b> <b>Remove,</b> <b>Reset.</b>. </param>
         /// <param name="groups"> A list of sharing profile groups. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SharingUpdate(SharingUpdateOperationType operationType, IList<SharingProfileGroup> groups, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SharingUpdate(SharingUpdateOperationTypes operationType, IList<SharingProfileGroup> groups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationType = operationType;
             Groups = groups;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharingUpdate"/> for deserialization. </summary>
-        internal SharingUpdate()
-        {
-        }
+        /// <summary> This property allows you to specify the operation type of gallery sharing update. Possible values are: <b>Add,</b> <b>Remove,</b> <b>Reset.</b>. </summary>
+        public SharingUpdateOperationTypes OperationType { get; set; }
 
-        /// <summary> This property allows you to specify the operation type of gallery sharing update. Possible values are: **Add,** **Remove,** **Reset.**. </summary>
-        public SharingUpdateOperationType OperationType { get; set; }
         /// <summary> A list of sharing profile groups. </summary>
         public IList<SharingProfileGroup> Groups { get; }
     }

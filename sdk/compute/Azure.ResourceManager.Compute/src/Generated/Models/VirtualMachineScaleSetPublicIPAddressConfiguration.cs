@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes a virtual machines scale set IP Configuration's PublicIPAddress configuration. </summary>
     public partial class VirtualMachineScaleSetPublicIPAddressConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
@@ -56,68 +26,131 @@ namespace Azure.ResourceManager.Compute.Models
 
             Name = name;
             Tags = new ChangeTrackingDictionary<string, string>();
-            IPTags = new ChangeTrackingList<VirtualMachineScaleSetIPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
+        /// <param name="properties"> Describes a virtual machines scale set IP Configuration's PublicIPAddress configuration. </param>
         /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
         /// <param name="tags"> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </param>
-        /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
-        /// <param name="dnsSettings"> The dns settings to be applied on the publicIP addresses . </param>
-        /// <param name="ipTags"> The list of IP tags associated with the public IP address. </param>
-        /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
-        /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
-        /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, ComputePublicIPAddressSku sku, IDictionary<string, string> tags, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, ComputeDeleteOption? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, VirtualMachineScaleSetPublicIPAddressConfigurationProperties properties, PublicIPAddressSku sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            Properties = properties;
             Sku = sku;
             Tags = tags;
-            IdleTimeoutInMinutes = idleTimeoutInMinutes;
-            DnsSettings = dnsSettings;
-            IPTags = ipTags;
-            PublicIPPrefix = publicIPPrefix;
-            PublicIPAddressVersion = publicIPAddressVersion;
-            DeleteOption = deleteOption;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPublicIPAddressConfiguration"/> for deserialization. </summary>
-        internal VirtualMachineScaleSetPublicIPAddressConfiguration()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The publicIP address configuration name. </summary>
         public string Name { get; set; }
+
+        /// <summary> Describes a virtual machines scale set IP Configuration's PublicIPAddress configuration. </summary>
+        internal VirtualMachineScaleSetPublicIPAddressConfigurationProperties Properties { get; set; }
+
         /// <summary> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </summary>
-        public ComputePublicIPAddressSku Sku { get; set; }
+        public PublicIPAddressSku Sku { get; set; }
+
         /// <summary> Resource tags applied to the publicIP address created by this PublicIPAddressConfiguration. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The idle timeout of the public IP address. </summary>
-        public int? IdleTimeoutInMinutes { get; set; }
-        /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
-        public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings { get; set; }
-        /// <summary> The list of IP tags associated with the public IP address. </summary>
-        public IList<VirtualMachineScaleSetIPTag> IPTags { get; }
-        /// <summary> The PublicIPPrefix from which to allocate publicIP addresses. </summary>
-        internal WritableSubResource PublicIPPrefix { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier PublicIPPrefixId
+        public int? IdleTimeoutInMinutes
         {
-            get => PublicIPPrefix is null ? default : PublicIPPrefix.Id;
+            get
+            {
+                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
+            }
             set
             {
-                if (PublicIPPrefix is null)
-                    PublicIPPrefix = new WritableSubResource();
-                PublicIPPrefix.Id = value;
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties();
+                }
+                Properties.IdleTimeoutInMinutes = value.Value;
+            }
+        }
+
+        /// <summary> The dns settings to be applied on the publicIP addresses . </summary>
+        public VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings DnsSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DnsSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties();
+                }
+                Properties.DnsSettings = value;
+            }
+        }
+
+        /// <summary> The list of IP tags associated with the public IP address. </summary>
+        public IList<VirtualMachineScaleSetIpTag> IpTags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties();
+                }
+                return Properties.IpTags;
             }
         }
 
         /// <summary> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </summary>
-        public IPVersion? PublicIPAddressVersion { get; set; }
+        public IPVersion? PublicIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddressVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties();
+                }
+                Properties.PublicIPAddressVersion = value.Value;
+            }
+        }
+
         /// <summary> Specify what happens to the public IP when the VM is deleted. </summary>
-        public ComputeDeleteOption? DeleteOption { get; set; }
+        public DeleteOptions? DeleteOption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DeleteOption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties();
+                }
+                Properties.DeleteOption = value.Value;
+            }
+        }
+
+        /// <summary> Resource Id. </summary>
+        public string PublicIPPrefixId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPPrefixId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineScaleSetPublicIPAddressConfigurationProperties();
+                }
+                Properties.PublicIPPrefixId = value;
+            }
+        }
     }
 }

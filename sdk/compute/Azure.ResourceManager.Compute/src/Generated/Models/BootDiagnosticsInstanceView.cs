@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> The instance view of a virtual machine boot diagnostics. </summary>
     public partial class BootDiagnosticsInstanceView
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BootDiagnosticsInstanceView"/>. </summary>
         internal BootDiagnosticsInstanceView()
@@ -51,23 +22,25 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BootDiagnosticsInstanceView"/>. </summary>
-        /// <param name="consoleScreenshotBlobUri"> The console screenshot blob URI. **Note:** This will **not** be set if boot diagnostics is currently enabled with managed storage. </param>
-        /// <param name="serialConsoleLogBlobUri"> The serial console log blob Uri. **Note:** This will **not** be set if boot diagnostics is currently enabled with managed storage. </param>
-        /// <param name="status"> The boot diagnostics status information for the VM. **Note:** It will be set only if there are errors encountered in enabling boot diagnostics. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BootDiagnosticsInstanceView(Uri consoleScreenshotBlobUri, Uri serialConsoleLogBlobUri, InstanceViewStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="consoleScreenshotBlobUri"> The console screenshot blob URI. <b>Note:</b> This will <b>not</b> be set if boot diagnostics is currently enabled with managed storage. </param>
+        /// <param name="serialConsoleLogBlobUri"> The serial console log blob Uri. <b>Note:</b> This will <b>not</b> be set if boot diagnostics is currently enabled with managed storage. </param>
+        /// <param name="status"> The boot diagnostics status information for the VM. <b>Note:</b> It will be set only if there are errors encountered in enabling boot diagnostics. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BootDiagnosticsInstanceView(string consoleScreenshotBlobUri, string serialConsoleLogBlobUri, InstanceViewStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConsoleScreenshotBlobUri = consoleScreenshotBlobUri;
             SerialConsoleLogBlobUri = serialConsoleLogBlobUri;
             Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The console screenshot blob URI. **Note:** This will **not** be set if boot diagnostics is currently enabled with managed storage. </summary>
-        public Uri ConsoleScreenshotBlobUri { get; }
-        /// <summary> The serial console log blob Uri. **Note:** This will **not** be set if boot diagnostics is currently enabled with managed storage. </summary>
-        public Uri SerialConsoleLogBlobUri { get; }
-        /// <summary> The boot diagnostics status information for the VM. **Note:** It will be set only if there are errors encountered in enabling boot diagnostics. </summary>
+        /// <summary> The console screenshot blob URI. <b>Note:</b> This will <b>not</b> be set if boot diagnostics is currently enabled with managed storage. </summary>
+        public string ConsoleScreenshotBlobUri { get; }
+
+        /// <summary> The serial console log blob Uri. <b>Note:</b> This will <b>not</b> be set if boot diagnostics is currently enabled with managed storage. </summary>
+        public string SerialConsoleLogBlobUri { get; }
+
+        /// <summary> The boot diagnostics status information for the VM. <b>Note:</b> It will be set only if there are errors encountered in enabling boot diagnostics. </summary>
         public InstanceViewStatus Status { get; }
     }
 }

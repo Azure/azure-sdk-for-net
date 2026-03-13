@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> Contains security profile for an OS disk image. </summary>
     public partial class OSDiskImageSecurityProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OSDiskImageSecurityProfile"/>. </summary>
         public OSDiskImageSecurityProfile()
@@ -51,19 +22,20 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OSDiskImageSecurityProfile"/>. </summary>
-        /// <param name="confidentialVmEncryptionType"> confidential VM encryption types. </param>
-        /// <param name="secureVmDiskEncryptionSetId"> secure VM disk encryption set id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSDiskImageSecurityProfile(ConfidentialVmEncryptionType? confidentialVmEncryptionType, string secureVmDiskEncryptionSetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="confidentialVMEncryptionType"> confidential VM encryption types. </param>
+        /// <param name="secureVMDiskEncryptionSetId"> secure VM disk encryption set id. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OSDiskImageSecurityProfile(ConfidentialVMEncryptionType? confidentialVMEncryptionType, string secureVMDiskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ConfidentialVmEncryptionType = confidentialVmEncryptionType;
-            SecureVmDiskEncryptionSetId = secureVmDiskEncryptionSetId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ConfidentialVMEncryptionType = confidentialVMEncryptionType;
+            SecureVMDiskEncryptionSetId = secureVMDiskEncryptionSetId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> confidential VM encryption types. </summary>
-        public ConfidentialVmEncryptionType? ConfidentialVmEncryptionType { get; set; }
+        public ConfidentialVMEncryptionType? ConfidentialVMEncryptionType { get; set; }
+
         /// <summary> secure VM disk encryption set id. </summary>
-        public string SecureVmDiskEncryptionSetId { get; set; }
+        public string SecureVMDiskEncryptionSetId { get; set; }
     }
 }

@@ -8,17 +8,62 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class ImageDataDisk : IUtf8JsonSerializable, IJsonModel<ImageDataDisk>
+    /// <summary> Describes a data disk. </summary>
+    public partial class ImageDataDisk : ImageDisk, IJsonModel<ImageDataDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageDataDisk>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ImageDataDisk"/> for deserialization. </summary>
+        internal ImageDataDisk()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ImageDisk PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImageDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeImageDataDisk(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ImageDataDisk)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImageDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ImageDataDisk)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ImageDataDisk>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImageDataDisk IPersistableModel<ImageDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options) => (ImageDataDisk)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ImageDataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImageDataDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,123 +75,121 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImageDataDisk)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
         }
 
-        ImageDataDisk IJsonModel<ImageDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImageDataDisk IJsonModel<ImageDataDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ImageDataDisk)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ImageDisk JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageDataDisk>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImageDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImageDataDisk)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeImageDataDisk(document.RootElement, options);
         }
 
-        internal static ImageDataDisk DeserializeImageDataDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ImageDataDisk DeserializeImageDataDisk(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int lun = default;
-            WritableSubResource snapshot = default;
-            WritableSubResource managedDisk = default;
-            Uri blobUri = default;
+            SubResource snapshot = default;
+            SubResource managedDisk = default;
+            string blobUri = default;
             CachingType? caching = default;
             int? diskSizeGB = default;
-            StorageAccountType? storageAccountType = default;
-            WritableSubResource diskEncryptionSet = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            StorageAccountTypes? storageAccountType = default;
+            DiskEncryptionSetParameters diskEncryptionSet = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int lun = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("lun"u8))
+                if (prop.NameEquals("snapshot"u8))
                 {
-                    lun = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("snapshot"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    snapshot = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
+                    snapshot = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("managedDisk"u8))
+                if (prop.NameEquals("managedDisk"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    managedDisk = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
+                    managedDisk = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("blobUri"u8))
+                if (prop.NameEquals("blobUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    blobUri = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("caching"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    blobUri = new Uri(property.Value.GetString());
+                    caching = prop.Value.GetString().ToCachingType();
                     continue;
                 }
-                if (property.NameEquals("caching"u8))
+                if (prop.NameEquals("diskSizeGB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    caching = property.Value.GetString().ToCachingType();
+                    diskSizeGB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("diskSizeGB"u8))
+                if (prop.NameEquals("storageAccountType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    diskSizeGB = property.Value.GetInt32();
+                    storageAccountType = new StorageAccountTypes(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountType"u8))
+                if (prop.NameEquals("diskEncryptionSet"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountType = new StorageAccountType(property.Value.GetString());
+                    diskEncryptionSet = DiskEncryptionSetParameters.DeserializeDiskEncryptionSetParameters(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("diskEncryptionSet"u8))
+                if (prop.NameEquals("lun"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    diskEncryptionSet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
+                    lun = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ImageDataDisk(
                 snapshot,
                 managedDisk,
@@ -155,39 +198,8 @@ namespace Azure.ResourceManager.Compute.Models
                 diskSizeGB,
                 storageAccountType,
                 diskEncryptionSet,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 lun);
         }
-
-        BinaryData IPersistableModel<ImageDataDisk>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageDataDisk>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ImageDataDisk)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ImageDataDisk IPersistableModel<ImageDataDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ImageDataDisk>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeImageDataDisk(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ImageDataDisk)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ImageDataDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

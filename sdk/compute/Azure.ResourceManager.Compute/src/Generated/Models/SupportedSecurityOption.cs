@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeDisk.Models
 {
     /// <summary> Refers to the security capability of the disk supported to create a Trusted launch or Confidential VM. </summary>
     public readonly partial struct SupportedSecurityOption : IEquatable<SupportedSecurityOption>
     {
         private readonly string _value;
+        /// <summary> The disk supports creating Trusted Launch VMs. </summary>
+        private const string TrustedLaunchSupportedValue = "TrustedLaunchSupported";
+        /// <summary> The disk supports creating both Trusted Launch and Confidential VMs. </summary>
+        private const string TrustedLaunchAndConfidentialVMSupportedValue = "TrustedLaunchAndConfidentialVMSupported";
 
         /// <summary> Initializes a new instance of <see cref="SupportedSecurityOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SupportedSecurityOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrustedLaunchSupportedValue = "TrustedLaunchSupported";
-        private const string TrustedLaunchAndConfidentialVmSupportedValue = "TrustedLaunchAndConfidentialVMSupported";
+            _value = value;
+        }
 
         /// <summary> The disk supports creating Trusted Launch VMs. </summary>
         public static SupportedSecurityOption TrustedLaunchSupported { get; } = new SupportedSecurityOption(TrustedLaunchSupportedValue);
+
         /// <summary> The disk supports creating both Trusted Launch and Confidential VMs. </summary>
-        public static SupportedSecurityOption TrustedLaunchAndConfidentialVmSupported { get; } = new SupportedSecurityOption(TrustedLaunchAndConfidentialVmSupportedValue);
+        public static SupportedSecurityOption TrustedLaunchAndConfidentialVMSupported { get; } = new SupportedSecurityOption(TrustedLaunchAndConfidentialVMSupportedValue);
+
         /// <summary> Determines if two <see cref="SupportedSecurityOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SupportedSecurityOption left, SupportedSecurityOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SupportedSecurityOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SupportedSecurityOption left, SupportedSecurityOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SupportedSecurityOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SupportedSecurityOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SupportedSecurityOption(string value) => new SupportedSecurityOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SupportedSecurityOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SupportedSecurityOption?(string value) => value == null ? null : new SupportedSecurityOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SupportedSecurityOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SupportedSecurityOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

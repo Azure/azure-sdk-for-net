@@ -9,14 +9,64 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class VirtualMachineScaleSetVmInstanceView : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmInstanceView>
+    /// <summary> The instance view of a virtual machine scale set VM. </summary>
+    public partial class VirtualMachineScaleSetVmInstanceView : IJsonModel<VirtualMachineScaleSetVmInstanceView>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmInstanceView>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineScaleSetVmInstanceView PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualMachineScaleSetVmInstanceView(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineScaleSetVmInstanceView>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineScaleSetVmInstanceView IPersistableModel<VirtualMachineScaleSetVmInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualMachineScaleSetVmInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VirtualMachineScaleSetVmInstanceView"/> from. </param>
+        internal static VirtualMachineScaleSetVmInstanceView FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVirtualMachineScaleSetVmInstanceView(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineScaleSetVmInstanceView>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +78,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(PlatformUpdateDomain))
             {
                 writer.WritePropertyName("platformUpdateDomain"u8);
@@ -63,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
-                foreach (var item in Disks)
+                foreach (DiskInstanceView item in Disks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -73,7 +122,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Extensions)
+                foreach (VirtualMachineExtensionInstanceView item in Extensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -93,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
-                foreach (var item in Statuses)
+                foreach (InstanceViewStatus item in Statuses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -114,30 +163,30 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("computerName"u8);
                 writer.WriteStringValue(ComputerName);
             }
-            if (Optional.IsDefined(OSName))
+            if (Optional.IsDefined(OsName))
             {
                 writer.WritePropertyName("osName"u8);
-                writer.WriteStringValue(OSName);
+                writer.WriteStringValue(OsName);
             }
-            if (Optional.IsDefined(OSVersion))
+            if (Optional.IsDefined(OsVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
-                writer.WriteStringValue(OSVersion);
+                writer.WriteStringValue(OsVersion);
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
                 writer.WritePropertyName("hyperVGeneration"u8);
                 writer.WriteStringValue(HyperVGeneration.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -146,22 +195,27 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        VirtualMachineScaleSetVmInstanceView IJsonModel<VirtualMachineScaleSetVmInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineScaleSetVmInstanceView IJsonModel<VirtualMachineScaleSetVmInstanceView>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineScaleSetVmInstanceView JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualMachineScaleSetVmInstanceView(document.RootElement, options);
         }
 
-        internal static VirtualMachineScaleSetVmInstanceView DeserializeVirtualMachineScaleSetVmInstanceView(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualMachineScaleSetVmInstanceView DeserializeVirtualMachineScaleSetVmInstanceView(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -171,166 +225,160 @@ namespace Azure.ResourceManager.Compute.Models
             string rdpThumbPrint = default;
             VirtualMachineAgentInstanceView vmAgent = default;
             MaintenanceRedeployStatus maintenanceRedeployStatus = default;
-            IReadOnlyList<DiskInstanceView> disks = default;
-            IReadOnlyList<VirtualMachineExtensionInstanceView> extensions = default;
+            IList<DiskInstanceView> disks = default;
+            IList<VirtualMachineExtensionInstanceView> extensions = default;
             VirtualMachineHealthStatus vmHealth = default;
             BootDiagnosticsInstanceView bootDiagnostics = default;
-            IReadOnlyList<InstanceViewStatus> statuses = default;
-            ResourceIdentifier assignedHost = default;
+            IList<InstanceViewStatus> statuses = default;
+            string assignedHost = default;
             string placementGroupId = default;
             string computerName = default;
             string osName = default;
             string osVersion = default;
             HyperVGeneration? hyperVGeneration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("platformUpdateDomain"u8))
+                if (prop.NameEquals("platformUpdateDomain"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    platformUpdateDomain = property.Value.GetInt32();
+                    platformUpdateDomain = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("platformFaultDomain"u8))
+                if (prop.NameEquals("platformFaultDomain"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    platformFaultDomain = property.Value.GetInt32();
+                    platformFaultDomain = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rdpThumbPrint"u8))
+                if (prop.NameEquals("rdpThumbPrint"u8))
                 {
-                    rdpThumbPrint = property.Value.GetString();
+                    rdpThumbPrint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmAgent"u8))
+                if (prop.NameEquals("vmAgent"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmAgent = VirtualMachineAgentInstanceView.DeserializeVirtualMachineAgentInstanceView(property.Value, options);
+                    vmAgent = VirtualMachineAgentInstanceView.DeserializeVirtualMachineAgentInstanceView(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("maintenanceRedeployStatus"u8))
+                if (prop.NameEquals("maintenanceRedeployStatus"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maintenanceRedeployStatus = MaintenanceRedeployStatus.DeserializeMaintenanceRedeployStatus(property.Value, options);
+                    maintenanceRedeployStatus = MaintenanceRedeployStatus.DeserializeMaintenanceRedeployStatus(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("disks"u8))
+                if (prop.NameEquals("disks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DiskInstanceView> array = new List<DiskInstanceView>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DiskInstanceView.DeserializeDiskInstanceView(item, options));
                     }
                     disks = array;
                     continue;
                 }
-                if (property.NameEquals("extensions"u8))
+                if (prop.NameEquals("extensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VirtualMachineExtensionInstanceView> array = new List<VirtualMachineExtensionInstanceView>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(VirtualMachineExtensionInstanceView.DeserializeVirtualMachineExtensionInstanceView(item, options));
                     }
                     extensions = array;
                     continue;
                 }
-                if (property.NameEquals("vmHealth"u8))
+                if (prop.NameEquals("vmHealth"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(property.Value, options);
+                    vmHealth = VirtualMachineHealthStatus.DeserializeVirtualMachineHealthStatus(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("bootDiagnostics"u8))
+                if (prop.NameEquals("bootDiagnostics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(property.Value, options);
+                    bootDiagnostics = BootDiagnosticsInstanceView.DeserializeBootDiagnosticsInstanceView(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("statuses"u8))
+                if (prop.NameEquals("statuses"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
                 }
-                if (property.NameEquals("assignedHost"u8))
+                if (prop.NameEquals("assignedHost"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    assignedHost = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("placementGroupId"u8))
+                {
+                    placementGroupId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("computerName"u8))
+                {
+                    computerName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("osName"u8))
+                {
+                    osName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("osVersion"u8))
+                {
+                    osVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("hyperVGeneration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    assignedHost = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("placementGroupId"u8))
-                {
-                    placementGroupId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("computerName"u8))
-                {
-                    computerName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("osName"u8))
-                {
-                    osName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("osVersion"u8))
-                {
-                    osVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("hyperVGeneration"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    hyperVGeneration = new HyperVGeneration(property.Value.GetString());
+                    hyperVGeneration = new HyperVGeneration(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineScaleSetVmInstanceView(
                 platformUpdateDomain,
                 platformFaultDomain,
@@ -348,38 +396,7 @@ namespace Azure.ResourceManager.Compute.Models
                 osName,
                 osVersion,
                 hyperVGeneration,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<VirtualMachineScaleSetVmInstanceView>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VirtualMachineScaleSetVmInstanceView IPersistableModel<VirtualMachineScaleSetVmInstanceView>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualMachineScaleSetVmInstanceView(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VirtualMachineScaleSetVmInstanceView>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

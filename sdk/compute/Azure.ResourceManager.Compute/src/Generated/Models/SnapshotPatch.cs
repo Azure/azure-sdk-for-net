@@ -7,44 +7,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeDisk.Models
 {
     /// <summary> Snapshot update resource. </summary>
     public partial class SnapshotPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPatch"/>. </summary>
         public SnapshotPatch()
@@ -53,63 +25,204 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPatch"/>. </summary>
+        /// <param name="properties"> Snapshot resource update properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="sku"> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </param>
-        /// <param name="osType"> the Operating System type. </param>
-        /// <param name="diskSizeGB"> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </param>
-        /// <param name="encryptionSettingsGroup"> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </param>
-        /// <param name="encryption"> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </param>
-        /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
-        /// <param name="diskAccessId"> ARM id of the DiskAccess resource for using private endpoints on disks. </param>
-        /// <param name="supportsHibernation"> Indicates the OS on a snapshot supports hibernation. </param>
-        /// <param name="publicNetworkAccess"> Policy for controlling export on the disk. </param>
-        /// <param name="dataAccessAuthMode"> Additional authentication requirements when exporting or uploading to a disk or snapshot. </param>
-        /// <param name="supportedCapabilities"> List of supported capabilities for the image from which the OS disk was created. </param>
-        /// <param name="snapshotAccessState"> The state of snapshot which determines the access availability of the snapshot. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotPatch(IDictionary<string, string> tags, SnapshotSku sku, SupportedOperatingSystemType? osType, int? diskSizeGB, EncryptionSettingsGroup encryptionSettingsGroup, DiskEncryption encryption, NetworkAccessPolicy? networkAccessPolicy, ResourceIdentifier diskAccessId, bool? supportsHibernation, DiskPublicNetworkAccess? publicNetworkAccess, DataAccessAuthMode? dataAccessAuthMode, SupportedCapabilities supportedCapabilities, SnapshotAccessState? snapshotAccessState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SnapshotPatch(SnapshotUpdateProperties properties, IDictionary<string, string> tags, SnapshotSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Properties = properties;
             Tags = tags;
             Sku = sku;
-            OSType = osType;
-            DiskSizeGB = diskSizeGB;
-            EncryptionSettingsGroup = encryptionSettingsGroup;
-            Encryption = encryption;
-            NetworkAccessPolicy = networkAccessPolicy;
-            DiskAccessId = diskAccessId;
-            SupportsHibernation = supportsHibernation;
-            PublicNetworkAccess = publicNetworkAccess;
-            DataAccessAuthMode = dataAccessAuthMode;
-            SupportedCapabilities = supportedCapabilities;
-            SnapshotAccessState = snapshotAccessState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Snapshot resource update properties. </summary>
+        internal SnapshotUpdateProperties Properties { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The snapshots sku name. Can be Standard_LRS, Premium_LRS, or Standard_ZRS. This is an optional parameter for incremental snapshot and the default behavior is the SKU will be set to the same sku as the previous snapshot. </summary>
         public SnapshotSku Sku { get; set; }
+
         /// <summary> the Operating System type. </summary>
-        public SupportedOperatingSystemType? OSType { get; set; }
+        public OperatingSystemTypes? OsType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OsType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotUpdateProperties();
+                }
+                Properties.OsType = value.Value;
+            }
+        }
+
         /// <summary> If creationData.createOption is Empty, this field is mandatory and it indicates the size of the disk to create. If this field is present for updates or creation with other options, it indicates a resize. Resizes are only allowed if the disk is not attached to a running VM, and can only increase the disk's size. </summary>
-        public int? DiskSizeGB { get; set; }
+        public int? DiskSizeGB
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskSizeGB;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotUpdateProperties();
+                }
+                Properties.DiskSizeGB = value.Value;
+            }
+        }
+
         /// <summary> Encryption settings collection used be Azure Disk Encryption, can contain multiple encryption settings per disk or snapshot. </summary>
-        public EncryptionSettingsGroup EncryptionSettingsGroup { get; set; }
+        public EncryptionSettingsCollection EncryptionSettingsCollection
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EncryptionSettingsCollection;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotUpdateProperties();
+                }
+                Properties.EncryptionSettingsCollection = value;
+            }
+        }
+
         /// <summary> Encryption property can be used to encrypt data at rest with customer managed keys or platform managed keys. </summary>
-        public DiskEncryption Encryption { get; set; }
+        public Encryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotUpdateProperties();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
         /// <summary> Policy for accessing the disk via network. </summary>
-        public NetworkAccessPolicy? NetworkAccessPolicy { get; set; }
+        public NetworkAccessPolicy? NetworkAccessPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkAccessPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotUpdateProperties();
+                }
+                Properties.NetworkAccessPolicy = value.Value;
+            }
+        }
+
         /// <summary> ARM id of the DiskAccess resource for using private endpoints on disks. </summary>
-        public ResourceIdentifier DiskAccessId { get; set; }
+        public string DiskAccessId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DiskAccessId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotUpdateProperties();
+                }
+                Properties.DiskAccessId = value;
+            }
+        }
+
         /// <summary> Indicates the OS on a snapshot supports hibernation. </summary>
-        public bool? SupportsHibernation { get; set; }
+        public bool? SupportsHibernation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportsHibernation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotUpdateProperties();
+                }
+                Properties.SupportsHibernation = value.Value;
+            }
+        }
+
         /// <summary> Policy for controlling export on the disk. </summary>
-        public DiskPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public PublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotUpdateProperties();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> Additional authentication requirements when exporting or uploading to a disk or snapshot. </summary>
-        public DataAccessAuthMode? DataAccessAuthMode { get; set; }
+        public DataAccessAuthMode? DataAccessAuthMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataAccessAuthMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotUpdateProperties();
+                }
+                Properties.DataAccessAuthMode = value.Value;
+            }
+        }
+
         /// <summary> List of supported capabilities for the image from which the OS disk was created. </summary>
-        public SupportedCapabilities SupportedCapabilities { get; set; }
+        public SupportedCapabilities SupportedCapabilities
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportedCapabilities;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotUpdateProperties();
+                }
+                Properties.SupportedCapabilities = value;
+            }
+        }
+
         /// <summary> The state of snapshot which determines the access availability of the snapshot. </summary>
-        public SnapshotAccessState? SnapshotAccessState { get; }
+        public SnapshotAccessState? SnapshotAccessState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SnapshotAccessState;
+            }
+        }
     }
 }

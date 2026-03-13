@@ -7,10 +7,11 @@
 
 using System;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     internal static partial class CachingTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CachingType value) => value switch
         {
             CachingType.None => "None",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CachingType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static CachingType ToCachingType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return CachingType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly")) return CachingType.ReadOnly;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadWrite")) return CachingType.ReadWrite;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return CachingType.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly"))
+            {
+                return CachingType.ReadOnly;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadWrite"))
+            {
+                return CachingType.ReadWrite;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CachingType value.");
         }
     }

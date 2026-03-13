@@ -8,116 +8,151 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using ComputeGallery.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the GalleryImageVersion data model.
-    /// Specifies information about the gallery image version that you want to create or update.
-    /// </summary>
+    /// <summary> Specifies information about the gallery image version that you want to create or update. </summary>
     public partial class GalleryImageVersionData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public GalleryImageVersionData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryImageVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="publishingProfile"> The publishing profile of a gallery image Version. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
-        /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
-        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        /// <param name="securityProfile"> The security profile of a gallery image version. </param>
-        /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
-        /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? isRestoreEnabled, GalleryImageValidationsProfile validationsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the properties of a gallery image version. </param>
+        internal GalleryImageVersionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            PublishingProfile = publishingProfile;
-            ProvisioningState = provisioningState;
-            StorageProfile = storageProfile;
-            SafetyProfile = safetyProfile;
-            ReplicationStatus = replicationStatus;
-            SecurityProfile = securityProfile;
-            IsRestoreEnabled = isRestoreEnabled;
-            ValidationsProfile = validationsProfile;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryImageVersionData"/> for deserialization. </summary>
-        internal GalleryImageVersionData()
-        {
-        }
+        /// <summary> Describes the properties of a gallery image version. </summary>
+        internal GalleryImageVersionProperties Properties { get; set; }
 
         /// <summary> The publishing profile of a gallery image Version. </summary>
-        public GalleryImageVersionPublishingProfile PublishingProfile { get; set; }
-        /// <summary> The provisioning state, which only appears in the response. </summary>
-        public GalleryProvisioningState? ProvisioningState { get; }
-        /// <summary> This is the storage profile of a Gallery Image Version. </summary>
-        public GalleryImageVersionStorageProfile StorageProfile { get; set; }
-        /// <summary> This is the safety profile of the Gallery Image Version. </summary>
-        public GalleryImageVersionSafetyProfile SafetyProfile { get; set; }
-        /// <summary> This is the replication status of the gallery image version. </summary>
-        public ReplicationStatus ReplicationStatus { get; }
-        /// <summary> The security profile of a gallery image version. </summary>
-        internal ImageVersionSecurityProfile SecurityProfile { get; set; }
-        /// <summary> Contains UEFI settings for the image version. </summary>
-        public GalleryImageVersionUefiSettings SecurityUefiSettings
+        public GalleryImageVersionPublishingProfile PublishingProfile
         {
-            get => SecurityProfile is null ? default : SecurityProfile.UefiSettings;
+            get
+            {
+                return Properties is null ? default : Properties.PublishingProfile;
+            }
             set
             {
-                if (SecurityProfile is null)
-                    SecurityProfile = new ImageVersionSecurityProfile();
-                SecurityProfile.UefiSettings = value;
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageVersionProperties();
+                }
+                Properties.PublishingProfile = value;
+            }
+        }
+
+        /// <summary> The provisioning state, which only appears in the response. </summary>
+        public GalleryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> This is the storage profile of a Gallery Image Version. </summary>
+        public GalleryImageVersionStorageProfile StorageProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageVersionProperties();
+                }
+                Properties.StorageProfile = value;
+            }
+        }
+
+        /// <summary> This is the safety profile of the Gallery Image Version. </summary>
+        public GalleryImageVersionSafetyProfile SafetyProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SafetyProfile;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageVersionProperties();
+                }
+                Properties.SafetyProfile = value;
+            }
+        }
+
+        /// <summary> This is the replication status of the gallery image version. </summary>
+        public ReplicationStatus ReplicationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationStatus;
             }
         }
 
         /// <summary> Indicates if this is a soft-delete resource restoration request. </summary>
-        public bool? IsRestoreEnabled { get; set; }
+        public bool? Restore
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Restore;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageVersionProperties();
+                }
+                Properties.Restore = value.Value;
+            }
+        }
+
         /// <summary> This is the validations profile of a Gallery Image Version. </summary>
-        public GalleryImageValidationsProfile ValidationsProfile { get; }
+        public ValidationsProfile ValidationsProfile
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ValidationsProfile;
+            }
+        }
+
+        /// <summary> Contains UEFI settings for the image version. </summary>
+        public GalleryImageVersionUefiSettings SecurityUefiSettings
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecurityUefiSettings;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryImageVersionProperties();
+                }
+                Properties.SecurityUefiSettings = value;
+            }
+        }
     }
 }

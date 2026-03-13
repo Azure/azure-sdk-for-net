@@ -8,100 +8,91 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using ComputeGallery.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the GalleryApplicationVersion data model.
-    /// Specifies information about the gallery Application Version that you want to create or update.
-    /// </summary>
+    /// <summary> Specifies information about the gallery Application Version that you want to create or update. </summary>
     public partial class GalleryApplicationVersionData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public GalleryApplicationVersionData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
-        /// <param name="safetyProfile"> The safety profile of the Gallery Application Version. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryApplicationVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryApplicationVersionPublishingProfile publishingProfile, GalleryApplicationVersionSafetyProfile safetyProfile, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the properties of a gallery image version. </param>
+        internal GalleryApplicationVersionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryApplicationVersionProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            PublishingProfile = publishingProfile;
-            SafetyProfile = safetyProfile;
-            ProvisioningState = provisioningState;
-            ReplicationStatus = replicationStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryApplicationVersionData"/> for deserialization. </summary>
-        internal GalleryApplicationVersionData()
-        {
-        }
+        /// <summary> Describes the properties of a gallery image version. </summary>
+        internal GalleryApplicationVersionProperties Properties { get; set; }
 
         /// <summary> The publishing profile of a gallery image version. </summary>
-        public GalleryApplicationVersionPublishingProfile PublishingProfile { get; set; }
-        /// <summary> The safety profile of the Gallery Application Version. </summary>
-        internal GalleryApplicationVersionSafetyProfile SafetyProfile { get; set; }
-        /// <summary> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </summary>
-        public bool? AllowDeletionOfReplicatedLocations
+        public GalleryApplicationVersionPublishingProfile PublishingProfile
         {
-            get => SafetyProfile is null ? default : SafetyProfile.AllowDeletionOfReplicatedLocations;
+            get
+            {
+                return Properties is null ? default : Properties.PublishingProfile;
+            }
             set
             {
-                if (SafetyProfile is null)
-                    SafetyProfile = new GalleryApplicationVersionSafetyProfile();
-                SafetyProfile.AllowDeletionOfReplicatedLocations = value;
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationVersionProperties();
+                }
+                Properties.PublishingProfile = value;
             }
         }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public GalleryProvisioningState? ProvisioningState { get; }
+        public GalleryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> This is the replication status of the gallery image version. </summary>
-        public ReplicationStatus ReplicationStatus { get; }
+        public ReplicationStatus ReplicationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationStatus;
+            }
+        }
+
+        /// <summary> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </summary>
+        public bool? AllowDeletionOfReplicatedLocations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowDeletionOfReplicatedLocations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationVersionProperties();
+                }
+                Properties.AllowDeletionOfReplicatedLocations = value.Value;
+            }
+        }
     }
 }

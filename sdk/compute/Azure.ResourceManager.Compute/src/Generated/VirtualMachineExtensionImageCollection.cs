@@ -8,15 +8,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Compute;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
     /// <summary>
     /// A class representing a collection of <see cref="VirtualMachineExtensionImageResource"/> and their operations.
@@ -25,79 +27,87 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class VirtualMachineExtensionImageCollection : ArmCollection, IEnumerable<VirtualMachineExtensionImageResource>, IAsyncEnumerable<VirtualMachineExtensionImageResource>
     {
-        private readonly ClientDiagnostics _virtualMachineExtensionImageClientDiagnostics;
-        private readonly VirtualMachineExtensionImagesRestOperations _virtualMachineExtensionImageRestClient;
-        private readonly AzureLocation _location;
+        private readonly ClientDiagnostics _virtualMachineExtensionImagesClientDiagnostics;
+        private readonly VirtualMachineExtensionImages _virtualMachineExtensionImagesRestClient;
+        /// <summary> The location. </summary>
+        private readonly string _location;
+        /// <summary> The publisherName. </summary>
         private readonly string _publisherName;
+        /// <summary> The type. </summary>
+        private readonly string _type;
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionImageCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of VirtualMachineExtensionImageCollection for mocking. </summary>
         protected VirtualMachineExtensionImageCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="VirtualMachineExtensionImageCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineExtensionImageCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="location"> The name of Azure region. </param>
-        /// <param name="publisherName"> The <see cref="string"/> to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal VirtualMachineExtensionImageCollection(ArmClient client, ResourceIdentifier id, AzureLocation location, string publisherName) : base(client, id)
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <param name="publisherName"> The publisherName for the resource. </param>
+        /// <param name="type"> The type for the resource. </param>
+        internal VirtualMachineExtensionImageCollection(ArmClient client, ResourceIdentifier id, string location, string publisherName, string @type) : base(client, id)
         {
+            TryGetApiVersion(VirtualMachineExtensionImageResource.ResourceType, out string virtualMachineExtensionImageApiVersion);
             _location = location;
             _publisherName = publisherName;
-            _virtualMachineExtensionImageClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineExtensionImageResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(VirtualMachineExtensionImageResource.ResourceType, out string virtualMachineExtensionImageApiVersion);
-            _virtualMachineExtensionImageRestClient = new VirtualMachineExtensionImagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineExtensionImageApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _type = @type;
+            _virtualMachineExtensionImagesClientDiagnostics = new ClientDiagnostics("ComputeCombine", VirtualMachineExtensionImageResource.ResourceType.Namespace, Diagnostics);
+            _virtualMachineExtensionImagesRestClient = new VirtualMachineExtensionImages(_virtualMachineExtensionImagesClientDiagnostics, Pipeline, Endpoint, virtualMachineExtensionImageApiVersion ?? "2025-04-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SubscriptionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SubscriptionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Gets a virtual machine extension image.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The <see cref="string"/> to use. </param>
-        /// <param name="version"> The <see cref="string"/> to use. </param>
+        /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
-        public virtual async Task<Response<VirtualMachineExtensionImageResource>> GetAsync(string type, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VirtualMachineExtensionImageResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(type, nameof(type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _virtualMachineExtensionImageClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Get");
+            using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Get");
             scope.Start();
             try
             {
-                var response = await _virtualMachineExtensionImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, version, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VirtualMachineExtensionImageData> response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -111,40 +121,42 @@ namespace Azure.ResourceManager.Compute
         /// Gets a virtual machine extension image.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The <see cref="string"/> to use. </param>
-        /// <param name="version"> The <see cref="string"/> to use. </param>
+        /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
-        public virtual Response<VirtualMachineExtensionImageResource> Get(string type, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VirtualMachineExtensionImageResource> Get(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(type, nameof(type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _virtualMachineExtensionImageClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Get");
+            using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Get");
             scope.Start();
             try
             {
-                var response = _virtualMachineExtensionImageRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, version, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VirtualMachineExtensionImageData> response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -155,173 +167,133 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// Gets a list of virtual machine extension image types.
+        /// Gets a list of virtual machine extension image versions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_ListTypes</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_ListVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineExtensionImageRestClient.CreateListTypesRequest(Id.SubscriptionId, new AzureLocation(_location), _publisherName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine extension image types.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_ListTypes</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. </param>
+        /// <param name="top"></param>
+        /// <param name="orderby"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineExtensionImageRestClient.CreateListTypesRequest(Id.SubscriptionId, new AzureLocation(_location), _publisherName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new VirtualMachineExtensionImageCollectionGetAllAsyncCollectionResultOfT(
+                _virtualMachineExtensionImagesRestClient,
+                Id.SubscriptionId,
+                _location,
+                _publisherName,
+                _type,
+                filter,
+                top,
+                @orderby,
+                context), data => new VirtualMachineExtensionImageResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of virtual machine extension image versions.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_ListVersions</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_ListVersions. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The <see cref="string"/> to use. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="orderby"> The <see cref="string"/> to use. </param>
+        /// <param name="top"></param>
+        /// <param name="orderby"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
-        /// <returns> An async collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(type, nameof(type));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineExtensionImageRestClient.CreateListVersionsRequest(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, filter, top, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of virtual machine extension image versions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_ListVersions</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="type"> The <see cref="string"/> to use. </param>
-        /// <param name="filter"> The filter to apply on the operation. </param>
-        /// <param name="top"> The <see cref="int"/>? to use. </param>
-        /// <param name="orderby"> The <see cref="string"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string type, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(type, nameof(type));
-
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineExtensionImageRestClient.CreateListVersionsRequest(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, filter, top, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new VirtualMachineExtensionImageResource(Client, VirtualMachineExtensionImageData.DeserializeVirtualMachineExtensionImageData(e)), _virtualMachineExtensionImageClientDiagnostics, Pipeline, "VirtualMachineExtensionImageCollection.GetAll", "", null, cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<VirtualMachineExtensionImageData, VirtualMachineExtensionImageResource>(new VirtualMachineExtensionImageCollectionGetAllCollectionResultOfT(
+                _virtualMachineExtensionImagesRestClient,
+                Id.SubscriptionId,
+                _location,
+                _publisherName,
+                _type,
+                filter,
+                top,
+                @orderby,
+                context), data => new VirtualMachineExtensionImageResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The <see cref="string"/> to use. </param>
-        /// <param name="version"> The <see cref="string"/> to use. </param>
+        /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string type, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(type, nameof(type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _virtualMachineExtensionImageClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Exists");
+            using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _virtualMachineExtensionImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VirtualMachineExtensionImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualMachineExtensionImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -335,38 +307,50 @@ namespace Azure.ResourceManager.Compute
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The <see cref="string"/> to use. </param>
-        /// <param name="version"> The <see cref="string"/> to use. </param>
+        /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
-        public virtual Response<bool> Exists(string type, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(type, nameof(type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _virtualMachineExtensionImageClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Exists");
+            using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.Exists");
             scope.Start();
             try
             {
-                var response = _virtualMachineExtensionImageRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, version, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VirtualMachineExtensionImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualMachineExtensionImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -380,40 +364,54 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The <see cref="string"/> to use. </param>
-        /// <param name="version"> The <see cref="string"/> to use. </param>
+        /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
-        public virtual async Task<NullableResponse<VirtualMachineExtensionImageResource>> GetIfExistsAsync(string type, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<VirtualMachineExtensionImageResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(type, nameof(type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _virtualMachineExtensionImageClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _virtualMachineExtensionImageRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<VirtualMachineExtensionImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualMachineExtensionImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VirtualMachineExtensionImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -427,40 +425,54 @@ namespace Azure.ResourceManager.Compute
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/publishers/{publisherName}/artifacttypes/vmextension/types/{type}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachineExtensionImages_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachineExtensionImages_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="VirtualMachineExtensionImageResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="type"> The <see cref="string"/> to use. </param>
-        /// <param name="version"> The <see cref="string"/> to use. </param>
+        /// <param name="version"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="type"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> or <paramref name="version"/> is null. </exception>
-        public virtual NullableResponse<VirtualMachineExtensionImageResource> GetIfExists(string type, string version, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<VirtualMachineExtensionImageResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(type, nameof(type));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _virtualMachineExtensionImageClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetIfExists");
+            using DiagnosticScope scope = _virtualMachineExtensionImagesClientDiagnostics.CreateScope("VirtualMachineExtensionImageCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _virtualMachineExtensionImageRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), _publisherName, type, version, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _virtualMachineExtensionImagesRestClient.CreateGetRequest(Id.SubscriptionId, _location, _publisherName, _type, version, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<VirtualMachineExtensionImageData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(VirtualMachineExtensionImageData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((VirtualMachineExtensionImageData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<VirtualMachineExtensionImageResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new VirtualMachineExtensionImageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -480,6 +492,7 @@ namespace Azure.ResourceManager.Compute
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<VirtualMachineExtensionImageResource> IAsyncEnumerable<VirtualMachineExtensionImageResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

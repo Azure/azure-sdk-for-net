@@ -7,10 +7,11 @@
 
 using System;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     internal static partial class HostCachingExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this HostCaching value) => value switch
         {
             HostCaching.None => "None",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostCaching value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static HostCaching ToHostCaching(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return HostCaching.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly")) return HostCaching.ReadOnly;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadWrite")) return HostCaching.ReadWrite;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return HostCaching.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly"))
+            {
+                return HostCaching.ReadOnly;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadWrite"))
+            {
+                return HostCaching.ReadWrite;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostCaching value.");
         }
     }

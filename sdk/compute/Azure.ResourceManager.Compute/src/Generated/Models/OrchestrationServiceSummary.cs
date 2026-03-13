@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Summary for an orchestration service of a virtual machine scale set. </summary>
     public partial class OrchestrationServiceSummary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OrchestrationServiceSummary"/>. </summary>
         internal OrchestrationServiceSummary()
@@ -54,24 +25,27 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="serviceName"> The name of the service. </param>
         /// <param name="serviceState"> The current state of the service. </param>
         /// <param name="latestOperationStatus"> The latest operation status of the service. Minimum API version for this property is 2025-04-01. </param>
-        /// <param name="lastStatusChangedOn"> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OrchestrationServiceSummary(OrchestrationServiceName? serviceName, OrchestrationServiceState? serviceState, OrchestrationServiceOperationStatus? latestOperationStatus, DateTimeOffset? lastStatusChangedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="lastStatusChangeOn"> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OrchestrationServiceSummary(OrchestrationServiceNames? serviceName, OrchestrationServiceState? serviceState, OrchestrationServiceOperationStatus? latestOperationStatus, DateTimeOffset? lastStatusChangeOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceName = serviceName;
             ServiceState = serviceState;
             LatestOperationStatus = latestOperationStatus;
-            LastStatusChangedOn = lastStatusChangedOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            LastStatusChangeOn = lastStatusChangeOn;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the service. </summary>
-        public OrchestrationServiceName? ServiceName { get; }
+        public OrchestrationServiceNames? ServiceName { get; }
+
         /// <summary> The current state of the service. </summary>
         public OrchestrationServiceState? ServiceState { get; }
+
         /// <summary> The latest operation status of the service. Minimum API version for this property is 2025-04-01. </summary>
         public OrchestrationServiceOperationStatus? LatestOperationStatus { get; }
+
         /// <summary> The last UTC time when the operation status changed. Minimum API version for this property is 2025-04-01. </summary>
-        public DateTimeOffset? LastStatusChangedOn { get; }
+        public DateTimeOffset? LastStatusChangeOn { get; }
     }
 }

@@ -8,130 +8,253 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the VirtualMachineRunCommand data model.
-    /// Describes a Virtual Machine run command.
-    /// </summary>
+    /// <summary> Describes a Virtual Machine run command. </summary>
     public partial class VirtualMachineRunCommandData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public VirtualMachineRunCommandData(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingList<RunCommandInputParameter>();
-            ProtectedParameters = new ChangeTrackingList<RunCommandInputParameter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="source"> The source of the run command script. </param>
-        /// <param name="parameters"> The parameters used by the script. </param>
-        /// <param name="protectedParameters"> The parameters used by the script. </param>
-        /// <param name="asyncExecution"> Optional. If set to true, provisioning will complete as soon as the script starts and will not wait for script to complete. </param>
-        /// <param name="runAsUser"> Specifies the user account on the VM when executing the run command. </param>
-        /// <param name="runAsPassword"> Specifies the user account password on the VM when executing the run command. </param>
-        /// <param name="timeoutInSeconds"> The timeout in seconds to execute the run command. </param>
-        /// <param name="outputBlobUri"> Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter. </param>
-        /// <param name="errorBlobUri"> Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter. </param>
-        /// <param name="outputBlobManagedIdentity"> User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
-        /// <param name="errorBlobManagedIdentity"> User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. If treatFailureAsDeploymentFailure set to true, any failure in the script will fail the deployment and ProvisioningState will be marked as Failed. If treatFailureAsDeploymentFailure set to false, ProvisioningState would only reflect whether the run command was run or not by the extensions platform, it would not indicate whether script failed in case of script failures. See instance view of run command in case of script failures to see executionMessage, output, error: https://aka.ms/runcommandmanaged#get-execution-status-and-results. </param>
-        /// <param name="instanceView"> The virtual machine run command instance view. </param>
-        /// <param name="treatFailureAsDeploymentFailure"> Optional. If set to true, any failure in the script will fail the deployment and ProvisioningState will be marked as Failed. If set to false, ProvisioningState would only reflect whether the run command was run or not by the extensions platform, it would not indicate whether script failed in case of script failures. See instance view of run command in case of script failures to see executionMessage, output, error: https://aka.ms/runcommandmanaged#get-execution-status-and-results. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineRunCommandData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, VirtualMachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, Uri outputBlobUri, Uri errorBlobUri, RunCommandManagedIdentity outputBlobManagedIdentity, RunCommandManagedIdentity errorBlobManagedIdentity, string provisioningState, VirtualMachineRunCommandInstanceView instanceView, bool? treatFailureAsDeploymentFailure, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the properties of a Virtual Machine run command. </param>
+        internal VirtualMachineRunCommandData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, VirtualMachineRunCommandProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Source = source;
-            Parameters = parameters;
-            ProtectedParameters = protectedParameters;
-            AsyncExecution = asyncExecution;
-            RunAsUser = runAsUser;
-            RunAsPassword = runAsPassword;
-            TimeoutInSeconds = timeoutInSeconds;
-            OutputBlobUri = outputBlobUri;
-            ErrorBlobUri = errorBlobUri;
-            OutputBlobManagedIdentity = outputBlobManagedIdentity;
-            ErrorBlobManagedIdentity = errorBlobManagedIdentity;
-            ProvisioningState = provisioningState;
-            InstanceView = instanceView;
-            TreatFailureAsDeploymentFailure = treatFailureAsDeploymentFailure;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandData"/> for deserialization. </summary>
-        internal VirtualMachineRunCommandData()
-        {
-        }
+        /// <summary> Describes the properties of a Virtual Machine run command. </summary>
+        internal VirtualMachineRunCommandProperties Properties { get; set; }
 
         /// <summary> The source of the run command script. </summary>
-        public VirtualMachineRunCommandScriptSource Source { get; set; }
+        public VirtualMachineRunCommandScriptSource Source
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Source;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.Source = value;
+            }
+        }
+
         /// <summary> The parameters used by the script. </summary>
-        public IList<RunCommandInputParameter> Parameters { get; }
+        public IList<RunCommandInputParameter> Parameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                return Properties.Parameters;
+            }
+        }
+
         /// <summary> The parameters used by the script. </summary>
-        public IList<RunCommandInputParameter> ProtectedParameters { get; }
+        public IList<RunCommandInputParameter> ProtectedParameters
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                return Properties.ProtectedParameters;
+            }
+        }
+
         /// <summary> Optional. If set to true, provisioning will complete as soon as the script starts and will not wait for script to complete. </summary>
-        public bool? AsyncExecution { get; set; }
+        public bool? AsyncExecution
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AsyncExecution;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.AsyncExecution = value.Value;
+            }
+        }
+
         /// <summary> Specifies the user account on the VM when executing the run command. </summary>
-        public string RunAsUser { get; set; }
+        public string RunAsUser
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunAsUser;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.RunAsUser = value;
+            }
+        }
+
         /// <summary> Specifies the user account password on the VM when executing the run command. </summary>
-        public string RunAsPassword { get; set; }
+        public string RunAsPassword
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RunAsPassword;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.RunAsPassword = value;
+            }
+        }
+
         /// <summary> The timeout in seconds to execute the run command. </summary>
-        public int? TimeoutInSeconds { get; set; }
+        public int? TimeoutInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TimeoutInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.TimeoutInSeconds = value.Value;
+            }
+        }
+
         /// <summary> Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter. </summary>
-        public Uri OutputBlobUri { get; set; }
+        public string OutputBlobUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OutputBlobUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.OutputBlobUri = value;
+            }
+        }
+
         /// <summary> Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter. </summary>
-        public Uri ErrorBlobUri { get; set; }
+        public string ErrorBlobUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorBlobUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.ErrorBlobUri = value;
+            }
+        }
+
         /// <summary> User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </summary>
-        public RunCommandManagedIdentity OutputBlobManagedIdentity { get; set; }
+        public RunCommandManagedIdentity OutputBlobManagedIdentity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OutputBlobManagedIdentity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.OutputBlobManagedIdentity = value;
+            }
+        }
+
         /// <summary> User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </summary>
-        public RunCommandManagedIdentity ErrorBlobManagedIdentity { get; set; }
+        public RunCommandManagedIdentity ErrorBlobManagedIdentity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ErrorBlobManagedIdentity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.ErrorBlobManagedIdentity = value;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. If treatFailureAsDeploymentFailure set to true, any failure in the script will fail the deployment and ProvisioningState will be marked as Failed. If treatFailureAsDeploymentFailure set to false, ProvisioningState would only reflect whether the run command was run or not by the extensions platform, it would not indicate whether script failed in case of script failures. See instance view of run command in case of script failures to see executionMessage, output, error: https://aka.ms/runcommandmanaged#get-execution-status-and-results. </summary>
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> The virtual machine run command instance view. </summary>
-        public VirtualMachineRunCommandInstanceView InstanceView { get; }
+        public VirtualMachineRunCommandInstanceView InstanceView
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceView;
+            }
+        }
+
         /// <summary> Optional. If set to true, any failure in the script will fail the deployment and ProvisioningState will be marked as Failed. If set to false, ProvisioningState would only reflect whether the run command was run or not by the extensions platform, it would not indicate whether script failed in case of script failures. See instance view of run command in case of script failures to see executionMessage, output, error: https://aka.ms/runcommandmanaged#get-execution-status-and-results. </summary>
-        public bool? TreatFailureAsDeploymentFailure { get; set; }
+        public bool? TreatFailureAsDeploymentFailure
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TreatFailureAsDeploymentFailure;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualMachineRunCommandProperties();
+                }
+                Properties.TreatFailureAsDeploymentFailure = value.Value;
+            }
+        }
     }
 }

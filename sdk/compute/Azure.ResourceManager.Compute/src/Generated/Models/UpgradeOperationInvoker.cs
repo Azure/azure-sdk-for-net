@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Invoker of the Upgrade Operation. </summary>
     public enum UpgradeOperationInvoker

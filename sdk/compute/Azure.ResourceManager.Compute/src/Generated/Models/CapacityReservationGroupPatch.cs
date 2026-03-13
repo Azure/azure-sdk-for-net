@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Specifies information about the capacity reservation group. Only tags can be updated. </summary>
     public partial class CapacityReservationGroupPatch : ComputeResourcePatch
@@ -17,47 +17,83 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupPatch"/>. </summary>
         public CapacityReservationGroupPatch()
         {
-            CapacityReservations = new ChangeTrackingList<SubResource>();
-            VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
-        /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
-        /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
-        /// <param name="sharingProfile"> Specifies the settings to enable sharing across subscriptions for the capacity reservation group resource. The capacity reservation group resource can generally be shared across subscriptions belonging to a single Azure AAD tenant or across AAD tenants if there is a trust relationship established between the tenants.  Block capacity reservation does not support sharing across subscriptions. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
-        /// <param name="reservationType"> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </param>
-        internal CapacityReservationGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<SubResource> capacityReservations, IReadOnlyList<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView, ResourceSharingProfile sharingProfile, CapacityReservationType? reservationType) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> capacity reservation group Properties. </param>
+        internal CapacityReservationGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, CapacityReservationGroupProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            CapacityReservations = capacityReservations;
-            VirtualMachinesAssociated = virtualMachinesAssociated;
-            InstanceView = instanceView;
-            SharingProfile = sharingProfile;
-            ReservationType = reservationType;
+            Properties = properties;
         }
 
+        /// <summary> capacity reservation group Properties. </summary>
+        internal CapacityReservationGroupProperties Properties { get; set; }
+
         /// <summary> A list of all capacity reservation resource ids that belong to capacity reservation group. </summary>
-        public IReadOnlyList<SubResource> CapacityReservations { get; }
-        /// <summary> A list of references to all virtual machines associated to the capacity reservation group. </summary>
-        public IReadOnlyList<SubResource> VirtualMachinesAssociated { get; }
-        /// <summary> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </summary>
-        public CapacityReservationGroupInstanceView InstanceView { get; }
-        /// <summary> Specifies the settings to enable sharing across subscriptions for the capacity reservation group resource. The capacity reservation group resource can generally be shared across subscriptions belonging to a single Azure AAD tenant or across AAD tenants if there is a trust relationship established between the tenants.  Block capacity reservation does not support sharing across subscriptions. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
-        internal ResourceSharingProfile SharingProfile { get; set; }
-        /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
-        public IList<WritableSubResource> SharingSubscriptionIds
+        public IReadOnlyList<SubResourceReadOnly> CapacityReservations
         {
             get
             {
-                if (SharingProfile is null)
-                    SharingProfile = new ResourceSharingProfile();
-                return SharingProfile.SubscriptionIds;
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationGroupProperties();
+                }
+                return Properties.CapacityReservations;
+            }
+        }
+
+        /// <summary> A list of references to all virtual machines associated to the capacity reservation group. </summary>
+        public IReadOnlyList<SubResourceReadOnly> VirtualMachinesAssociated
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationGroupProperties();
+                }
+                return Properties.VirtualMachinesAssociated;
+            }
+        }
+
+        /// <summary> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </summary>
+        public CapacityReservationGroupInstanceView InstanceView
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceView;
             }
         }
 
         /// <summary> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </summary>
-        public CapacityReservationType? ReservationType { get; set; }
+        public ReservationType? ReservationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationGroupProperties();
+                }
+                Properties.ReservationType = value.Value;
+            }
+        }
+
+        /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
+        public IList<SubResource> SharingSubscriptionIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationGroupProperties();
+                }
+                return Properties.SharingSubscriptionIds;
+            }
+        }
     }
 }

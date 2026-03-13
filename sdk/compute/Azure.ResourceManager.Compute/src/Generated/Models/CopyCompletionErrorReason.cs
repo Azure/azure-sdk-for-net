@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeDisk.Models
 {
     /// <summary> Indicates the error code if the background copy of a resource created via the CopyStart operation fails. </summary>
     public readonly partial struct CopyCompletionErrorReason : IEquatable<CopyCompletionErrorReason>
     {
         private readonly string _value;
+        /// <summary> Indicates that the source snapshot was deleted while the background copy of the resource created via CopyStart operation was in progress. </summary>
+        private const string CopySourceNotFoundValue = "CopySourceNotFound";
 
         /// <summary> Initializes a new instance of <see cref="CopyCompletionErrorReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CopyCompletionErrorReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CopySourceNotFoundValue = "CopySourceNotFound";
+            _value = value;
+        }
 
         /// <summary> Indicates that the source snapshot was deleted while the background copy of the resource created via CopyStart operation was in progress. </summary>
         public static CopyCompletionErrorReason CopySourceNotFound { get; } = new CopyCompletionErrorReason(CopySourceNotFoundValue);
+
         /// <summary> Determines if two <see cref="CopyCompletionErrorReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CopyCompletionErrorReason left, CopyCompletionErrorReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CopyCompletionErrorReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CopyCompletionErrorReason left, CopyCompletionErrorReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CopyCompletionErrorReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CopyCompletionErrorReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CopyCompletionErrorReason(string value) => new CopyCompletionErrorReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CopyCompletionErrorReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CopyCompletionErrorReason?(string value) => value == null ? null : new CopyCompletionErrorReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CopyCompletionErrorReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CopyCompletionErrorReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

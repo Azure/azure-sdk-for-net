@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> Describes the properties of a gallery script version. </summary>
     public partial class GalleryScriptVersionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryScriptVersionProperties"/>. </summary>
         /// <param name="publishingProfile"> The publishing profile of a gallery image version. </param>
@@ -60,40 +32,43 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="safetyProfile"> The safety profile of the Gallery Script Version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryScriptVersionProperties(GalleryScriptVersionPublishingProfile publishingProfile, GalleryScriptVersionSafetyProfile safetyProfile, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryScriptVersionProperties(GalleryScriptVersionPublishingProfile publishingProfile, GalleryScriptVersionSafetyProfile safetyProfile, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublishingProfile = publishingProfile;
             SafetyProfile = safetyProfile;
             ProvisioningState = provisioningState;
             ReplicationStatus = replicationStatus;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GalleryScriptVersionProperties"/> for deserialization. </summary>
-        internal GalleryScriptVersionProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The publishing profile of a gallery image version. </summary>
         public GalleryScriptVersionPublishingProfile PublishingProfile { get; set; }
+
         /// <summary> The safety profile of the Gallery Script Version. </summary>
         internal GalleryScriptVersionSafetyProfile SafetyProfile { get; set; }
-        /// <summary> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </summary>
-        public bool? AllowDeletionOfReplicatedLocations
-        {
-            get => SafetyProfile is null ? default : SafetyProfile.AllowDeletionOfReplicatedLocations;
-            set
-            {
-                if (SafetyProfile is null)
-                    SafetyProfile = new GalleryScriptVersionSafetyProfile();
-                SafetyProfile.AllowDeletionOfReplicatedLocations = value;
-            }
-        }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public GalleryProvisioningState? ProvisioningState { get; }
+
         /// <summary> This is the replication status of the gallery image version. </summary>
         public ReplicationStatus ReplicationStatus { get; }
+
+        /// <summary> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </summary>
+        public bool? AllowDeletionOfReplicatedLocations
+        {
+            get
+            {
+                return SafetyProfile is null ? default : SafetyProfile.AllowDeletionOfReplicatedLocations;
+            }
+            set
+            {
+                if (SafetyProfile is null)
+                {
+                    SafetyProfile = new GalleryScriptVersionSafetyProfile();
+                }
+                SafetyProfile.AllowDeletionOfReplicatedLocations = value;
+            }
+        }
     }
 }

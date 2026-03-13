@@ -7,10 +7,11 @@
 
 using System;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     internal static partial class IntervalInMinsExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this IntervalInMins value) => value switch
         {
             IntervalInMins.ThreeMins => "ThreeMins",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IntervalInMins value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static IntervalInMins ToIntervalInMins(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ThreeMins")) return IntervalInMins.ThreeMins;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FiveMins")) return IntervalInMins.FiveMins;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ThirtyMins")) return IntervalInMins.ThirtyMins;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SixtyMins")) return IntervalInMins.SixtyMins;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ThreeMins"))
+            {
+                return IntervalInMins.ThreeMins;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FiveMins"))
+            {
+                return IntervalInMins.FiveMins;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ThirtyMins"))
+            {
+                return IntervalInMins.ThirtyMins;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SixtyMins"))
+            {
+                return IntervalInMins.SixtyMins;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IntervalInMins value.");
         }
     }

@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> The source of the gallery artifact version. </summary>
     public partial class GalleryArtifactVersionFullSource : GalleryArtifactVersionSource
@@ -21,10 +20,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryArtifactVersionFullSource"/>. </summary>
         /// <param name="id"> The id of the gallery artifact version source. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="communityGalleryImageId"> The resource Id of the source Community Gallery Image.  Only required when using Community Gallery Image as a source. </param>
         /// <param name="virtualMachineId"> The resource Id of the source virtual machine.  Only required when capturing a virtual machine to source this Gallery Image Version. </param>
-        internal GalleryArtifactVersionFullSource(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string communityGalleryImageId, ResourceIdentifier virtualMachineId) : base(id, serializedAdditionalRawData)
+        internal GalleryArtifactVersionFullSource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string communityGalleryImageId, string virtualMachineId) : base(id, additionalBinaryDataProperties)
         {
             CommunityGalleryImageId = communityGalleryImageId;
             VirtualMachineId = virtualMachineId;
@@ -32,7 +31,8 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The resource Id of the source Community Gallery Image.  Only required when using Community Gallery Image as a source. </summary>
         public string CommunityGalleryImageId { get; set; }
+
         /// <summary> The resource Id of the source virtual machine.  Only required when capturing a virtual machine to source this Gallery Image Version. </summary>
-        public ResourceIdentifier VirtualMachineId { get; set; }
+        public string VirtualMachineId { get; set; }
     }
 }

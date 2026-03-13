@@ -7,45 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Describes a image disk. </summary>
     public partial class ImageDisk
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImageDisk"/>. </summary>
         public ImageDisk()
@@ -56,12 +26,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="snapshot"> The snapshot. </param>
         /// <param name="managedDisk"> The managedDisk. </param>
         /// <param name="blobUri"> The Virtual Hard Disk. </param>
-        /// <param name="caching"> Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The default values are: **None for Standard storage. ReadOnly for Premium storage.**. </param>
+        /// <param name="caching"> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </param>
         /// <param name="diskSizeGB"> Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image. This value cannot be larger than 1023 GB. </param>
         /// <param name="storageAccountType"> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </param>
         /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed image disk. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImageDisk(WritableSubResource snapshot, WritableSubResource managedDisk, Uri blobUri, CachingType? caching, int? diskSizeGB, StorageAccountType? storageAccountType, WritableSubResource diskEncryptionSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImageDisk(SubResource snapshot, SubResource managedDisk, string blobUri, CachingType? caching, int? diskSizeGB, StorageAccountTypes? storageAccountType, DiskEncryptionSetParameters diskEncryptionSet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Snapshot = snapshot;
             ManagedDisk = managedDisk;
@@ -70,55 +40,77 @@ namespace Azure.ResourceManager.Compute.Models
             DiskSizeGB = diskSizeGB;
             StorageAccountType = storageAccountType;
             DiskEncryptionSet = diskEncryptionSet;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The snapshot. </summary>
-        internal WritableSubResource Snapshot { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier SnapshotId
+        internal SubResource Snapshot { get; set; }
+
+        /// <summary> The managedDisk. </summary>
+        internal SubResource ManagedDisk { get; set; }
+
+        /// <summary> The Virtual Hard Disk. </summary>
+        public string BlobUri { get; set; }
+
+        /// <summary> Specifies the caching requirements. Possible values are: <b>None,</b> <b>ReadOnly,</b> <b>ReadWrite.</b> The default values are: <b>None for Standard storage. ReadOnly for Premium storage.</b>. </summary>
+        public CachingType? Caching { get; set; }
+
+        /// <summary> Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image. This value cannot be larger than 1023 GB. </summary>
+        public int? DiskSizeGB { get; set; }
+
+        /// <summary> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </summary>
+        public StorageAccountTypes? StorageAccountType { get; set; }
+
+        /// <summary> Specifies the customer managed disk encryption set resource id for the managed image disk. </summary>
+        internal DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
+
+        /// <summary> Resource Id. </summary>
+        public string SnapshotId
         {
-            get => Snapshot is null ? default : Snapshot.Id;
+            get
+            {
+                return Snapshot is null ? default : Snapshot.Id;
+            }
             set
             {
                 if (Snapshot is null)
-                    Snapshot = new WritableSubResource();
+                {
+                    Snapshot = new SubResource();
+                }
                 Snapshot.Id = value;
             }
         }
 
-        /// <summary> The managedDisk. </summary>
-        internal WritableSubResource ManagedDisk { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier ManagedDiskId
+        /// <summary> Resource Id. </summary>
+        public string ManagedDiskId
         {
-            get => ManagedDisk is null ? default : ManagedDisk.Id;
+            get
+            {
+                return ManagedDisk is null ? default : ManagedDisk.Id;
+            }
             set
             {
                 if (ManagedDisk is null)
-                    ManagedDisk = new WritableSubResource();
+                {
+                    ManagedDisk = new SubResource();
+                }
                 ManagedDisk.Id = value;
             }
         }
 
-        /// <summary> The Virtual Hard Disk. </summary>
-        public Uri BlobUri { get; set; }
-        /// <summary> Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The default values are: **None for Standard storage. ReadOnly for Premium storage.**. </summary>
-        public CachingType? Caching { get; set; }
-        /// <summary> Specifies the size of empty data disks in gigabytes. This element can be used to overwrite the name of the disk in a virtual machine image. This value cannot be larger than 1023 GB. </summary>
-        public int? DiskSizeGB { get; set; }
-        /// <summary> Specifies the storage account type for the managed disk. NOTE: UltraSSD_LRS can only be used with data disks, it cannot be used with OS Disk. </summary>
-        public StorageAccountType? StorageAccountType { get; set; }
-        /// <summary> Specifies the customer managed disk encryption set resource id for the managed image disk. </summary>
-        internal WritableSubResource DiskEncryptionSet { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier DiskEncryptionSetId
+        /// <summary> Resource Id. </summary>
+        public string DiskEncryptionSetId
         {
-            get => DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            get
+            {
+                return DiskEncryptionSet is null ? default : DiskEncryptionSet.Id;
+            }
             set
             {
                 if (DiskEncryptionSet is null)
-                    DiskEncryptionSet = new WritableSubResource();
+                {
+                    DiskEncryptionSet = new DiskEncryptionSetParameters();
+                }
                 DiskEncryptionSet.Id = value;
             }
         }

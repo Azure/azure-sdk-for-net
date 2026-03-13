@@ -10,13 +10,67 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class VirtualMachineExtensionPatch : IUtf8JsonSerializable, IJsonModel<VirtualMachineExtensionPatch>
+    /// <summary> Describes a Virtual Machine Extension. </summary>
+    public partial class VirtualMachineExtensionPatch : ComputeResourcePatch, IJsonModel<VirtualMachineExtensionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineExtensionPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ComputeResourcePatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualMachineExtensionPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineExtensionPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineExtensionPatch IPersistableModel<VirtualMachineExtensionPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (VirtualMachineExtensionPatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualMachineExtensionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="virtualMachineExtensionPatch"> The <see cref="VirtualMachineExtensionPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VirtualMachineExtensionPatch virtualMachineExtensionPatch)
+        {
+            if (virtualMachineExtensionPatch == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(virtualMachineExtensionPatch, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineExtensionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,267 +82,85 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ForceUpdateTag))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("forceUpdateTag"u8);
-                writer.WriteStringValue(ForceUpdateTag);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Publisher))
-            {
-                writer.WritePropertyName("publisher"u8);
-                writer.WriteStringValue(Publisher);
-            }
-            if (Optional.IsDefined(ExtensionType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ExtensionType);
-            }
-            if (Optional.IsDefined(TypeHandlerVersion))
-            {
-                writer.WritePropertyName("typeHandlerVersion"u8);
-                writer.WriteStringValue(TypeHandlerVersion);
-            }
-            if (Optional.IsDefined(AutoUpgradeMinorVersion))
-            {
-                writer.WritePropertyName("autoUpgradeMinorVersion"u8);
-                writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
-            }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
-            {
-                writer.WritePropertyName("enableAutomaticUpgrade"u8);
-                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
-            }
-            if (Optional.IsDefined(Settings))
-            {
-                writer.WritePropertyName("settings"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Settings);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Settings, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (Optional.IsDefined(ProtectedSettings))
-            {
-                writer.WritePropertyName("protectedSettings"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ProtectedSettings);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ProtectedSettings, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            if (Optional.IsDefined(SuppressFailures))
-            {
-                writer.WritePropertyName("suppressFailures"u8);
-                writer.WriteBooleanValue(SuppressFailures.Value);
-            }
-            if (Optional.IsDefined(KeyVaultProtectedSettings))
-            {
-                writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(KeyVaultProtectedSettings, options);
-            }
-            writer.WriteEndObject();
         }
 
-        VirtualMachineExtensionPatch IJsonModel<VirtualMachineExtensionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineExtensionPatch IJsonModel<VirtualMachineExtensionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VirtualMachineExtensionPatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ComputeResourcePatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualMachineExtensionPatch(document.RootElement, options);
         }
 
-        internal static VirtualMachineExtensionPatch DeserializeVirtualMachineExtensionPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualMachineExtensionPatch DeserializeVirtualMachineExtensionPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IDictionary<string, string> tags = default;
-            string forceUpdateTag = default;
-            string publisher = default;
-            string type = default;
-            string typeHandlerVersion = default;
-            bool? autoUpgradeMinorVersion = default;
-            bool? enableAutomaticUpgrade = default;
-            BinaryData settings = default;
-            BinaryData protectedSettings = default;
-            bool? suppressFailures = default;
-            KeyVaultSecretReference protectedSettingsFromKeyVault = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            VirtualMachineExtensionUpdateProperties properties = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("tags"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("forceUpdateTag"u8))
-                        {
-                            forceUpdateTag = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("publisher"u8))
-                        {
-                            publisher = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("type"u8))
-                        {
-                            type = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("typeHandlerVersion"u8))
-                        {
-                            typeHandlerVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("autoUpgradeMinorVersion"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            autoUpgradeMinorVersion = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableAutomaticUpgrade"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableAutomaticUpgrade = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("settings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            settings = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("protectedSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            protectedSettings = BinaryData.FromString(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("suppressFailures"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            suppressFailures = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("protectedSettingsFromKeyVault"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    properties = VirtualMachineExtensionUpdateProperties.DeserializeVirtualMachineExtensionUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualMachineExtensionPatch(
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
-                forceUpdateTag,
-                publisher,
-                type,
-                typeHandlerVersion,
-                autoUpgradeMinorVersion,
-                enableAutomaticUpgrade,
-                settings,
-                protectedSettings,
-                suppressFailures,
-                protectedSettingsFromKeyVault);
+            return new VirtualMachineExtensionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties);
         }
-
-        BinaryData IPersistableModel<VirtualMachineExtensionPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VirtualMachineExtensionPatch IPersistableModel<VirtualMachineExtensionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualMachineExtensionPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VirtualMachineExtensionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

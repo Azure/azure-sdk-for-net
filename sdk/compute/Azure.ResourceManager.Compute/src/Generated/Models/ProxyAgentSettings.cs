@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Specifies ProxyAgent settings for the virtual machine or virtual machine scale set. Minimum api-version: 2023-09-01. </summary>
     public partial class ProxyAgentSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProxyAgentSettings"/>. </summary>
         public ProxyAgentSettings()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="wireServer"> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
         /// <param name="imds"> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </param>
         /// <param name="addProxyAgentExtension"> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProxyAgentSettings(bool? enabled, Mode? mode, int? keyIncarnationId, HostEndpointSettings wireServer, HostEndpointSettings imds, bool? addProxyAgentExtension, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProxyAgentSettings(bool? enabled, Mode? mode, int? keyIncarnationId, HostEndpointSettings wireServer, HostEndpointSettings imds, bool? addProxyAgentExtension, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Enabled = enabled;
             Mode = mode;
@@ -66,19 +37,24 @@ namespace Azure.ResourceManager.Compute.Models
             WireServer = wireServer;
             Imds = imds;
             AddProxyAgentExtension = addProxyAgentExtension;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether ProxyAgent feature should be enabled on the virtual machine or virtual machine scale set. </summary>
         public bool? Enabled { get; set; }
+
         /// <summary> Specifies the mode that ProxyAgent will execute on. Warning: this property has been deprecated, please specify 'mode' under particular hostendpoint setting. </summary>
         public Mode? Mode { get; set; }
+
         /// <summary> Increase the value of this property allows users to reset the key used for securing communication channel between guest and host. </summary>
         public int? KeyIncarnationId { get; set; }
+
         /// <summary> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </summary>
         public HostEndpointSettings WireServer { get; set; }
+
         /// <summary> Specifies the IMDS endpoint settings while creating the virtual machine or virtual machine scale set. Minimum api-version: 2024-03-01. </summary>
         public HostEndpointSettings Imds { get; set; }
+
         /// <summary> Specify whether to implicitly install the ProxyAgent Extension. This option is currently applicable only for Linux Os. </summary>
         public bool? AddProxyAgentExtension { get; set; }
     }

@@ -8,66 +8,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Specifies a list of virtual machine instance IDs from the VM scale set. </summary>
-    public partial class VirtualMachineScaleSetVmInstanceRequiredIds
+    public partial class VirtualMachineScaleSetVMInstanceRequiredIDs
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceRequiredIds"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMInstanceRequiredIDs"/>. </summary>
         /// <param name="instanceIds"> The virtual machine scale set instance ids. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="instanceIds"/> is null. </exception>
-        public VirtualMachineScaleSetVmInstanceRequiredIds(IEnumerable<string> instanceIds)
+        public VirtualMachineScaleSetVMInstanceRequiredIDs(IEnumerable<string> instanceIds)
         {
             Argument.AssertNotNull(instanceIds, nameof(instanceIds));
 
             InstanceIds = instanceIds.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceRequiredIds"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVMInstanceRequiredIDs"/>. </summary>
         /// <param name="instanceIds"> The virtual machine scale set instance ids. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmInstanceRequiredIds(IList<string> instanceIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetVMInstanceRequiredIDs(IList<string> instanceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InstanceIds = instanceIds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetVmInstanceRequiredIds"/> for deserialization. </summary>
-        internal VirtualMachineScaleSetVmInstanceRequiredIds()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The virtual machine scale set instance ids. </summary>

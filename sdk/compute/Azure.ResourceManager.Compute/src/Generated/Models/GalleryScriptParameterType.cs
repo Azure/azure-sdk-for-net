@@ -7,54 +7,80 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> Specifies the type of the Gallery Script parameter. Possible values are: String, Int, Double, Boolean, Enum. </summary>
     public readonly partial struct GalleryScriptParameterType : IEquatable<GalleryScriptParameterType>
     {
         private readonly string _value;
+        /// <summary> String gallery script parameter type. </summary>
+        private const string StringValue = "String";
+        /// <summary> Int gallery script parameter type. </summary>
+        private const string IntValue = "Int";
+        /// <summary> Double gallery script parameter type. </summary>
+        private const string DoubleValue = "Double";
+        /// <summary> Boolean gallery script parameter type. </summary>
+        private const string BooleanValue = "Boolean";
+        /// <summary> Enum gallery script parameter type. </summary>
+        private const string EnumValue = "Enum";
 
         /// <summary> Initializes a new instance of <see cref="GalleryScriptParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public GalleryScriptParameterType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StringValue = "String";
-        private const string IntValue = "Int";
-        private const string DoubleValue = "Double";
-        private const string BooleanValue = "Boolean";
-        private const string EnumValue = "Enum";
+            _value = value;
+        }
 
         /// <summary> String gallery script parameter type. </summary>
         public static GalleryScriptParameterType String { get; } = new GalleryScriptParameterType(StringValue);
+
         /// <summary> Int gallery script parameter type. </summary>
         public static GalleryScriptParameterType Int { get; } = new GalleryScriptParameterType(IntValue);
+
         /// <summary> Double gallery script parameter type. </summary>
         public static GalleryScriptParameterType Double { get; } = new GalleryScriptParameterType(DoubleValue);
+
         /// <summary> Boolean gallery script parameter type. </summary>
         public static GalleryScriptParameterType Boolean { get; } = new GalleryScriptParameterType(BooleanValue);
+
         /// <summary> Enum gallery script parameter type. </summary>
         public static GalleryScriptParameterType Enum { get; } = new GalleryScriptParameterType(EnumValue);
+
         /// <summary> Determines if two <see cref="GalleryScriptParameterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(GalleryScriptParameterType left, GalleryScriptParameterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="GalleryScriptParameterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(GalleryScriptParameterType left, GalleryScriptParameterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="GalleryScriptParameterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="GalleryScriptParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator GalleryScriptParameterType(string value) => new GalleryScriptParameterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="GalleryScriptParameterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator GalleryScriptParameterType?(string value) => value == null ? null : new GalleryScriptParameterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is GalleryScriptParameterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(GalleryScriptParameterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

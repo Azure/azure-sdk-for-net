@@ -8,111 +8,111 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the CapacityReservationGroup data model.
-    /// Specifies information about the capacity reservation group that the capacity reservations should be assigned to. Currently, a capacity reservation can only be added to a capacity reservation group at creation time. An existing capacity reservation cannot be added or moved to another capacity reservation group.
-    /// </summary>
+    /// <summary> Specifies information about the capacity reservation group that the capacity reservations should be assigned to. Currently, a capacity reservation can only be added to a capacity reservation group at creation time. An existing capacity reservation cannot be added or moved to another capacity reservation group. </summary>
     public partial class CapacityReservationGroupData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public CapacityReservationGroupData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
-            CapacityReservations = new ChangeTrackingList<SubResource>();
-            VirtualMachinesAssociated = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> capacity reservation group Properties. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <param name="capacityReservations"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
-        /// <param name="virtualMachinesAssociated"> A list of references to all virtual machines associated to the capacity reservation group. </param>
-        /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
-        /// <param name="sharingProfile"> Specifies the settings to enable sharing across subscriptions for the capacity reservation group resource. The capacity reservation group resource can generally be shared across subscriptions belonging to a single Azure AAD tenant or across AAD tenants if there is a trust relationship established between the tenants.  Block capacity reservation does not support sharing across subscriptions. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
-        /// <param name="reservationType"> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, IReadOnlyList<SubResource> capacityReservations, IReadOnlyList<SubResource> virtualMachinesAssociated, CapacityReservationGroupInstanceView instanceView, ResourceSharingProfile sharingProfile, CapacityReservationType? reservationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal CapacityReservationGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, CapacityReservationGroupProperties properties, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Zones = zones;
-            CapacityReservations = capacityReservations;
-            VirtualMachinesAssociated = virtualMachinesAssociated;
-            InstanceView = instanceView;
-            SharingProfile = sharingProfile;
-            ReservationType = reservationType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupData"/> for deserialization. </summary>
-        internal CapacityReservationGroupData()
-        {
-        }
+        /// <summary> capacity reservation group Properties. </summary>
+        internal CapacityReservationGroupProperties Properties { get; set; }
 
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
+
         /// <summary> A list of all capacity reservation resource ids that belong to capacity reservation group. </summary>
-        public IReadOnlyList<SubResource> CapacityReservations { get; }
-        /// <summary> A list of references to all virtual machines associated to the capacity reservation group. </summary>
-        public IReadOnlyList<SubResource> VirtualMachinesAssociated { get; }
-        /// <summary> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </summary>
-        public CapacityReservationGroupInstanceView InstanceView { get; }
-        /// <summary> Specifies the settings to enable sharing across subscriptions for the capacity reservation group resource. The capacity reservation group resource can generally be shared across subscriptions belonging to a single Azure AAD tenant or across AAD tenants if there is a trust relationship established between the tenants.  Block capacity reservation does not support sharing across subscriptions. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
-        internal ResourceSharingProfile SharingProfile { get; set; }
-        /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. **Note:** Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
-        public IList<WritableSubResource> SharingSubscriptionIds
+        public IReadOnlyList<SubResourceReadOnly> CapacityReservations
         {
             get
             {
-                if (SharingProfile is null)
-                    SharingProfile = new ResourceSharingProfile();
-                return SharingProfile.SubscriptionIds;
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationGroupProperties();
+                }
+                return Properties.CapacityReservations;
+            }
+        }
+
+        /// <summary> A list of references to all virtual machines associated to the capacity reservation group. </summary>
+        public IReadOnlyList<SubResourceReadOnly> VirtualMachinesAssociated
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationGroupProperties();
+                }
+                return Properties.VirtualMachinesAssociated;
+            }
+        }
+
+        /// <summary> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </summary>
+        public CapacityReservationGroupInstanceView InstanceView
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstanceView;
             }
         }
 
         /// <summary> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations and 'Targeted' for reservations that enable a VM to consume a specific capacity reservation when a capacity reservation group is provided. The reservation type is immutable and cannot be changed after it is assigned. </summary>
-        public CapacityReservationType? ReservationType { get; set; }
+        public ReservationType? ReservationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReservationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationGroupProperties();
+                }
+                Properties.ReservationType = value.Value;
+            }
+        }
+
+        /// <summary> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </summary>
+        public IList<SubResource> SharingSubscriptionIds
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CapacityReservationGroupProperties();
+                }
+                return Properties.SharingSubscriptionIds;
+            }
+        }
     }
 }

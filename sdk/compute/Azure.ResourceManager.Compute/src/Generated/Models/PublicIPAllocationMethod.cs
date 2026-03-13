@@ -7,45 +7,63 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Specify the public IP allocation type. </summary>
     public readonly partial struct PublicIPAllocationMethod : IEquatable<PublicIPAllocationMethod>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="PublicIPAllocationMethod"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PublicIPAllocationMethod(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DynamicValue = "Dynamic";
         private const string StaticValue = "Static";
 
-        /// <summary> Dynamic. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublicIPAllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public PublicIPAllocationMethod(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Dynamic. </summary>
         public static PublicIPAllocationMethod Dynamic { get; } = new PublicIPAllocationMethod(DynamicValue);
-        /// <summary> Static. </summary>
+
+        /// <summary> Gets the Static. </summary>
         public static PublicIPAllocationMethod Static { get; } = new PublicIPAllocationMethod(StaticValue);
+
         /// <summary> Determines if two <see cref="PublicIPAllocationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PublicIPAllocationMethod left, PublicIPAllocationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PublicIPAllocationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PublicIPAllocationMethod left, PublicIPAllocationMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PublicIPAllocationMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PublicIPAllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PublicIPAllocationMethod(string value) => new PublicIPAllocationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PublicIPAllocationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PublicIPAllocationMethod?(string value) => value == null ? null : new PublicIPAllocationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PublicIPAllocationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PublicIPAllocationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

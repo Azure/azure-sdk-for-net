@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
+    /// <summary></summary>
     public partial class ProximityPlacementGroupResource : IJsonModel<ProximityPlacementGroupData>
     {
-        private static ProximityPlacementGroupData s_dataDeserializationInstance;
-        private static ProximityPlacementGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ProximityPlacementGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ProximityPlacementGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProximityPlacementGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProximityPlacementGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProximityPlacementGroupData>)Data).Write(writer, options);
 
-        ProximityPlacementGroupData IJsonModel<ProximityPlacementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProximityPlacementGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProximityPlacementGroupData IJsonModel<ProximityPlacementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProximityPlacementGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProximityPlacementGroupData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ProximityPlacementGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProximityPlacementGroupData>(Data, options, ComputeCombineContext.Default);
 
-        ProximityPlacementGroupData IPersistableModel<ProximityPlacementGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProximityPlacementGroupData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProximityPlacementGroupData IPersistableModel<ProximityPlacementGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProximityPlacementGroupData>(data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<ProximityPlacementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProximityPlacementGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProximityPlacementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

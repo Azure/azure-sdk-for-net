@@ -8,101 +8,155 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using Common.Models;
+using ComputeGallery.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the GalleryApplication data model.
-    /// Specifies information about the gallery Application Definition that you want to create or update.
-    /// </summary>
+    /// <summary> Specifies information about the gallery Application Definition that you want to create or update. </summary>
     public partial class GalleryApplicationData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public GalleryApplicationData(AzureLocation location) : base(location)
         {
-            CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GalleryApplicationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="description"> The description of this gallery Application Definition resource. This property is updatable. </param>
-        /// <param name="eula"> The Eula agreement for the gallery Application Definition. </param>
-        /// <param name="privacyStatementUri"> The privacy statement uri. </param>
-        /// <param name="releaseNoteUri"> The release note uri. </param>
-        /// <param name="endOfLifeOn"> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </param>
-        /// <param name="customActions"> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, SupportedOperatingSystemType? supportedOSType, IList<GalleryApplicationCustomAction> customActions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the properties of a gallery Application Definition. </param>
+        internal GalleryApplicationData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryApplicationProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Description = description;
-            Eula = eula;
-            PrivacyStatementUri = privacyStatementUri;
-            ReleaseNoteUri = releaseNoteUri;
-            EndOfLifeOn = endOfLifeOn;
-            SupportedOSType = supportedOSType;
-            CustomActions = customActions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GalleryApplicationData"/> for deserialization. </summary>
-        internal GalleryApplicationData()
-        {
-        }
+        /// <summary> Describes the properties of a gallery Application Definition. </summary>
+        internal GalleryApplicationProperties Properties { get; set; }
 
         /// <summary> The description of this gallery Application Definition resource. This property is updatable. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The Eula agreement for the gallery Application Definition. </summary>
-        public string Eula { get; set; }
+        public string Eula
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Eula;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.Eula = value;
+            }
+        }
+
         /// <summary> The privacy statement uri. </summary>
-        public Uri PrivacyStatementUri { get; set; }
+        public string PrivacyStatementUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivacyStatementUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.PrivacyStatementUri = value;
+            }
+        }
+
         /// <summary> The release note uri. </summary>
-        public Uri ReleaseNoteUri { get; set; }
+        public string ReleaseNoteUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReleaseNoteUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.ReleaseNoteUri = value;
+            }
+        }
+
         /// <summary> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
-        public DateTimeOffset? EndOfLifeOn { get; set; }
-        /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </summary>
-        public SupportedOperatingSystemType? SupportedOSType { get; set; }
+        public DateTimeOffset? EndOfLifeOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOfLifeOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.EndOfLifeOn = value.Value;
+            }
+        }
+
+        /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: <b>Windows,</b> <b>Linux.</b>. </summary>
+        public OperatingSystemTypes SupportedOSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SupportedOSType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                Properties.SupportedOSType = value;
+            }
+        }
+
         /// <summary> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </summary>
-        public IList<GalleryApplicationCustomAction> CustomActions { get; }
+        public IList<GalleryApplicationCustomAction> CustomActions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryApplicationProperties();
+                }
+                return Properties.CustomActions;
+            }
+        }
     }
 }

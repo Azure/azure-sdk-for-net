@@ -8,115 +8,122 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using Compute.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the DedicatedHostGroup data model.
-    /// Specifies information about the dedicated host group that the dedicated hosts should be assigned to. Currently, a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot be added to another dedicated host group.
-    /// </summary>
+    /// <summary> Specifies information about the dedicated host group that the dedicated hosts should be assigned to. Currently, a dedicated host can only be added to a dedicated host group at creation time. An existing dedicated host cannot be added to another dedicated host group. </summary>
     public partial class DedicatedHostGroupData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DedicatedHostGroupData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
-            DedicatedHosts = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Dedicated Host Group Properties. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <param name="platformFaultDomainCount"> Number of fault domains that the host group can span. </param>
-        /// <param name="dedicatedHosts"> A list of references to all dedicated hosts in the dedicated host group. </param>
-        /// <param name="instanceView"> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </param>
-        /// <param name="supportAutomaticPlacement"> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to 'false' when not provided. Minimum api-version: 2020-06-01. </param>
-        /// <param name="additionalCapabilities"> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHostGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, int? platformFaultDomainCount, IReadOnlyList<SubResource> dedicatedHosts, DedicatedHostGroupInstanceView instanceView, bool? supportAutomaticPlacement, DedicatedHostGroupPropertiesAdditionalCapabilities additionalCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DedicatedHostGroupData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, DedicatedHostGroupProperties properties, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
             Zones = zones;
-            PlatformFaultDomainCount = platformFaultDomainCount;
-            DedicatedHosts = dedicatedHosts;
-            InstanceView = instanceView;
-            SupportAutomaticPlacement = supportAutomaticPlacement;
-            AdditionalCapabilities = additionalCapabilities;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHostGroupData"/> for deserialization. </summary>
-        internal DedicatedHostGroupData()
-        {
-        }
+        /// <summary> Dedicated Host Group Properties. </summary>
+        internal DedicatedHostGroupProperties Properties { get; set; }
 
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
+
         /// <summary> Number of fault domains that the host group can span. </summary>
-        public int? PlatformFaultDomainCount { get; set; }
-        /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
-        public IReadOnlyList<SubResource> DedicatedHosts { get; }
-        /// <summary> The dedicated host group instance view, which has the list of instance view of the dedicated hosts under the dedicated host group. </summary>
-        internal DedicatedHostGroupInstanceView InstanceView { get; }
-        /// <summary> List of instance view of the dedicated hosts under the dedicated host group. </summary>
-        public IReadOnlyList<DedicatedHostInstanceViewWithName> InstanceViewHosts
+        public int PlatformFaultDomainCount
         {
-            get => InstanceView?.Hosts;
+            get
+            {
+                return Properties is null ? default : Properties.PlatformFaultDomainCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostGroupProperties();
+                }
+                Properties.PlatformFaultDomainCount = value;
+            }
+        }
+
+        /// <summary> A list of references to all dedicated hosts in the dedicated host group. </summary>
+        public IReadOnlyList<SubResourceReadOnly> Hosts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostGroupProperties();
+                }
+                return Properties.Hosts;
+            }
         }
 
         /// <summary> Specifies whether virtual machines or virtual machine scale sets can be placed automatically on the dedicated host group. Automatic placement means resources are allocated on dedicated hosts, that are chosen by Azure, under the dedicated host group. The value is defaulted to 'false' when not provided. Minimum api-version: 2020-06-01. </summary>
-        public bool? SupportAutomaticPlacement { get; set; }
-        /// <summary> Enables or disables a capability on the dedicated host group. Minimum api-version: 2022-03-01. </summary>
-        internal DedicatedHostGroupPropertiesAdditionalCapabilities AdditionalCapabilities { get; set; }
-        /// <summary> The flag that enables or disables a capability to have UltraSSD Enabled Virtual Machines on Dedicated Hosts of the Dedicated Host Group. For the Virtual Machines to be UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be set true as well. The value is defaulted to 'false' when not provided. Please refer to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd for more details on Ultra SSD feature. **Note:** The ultraSSDEnabled setting can only be enabled for Host Groups that are created as zonal. Minimum api-version: 2022-03-01. </summary>
-        public bool? UltraSsdEnabled
+        public bool? SupportAutomaticPlacement
         {
-            get => AdditionalCapabilities is null ? default : AdditionalCapabilities.UltraSsdEnabled;
+            get
+            {
+                return Properties is null ? default : Properties.SupportAutomaticPlacement;
+            }
             set
             {
-                if (AdditionalCapabilities is null)
-                    AdditionalCapabilities = new DedicatedHostGroupPropertiesAdditionalCapabilities();
-                AdditionalCapabilities.UltraSsdEnabled = value;
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostGroupProperties();
+                }
+                Properties.SupportAutomaticPlacement = value.Value;
+            }
+        }
+
+        /// <summary> List of instance view of the dedicated hosts under the dedicated host group. </summary>
+        public IList<DedicatedHostInstanceViewWithName> InstanceViewHosts
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostGroupProperties();
+                }
+                return Properties.InstanceViewHosts;
+            }
+        }
+
+        /// <summary> The flag that enables or disables a capability to have UltraSSD Enabled Virtual Machines on Dedicated Hosts of the Dedicated Host Group. For the Virtual Machines to be UltraSSD Enabled, UltraSSDEnabled flag for the resource needs to be set true as well. The value is defaulted to 'false' when not provided. Please refer to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-enable-ultra-ssd for more details on Ultra SSD feature. <b>Note:</b> The ultraSSDEnabled setting can only be enabled for Host Groups that are created as zonal. Minimum api-version: 2022-03-01. </summary>
+        public bool? UltraSSDEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UltraSSDEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DedicatedHostGroupProperties();
+                }
+                Properties.UltraSSDEnabled = value.Value;
             }
         }
     }

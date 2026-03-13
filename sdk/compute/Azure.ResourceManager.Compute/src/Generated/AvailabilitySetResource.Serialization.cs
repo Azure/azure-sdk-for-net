@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
+    /// <summary></summary>
     public partial class AvailabilitySetResource : IJsonModel<AvailabilitySetData>
     {
-        private static AvailabilitySetData s_dataDeserializationInstance;
-        private static AvailabilitySetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<AvailabilitySetData> s_dataDeserializationInstance;
 
+        private static IJsonModel<AvailabilitySetData> DataDeserializationInstance => s_dataDeserializationInstance ??= new AvailabilitySetData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvailabilitySetData>)Data).Write(writer, options);
 
-        AvailabilitySetData IJsonModel<AvailabilitySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvailabilitySetData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvailabilitySetData IJsonModel<AvailabilitySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvailabilitySetData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvailabilitySetData>(Data, options, ComputeCombineContext.Default);
 
-        AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailabilitySetData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AvailabilitySetData IPersistableModel<AvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailabilitySetData>(data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<AvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvailabilitySetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

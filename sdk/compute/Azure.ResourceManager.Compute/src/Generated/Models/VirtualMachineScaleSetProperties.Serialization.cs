@@ -8,17 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Common.Models;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
-    public partial class VirtualMachineScaleSetProperties : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetProperties>
+    /// <summary> Describes the properties of a Virtual Machine Scale Set. </summary>
+    internal partial class VirtualMachineScaleSetProperties : IJsonModel<VirtualMachineScaleSetProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineScaleSetProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualMachineScaleSetProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, ComputeCombineContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualMachineScaleSetProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineScaleSetProperties IPersistableModel<VirtualMachineScaleSetProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualMachineScaleSetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualMachineScaleSetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +70,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineScaleSetProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
@@ -66,10 +105,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("overprovision"u8);
                 writer.WriteBooleanValue(Overprovision.Value);
             }
-            if (Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVms))
+            if (Optional.IsDefined(DoNotRunExtensionsOnOverprovisionedVMs))
             {
                 writer.WritePropertyName("doNotRunExtensionsOnOverprovisionedVMs"u8);
-                writer.WriteBooleanValue(DoNotRunExtensionsOnOverprovisionedVms.Value);
+                writer.WriteBooleanValue(DoNotRunExtensionsOnOverprovisionedVMs.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(UniqueId))
             {
@@ -94,12 +133,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ProximityPlacementGroup))
             {
                 writer.WritePropertyName("proximityPlacementGroup"u8);
-                ((IJsonModel<WritableSubResource>)ProximityPlacementGroup).Write(writer, options);
+                writer.WriteObjectValue(ProximityPlacementGroup, options);
             }
             if (Optional.IsDefined(HostGroup))
             {
                 writer.WritePropertyName("hostGroup"u8);
-                ((IJsonModel<WritableSubResource>)HostGroup).Write(writer, options);
+                writer.WriteObjectValue(HostGroup, options);
             }
             if (Optional.IsDefined(AdditionalCapabilities))
             {
@@ -131,10 +170,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
             }
-            if (Optional.IsDefined(IsMaximumCapacityConstrained))
+            if (Optional.IsDefined(ConstrainedMaximumCapacity))
             {
                 writer.WritePropertyName("constrainedMaximumCapacity"u8);
-                writer.WriteBooleanValue(IsMaximumCapacityConstrained.Value);
+                writer.WriteBooleanValue(ConstrainedMaximumCapacity.Value);
             }
             if (Optional.IsDefined(ResiliencyPolicy))
             {
@@ -156,36 +195,44 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("highSpeedInterconnectPlacement"u8);
                 writer.WriteStringValue(HighSpeedInterconnectPlacement.Value.ToString());
             }
-            foreach (var item in AdditionalProperties)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
         }
 
-        VirtualMachineScaleSetProperties IJsonModel<VirtualMachineScaleSetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualMachineScaleSetProperties IJsonModel<VirtualMachineScaleSetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualMachineScaleSetProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualMachineScaleSetProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualMachineScaleSetProperties(document.RootElement, options);
         }
 
-        internal static VirtualMachineScaleSetProperties DeserializeVirtualMachineScaleSetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualMachineScaleSetProperties DeserializeVirtualMachineScaleSetProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -193,16 +240,16 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineScaleSetUpgradePolicy upgradePolicy = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
             AutomaticRepairsPolicy automaticRepairsPolicy = default;
-            VirtualMachineScaleSetVmProfile virtualMachineProfile = default;
+            VirtualMachineScaleSetVMProfile virtualMachineProfile = default;
             string provisioningState = default;
             bool? overprovision = default;
-            bool? doNotRunExtensionsOnOverprovisionedVms = default;
+            bool? doNotRunExtensionsOnOverprovisionedVMs = default;
             string uniqueId = default;
             bool? singlePlacementGroup = default;
             bool? zoneBalance = default;
             int? platformFaultDomainCount = default;
-            WritableSubResource proximityPlacementGroup = default;
-            WritableSubResource hostGroup = default;
+            SubResource proximityPlacementGroup = default;
+            SubResource hostGroup = default;
             AdditionalCapabilities additionalCapabilities = default;
             ScaleInPolicy scaleInPolicy = default;
             OrchestrationMode? orchestrationMode = default;
@@ -214,221 +261,222 @@ namespace Azure.ResourceManager.Compute.Models
             ZonalPlatformFaultDomainAlignMode? zonalPlatformFaultDomainAlignMode = default;
             ComputeSkuProfile skuProfile = default;
             HighSpeedInterconnectPlacement? highSpeedInterconnectPlacement = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("upgradePolicy"u8))
+                if (prop.NameEquals("upgradePolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(property.Value, options);
+                    upgradePolicy = VirtualMachineScaleSetUpgradePolicy.DeserializeVirtualMachineScaleSetUpgradePolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("scheduledEventsPolicy"u8))
+                if (prop.NameEquals("scheduledEventsPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property.Value, options);
+                    scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("automaticRepairsPolicy"u8))
+                if (prop.NameEquals("automaticRepairsPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    automaticRepairsPolicy = AutomaticRepairsPolicy.DeserializeAutomaticRepairsPolicy(property.Value, options);
+                    automaticRepairsPolicy = AutomaticRepairsPolicy.DeserializeAutomaticRepairsPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("virtualMachineProfile"u8))
+                if (prop.NameEquals("virtualMachineProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    virtualMachineProfile = VirtualMachineScaleSetVmProfile.DeserializeVirtualMachineScaleSetVmProfile(property.Value, options);
+                    virtualMachineProfile = VirtualMachineScaleSetVMProfile.DeserializeVirtualMachineScaleSetVMProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = property.Value.GetString();
+                    provisioningState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("overprovision"u8))
+                if (prop.NameEquals("overprovision"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    overprovision = property.Value.GetBoolean();
+                    overprovision = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("doNotRunExtensionsOnOverprovisionedVMs"u8))
+                if (prop.NameEquals("doNotRunExtensionsOnOverprovisionedVMs"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    doNotRunExtensionsOnOverprovisionedVms = property.Value.GetBoolean();
+                    doNotRunExtensionsOnOverprovisionedVMs = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("uniqueId"u8))
+                if (prop.NameEquals("uniqueId"u8))
                 {
-                    uniqueId = property.Value.GetString();
+                    uniqueId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("singlePlacementGroup"u8))
+                if (prop.NameEquals("singlePlacementGroup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    singlePlacementGroup = property.Value.GetBoolean();
+                    singlePlacementGroup = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("zoneBalance"u8))
+                if (prop.NameEquals("zoneBalance"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    zoneBalance = property.Value.GetBoolean();
+                    zoneBalance = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("platformFaultDomainCount"u8))
+                if (prop.NameEquals("platformFaultDomainCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    platformFaultDomainCount = property.Value.GetInt32();
+                    platformFaultDomainCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("proximityPlacementGroup"u8))
+                if (prop.NameEquals("proximityPlacementGroup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    proximityPlacementGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
+                    proximityPlacementGroup = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("hostGroup"u8))
+                if (prop.NameEquals("hostGroup"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    hostGroup = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerComputeContext.Default);
+                    hostGroup = SubResource.DeserializeSubResource(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("additionalCapabilities"u8))
+                if (prop.NameEquals("additionalCapabilities"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property.Value, options);
+                    additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("scaleInPolicy"u8))
+                if (prop.NameEquals("scaleInPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scaleInPolicy = ScaleInPolicy.DeserializeScaleInPolicy(property.Value, options);
+                    scaleInPolicy = ScaleInPolicy.DeserializeScaleInPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("orchestrationMode"u8))
+                if (prop.NameEquals("orchestrationMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    orchestrationMode = new OrchestrationMode(property.Value.GetString());
+                    orchestrationMode = new OrchestrationMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("spotRestorePolicy"u8))
+                if (prop.NameEquals("spotRestorePolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    spotRestorePolicy = SpotRestorePolicy.DeserializeSpotRestorePolicy(property.Value, options);
+                    spotRestorePolicy = SpotRestorePolicy.DeserializeSpotRestorePolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("priorityMixPolicy"u8))
+                if (prop.NameEquals("priorityMixPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    priorityMixPolicy = VirtualMachineScaleSetPriorityMixPolicy.DeserializeVirtualMachineScaleSetPriorityMixPolicy(property.Value, options);
+                    priorityMixPolicy = VirtualMachineScaleSetPriorityMixPolicy.DeserializeVirtualMachineScaleSetPriorityMixPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("timeCreated"u8))
+                if (prop.NameEquals("timeCreated"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    timeCreated = property.Value.GetDateTimeOffset("O");
+                    timeCreated = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("constrainedMaximumCapacity"u8))
+                if (prop.NameEquals("constrainedMaximumCapacity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    constrainedMaximumCapacity = property.Value.GetBoolean();
+                    constrainedMaximumCapacity = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("resiliencyPolicy"u8))
+                if (prop.NameEquals("resiliencyPolicy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resiliencyPolicy = ResiliencyPolicy.DeserializeResiliencyPolicy(property.Value, options);
+                    resiliencyPolicy = ResiliencyPolicy.DeserializeResiliencyPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("zonalPlatformFaultDomainAlignMode"u8))
+                if (prop.NameEquals("zonalPlatformFaultDomainAlignMode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    zonalPlatformFaultDomainAlignMode = new ZonalPlatformFaultDomainAlignMode(property.Value.GetString());
+                    zonalPlatformFaultDomainAlignMode = new ZonalPlatformFaultDomainAlignMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("skuProfile"u8))
+                if (prop.NameEquals("skuProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(property.Value, options);
+                    skuProfile = ComputeSkuProfile.DeserializeComputeSkuProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("highSpeedInterconnectPlacement"u8))
+                if (prop.NameEquals("highSpeedInterconnectPlacement"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    highSpeedInterconnectPlacement = new HighSpeedInterconnectPlacement(property.Value.GetString());
+                    highSpeedInterconnectPlacement = new HighSpeedInterconnectPlacement(prop.Value.GetString());
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new VirtualMachineScaleSetProperties(
                 upgradePolicy,
                 scheduledEventsPolicy,
@@ -436,7 +484,7 @@ namespace Azure.ResourceManager.Compute.Models
                 virtualMachineProfile,
                 provisioningState,
                 overprovision,
-                doNotRunExtensionsOnOverprovisionedVms,
+                doNotRunExtensionsOnOverprovisionedVMs,
                 uniqueId,
                 singlePlacementGroup,
                 zoneBalance,
@@ -454,38 +502,7 @@ namespace Azure.ResourceManager.Compute.Models
                 zonalPlatformFaultDomainAlignMode,
                 skuProfile,
                 highSpeedInterconnectPlacement,
-                additionalProperties);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<VirtualMachineScaleSetProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VirtualMachineScaleSetProperties IPersistableModel<VirtualMachineScaleSetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualMachineScaleSetProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VirtualMachineScaleSetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

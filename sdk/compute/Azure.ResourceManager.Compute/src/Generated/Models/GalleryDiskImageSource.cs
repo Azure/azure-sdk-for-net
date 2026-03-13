@@ -7,9 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> The source for the disk image. </summary>
     public partial class GalleryDiskImageSource : GalleryArtifactVersionSource
@@ -21,15 +20,19 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryDiskImageSource"/>. </summary>
         /// <param name="id"> The id of the gallery artifact version source. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
         /// <param name="storageAccountId"> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </param>
-        internal GalleryDiskImageSource(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri, ResourceIdentifier storageAccountId) : base(id, serializedAdditionalRawData)
+        internal GalleryDiskImageSource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string uri, string storageAccountId) : base(id, additionalBinaryDataProperties)
         {
             Uri = uri;
             StorageAccountId = storageAccountId;
         }
+
+        /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
+        public string Uri { get; set; }
+
         /// <summary> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </summary>
-        public ResourceIdentifier StorageAccountId { get; set; }
+        public string StorageAccountId { get; set; }
     }
 }

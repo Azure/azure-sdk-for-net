@@ -7,10 +7,11 @@
 
 using System;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     internal static partial class GalleryApplicationCustomActionParameterTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this GalleryApplicationCustomActionParameterType value) => value switch
         {
             GalleryApplicationCustomActionParameterType.String => "String",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Compute.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GalleryApplicationCustomActionParameterType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static GalleryApplicationCustomActionParameterType ToGalleryApplicationCustomActionParameterType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "String")) return GalleryApplicationCustomActionParameterType.String;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ConfigurationDataBlob")) return GalleryApplicationCustomActionParameterType.ConfigurationDataBlob;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LogOutputBlob")) return GalleryApplicationCustomActionParameterType.LogOutputBlob;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "String"))
+            {
+                return GalleryApplicationCustomActionParameterType.String;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ConfigurationDataBlob"))
+            {
+                return GalleryApplicationCustomActionParameterType.ConfigurationDataBlob;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LogOutputBlob"))
+            {
+                return GalleryApplicationCustomActionParameterType.LogOutputBlob;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GalleryApplicationCustomActionParameterType value.");
         }
     }

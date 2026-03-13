@@ -7,51 +7,71 @@
 
 using System;
 using System.ComponentModel;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Specifies the reboot setting for all AutomaticByPlatform patch installation operations. </summary>
     public readonly partial struct LinuxVmGuestPatchAutomaticByPlatformRebootSetting : IEquatable<LinuxVmGuestPatchAutomaticByPlatformRebootSetting>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LinuxVmGuestPatchAutomaticByPlatformRebootSetting(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string IfRequiredValue = "IfRequired";
         private const string NeverValue = "Never";
         private const string AlwaysValue = "Always";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public LinuxVmGuestPatchAutomaticByPlatformRebootSetting(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static LinuxVmGuestPatchAutomaticByPlatformRebootSetting Unknown { get; } = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(UnknownValue);
-        /// <summary> IfRequired. </summary>
+
+        /// <summary> Gets the IfRequired. </summary>
         public static LinuxVmGuestPatchAutomaticByPlatformRebootSetting IfRequired { get; } = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(IfRequiredValue);
-        /// <summary> Never. </summary>
+
+        /// <summary> Gets the Never. </summary>
         public static LinuxVmGuestPatchAutomaticByPlatformRebootSetting Never { get; } = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(NeverValue);
-        /// <summary> Always. </summary>
+
+        /// <summary> Gets the Always. </summary>
         public static LinuxVmGuestPatchAutomaticByPlatformRebootSetting Always { get; } = new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(AlwaysValue);
+
         /// <summary> Determines if two <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LinuxVmGuestPatchAutomaticByPlatformRebootSetting left, LinuxVmGuestPatchAutomaticByPlatformRebootSetting right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LinuxVmGuestPatchAutomaticByPlatformRebootSetting(string value) => new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LinuxVmGuestPatchAutomaticByPlatformRebootSetting"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LinuxVmGuestPatchAutomaticByPlatformRebootSetting?(string value) => value == null ? null : new LinuxVmGuestPatchAutomaticByPlatformRebootSetting(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LinuxVmGuestPatchAutomaticByPlatformRebootSetting other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LinuxVmGuestPatchAutomaticByPlatformRebootSetting other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

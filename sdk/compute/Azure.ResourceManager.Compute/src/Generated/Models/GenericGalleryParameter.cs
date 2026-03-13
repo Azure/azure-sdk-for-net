@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace ComputeGallery.Models
 {
     /// <summary> The definition of a generic gallery parameter. </summary>
     public partial class GenericGalleryParameter
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="GenericGalleryParameter"/>. </summary>
         /// <param name="name"> The name of the parameter. </param>
@@ -60,27 +32,25 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="required"> Indicates whether this parameter must be passed. </param>
         /// <param name="defaultValue"> The default value of the parameter, only applies to string types. </param>
         /// <param name="description"> A description to help users understand what this parameter means. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GenericGalleryParameter(string name, bool? required, string defaultValue, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal GenericGalleryParameter(string name, bool? @required, string defaultValue, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Required = required;
+            Required = @required;
             DefaultValue = defaultValue;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GenericGalleryParameter"/> for deserialization. </summary>
-        internal GenericGalleryParameter()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the parameter. </summary>
         public string Name { get; set; }
+
         /// <summary> Indicates whether this parameter must be passed. </summary>
         public bool? Required { get; set; }
+
         /// <summary> The default value of the parameter, only applies to string types. </summary>
         public string DefaultValue { get; set; }
+
         /// <summary> A description to help users understand what this parameter means. </summary>
         public string Description { get; set; }
     }

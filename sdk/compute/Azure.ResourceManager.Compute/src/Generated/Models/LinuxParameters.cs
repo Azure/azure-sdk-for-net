@@ -7,48 +7,20 @@
 
 using System;
 using System.Collections.Generic;
+using ComputeCombine;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Input for InstallPatches on a Linux VM, as directly received by the API. </summary>
     public partial class LinuxParameters
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LinuxParameters"/>. </summary>
         public LinuxParameters()
         {
-            ClassificationsToInclude = new ChangeTrackingList<VmGuestPatchClassificationForLinux>();
+            ClassificationsToInclude = new ChangeTrackingList<VMGuestPatchClassificationLinux>();
             PackageNameMasksToInclude = new ChangeTrackingList<string>();
             PackageNameMasksToExclude = new ChangeTrackingList<string>();
         }
@@ -58,22 +30,25 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="packageNameMasksToInclude"> packages to include in the patch operation. Format: packageName_packageVersion. </param>
         /// <param name="packageNameMasksToExclude"> packages to exclude in the patch operation. Format: packageName_packageVersion. </param>
         /// <param name="maintenanceRunId"> This is used as a maintenance run identifier for Auto VM Guest Patching in Linux. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxParameters(IList<VmGuestPatchClassificationForLinux> classificationsToInclude, IList<string> packageNameMasksToInclude, IList<string> packageNameMasksToExclude, string maintenanceRunId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxParameters(IList<VMGuestPatchClassificationLinux> classificationsToInclude, IList<string> packageNameMasksToInclude, IList<string> packageNameMasksToExclude, string maintenanceRunId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClassificationsToInclude = classificationsToInclude;
             PackageNameMasksToInclude = packageNameMasksToInclude;
             PackageNameMasksToExclude = packageNameMasksToExclude;
             MaintenanceRunId = maintenanceRunId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The update classifications to select when installing patches for Linux. </summary>
-        public IList<VmGuestPatchClassificationForLinux> ClassificationsToInclude { get; }
+        public IList<VMGuestPatchClassificationLinux> ClassificationsToInclude { get; }
+
         /// <summary> packages to include in the patch operation. Format: packageName_packageVersion. </summary>
         public IList<string> PackageNameMasksToInclude { get; }
+
         /// <summary> packages to exclude in the patch operation. Format: packageName_packageVersion. </summary>
         public IList<string> PackageNameMasksToExclude { get; }
+
         /// <summary> This is used as a maintenance run identifier for Auto VM Guest Patching in Linux. </summary>
         public string MaintenanceRunId { get; set; }
     }

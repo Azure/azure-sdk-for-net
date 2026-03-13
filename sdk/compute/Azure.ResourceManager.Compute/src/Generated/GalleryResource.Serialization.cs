@@ -9,21 +9,31 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
+    /// <summary></summary>
     public partial class GalleryResource : IJsonModel<GalleryData>
     {
-        private static GalleryData s_dataDeserializationInstance;
-        private static GalleryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GalleryData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GalleryData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GalleryData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GalleryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GalleryData>)Data).Write(writer, options);
 
-        GalleryData IJsonModel<GalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryData IJsonModel<GalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
-        BinaryData IPersistableModel<GalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryData>(Data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryData>(Data, options, ComputeCombineContext.Default);
 
-        GalleryData IPersistableModel<GalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryData>(data, options, AzureResourceManagerComputeContext.Default);
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GalleryData IPersistableModel<GalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryData>(data, options, ComputeCombineContext.Default);
 
-        string IPersistableModel<GalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

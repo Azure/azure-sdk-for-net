@@ -8,105 +8,147 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Models;
+using ComputeGallery.Models;
 
-namespace Azure.ResourceManager.Compute
+namespace ComputeCombine
 {
-    /// <summary>
-    /// A class representing the GalleryInVmAccessControlProfileVersion data model.
-    /// Specifies information about the gallery inVMAccessControlProfile version that you want to create or update.
-    /// </summary>
-    public partial class GalleryInVmAccessControlProfileVersionData : TrackedResourceData
+    /// <summary> Specifies information about the gallery inVMAccessControlProfile version that you want to create or update. </summary>
+    public partial class GalleryInVMAccessControlProfileVersionData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public GalleryInVmAccessControlProfileVersionData(AzureLocation location) : base(location)
-        {
-            TargetLocations = new ChangeTrackingList<TargetRegion>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="targetLocations"> The target regions where the Resource Profile version is going to be replicated to. This property is updatable. </param>
-        /// <param name="excludeFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Resource Profile won't use this Profile version. </param>
-        /// <param name="publishedOn"> The timestamp for when the Resource Profile Version is published. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        /// <param name="mode"> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </param>
-        /// <param name="defaultAccess"> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </param>
-        /// <param name="rules"> This is the Access Control Rules specification for an inVMAccessControlProfile version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryInVmAccessControlProfileVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<TargetRegion> targetLocations, bool? excludeFromLatest, DateTimeOffset? publishedOn, GalleryProvisioningState? provisioningState, ReplicationStatus replicationStatus, GalleryInVmAccessControlRulesMode? mode, ComputeGalleryEndpointAccess? defaultAccess, GalleryInVmAccessControlRules rules, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
-        {
-            TargetLocations = targetLocations;
-            ExcludeFromLatest = excludeFromLatest;
-            PublishedOn = publishedOn;
-            ProvisioningState = provisioningState;
-            ReplicationStatus = replicationStatus;
-            Mode = mode;
-            DefaultAccess = defaultAccess;
-            Rules = rules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlProfileVersionData"/> for deserialization. </summary>
-        internal GalleryInVmAccessControlProfileVersionData()
+        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileVersionData"/>. </summary>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        public GalleryInVMAccessControlProfileVersionData(AzureLocation location) : base(location)
         {
         }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryInVMAccessControlProfileVersionData"/>. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the properties of an inVMAccessControlProfile version. </param>
+        internal GalleryInVMAccessControlProfileVersionData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, GalleryInVMAccessControlProfileVersionProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+        }
+
+        /// <summary> Describes the properties of an inVMAccessControlProfile version. </summary>
+        internal GalleryInVMAccessControlProfileVersionProperties Properties { get; set; }
 
         /// <summary> The target regions where the Resource Profile version is going to be replicated to. This property is updatable. </summary>
-        public IList<TargetRegion> TargetLocations { get; }
+        public IList<TargetRegion> TargetLocations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                }
+                return Properties.TargetLocations;
+            }
+        }
+
         /// <summary> If set to true, Virtual Machines deployed from the latest version of the Resource Profile won't use this Profile version. </summary>
-        public bool? ExcludeFromLatest { get; set; }
+        public bool? ExcludeFromLatest
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExcludeFromLatest;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                }
+                Properties.ExcludeFromLatest = value.Value;
+            }
+        }
+
         /// <summary> The timestamp for when the Resource Profile Version is published. </summary>
-        public DateTimeOffset? PublishedOn { get; }
+        public DateTimeOffset? PublishedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishedOn;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public GalleryProvisioningState? ProvisioningState { get; }
+        public GalleryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> This is the replication status of the gallery image version. </summary>
-        public ReplicationStatus ReplicationStatus { get; }
+        public ReplicationStatus ReplicationStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ReplicationStatus;
+            }
+        }
+
         /// <summary> This property allows you to specify whether the access control rules are in Audit mode, in Enforce mode or Disabled. Possible values are: 'Audit', 'Enforce' or 'Disabled'. </summary>
-        public GalleryInVmAccessControlRulesMode? Mode { get; set; }
+        public AccessControlRulesMode Mode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                }
+                Properties.Mode = value;
+            }
+        }
+
         /// <summary> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </summary>
-        public ComputeGalleryEndpointAccess? DefaultAccess { get; set; }
+        public EndpointAccess DefaultAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                }
+                Properties.DefaultAccess = value;
+            }
+        }
+
         /// <summary> This is the Access Control Rules specification for an inVMAccessControlProfile version. </summary>
-        public GalleryInVmAccessControlRules Rules { get; set; }
+        public AccessControlRules Rules
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Rules;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GalleryInVMAccessControlProfileVersionProperties();
+                }
+                Properties.Rules = value;
+            }
+        }
     }
 }

@@ -8,42 +8,13 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.Compute.Models
+namespace Compute.Models
 {
     /// <summary> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations. </summary>
     public partial class ScheduledEventsPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduledEventsPolicy"/>. </summary>
         public ScheduledEventsPolicy()
@@ -55,47 +26,97 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userInitiatedReboot"> The configuration parameters used while creating userInitiatedReboot scheduled event setting creation. </param>
         /// <param name="scheduledEventsAdditionalPublishingTargets"> The configuration parameters used while publishing scheduledEventsAdditionalPublishingTargets. </param>
         /// <param name="allInstancesDown"> The configuration parameters used while creating AllInstancesDown scheduled event setting creation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledEventsPolicy(UserInitiatedRedeploy userInitiatedRedeploy, UserInitiatedReboot userInitiatedReboot, ScheduledEventsAdditionalPublishingTargets scheduledEventsAdditionalPublishingTargets, AllInstancesDown allInstancesDown, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduledEventsPolicy(UserInitiatedRedeploy userInitiatedRedeploy, UserInitiatedReboot userInitiatedReboot, ScheduledEventsAdditionalPublishingTargets scheduledEventsAdditionalPublishingTargets, AllInstancesDown allInstancesDown, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserInitiatedRedeploy = userInitiatedRedeploy;
             UserInitiatedReboot = userInitiatedReboot;
             ScheduledEventsAdditionalPublishingTargets = scheduledEventsAdditionalPublishingTargets;
             AllInstancesDown = allInstancesDown;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The configuration parameters used while creating userInitiatedRedeploy scheduled event setting creation. </summary>
-        public UserInitiatedRedeploy UserInitiatedRedeploy { get; set; }
+        internal UserInitiatedRedeploy UserInitiatedRedeploy { get; set; }
+
         /// <summary> The configuration parameters used while creating userInitiatedReboot scheduled event setting creation. </summary>
         internal UserInitiatedReboot UserInitiatedReboot { get; set; }
+
+        /// <summary> The configuration parameters used while publishing scheduledEventsAdditionalPublishingTargets. </summary>
+        internal ScheduledEventsAdditionalPublishingTargets ScheduledEventsAdditionalPublishingTargets { get; set; }
+
+        /// <summary> The configuration parameters used while creating AllInstancesDown scheduled event setting creation. </summary>
+        internal AllInstancesDown AllInstancesDown { get; set; }
+
+        /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
+        public bool? AutomaticallyApprove
+        {
+            get
+            {
+                return UserInitiatedRedeploy is null ? default : UserInitiatedRedeploy.AutomaticallyApprove;
+            }
+            set
+            {
+                if (UserInitiatedRedeploy is null)
+                {
+                    UserInitiatedRedeploy = new UserInitiatedRedeploy();
+                }
+                UserInitiatedRedeploy.AutomaticallyApprove = value;
+            }
+        }
+
         /// <summary> Specifies Reboot Scheduled Event related configurations. </summary>
         public bool? AutomaticallyApprove
         {
-            get => UserInitiatedReboot is null ? default : UserInitiatedReboot.AutomaticallyApprove;
+            get
+            {
+                return UserInitiatedReboot is null ? default : UserInitiatedReboot.AutomaticallyApprove;
+            }
             set
             {
                 if (UserInitiatedReboot is null)
+                {
                     UserInitiatedReboot = new UserInitiatedReboot();
+                }
                 UserInitiatedReboot.AutomaticallyApprove = value;
             }
         }
 
-        /// <summary> The configuration parameters used while publishing scheduledEventsAdditionalPublishingTargets. </summary>
-        internal ScheduledEventsAdditionalPublishingTargets ScheduledEventsAdditionalPublishingTargets { get; set; }
         /// <summary> The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. </summary>
         public EventGridAndResourceGraph ScheduledEventsAdditionalPublishingTargetsEventGridAndResourceGraph
         {
-            get => ScheduledEventsAdditionalPublishingTargets is null ? default : ScheduledEventsAdditionalPublishingTargets.EventGridAndResourceGraph;
+            get
+            {
+                return ScheduledEventsAdditionalPublishingTargets is null ? default : ScheduledEventsAdditionalPublishingTargets.EventGridAndResourceGraph;
+            }
             set
             {
                 if (ScheduledEventsAdditionalPublishingTargets is null)
+                {
                     ScheduledEventsAdditionalPublishingTargets = new ScheduledEventsAdditionalPublishingTargets();
+                }
                 ScheduledEventsAdditionalPublishingTargets.EventGridAndResourceGraph = value;
             }
         }
 
-        /// <summary> The configuration parameters used while creating AllInstancesDown scheduled event setting creation. </summary>
-        public AllInstancesDown AllInstancesDown { get; set; }
+        /// <summary>
+        /// Specifies if Scheduled Events should be auto-approved when all instances are down.
+        /// its default value is true
+        /// </summary>
+        public bool? AutomaticallyApprove
+        {
+            get
+            {
+                return AllInstancesDown is null ? default : AllInstancesDown.AutomaticallyApprove;
+            }
+            set
+            {
+                if (AllInstancesDown is null)
+                {
+                    AllInstancesDown = new AllInstancesDown();
+                }
+                AllInstancesDown.AutomaticallyApprove = value;
+            }
+        }
     }
 }
