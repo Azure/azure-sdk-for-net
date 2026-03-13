@@ -14,6 +14,8 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryWebhookData
     {
+        // Backward compatibility: the generated constructor is internal. The old API
+        // exposed a public constructor taking AzureLocation for creating webhook resources.
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookData"/>. </summary>
         /// <param name="location"> The location of the webhook. </param>
         public ContainerRegistryWebhookData(AzureLocation location) : base(default, default, default, default, default, location)

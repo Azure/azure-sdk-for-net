@@ -15,6 +15,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
+    // Generator bug: generated GetArchives/GetArchive/GetArchiveAsync methods don't pass
+    // the required `packageType` parameter to the ArchiveCollection constructor.
+    // Suppressing the generated methods and providing a corrected implementation.
     [CodeGenSuppress("GetArchives", typeof(string))]
     [CodeGenSuppress("GetArchiveAsync", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetArchive", typeof(string), typeof(CancellationToken))]

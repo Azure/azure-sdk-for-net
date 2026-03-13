@@ -8,9 +8,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
+    // Backward compatibility: the PrivateLinkResource is not generated as an ARM resource
+    // in the new TypeSpec-based code. This custom Data class preserves the old API surface
+    // with GroupId, RequiredMembers, and RequiredZoneNames properties.
     /// <summary>
     /// A class representing the ContainerRegistryPrivateLinkResource data model.
-    /// A private link resource.
     /// </summary>
     public partial class ContainerRegistryPrivateLinkResourceData : ResourceData
     {
