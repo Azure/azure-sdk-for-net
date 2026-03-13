@@ -344,39 +344,8 @@ public class ClientLoggingOptions
 
     private void BindStringListProperties(IConfigurationSection section)
     {
-        IConfigurationSection allowedHeaders = section.GetSection(nameof(AllowedHeaderNames));
         IConfigurationSection additionalHeaders = section.GetSection(AdditionalAllowedHeaderNamesKey);
-
-        if (allowedHeaders.Exists() && additionalHeaders.Exists())
-        {
-            throw new InvalidOperationException(
-                $"Cannot specify both '{nameof(AllowedHeaderNames)}' and '{AdditionalAllowedHeaderNamesKey}'. " +
-                $"Use '{nameof(AllowedHeaderNames)}' to replace the defaults or '{AdditionalAllowedHeaderNamesKey}' to add to them.");
-        }
-
-        IConfigurationSection allowedQueryParams = section.GetSection(nameof(AllowedQueryParameters));
-        IConfigurationSection additionalQueryParams = section.GetSection(AdditionalAllowedQueryParametersKey);
-
-        if (allowedQueryParams.Exists() && additionalQueryParams.Exists())
-        {
-            throw new InvalidOperationException(
-                $"Cannot specify both '{nameof(AllowedQueryParameters)}' and '{AdditionalAllowedQueryParametersKey}'. " +
-                $"Use '{nameof(AllowedQueryParameters)}' to replace the defaults or '{AdditionalAllowedQueryParametersKey}' to add to them.");
-        }
-
-        if (allowedHeaders.Exists())
-        {
-            ChangeTrackingStringList headers = new();
-            foreach (IConfigurationSection child in allowedHeaders.GetChildren())
-            {
-                if (child.Value is not null)
-                {
-                    headers.Add(child.Value);
-                }
-            }
-            _allowedHeaderNames = headers;
-        }
-        else if (additionalHeaders.Exists())
+        if (additionalHeaders.Exists())
         {
             HashSet<string> existing = new(AllowedHeaderNames, StringComparer.OrdinalIgnoreCase);
             foreach (IConfigurationSection child in additionalHeaders.GetChildren())
@@ -388,19 +357,8 @@ public class ClientLoggingOptions
             }
         }
 
-        if (allowedQueryParams.Exists())
-        {
-            ChangeTrackingStringList queryParams = new();
-            foreach (IConfigurationSection child in allowedQueryParams.GetChildren())
-            {
-                if (child.Value is not null)
-                {
-                    queryParams.Add(child.Value);
-                }
-            }
-            _allowedQueryParameters = queryParams;
-        }
-        else if (additionalQueryParams.Exists())
+        IConfigurationSection additionalQueryParams = section.GetSection(AdditionalAllowedQueryParametersKey);
+        if (additionalQueryParams.Exists())
         {
             HashSet<string> existing = new(AllowedQueryParameters, StringComparer.OrdinalIgnoreCase);
             foreach (IConfigurationSection child in additionalQueryParams.GetChildren())

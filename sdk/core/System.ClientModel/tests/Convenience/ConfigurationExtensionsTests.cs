@@ -235,38 +235,6 @@ public class ConfigurationExtensionsTests
     }
 
     [Test]
-    public void GetClientSettings_AllowedHeaderNames_ReplacesDefaults()
-    {
-        ConfigurationBuilder builder = new();
-        builder.AddInMemoryCollection(new Dictionary<string, string?>
-        {
-            ["TestClient:Options:ClientLoggingOptions:AllowedHeaderNames:0"] = "X-Custom-Header",
-            ["TestClient:Options:ClientLoggingOptions:AllowedHeaderNames:1"] = "X-Request-Id"
-        });
-        IConfigurationRoot config = builder.Build();
-
-        TestClientSettings settings = config.GetClientSettings<TestClientSettings>("TestClient");
-
-        Assert.That(settings.Options!.ClientLoggingOptions!.AllowedHeaderNames, Is.EquivalentTo(new[] { "X-Custom-Header", "X-Request-Id" }));
-    }
-
-    [Test]
-    public void GetClientSettings_AllowedQueryParameters_ReplacesDefaults()
-    {
-        ConfigurationBuilder builder = new();
-        builder.AddInMemoryCollection(new Dictionary<string, string?>
-        {
-            ["TestClient:Options:ClientLoggingOptions:AllowedQueryParameters:0"] = "filter",
-            ["TestClient:Options:ClientLoggingOptions:AllowedQueryParameters:1"] = "top"
-        });
-        IConfigurationRoot config = builder.Build();
-
-        TestClientSettings settings = config.GetClientSettings<TestClientSettings>("TestClient");
-
-        Assert.That(settings.Options!.ClientLoggingOptions!.AllowedQueryParameters, Is.EquivalentTo(new[] { "filter", "top" }));
-    }
-
-    [Test]
     public void GetClientSettings_AdditionalAllowedHeaderNames_AppendsToDefaults()
     {
         ConfigurationBuilder builder = new();
@@ -357,35 +325,5 @@ public class ConfigurationExtensionsTests
             if (string.Equals(q, "api-version", StringComparison.OrdinalIgnoreCase)) apiVersionCount++;
         }
         Assert.That(apiVersionCount, Is.EqualTo(1), "api-version should not be duplicated");
-    }
-
-    [Test]
-    public void GetClientSettings_AllowedAndAdditionalHeaderNames_ThrowsInvalidOperation()
-    {
-        ConfigurationBuilder builder = new();
-        builder.AddInMemoryCollection(new Dictionary<string, string?>
-        {
-            ["TestClient:Options:ClientLoggingOptions:AllowedHeaderNames:0"] = "X-Custom",
-            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedHeaderNames:0"] = "X-Extra"
-        });
-        IConfigurationRoot config = builder.Build();
-
-        Assert.Throws<InvalidOperationException>(() =>
-            config.GetClientSettings<TestClientSettings>("TestClient"));
-    }
-
-    [Test]
-    public void GetClientSettings_AllowedAndAdditionalQueryParameters_ThrowsInvalidOperation()
-    {
-        ConfigurationBuilder builder = new();
-        builder.AddInMemoryCollection(new Dictionary<string, string?>
-        {
-            ["TestClient:Options:ClientLoggingOptions:AllowedQueryParameters:0"] = "filter",
-            ["TestClient:Options:ClientLoggingOptions:AdditionalAllowedQueryParameters:0"] = "top"
-        });
-        IConfigurationRoot config = builder.Build();
-
-        Assert.Throws<InvalidOperationException>(() =>
-            config.GetClientSettings<TestClientSettings>("TestClient"));
     }
 }
