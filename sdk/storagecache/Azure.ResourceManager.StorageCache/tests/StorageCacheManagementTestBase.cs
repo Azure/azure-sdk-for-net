@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
 
             // Check if the job already exists before creating
             Console.WriteLine("Checking if an expansion job with the same name already exists...");
-            NullableResponse <ExpansionJobResource> existingJob = await expansionJobCollectionVar.GetIfExistsAsync(expansionJobName);
+            NullableResponse<ExpansionJobResource> existingJob = await expansionJobCollectionVar.GetIfExistsAsync(expansionJobName);
             if (existingJob.HasValue)
             {
                 Console.WriteLine("Expansion job with the same name already exists. Returning the existing job.");

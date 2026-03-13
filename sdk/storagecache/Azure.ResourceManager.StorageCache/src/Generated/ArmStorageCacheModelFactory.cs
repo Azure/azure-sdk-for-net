@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="startTimeUTC"> The time (in UTC) the expansion job started. </param>
         /// <param name="completionTimeUTC"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
         /// <returns> A new <see cref="StorageCache.ExpansionJobData"/> instance for mocking. </returns>
-        public static ExpansionJobData ExpansionJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExpansionJobPropertiesProvisioningState? provisioningState = null, float? newStorageCapacityTiB = null, ExpansionJobStatusType? state = null, string statusCode = null, string statusMessage = null, float? percentComplete = null, DateTimeOffset? startTimeUTC = null, DateTimeOffset? completionTimeUTC = null)
+        public static ExpansionJobData ExpansionJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExpansionJobProvisioningState? provisioningState = null, float? newStorageCapacityTiB = null, ExpansionJobStatusType? state = null, string statusCode = null, string statusMessage = null, float? percentComplete = null, DateTimeOffset? startTimeUTC = null, DateTimeOffset? completionTimeUTC = null)
         {
             tags ??= new Dictionary<string, string>();
 

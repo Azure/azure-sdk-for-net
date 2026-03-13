@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StorageCache
         /// <param name="startTimeUTC"> The time (in UTC) the expansion job started. </param>
         /// <param name="completionTimeUTC"> The time (in UTC) when the expansion job completed. Only populated when job reaches a terminal state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpansionJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExpansionJobPropertiesProvisioningState? provisioningState, float? newStorageCapacityTiB, ExpansionJobStatusType? state, string statusCode, string statusMessage, float? percentComplete, DateTimeOffset? startTimeUTC, DateTimeOffset? completionTimeUTC, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ExpansionJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExpansionJobProvisioningState? provisioningState, float? newStorageCapacityTiB, ExpansionJobStatusType? state, string statusCode, string statusMessage, float? percentComplete, DateTimeOffset? startTimeUTC, DateTimeOffset? completionTimeUTC, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             NewStorageCapacityTiB = newStorageCapacityTiB;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </summary>
-        public ExpansionJobPropertiesProvisioningState? ProvisioningState { get; }
+        public ExpansionJobProvisioningState? ProvisioningState { get; }
         /// <summary> The new storage capacity in TiB for the AML file system after expansion. This must be a multiple of the Sku step size, and greater than the current storage capacity of the AML file system. </summary>
         public float? NewStorageCapacityTiB { get; set; }
         /// <summary> The operational state of the expansion job. InProgress indicates the expansion is still running. Completed indicates expansion finished successfully. Failed means the expansion was unable to complete due to a fatal error. Deleting indicates the expansion is being rolled back. </summary>

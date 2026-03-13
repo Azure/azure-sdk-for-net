@@ -75,6 +75,7 @@ rename-mapping:
   Nfs3Target.writeBackTimer: WriteBackDelayInSeconds
   BlobNfsTarget.verificationTimer: VerificationDelayInSeconds
   BlobNfsTarget.writeBackTimer: WriteBackDelayInSeconds
+  ExpansionJobPropertiesProvisioningState: ExpansionJobProvisioningState
 
 prepend-rp-prefix:
   - ImportJob

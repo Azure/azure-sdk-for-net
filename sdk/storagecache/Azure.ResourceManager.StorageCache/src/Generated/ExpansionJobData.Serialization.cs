@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StorageCache
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ExpansionJobPropertiesProvisioningState? provisioningState = default;
+            ExpansionJobProvisioningState? provisioningState = default;
             float? newStorageCapacityTiB = default;
             ExpansionJobStatusType? state = default;
             string statusCode = default;
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            provisioningState = new ExpansionJobPropertiesProvisioningState(property0.Value.GetString());
+                            provisioningState = new ExpansionJobProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("newStorageCapacityTiB"u8))
